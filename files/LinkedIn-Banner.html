@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>SABALA - LINKEDIN BANNER</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=instrument-serif@400&f[]=satoshi@400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'night-foundation': '#1A1A18',
+            'night-text': '#F5F3EF',
+            'night-gold': '#C9A84C',
+            'refined-gold': '#B8963E'
+          },
+          fontFamily: {
+            'instrument': ['"Instrument Serif"', 'serif'],
+            'mono': ['"Geist Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #2a2a29; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Satoshi', sans-serif; margin: 0; }
+    
+    .grain-overlay {
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 10;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    #banner-container {
+      width: 1584px;
+      height: 396px;
+      background: #1A1A18;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls -->
+  <div class="mb-12 bg-black/40 p-6 rounded-2xl border border-white/10 text-center max-w-2xl px-12 relative z-[100]">
+     <h1 class="text-white text-2xl font-instrument mb-2">LinkedIn Profil Banner Exporter</h1>
+     <p class="text-white/60 mb-8 text-sm">Die Feinjustierung: Bild weiter nach rechts ("Bildschirm" rückt raus), Text weiter rechts und etwas höher positioniert, großer Diamant hinter "Klarheit" gesetzt und das Logo minimiert ins Eck gepusht.</p>
+     <button id="downloadBtn" class="bg-[#B8963E] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors duration-300">
+        Banner als PNG speichern
+     </button>
+  </div>
+
+  <div id="banner-container" class="relative overflow-hidden w-[1584px] h-[396px]">
+     
+     <!-- Background Image RIGHT side -->
+     <img src="../public/Bilder Sabala/14 - 56_CH_Sehnde_.jpg" 
+          class="absolute inset-y-0 right-[-150px] h-[396px] w-[900px] object-cover object-[center_20%] opacity-90 z-0 grayscale-[10%]" alt="Sabala Portrait" />
+     
+     <!-- Refined Left to Right Dark Overlay for seamless fade -->
+     <div class="absolute inset-y-0 right-0 h-[396px] w-[1000px] bg-gradient-to-l from-transparent via-[#1A1A18]/80 to-[#1A1A18] z-0 pointer-events-none"></div>
+
+     <!-- Bottom Edge Gradient (~60-80px height) -->
+     <div class="absolute bottom-0 inset-x-0 h-[80px] bg-gradient-to-t from-[rgba(26,26,24,0.7)] to-transparent z-0 pointer-events-none"></div>
+
+     <!-- Website Reference Bottom Right -->
+     <div class="absolute bottom-[12px] right-[40px] z-[80]">
+        <p class="font-mono text-[#C9A84C] text-[12px] tracking-[0.08em]">
+          sabala-mentoring.com
+        </p>
+     </div>
+
+     <!-- Noise Grain -->
+     <div class="grain-overlay mix-blend-overlay"></div>
+
+     <!-- Safe Zone Overlay (For Preview Only) -->
+     <div id="safe-zone" class="absolute bottom-[-50px] left-[40px] w-[260px] h-[260px] rounded-full border-4 border-dashed border-white/30 bg-black/50 flex flex-col items-center justify-center opacity-0 transition-opacity z-[90] backdrop-blur-[2px]">
+        <span class="text-white text-[12px] uppercase font-mono tracking-widest text-center px-4 font-bold drop-shadow-md">LinkedIn<br>Profilbild<br>Zone</span>
+     </div>
+
+     <!-- Large Subtle Diamond Element exactly behind 'Klarheit' text -->
+     <img src="../public/images/Schwebender Kristall mit goldenen Einschlüssen.png" 
+          class="absolute top-1/2 -translate-y-1/2 left-[500px] w-[350px] h-[350px] object-cover opacity-[0.08] z-0 blur-[1px] mix-blend-screen" />
+
+     <!-- Top Left Logo: Smaller, pushed further top-left -->
+     <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-[28px] left-[32px] w-[110px] h-auto z-50 drop-shadow-xl" alt="Sabala Logo" />
+
+     <!-- Text Overlay Layer (Middle to Right) -->
+     <div class="absolute top-[44%] -translate-y-[50%] left-[650px] z-[60] flex flex-col items-start w-[700px]">
+        
+        <div class="flex items-center gap-4 mb-[20px]">
+            <img src="../public/images/Schwebender Kristall mit goldenen Einschlüssen.png" class="w-6 h-6 object-contain drop-shadow-lg brightness-125 sepia-[0.3]" />
+            <p class="font-mono text-[#D8C28E] opacity-90 text-[14px] uppercase tracking-[0.2em] pt-[2px]">
+              Der meditierende Business-Architekt
+            </p>
+        </div>
+
+        <div class="w-[85%] h-px bg-gradient-to-r from-[#B8963E]/40 to-transparent mb-[20px]"></div>
+
+        <h2 class="font-instrument text-night-text text-[46px] leading-[1.1] tracking-[-0.02em] mb-1 drop-shadow-2xl">
+          Klarheit in der Positionierung.
+        </h2>
+        <h2 class="font-instrument text-[#D8C28E] text-[46px] leading-[1.1] tracking-[-0.02em] italic drop-shadow-2xl">
+          Kraft im Auftritt.
+        </h2>
+        
+     </div>
+
+  </div>
+
+  <script>
+    const bannerContainer = document.getElementById('banner-container');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const safeZone = document.getElementById('safe-zone');
+
+    bannerContainer.addEventListener('mouseenter', () => { safeZone.style.opacity = '1'; });
+    bannerContainer.addEventListener('mouseleave', () => { safeZone.style.opacity = '0'; });
+
+    downloadBtn.addEventListener('click', async () => {
+       downloadBtn.textContent = '... wird gerendert ...';
+       downloadBtn.disabled = true;
+       downloadBtn.style.opacity = '0.5';
+
+       safeZone.style.display = 'none';
+
+       await new Promise(r => setTimeout(r, 100));
+
+       try {
+           const dataUrl = await htmlToImage.toPng(bannerContainer, {
+               quality: 1,
+               pixelRatio: 1
+           });
+           download(dataUrl, 'LinkedIn-Banner-Sabala.png');
+           
+           downloadBtn.textContent = 'Banner erfolgreich exportiert!';
+       } catch (error) {
+           console.error('fehler!', error);
+           downloadBtn.textContent = 'Fehler beim Export!';
+       } finally {
+           safeZone.style.display = 'flex';
+           downloadBtn.disabled = false;
+           downloadBtn.style.opacity = '1';
+           setTimeout(() => { downloadBtn.textContent = 'Banner als PNG speichern'; }, 3000);
+       }
+    });
+  </script>
+
+</body>
+</html>

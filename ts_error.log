@@ -1,0 +1,97 @@
+node_modules/next/dist/build/webpack/loaders/next-app-loader/index.d.ts(1,13): error TS2613: Module '"next/dist/compiled/webpack/webpack"' has no default export. Did you mean to use 'import { webpack } from "next/dist/compiled/webpack/webpack"' instead?
+node_modules/next/dist/client/components/catch-error.d.ts(2,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/components/error-boundary.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/components/http-access-fallback/error-boundary.d.ts(11,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/components/layout-router.d.ts(3,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/components/segment-cache/cache.d.ts(104,21): error TS2304: Cannot find name 'PromiseWithResolvers'.
+node_modules/next/dist/client/image-component.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/link.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/script.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/client/with-router.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/lib/metadata/metadata.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/pages/_app.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/pages/_document.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/pages/_error.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/server/app-render/types.d.ts(10,8): error TS1192: Module '"next/dist/compiled/superstruct"' has no default export.
+node_modules/next/dist/server/web/spec-extension/adapters/headers.d.ts(39,16): error TS2304: Cannot find name 'HeadersIterator'.
+node_modules/next/dist/server/web/spec-extension/adapters/headers.d.ts(40,13): error TS2304: Cannot find name 'HeadersIterator'.
+node_modules/next/dist/server/web/spec-extension/adapters/headers.d.ts(41,15): error TS2304: Cannot find name 'HeadersIterator'.
+node_modules/next/dist/server/web/spec-extension/adapters/headers.d.ts(42,26): error TS2304: Cannot find name 'HeadersIterator'.
+node_modules/next/dist/shared/lib/app-router-context.shared-runtime.d.ts(4,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/app-router-types.d.ts(7,13): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/dynamic.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/head-manager-context.shared-runtime.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/head.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/image-config-context.shared-runtime.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/loadable-context.shared-runtime.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/loadable.shared-runtime.d.ts(21,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/router-context.shared-runtime.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/server-inserted-html.shared-runtime.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/next/dist/shared/lib/utils.d.ts(10,13): error TS1192: Module '"fs"' has no default export.
+node_modules/next/dist/styled-jsx/types/global.d.ts(1,8): error TS1259: Module '"/Users/iljakrasevskij/Library/Mobile Documents/com~apple~CloudDocs/Claude/Projekte/Sabala Mentoring/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+src/app/meditation/page.tsx(3,32): error TS2307: Cannot find module '@/components/ui/SlowWordReveal' or its corresponding type declarations.
+src/app/meditation/page.tsx(4,30): error TS2307: Cannot find module '@/components/ui/ScrollReveal' or its corresponding type declarations.
+src/app/meditation/page.tsx(14,5): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(17,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(23,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(35,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(37,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(38,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(39,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(48,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(49,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(52,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(53,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(61,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(62,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(63,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(64,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(65,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(67,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(70,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(71,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(73,58): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(81,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(82,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(83,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(85,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(86,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(87,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(88,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(91,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(92,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(93,19): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(94,63): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(95,52): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(99,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(100,19): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(102,44): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(113,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(114,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(115,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(117,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(118,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(121,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(122,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(123,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(124,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(124,31): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(125,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(126,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(127,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(128,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(138,7): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(141,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(143,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(144,11): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(146,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(147,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(148,40): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(149,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(149,84): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(154,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(155,15): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(156,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(160,19): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/meditation/page.tsx(162,19): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.

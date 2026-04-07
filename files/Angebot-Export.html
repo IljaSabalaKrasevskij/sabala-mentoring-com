@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>SABALA ANGEBOT - PDF EXPORT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=instrument-serif@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'warm-canvas': '#FAF8F5',
+            'pure-surface': '#FFFFFF',
+            'deep-charcoal': '#1A1A18',
+            'warm-steel': '#6B6963',
+            'soft-stone': '#B5B0A8',
+            'refined-gold': '#B8963E',
+            'night-foundation': '#1A1A18',
+            'night-text': '#F5F3EF',
+            'night-secondary': '#A09C95',
+            'night-gold': '#C9A84C',
+            'whisper-border': 'rgba(181, 176, 168, 0.3)',
+            'warm-shadow': 'rgba(26, 26, 24, 0.06)'
+          },
+          fontFamily: {
+            'instrument': ['"Instrument Serif"', 'serif'],
+            'satoshi': ['Satoshi', 'sans-serif'],
+            'mono': ['"Geist Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media print {
+      @page { size: landscape; margin: 0; }
+      body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; margin: 0; background: none !important; padding: 0 !important; gap: 0 !important; }
+      .slide { box-shadow: none !important; break-after: page; page-break-after: always; margin: 0 !important; }
+    }
+    body { background-color: #888; font-family: 'Satoshi', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 2rem; gap: 2rem; }
+    .slide { width: 297mm; height: 210mm; background-color: #FAF8F5; position: relative; overflow: hidden; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.2); flex-shrink: 0; }
+    .night { background-color: #1A1A18; color: #F5F3EF; }
+    .slide-content { padding: 4rem 5rem; height: 100%; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 10; }
+    .eyebrow { font-family: 'Geist Mono', monospace; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER (Light) -->
+  <div class="slide flex flex-col justify-center relative">
+    <div class="slide-content">
+      <div class="flex items-center justify-between h-full w-full">
+         <div class="w-[55%] pr-10 flex flex-col justify-center">
+            <img src="../public/images/logo-sabala-mentoring.png" class="w-32 h-auto mb-8 drop-shadow-sm" alt="Sabala Logo" />
+            <h1 class="font-instrument text-[5.5rem] leading-[0.95] tracking-tight text-deep-charcoal mb-8">
+              Premium<br>
+              <span class="italic text-refined-gold">One-Pager</span><br>
+              Paket.
+            </h1>
+            <p class="text-warm-steel text-xl leading-relaxed mb-16 w-11/12 font-light">
+              Dein digitaler Premium-Auftritt in nur 7 Tagen. <br>
+              Ein auf dich zugeschnittenes Fundament aus Branding, strategischer Klarheit und verkaufsstarkem Design.
+            </p>
+            <div class="inline-block border border-whisper-border bg-pure-surface px-6 py-3 rounded-full w-max">
+               <p class="text-[0.65rem] uppercase tracking-widest text-warm-steel mb-0.5">Exklusives Angebot für</p>
+               <p class="font-instrument text-xl text-deep-charcoal leading-none">Connecting Herzkreative Member</p>
+            </div>
+         </div>
+         <div class="w-[45%] h-full py-4">
+            <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-whisper-border relative">
+               <img src="../public/Bilder Sabala/6 - 33_CH_Sehnde_.jpg" class="object-cover w-full h-full" alt="Sabala Speaking" />
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: PROBLEM (Dark) -->
+  <div class="slide night relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-20 z-50" />
+    <div class="slide-content">
+       <div class="flex items-center justify-between h-full w-full">
+         <div class="w-[50%] h-full py-4 pr-12">
+            <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 relative">
+               <img src="../public/Bilder Sabala/21 - _MXS8235.jpg" class="object-cover object-[15%] w-full h-full grayscale-[50%]" alt="Podcast" />
+               <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A18]/80 to-transparent"></div>
+            </div>
+         </div>
+         <div class="w-[50%] pl-4">
+            <h2 class="font-instrument text-[3.5rem] leading-[1.0] mb-6">
+              Dein Potenzial ist riesig.<br>
+              <span class="italic text-night-gold">Aber dein Auftritt zeigt es nicht.</span>
+            </h2>
+            <p class="text-night-secondary text-lg mb-10 font-light">
+              Du stiftest echten Wert. Deine bestehenden Kunden wissen das. Aber dein digitaler Auftritt erzählt eine andere Geschichte.
+            </p>
+            
+            <div class="space-y-4">
+               <div class="bg-white/[0.02] border border-white/10 p-5 rounded-3xl flex gap-4">
+                  <span class="text-night-gold font-bold">✕</span>
+                  <p class="text-night-text text-sm">Jemand fragt "Was kostet das?" — und du merkst, dass du dein Angebot nicht klar auf den Punkt bringst. Weil die Struktur dahinter noch fehlt.</p>
+               </div>
+               <div class="bg-white/[0.02] border border-white/10 p-5 rounded-3xl flex gap-4">
+                  <span class="text-night-gold font-bold">✕</span>
+                  <p class="text-night-text text-sm">Du postest regelmäßig Content — aber es bewegt sich nichts. Das Gefühl: "Ich mache viel, aber es kommt nichts zurück."</p>
+               </div>
+               <div class="bg-white/[0.02] border border-white/10 p-5 rounded-3xl flex gap-4">
+                  <span class="text-night-gold font-bold">✕</span>
+                  <p class="text-night-text text-sm">Eine Anfrage kommt rein — und du weißt nicht, was der nächste Schritt ist. Kein klarer Ablauf, keine Seite, die für dich verkauft.</p>
+               </div>
+            </div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: KLARHEITSFOKUS (Light) -->
+  <div class="slide relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-30 z-50" />
+    <div class="slide-content">
+      <div class="flex justify-between items-end mb-12">
+         <div class="w-3/5 pr-16"> <!-- Added padding right to respect absolute logo -->
+            <p class="eyebrow text-refined-gold mb-4">DER PARADIGMENWECHSEL</p>
+            <h2 class="font-instrument text-[4rem] leading-[1.0] text-deep-charcoal">
+              Warum der <span class="italic text-refined-gold">Klarheitsfokus</span><br>alles verändert.
+            </h2>
+         </div>
+         <div class="w-2/5 h-48 rounded-[2.5rem] overflow-hidden border border-whisper-border">
+            <img src="../public/Bilder Sabala/7 - 36_CH_Sehnde_.jpg" class="object-cover w-full h-full object-[center_30%]" alt="Sabala Side" />
+         </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-8">
+         <div class="bg-pure-surface border border-whisper-border p-8 rounded-[2rem] shadow-warm-shadow">
+            <span class="font-instrument text-4xl text-refined-gold mb-4 block">1</span>
+            <h3 class="font-instrument text-2xl mb-3 text-deep-charcoal">Eine Zielgruppe</h3>
+            <p class="text-warm-steel text-sm leading-relaxed font-light">Wer zu jedem spricht, erreicht niemanden. Wenn du spezifisch bist, fühlen sich Kunden tief verstanden.</p>
+         </div>
+         <div class="bg-pure-surface border border-whisper-border p-8 rounded-[2rem] shadow-warm-shadow">
+            <span class="font-instrument text-4xl text-refined-gold mb-4 block">2</span>
+            <h3 class="font-instrument text-2xl mb-3 text-deep-charcoal">Ein Angebot</h3>
+            <p class="text-warm-steel text-sm leading-relaxed font-light">Wir rücken dein stärkstes Kernangebot in den Fokus. Das eliminiert Stress und kreiert Sog.</p>
+         </div>
+         <div class="bg-pure-surface border border-whisper-border p-8 rounded-[2rem] shadow-warm-shadow">
+            <span class="font-instrument text-4xl text-refined-gold mb-4 block">3</span>
+            <h3 class="font-instrument text-2xl mb-3 text-deep-charcoal">Ein Vertriebsweg</h3>
+            <p class="text-warm-steel text-sm leading-relaxed font-light">Komplexe Funnels lenken nur ab. Eine clevere Customer Journey auf deiner Premium-Seite reicht aus, um aus Interessenten Kunden zu machen.</p>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: LIEFERUMFANG (Dark) -->
+  <div class="slide night relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-20 z-50" />
+    <div class="slide-content">
+      <div class="flex items-center justify-between h-full">
+         <div class="w-[50%] pr-8">
+            <p class="eyebrow text-night-gold mb-2">DER LIEFERUMFANG</p>
+            <h2 class="font-instrument text-[3.2rem] leading-[1.0] mb-4">Das Premium<br>One-Pager Paket.</h2>
+            <p class="text-night-secondary text-base mb-6 font-light italic">Kein Template. Kein Baukasten.<br>Deine 100% individuelle Premium-Identität.</p>
+
+            <div class="space-y-3">
+               <div class="bg-white/[0.02] border border-white/10 p-4 rounded-3xl flex items-start gap-4">
+                  <span class="font-mono text-lg text-night-gold">01.</span>
+                  <div>
+                    <h4 class="font-instrument text-xl mb-1 text-white">Brandstrategie</h4>
+                    <p class="text-night-secondary text-xs leading-relaxed">Wir definieren deine exakte strategische Ausrichtung am Markt, damit du Premium wirkst.</p>
+                  </div>
+               </div>
+               <div class="bg-white/[0.02] border border-white/10 p-4 rounded-3xl flex items-start gap-4">
+                  <span class="font-mono text-lg text-night-gold">02.</span>
+                  <div>
+                    <h4 class="font-instrument text-xl mb-1 text-white">Visueller Brandguide</h4>
+                    <p class="text-night-secondary text-xs leading-relaxed">Farben, Typografie, Bildsprache & Mood. Alles feinsäuberlich dokumentiert.</p>
+                  </div>
+               </div>
+               <div class="bg-white/[0.02] border border-white/10 p-4 rounded-3xl flex items-start gap-4">
+                  <span class="font-mono text-lg text-night-gold">03.</span>
+                  <div>
+                    <h4 class="font-instrument text-xl mb-1 text-white">Premium One-Pager</h4>
+                    <p class="text-night-secondary text-xs leading-relaxed">Eine designstarke, mobil-optimierte Landingpage. Nach Verkaufspsychologie aufgebaut.</p>
+                  </div>
+               </div>
+               <div class="bg-night-gold/10 border border-night-gold/20 p-4 rounded-3xl flex items-start gap-4 relative">
+                  <div class="absolute top-3 right-4 bg-night-gold text-night-foundation px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest font-bold">Bonus</div>
+                  <span class="font-mono text-lg text-night-gold">04.</span>
+                  <div class="pr-12">
+                    <h4 class="font-instrument text-xl mb-1 text-night-gold">Contentplan</h4>
+                    <p class="text-night-secondary text-xs leading-relaxed">Präsentation deiner Content-Säulen. Die klare Strategie für deine Sichtbarkeit.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="w-[50%] h-[90%] py-4">
+            <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 relative">
+               <img src="../public/Bilder Sabala/10 - 43_CH_Sehnde_.jpg" class="object-cover w-full h-full grayscale-[20%]" alt="Präsentation von Hinten" />
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: ABLAUF (Light) -->
+  <div class="slide relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-30 z-50" />
+    <div class="slide-content items-center text-center">
+       <h2 class="font-instrument text-[4.5rem] leading-[1.0] text-deep-charcoal mb-4">Der Weg zur neuen Website.</h2>
+       <p class="font-instrument text-3xl text-refined-gold italic mb-20">Einfach, strukturiert & zügig.</p>
+
+       <div class="grid grid-cols-3 gap-12 w-full text-left relative">
+          <!-- Connector Line -->
+          <div class="absolute top-8 left-12 right-12 h-px bg-refined-gold/30"></div>
+
+          <div class="relative z-10 pt-4">
+             <div class="bg-warm-canvas border border-whisper-border inline-block px-2 text-2xl font-instrument text-refined-gold mb-6 relative -top-7 left-4">1. Schritt</div>
+             <h3 class="font-instrument text-2xl mb-2 text-deep-charcoal">Vorbereitungsgespräch</h3>
+             <p class="eyebrow text-warm-steel mb-4">30-Minuten Briefing & Checkliste</p>
+             <p class="text-warm-steel text-sm leading-relaxed font-light">In einem 30-minütigen Call besprechen wir gemeinsam deine Checkliste: Zielgruppe, Angebot, Vertriebsweg und alle Materialien, die du vorbereitest.</p>
+          </div>
+
+          <div class="relative z-10 pt-4">
+             <div class="bg-warm-canvas border border-whisper-border inline-block px-2 text-2xl font-instrument text-refined-gold mb-6 relative -top-7 left-4">2. Schritt</div>
+             <h3 class="font-instrument text-2xl mb-2 text-deep-charcoal">Du lieferst das Fundament</h3>
+             <p class="eyebrow text-warm-steel mb-4">Materialien & finale Entscheidungen</p>
+             <p class="text-warm-steel text-sm leading-relaxed font-light">Du legst deine Farbwünsche, Bilder, Texte sowie die finale Entscheidung (Wer, Was, Wie) ab.</p>
+          </div>
+
+          <div class="relative z-10 pt-4">
+             <div class="bg-warm-canvas border border-whisper-border inline-block px-2 text-2xl font-instrument text-refined-gold mb-6 relative -top-7 left-4">3. Schritt</div>
+             <h3 class="font-instrument text-2xl mb-2 text-deep-charcoal">Kick-Off & Lieferung</h3>
+             <p class="eyebrow text-warm-steel mb-4">Wir erwecken es zum Leben</p>
+             <p class="text-warm-steel text-sm leading-relaxed font-light">Wir führen den offiziellen Kick-Off durch. Und genau <strong class="text-night-gold font-normal px-1 bg-[#1A1A18] rounded">7 Tage nach diesem Call</strong> steht deine komplette neue Premium-Identität und One-Page Landingpage – optimiert für Terminbuchungen.</p>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: FÜR WEN (Dark) -->
+  <div class="slide night relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-20 z-50" />
+    <div class="slide-content justify-center items-center">
+       <h2 class="font-instrument text-[4.5rem] leading-[1.0] text-center mb-16">
+         Für wen ist das <br><span class="italic text-night-gold">Premium One-Pager Paket?</span>
+       </h2>
+
+       <div class="flex gap-12 w-full max-w-5xl">
+          <div class="w-1/2 p-10 border border-white/5 bg-white/[0.01] rounded-[2.5rem]">
+             <h3 class="eyebrow text-night-secondary mb-8 pb-4 border-b border-white/10 text-center">Nicht geeignet für dich...</h3>
+             <ul class="space-y-8">
+               <li class="flex gap-4">
+                  <span class="text-soft-stone font-bold shrink-0">✕</span>
+                  <p class="text-night-secondary text-sm leading-relaxed font-light">Wenn du ganz am Anfang stehst und tief im Inneren noch nach deiner Nische suchst (Finde-dich-selbst Phase).</p>
+               </li>
+               <li class="flex gap-4">
+                  <span class="text-soft-stone font-bold shrink-0">✕</span>
+                  <p class="text-night-secondary text-sm leading-relaxed font-light">Wenn du noch gar nicht weißt, was dein Angebot genau ist und wie du überhaupt mit Kunden arbeiten möchtest.</p>
+               </li>
+               <li class="flex gap-4">
+                  <span class="text-soft-stone font-bold shrink-0">✕</span>
+                  <p class="text-night-secondary text-sm leading-relaxed font-light">Wenn du noch keine vernünftigen Fotos von dir hast und dir sehr unsicher mit dem ersten Entwurf deiner Texte bist.</p>
+               </li>
+             </ul>
+          </div>
+
+          <div class="w-1/2 p-10 border border-night-gold/20 bg-night-gold/5 rounded-[2.5rem] relative">
+             <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-night-gold text-night-foundation px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest font-bold">Der Perfekte Match</div>
+             <h3 class="eyebrow text-night-gold mb-8 pb-4 border-b border-night-gold/20 text-center">Dieses Paket ist für dich, wenn...</h3>
+             <ul class="space-y-8">
+               <li class="flex gap-4">
+                  <span class="text-refined-gold font-bold shrink-0">✓</span>
+                  <p class="text-white text-sm leading-relaxed font-light">Du eine <span class="text-night-gold font-normal">klare Entscheidung</span> getroffen hast (für eine Zielgruppe, ein Kernangebot und einen klaren Prozess).</p>
+               </li>
+               <li class="flex gap-4">
+                  <span class="text-refined-gold font-bold shrink-0">✓</span>
+                  <p class="text-white text-sm leading-relaxed font-light">Du bereits ein <span class="text-night-gold font-normal">grobes Farbkonzept</span> oder eine Vorstellung deiner Identität hast.</p>
+               </li>
+               <li class="flex gap-4">
+                  <span class="text-refined-gold font-bold shrink-0">✓</span>
+                  <p class="text-white text-sm leading-relaxed font-light">Deine <span class="text-night-gold font-normal">Bilder & Basis-Texte</span> existieren bereits. Dir fehlt nur noch das strukturierte, atemberaubende Premium-Fundament.</p>
+               </li>
+             </ul>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: VISION (Light) -->
+  <div class="slide relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-30 z-50" />
+    <div class="slide-content">
+      <div class="flex items-center justify-between h-[85%] w-full">
+         <div class="w-[45%] h-full pr-12">
+            <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-whisper-border relative">
+               <img src="../public/Bilder Sabala/P9282978.jpg" class="object-cover w-full h-full grayscale-[30%]" alt="Vision" />
+            </div>
+         </div>
+         <div class="w-[55%] pl-4 py-8">
+            <p class="eyebrow text-refined-gold mb-4">DIE VISION</p>
+            <h2 class="font-instrument text-[4rem] leading-[1.0] text-deep-charcoal mb-6">
+              Endlich das Fundament,<br>
+              um <span class="italic text-refined-gold">richtig</span> loszulegen.
+            </h2>
+            <p class="text-warm-steel text-lg mb-10 font-light leading-relaxed">
+              Stell dir vor, du verschickst den Link zu deiner Website nicht mehr mit einem unsicheren Gefühl, sondern aus tiefstem Stolz. Ein Auftritt, der endlich das widerspiegelt, was du innerlich schon lange weißt.
+            </p>
+            
+            <div class="space-y-6">
+               <div class="border-l border-refined-gold/40 pl-6">
+                  <h4 class="font-instrument text-2xl text-deep-charcoal mb-2 flex items-center gap-2"><span class="text-refined-gold font-sans font-light">→</span> Klarheit, die sich im Alltag anfühlt</h4>
+                  <p class="text-warm-steel text-sm leading-relaxed font-light">Du kannst dein Angebot klar formulieren. Du setzt selbstbewusst Preise. Wenn jemand fragt, was du machst, kommt die Antwort ohne Zögern. Du verkaufst ohne Druck — weil dein Auftritt die Vorarbeit leistet.</p>
+               </div>
+               <div class="border-l border-refined-gold/40 pl-6">
+                  <h4 class="font-instrument text-2xl text-deep-charcoal mb-2 flex items-center gap-2"><span class="text-refined-gold font-sans font-light">→</span> Vertrauen auf den ersten Blick</h4>
+                  <p class="text-warm-steel text-sm leading-relaxed font-light">Bevor du das erste Wort im Call sprichst, hat deine Website bereits gezeigt, wer du bist und was du kannst. Deine Wunschkunden kommen nicht mit Skepsis ins Gespräch — sondern mit Vorfreude.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: PREIS (Light) -->
+  <div class="slide relative">
+    <img src="../public/images/logo-sabala-mentoring.png" class="absolute top-10 right-12 w-[4.5rem] opacity-30 z-50" />
+    <div class="slide-content items-center justify-center text-center">
+       <p class="eyebrow text-refined-gold mb-4">EINMALIGE GELEGENHEIT</p>
+       <h2 class="font-instrument text-[5rem] leading-[1.0] text-deep-charcoal mb-6">Investition & Exklusivität</h2>
+       <p class="text-warm-steel text-xl mb-24 max-w-2xl mx-auto font-light">Dieses exklusive Preismodell und Angebot gilt ausschließlich für <strong class="text-deep-charcoal font-medium">Connecting Herzkreative Member</strong>.</p>
+       
+       <div class="flex items-stretch justify-center gap-16 w-full max-w-4xl mx-auto">
+          
+          <div class="w-[55%] p-12 border border-whisper-border bg-pure-surface rounded-[3rem] shadow-warm-shadow flex flex-col items-center justify-center relative">
+             <div class="absolute -top-4 w-max bg-refined-gold text-pure-surface px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest font-bold shadow-md">Exklusiver Community Deal</div>
+             <p class="font-mono text-warm-steel font-medium opacity-80 text-xl tracking-wider line-through mb-4">€ 2.500,- SPÄTERER MARKTPREIS</p>
+             <p class="font-mono text-deep-charcoal text-[3.5rem] leading-none mb-1">810 € <span class="text-3xl">NETTO</span></p>
+          </div>
+
+          <div class="w-px bg-whisper-border"></div>
+
+          <div class="w-[45%] px-12 flex flex-col items-center justify-center text-center">
+             <span class="font-instrument text-refined-gold text-[8rem] leading-[0.8] block mb-4">7</span>
+             <p class="eyebrow text-warm-steel mb-8">PLÄTZE VERFÜGBAR</p>
+             <p class="text-warm-steel text-sm leading-relaxed font-light">Dieses Angebot schließt sich <strong>automatisch</strong>, sobald genau 7 Personen den Kick-Off Slot verbindlich bestätigt haben.</p>
+          </div>
+
+       </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: CTA (Dark) -->
+  <div class="slide night relative">
+    <div class="slide-content">
+       <div class="flex items-center justify-between h-full">
+         <div class="w-[50%] pr-16 flex flex-col justify-center">
+            
+            <img src="../public/images/logo-sabala-mentoring.png" class="w-24 h-auto drop-shadow-md mb-8" alt="Sabala Logo" />
+            <h2 class="font-instrument text-[4.2rem] leading-[1.0] mb-6">Lass uns sprechen.<br><span class="italic text-night-gold">Völlig unverbindlich.</span></h2>
+            
+            <p class="text-night-secondary text-base mb-12 font-light leading-relaxed">
+              Dieses Gespräch ist unverbindlich, aber deine Buchung erfordert ein Commitment an dich selbst. Darin finden wir gemeinsam heraus, ob dieses exklusive Angebot genau der fehlende Baustein für dich ist.
+            </p>
+
+            <div class="bg-[#1A1A18] border border-white/10 p-8 rounded-[2.5rem] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+               <div class="flex items-center gap-4 mb-6">
+                  <svg class="w-8 h-8 text-night-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <p class="text-white text-lg font-medium">30-Min-Vorbereitungsgespräch buchen</p>
+               </div>
+               <a href="https://tidycal.com/sabala-mentoring/premium-onepager-paket-passen-wir-zusammen"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block w-full bg-night-gold text-deep-charcoal px-8 py-5 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-white transition-colors duration-500 text-center">
+                  HIER TERMIN WÄHLEN →
+               </a>
+            </div>
+         </div>
+         <div class="w-[50%] h-[90%] py-4 pl-8">
+            <div class="w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 relative">
+               <img src="../public/Bilder Sabala/5 - _MXS8196.jpg" class="object-cover object-center w-full h-full grayscale-[20%]" alt="Sabala Portrait in die Kamera" />
+               <div class="absolute inset-0 bg-gradient-to-l from-transparent to-[#1A1A18]/40"></div>
+            </div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+</body>
+</html>
