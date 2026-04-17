@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabala — Premium-Websites, KI-Training, Mentoring</title>
+<meta name="description" content="Sabala — Premium-Websites, KI-Training &amp; Workshops, exklusives Mentoring. Von Hand gebaut, damit dein Außenauftritt endlich zu dir passt.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #FAF8F5;
+    --warm-light: #EDE8E0;
+    --warm-mid: #7A7268;
+    --deep: #2E2B26;
+    --tech-bg: #0A0806;
+    --gold: #B8963E;
+    --gold-light: #D4AE5A;
+    --pure: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Satoshi', system-ui, sans-serif;
+    color: var(--deep);
+    background: var(--cream);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; }
+  .mono { font-family: ui-monospace, 'SF Mono', monospace; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 640px) { .container { padding: 0 20px; } }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  /* ───────────────────────────── NAVBAR */
+  nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(250, 248, 245, 0.7);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid rgba(184, 150, 62, 0.15);
+    border-radius: 999px;
+    padding: 10px 10px 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  nav .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: var(--deep);
+  }
+  nav .brand svg { width: 26px; height: 26px; }
+  nav a.cta {
+    background: var(--deep);
+    color: var(--cream);
+    padding: 10px 18px 10px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  nav a.cta .icon {
+    width: 28px; height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  nav a.cta:hover { transform: scale(0.98); }
+  nav a.cta:hover .icon { transform: translate(3px, -1px) scale(1.05); background: rgba(255, 255, 255, 0.2); }
+
+  /* ───────────────────────────── HERO */
+  .hero {
+    min-height: 100dvh;
+    background: var(--tech-bg);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 75% 30%, rgba(184, 150, 62, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 32px, rgba(184, 150, 62, 0.035) 32px, rgba(184, 150, 62, 0.035) 33px);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .hero .eyebrow {
+    background: rgba(184, 150, 62, 0.1);
+    border: 1px solid rgba(184, 150, 62, 0.3);
+    color: var(--gold-light);
+    margin-bottom: 28px;
+  }
+  .hero-logo {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 32px;
+    display: block;
+    filter: drop-shadow(0 0 40px rgba(184, 150, 62, 0.3));
+  }
+  @media (max-width: 640px) { .hero-logo { width: 72px; height: 72px; } }
+  .hero h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    margin-bottom: 28px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p.lead {
+    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    color: #C9C4BB;
+    max-width: 54ch;
+    margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px 14px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--tech-bg);
+  }
+  .btn-primary .icon {
+    width: 32px; height: 32px;
+    background: rgba(10, 8, 6, 0.15);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .btn-primary:hover { transform: scale(0.98); background: var(--gold-light); }
+  .btn-primary:hover .icon { transform: translate(3px, -1px) scale(1.05); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+  /* Hero Illustration (rechte Seite) */
+  .hero-illus-outer {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    border-radius: 32px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.05);
+  }
+  .hero-illus-inner {
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: var(--warm-light);
+  }
+  .hero-illus-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* QR Card (Hero right side) */
+  .qr-card-outer {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    padding: 10px;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.08);
+  }
+  .qr-card-inner {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+    color: var(--deep);
+  }
+  .qr-card-inner .qr-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--warm-mid);
+    margin-bottom: 16px;
+  }
+  .qr-card-inner .qr-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 260px;
+    margin: 0 auto 20px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .qr-card-inner .qr-box img { width: 100%; height: 100%; display: block; }
+  .qr-card-inner .qr-headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .qr-card-inner .qr-sub { font-size: 13px; color: var(--warm-mid); }
+
+  /* ───────────────────────────── THREE PILLARS */
+  .pillars {
+    padding: 120px 0;
+    background: var(--cream);
+  }
+  .pillars-header { margin-bottom: 64px; max-width: 760px; }
+  .pillars-header .eyebrow {
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .pillars-header h2 {
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    margin-bottom: 20px;
+  }
+  .pillars-header p {
+    color: var(--warm-mid);
+    font-size: 1.05rem;
+    max-width: 60ch;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+
+  .pillar {
+    padding: 10px;
+    border-radius: 32px;
+    background: rgba(46, 43, 38, 0.04);
+    border: 1px solid rgba(46, 43, 38, 0.06);
+    transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .pillar:hover { transform: translateY(-4px); }
+  .pillar-inner {
+    border-radius: 24px;
+    padding: 36px 28px;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar.dark .pillar-inner {
+    background: var(--tech-bg);
+    color: var(--cream);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.08);
+  }
+  .pillar.dark .pillar-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at bottom right, rgba(184, 150, 62, 0.2), transparent 60%);
+    pointer-events: none;
+  }
+  .pillar.cream .pillar-inner {
+    background: var(--warm-light);
+    color: var(--deep);
+  }
+  .pillar.light .pillar-inner {
+    background: var(--pure);
+    color: var(--deep);
+    border: 1px solid rgba(46, 43, 38, 0.06);
+  }
+  .pillar.featured {
+    background: rgba(184, 150, 62, 0.06);
+    border: 1px solid rgba(184, 150, 62, 0.2);
+  }
+  .pillar.featured .flag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(184, 150, 62, 0.12);
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(184, 150, 62, 0.3);
+  }
+
+  .pillar-num {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    opacity: 0.6;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .pillar-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.4rem;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .pillar.dark .pillar-name em { color: var(--gold-light); font-style: italic; }
+  .pillar.cream .pillar-name em, .pillar.light .pillar-name em { color: var(--gold); font-style: italic; }
+  .pillar-sub {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+    opacity: 0.7;
+    position: relative;
+    z-index: 2;
+  }
+  .pillar-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 16px;
+  }
+  .pillar.dark .pillar-text { color: #C9C4BB; }
+  .pillar-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .pillar-list li {
+    font-size: 13px;
+    padding: 6px 0 6px 18px;
+    position: relative;
+    opacity: 0.85;
+  }
+  .pillar-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+  .pillar.dark .pillar-list li::before { color: var(--gold-light); }
+
+  /* ───────────────────────────── TESTIMONIALS */
+  .testimonials {
+    padding: 120px 0;
+    background: var(--warm-light);
+    position: relative;
+  }
+  .testimonials-header { margin-bottom: 56px; max-width: 760px; }
+  .testimonials-header .eyebrow {
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .testimonials-header h2 {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    margin-bottom: 16px;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+  .testimonial {
+    padding: 10px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(46, 43, 38, 0.06);
+  }
+  .testimonial-inner {
+    background: var(--pure);
+    border-radius: 20px;
+    padding: 28px 24px;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .testimonial-inner::before {
+    content: '\201C';
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.3;
+  }
+  .testimonial-quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--deep);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(46, 43, 38, 0.08);
+  }
+  .testimonial-author .name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--deep);
+  }
+  .testimonial-author .role {
+    font-size: 12px;
+    color: var(--warm-mid);
+  }
+
+  /* ───────────────────────────── PROVENEXPERT PROOF BAR */
+  .proof-bar {
+    margin-top: 56px;
+    padding: 10px;
+    background: rgba(184, 150, 62, 0.06);
+    border: 1px solid rgba(184, 150, 62, 0.2);
+    border-radius: 999px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .proof-bar-inner {
+    background: var(--pure);
+    border-radius: 999px;
+    padding: 16px 8px 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .proof-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--gold);
+  }
+  .proof-text {
+    font-size: 14px;
+    color: var(--deep);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .proof-text strong { font-weight: 600; }
+  .proof-text span { font-size: 12px; color: var(--warm-mid); }
+  .proof-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--deep);
+    color: var(--cream);
+    border-radius: 999px;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.6s cubic-bezier(0.32,0.72,0,1);
+  }
+  .proof-link:hover { transform: scale(0.97); background: var(--gold); color: var(--tech-bg); }
+
+  /* ───────────────────────────── ABOUT STRIP */
+  .about {
+    padding: 120px 0;
+    background: var(--cream);
+    position: relative;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .about-portrait-outer {
+    padding: 12px;
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.2);
+    border-radius: 32px;
+    box-shadow: 0 20px 60px -20px rgba(46, 43, 38, 0.2);
+  }
+  .about-portrait-inner {
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--warm-light);
+  }
+  .about-portrait-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-quote-strip {
+    margin-top: 56px;
+    padding: 48px 40px;
+    background: var(--warm-light);
+    border-radius: 28px;
+    border: 1px solid rgba(46, 43, 38, 0.06);
+    text-align: center;
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .about .eyebrow {
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .about h2 {
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    margin-bottom: 24px;
+  }
+  .about p {
+    color: var(--warm-mid);
+    font-size: 1.05rem;
+    max-width: 60ch;
+    margin-bottom: 16px;
+  }
+  .about .quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+    line-height: 1.25;
+    font-style: italic;
+    color: var(--deep);
+    padding-left: 28px;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ───────────────────────────── SOCIAL / FIND ME */
+  .socials {
+    padding: 100px 0;
+    background: var(--warm-light);
+  }
+  .socials-header { text-align: center; margin-bottom: 48px; }
+  .socials-header .eyebrow {
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .socials-header h2 {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+  }
+  .socials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .social-card {
+    padding: 8px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(46,43,38,0.06);
+    transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .social-card:hover { transform: translateY(-3px); }
+  .social-card-inner {
+    background: var(--pure);
+    border-radius: 18px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--deep);
+  }
+  .social-icon {
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    background: rgba(184, 150, 62, 0.08);
+    border: 1px solid rgba(184, 150, 62, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .social-meta .label {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--warm-mid);
+    margin-bottom: 2px;
+  }
+  .social-meta .handle {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--deep);
+  }
+
+  /* ───────────────────────────── FINAL CTA */
+  .final-cta {
+    padding: 120px 0 80px;
+    background: var(--tech-bg);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(184, 150, 62, 0.15), transparent 60%);
+    pointer-events: none;
+  }
+  .final-cta-inner {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .final-cta .eyebrow {
+    background: rgba(184, 150, 62, 0.1);
+    border: 1px solid rgba(184, 150, 62, 0.3);
+    color: var(--gold-light);
+    margin-bottom: 28px;
+  }
+  .final-cta h2 {
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    margin-bottom: 28px;
+  }
+  .final-cta p.lead {
+    color: #C9C4BB;
+    font-size: 1.1rem;
+    margin-bottom: 48px;
+    max-width: 58ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: left;
+  }
+  @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    padding: 10px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .contact-card-inner {
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .contact-card .label {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+  .contact-card .value {
+    font-size: 15px;
+    color: var(--cream);
+    word-break: break-all;
+  }
+  .contact-card a { color: inherit; text-decoration: none; }
+
+  /* ───────────────────────────── FOOTER */
+  footer {
+    padding: 32px 0;
+    background: var(--tech-bg);
+    color: #6B6963;
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer .brand-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  footer .brand-line svg { width: 48px; height: 48px; }
+  footer .brand-line { font-size: 28px; margin-bottom: 16px; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(4px);
+    transition: opacity 1s cubic-bezier(0.32,0.72,0,1), transform 1s cubic-bezier(0.32,0.72,0,1), filter 0.8s;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+</style>
+</head>
+<body>
+
+<!-- Globale Gradient-Definition für alle Logo-Instanzen -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sabala-grad" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#AD9553"/>
+      <stop offset="0.25" stop-color="#A38A4D"/>
+      <stop offset="0.53" stop-color="#9F864A"/>
+      <stop offset="1" stop-color="#AD9553"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="brand">
+    <svg viewBox="0 0 1144.85 1144.85" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" fill="url(#sabala-grad)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+    <span>Sabala</span>
+  </div>
+  <a href="#kontakt" class="cta">
+    Termin
+    <span class="icon">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <svg class="hero-logo" viewBox="0 0 1144.85 1144.85" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" fill="url(#sabala-grad)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+        <span class="eyebrow">Networking Event — April 2026</span>
+        <h1 class="serif">
+          Premium-Websites,<br>
+          <em>die zu dir passen.</em>
+        </h1>
+        <p class="lead">
+          Ich bin Sabala — der meditierende Business Architekt. Ich baue von Hand Premium-Websites für Premium-Dienstleister, denen ihr Außenauftritt zu generisch geworden ist. Daneben gebe ich Trainings und Workshops rund um KI — und begleite ausgewählte Menschen im 1:1-Mentoring.
+        </p>
+        <div class="hero-actions">
+          <a href="#saeulen" class="btn-primary">
+            Was ich anbiete
+            <span class="icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M6 10L2 6M6 10L10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a href="#kontakt" class="btn-secondary">Kontakt</a>
+        </div>
+      </div>
+
+      <div class="hero-illus-outer reveal">
+        <div class="hero-illus-inner">
+          <img src="assets/hero-illustration.jpg" alt="Eine Unternehmerin freut sich an ihrem Schreibtisch über ihre Premium-Website">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DREI SÄULEN -->
+<section class="pillars" id="saeulen">
+  <div class="container">
+    <div class="pillars-header reveal">
+      <span class="eyebrow">Drei Säulen</span>
+      <h2 class="serif">Drei Welten —<br><em>drei Arten, mit mir zu arbeiten.</em></h2>
+      <p>Meine Kernarbeit sind Premium-Websites im Studio. Dazu gebe ich Schulungen &amp; Workshops rund um KI — und begleite eine kleine Zahl ausgewählter Menschen exklusiv im Mentoring.</p>
+    </div>
+
+    <div class="pillars-grid">
+      <!-- STUDIO (Primary) -->
+      <div class="pillar light featured reveal">
+        <span class="flag">Kernangebot</span>
+        <div class="pillar-inner">
+          <div>
+            <div class="pillar-num">Säule 01 — Studio</div>
+            <h3 class="pillar-name">Sabala<br><em>Studio</em></h3>
+            <div class="pillar-sub">Premium Web &amp; Design</div>
+            <p class="pillar-text">Von Hand gebaute Websites für Menschen und Unternehmen, die ihren Außenauftritt endlich stimmig wollen.</p>
+            <ul class="pillar-list">
+              <li>Premium-Websites &amp; One-Pager</li>
+              <li>Positioning &amp; Branding</li>
+              <li>Design &amp; Umsetzung aus einer Hand</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI TRAINING -->
+      <div class="pillar dark reveal">
+        <div class="pillar-inner">
+          <div>
+            <div class="pillar-num">Säule 02 — KI</div>
+            <h3 class="pillar-name">Sabala<br><em>AI</em></h3>
+            <div class="pillar-sub">Training, Workshops &amp; Community</div>
+            <p class="pillar-text">Schulungen und Workshops rund um KI für Unternehmen, Teams und Einzelpersonen — plus eine Community, in der gelernt wird, was wirklich funktioniert.</p>
+            <ul class="pillar-list">
+              <li>KI-Workshops &amp; Trainings</li>
+              <li>Team-Schulungen</li>
+              <li>Community &amp; Weiterbildung</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- MENTORING (exclusive) -->
+      <div class="pillar cream reveal">
+        <div class="pillar-inner">
+          <div>
+            <div class="pillar-num">Säule 03 — Mentoring</div>
+            <h3 class="pillar-name">Sabala<br><em>Mentoring</em></h3>
+            <div class="pillar-sub">Exklusiv &amp; individuell</div>
+            <p class="pillar-text">1:1-Mentoring nur für eine kleine, ausgewählte Zahl an Menschen. Kein Standard-Programm, sondern individuelle Begleitung auf deinem Weg.</p>
+            <ul class="pillar-list">
+              <li>Persönliche 1:1-Arbeit</li>
+              <li>Ausgewählte Plätze pro Jahr</li>
+              <li>Auf Anfrage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <span class="eyebrow">Stimmen</span>
+      <h2 class="serif">Was Menschen über die Arbeit mit mir sagen.</h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <!-- Echte Testimonials aus /referenzen der Hauptseite -->
+      <div class="testimonial reveal">
+        <div class="testimonial-inner">
+          <p class="testimonial-quote">Ilja hat mich in 6 Sessions begleitet. In der Zusammenarbeit ist ein tolles Format entstanden, mit welchem ich bereits Umsatz generiere. Die Zusammenarbeit war unheimlich angenehm, durch Iljas wertschätzende, kreative, erdende und authentische Art.</p>
+          <div class="testimonial-author">
+            <span class="name">Nadja Kirchner</span>
+            <span class="role">Unternehmerin</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <div class="testimonial-inner">
+          <p class="testimonial-quote">Was man in kurzer Zeit über sich und seine Psyche lernt und verbessern kann, ist wirklich beeindruckend. Und das ganze mühelos! Was Sabala anbietet sollte jeder in Erwägung ziehen, der zur heutigen Zeit selbstständig ist.</p>
+          <div class="testimonial-author">
+            <span class="name">Philipp Siebler</span>
+            <span class="role">Conversion Films</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <div class="testimonial-inner">
+          <p class="testimonial-quote">Sabalas wundervolle Fähigkeit, einen vertrauensvollen Raum zu eröffnen, ermöglicht es jedem Menschen, sich der eigenen Realität zu stellen und für die eigene Wahrheit zu öffnen.</p>
+          <div class="testimonial-author">
+            <span class="name">Silke Ettrich</span>
+            <span class="role">Bewusstseinsmentorin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ProvenExpert Badge / Social Proof -->
+    <div class="proof-bar reveal">
+      <div class="proof-bar-inner">
+        <div class="proof-stars">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="proof-text">
+          <strong>151+ verifizierte Bewertungen</strong>
+          <span>auf ProvenExpert</span>
+        </div>
+        <!-- TODO: ProvenExpert-Profil-URL einsetzen -->
+        <a href="https://www.provenexpert.com/en-us/sabala-mentoring-llc/?utm_source=seals&utm_campaign=proseal&utm_medium=profile&utm_content=d141633c-680b-4523-a2d3-c73496e5d287" target="_blank" rel="noopener" class="proof-link">
+          Alle Bewertungen ansehen
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="eyebrow">Über mich</span>
+        <h2 class="serif">Wer hinter <em>Sabala</em> steht.</h2>
+        <p>Ich bin Ilja — bekannt als Sabala. Der <em>meditierende Business Architekt</em>: ich verbinde tiefe Expertise in Tech und KI mit einem echten Blick für Gestaltung, Menschen und Innenraum.</p>
+        <p>Ich arbeite mit Menschen und Unternehmen, die spüren: mein Außenauftritt sollte genauso präzise und stimmig sein wie das, was ich eigentlich leiste.</p>
+      </div>
+      <div class="about-portrait-outer reveal">
+        <div class="about-portrait-inner">
+          <img src="assets/sabala-portrait.png" alt="Ilja Krasevskij — Sabala" />
+        </div>
+      </div>
+    </div>
+
+    <div class="about-quote-strip reveal">
+      <div class="quote" style="border-left:none;padding-left:0;">
+        "Wenn dein Außen­auftritt zu dem passt, was du wirklich anbietest — dann kommen die richtigen Menschen fast von selbst."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL / FIND ME -->
+<section class="socials">
+  <div class="container">
+    <div class="socials-header reveal">
+      <span class="eyebrow">Wo du mich findest</span>
+      <h2 class="serif">Bleib <em>in Verbindung.</em></h2>
+    </div>
+
+    <div class="socials-grid reveal">
+      <!-- TODO: Echte Profil-URLs einsetzen -->
+      <div class="social-card">
+        <a class="social-card-inner" href="https://www.instagram.com/sabala_mentoring/" target="_blank" rel="noopener">
+          <span class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </span>
+          <div class="social-meta">
+            <div class="label">Instagram</div>
+            <div class="handle">@sabala_mentoring</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-card">
+        <a class="social-card-inner" href="https://www.linkedin.com/in/sabala-mentoring/" target="_blank" rel="noopener">
+          <span class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 014 0v4M12 13v4"/></svg>
+          </span>
+          <div class="social-meta">
+            <div class="label">LinkedIn</div>
+            <div class="handle">Sabala Mentoring</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-card">
+        <a class="social-card-inner" href="https://www.youtube.com/@sabala-mentoring" target="_blank" rel="noopener">
+          <span class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+          </span>
+          <div class="social-meta">
+            <div class="label">YouTube</div>
+            <div class="handle">@sabala-mentoring</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-card">
+        <a class="social-card-inner" href="https://podcasts.apple.com/de/podcast/business-beyond-mind/id1742615614" target="_blank" rel="noopener">
+          <span class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>
+          </span>
+          <div class="social-meta">
+            <div class="label">Podcast</div>
+            <div class="handle">Business Beyond Mind</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="kontakt">
+  <div class="container">
+    <div class="final-cta-inner">
+      <svg viewBox="0 0 1144.85 1144.85" xmlns="http://www.w3.org/2000/svg" style="width:88px;height:88px;margin:0 auto 32px;display:block;filter:drop-shadow(0 0 40px rgba(184,150,62,0.3));"><path fill-rule="evenodd" fill="url(#sabala-grad)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+      <span class="eyebrow">Lass uns reden</span>
+      <h2 class="serif">Bereit für den nächsten Schritt?</h2>
+      <p class="lead">Schreib mir direkt oder buche ein unverbindliches Erstgespräch. Ich freue mich auf dich.</p>
+
+      <a href="https://tidycal.com/sabala-mentoring/premium-onepager-paket-passen-wir-zusammen" class="btn-primary">
+        Termin buchen
+        <span class="icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="contact-grid reveal">
+        <div class="contact-card">
+          <div class="contact-card-inner">
+            <div class="label">Web</div>
+            <div class="value"><a href="https://sabala-mentoring.com">sabala-mentoring.com</a></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-inner">
+            <div class="label">E-Mail</div>
+            <div class="value"><a href="mailto:sabala@sabala-mentoring.com">sabala@sabala-mentoring.com</a></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-inner">
+            <div class="label">Termin</div>
+            <div class="value"><a href="https://tidycal.com/sabala-mentoring/premium-onepager-paket-passen-wir-zusammen">30 Minuten buchen</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="brand-line">
+      <svg viewBox="0 0 1144.85 1144.85" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" fill="url(#sabala-grad)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+      <span>Sabala</span>
+    </div>
+    <div>© 2026 Sabala — Studio · AI · Mentoring · Alle Rechte vorbehalten</div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>

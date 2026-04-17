@@ -1,0 +1,17 @@
+
+> tmp-app@0.1.0 dev
+> next dev -p 3000
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.14.159:3000
+✓ Ready in 487ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3002
+- PID:          52358
+- Dir:          /Users/iljakrasevskij/Documents/Claude/Projekte/Sabala Mentoring
+- Log:          .next/dev/logs/next-development.log
+
+Run kill 52358 to stop it.
+[?25h

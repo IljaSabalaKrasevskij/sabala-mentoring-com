@@ -81,10 +81,10 @@ export default function BrandguidePage() {
             
             {/* Swatch 2 */}
             <div className="h-full flex flex-col group mt-4">
-              <div className="flex-grow bg-[#1A1A18] rounded-t-2xl shadow-xl transition-transform group-hover:-translate-y-2"></div>
+              <div className="flex-grow bg-[#2E2B26] rounded-t-2xl shadow-xl transition-transform group-hover:-translate-y-2"></div>
               <div className="bg-pure-surface p-4 border border-t-0 border-whisper-border rounded-b-2xl">
                 <p className="font-medium text-deep-charcoal">Night Foundation</p>
-                <p className="font-mono text-sm text-warm-steel mt-1">#1A1A18</p>
+                <p className="font-mono text-sm text-warm-steel mt-1">#2E2B26</p>
                  <p className="text-xs text-warm-steel mt-2">Dark Sections</p>
               </div>
             </div>
@@ -193,17 +193,17 @@ export default function BrandguidePage() {
                   <h4 className="font-satoshi uppercase text-night-secondary tracking-widest text-sm mb-6">Interactive Elements</h4>
                   
                   <div className="space-y-6">
-                     <div className="flex justify-between items-center bg-[#1A1A18] border border-night-gold/30 p-6 rounded-xl hover:border-night-gold transition-colors">
+                     <div className="flex justify-between items-center bg-[#2E2B26] border border-night-gold/30 p-6 rounded-xl hover:border-night-gold transition-colors">
                         <span className="font-instrument text-2xl text-white">Primary Button</span>
                         <button className="bg-night-gold text-deep-charcoal px-8 py-3 rounded-full text-sm font-bold uppercase tracking-wide">Action</button>
                      </div>
                      
-                     <div className="flex justify-between items-center bg-[#1A1A18] border border-white/10 p-6 rounded-xl">
+                     <div className="flex justify-between items-center bg-[#2E2B26] border border-white/10 p-6 rounded-xl">
                         <span className="font-instrument text-2xl text-white">Secondary Tag</span>
                         <div className="border border-night-secondary text-night-secondary px-6 py-2 rounded-full text-sm uppercase tracking-widest">Optional</div>
                      </div>
 
-                     <div className="flex justify-between items-center bg-[#1A1A18] border border-white/10 p-6 rounded-xl">
+                     <div className="flex justify-between items-center bg-[#2E2B26] border border-white/10 p-6 rounded-xl">
                         <span className="font-instrument text-2xl text-white">Hover Glow</span>
                         <div className="w-16 h-16 rounded-full bg-deep-charcoal shadow-[0_0_30px_rgba(201,168,76,0.3)] flex items-center justify-center">
                            <div className="w-2 h-2 bg-night-gold rounded-full"></div>

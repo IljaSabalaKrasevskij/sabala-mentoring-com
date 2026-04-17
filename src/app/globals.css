@@ -3,23 +3,40 @@
 @theme inline {
   --color-warm-canvas: #FAF8F5;
   --color-pure-surface: #FFFFFF;
-  --color-deep-charcoal: #1A1A18;
-  --color-warm-steel: #6B6963;
+  --color-deep-charcoal: #2E2B26;
+  --color-warm-steel: #7A7268;
   --color-soft-stone: #B5B0A8;
   --color-refined-gold: #B8963E;
 
-  --color-night-foundation: #1A1A18;
-  --color-night-text: #F5F3EF;
+  --color-night-foundation: #2E2B26;
+  --color-night-text: #FAF8F5;
   --color-night-secondary: #A09C95;
-  --color-night-gold: #C9A84C;
+  --color-night-gold: #D4AE5A;
+
+  --color-warm-light: #EDE8E0;
+  --color-tech-bg: #0A0806;
+  --color-gold: #B8963E;
+  --color-gold-light: #D4AE5A;
 
   --color-whisper-border: rgba(181, 176, 168, 0.3);
-  --color-warm-shadow: rgba(26, 26, 24, 0.06);
+  --color-warm-shadow: rgba(46, 43, 38, 0.06);
   --color-gold-glow: rgba(184, 150, 62, 0.08);
 
   --font-instrument: var(--font-instrument);
   --font-satoshi: "Satoshi", sans-serif;
   --font-mono: var(--font-geist-mono);
+
+  --animate-spotlight: spotlight 2s ease .75s 1 forwards;
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%,-40%) scale(1);
+    }
+  }
 }
 
 @layer base {

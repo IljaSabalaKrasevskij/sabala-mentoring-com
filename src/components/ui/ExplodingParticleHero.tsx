@@ -214,7 +214,7 @@ export function ExplodingParticleHero() {
             y = p.oy + (p.sy - p.oy) * easeT;
             
             if (p.shapeType === 0) pColor = "#B8963E"; 
-            else pColor = "#1A1A18"; 
+            else pColor = "#2E2B26"; 
             drawShape = p.shapeType;
             
           } else if (progress > 0.6 && progress <= 0.8) {
@@ -224,7 +224,7 @@ export function ExplodingParticleHero() {
             y = p.sy + (p.ty - p.sy) * easeT;
             
             if (p.shapeType === 0) pColor = "#B8963E";
-            else pColor = "#1A1A18";
+            else pColor = "#2E2B26";
             drawShape = p.shapeType;
 
           } else if (progress > 0.8) {

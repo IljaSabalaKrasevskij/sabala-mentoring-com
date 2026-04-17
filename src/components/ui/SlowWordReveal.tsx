@@ -21,7 +21,7 @@ export function SlowWordReveal({ text, className, delay = 0 }: SlowWordRevealPro
     },
   };
 
-  const child = {
+  const child: any = {
     visible: {
       opacity: 1,
       y: 0,

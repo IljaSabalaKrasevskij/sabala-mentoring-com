@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabala — Was wir für Coaches leisten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:       #FAF8F5;
+  --warm-light:  #EDE8E0;
+  --warm-mid:    #7A7268;
+  --deep:        #2E2B26;
+  --gold:        #B8963E;
+  --gold-light:  #D4AE5A;
+  --tech-bg:     #0A0806;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-snap-type: y mandatory; overflow-y: scroll; }
+
+.slide {
+  width: 100vw;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* ─── DOT NAVIGATION ─── */
+.dots {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(250,248,245,0.2);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.dot.active { background: var(--gold); transform: scale(1.5); }
+.dot:hover  { background: rgba(250,248,245,0.5); }
+
+/* ─── PERSISTENT SLIDE LOGO (alle Slides ausser Cover) ─── */
+.slide-logo {
+  position: absolute;
+  bottom: 32px;
+  left: 48px;
+  opacity: 0.7;
+  z-index: 10;
+}
+.slide-logo svg { width: 28px; height: 28px; display: block; }
+
+/* ─── SLIDE 1: COVER ─── */
+.slide-cover {
+  background: var(--deep);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.cover-left {
+  padding: 64px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-logo-wrap { display: flex; align-items: center; gap: 16px; }
+.cover-logo-wrap svg { width: 80px; height: 80px; flex-shrink: 0; }
+.cover-brand-text {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250,248,245,0.35);
+  line-height: 1.8;
+}
+
+.cover-main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 40px 0; }
+
+.cover-eyebrow {
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.cover-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  margin-bottom: 32px;
+}
+.cover-title em { font-style: italic; color: var(--gold-light); }
+
+.cover-sub {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px;
+  color: rgba(250,248,245,0.45);
+  max-width: 380px;
+  line-height: 1.65;
+}
+
+.cover-footer {
+  display: flex;
+  gap: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(184,150,62,0.15);
+}
+.cover-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.cover-meta-val {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  color: var(--gold-light);
+}
+.cover-meta-lbl {
+  font-size: 11px;
+  color: rgba(250,248,245,0.3);
+  letter-spacing: 0.08em;
+}
+
+.cover-right {
+  position: relative;
+  overflow: hidden;
+}
+.cover-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.75) saturate(0.85);
+}
+.cover-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--deep) 0%, transparent 30%);
+  z-index: 1;
+}
+
+/* ─── SLIDE 2: MARKT ─── */
+.slide-markt {
+  background: var(--cream);
+  padding: 80px;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.s-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  font-family: 'Satoshi', sans-serif;
+}
+.s-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--deep);
+  margin-bottom: 12px;
+}
+.s-title em { font-style: italic; color: var(--gold); }
+.s-sub {
+  font-size: 15px;
+  color: var(--warm-mid);
+  margin-bottom: 56px;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 960px;
+  border: 1px solid var(--warm-light);
+}
+.stat-box {
+  padding: 40px 36px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid var(--warm-light);
+}
+.stat-box:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 52px;
+  color: var(--deep);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-num span { font-size: 28px; color: var(--gold); }
+.stat-desc {
+  font-size: 13px;
+  color: var(--warm-mid);
+  line-height: 1.5;
+  max-width: 200px;
+}
+.stat-source {
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(122,114,104,0.4);
+  margin-top: 6px;
+  letter-spacing: 0.06em;
+}
+
+.markt-note {
+  margin-top: 40px;
+  max-width: 700px;
+  padding: 24px 32px;
+  background: var(--warm-light);
+  border-radius: 10px;
+  border-left: 3px solid var(--gold);
+}
+.markt-note p {
+  font-size: 14px;
+  color: var(--deep);
+  line-height: 1.65;
+}
+.markt-note strong { color: var(--deep); font-weight: 700; }
+
+/* ─── SLIDE 3: DREI SÄULEN ─── */
+.slide-saeulen {
+  background: var(--deep);
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 80px;
+  gap: 0;
+}
+
+.slide-saeulen .s-label { color: var(--gold-light); }
+.slide-saeulen .s-title { color: var(--cream); }
+.slide-saeulen .s-title em { color: var(--gold-light); }
+.slide-saeulen .s-sub { color: rgba(250,248,245,0.4); }
+
+.pillar-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(184,150,62,0.15);
+  width: 100%;
+}
+
+/* Pillar 1 — KI (dark tech) */
+.pillar-ki {
+  background: var(--tech-bg);
+  padding: 48px 40px;
+  border-right: 1px solid rgba(184,150,62,0.12);
+  position: relative;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 28px,
+    rgba(184,150,62,0.025) 28px,
+    rgba(184,150,62,0.025) 29px
+  );
+}
+.pillar-ki::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(184,150,62,0.5);
+}
+.pillar-tag {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--gold-light);
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+  display: block;
+}
+.pillar-ki .pillar-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.pillar-ki .pillar-desc {
+  font-size: 13px;
+  color: rgba(250,248,245,0.4);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.pillar-items-ki {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pillar-items-ki li {
+  font-family: monospace;
+  font-size: 11px;
+  color: rgba(212,174,90,0.7);
+  letter-spacing: 0.04em;
+}
+.pillar-items-ki li::before { content: '>_ '; opacity: 0.5; }
+
+/* Pillar 2 — Coaching (warm cream) */
+.pillar-coaching {
+  background: var(--cream);
+  padding: 48px 40px;
+  border-right: 1px solid rgba(184,150,62,0.15);
+  position: relative;
+}
+.pillar-coaching::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+.pillar-coaching .pillar-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+  color: var(--deep);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.pillar-coaching .pillar-desc {
+  font-size: 13px;
+  color: var(--warm-mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.pillar-items-warm {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pillar-items-warm li {
+  font-size: 13px;
+  color: var(--deep);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.5;
+}
+.pillar-items-warm li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Pillar 3 — Studio (premium white) */
+.pillar-studio {
+  background: #fff;
+  padding: 48px 40px;
+  position: relative;
+}
+.pillar-studio::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+.pillar-studio .pillar-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 26px;
+  color: var(--deep);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.pillar-studio .pillar-desc {
+  font-size: 13px;
+  color: var(--warm-mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.pillar-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pillar-step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: flex-start;
+}
+.step-num {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  padding-top: 1px;
+}
+.step-text {
+  font-size: 13px;
+  color: var(--deep);
+  line-height: 1.5;
+}
+
+/* ─── SLIDE 4: FINALE ─── */
+.slide-finale {
+  background: var(--deep);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 72px 80px;
+  gap: 0;
+}
+
+.finale-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 56px;
+}
+
+.finale-logo-wrap { display: flex; align-items: center; gap: 20px; }
+.finale-logo-wrap svg { width: 72px; height: 72px; }
+.finale-brand {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(250,248,245,0.3);
+  line-height: 1.8;
+}
+
+.finale-mooni {
+  width: 140px;
+  height: 140px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(184,150,62,0.2);
+  background: rgba(184,150,62,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.finale-mooni img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.finale-mooni-placeholder {
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(184,150,62,0.4);
+  text-align: center;
+  letter-spacing: 0.08em;
+  padding: 12px;
+}
+
+.finale-cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+.cta-box {
+  background: rgba(184,150,62,0.08);
+  border: 1px solid rgba(184,150,62,0.2);
+  border-radius: 12px;
+  padding: 36px 40px;
+}
+.cta-box-dark {
+  background: rgba(250,248,245,0.03);
+  border: 1px solid rgba(250,248,245,0.06);
+}
+.cta-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+  font-family: 'Satoshi', sans-serif;
+}
+.cta-headline {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+.cta-headline em { font-style: italic; color: var(--gold-light); }
+.cta-text {
+  font-size: 14px;
+  color: rgba(250,248,245,0.45);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.cta-link {
+  display: inline-block;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184,150,62,0.3);
+  padding-bottom: 2px;
+}
+
+.contact-row {
+  display: flex;
+  gap: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(184,150,62,0.1);
+  width: 100%;
+}
+.contact-item {
+  font-size: 13px;
+  color: rgba(250,248,245,0.35);
+}
+.contact-item strong {
+  display: block;
+  color: rgba(250,248,245,0.6);
+  margin-bottom: 2px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<!-- DOT NAVIGATION -->
+<nav class="dots">
+  <div class="dot active" onclick="scrollToSlide(0)"></div>
+  <div class="dot" onclick="scrollToSlide(1)"></div>
+  <div class="dot" onclick="scrollToSlide(2)"></div>
+  <div class="dot" onclick="scrollToSlide(3)"></div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 1 — COVER
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-cover" id="slide-0">
+
+  <div class="cover-left">
+    <div class="cover-logo-wrap">
+      <svg viewBox="0 0 1144.85 1144.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg0" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse">
+            <stop offset="0"    stop-color="#AD9553"/>
+            <stop offset="0.25" stop-color="#A38A4D"/>
+            <stop offset="0.53" stop-color="#9F864A"/>
+            <stop offset="1"    stop-color="#AD9553"/>
+          </linearGradient>
+        </defs>
+        <path fill-rule="evenodd" fill="url(#lg0)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/>
+      </svg>
+      <div class="cover-brand-text">Sabala Mentoring<br>Brand &amp; Web Partner</div>
+    </div>
+
+    <div class="cover-main">
+      <span class="cover-eyebrow">Premium-Begleitung — April 2026</span>
+      <h1 class="cover-title">Was wir für<br><em>Coaches</em><br>leisten</h1>
+      <p class="cover-sub">Positionierung, digitale Präsenz und KI-Unterstützung — alles aus einem Guss. Ein Jahr Begleitung statt einmaliges Abliefern.</p>
+    </div>
+
+    <div class="cover-footer">
+      <div class="cover-meta-item">
+        <span class="cover-meta-val">3</span>
+        <span class="cover-meta-lbl">Brand-Säulen</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-val">12<span style="font-size:16px;color:var(--gold)">Mo</span></span>
+        <span class="cover-meta-lbl">Begleitung</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-val">1</span>
+        <span class="cover-meta-lbl">Partner für alles</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-right">
+    <img src="../Generated/coaches-cover.jpg" alt="Coach und Klient im Gespräch">
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 2 — MARKT
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-markt" id="slide-1">
+
+  <div class="s-label">Der Kontext</div>
+  <h2 class="s-title">Coaching boomt.<br><em>Professionelle Präsenz</em> nicht.</h2>
+  <p class="s-sub">Der globale Coaching-Markt wächst rasant — aber die meisten Coaches verlieren Aufträge nicht wegen fehlender Kompetenz, sondern wegen fehlender Wirkung nach außen.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num">7,3<span>Mrd $</span></div>
+      <div class="stat-desc">Globaler Coaching-Markt 2026 — von 5,3 Mrd. 2025</div>
+      <div class="stat-source">ICF / Rauen 2025</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">178<span>€/h</span></div>
+      <div class="stat-desc">Durchschnittliches Stundenhonorar in Deutschland (netto)</div>
+      <div class="stat-source">RAUEN Marktanalyse 2024</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">9.000<span style="font-size:22px"></span></div>
+      <div class="stat-desc">Business-Coaches in Deutschland — mit wachsendem Wettbewerb</div>
+      <div class="stat-source">Rauen et al. 2024</div>
+    </div>
+  </div>
+
+  <div class="markt-note">
+    <p><strong>Das Problem:</strong> Je mehr Coaches auf den Markt drängen, desto wichtiger wird der erste Eindruck. Wer nicht sofort Vertrauen ausstrahlt, verliert — egal wie gut die Arbeit ist.</p>
+  </div>
+
+  <!-- Persistent Logo -->
+  <div class="slide-logo">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg1" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse">
+          <stop offset="0"    stop-color="#AD9553"/>
+          <stop offset="0.25" stop-color="#A38A4D"/>
+          <stop offset="0.53" stop-color="#9F864A"/>
+          <stop offset="1"    stop-color="#AD9553"/>
+        </linearGradient>
+      </defs>
+      <path fill-rule="evenodd" fill="url(#lg1)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/>
+    </svg>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 3 — DREI SÄULEN
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-saeulen" id="slide-2">
+
+  <div class="s-label" style="color:var(--gold-light);margin-bottom:10px;">Unser Angebot</div>
+  <h2 class="s-title" style="color:var(--cream);font-size:42px;margin-bottom:8px;">Drei Säulen. <em>Ein Partner.</em></h2>
+  <p class="s-sub" style="color:rgba(250,248,245,0.4);margin-bottom:36px;">Kein Baukasten. Keine Einzelleistungen. Sabala denkt dein Business als Ganzes.</p>
+
+  <div class="pillar-row">
+
+    <!-- KI & Software -->
+    <div class="pillar-ki">
+      <span class="pillar-tag">&gt;_ 01 — KI &amp; Software</span>
+      <div class="pillar-name">KI-Assistenten &amp; Automatisierung</div>
+      <div class="pillar-desc">Dein persönliches KI-Team — maßgeschneidert für dein Business, nicht für den Massenmarkt.</div>
+      <ul class="pillar-items-ki">
+        <li>Custom GPTs und Workflows</li>
+        <li>KI-Assistenten (Mooni, Aurel, Lia...)</li>
+        <li>Automatisierte Prozesse</li>
+        <li>KI-Onboarding für dein Team</li>
+      </ul>
+    </div>
+
+    <!-- Coaching -->
+    <div class="pillar-coaching">
+      <span class="pillar-tag" style="color:var(--gold);font-family:monospace;font-size:10px;letter-spacing:0.12em;">02 — COACHING</span>
+      <div class="pillar-name">Mentoring &amp; innere Klarheit</div>
+      <div class="pillar-desc">Strategische Begleitung, die in die Tiefe geht. Positionierung beginnt innen.</div>
+      <ul class="pillar-items-warm">
+        <li>Persönliches Brand-Interview</li>
+        <li>Positionierungs-Workshop</li>
+        <li>Achtsamkeit &amp; innere Führung</li>
+        <li>12 Monate Begleitung</li>
+      </ul>
+    </div>
+
+    <!-- Webstudio -->
+    <div class="pillar-studio">
+      <span class="pillar-tag" style="color:var(--gold);font-family:monospace;font-size:10px;letter-spacing:0.12em;">03 — WEBSTUDIO</span>
+      <div class="pillar-name">Brand &amp; Premium-Website</div>
+      <div class="pillar-desc">Positionierung, Branddesign und Website — alles aus einem Guss, nicht zusammengestückelt.</div>
+      <div class="pillar-steps">
+        <div class="pillar-step">
+          <span class="step-num">01</span>
+          <span class="step-text">Positionierung &amp; Essenz herausarbeiten</span>
+        </div>
+        <div class="pillar-step">
+          <span class="step-num">02</span>
+          <span class="step-text">Visuelle Identität entwickeln</span>
+        </div>
+        <div class="pillar-step">
+          <span class="step-num">03</span>
+          <span class="step-text">Premium-Website bauen &amp; launchen</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Persistent Logo -->
+  <div class="slide-logo" style="bottom:28px;left:48px;">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg2" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse">
+          <stop offset="0"    stop-color="#AD9553"/>
+          <stop offset="0.25" stop-color="#A38A4D"/>
+          <stop offset="0.53" stop-color="#9F864A"/>
+          <stop offset="1"    stop-color="#AD9553"/>
+        </linearGradient>
+      </defs>
+      <path fill-rule="evenodd" fill="url(#lg2)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/>
+    </svg>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 4 — FINALE
+════════════════════════════════════════════════════════ -->
+<section class="slide slide-finale" id="slide-3">
+
+  <div class="finale-top">
+    <div class="finale-logo-wrap">
+      <svg viewBox="0 0 1144.85 1144.85" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg3" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse">
+            <stop offset="0"    stop-color="#AD9553"/>
+            <stop offset="0.25" stop-color="#A38A4D"/>
+            <stop offset="0.53" stop-color="#9F864A"/>
+            <stop offset="1"    stop-color="#AD9553"/>
+          </linearGradient>
+        </defs>
+        <path fill-rule="evenodd" fill="url(#lg3)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/>
+      </svg>
+      <div class="finale-brand">Sabala Mentoring<br>Brand &amp; Web Partner</div>
+    </div>
+
+    <div class="finale-mooni">
+      <div class="finale-mooni-placeholder">Mooni<br>KI-Assistentin</div>
+    </div>
+  </div>
+
+  <div class="finale-cta-row">
+    <div class="cta-box">
+      <div class="cta-label">Nächster Schritt</div>
+      <div class="cta-headline">Dein kostenloses<br><em>Erstgespräch</em></div>
+      <p class="cta-text">30 Minuten. Kein Pitch. Wir schauen gemeinsam, ob und wie Sabala zu dir passt.</p>
+      <a class="cta-link" href="https://sabala.de">sabala.de/gespräch</a>
+    </div>
+    <div class="cta-box cta-box-dark">
+      <div class="cta-label">Das bekommst du</div>
+      <div class="cta-headline" style="font-size:24px;margin-bottom:20px;">Alles aus <em>einem Guss</em></div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:13px;color:rgba(250,248,245,0.45);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);">—</span>Positionierung &amp; Strategie</li>
+        <li style="font-size:13px;color:rgba(250,248,245,0.45);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);">—</span>Visuelles Brand &amp; Website</li>
+        <li style="font-size:13px;color:rgba(250,248,245,0.45);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);">—</span>KI-Team für dein Business</li>
+        <li style="font-size:13px;color:rgba(250,248,245,0.45);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);">—</span>12 Monate Begleitung</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contact-row">
+    <div class="contact-item">
+      <strong>Website</strong>
+      sabala.de
+    </div>
+    <div class="contact-item">
+      <strong>Ilja Krasevskij</strong>
+      ilja@sabala.de
+    </div>
+    <div class="contact-item">
+      <strong>Instagram</strong>
+      @sabala.mentoring
+    </div>
+    <div class="contact-item" style="margin-left:auto;font-family:monospace;font-size:10px;color:rgba(250,248,245,0.15);letter-spacing:0.08em;align-self:flex-end;">
+      Sabala Brand Guide V3.0 — April 2026
+    </div>
+  </div>
+
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dots   = document.querySelectorAll('.dot');
+
+function scrollToSlide(i) {
+  slides[i].scrollIntoView({ behavior: 'smooth' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const i = Array.from(slides).indexOf(entry.target);
+      dots.forEach(d => d.classList.remove('active'));
+      if (dots[i]) dots[i].classList.add('active');
+    }
+  });
+}, { threshold: 0.6 });
+
+slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

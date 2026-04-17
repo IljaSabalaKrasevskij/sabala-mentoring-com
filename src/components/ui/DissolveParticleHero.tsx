@@ -83,11 +83,13 @@ export function DissolveParticleHero() {
 
       const maxWidth = width;
       const maxHeight = height;
-      const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+      // Increased scaling slightly internally, but because the canvas is wider now it balances perfectly
+      const ratio = Math.min(maxWidth / img.width, maxHeight / img.height) * 0.8;
       const drawWidth = Math.floor(img.width * ratio);
       const drawHeight = Math.floor(img.height * ratio);
       
-      const offsetX = Math.floor((width - drawWidth) / 2);
+      // Shift him slightly to the left (-30px) for centering better
+      const offsetX = Math.floor((width - drawWidth) / 2) - 30;
       const offsetY = Math.floor(height - drawHeight);
 
       // Store bounds for the crisp image draw
@@ -101,8 +103,8 @@ export function DissolveParticleHero() {
       const particles: Particle[] = [];
       
       const isMobile = window.innerWidth < 768;
-      // Drastisch mehr Partikel: Lücke halbieren = 4x mehr Partikel
-      const gap = isMobile ? 6 : 3; 
+      // Weniger Dichte für abstrakteres Design
+      const gap = isMobile ? 8 : 5; 
 
       const imgCenterX = drawWidth / 2;
       const imgCenterY = drawHeight / 2;
@@ -137,15 +139,19 @@ export function DissolveParticleHero() {
             
             if (rand < 0.35) {
               // Arrow Shaft (breit und hoch)
-              tx = arrowCenterX + (Math.random() * 40 - 20); // 40px width
+              tx = arrowCenterX + (Math.random() * 60 - 30); // wider shaft
               ty = arrowCenterY - 140 + Math.random() * 140; // 140px height
             } else {
               // Arrow Head (großes klares Dreieck nach unten)
-              const headY = Math.random() * 100;
-              const headXWidth = 100 - headY; // Breiter oben, spitzt nach unten zu
+              const headY = Math.random() * 120;
+              const headXWidth = 120 - headY; // Breiter oben, spitzt nach unten zu
               tx = arrowCenterX + (Math.random() * headXWidth * 2 - headXWidth);
               ty = arrowCenterY + headY;
             }
+
+            // Abstraktion: Streuen wir den Pfeil etwas mehr, damit er nicht so dicht und blockig ist
+            tx += (Math.random() - 0.5) * 30;
+            ty += (Math.random() - 0.5) * 30;
             
             particles.push({
               ox: offsetX + x,
@@ -156,7 +162,7 @@ export function DissolveParticleHero() {
               tx: tx,
               ty: ty,
               shapeType: Math.floor(Math.random() * 3), // 0: circle, 1: triangle, 2: line
-              size: isMobile ? 2 : 1.5 + Math.random(),
+              size: isMobile ? 1.5 : 0.8 + Math.random() * 0.8, // feinere Partikel
               nDist,
             });
           }
@@ -282,8 +288,8 @@ export function DissolveParticleHero() {
         // Render current shape
         if (pShape === 0) {
           ctx.beginPath();
-          // Pfeil ist extrem dicht, Scatter ist kleiner
-          const radius = progress > 0.45 ? 2.0 : p.size; 
+          // Pfeil etwas abstrakter und feiner (1.0 Radius statt 2.0)
+          const radius = progress > 0.45 ? 1.0 : p.size; 
           ctx.arc(x, y, radius, 0, Math.PI * 2);
           ctx.fill();
         } else if (pShape === 1) {
@@ -322,48 +328,43 @@ export function DissolveParticleHero() {
   }, [isLoaded, smoothProgress]);
 
   return (
-    <section ref={containerRef} className="relative h-[350vh] bg-warm-canvas rounded-b-[40px] z-10 shadow-[0_40px_60px_rgba(26,26,24,0.02)]">
+    <section ref={containerRef} className="relative h-[250vh] bg-warm-canvas rounded-b-[40px] z-10 shadow-[0_40px_60px_rgba(26,26,24,0.02)]">
       <div className="sticky top-0 h-[100dvh] pt-24 pb-20 px-6 sm:px-12 md:px-24 flex items-center justify-center overflow-hidden">
         <div className="max-w-[1400px] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 h-full">
           
           {/* TEXT CONTENT (LEFT) */}
-          <div className="lg:col-span-6 xl:col-span-5 flex flex-col gap-4 z-20">
+          <div className="lg:col-span-6 flex flex-col gap-5 z-20 xl:pr-8">
             <ScrollReveal>
-              <div className="inline-block px-4 py-1.5 rounded-full border border-whisper-border bg-pure-surface text-sm font-medium text-warm-steel mb-1 tracking-wide w-max">
+              <div className="inline-block px-3 py-1 rounded-full border border-whisper-border bg-pure-surface text-[0.75rem] uppercase tracking-widest font-medium text-warm-steel mb-2 w-max">
                 Der meditierende Business-Architekt
               </div>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
-              <h1 className="font-instrument text-deep-charcoal leading-[1.05] tracking-[-0.02em] text-[clamp(2.2rem,4.5vw,3.75rem)] pb-4">
-                Klarheit in der Positionierung.<br/>
-                Kraft im{" "}
-                <span className="inline-block align-middle mx-1 md:mx-2 overflow-hidden rounded-full w-[1.2em] h-[1.2em] relative translate-y-[-0.05em] shadow-sm border border-whisper-border bg-black group">
-                  <Image 
-                    src="/images/pflanze-header.png" 
-                    alt="Pflanze" 
-                    fill
-                    className="object-cover object-center group-hover:scale-110 transition-transform duration-700" 
-                  />
-                  {/* Color-Blend Layer to turn the green plant gold */}
-                  <div className="absolute inset-0 bg-[#B8963E] mix-blend-color pointer-events-none opacity-100 saturate-150"></div>
-                  {/* Subtle shimmering light overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.4)_0%,_transparent_60%)] mix-blend-overlay pointer-events-none animate-pulse"></div>
-                </span>{" "}
-                Auftritt.<br/>
-                Kunden, die wirklich passen.
+              <h1 className="font-instrument text-deep-charcoal leading-[1.1] tracking-[-0.02em] text-[clamp(2rem,4vw,3.5rem)] pb-2 flex flex-col gap-1">
+                <span>Klarheit in der <span className="text-refined-gold italic pr-1">Positionierung.</span></span>
+                <span>Kraft im <span className="text-refined-gold italic pr-1">Auftritt.</span></span>
+                <span>Kunden, die <span className="text-refined-gold italic pr-1">wirklich passen.</span></span>
               </h1>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p className="font-satoshi text-[#6B6963] text-[1.25rem] leading-[1.65] max-w-[550px]">
+              <p className="font-satoshi text-warm-steel text-[1.1rem] leading-[1.6] max-w-[500px]">
                 Wir begleiten dich von der Kernbotschaft bis zur fertigen Premium-Website — und bleiben ein Jahr an deiner Seite. Strategie, Branding und Technik aus einer Hand.
               </p>
             </ScrollReveal>
           </div>
           
           {/* CANVAS AREA (RIGHT) */}
-          <div className="lg:col-span-6 xl:col-span-7 relative w-full h-[60vh] lg:h-[85vh] flex items-center justify-center mt-8 lg:mt-0">
+          <div 
+            className="lg:col-span-6 relative w-full h-[60vh] lg:h-[85vh] flex items-end justify-center mt-8 lg:mt-0"
+            style={{ 
+              WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%), linear-gradient(to right, black 80%, transparent 100%)",
+              WebkitMaskComposite: "source-in",
+              maskImage: "linear-gradient(to bottom, black 85%, transparent 100%), linear-gradient(to right, black 80%, transparent 100%)",
+              maskComposite: "intersect"
+            }}
+          >
             <canvas 
               ref={canvasRef} 
               className="absolute inset-0 z-10 w-full h-full pointer-events-none drop-shadow-2xl"

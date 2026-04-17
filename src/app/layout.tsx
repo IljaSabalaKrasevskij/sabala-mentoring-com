@@ -30,8 +30,9 @@ export default function RootLayout({
     <html
       lang="de"
       className={`${instrumentSerif.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="min-h-[100dvh] flex flex-col relative">
+      <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>
         <CustomCursor />
         <Navbar />
         <main className="flex-1">{children}</main>

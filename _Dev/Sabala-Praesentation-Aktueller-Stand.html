@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabala Mentoring — Aktueller Stand April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF8F5; --warm-light: #EDE8E0; --warm-mid: #7A7268;
+  --deep: #2E2B26; --gold: #B8963E; --gold-light: #D4AE5A;
+  --tech-bg: #0E0C09; --tech-border: rgba(184,150,62,0.18);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-snap-type: y mandatory; overflow-y: scroll; }
+body { font-family:'Satoshi',sans-serif; background:var(--deep); }
+
+/* ── SLIDE BASE ── */
+.slide {
+  width: 100vw; min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+
+/* ── LOGO ── */
+.logo-mark {
+  width: 38px; height: 38px;
+  position: absolute; top: 40px; left: 48px; z-index: 10;
+}
+.logo-mark.light svg { opacity: 0.9; }
+.logo-mark.dark svg  { opacity: 0.7; }
+.logo-mark.tech svg  { filter: drop-shadow(0 0 6px rgba(184,150,62,0.4)); }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 1 — COVER                               */
+/* ══════════════════════════════════════════════ */
+#s1 {
+  background: var(--deep);
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.s1-img {
+  position: relative; overflow: hidden;
+  background: #1a1714;
+}
+.s1-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.75;
+}
+.s1-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--deep) 0%, transparent 40%);
+}
+.s1-text {
+  padding: 80px 72px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.s1-text::before {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 380px; height: 380px; border-radius: 50%;
+  border: 1px solid rgba(184,150,62,0.08);
+}
+.s1-eyebrow {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.s1-eyebrow::before { content:''; width:28px; height:1px; background:var(--gold); }
+.s1-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 72px; font-weight: 400; line-height: 0.95;
+  color: var(--cream); letter-spacing: -0.03em;
+  margin-bottom: 32px;
+}
+.s1-title em { font-style: italic; color: var(--gold-light); }
+.s1-sub {
+  font-size: 15px; color: rgba(250,248,245,0.45);
+  line-height: 1.6; max-width: 42ch; margin-bottom: 56px;
+}
+.s1-meta {
+  display: flex; gap: 40px;
+  border-top: 1px solid rgba(184,150,62,0.15);
+  padding-top: 32px;
+}
+.s1-stat-v { font-family:'Instrument Serif',serif; font-size: 32px; color: var(--gold-light); }
+.s1-stat-l { font-size: 11px; color: rgba(250,248,245,0.3); letter-spacing: 0.08em; margin-top: 2px; }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 2 — DREI SÄULEN                         */
+/* ══════════════════════════════════════════════ */
+#s2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ── Säule 1: KI & Software — Dark Tech ── */
+.pillar-ki {
+  background: #0A0806;
+  padding: 72px 52px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid rgba(184,150,62,0.12);
+  position: relative; overflow: hidden;
+}
+.pillar-ki::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 28px,
+    rgba(184,150,62,0.03) 28px, rgba(184,150,62,0.03) 29px
+  );
+  pointer-events: none;
+}
+.pillar-ki::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.pk-top { position: relative; z-index: 2; }
+.pk-label {
+  font-family: monospace; font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 8px;
+}
+.pk-label::before { content: '>_'; opacity: 0.6; }
+.pk-num {
+  font-family: monospace; font-size: 64px; line-height: 1;
+  color: rgba(184,150,62,0.08); letter-spacing: -0.04em;
+  margin-bottom: 4px;
+}
+.pk-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 34px; font-weight: 400; line-height: 1.1;
+  color: rgba(250,248,245,0.88); margin-bottom: 16px;
+}
+.pk-title em { font-style: italic; color: var(--gold-light); }
+.pk-text { font-size: 13px; color: rgba(250,248,245,0.35); line-height: 1.7; }
+.pk-bottom { position: relative; z-index: 2; }
+.pk-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }
+.pk-tag {
+  font-family: monospace; font-size: 10px; letter-spacing: 0.08em;
+  color: rgba(184,150,62,0.6); border: 1px solid rgba(184,150,62,0.15);
+  padding: 4px 10px; border-radius: 3px;
+}
+.pk-stats { margin-top: 32px; display: flex; gap: 32px; }
+.pk-stat-v { font-family: monospace; font-size: 24px; color: var(--gold-light); }
+.pk-stat-l { font-size: 10px; color: rgba(250,248,245,0.25); letter-spacing: 0.08em; margin-top: 4px; }
+
+/* ── Säule 2: Coaching & Meditation — Warm Human ── */
+.pillar-coaching {
+  background: var(--cream);
+  padding: 72px 52px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--warm-light);
+  position: relative; overflow: hidden;
+}
+.pillar-coaching::before {
+  content: '';
+  position: absolute; bottom: -120px; right: -120px;
+  width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,150,62,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.pc-label {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+}
+.pc-num {
+  font-family: 'Instrument Serif', serif; font-size: 64px; line-height: 1;
+  color: rgba(184,150,62,0.1); letter-spacing: -0.04em; margin-bottom: 4px;
+}
+.pc-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 34px; font-weight: 400; line-height: 1.1;
+  color: var(--deep); margin-bottom: 16px;
+}
+.pc-title em { font-style: italic; color: var(--gold); }
+.pc-text { font-size: 13px; color: var(--warm-mid); line-height: 1.7; }
+.pc-values { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+.pc-value {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--warm-light);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 13px; color: var(--warm-mid);
+}
+.pc-value:last-child { border-bottom: none; }
+.pc-value::before { content: '—'; color: var(--gold); font-size: 12px; }
+
+/* ── Säule 3: Sabala Webstudio — Premium Light ── */
+.pillar-studio {
+  background: #FFFFFF;
+  padding: 72px 52px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.pillar-studio::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+.ps2-label {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+}
+.ps2-num {
+  font-family: 'Instrument Serif', serif; font-size: 64px; line-height: 1;
+  color: rgba(46,43,38,0.06); letter-spacing: -0.04em; margin-bottom: 4px;
+}
+.ps2-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 34px; font-weight: 400; line-height: 1.1;
+  color: var(--deep); margin-bottom: 16px;
+}
+.ps2-title em { font-style: italic; color: var(--gold); }
+.ps2-text { font-size: 13px; color: var(--warm-mid); line-height: 1.7; }
+.ps2-steps { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+.ps2-step {
+  padding: 14px 0; border-bottom: 1px solid #F0EDE8;
+  display: grid; grid-template-columns: 20px 1fr; gap: 12px;
+  font-size: 13px; color: #9A9289;
+}
+.ps2-step:last-child { border-bottom: none; }
+.ps2-step-n { font-family: monospace; font-size: 11px; color: var(--gold); opacity: 0.6; }
+.ps2-logo-area { margin-top: 40px; }
+
+/* ── Slide header overlay ── */
+.s2-overlay {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 40px 52px 0;
+  display: flex; align-items: center; gap: 16px;
+  z-index: 10;
+  pointer-events: none;
+}
+.s2-slide-num {
+  font-family: monospace; font-size: 10px; letter-spacing: 0.14em;
+  color: rgba(250,248,245,0.2); text-transform: uppercase;
+}
+
+/* shared for other slides */
+.slide-inner { padding: 80px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.slide-header { margin-bottom: 56px; }
+.slide-num { font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+.slide-title {
+  font-family:'Instrument Serif',serif;
+  font-size: 58px; font-weight: 400; line-height: 1.0;
+  letter-spacing: -0.025em; color: var(--deep);
+}
+.slide-title em { font-style:italic; color: var(--gold); }
+
+.palette-strip { display:flex; height:64px; border-radius:8px; overflow:hidden; margin-top:40px; box-shadow:0 2px 16px rgba(46,43,38,0.1); }
+.ps { flex:1; display:flex; align-items:flex-end; padding:10px 14px; }
+.ps-hex { font-family:monospace; font-size:10px; font-weight:700; }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 3 — WEBSITE STATUS                      */
+/* ══════════════════════════════════════════════ */
+#s3 { background: var(--warm-light); }
+.status-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.status-card { background:var(--cream); border-radius:12px; padding:36px; border:1px solid rgba(122,114,104,0.15); }
+.status-card.done { border-color:rgba(184,150,62,0.3); }
+.status-card.wip  { border-color:rgba(122,114,104,0.2); }
+.status-card.todo { opacity:0.6; }
+.sc-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+  padding:4px 10px; border-radius:20px; margin-bottom:16px; font-weight:700;
+}
+.sc-badge.done { background:rgba(184,150,62,0.1); color:var(--gold); }
+.sc-badge.wip  { background:rgba(122,114,104,0.1); color:var(--warm-mid); }
+.sc-badge.todo { background:rgba(46,43,38,0.06); color:var(--warm-mid); }
+.sc-title { font-family:'Instrument Serif',serif; font-size:22px; color:var(--deep); margin-bottom:8px; }
+.sc-text  { font-size:13px; color:var(--warm-mid); line-height:1.55; }
+.sc-items { margin-top:14px; list-style:none; display:flex; flex-direction:column; gap:5px; }
+.sc-items li { font-size:12px; color:var(--warm-mid); padding-left:14px; position:relative; }
+.sc-items li::before { content:'·'; position:absolute; left:0; color:var(--gold); }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 4 — KI TEAM (TECH STYLE)               */
+/* ══════════════════════════════════════════════ */
+#s4 { background: var(--tech-bg); }
+.tech-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border: 1px solid var(--tech-border);
+  border-radius: 12px; overflow: hidden;
+}
+.tech-card {
+  padding: 32px 28px;
+  border-right: 1px solid var(--tech-border);
+  border-bottom: 1px solid var(--tech-border);
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.tech-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--accent-color, var(--gold));
+  opacity: 0.6;
+}
+.tech-card:nth-child(4n) { border-right: none; }
+.tech-card:nth-child(n+5) { border-bottom: none; }
+.tech-card:hover { background: rgba(184,150,62,0.04); }
+.tc-dot { width:36px; height:36px; border-radius:50%; margin-bottom:16px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:rgba(255,255,255,0.85); letter-spacing:0.04em; }
+.tc-name { font-family:'Instrument Serif',serif; font-size:18px; color:rgba(250,248,245,0.9); margin-bottom:4px; }
+.tc-role { font-size:11px; letter-spacing:0.06em; color:rgba(250,248,245,0.35); margin-bottom:10px; text-transform:uppercase; }
+.tc-desc { font-size:12px; color:rgba(250,248,245,0.4); line-height:1.5; font-style:italic; }
+.tc-hex  { margin-top:14px; font-family:monospace; font-size:10px; color:rgba(184,150,62,0.4); letter-spacing:0.06em; }
+.tech-slide-title { font-family:'Instrument Serif',serif; font-size:52px; font-weight:400; line-height:1.0; letter-spacing:-0.025em; color:rgba(250,248,245,0.9); margin-bottom:8px; }
+.tech-slide-title em { font-style:italic; color: var(--gold-light); }
+.tech-slide-sub { font-size:14px; color:rgba(250,248,245,0.35); margin-bottom:52px; max-width:52ch; }
+.tech-label { font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 5 — NÄCHSTE SCHRITTE                    */
+/* ══════════════════════════════════════════════ */
+#s5 { background: var(--deep); }
+.next-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.next-item {
+  border-radius:10px; padding:32px 28px;
+  border: 1px solid rgba(184,150,62,0.12);
+  display:flex; gap:20px; align-items:flex-start;
+  background: rgba(250,248,245,0.02);
+  transition: border-color 0.2s, background 0.2s;
+}
+.next-item:hover { border-color:rgba(184,150,62,0.3); background:rgba(184,150,62,0.04); }
+.next-num { font-family:'Instrument Serif',serif; font-size:36px; color:var(--gold); opacity:0.35; line-height:1; flex-shrink:0; width:48px; }
+.next-content-title { font-family:'Instrument Serif',serif; font-size:20px; color:rgba(250,248,245,0.85); margin-bottom:6px; }
+.next-content-text  { font-size:13px; color:rgba(250,248,245,0.4); line-height:1.6; }
+.next-tag { display:inline-block; margin-top:10px; font-family:monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); background:rgba(184,150,62,0.08); padding:3px 10px; border-radius:20px; }
+
+/* ══════════════════════════════════════════════ */
+/* SLIDE 6 — FINALE                              */
+/* ══════════════════════════════════════════════ */
+#s6 {
+  background: var(--deep);
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.s6-logos {
+  padding: 80px; display:flex; flex-direction:column; justify-content:center; gap:0;
+  border-right: 1px solid rgba(184,150,62,0.1);
+}
+.s6-logos-title { font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:40px; }
+.logo-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-radius:10px; overflow:hidden; border:1px solid rgba(184,150,62,0.1); }
+.logo-placeholder { padding:28px 24px; display:flex; align-items:center; justify-content:center; border-right:1px solid rgba(184,150,62,0.08); border-bottom:1px solid rgba(184,150,62,0.08); }
+.logo-placeholder:nth-child(3n) { border-right:none; }
+.logo-placeholder:nth-child(n+4) { border-bottom:none; }
+.lp-text { font-size:11px; color:rgba(250,248,245,0.2); letter-spacing:0.08em; text-align:center; line-height:1.4; }
+.s6-cta { padding:80px; display:flex; flex-direction:column; justify-content:center; }
+.s6-cta-title { font-family:'Instrument Serif',serif; font-size:52px; font-weight:400; line-height:1.0; letter-spacing:-0.025em; color:var(--cream); margin-bottom:20px; }
+.s6-cta-title em { font-style:italic; color:var(--gold-light); }
+.s6-cta-text { font-size:15px; color:rgba(250,248,245,0.45); line-height:1.6; margin-bottom:48px; max-width:40ch; }
+.cta-btn { display:inline-block; padding:16px 36px; background:var(--gold); color:var(--cream); font-weight:700; font-size:14px; border-radius:6px; letter-spacing:0.04em; cursor:pointer; transition:filter 0.2s; }
+.cta-btn:hover { filter:brightness(1.12); }
+.s6-contact { margin-top:48px; padding-top:32px; border-top:1px solid rgba(184,150,62,0.12); }
+.s6-contact-row { font-size:13px; color:rgba(250,248,245,0.3); margin-bottom:6px; }
+.s6-contact-row strong { color:rgba(250,248,245,0.6); }
+
+/* ── SLIDE INDICATOR ── */
+.slide-indicator {
+  position:fixed; right:28px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; gap:8px; z-index:50;
+}
+.si-dot { width:6px; height:6px; border-radius:50%; background:rgba(250,248,245,0.2); cursor:pointer; transition:all 0.2s; }
+.si-dot.active { background:var(--gold); transform:scale(1.4); }
+
+/* ── SLIDE NAV LABEL ── */
+.slide-label { position:absolute; bottom:32px; right:48px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(250,248,245,0.2); font-family:monospace; }
+.slide-label.dark-text { color:rgba(46,43,38,0.25); }
+</style>
+</head>
+<body>
+
+<!-- Slide Indicator -->
+<div class="slide-indicator" id="indicator">
+  <div class="si-dot active" onclick="scrollTo(0)"></div>
+  <div class="si-dot" onclick="scrollTo(1)"></div>
+  <div class="si-dot" onclick="scrollTo(2)"></div>
+  <div class="si-dot" onclick="scrollTo(3)"></div>
+  <div class="si-dot" onclick="scrollTo(4)"></div>
+  <div class="si-dot" onclick="scrollTo(5)"></div>
+</div>
+
+<!-- ══ SLIDE 1 — COVER ══ -->
+<section class="slide" id="s1">
+  <div class="logo-mark dark">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none"><defs><linearGradient id="g0" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#AD9553"/><stop offset="0.5" style="stop-color:#9F864A"/><stop offset="1" style="stop-color:#AD9553"/></linearGradient></defs><path fill-rule="evenodd" fill="url(#g0)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+  </div>
+  <div class="s1-img">
+    <img src="../_Dev/Generated/cover-hero.jpg" alt="Cover">
+  </div>
+  <div class="s1-text">
+    <div class="s1-eyebrow">Aktueller Stand April 2026</div>
+    <div class="s1-title">Sabala<br>Mentoring<br><em>Studio.</em></div>
+    <div class="s1-sub">Brand Identity, KI-Team, Website — der aktuelle Stand unserer Arbeit und die nächsten Schritte.</div>
+    <div class="s1-meta">
+      <div><div class="s1-stat-v">3</div><div class="s1-stat-l">Brand-Säulen</div></div>
+      <div><div class="s1-stat-v">8</div><div class="s1-stat-l">KI-Charaktere</div></div>
+      <div><div class="s1-stat-v">V3</div><div class="s1-stat-l">Brand Guide</div></div>
+    </div>
+  </div>
+  <div class="slide-label">01 / 06</div>
+</section>
+
+<!-- ══ SLIDE 2 — DREI SÄULEN ══ -->
+<section class="slide" id="s2">
+
+  <!-- KI & Software — Dark Tech -->
+  <div class="pillar-ki">
+    <div class="pk-top">
+      <div class="pk-label">Säule 01 — KI & Software</div>
+      <div class="pk-num">01</div>
+      <div class="pk-title">KI Services<br>& <em>Software</em></div>
+      <div class="pk-text">KI-Assistenten, Custom GPTs, Automatisierung und Workflows — skalierbar, präzise, für Unternehmen die KI wirklich nutzen wollen.</div>
+      <div class="pk-tags">
+        <span class="pk-tag">custom-gpt</span>
+        <span class="pk-tag">automation</span>
+        <span class="pk-tag">flux-kontext</span>
+        <span class="pk-tag">workflows</span>
+        <span class="pk-tag">kie-image-gen</span>
+      </div>
+    </div>
+    <div class="pk-bottom">
+      <div class="pk-stats">
+        <div><div class="pk-stat-v">8</div><div class="pk-stat-l">KI-Charaktere</div></div>
+        <div><div class="pk-stat-v">∞</div><div class="pk-stat-l">Skalierbar</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coaching & Meditation — Warm Human -->
+  <div class="pillar-coaching">
+    <div>
+      <div class="pc-label">Säule 02 — Coaching</div>
+      <div class="pc-num">02</div>
+      <div class="pc-title">Coaching<br>& <em>Meditation</em></div>
+      <div class="pc-text">Persönliches Mentoring, innere Klarheit und Achtsamkeit für Solopreneure die wirklich wachsen wollen — von innen nach außen.</div>
+      <div class="pc-values">
+        <div class="pc-value">Stabilität & Halt geben</div>
+        <div class="pc-value">Tiefe statt Oberfläche</div>
+        <div class="pc-value">Langfristige Begleitung</div>
+        <div class="pc-value">Authentisch und direkt</div>
+      </div>
+    </div>
+    <div style="padding-top:32px; border-top:1px solid var(--warm-light);">
+      <div style="font-size:11px; letter-spacing:0.1em; color:var(--warm-mid);">Für Solopreneure in Transformation</div>
+    </div>
+  </div>
+
+  <!-- Sabala Webstudio — Premium Light -->
+  <div class="pillar-studio">
+    <div>
+      <div class="ps2-label">Säule 03 — Studio</div>
+      <div class="ps2-num">03</div>
+      <div class="ps2-title">Sabala<br><em>Webstudio</em></div>
+      <div class="ps2-text">Positionierung, Branddesign und Premium-Website — alles aus einem Guss. Nicht nur abliefern, sondern ein Jahr begleiten.</div>
+      <div class="ps2-steps">
+        <div class="ps2-step"><span class="ps2-step-n">01</span><span>Positionierung & Strategie</span></div>
+        <div class="ps2-step"><span class="ps2-step-n">02</span><span>Brand Identity & Design</span></div>
+        <div class="ps2-step"><span class="ps2-step-n">03</span><span>Premium-Website</span></div>
+        <div class="ps2-step"><span class="ps2-step-n">04</span><span>1 Jahr Begleitung</span></div>
+      </div>
+    </div>
+    <div style="padding-top:24px; border-top:1px solid #F0EDE8;">
+      <div style="font-size:11px; color:#B8A090; letter-spacing:0.08em;">Für reflektierte Dienstleister &amp; Coaches</div>
+    </div>
+  </div>
+
+  <div class="slide-label" style="color:rgba(250,248,245,0.15);">02 / 06</div>
+</section>
+
+<!-- ══ SLIDE 3 — WEBSITE STATUS ══ -->
+<section class="slide" id="s3">
+  <div class="logo-mark light">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none"><defs><linearGradient id="g2" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#AD9553"/><stop offset="1" style="stop-color:#9F864A"/></linearGradient></defs><path fill-rule="evenodd" fill="url(#g2)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+  </div>
+  <div class="slide-inner">
+    <div class="slide-header">
+      <div class="slide-num">03 — Website Status</div>
+      <div class="slide-title">Was steht. Was<br>kommt <em>als nächstes.</em></div>
+    </div>
+    <div class="status-grid">
+      <div class="status-card done">
+        <div class="sc-badge done">✓ Abgeschlossen</div>
+        <div class="sc-title">Brand Guide V3.0</div>
+        <div class="sc-text">Warm Atlas Edition finalisiert — Farben, Typo, Logo-System, KI-Team, Illustration Style, Anti-Patterns.</div>
+      </div>
+      <div class="status-card done">
+        <div class="sc-badge done">✓ Abgeschlossen</div>
+        <div class="sc-title">KI-Team System</div>
+        <div class="sc-text">Alle 8 Charaktere als 3D-Renders vorhanden — Mooni, Aurel, Lia, Mila, Maris, Runa, Siris, Juris.</div>
+      </div>
+      <div class="status-card wip">
+        <div class="sc-badge wip">⏳ In Arbeit</div>
+        <div class="sc-title">KIE AI Integration</div>
+        <div class="sc-text">Image-Gen Skill aktiv — API-Key gesetzt, Polling-Fix deployed. Erste Testbilder generiert.</div>
+        <ul class="sc-items">
+          <li>Skill SKILL.md Response-Format korrigiert</li>
+          <li>3 Testbilder erfolgreich generiert</li>
+          <li>Präsentations-Workflow im Aufbau</li>
+        </ul>
+      </div>
+      <div class="status-card wip">
+        <div class="sc-badge wip">⏳ Nächster Schritt</div>
+        <div class="sc-title">Mooni Illustration Szenen</div>
+        <div class="sc-text">3D-Render auf Warm-Atlas-Hintergrunden. Szenen via KIE AI generieren, dann komponieren.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-label dark-text">03 / 06</div>
+</section>
+
+<!-- ══ SLIDE 4 — KI TEAM (TECH STYLE) ══ -->
+<section class="slide" id="s4">
+  <div class="logo-mark tech">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none"><defs><linearGradient id="g3" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#C9A84C"/><stop offset="1" style="stop-color:#B8963E"/></linearGradient></defs><path fill-rule="evenodd" fill="url(#g3)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+  </div>
+  <div style="padding:80px; flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="tech-label">04 — KI-Team</div>
+    <div class="tech-slide-title">Acht Assistenten.<br>Eine <em>DNA.</em></div>
+    <div class="tech-slide-sub">Weißer Körper, gold-facettierter Diamant als Kernsymbol. Jeder Charakter mit einzigartiger Akzentfarbe, Rolle und Persönlichkeit.</div>
+    <div class="tech-grid">
+      <div class="tech-card" style="--accent-color:#B8963E;"><div class="tc-dot" style="background:#B8963E;">Mo</div><div class="tc-name">Mooni</div><div class="tc-role">Brand Lead</div><div class="tc-desc">Neugierig, warm, beobachtend</div><div class="tc-hex">#B8963E</div></div>
+      <div class="tech-card" style="--accent-color:#8B6914;"><div class="tc-dot" style="background:#8B6914;">Au</div><div class="tc-name">Aurel</div><div class="tc-role">Strategie</div><div class="tc-desc">Weise, reflektiert, tiefgründig</div><div class="tc-hex">#8B6914</div></div>
+      <div class="tech-card" style="--accent-color:#D4739A;"><div class="tc-dot" style="background:#D4739A;">Li</div><div class="tc-name">Lia</div><div class="tc-role">Design</div><div class="tc-desc">Kreativ, feinfühlig, präzise</div><div class="tc-hex">#D4739A</div></div>
+      <div class="tech-card" style="--accent-color:#C9A84C;"><div class="tc-dot" style="background:#C9A84C;">Mi</div><div class="tc-name">Mila</div><div class="tc-role">Content</div><div class="tc-desc">Leicht, eloquent, einfühlsam</div><div class="tc-hex">#C9A84C</div></div>
+      <div class="tech-card" style="--accent-color:#4A9B8E;"><div class="tc-dot" style="background:#4A9B8E;">Ma</div><div class="tc-name">Maris</div><div class="tc-role">Daten & Analyse</div><div class="tc-desc">Klar, strukturiert, verlässlich</div><div class="tc-hex">#4A9B8E</div></div>
+      <div class="tech-card" style="--accent-color:#B84444;"><div class="tc-dot" style="background:#B84444;">Ru</div><div class="tc-name">Runa</div><div class="tc-role">Sicherheit</div><div class="tc-desc">Standhaft, direkt, schützend</div><div class="tc-hex">#B84444</div></div>
+      <div class="tech-card" style="--accent-color:#4468B8;"><div class="tc-dot" style="background:#4468B8;">Si</div><div class="tc-name">Siris</div><div class="tc-role">Technik</div><div class="tc-desc">Logisch, ruhig, lösungsorientiert</div><div class="tc-hex">#4468B8</div></div>
+      <div class="tech-card" style="--accent-color:#6B4488;"><div class="tc-dot" style="background:#6B4488;">Ju</div><div class="tc-name">Juris</div><div class="tc-role">Recht</div><div class="tc-desc">Präzise, gründlich, unverzichtbar</div><div class="tc-hex">#6B4488</div></div>
+    </div>
+  </div>
+  <div class="slide-label">04 / 06</div>
+</section>
+
+<!-- ══ SLIDE 5 — NÄCHSTE SCHRITTE ══ -->
+<section class="slide" id="s5">
+  <div class="logo-mark dark">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none"><defs><linearGradient id="g4" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#AD9553"/><stop offset="1" style="stop-color:#9F864A"/></linearGradient></defs><path fill-rule="evenodd" fill="url(#g4)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+  </div>
+  <div style="padding:80px; flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="slide-num" style="color:var(--gold);">05 — Nächste Schritte</div>
+    <div class="slide-title" style="color:var(--cream); margin-bottom:52px;">Was <em>als nächstes</em><br>passiert.</div>
+    <div class="next-grid">
+      <div class="next-item">
+        <div class="next-num">01</div>
+        <div>
+          <div class="next-content-title">Mooni Illustration Szenen</div>
+          <div class="next-content-text">3D-Renders auf Warm-Atlas-Hintergründen komponieren. Szenen via KIE AI generieren, dann in Präsentationen integrieren.</div>
+          <span class="next-tag">kie-image-gen · mooni-scene</span>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-num">02</div>
+        <div>
+          <div class="next-content-title">Comprehensive Presentation Skill</div>
+          <div class="next-content-text">Logo auf Folie 1, Kunden-Logos auf letzter Folie, Firecrawl-Recherche, KIE AI Bilder, Pinecone-Persistenz — vollautomatisch.</div>
+          <span class="next-tag">skill · firecrawl · pinecone</span>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-num">03</div>
+        <div>
+          <div class="next-content-title">Brand Guide Merge</div>
+          <div class="next-content-text">Illustration Style Guide und Brand Guide zu einem vollständigen Guide zusammenführen. Mooni-Sektion mit echten Renders ergänzen.</div>
+          <span class="next-tag">SABALA-BRANDGUIDE.html</span>
+        </div>
+      </div>
+      <div class="next-item">
+        <div class="next-num">04</div>
+        <div>
+          <div class="next-content-title">Website Launch-Vorbereitung</div>
+          <div class="next-content-text">Finale Kopie, Testimonials, Team-Fotos einbauen. SEO-Grundstruktur. Hosting via Christopher vorbereiten.</div>
+          <span class="next-tag">webstudio · christopher</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-label">05 / 06</div>
+</section>
+
+<!-- ══ SLIDE 6 — FINALE ══ -->
+<section class="slide" id="s6">
+  <div class="logo-mark dark" style="top:40px; left:48px;">
+    <svg viewBox="0 0 1144.85 1144.85" fill="none"><defs><linearGradient id="g5" x1="776.75" y1="927.53" x2="366.71" y2="217.32" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#C9A84C"/><stop offset="1" style="stop-color:#AD9553"/></linearGradient></defs><path fill-rule="evenodd" fill="url(#g5)" d="M572.42,162.39c226.31,0,410.03,183.73,410.03,410.03S798.73,982.46,572.42,982.46c-226.3,0-410.03-183.73-410.03-410.03S346.12,162.39,572.42,162.39L572.42,162.39z M683.51,387.94c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.19,408.73,683.2,388.02,683.51,387.94L683.51,387.94z M675.39,377.01c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C601,293.39,637.92,327.66,675.39,377.01L675.39,377.01z"/></svg>
+  </div>
+  <div class="s6-logos">
+    <div class="s6-logos-title">Unsere Kunden</div>
+    <div class="logo-strip">
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>A</div></div>
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>B</div></div>
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>C</div></div>
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>D</div></div>
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>E</div></div>
+      <div class="logo-placeholder"><div class="lp-text">Kunde<br>F</div></div>
+    </div>
+  </div>
+  <div class="s6-cta">
+    <div class="s6-cta-title">Bereit für<br>dein <em>Fundament?</em></div>
+    <div class="s6-cta-text">Keine halben Sachen — Positionierung, Branding, Website. Alles aus einem Guss, ein Jahr Begleitung.</div>
+    <div class="cta-btn">Kennenlerngespräch</div>
+    <div class="s6-contact">
+      <div class="s6-contact-row"><strong>Ilja Krasevskij</strong> — Sabala Mentoring</div>
+      <div class="s6-contact-row">sabala-mentoring.com</div>
+    </div>
+  </div>
+  <div class="slide-label">06 / 06</div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.si-dot');
+
+function scrollTo(i) {
+  slides[i].scrollIntoView({ behavior: 'smooth' });
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const i = [...slides].indexOf(e.target);
+      dots.forEach((d, j) => d.classList.toggle('active', i === j));
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

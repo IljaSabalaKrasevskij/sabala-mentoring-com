@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabala — Logo System</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:#B8963E; --gold-lt:#D4AE5A; --cream:#FAF8F5; --char:#1A1A18;
+    --serif:'Instrument Serif',Georgia,serif;
+    --sans:'Satoshi',system-ui,sans-serif;
+    --mono:'Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#111110;color:#fff;font-family:var(--sans);}
+
+  .nav{position:sticky;top:0;z-index:10;background:rgba(17,17,16,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(184,150,62,.15);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-t{font-family:var(--serif);font-size:17px;color:var(--cream);}
+  .nav-s{font-size:10px;font-family:var(--mono);color:var(--gold);letter-spacing:.14em;text-transform:uppercase;}
+
+  .sec{padding:52px 40px 0;}
+  .sec-label{font-size:10px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .sec-title{font-family:var(--serif);font-size:26px;color:var(--cream);margin-bottom:6px;}
+  .sec-title em{font-style:italic;color:var(--gold-lt);}
+  .sec-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.7;max-width:600px;padding-bottom:32px;}
+
+  /* Variant grid */
+  .var-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(184,150,62,.07);}
+  .var-cell{padding:52px 32px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:28px;position:relative;}
+  .var-cell+.var-cell{border-left:1px solid rgba(184,150,62,.07);}
+  .var-name{font-size:10px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.5;text-align:center;}
+  .var-rule{font-size:11px;color:rgba(255,255,255,.25);text-align:center;line-height:1.5;font-family:var(--sans);}
+
+  /* Wordmark section */
+  .wm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(184,150,62,.07);}
+  .wm-cell{padding:64px 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;position:relative;}
+  .wm-cell+.wm-cell{border-left:1px solid rgba(184,150,62,.07);}
+  .wm-label{position:absolute;top:20px;left:24px;font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.3;}
+  .wm-verdict{font-size:12px;font-family:var(--mono);letter-spacing:.06em;text-align:center;line-height:1.6;}
+
+  /* Dont's section */
+  .dont-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(184,150,62,.07);}
+  .dont-cell{padding:48px 32px;display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;}
+  .dont-cell+.dont-cell{border-left:1px solid rgba(255,255,255,.05);}
+  .dont-mark{position:absolute;top:0;left:0;right:0;bottom:0;border:3px solid rgba(220,60,60,.5);pointer-events:none;}
+  .dont-x{position:absolute;top:16px;right:16px;width:28px;height:28px;background:rgba(220,60,60,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;}
+  .dont-text{font-size:12px;color:rgba(220,100,100,.7);font-family:var(--mono);letter-spacing:.06em;text-align:center;}
+
+  .divider{height:1px;background:rgba(184,150,62,.07);}
+
+  /* Approve section */
+  .approve{padding:64px 40px;background:#090908;border-top:1px solid rgba(184,150,62,.1);text-align:center;}
+  .approve h2{font-family:var(--serif);font-size:26px;color:var(--cream);margin-bottom:8px;}
+  .approve h2 em{font-style:italic;color:var(--gold-lt);}
+  .approve p{font-size:13px;color:rgba(255,255,255,.3);line-height:1.7;max-width:500px;margin:0 auto 32px;}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn{padding:12px 28px;border-radius:6px;border:none;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:600;transition:all .2s;}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.15);}
+  .btn-y{background:var(--gold);color:#fff;border:1px solid var(--gold);}
+  .btn-n{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);}
+
+  /* Stacked wordmark helper */
+  .stack{display:flex;flex-direction:column;align-items:center;}
+  .h-lock{display:flex;align-items:center;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-t">Sabala — Logo System</div>
+  <div class="nav-s">Varianten · Wordmark · Regeln</div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 1. MARK-VARIANTEN                             -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="sec-label">Mark Varianten</div>
+  <div class="sec-title">Gold, Weiß, <em>Invertiert.</em></div>
+  <div class="sec-desc">Alle erlaubten Kombinationen — immer auf soliden Farbflächen, nie auf bunten oder fotografischen Hintergründen.</div>
+</div>
+
+<div class="var-grid">
+
+  <!-- 1: Gold auf Cream (Standard) -->
+  <div class="var-cell" style="background:var(--cream);">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <defs><linearGradient id="v1g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#v1g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name" style="color:var(--char);">Gold auf Cream</div>
+    <div class="var-rule" style="color:var(--char);opacity:.4;">Standard · Primär</div>
+  </div>
+
+  <!-- 2: Gold auf Weiß -->
+  <div class="var-cell" style="background:#fff;">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <defs><linearGradient id="v2g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#v2g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name" style="color:var(--char);">Gold auf Weiß</div>
+    <div class="var-rule" style="color:var(--char);opacity:.4;">Für Print, Dokumente</div>
+  </div>
+
+  <!-- 3: Gold auf Charcoal, Berg in Charcoal -->
+  <div class="var-cell" style="background:var(--char);">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <defs><linearGradient id="v3g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <!-- Gold ring, Charcoal inner -->
+      <circle cx="572.25" cy="545.03" r="410.03" fill="url(#v3g)"/>
+      <path fill="#1A1A18" d="M683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56z"/>
+      <path fill="#1A1A18" d="M675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name">Gold · Berg Charcoal</div>
+    <div class="var-rule">Auf Charcoal — Berg nimmt Hintergrundfarbe an</div>
+  </div>
+
+  <!-- 4: Gold auf Schwarz, Berg in Weiß (explizit) -->
+  <div class="var-cell" style="background:#111110;">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <defs><linearGradient id="v4g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <!-- Gold ring, WHITE inner — explizit -->
+      <circle cx="572.25" cy="545.03" r="410.03" fill="url(#v4g)"/>
+      <path fill="#FFFFFF" d="M683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56z"/>
+      <path fill="#FFFFFF" d="M675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name">Gold · Berg Weiß</div>
+    <div class="var-rule">Auf Schwarz — Berg explizit weiß, maximaler Kontrast</div>
+  </div>
+
+</div>
+
+<!-- Reihe 2: Invertierte Varianten -->
+<div class="var-grid" style="border-top:1px solid rgba(184,150,62,.07);">
+
+  <!-- 5: Weiß auf Gold -->
+  <div class="var-cell" style="background:var(--gold);">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <!-- Weißer Kreis, Gold-Berg (zeigt Hintergrundgold durch) -->
+      <circle cx="572.25" cy="545.03" r="410.03" fill="#FFFFFF"/>
+      <path fill="#B8963E" d="M683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56z"/>
+      <path fill="#B8963E" d="M675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name" style="color:#fff;">Weiß auf Gold</div>
+    <div class="var-rule" style="color:rgba(255,255,255,.5);">Invertiert · Auf Goldfläche</div>
+  </div>
+
+  <!-- 6: Alles Weiß auf Charcoal -->
+  <div class="var-cell" style="background:var(--char);">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name">Alles Weiß</div>
+    <div class="var-rule">Auf Charcoal — Nur wenn Gold nicht verfügbar</div>
+  </div>
+
+  <!-- 7: Alles Weiß auf Schwarz -->
+  <div class="var-cell" style="background:#111110;">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name">Alles Weiß</div>
+    <div class="var-rule">Auf Schwarz — Notfallvariante</div>
+  </div>
+
+  <!-- 8: Charcoal auf Cream (einfarbig dunkel) -->
+  <div class="var-cell" style="background:var(--cream);">
+    <svg width="120" height="120" viewBox="162 135 820 820">
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="#1A1A18" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="var-name" style="color:var(--char);">Charcoal auf Cream</div>
+    <div class="var-rule" style="color:rgba(26,26,24,.4);">Einfarbig dunkel — sehr selten</div>
+  </div>
+
+</div>
+
+<div class="divider" style="margin-top:0;"></div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 2. WORDMARK PLATZIERUNG                       -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="sec-label">Wordmark Platzierung</div>
+  <div class="sec-title">Wo steht <em>SABALA?</em></div>
+  <div class="sec-desc">Drei Optionen — schau welche sich richtig anfühlt.</div>
+</div>
+
+<div class="wm-grid">
+
+  <!-- Option 1: Nur Mark -->
+  <div class="wm-cell" style="background:var(--cream);">
+    <div class="wm-label" style="color:var(--char);">Option 1</div>
+    <svg width="110" height="110" viewBox="162 135 820 820">
+      <defs><linearGradient id="wm1g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#wm1g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="wm-verdict" style="color:var(--char);">Nur das Mark.<br>Kein Name.</div>
+    <div class="var-rule" style="color:rgba(26,26,24,.4);">Wenn Sabala bekannt ist.</div>
+  </div>
+
+  <!-- Option 2: Mark + SABALA darunter (zentriert, gestapelt) -->
+  <div class="wm-cell" style="background:var(--cream);">
+    <div class="wm-label" style="color:var(--char);">Option 2</div>
+    <div class="stack" style="gap:18px;">
+      <svg width="100" height="100" viewBox="162 135 820 820">
+        <defs><linearGradient id="wm2g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#wm2g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+      </svg>
+      <!-- Dünne Trennlinie -->
+      <div style="width:40px;height:1px;background:rgba(184,150,62,.4);"></div>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:22px;color:var(--char);letter-spacing:.18em;">SABALA</span>
+    </div>
+    <div class="wm-verdict" style="color:var(--char);">Mark oben,<br>Name darunter.</div>
+    <div class="var-rule" style="color:rgba(26,26,24,.4);">Quadratisches Format.<br>Für Präsentationsdeckblatt.</div>
+  </div>
+
+  <!-- Option 3: Mark links + SABALA rechts -->
+  <div class="wm-cell" style="background:var(--cream);">
+    <div class="wm-label" style="color:var(--char);">Option 3</div>
+    <div class="h-lock" style="gap:18px;">
+      <svg width="72" height="72" viewBox="162 135 820 820">
+        <defs><linearGradient id="wm3g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#wm3g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+      </svg>
+      <!-- Vertikale Trennlinie -->
+      <div style="width:1px;height:36px;background:rgba(184,150,62,.35);"></div>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;color:var(--char);letter-spacing:.14em;line-height:1;">SABALA</span>
+    </div>
+    <div class="wm-verdict" style="color:var(--char);">Mark links,<br>Name rechts.</div>
+    <div class="var-rule" style="color:rgba(26,26,24,.4);">Navigation, Signatur, Header.</div>
+  </div>
+
+</div>
+
+<!-- Dunkel-Varianten der Wordmarks -->
+<div class="wm-grid" style="border-top:1px solid rgba(184,150,62,.07);">
+
+  <div class="wm-cell" style="background:#111110;">
+    <div class="wm-label">Option 1 · Dunkel</div>
+    <svg width="110" height="110" viewBox="162 135 820 820">
+      <defs><linearGradient id="wmd1g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#wmd1g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+  </div>
+
+  <div class="wm-cell" style="background:#111110;">
+    <div class="wm-label">Option 2 · Dunkel</div>
+    <div class="stack" style="gap:18px;">
+      <svg width="100" height="100" viewBox="162 135 820 820">
+        <defs><linearGradient id="wmd2g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+        <circle cx="572.25" cy="545.03" r="410.03" fill="url(#wmd2g)"/>
+        <path fill="#ffffff" d="M683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56z"/>
+        <path fill="#ffffff" d="M675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+      </svg>
+      <div style="width:40px;height:1px;background:rgba(184,150,62,.4);"></div>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:22px;color:#FAF8F5;letter-spacing:.18em;">SABALA</span>
+    </div>
+  </div>
+
+  <div class="wm-cell" style="background:#111110;">
+    <div class="wm-label">Option 3 · Dunkel</div>
+    <div class="h-lock" style="gap:18px;">
+      <svg width="72" height="72" viewBox="162 135 820 820">
+        <defs><linearGradient id="wmd3g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+        <circle cx="572.25" cy="545.03" r="410.03" fill="url(#wmd3g)"/>
+        <path fill="#ffffff" d="M683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56z"/>
+        <path fill="#ffffff" d="M675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+      </svg>
+      <div style="width:1px;height:36px;background:rgba(184,150,62,.35);"></div>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;color:#FAF8F5;letter-spacing:.14em;line-height:1;">SABALA</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- 3. NIE — VERBOTENE VERWENDUNGEN               -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="sec">
+  <div class="sec-label">Nie — Verboten</div>
+  <div class="sec-title">Das Logo <em>niemals so.</em></div>
+  <div class="sec-desc">Das Logo steht nur auf soliden Farbflächen. Nie auf Fotos, Texturen, bunten Verläufen.</div>
+</div>
+
+<div class="dont-grid" style="border-top:1px solid rgba(184,150,62,.07);">
+
+  <!-- Dont 1: Auf buntem Verlauf -->
+  <div class="dont-cell" style="background:linear-gradient(135deg,#6B2D8B,#E44D26,#F5A623);">
+    <div class="dont-mark"></div>
+    <div class="dont-x">✕</div>
+    <svg width="80" height="80" viewBox="162 135 820 820">
+      <defs><linearGradient id="d1g" x1="777" y1="900" x2="367" y2="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C8A448"/><stop offset="0.52" stop-color="#B8963E"/><stop offset="1" stop-color="#C8A448"/></linearGradient></defs>
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="url(#d1g)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="dont-text">Nie auf buntem Verlauf</div>
+  </div>
+
+  <!-- Dont 2: Auf Foto/Textur (simuliert) -->
+  <div class="dont-cell" style="background:linear-gradient(135deg,#2C5F2E 0%,#4A8C3F 30%,#8DB87A 60%,#C5A55A 100%);position:relative;">
+    <div class="dont-mark"></div>
+    <div class="dont-x">✕</div>
+    <svg width="80" height="80" viewBox="162 135 820 820">
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="rgba(255,255,255,0.85)" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="dont-text">Nie auf Foto oder Textur</div>
+  </div>
+
+  <!-- Dont 3: Verzerrt / falsche Farbe -->
+  <div class="dont-cell" style="background:#1a2a4a;">
+    <div class="dont-mark"></div>
+    <div class="dont-x">✕</div>
+    <svg width="80" height="96" viewBox="162 135 820 820" style="transform:scaleX(1.4);">
+      <path fill-rule="evenodd" clip-rule="evenodd" fill="#4A90D9" d="M572.25,135c226.31,0,410.03,183.73,410.03,410.03S798.55,955.07,572.25,955.07c-226.3,0-410.03-183.73-410.03-410.03S345.94,135,572.25,135zM683.34,360.56c78.8,108.1,156.41,276.57,129.49,323.49c-40.65,70.85-441.34,76.93-481.14,7.47c-9.18-16.02-5.42-47.19,6.78-85.71c70.28,26.26,349.52,66.92,348.55-60.77c-0.61-80.94-107.77-53.19-93.8-118.15C603.01,381.34,683.02,360.64,683.34,360.56zM675.22,349.63c-0.33,0.09-83.4,22.07-96.65,70.31c-21.22,77.22,85.14,65.46,92.43,113.25c18.72,122.73-259.56,84.32-327.89,58.79c45.47-129.14,172.94-324.66,232.46-325.59C600.82,266.01,637.74,300.28,675.22,349.63z"/>
+    </svg>
+    <div class="dont-text">Nie verzerrt, nie fremde Farben</div>
+  </div>
+
+</div>
+
+
+<!-- APPROVE -->
+<div class="approve">
+  <h2>Passt das <em>so?</em></h2>
+  <p>Welche Wordmark-Option findest du am stärksten? Dann schreiben wir alles in den Brandguide und das Logo-Kapitel ist abgeschlossen.</p>
+  <div class="btns">
+    <button class="btn btn-y">Ja — alles so ✓</button>
+    <button class="btn btn-n">Noch Anpassungen</button>
+  </div>
+</div>
+
+</body>
+</html>

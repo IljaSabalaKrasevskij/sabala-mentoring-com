@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Konzept: Über-Mich — Sabala Mentoring</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+    :root {
+      --warm-canvas: #FAF8F5;
+      --deep-charcoal: #1A1A18;
+      --refined-gold: #B8963E;
+      --warm-steel: #6B6760;
+      --soft-stone: #9E9B96;
+      --whisper: #E8E5E0;
+      --night: #1A1A18;
+      --night-gold: #C9A84C;
+      --night-text: #F0EDE8;
+      --night-secondary: #A09D97;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-canvas);
+      color: var(--deep-charcoal);
+      font-size: 11pt;
+      line-height: 1.65;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 72px;
+      background: var(--night);
+      color: var(--night-text);
+      page-break-after: always;
+    }
+
+    .cover-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 9pt;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--night-gold);
+      margin-bottom: 48px;
+    }
+
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: 52pt;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: var(--night-text);
+    }
+
+    .cover h1 em {
+      font-style: italic;
+      color: var(--night-gold);
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 40px;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cover-meta-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 8.5pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--night-secondary);
+    }
+
+    .cover-meta-item strong {
+      display: block;
+      color: var(--night-text);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    /* ── CONTENT PAGES ── */
+    .page {
+      padding: 72px 72px 64px;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    .page-dark {
+      background: var(--night);
+      color: var(--night-text);
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 8.5pt;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--refined-gold);
+      margin-bottom: 16px;
+    }
+
+    .page-dark .section-eyebrow {
+      color: var(--night-gold);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: 30pt;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: var(--deep-charcoal);
+    }
+
+    .page-dark h2 {
+      color: var(--night-text);
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 16pt;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--deep-charcoal);
+      margin-bottom: 8px;
+    }
+
+    .page-dark h3 {
+      color: var(--night-text);
+    }
+
+    p {
+      color: var(--warm-steel);
+      margin-bottom: 16px;
+      max-width: 68ch;
+    }
+
+    .page-dark p {
+      color: var(--night-secondary);
+    }
+
+    /* ── NARRATIVE BOGEN ── */
+    .bogen {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 32px 0 40px;
+      flex-wrap: wrap;
+    }
+
+    .bogen-step {
+      font-family: 'DM Mono', monospace;
+      font-size: 8pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--night-gold);
+      padding: 8px 16px;
+      border: 1px solid rgba(201,168,76,0.3);
+      white-space: nowrap;
+    }
+
+    .bogen-arrow {
+      color: rgba(201,168,76,0.4);
+      font-size: 14pt;
+      padding: 0 4px;
+    }
+
+    /* ── BILD-KARTEN ── */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .card {
+      border: 1px solid var(--whisper);
+      border-radius: 16px;
+      padding: 20px 24px;
+      background: white;
+    }
+
+    .page-dark .card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 8pt;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--refined-gold);
+      margin-bottom: 6px;
+    }
+
+    .page-dark .card-num {
+      color: var(--night-gold);
+    }
+
+    .card-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 18pt;
+      font-weight: 300;
+      color: var(--deep-charcoal);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    .page-dark .card-year {
+      color: var(--night-text);
+    }
+
+    .card-title {
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: var(--deep-charcoal);
+      margin-bottom: 4px;
+      letter-spacing: 0.01em;
+    }
+
+    .page-dark .card-title {
+      color: var(--night-text);
+    }
+
+    .card-subtitle {
+      font-size: 9pt;
+      color: var(--soft-stone);
+      font-style: italic;
+    }
+
+    .page-dark .card-subtitle {
+      color: var(--night-secondary);
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 7.5pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(184,150,62,0.12);
+      color: var(--refined-gold);
+    }
+
+    .page-dark .card-tag {
+      background: rgba(201,168,76,0.12);
+      color: var(--night-gold);
+    }
+
+    /* ── OFFENE PUNKTE ── */
+    .decision-list {
+      list-style: none;
+      margin-top: 24px;
+    }
+
+    .decision-list li {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--whisper);
+      color: var(--warm-steel);
+    }
+
+    .decision-list li:last-child {
+      border-bottom: none;
+    }
+
+    .decision-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 8pt;
+      color: var(--refined-gold);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .decision-text strong {
+      display: block;
+      color: var(--deep-charcoal);
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 10pt;
+    }
+
+    .decision-text span {
+      font-size: 9.5pt;
+    }
+
+    /* ── NEXT STEPS ── */
+    .steps {
+      margin-top: 24px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      align-items: flex-start;
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 22pt;
+      font-weight: 500;
+      color: rgba(201,168,76,0.25);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 48px;
+    }
+
+    .step-content strong {
+      display: block;
+      color: var(--night-text);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .step-content span {
+      font-size: 9.5pt;
+      color: var(--night-secondary);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--whisper);
+      margin: 40px 0;
+    }
+
+    .page-dark .divider {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight {
+      background: rgba(184,150,62,0.08);
+      border-left: 3px solid var(--refined-gold);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+
+    .page-dark .highlight {
+      background: rgba(201,168,76,0.08);
+      border-left-color: var(--night-gold);
+    }
+
+    .highlight p {
+      margin: 0;
+      font-style: italic;
+      font-size: 11pt;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .cover { min-height: 100vh; }
+      .page { min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <p class="cover-eyebrow">Sabala Mentoring — sabala-mentoring.com</p>
+    <h1>
+      Konzept<br>
+      <em>Über-Mich Seite</em><br>
+      Story &amp; Bildauswahl
+    </h1>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>Status</strong>In Arbeit</div>
+      <div class="cover-meta-item"><strong>Stand</strong>April 2026</div>
+      <div class="cover-meta-item"><strong>Seite</strong>/ueber-mich</div>
+      <div class="cover-meta-item"><strong>Zielgruppe</strong>Reflektierte Solo-Unternehmer</div>
+    </div>
+  </div>
+
+  <!-- ══ SEITE 2: Kernfrage & Bogen ══ -->
+  <div class="page">
+    <p class="section-eyebrow">01 — Ausgangspunkt</p>
+    <h2>Die Kernfrage</h2>
+
+    <div class="highlight">
+      <p>Nicht: <em>Was habe ich alles gemacht.</em><br>
+      Sondern: <em>Was hat mich zu dem gemacht, der ich heute bin — und warum bin ich der richtige Begleiter für dich?</em></p>
+    </div>
+
+    <p>Die Über-Mich-Seite spricht reflektierte Solo-Unternehmer an, die selbst an einem Wendepunkt stehen. Sie sollen sich in Iljas Geschichte erkennen — nicht im Erfolg, sondern im Mut, den inneren Weg zu gehen.</p>
+
+    <div class="divider"></div>
+
+    <p class="section-eyebrow">02 — Narrativer Bogen</p>
+    <h2>Die Story-Architektur</h2>
+
+    <div class="bogen">
+      <div class="bogen-step">Herkunft</div>
+      <div class="bogen-arrow">→</div>
+      <div class="bogen-step">Versuche</div>
+      <div class="bogen-arrow">→</div>
+      <div class="bogen-step">Erfolg</div>
+      <div class="bogen-arrow">→</div>
+      <div class="bogen-step">Wendepunkt</div>
+      <div class="bogen-arrow">→</div>
+      <div class="bogen-step">Transformation</div>
+      <div class="bogen-arrow">→</div>
+      <div class="bogen-step">Vision</div>
+    </div>
+
+    <p>Die Spannung liegt zwischen zwei Welten:</p>
+    <p><strong>Außen:</strong> Was ich geleistet habe — Sport, McDonald's, Manager, Gründer.<br>
+    <strong>Innen:</strong> Was mich wirklich bewegt hat — Intuition, Erwachen, Vertrauen ins Leben.</p>
+    <p>Die Auflösung: Sabala Mentoring ist der Ort, wo beides zusammenkommt.</p>
+  </div>
+
+  <!-- ══ SEITE 3: Empfohlene 9 Bilder ══ -->
+  <div class="page">
+    <p class="section-eyebrow">03 — Bildauswahl</p>
+    <h2>Empfehlung: 9 Bilder</h2>
+    <p>Jedes Bild trägt maximales Gewicht. Kein Ballast, kein Überlappen. Der Bogen ist vollständig — von Kiew bis heute.</p>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-year">1989</div>
+        <div class="card-title">Kiew 1989.png</div>
+        <div class="card-subtitle">Baby mit Fläschchen, Mama schaut liebevoll</div>
+        <span class="card-tag">Herkunft</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-year">1991</div>
+        <div class="card-title">Kiew 1991.png</div>
+        <div class="card-subtitle">Kleiner Ilja mit Papa und Pudel — kurz bevor er geht</div>
+        <span class="card-tag">Erster Bruch</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-year">1994</div>
+        <div class="card-title">Hilden 1994.png</div>
+        <div class="card-subtitle">Taekwondo-Gi, Spreizsprung, strahlendes Lachen</div>
+        <span class="card-tag">Freude & Körper</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">04</div>
+        <div class="card-year">2004</div>
+        <div class="card-title">Aachen 2004.png</div>
+        <div class="card-subtitle">Jugend-Team-Foto — fast Fußballprofi, aber kein Anschluss</div>
+        <span class="card-tag">Talent & Scheitern</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">05</div>
+        <div class="card-year">2007</div>
+        <div class="card-title">Hückelhoven 2007.png</div>
+        <div class="card-subtitle">Roter Polo McDonald's + Krawatte als Manager</div>
+        <span class="card-tag">Unerwarteter Weg</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">06</div>
+        <div class="card-year">2015</div>
+        <div class="card-title">München Flughafen 2015.png</div>
+        <div class="card-subtitle">Mit Ronald McDonald, Daumen hoch — konventioneller Gipfel</div>
+        <span class="card-tag">Erfolg</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">07</div>
+        <div class="card-year">2019</div>
+        <div class="card-title">München 2019 — Dina.JPG</div>
+        <div class="card-subtitle">Ihr beide auf dem Oktoberfest — die Liebe, die alles trägt</div>
+        <span class="card-tag">Liebe & Support</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">08</div>
+        <div class="card-year">2022</div>
+        <div class="card-title">Stuttgart 2022 Speaker Award.png</div>
+        <div class="card-subtitle">Meditiert auf der Bühne — 40 Sekunden Stille vor Publikum</div>
+        <span class="card-tag">Haltung</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">09</div>
+        <div class="card-year">2026</div>
+        <div class="card-title">Stettin 2026.png</div>
+        <div class="card-subtitle">Sonnenbrille, Leinen, schaut nach oben — ruhig und frei</div>
+        <span class="card-tag">Heute & Vision</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SEITE 4: Fußball-Frage ══ -->
+  <div class="page page-dark">
+    <p class="section-eyebrow">04 — Offene Entscheidung</p>
+    <h2>Das Fußball-Kapitel</h2>
+
+    <p>Die Fußball-Story hat genau die richtige Spannung für die Zielgruppe: <em>„Talent allein reicht nicht, wenn das Herz nicht dabei ist"</em> — das trifft jeden Unternehmer.</p>
+
+    <div class="divider"></div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">Option A</div>
+        <div class="card-year" style="font-size:14pt;">Aachen 2004</div>
+        <div class="card-title">„Fast Profi"</div>
+        <div class="card-subtitle">Jugend-Team-Foto, rote Trikots — das Talent das nicht aufgegangen ist</div>
+        <span class="card-tag">Botschaft: Ich war kurz davor</span>
+      </div>
+
+      <div class="card">
+        <div class="card-num">Option B</div>
+        <div class="card-year" style="font-size:14pt;">Schwaging 2021</div>
+        <div class="card-title">„Ich musste es nochmal wissen"</div>
+        <div class="card-subtitle">Portrait im roten Trikot, nachdenklicher Blick — Ego vs. Realität</div>
+        <span class="card-tag">Botschaft: Der Rückblick mit Bewusstsein</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="highlight">
+      <p><strong style="color: var(--night-gold);">Option C — Beide:</strong> Aachen als Jugend-Bild zeigt den Traum. Schwaging als Erwachsenen-Bild zeigt das Loslassen-Können. Zusammen erzählen sie: Ich habe zweimal Fußball gespielt — und zweimal gelernt, wann ich loslassen muss.</p>
+    </div>
+
+    <p>Bei Option C hätten wir 10–11 Bilder. Das ist noch gut handhabbar und gibt der Fußball-Thematik das Gewicht, das sie verdient.</p>
+  </div>
+
+  <!-- ══ SEITE 5: Nächste Schritte ══ -->
+  <div class="page page-dark">
+    <p class="section-eyebrow">05 — Nächste Schritte</p>
+    <h2>Wie wir weitermachen</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <strong>Fußball-Entscheidung treffen</strong>
+          <span>1 Bild (Aachen), 2 Bilder (Aachen + Schwaging) oder weglassen?</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <strong>Text zu jedem Bild</strong>
+          <span>Ilja erzählt 2–3 Sätze pro Station — in seiner eigenen Sprache.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <strong>Text redigieren & verfeinern</strong>
+          <span>Tonalität: klar, direkt, warm — kein Guru-Pathos.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <strong>Antigravity-Briefing aktualisieren</strong>
+          <span>Finale Bild-Liste + alle Texte in das Übergabe-Dokument.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <strong>Technische Umsetzung</strong>
+          <span>Echte Bilder einbinden, Platzhalter ersetzen, Seite live schalten.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

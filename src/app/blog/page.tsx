@@ -1,84 +1,42 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import TreeBookshelfScrollytelling from "@/components/ui/TreeBookshelfScrollytelling";
 
 const featuredArticle = {
-  id: 1,
-  title: "Warum die reine Sichtbarkeit zur Falle wird, wenn das Fundament fehlt",
-  excerpt: "Jeder jagt nach Reichweite, Leads und Followern. Doch wenn das innere und äußere Fundament nicht steht, baut man sein Business auf Sand. Ein Deep Dive in die Psychologie von Premium-Marken.",
-  category: "Gedanken",
-  date: "14. März 2026",
+  title: "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt.",
+  excerpt: "Ein schlechtes Mikrofon zerstört selbst die tiefste energetische Übertragung. Wie du ortsunabhängig arbeitest, ohne an Qualität und Ausstrahlung zu verlieren.",
+  category: "Business",
+  date: "Januar 2026",
   readTime: "6 Min",
-  image: "https://picsum.photos/seed/journal_hero/1600/900",
-  slug: "/blog/warum-sichtbarkeit-zur-falle-wird"
+  image: "https://picsum.photos/seed/sabala_office/1600/900",
+  slug: "/blog/technik-setup-online-coach"
 };
 
 const articles = [
   {
     id: 2,
-    title: "Die Illusion der perfekten Nische",
-    excerpt: "Wahre Positionierung ist kein Korsett, sondern ein Spiegelbild deiner Essenz.",
+    title: "Warum viele Business Mentoring Programme scheitern",
+    excerpt: "Und warum klassische Schablonen für tief und relational arbeitende Menschen keine Lösung sind.",
     category: "Business",
-    date: "10. März",
-    readTime: "4 Min",
-    image: "https://picsum.photos/seed/journal_1/600/600",
+    date: "Januar 2025",
+    readTime: "8 Min",
+    image: "https://picsum.photos/seed/mentoring_fail/600/600",
+    slug: "/blog/warum-business-mentoring-programme-scheitern",
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
   },
   {
     id: 3,
-    title: "Webdesign ist keine Kunst, es ist Psychologie",
-    excerpt: "Warum so viele 'schöne' Websites scheitern und was den wahren Unterschied macht.",
-    category: "Design",
-    date: "02. März",
-    readTime: "5 Min",
-    image: "https://picsum.photos/seed/journal_2/600/900",
+    title: "Finanzielle Freiheit: Warum wir unser Geld-Set-up neu denken müssen",
+    excerpt: "Reisen und arbeiten ist das eine. Wirklich frei über sein Geld verfügen das andere. Meine Yuh Empfehlung.",
+    category: "Finance",
+    date: "Januar 2026",
+    readTime: "6 Min",
+    image: "https://picsum.photos/seed/nomad_finance/800/800",
+    slug: "/blog/finanzielle-freiheit-yuh",
     layout: "col-span-1 md:col-span-1 row-span-2",
     aspect: "aspect-[2/3]"
-  },
-  {
-    id: 4,
-    title: "Der Preis von 'Hustle Culture'",
-    excerpt: "Die gefährliche Sucht nach dem Mehr und wie Meditation zum Tool für Erfolg wurde.",
-    category: "Meditation",
-    date: "25. Feb",
-    readTime: "8 Min",
-    image: "https://picsum.photos/seed/journal_3/1200/600",
-    layout: "col-span-1 md:col-span-2 row-span-1",
-    aspect: "aspect-[2/1] md:aspect-video"
-  },
-  {
-    id: 5,
-    title: "Premium ist kein Preis, es ist eine Haltung",
-    excerpt: "Wie man High-Ticket verkauft, ohne jemals überreden zu müssen.",
-    category: "Business",
-    date: "18. Feb",
-    readTime: "5 Min",
-    image: "https://picsum.photos/seed/journal_6/600/600",
-    layout: "col-span-1 md:col-span-1 row-span-1",
-    aspect: "aspect-square"
-  },
-  {
-    id: 6,
-    title: "Digitaler Nomade vs. Innere Tiefe",
-    excerpt: "Warum wahre Freiheit nicht durch Ortsunabhängigkeit entsteht.",
-    category: "Leben",
-    date: "10. Feb",
-    readTime: "7 Min",
-    image: "https://picsum.photos/seed/journal_5/600/900",
-    layout: "col-span-1 md:col-span-1 row-span-2",
-    aspect: "aspect-[2/3]"
-  },
-  {
-    id: 7,
-    title: "Die Macht der klaren Struktur",
-    excerpt: "Chaos killt Conversion. Wie User Experience den Geist beruhigt.",
-    category: "Design",
-    date: "04. Feb",
-    readTime: "3 Min",
-    image: "https://picsum.photos/seed/journal_7/1200/600",
-    layout: "col-span-1 md:col-span-2 row-span-1",
-    aspect: "aspect-[2/1] md:aspect-video"
   }
 ];
 
@@ -86,20 +44,20 @@ const categories = ["Alle", "Gedanken", "Business", "Design", "Meditation", "Leb
 
 export default function BlogPage() {
   return (
-    <div className="flex flex-col w-full bg-pure-surface min-h-screen">
+    <div className="flex flex-col w-full bg-[#f5f3ee] min-h-screen selection:bg-deep-charcoal selection:text-white">
       
-      {/* HEADER / NAVIGATION PLATZHALTER ABSTAND */}
-      <div className="pt-24 md:pt-32"></div>
+      {/* THE IMMERSIVE SCROLLYTELLING ANIMATION HEADER */}
+      <TreeBookshelfScrollytelling />
 
-      {/* HEADER TEX SECTION */}
-      <section className="px-6 sm:px-12 md:px-24 mb-16 max-w-[1400px] mx-auto w-full">
+      {/* BLOG TITLE DE-COUPLED FROM HEADER */}
+      <section className="px-6 sm:px-12 md:px-24 mb-16 mt-24 max-w-[1400px] mx-auto w-full relative z-10">
         <ScrollReveal>
           <div className="flex flex-col gap-4">
-            <h1 className="font-instrument text-deep-charcoal leading-[1.1] text-[clamp(3rem,6vw,5.5rem)]">
-              Journal
+            <h1 className="font-instrument text-deep-charcoal leading-[1.1] text-[clamp(2.5rem,5vw,5rem)]">
+              Wissen & Mastermind
             </h1>
-            <p className="text-warm-steel text-lg max-w-[600px] font-satoshi">
-              Keine schnellen Hacks. Nur tiefgründige Gedanken über den Aufbau echter Business-Fundamente, Design-Psychologie und innere Klarheit.
+            <p className="text-deep-charcoal/70 text-lg max-w-[600px] font-satoshi">
+              Unterstützung für Mentoren, Coaches, Berater und Trainer. Interessante Artikel für den Aufbau deiner Marke und dein eigenes Wachstum.
             </p>
           </div>
         </ScrollReveal>
@@ -172,7 +130,7 @@ export default function BlogPage() {
               delay={index * 0.1}
               className={`group flex flex-col ${article.layout}`}
             >
-              <Link href={`/blog/article-${article.id}`} className="block h-full group">
+              <Link href={article.slug || `/blog/article-${article.id}`} className="block h-full group">
                 <div className={`relative ${article.aspect} w-full mb-6 overflow-hidden bg-warm-canvas`}>
                   {/* Image */}
                   <Image 

@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
+import { FloatingCard } from "@/components/ui/FloatingCard";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -123,12 +124,12 @@ export default function Home() {
           muted 
           loop 
           playsInline 
-          className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.4] z-0 pointer-events-none mix-blend-screen"
         >
           <source src="/videos/liquid-gold.mp4" type="video/mp4" />
         </video>
-        {/* Dark Overlay (#1A1A18 at 0.7 opacity) */}
-        <div className="absolute inset-0 bg-[#1A1A18]/70 z-[1] pointer-events-none"></div>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-[#2E2B26]/60 z-[1] pointer-events-none"></div>
 
         <div className="max-w-[1000px] mx-auto text-center relative z-10 flex flex-col items-center justify-center">
           <ScrollReveal>
@@ -160,31 +161,42 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto relative pb-24">
           <div className="grid md:grid-cols-3 gap-8">
              {/* Phase 1 */}
-             <ScrollReveal delay={0.1} className="p-8 border border-whisper-border rounded-2xl shadow-warm-shadow bg-pure-surface/50 h-full">
-               <span className="font-geist text-soft-stone text-sm tracking-widest uppercase mb-4 block">Phase 01</span>
-               <h3 className="font-instrument text-2xl text-deep-charcoal mb-3">Essenz & Positionierung</h3>
-               <p className="font-satoshi text-warm-steel leading-relaxed">Wir betreiben kein Oberflächen-Marketing. Im tiefen Interview finden wir heraus, wofür du wirklich stehst, und übersetzen das in eine glasklare Positionierung.</p>
+             <ScrollReveal delay={0.1} className="h-full">
+               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
+                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 01</span>
+                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Essenz & Positionierung</h3>
+                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Wir betreiben kein Oberflächen-Marketing. Im tiefen Interview finden wir heraus, wofür du wirklich stehst, und übersetzen das in eine glasklare Positionierung.</p>
+               </div>
              </ScrollReveal>
              
              {/* Phase 2 */}
-             <ScrollReveal delay={0.2} className="p-8 border border-whisper-border rounded-2xl shadow-warm-shadow bg-pure-surface/50 h-full">
-               <span className="font-geist text-soft-stone text-sm tracking-widest uppercase mb-4 block">Phase 02</span>
-               <h3 className="font-instrument text-2xl text-deep-charcoal mb-3">Brand Identity & Formgebung</h3>
-               <p className="font-satoshi text-warm-steel leading-relaxed">Fleur entwickelt dein visuelles Zuhause. Von der Signatur-Farbe bis zur Typografie – alles wird präzise auf deine Persönlichkeit und Frequenz abgestimmt.</p>
+             <ScrollReveal delay={0.2} className="h-full">
+               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
+                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 02</span>
+                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Brand Identity & Formgebung</h3>
+                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Fleur entwickelt dein visuelles Zuhause. Von der Signatur-Farbe bis zur Typografie – alles wird präzise auf deine Persönlichkeit und Frequenz abgestimmt.</p>
+               </div>
              </ScrollReveal>
              
              {/* Phase 3 */}
-             <ScrollReveal delay={0.3} className="p-8 border border-whisper-border rounded-2xl shadow-warm-shadow bg-pure-surface/50 h-full">
-               <span className="font-geist text-soft-stone text-sm tracking-widest uppercase mb-4 block">Phase 03</span>
-               <h3 className="font-instrument text-2xl text-deep-charcoal mb-3">Premium-Website & Launch</h3>
-               <p className="font-satoshi text-warm-steel leading-relaxed">Deine voll animierte, performante Website geht live. Keine Templates, sondern ein digitales Erlebnis, das deine Zielgruppe intuitiv abholt und Vertrauen schafft.</p>
+             <ScrollReveal delay={0.3} className="h-full">
+               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
+                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 03</span>
+                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Premium-Website & Launch</h3>
+                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Deine voll animierte, performante Website geht live. Keine Templates, sondern ein digitales Erlebnis, das deine Zielgruppe intuitiv abholt und Vertrauen schafft.</p>
+               </div>
              </ScrollReveal>
           </div>
           
-          <ScrollReveal delay={0.4} className="mt-20 text-center">
-            <Link href="/premium-angebot" className="inline-flex items-center gap-2 group text-deep-charcoal font-medium font-satoshi text-lg hover:text-refined-gold transition-colors">
+          <ScrollReveal delay={0.4} className="mt-20 flex justify-center text-center">
+            <Link 
+              href="/premium-angebot" 
+              className="group relative inline-flex items-center gap-4 bg-deep-charcoal hover:bg-black text-pure-surface px-8 md:px-10 py-4 md:py-5 rounded-full font-satoshi font-medium text-lg md:text-xl shadow-[0_10px_30px_rgba(26,26,24,0.15)] hover:shadow-[0_15px_40px_rgba(26,26,24,0.25)] transition-all duration-300 active:scale-95"
+            >
               Den detaillierten 7-Schritte-Fahrplan ansehen
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transform group-hover:translate-x-2 transition-transform duration-[400ms] ease-out">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </Link>
           </ScrollReveal>
         </div>
@@ -266,119 +278,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 1.6: DAS TRIO */}
-      <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-pure-surface">
-        <div className="max-w-[1400px] mx-auto">
-          <ScrollReveal>
-            <h2 className="font-instrument text-[clamp(2.5rem,5vw,3.5rem)] text-deep-charcoal text-center mb-6 max-w-[800px] mx-auto leading-[1.1]">Ein Team. Drei Disziplinen. Keine Kompromisse.</h2>
-            <p className="text-warm-steel text-center mb-24 max-w-[600px] mx-auto">Strategie, Design und Technik greifen bei uns nahtlos ineinander, um dein Business mit absoluter Klarheit und Kraft sichtbar zu machen.</p>
-          </ScrollReveal>
-
-          <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start mt-12">
-            
-            {/* Christopher */}
-            <ScrollReveal delay={0.1} className="group flex flex-col">
-              <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-[20px] shadow-warm-shadow border border-whisper-border group-hover:shadow-[0_20px_40px_rgba(184,150,62,0.15)] group-hover:border-refined-gold/30 transition-all duration-700 bg-night-foundation">
-                {/* Crisp Golden Hover Filter */}
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <Image src="/images/Das-Team-Christopher.jpg" alt="Christopher" fill className="object-cover object-[center_20%] grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                
-                {/* Hover Text in Image */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Gründer von Webseiten für Coaches & Meditationslehrer</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Christopher</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3">Technik & Hosting</p>
-              <p className="text-warm-steel leading-[1.65]">Christopher integriert deinen Auftritt technisch auf eigenen Hochleistungs-Servern. Mit Premium-Hosting, laufender Pflege, Updates und System-Wartung sorgt er dafür, dass du dich langfristig um nichts mehr kümmern musst.</p>
-            </ScrollReveal>
-
-            {/* Fleur */}
-            <ScrollReveal delay={0.2} className="group flex flex-col">
-              <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-[20px] shadow-warm-shadow border border-whisper-border group-hover:shadow-[0_20px_40px_rgba(184,150,62,0.15)] group-hover:border-refined-gold/30 transition-all duration-700 bg-night-foundation">
-                {/* Crisp Golden Hover Filter */}
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <Image src="/images/Das-Team-Fleur.png" alt="Fleur" fill className="object-cover object-[center_20%] grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                
-                {/* Hover Text in Image */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Gründerin von Golden Grid</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Fleur</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3">Brand Design</p>
-              <p className="text-warm-steel leading-[1.65]">Fleur sieht Menschen in Farben. Sie übersetzt dein Wesen in ein 100% individuelles Farbkonzept, einen starken Brandguide und eine eigene Designsprache, die deine Zielgruppe anspricht. Von Typografie über Logo bis hin zu fertigen Social-Media-Templates und klar strukturierten Webdesign-Vorlagen.</p>
-            </ScrollReveal>
-
-            {/* Sabala */}
-            <ScrollReveal delay={0.3} className="group flex flex-col">
-              <div className="relative aspect-[4/5] w-full mb-6 overflow-hidden rounded-[20px] shadow-warm-shadow border border-whisper-border group-hover:shadow-[0_20px_40px_rgba(184,150,62,0.15)] group-hover:border-refined-gold/30 transition-all duration-700 bg-night-foundation">
-                {/* Crisp Golden Hover Filter */}
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <Image src="/images/Das-Team-Sabala-2.png" alt="Sabala" fill className="object-cover object-[center_20%] grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                
-                {/* Hover Text in Image */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Gründer von Sabala Mentoring & Connecting Herzkreative</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Sabala</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3">Essenz, Strategie & Code</p>
-              <p className="text-warm-steel leading-[1.65]">Von der Essenz über die Positionierung und Angebotsstruktur bis zur strategischen Customer Journey. Mit Profi-Tools und individuellem Code setze ich unsere Vision grenzenlos und maßgeschneidert als funktionales Erlebnis um.</p>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
-
       {/* SECTION 1.7: REFERENZ-VORSCHAU */}
       <section id="referenzen" className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-warm-canvas">
         <div className="max-w-[1400px] mx-auto">
           <ScrollReveal>
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
               <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] text-deep-charcoal">Arbeiten, die für sich sprechen.</h2>
-              <Link href="/referenzen" className="font-mono text-sm text-warm-steel hover:text-refined-gold uppercase tracking-widest transition-colors mb-2">Alle Referenzen ansehen →</Link>
+              <span className="font-mono text-sm text-warm-steel uppercase tracking-widest mb-2 border border-warm-steel/20 px-4 py-2 rounded-full">Coming Soon</span>
             </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[400px]">
-            {/* Primary Project */}
+            {/* Primary Project 1 */}
             <ScrollReveal delay={0.1} className="md:col-span-2 lg:col-span-2 row-span-2 group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
               <div className="absolute inset-0 z-0">
-                <Image src="https://picsum.photos/seed/ref1/1200/800" alt="Projekt Eins" fill className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/80 to-transparent"></div>
+                <Image src="/images/Das-Team-Fleur.png" alt="Golden Grid" fill className="object-cover opacity-60 mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/90 via-deep-charcoal/40 to-transparent"></div>
+              </div>
+              <div className="absolute top-6 right-6 z-20">
+                <span className="bg-refined-gold/90 backdrop-blur-md text-white font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-full font-bold shadow-sm">
+                  In Arbeit
+                </span>
               </div>
               <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <p className="font-mono text-sm tracking-wider uppercase mb-3 opacity-90">Premium Website & Branding</p>
-                <h3 className="font-instrument text-4xl mb-4">The Conscious Leader</h3>
-                <p className="text-pure-surface/80 max-w-md hidden md:block">Vollständiger Rebrand und Website-Neugestaltung für eine Executive Leadership Coachin in Zürich.</p>
+                <p className="font-mono text-sm tracking-wider uppercase mb-3 opacity-90 text-refined-gold font-bold">Premium Brand Design & Website</p>
+                <h3 className="font-instrument text-4xl mb-4">Golden Grid (Fleur)</h3>
+                <p className="text-pure-surface/80 max-w-md hidden md:block">Eine tiefenpsychologische Premium-Marke und Website für Fleur, um ihre eigene Brand-Identity-Arbeit auf das nächste Level zu heben.</p>
               </div>
             </ScrollReveal>
 
             {/* Secondary Project 1 */}
             <ScrollReveal delay={0.2} className="group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
-              <div className="absolute inset-0 z-0">
-                <Image src="https://picsum.photos/seed/ref2/600/600" alt="Projekt Zwei" fill className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/80 to-transparent"></div>
+              <div className="absolute inset-0 z-0 bg-[#2E2B26]">
+                <Image src="/images/Das-Team-Christopher.jpg" alt="Christopher Buschor" fill className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1] grayscale" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+              </div>
+              <div className="absolute top-6 right-6 z-20">
+                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full font-bold">
+                  In Arbeit
+                </span>
               </div>
               <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <p className="font-mono text-sm tracking-wider uppercase mb-2 opacity-90">Brand Identity</p>
-                <h3 className="font-instrument text-2xl">Studio Minimal</h3>
+                <p className="font-mono text-xs tracking-wider uppercase mb-2 text-night-gold opacity-90">Premium Website & Hosting</p>
+                <h3 className="font-instrument text-3xl">Christopher Buschor</h3>
               </div>
             </ScrollReveal>
 
             {/* Secondary Project 2 */}
             <ScrollReveal delay={0.3} className="group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
-              <div className="absolute inset-0 z-0">
-                <Image src="https://picsum.photos/seed/ref3/600/600" alt="Projekt Drei" fill className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/80 to-transparent"></div>
+              <div className="absolute inset-0 z-0 bg-[#2E2B26]">
+                <div className="absolute inset-0 opacity-40 mix-blend-overlay bg-[url('/Bilder%20Sabala/P9282978.jpg')] bg-cover"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+              </div>
+              <div className="absolute top-6 right-6 z-20">
+                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full font-bold">
+                  Kommend
+                </span>
               </div>
               <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <p className="font-mono text-sm tracking-wider uppercase mb-2 opacity-90">Webdesign</p>
-                <h3 className="font-instrument text-2xl">Atem & Raum</h3>
+                <p className="font-mono text-[10px] tracking-wider uppercase mb-2 text-night-gold opacity-90 leading-tight pr-4">Premium Klangtherapie & Resilienz-Trainings am Bodensee</p>
+                <h3 className="font-instrument text-3xl">Stefan Pons</h3>
               </div>
             </ScrollReveal>
           </div>
