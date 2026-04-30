@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Podcast Cover</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+    @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap');
+
+    :root {
+      --night-foundation: #1A1A18;
+      --night-text: #F5F3EF;
+      --night-gold: #C9A84C;
+      --night-secondary: #A09C95;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 3000px;
+      height: 3000px;
+      background-color: var(--night-foundation);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* Subtle grain texture overlay */
+    .grain {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Subtle diamond accent in background */
+    .bg-diamond {
+      position: absolute;
+      top: -100px; left: -100px;
+      width: 1500px; height: 1500px;
+      border: 4px solid var(--night-gold);
+      transform: rotate(45deg);
+      opacity: 0.05;
+      z-index: 1;
+    }
+
+    /* Small logo corner */
+    .logo-corner {
+      position: absolute;
+      top: 240px;
+      left: 240px;
+      width: 250px;
+      opacity: 0.8;
+      z-index: 5;
+    }
+
+    .content-wrapper {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      padding: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Push to lower half */
+      padding-bottom: 450px;
+      z-index: 5;
+    }
+
+    /* Typography */
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 0.9;
+    }
+
+    .t-business {
+      font-family: 'Instrument Serif', serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 420px;
+      color: var(--night-text);
+      letter-spacing: -0.02em;
+    }
+
+    .t-beyond {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 360px;
+      color: var(--night-gold);
+      margin-left: 20px;
+      margin-top: -40px;
+    }
+
+    .t-mind {
+      font-family: 'Satoshi', sans-serif;
+      font-weight: 700;
+      font-size: 580px;
+      color: var(--night-text);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: -20px;
+      margin-left: -10px;
+    }
+    
+    .gold-separator {
+      width: 1300px;
+      height: 4px;
+      background-color: var(--night-gold);
+      opacity: 0.3;
+      margin-top: 100px;
+      margin-bottom: 80px;
+    }
+
+    .subtitle-group {
+      font-family: 'Satoshi', sans-serif;
+      font-weight: 400;
+      color: var(--night-secondary);
+      font-size: 130px;
+      line-height: 1.4;
+      max-width: 1600px;
+    }
+
+    .subtitle-group span {
+      display: block;
+    }
+    
+    .subtitle-bold {
+      color: var(--night-text);
+    }
+
+    /* Image area */
+    .photo-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2000px;
+      height: 3000px;
+      z-index: 2;
+    }
+    
+    .photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    /* Huge Gradient overlay for seamless fading */
+    .photo-fade {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2000px;
+      height: 3000px;
+      /* Left gradient fading to right, AND Bottom gradient fading to top */
+      background: linear-gradient(to right, var(--night-foundation) 10%, transparent 60%),
+                  linear-gradient(to top, var(--night-foundation) 0%, transparent 40%),
+                  linear-gradient(to bottom, var(--night-foundation) 0%, transparent 20%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+  </style>
+</head>
+<body>
+  
+  <div class="photo-container">
+    <img src="Bilder Sabala/5 - _MXS8196.jpg" alt="Ilja Sabala Krasevskij">
+    <div class="photo-fade"></div>
+  </div>
+
+  <div class="bg-diamond"></div>
+  
+  <img src="images/logo-sabala-mentoring.png" class="logo-corner" alt="Logo">
+
+  <div class="content-wrapper">
+    
+    <div class="title-group">
+      <div class="t-business">Business</div>
+      <div class="t-beyond">beyond</div>
+      <div class="t-mind">MIND</div>
+    </div>
+    
+    <div class="gold-separator"></div>
+    
+    <div class="subtitle-group">
+      <span>Der Podcast</span>
+      <span class="subtitle-bold">mit Ilja 'Sabala' Krasevskij</span>
+    </div>
+    
+  </div>
+  
+  <div class="grain"></div>
+
+</body>
+</html>

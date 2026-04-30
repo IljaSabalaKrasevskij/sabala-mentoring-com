@@ -1,0 +1,7 @@
+_Dev
+tmp
+.tmp_ffmpeg
+.git
+node_modules
+.next
+.DS_Store
