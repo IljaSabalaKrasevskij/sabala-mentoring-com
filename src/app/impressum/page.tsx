@@ -33,7 +33,7 @@ export default function ImpressumPage() {
           <section>
             <h2 className="font-semibold text-deep-charcoal text-lg mb-4">Kontakt</h2>
             <p>
-              Telefon: <a href="tel:+491783561736" className="text-refined-gold hover:underline">+49 178 3561736</a><br />
+              Telefon: <a href="tel:+995591443665" className="text-refined-gold hover:underline">+995 591 44 36 65</a><br />
               E-Mail: <a href="mailto:sabala@sabala-mentoring.com" className="text-refined-gold hover:underline">sabala@sabala-mentoring.com</a>
             </p>
           </section>
