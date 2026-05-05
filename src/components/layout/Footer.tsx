@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
 
 export default function Footer() {
   return (
@@ -30,7 +31,12 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="max-w-[1400px] mx-auto mt-20 pt-8 border-t border-whisper-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-soft-stone">
+      {/* ProvenExpert Compliance-Strip */}
+      <div className="max-w-[1400px] mx-auto mt-16 pt-6 border-t border-whisper-border flex justify-center md:justify-start">
+        <ProvenExpertCard variant="footer" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto mt-8 pt-6 border-t border-whisper-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-soft-stone">
         <p>&copy; 2026 Ilja Sabala Krasevskij</p>
         <div className="flex gap-6">
           <Link href="/impressum" className="hover:text-warm-steel transition-colors">Impressum</Link>

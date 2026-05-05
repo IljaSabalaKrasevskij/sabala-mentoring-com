@@ -2,6 +2,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
 import { FloatingCard } from "@/components/ui/FloatingCard";
 import { GoldDust } from "@/components/ui/GoldDust";
+import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -481,6 +482,36 @@ export default function Home() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* SECTION 1.4D: PROVEN-EXPERT TRUST-CARD */}
+      <section className="bg-warm-canvas py-20 md:py-28 px-6 sm:px-12 md:px-24 relative overflow-hidden border-t border-whisper-border">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-refined-gold/[0.04] blur-[150px] rounded-full pointer-events-none" />
+        <div className="max-w-[1100px] mx-auto relative z-10">
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-center">
+            <ScrollReveal>
+              <div>
+                <div className="inline-flex items-center gap-3 mb-6">
+                  <div className="h-[1px] w-10 bg-refined-gold" />
+                  <span className="font-mono text-refined-gold text-[0.65rem] md:text-xs tracking-[0.25em] uppercase font-bold">
+                    Verifizierte Auszeichnung
+                  </span>
+                </div>
+                <h2 className="font-instrument text-[clamp(2rem,4vw,3rem)] text-deep-charcoal leading-[1.1] mb-5">
+                  Echte Stimmen.{" "}
+                  <span className="italic text-refined-gold">Echte Ergebnisse.</span>
+                </h2>
+                <p className="font-satoshi text-warm-steel text-base md:text-lg leading-[1.65]">
+                  Über die Jahre haben Menschen aus den unterschiedlichsten Bereichen mit mir gearbeitet. Ihre Bewertungen werden unabhängig über ProvenExpert verifiziert — das volle Profil ist öffentlich einsehbar.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <ProvenExpertCard variant="card" />
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
