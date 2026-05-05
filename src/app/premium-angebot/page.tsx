@@ -621,78 +621,195 @@ export default function PremiumAngebotPage() {
       </section>
 
       
-      {/* SECTION 10: Investition & CTA */}
-      <section id="contact" className="relative py-32 md:py-48 px-6 text-center overflow-hidden">
+      {/* SECTION 10: VIER STUFEN — Lite · Basis · All-in · Signature */}
+      <section id="stufen" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#050505]">
         {/* Soft Dusk Transitions */}
-        <div className="absolute top-0 left-0 w-full h-[200px] md:h-[300px] bg-gradient-to-b from-[#050505] to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[300px] bg-gradient-to-t from-[#050505] to-transparent z-20 pointer-events-none" />
-        
-        {/* Full background image */}
-        <div className="absolute inset-0 z-0 scale-105">
-          <Image 
-            src="/images/Wohnzimmer Berge.jpeg"
-            alt="Wohnzimmer Berge - Raum zum Wohlfühlen"
-            fill
-            className="object-cover object-center translate-y-[-10%]"
-          />
-        </div>
-        
-        {/* Overlays */}
-        <div className="absolute inset-0 bg-[#050505]/80 backdrop-blur-[4px] z-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-[#050505] z-0" />
+        <div className="absolute top-0 left-0 w-full h-[200px] md:h-[300px] bg-gradient-to-b from-warm-canvas to-transparent z-10 pointer-events-none opacity-30 mix-blend-overlay" />
+        <div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-refined-gold/5 blur-[150px] rounded-full pointer-events-none" />
 
-        <div className="max-w-[700px] mx-auto relative z-10 flex flex-col items-center">
+        <div className="max-w-[1400px] mx-auto relative z-10">
           <ScrollReveal>
-             <h2 className="font-instrument text-[clamp(2.5rem,4vw,4rem)] text-white leading-[1.1] mb-6 drop-shadow-2xl">
-               Der Start<br className="hidden md:block"/> <span className="italic text-refined-gold">deines Fundaments.</span>
-             </h2>
-             <p className="font-satoshi text-white/80 text-lg md:text-xl leading-relaxed mb-16">
-               Wir prüfen in unserem gemeinsamen Call, ob wir menschlich und strategisch matchen.
-             </p>
+            <div className="text-center max-w-[820px] mx-auto mb-20 md:mb-24">
+              <div className="inline-block px-5 py-2 rounded-full border border-refined-gold/30 bg-refined-gold/5 backdrop-blur-md mb-8">
+                <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-refined-gold font-medium">Vier Stufen · ein Versprechen</span>
+              </div>
+              <h2 className="font-instrument text-[clamp(2.5rem,4vw,4rem)] text-white leading-[1.05] mb-6">
+                Wähle deine{" "}
+                <span className="italic text-refined-gold">Tiefe.</span>
+              </h2>
+              <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65]">
+                Drei klare Stufen mit Festpreis. Plus eine Signature-Stufe für hochindividuelle Projekte. Alle vier mit derselben Begleiter-Haltung.
+              </p>
+            </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.2} className="w-full">
-            <div className="relative p-[1px] rounded-[2.5rem] bg-gradient-to-br from-refined-gold/40 via-white/10 to-transparent w-full">
-              <div className="absolute -inset-10 bg-refined-gold/10 blur-[80px] rounded-full z-0 pointer-events-none"></div>
-              
-              <div className="relative bg-[#0A0A0A]/90 backdrop-blur-xl p-10 md:p-16 rounded-[calc(2.5rem-1px)] h-full flex flex-col items-center z-10 border border-white/5">
-                
-                {/* Process Steps inside CTA */}
-                <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-6 md:gap-12 w-full mb-16">
-                  <div className="flex flex-col items-center text-center">
-                     <div className="w-12 h-12 rounded-full border border-refined-gold/40 text-refined-gold flex items-center justify-center font-geist mb-3">01</div>
-                     <span className="font-satoshi text-white/90 text-sm">Assessment<br/>vereinbaren</span>
-                  </div>
-                  <div className="hidden md:block w-12 h-[1px] bg-white/20 mt-6 md:mt-6" />
-                  <div className="block md:hidden h-8 w-[1px] bg-white/20" />
-                  <div className="flex flex-col items-center text-center">
-                     <div className="w-12 h-12 rounded-full border border-refined-gold/40 text-refined-gold flex items-center justify-center font-geist mb-3">02</div>
-                     <span className="font-satoshi text-white/90 text-sm">Strategie &<br/>Angebot</span>
-                  </div>
-                  <div className="hidden md:block w-12 h-[1px] bg-white/20 mt-6 md:mt-6" />
-                  <div className="block md:hidden h-8 w-[1px] bg-white/20" />
-                  <div className="flex flex-col items-center text-center">
-                     <div className="w-12 h-12 rounded-full border border-refined-gold/40 text-refined-gold flex items-center justify-center font-geist mb-3">03</div>
-                     <span className="font-satoshi text-white/90 text-sm">Startschuss &<br/>Onboarding</span>
-                  </div>
+          {/* 4 Stufen Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 mb-12">
+            {/* LITE */}
+            <ScrollReveal delay={0.05} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
+              <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
+                <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">01 · Lite</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Der Einstieg ins Premium.</h3>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Sauberer Premium-Auftritt für klar fokussierte Macher.</p>
+                <div className="border-t border-white/5 pt-5 mb-5">
+                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+                  <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">8.000 €</span>
                 </div>
-
-                <div className="text-center mb-8">
-                  <span className="font-geist text-white/50 uppercase tracking-[0.2em] text-xs mb-3 block">Gesamt-Investition Premium-Auftritt</span>
-                  <span className="font-instrument text-[3rem] md:text-[4rem] text-refined-gold leading-none drop-shadow-md block">ab 9.900 €</span>
-                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.7rem] mt-3 block">5 – 8 Seiten · je nach Komplexität & technischer Integration</span>
-                </div>
-
-                <Link 
-                  href="/termin-buchen" 
-                  className="bg-refined-gold hover:bg-refined-gold/90 text-[#050505] px-10 md:px-14 py-5 rounded-full font-satoshi font-medium text-lg transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_15px_40px_rgba(184,150,62,0.3)] hover:shadow-[0_20px_60px_rgba(184,150,62,0.5)] flex items-center justify-center gap-3 w-full group"
-                >
-                  Termin buchen
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </Link>
-                <span className="text-white/40 font-geist text-xs uppercase tracking-widest text-center mt-4 block">Kostenfreies 30-Minuten Assessment</span>
-                
+                <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Identity Sessions (2× 90 Min)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Mini-Guide (Typo · Farben · Tonalität)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 5 Seiten</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>1 Tool-Embed (Buchung/Zahlung/Newsletter)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Hosting · DSGVO · cookie-frei</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>6 Monate Pflege Mini</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Liefergarantie · 8 Wochen (ohne Logo) · 3 Monate (mit Logo)</span></li>
+                </ul>
               </div>
+            </ScrollReveal>
+
+            {/* BASIS */}
+            <ScrollReveal delay={0.1} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/15 to-transparent" />
+              <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
+                <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">02 · Basis</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Mit Marketing-System.</h3>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Vollumfänglicher Premium-Auftritt mit Content-Start.</p>
+                <div className="border-t border-white/5 pt-5 mb-5">
+                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+                  <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">11.000 €</span>
+                </div>
+                <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Lite</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 8 Seiten</strong> + Blog/Podcast-Setup</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel</strong> zu deinen Kernthemen</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Tool-Beratung + Setup (3 Tools deiner Wahl)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Newsletter-Welcome-Sequence Vorlage</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>2× Event-/Webinar-Landingpages</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>12 Monate Pflege Plus + Monatsbericht</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>1× Mid-Year-Strategie-Call (60 Min)</span></li>
+                </ul>
+              </div>
+            </ScrollReveal>
+
+            {/* ALL-IN (Highlighted) */}
+            <ScrollReveal delay={0.15} className="group relative rounded-[2rem] p-[1px] overflow-hidden lg:-translate-y-4">
+              <div className="absolute inset-0 bg-gradient-to-b from-refined-gold/70 to-refined-gold/15" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-refined-gold to-transparent opacity-50" />
+              <div className="absolute top-8 right-8 w-24 h-24 bg-refined-gold/15 blur-[40px] rounded-full group-hover:bg-refined-gold/25 transition-colors duration-700" />
+              <div className="relative h-full bg-[#0E0B05] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col">
+                <div className="absolute top-4 right-4 bg-refined-gold text-[#050505] uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Empfohlen</div>
+                <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">03 · All-in</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Komplette Begleitung.</h3>
+                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Du brennst, ich kümmere mich um alles drumherum.</p>
+                <div className="border-t border-white/10 pt-5 mb-5 relative z-10">
+                  <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+                  <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">15.000 €</span>
+                </div>
+                <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Basis</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 12 Seiten</strong> + Tool-Orchestrierung</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Automation-Setup (Buchung → Zahlung → CRM)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">4× Event-/Webinar-Landingpages</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Wöchentlich LinkedIn-Karussell</strong> (52/Jahr)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Monatlich 1 Blog-Artikel</strong> (12/Jahr)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Content-Säulen + Themen-Plan + Vorlagen</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>12 Monate Pflege Premium + Monatsanalyse</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Monatlich 30-Min-Strategie-Call</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Sabala Diamond Force Bundle (Wert 1.490 €)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Quartals-Brand-Guidance</span></li>
+                </ul>
+              </div>
+            </ScrollReveal>
+
+            {/* SIGNATURE */}
+            <ScrollReveal delay={0.2} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-refined-gold/40 via-white/10 to-refined-gold/20" />
+              <div className="relative h-full bg-gradient-to-b from-[#0E0B05] to-[#050505] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col overflow-hidden">
+                {/* Signature-Bespoke Image as subtle background */}
+                <div className="absolute inset-0 opacity-[0.12] mix-blend-screen pointer-events-none">
+                  <Image src="/images/homepage/signature-bespoke.jpg" alt="" fill className="object-cover" />
+                </div>
+                <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">04 · Signature</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Bespoke. Hochindividuell.</h3>
+                <p className="font-satoshi italic text-white/60 text-sm mb-6 relative z-10">Nahezu unbegrenzte Möglichkeiten — wenn alles möglich sein soll.</p>
+                <div className="border-t border-refined-gold/20 pt-5 mb-5 relative z-10">
+                  <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+                  <span className="font-instrument text-[2.5rem] text-white leading-none">35.000 €</span>
+                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.6rem] mt-2 block">auf Anfrage</span>
+                </div>
+                <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus All-in</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Custom 3D-Hero</strong> (Spline / Three.js)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Custom Scroll-Storytelling</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom Sound-Design (optional)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom Video-Snippets</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Personal Brand Photoshoot-Begleitung</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Unbegrenzte Seiten</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>2-Tage Immersion-Workshop</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Wöchentliches Briefing & Iteration</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom KI-Workflows + Custom GPT</span></li>
+                </ul>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* ADD-ONS */}
+          <ScrollReveal delay={0.3}>
+            <div className="max-w-[900px] mx-auto mt-20 md:mt-24">
+              <div className="flex flex-col items-center text-center mb-10">
+                <div className="inline-block px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6">
+                  <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-white/70 font-medium">Optionale Add-ons</span>
+                </div>
+                <h3 className="font-instrument text-[clamp(1.75rem,3vw,2.5rem)] text-white leading-tight mb-4">
+                  Was du{" "}
+                  <span className="italic text-refined-gold">dazu nehmen kannst.</span>
+                </h3>
+                <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed max-w-[600px]">
+                  In jeder Stufe individuell zubuchbar — wenn du noch tiefer gehen willst.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-1 gap-4">
+                {/* Fleur Logo & Brand Design */}
+                <div className="group relative rounded-[1.5rem] p-[1px] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-refined-gold/30 via-white/5 to-transparent" />
+                  <div className="relative bg-[#0A0A0A] p-6 md:p-8 rounded-[calc(1.5rem-1px)] flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div className="flex-1">
+                      <div className="flex items-baseline gap-3 mb-2 flex-wrap">
+                        <h4 className="font-instrument text-xl md:text-2xl text-white">Fleur · Logo & Brand Design</h4>
+                        <span className="font-mono text-refined-gold text-sm tracking-widest">+1.500 €</span>
+                      </div>
+                      <p className="font-satoshi text-white/60 text-sm md:text-base leading-relaxed">
+                        Falls du noch kein Logo hast: Fleur entwickelt Logo + erstes Branddesign (Farbwelt, Logo-Erstentwurf, visuelle DNA). Wenn du bereits ein Logo mitbringst, gleichen wir es im Hauptpaket leicht an deine Markenwelt an — das ist <strong className="text-white font-medium">in jedem Paket inklusive</strong>.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* CTA Block */}
+          <ScrollReveal delay={0.4}>
+            <div className="max-w-[700px] mx-auto mt-20 md:mt-24 text-center">
+              <h3 className="font-instrument text-[clamp(2rem,3.5vw,3rem)] text-white leading-tight mb-6">
+                Lass uns sprechen.{" "}
+                <span className="italic text-refined-gold">Beidseitig unverbindlich.</span>
+              </h3>
+              <p className="font-satoshi text-warm-steel text-lg leading-relaxed mb-10">
+                30-Min-Klärungsgespräch — kein Verkaufsgespräch. Wir prüfen gemeinsam, ob wir zueinander passen. Wenn ja, geht&apos;s los. Wenn nicht — keine Kosten, keine Folgen.
+              </p>
+              <Link
+                href="/termin-buchen"
+                className="inline-flex items-center justify-center bg-refined-gold hover:bg-refined-gold/90 text-[#050505] px-10 md:px-14 py-5 rounded-full font-satoshi font-medium text-lg transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_15px_40px_rgba(184,150,62,0.3)] hover:shadow-[0_20px_60px_rgba(184,150,62,0.5)] gap-3 group"
+              >
+                Klärungsgespräch buchen
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </Link>
+              <p className="text-white/40 font-geist text-xs uppercase tracking-widest mt-4">
+                Kostenfreies 30-Minuten-Klärungsgespräch
+              </p>
             </div>
           </ScrollReveal>
         </div>
@@ -766,125 +883,40 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-{/* SECTION 11: Hosting-Pakete bei Christopher (WordPress-Pfad) */}
-      <section className="bg-[#050505] py-24 md:py-32 px-6 relative overflow-hidden z-20">
+{/* SECTION 11: Individuelles Angebot · WordPress / anderer Stack */}
+      <section className="bg-warm-canvas py-24 md:py-32 px-6 relative overflow-hidden border-t border-whisper-border">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-refined-gold/5 blur-[150px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-warm-steel/5 blur-[150px] rounded-full pointer-events-none" />
 
-        <div className="max-w-[1200px] mx-auto relative z-10">
+        <div className="max-w-[1000px] mx-auto relative z-10">
           <ScrollReveal>
-             <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-16 md:mb-20">
-               <div className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 inline-block">
-                 <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-white/70 font-medium">Hosting-Pakete · WordPress-Pfad mit Christopher</span>
-               </div>
-               <h2 className="font-instrument text-[clamp(2rem,4vw,3.5rem)] text-white leading-[1.1] mb-6">
-                 Technik, die sich <span className="italic text-refined-gold">mit dir weiterentwickelt.</span>
-               </h2>
-               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-relaxed">
-                 Wenn du den WordPress-Pfad wählst (Variante B im Fahrplan), übernimmt unser Technik-Partner <strong className="text-white font-medium">Christopher Buschor</strong> Hosting, Backups, Updates und DSGVO-Pflege. Server in Deutschland, du bleibst alleiniger Eigentümer deines Codes.
-               </p>
-             </div>
-          </ScrollReveal>
-
-          {/* Core Packages Bento */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-             {/* Package 1: Lite */}
-             <ScrollReveal delay={0.1} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
-                <div className="relative h-full bg-[#0A0A0A] p-8 md:p-10 rounded-[calc(2rem-1px)] flex flex-col items-start border-t border-white/5">
-                   <h3 className="font-instrument text-2xl text-white mb-2">Lite-Paket</h3>
-                   <div className="font-geist text-refined-gold tracking-widest text-sm uppercase mb-6">49,- € / Monat</div>
-                   <p className="font-satoshi text-white/60 mb-8 leading-relaxed">Die Minimallösung für den sicheren Einstieg mit Hosting auf deutschen Servern.</p>
-                   <ul className="space-y-4 font-satoshi text-white/80 w-full mb-8">
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Monatliche Rechtstext-Aktualisierung (DSGVO, Cookies)</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Wöchentliche Updates & Monats-Backups</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Monatliche Scans auf Malware</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>1 E-Mail-Postfach (2 GB Speicher)</span>
-                     </li>
-                   </ul>
+            <div className="bg-pure-surface border border-whisper-border rounded-[2rem] p-8 md:p-12 lg:p-16 shadow-[0_30px_80px_rgba(184,150,62,0.06)] flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
+              <div className="flex-1">
+                <div className="inline-block px-4 py-1.5 rounded-full border border-warm-steel/20 bg-warm-canvas mb-5">
+                  <span className="font-geist text-[0.65rem] md:text-xs tracking-[0.2em] uppercase text-warm-steel font-medium">Individuelles Angebot</span>
                 </div>
-             </ScrollReveal>
-
-             {/* Package 2: Basis (Highlighted) */}
-             <ScrollReveal delay={0.2} className="group relative rounded-[2rem] p-[1px] overflow-hidden lg:-translate-y-4">
-                <div className="absolute inset-0 bg-gradient-to-b from-refined-gold/60 to-refined-gold/10" />
-                <div className="relative h-full bg-[#0E0B05] p-8 md:p-10 rounded-[calc(2rem-1px)] flex flex-col items-start">
-                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-refined-gold to-transparent opacity-50" />
-                   <div className="absolute top-10 right-10 w-24 h-24 bg-refined-gold/10 blur-[40px] rounded-full group-hover:bg-refined-gold/20 transition-colors duration-700" />
-                   
-                   <h3 className="font-instrument text-3xl text-white mb-2 relative z-10">Basis-Paket</h3>
-                   <div className="font-geist text-refined-gold tracking-widest text-sm uppercase mb-6 relative z-10">74,- € / Monat</div>
-                   <p className="font-satoshi text-white/70 mb-8 leading-relaxed relative z-10">Das solide Fundament für Selbstständige, um ohne Sorgen aufzubauen.</p>
-                   <ul className="space-y-4 font-satoshi text-white/90 w-full mb-8 relative z-10">
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>2-wöchige Rechtstext-Updates</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Wöchentliche Updates inkl. Funktionscheck</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span><strong className="text-white">Tägliche</strong> Backups & regelmäßige Scans</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Bis zu 3 E-Mail-Postfächer (insg. 6 GB)</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Erweiterte Performance-Optimierung</span>
-                     </li>
-                   </ul>
-                </div>
-             </ScrollReveal>
-
-             {/* Package 3: Premium */}
-             <ScrollReveal delay={0.3} className="group relative rounded-[2rem] p-[1px] overflow-hidden md:col-span-2 lg:col-span-1">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
-                <div className="relative h-full bg-[#0A0A0A] p-8 md:p-10 rounded-[calc(2rem-1px)] flex flex-col items-start border-t border-white/5">
-                   <h3 className="font-instrument text-2xl text-white mb-2">Premium-Paket</h3>
-                   <div className="font-geist text-refined-gold tracking-widest text-sm uppercase mb-6">149,- € / Monat</div>
-                   <p className="font-satoshi text-white/60 mb-8 leading-relaxed">Für Unternehmer, die durch Performance und Analytics wachsen möchten.</p>
-                   <ul className="space-y-4 font-satoshi text-white/80 w-full mb-8">
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Updates jeden Montag & Freitag</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>360° Matomo Web Analytics</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Inkl. zeitlicher Assistenz (Beratung/Pflege bis 45 Min.)</span>
-                     </li>
-                     <li className="flex items-start gap-4">
-                       <span className="text-refined-gold mt-1">✦</span>
-                       <span>Bis zu 5 E-Mail-Postfächer (12 GB)</span>
-                     </li>
-                   </ul>
-                </div>
-             </ScrollReveal>
-          </div>
-
-          {/* Disclaimer for larger packages */}
-          <ScrollReveal delay={0.4}>
-              <div className="text-center mt-12 font-satoshi text-white/40 text-sm max-w-[600px] mx-auto border-t border-white/5 pt-6">
-                Neben diesen Kernpaketen bieten wir Business- (279€) und Elite-Pakete (799€) inkl. A/B-Testing, Heatmaps und höchster Priorisierung für stark aufgestellte Organisationen an.
+                <h3 className="font-instrument text-[clamp(1.75rem,3vw,2.5rem)] text-deep-charcoal leading-tight mb-4">
+                  Du brauchst WordPress oder einen{" "}
+                  <span className="italic text-refined-gold">anderen Stack?</span>
+                </h3>
+                <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed mb-2">
+                  Falls du WordPress, ein Membership-System oder eine sehr spezifische technische Lösung wünschst, arbeiten wir mit unserem Technik-Partner{" "}
+                  <strong className="text-deep-charcoal font-medium">Christopher Buschor</strong>{" "}
+                  zusammen. Du bekommst ein <strong className="text-deep-charcoal font-medium">individuelles Angebot</strong> nach Beratungsgespräch — Hosting in Deutschland, du bleibst alleiniger Eigentümer.
+                </p>
+                <p className="font-satoshi text-warm-steel/80 text-sm md:text-base leading-relaxed italic">
+                  Hinweis: Das ist außerhalb der vier Stufen — wir besprechen Scope und Preis individuell im Klärungsgespräch.
+                </p>
               </div>
+              <div className="shrink-0">
+                <Link
+                  href="/termin-buchen"
+                  className="inline-flex items-center justify-center bg-deep-charcoal hover:bg-black text-white px-7 py-4 rounded-full font-satoshi font-medium text-sm md:text-base transition-all shadow-lg hover:-translate-y-0.5 gap-3 group whitespace-nowrap"
+                >
+                  Beratungsgespräch buchen
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </Link>
+              </div>
+            </div>
           </ScrollReveal>
         </div>
       </section>

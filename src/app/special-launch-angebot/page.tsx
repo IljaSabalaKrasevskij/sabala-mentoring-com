@@ -682,7 +682,7 @@ export default function PresentationPage() {
                 </div>
                 <div className="bg-deep-charcoal border-none text-white p-8 lg:p-12 rounded-3xl lg:rounded-[40px] lg:mt-[80px] text-left lg:text-center shadow-xl hover:-translate-y-2 transition-transform duration-500">
                   <h3 className="font-instrument text-2xl lg:text-4xl mb-3 md:mb-4 text-white">
-                    Kick-Off & 7 Tage zur Live-Page
+                    Kick-Off & 14 Tage zur Live-Page
                   </h3>
                   <p className="text-night-secondary text-sm lg:text-lg mb-4 md:mb-6">
                     Mit Garantie
@@ -951,8 +951,8 @@ export default function PresentationPage() {
             <GuaranteeSeal
               delay={0.1}
               iconType="time"
-              title="7-Tage-Liefergarantie"
-              body="Sobald alle Materialien da sind, steht die Seite in 7 Tagen — garantiert."
+              title="14-Tage-Liefergarantie"
+              body="Sobald alle Materialien da sind, steht die Seite in 14 Tagen — garantiert."
             />
             <GuaranteeSeal
               delay={0.3}

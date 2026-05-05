@@ -204,6 +204,182 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECTION 1.4C: DREI WEGE ZUR ZUSAMMENARBEIT */}
+      <section className="bg-pure-surface py-24 md:py-32 px-6 sm:px-12 md:px-24 relative overflow-hidden border-t border-whisper-border">
+        {/* Hero illustration as subtle background */}
+        <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
+          <Image src="/images/homepage/drei-wege-hero.jpg" alt="" fill className="object-cover" />
+        </div>
+        <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-refined-gold/5 blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="text-center max-w-[800px] mx-auto mb-16 md:mb-20">
+              <div className="inline-block px-5 py-2 rounded-full border border-refined-gold/30 bg-refined-gold/5 mb-6">
+                <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-refined-gold font-medium">Drei Wege zur Zusammenarbeit</span>
+              </div>
+              <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] text-deep-charcoal leading-[1.05] mb-6">
+                Wie wir{" "}
+                <span className="italic text-refined-gold">gemeinsam starten.</span>
+              </h2>
+              <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65]">
+                Drei Wege — je nachdem, wo du stehst und wie tief du gehen willst.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* 3-Way Bento: Premium dominant, OnePager + KI sekundär */}
+          <div className="grid lg:grid-cols-12 gap-6">
+            {/* Premium-Webseite (Hauptangebot) */}
+            <ScrollReveal delay={0.1} className="lg:col-span-7 group">
+              <Link href="/premium-angebot" className="block h-full">
+                <div className="relative rounded-[2rem] overflow-hidden border-2 border-refined-gold/40 bg-pure-surface shadow-[0_30px_70px_rgba(184,150,62,0.08)] hover:shadow-[0_40px_90px_rgba(184,150,62,0.15)] hover:border-refined-gold/70 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 h-full flex flex-col">
+                  {/* Empfohlen Badge */}
+                  <div className="absolute top-6 right-6 z-20 bg-refined-gold text-deep-charcoal uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">
+                    Hauptangebot
+                  </div>
+
+                  {/* Image */}
+                  <div className="relative w-full aspect-[16/9] overflow-hidden">
+                    <Image
+                      src="/images/homepage/premium-webseite-card.jpg"
+                      alt="Premium-Webseite"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/40 via-transparent to-transparent"></div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8 md:p-10 lg:p-12 flex flex-col flex-1">
+                    <p className="font-mono text-refined-gold text-xs tracking-widest uppercase mb-3">01 · Premium-Webseite</p>
+                    <h3 className="font-instrument text-3xl md:text-4xl lg:text-5xl text-deep-charcoal leading-tight mb-4">
+                      Dein vollumfänglicher{" "}
+                      <span className="italic text-refined-gold">Premium-Auftritt.</span>
+                    </h3>
+                    <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed mb-8 max-w-[560px]">
+                      Bis zu 12 Seiten, individuell designt und animiert, mit Strategie · Brand · Pflege · Begleitung. Vier klare Stufen — vom sauberen Einstieg bis zur Bespoke-Edition.
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 mb-8">
+                      <div className="bg-warm-canvas border border-whisper-border rounded-2xl px-5 py-3">
+                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">Lite</span>
+                        <span className="font-instrument text-deep-charcoal text-xl">ab 8.000 €</span>
+                      </div>
+                      <div className="bg-warm-canvas border border-whisper-border rounded-2xl px-5 py-3">
+                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">All-in</span>
+                        <span className="font-instrument text-deep-charcoal text-xl">ab 15.000 €</span>
+                      </div>
+                      <div className="bg-deep-charcoal border border-refined-gold/30 rounded-2xl px-5 py-3">
+                        <span className="font-geist text-refined-gold text-[0.65rem] uppercase tracking-widest block mb-1">Signature</span>
+                        <span className="font-instrument text-white text-xl">ab 35.000 €</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-auto inline-flex items-center gap-3 text-deep-charcoal font-satoshi font-medium">
+                      <span>Vier Stufen ansehen</span>
+                      <span className="w-10 h-10 rounded-full bg-refined-gold flex items-center justify-center text-white group-hover:translate-x-1 transition-transform">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </ScrollReveal>
+
+            {/* OnePager + KI-Team (rechte Spalte, gestapelt) */}
+            <div className="lg:col-span-5 grid grid-rows-2 gap-6">
+              {/* OnePager */}
+              <ScrollReveal delay={0.2} className="group">
+                <Link href="/special-launch-angebot" className="block h-full">
+                  <div className="relative rounded-[2rem] overflow-hidden border border-whisper-border bg-pure-surface hover:border-refined-gold/50 hover:shadow-[0_30px_70px_rgba(184,150,62,0.1)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 h-full flex">
+                    <div className="p-6 md:p-8 flex flex-col flex-1">
+                      <div className="flex items-start justify-between mb-3">
+                        <p className="font-mono text-refined-gold text-xs tracking-widest uppercase">02 · OnePager</p>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-warm-steel/60 bg-warm-canvas px-2 py-1 rounded-full border border-whisper-border">7 Tage Launch</span>
+                      </div>
+                      <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal leading-tight mb-3">
+                        Schneller{" "}
+                        <span className="italic text-refined-gold">Premium-Einstieg.</span>
+                      </h3>
+                      <p className="font-satoshi text-warm-steel text-sm md:text-base leading-relaxed mb-4 flex-1">
+                        Eine fokussierte Premium-OnePager mit Wow-Effekt — verkaufspsychologisch gebaut, in 7 Tagen live.
+                      </p>
+                      <div className="flex items-baseline gap-2 mb-4">
+                        <span className="font-mono text-warm-steel text-xs uppercase tracking-widest">Reference</span>
+                        <span className="font-instrument text-deep-charcoal text-2xl">2.490 €</span>
+                        <span className="font-mono text-warm-steel/60 text-xs">/ regulär 4.900 €</span>
+                      </div>
+                      <div className="inline-flex items-center gap-2 text-deep-charcoal font-satoshi font-medium text-sm">
+                        <span>OnePager ansehen</span>
+                        <span className="text-refined-gold group-hover:translate-x-1 transition-transform">→</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
+
+              {/* KI-Team */}
+              <ScrollReveal delay={0.3} className="group">
+                <Link href="/gpt-team" className="block h-full">
+                  <div className="relative rounded-[2rem] overflow-hidden border border-deep-charcoal/15 bg-deep-charcoal hover:border-refined-gold/50 hover:shadow-[0_30px_70px_rgba(184,150,62,0.15)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 h-full flex">
+                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-refined-gold/15 blur-[60px] rounded-full group-hover:bg-refined-gold/25 transition-colors duration-700" />
+                    <div className="p-6 md:p-8 flex flex-col flex-1 relative z-10">
+                      <div className="flex items-start justify-between mb-3">
+                        <p className="font-mono text-refined-gold text-xs tracking-widest uppercase">03 · KI-Team</p>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-white/50 bg-white/5 px-2 py-1 rounded-full border border-white/10">Diamond Force</span>
+                      </div>
+                      <h3 className="font-instrument text-2xl md:text-3xl text-white leading-tight mb-3">
+                        Dein autarkes{" "}
+                        <span className="italic text-refined-gold">KI-Team.</span>
+                      </h3>
+                      <p className="font-satoshi text-white/70 text-sm md:text-base leading-relaxed mb-4 flex-1">
+                        Custom GPTs als Bundle — dein KI-Team begleitet dich operativ. Mooni & die Diamond Force.
+                      </p>
+                      <div className="inline-flex items-center gap-2 text-white font-satoshi font-medium text-sm">
+                        <span>KI-Team kennenlernen</span>
+                        <span className="text-refined-gold group-hover:translate-x-1 transition-transform">→</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            </div>
+          </div>
+
+          {/* Signature-Hinweis als Footer-Banner */}
+          <ScrollReveal delay={0.4}>
+            <div className="mt-10 md:mt-12">
+              <div className="relative rounded-[2rem] overflow-hidden p-[1px] bg-gradient-to-r from-refined-gold/40 via-refined-gold/10 to-refined-gold/40">
+                <div className="relative bg-deep-charcoal rounded-[calc(2rem-1px)] p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 overflow-hidden">
+                  {/* Signature image as background accent */}
+                  <div className="absolute inset-0 opacity-[0.18] mix-blend-screen pointer-events-none">
+                    <Image src="/images/homepage/signature-bespoke.jpg" alt="" fill className="object-cover" />
+                  </div>
+                  <div className="flex-1 relative z-10">
+                    <p className="font-mono text-refined-gold text-xs tracking-[0.2em] uppercase mb-2">04 · Sabala Signature</p>
+                    <h3 className="font-instrument text-2xl md:text-3xl text-white leading-tight mb-2">
+                      Du suchst{" "}
+                      <span className="italic text-refined-gold">Hochindividuelles?</span>
+                    </h3>
+                    <p className="font-satoshi text-white/70 text-base md:text-lg leading-relaxed">
+                      Bespoke ab 35.000 € — Custom 3D-Heroes, Scroll-Storytelling, unbegrenzte Möglichkeiten. Nur auf Anfrage. Nur für ausgewählte Projekte.
+                    </p>
+                  </div>
+                  <Link
+                    href="/premium-angebot#stufen"
+                    className="relative z-10 inline-flex items-center justify-center bg-refined-gold hover:bg-white text-deep-charcoal hover:text-deep-charcoal px-7 py-4 rounded-full font-satoshi font-medium text-sm transition-all shadow-lg hover:-translate-y-0.5 gap-3 group whitespace-nowrap shrink-0"
+                  >
+                    Signature ansehen
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* SECTION 1.5: TESTIMONIALS (BENT0-GRID) */}
       <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-night-foundation text-night-text border-y border-white/5">
         <div className="max-w-[1200px] mx-auto overflow-hidden">
