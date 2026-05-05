@@ -688,7 +688,7 @@ export default function PresentationPage() {
                     Mit Garantie
                   </p>
                   <p className="leading-relaxed text-sm md:text-base text-white/90">
-                    Nach Kick-Off: <strong className="text-night-gold font-normal">7 Tage</strong> Umsetzung. Wenn nicht steht oder du dich nicht zu 100% wiedererkennst — wir bauen weiter, ohne Aufpreis.
+                    Nach Kick-Off: <strong className="text-night-gold font-normal">14 Tage</strong> Umsetzung ab vollständigen Daten. Wenn nicht steht oder du dich nicht zu 100% wiedererkennst — wir bauen weiter, ohne Aufpreis.
                   </p>
                 </div>
               </ScrollReveal>

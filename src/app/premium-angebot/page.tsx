@@ -212,13 +212,13 @@ export default function PremiumAngebotPage() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
                 {[
-                  { title: "Positionierung & Botschaft", desc: "Tiefeninterview, Brand Voice und Texte, die exakt nach dir klingen.", class: "md:col-span-2 lg:col-span-2 relative overflow-hidden group" },
-                  { title: "Brand Design Book", desc: "Farbpalette, Typografie, Logo, Bildsprache. Vollständig ausgearbeitet.", class: "group relative overflow-hidden" },
-                  { title: "Erlebnis-Website", desc: "5–8 Seiten. Individuell designt, animiert, optimiert. Keine Templates.", class: "md:col-span-1 lg:col-span-1 group relative overflow-hidden" },
-                  { title: "SEO & Datenanalyse", desc: "Keyword-Strategie, 3 tiefgründige Blogartikel zum Start und sauberes Analyse-Setup für nachvollziehbare Ergebnisse.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
-                  { title: "Social-Media-Vorlagen", desc: "Eine kuratierte Auswahl an Vorlagen im neuen Design für LinkedIn & Instagram — ready to post, ohne Vorlagen-Overkill.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
-                  { title: "Recht & Technik", desc: "Rechtssicher und DSGVO-konform: Impressum, Datenschutz, Cookies, Hosting-Setup und High-End PageSpeed.", class: "group relative overflow-hidden" },
-                  { title: "1 Jahr Begleitung", desc: "Eine Session pro Monat nach Go-Live, damit deine Seite wirklich performt. Inklusive: 2 zusätzliche Landingpages oder Webinar-Seiten innerhalb des Jahres — perfekt für ein spontanes Webinar, einen Workshop oder eine neue Anmeldeseite. Kleine Anpassungen erledigen wir sofort.", class: "md:col-span-2 lg:col-span-3 min-h-[300px] group relative overflow-hidden border border-refined-gold/20 shadow-[inset_0_0_80px_rgba(184,150,62,0.03)]" }
+                  { title: "Positionierung & Botschaft", desc: "Brand Identity Sessions (2× 90 Min): Personal-Brand-Interview + Strategie. Wir finden Brand Voice und Texte, die exakt nach dir klingen.", class: "md:col-span-2 lg:col-span-2 relative overflow-hidden group" },
+                  { title: "Brand Mini-Guide", desc: "Typografie, Farben, Tonalität und Bildsprache. Auf Google Fonts — ohne Lizenz-Risiko. Logo & Branddesign optional als Add-on (Fleur, +1.500 €).", class: "group relative overflow-hidden" },
+                  { title: "Erlebnis-Website", desc: "5 bis 12 Seiten je nach Stufe. Individuell designt, animiert, optimiert. Hosting via Vercel · DSGVO · cookie-frei.", class: "md:col-span-1 lg:col-span-1 group relative overflow-hidden" },
+                  { title: "SEO & Datenanalyse", desc: "Saubere SEO-Basis und Analyse-Setup. Plus Starter-Blog-Artikel ab Stufe Basis (3 in Basis · monatlich 1 in All-in).", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
+                  { title: "Content & Social-Media", desc: "Newsletter-Welcome-Sequence ab Basis. In All-in zusätzlich: wöchentlich 1 LinkedIn-Karussell, Content-Säulen + Themen-Plan + Vorlagen.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
+                  { title: "Recht & Technik", desc: "Rechtssicher und DSGVO-konform: Impressum, Datenschutz, kein Cookie-Banner. Hosting-Setup und High-End PageSpeed.", class: "group relative overflow-hidden" },
+                  { title: "Begleitung & Pflege", desc: "Pflege ist in jeder Stufe enthalten. Lite: 6 Monate Mini. Basis: 12 Monate Plus + Monatsbericht + Mid-Year-Strategie-Call. All-in: 12 Monate Premium + monatlich Strategie-Call + 4 Event-Landingpages + Quartals-Brand-Guidance.", class: "md:col-span-2 lg:col-span-3 min-h-[300px] group relative overflow-hidden border border-refined-gold/20 shadow-[inset_0_0_80px_rgba(184,150,62,0.03)]" }
                 ].map((item, i) => (
                   <ScrollReveal key={i} delay={i * 0.1} className={item.class}>
                     <div className="absolute inset-0 bg-[#0A0A0A] transition-colors duration-500 group-hover:bg-[#111] rounded-[2rem] border border-white/[0.04]" />
@@ -372,9 +372,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={false}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">04</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Brand Design <span className="text-warm-steel/60 font-normal text-base align-middle">— optional mit Fleur</span></h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Brand Mini-Guide <span className="text-warm-steel/60 font-normal text-base align-middle">— Logo optional als Add-on</span></h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Wenn du noch kein Logo und kein Designsystem hast, baut Fleur dein visuelles Grundgerüst — Farben, Typografie, Logo-Erstentwurf, Bildsprache. Alles auf deine Persönlichkeit abgestimmt. Wenn du bereits ein etabliertes Design hast, übernehmen wir es und übersetzen es in den Premium-Auftritt.
+                      Im Hauptpaket inklusive: Typografie, Farben, Tonalität, Bildsprache — alles auf deine Persönlichkeit abgestimmt. Wenn du bereits ein Logo mitbringst, gleiche ich es leicht an deine Markenwelt an. Wenn du noch kein Logo hast, entwickelt Fleur Logo + erstes Branddesign als Add-on (+1.500 €).
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -402,24 +402,13 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={false}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">06</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Premium-Webseite & Technik <span className="text-warm-steel/60 font-normal text-base align-middle">— zwei Wege</span></h4>
-                    <p className="font-satoshi text-warm-steel leading-[1.65] mb-5">
-                      Du wählst, wie deine Webseite technisch leben soll. Beide Wege führen zum gleichen Premium-Auftritt — der Unterschied liegt in Eigentum und Pflege.
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Launch der Premium-Webseite</h4>
+                    <p className="font-satoshi text-warm-steel leading-[1.65]">
+                      Deine Seite geht live — Hosting via Vercel, deutsche Edge-Region, DSGVO-konform und cookie-frei. Keine WordPress-Sorgen, keine Plugin-Updates, kein Cookie-Banner. Ich übernehme die technische Pflege komplett.
                     </p>
-                    <div className="grid grid-cols-1 gap-3 mt-4">
-                      <div className="rounded-2xl border border-refined-gold/25 bg-refined-gold/[0.04] p-4">
-                        <div className="font-mono text-[0.7rem] tracking-widest uppercase text-refined-gold mb-1.5 font-bold">Variante A · Sabala-Pfad</div>
-                        <p className="font-satoshi text-warm-steel text-[0.95rem] leading-relaxed">
-                          Wir liefern alles aus einer Hand — kein WordPress, keine Cookie-Banner-Sorgen, keine Plugin-Updates. Du hast einen verlässlichen Partner, der deine Seite hochwertig pflegt und Anpassungen in hoher Geschwindigkeit umsetzt.
-                        </p>
-                      </div>
-                      <div className="rounded-2xl border border-warm-steel/20 bg-white/40 p-4">
-                        <div className="font-mono text-[0.7rem] tracking-widest uppercase text-warm-steel mb-1.5 font-bold">Variante B · WordPress-Pfad mit Christopher</div>
-                        <p className="font-satoshi text-warm-steel text-[0.95rem] leading-relaxed">
-                          Ich liefere Strategie, Content und Branding. Christopher übernimmt die technische Umsetzung in WordPress + Elementor. Du bist alleiniger Eigentümer und kannst künftig auch selbst dran arbeiten.
-                        </p>
-                      </div>
-                    </div>
+                    <p className="font-satoshi text-warm-steel/80 leading-[1.65] mt-3 italic text-[0.95rem]">
+                      Du wünschst dir WordPress oder einen anderen Stack? Dann gibt&apos;s ein individuelles Angebot via Beratungsgespräch.
+                    </p>
                   </Timeline3DBox>
                 </div>
               </div>
@@ -431,13 +420,15 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={true}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">07</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">1 Jahr Begleitung (Guidance)</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Begleitung & Pflege</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65] mb-3">
-                      Wir lassen dich nicht allein. Nach Go-Live bekommst du <strong className="text-deep-charcoal">eine Session pro Monat</strong>, damit deine Seite wirklich performt — strategisch, redaktionell, technisch.
+                      Wir lassen dich nicht allein. Pflege, Updates und Begleitung sind in jeder Stufe enthalten — die Tiefe variiert je nach Paket:
                     </p>
-                    <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      <strong className="text-deep-charcoal">Inklusive: 2 zusätzliche Landingpages oder Webinar-Seiten</strong> innerhalb des Jahres. Wenn du ein Webinar machst, einen Workshop ankündigst oder eine neue Anmeldeseite brauchst, liefere ich dir die Seite schnell. Kleine Anpassungen erledigen wir sofort.
-                    </p>
+                    <ul className="font-satoshi text-warm-steel leading-[1.65] space-y-2 text-[0.95rem]">
+                      <li>· <strong className="text-deep-charcoal">Lite:</strong> 6 Monate Mini-Pflege (Anpassungen + Hosting)</li>
+                      <li>· <strong className="text-deep-charcoal">Basis:</strong> 12 Monate Plus + Monatsbericht + 1× Mid-Year-Strategie-Call</li>
+                      <li>· <strong className="text-deep-charcoal">All-in:</strong> 12 Monate Premium + monatlich Strategie-Call + 4 Event-Landingpages + Quartals-Brand-Guidance</li>
+                    </ul>
                   </Timeline3DBox>
                 </div>
               </div>
@@ -501,8 +492,8 @@ export default function PremiumAngebotPage() {
                 </div>
               </div>
               <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Fleur</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Brand Design & UX</p>
-              <p className="font-satoshi text-warm-steel leading-[1.65]">Fleur gibt deiner Frequenz ein Gesicht. Sie kreiert Logos, Farbwelten und hochkonvertierende UI/UX-Designs, die nicht nur schön sind, sondern Vertrauen tiefgreifend visuell kommunizieren.</p>
+              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Brand Design · Add-on</p>
+              <p className="font-satoshi text-warm-steel leading-[1.65]">Wenn du noch kein Logo hast: Fleur entwickelt Logo, Farbwelten und visuelle DNA — als Add-on für 1.500 €. Ohne Logo bleibst du im Hauptpaket: ich übernehme das Webdesign komplett.</p>
             </ScrollReveal>
 
             {/* PERSON 3 */}
@@ -520,8 +511,8 @@ export default function PremiumAngebotPage() {
                 </div>
               </div>
               <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Christopher</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Web-Entwicklung & Tech</p>
-              <p className="font-satoshi text-warm-steel leading-[1.65]">Christopher baut das Backend deiner Sichtbarkeit. Von blitzschnellem Premium-Hosting über DSGVO bis hin zur dauerhaften Wartung – er sichert deinen digitalen Raum.</p>
+              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Optional · WordPress-Pfad</p>
+              <p className="font-satoshi text-warm-steel leading-[1.65]">Falls du dir explizit eine WordPress-Lösung wünschst, übernimmt Christopher die technische Umsetzung — als individuelles Angebot via Beratungsgespräch. Im Standard-Premium-Pfad mache ich alles selbst.</p>
             </ScrollReveal>
 
           </div>
@@ -621,7 +612,7 @@ export default function PremiumAngebotPage() {
       </section>
 
       
-      {/* SECTION 10: VIER STUFEN — Lite · Basis · All-in · Signature */}
+      {/* SECTION 10: DREI STUFEN — Lite · Basis · All-in */}
       <section id="stufen" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#050505]">
         {/* Soft Dusk Transitions */}
         <div className="absolute top-0 left-0 w-full h-[200px] md:h-[300px] bg-gradient-to-b from-warm-canvas to-transparent z-10 pointer-events-none opacity-30 mix-blend-overlay" />
@@ -638,20 +629,20 @@ export default function PremiumAngebotPage() {
                 <span className="italic text-refined-gold">Tiefe.</span>
               </h2>
               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65]">
-                Drei klare Stufen mit Festpreis. Plus eine Signature-Stufe für hochindividuelle Projekte. Alle vier mit derselben Begleiter-Haltung.
+                Drei klare Stufen mit Festpreis. Alle drei mit derselben Begleiter-Haltung — du wählst, wie tief wir gemeinsam gehen.
               </p>
             </div>
           </ScrollReveal>
 
-          {/* 4 Stufen Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 mb-12">
+          {/* 3 Stufen Grid */}
+          <div className="grid md:grid-cols-3 gap-5 lg:gap-6 mb-12">
             {/* LITE */}
             <ScrollReveal delay={0.05} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
               <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
                 <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">01 · Lite</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Der Einstieg ins Premium.</h3>
-                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Sauberer Premium-Auftritt für klar fokussierte Macher.</p>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Sauberer Premium-Auftritt für klar fokussierte Menschen, die wirklich etwas bewegen.</p>
                 <div className="border-t border-white/5 pt-5 mb-5">
                   <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">8.000 €</span>
@@ -722,36 +713,6 @@ export default function PremiumAngebotPage() {
               </div>
             </ScrollReveal>
 
-            {/* SIGNATURE */}
-            <ScrollReveal delay={0.2} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-refined-gold/40 via-white/10 to-refined-gold/20" />
-              <div className="relative h-full bg-gradient-to-b from-[#0E0B05] to-[#050505] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col overflow-hidden">
-                {/* Signature-Bespoke Image as subtle background */}
-                <div className="absolute inset-0 opacity-[0.12] mix-blend-screen pointer-events-none">
-                  <Image src="/images/homepage/signature-bespoke.jpg" alt="" fill className="object-cover" />
-                </div>
-                <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">04 · Signature</div>
-                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Bespoke. Hochindividuell.</h3>
-                <p className="font-satoshi italic text-white/60 text-sm mb-6 relative z-10">Nahezu unbegrenzte Möglichkeiten — wenn alles möglich sein soll.</p>
-                <div className="border-t border-refined-gold/20 pt-5 mb-5 relative z-10">
-                  <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
-                  <span className="font-instrument text-[2.5rem] text-white leading-none">35.000 €</span>
-                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.6rem] mt-2 block">auf Anfrage</span>
-                </div>
-                <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus All-in</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Custom 3D-Hero</strong> (Spline / Three.js)</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Custom Scroll-Storytelling</strong></span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom Sound-Design (optional)</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom Video-Snippets</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Personal Brand Photoshoot-Begleitung</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Unbegrenzte Seiten</strong></span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>2-Tage Immersion-Workshop</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Wöchentliches Briefing & Iteration</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Custom KI-Workflows + Custom GPT</span></li>
-                </ul>
-              </div>
-            </ScrollReveal>
           </div>
 
           {/* ADD-ONS */}
@@ -822,13 +783,13 @@ export default function PremiumAngebotPage() {
           <ScrollReveal>
             <div className="flex flex-col items-center text-center max-w-[820px] mx-auto mb-16 md:mb-20">
               <div className="px-5 py-2 rounded-full border border-refined-gold/30 bg-refined-gold/5 mb-8 inline-block">
-                <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-refined-gold font-medium">Sabala Service · Sabala-Pfad</span>
+                <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-refined-gold font-medium">Pflege & Wachstum · nach Begleitung</span>
               </div>
               <h2 className="font-instrument text-[clamp(2rem,4vw,3.5rem)] text-deep-charcoal leading-[1.1] mb-6">
                 Damit deine Seite <span className="italic text-refined-gold">wirklich performt.</span>
               </h2>
               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-relaxed">
-                Mein Service nach dem 1. Jahr Begleitung — oder ab dem ersten Tag, wenn du den Sabala-Pfad gewählt hast. Drei Stufen, je nachdem wie aktiv deine Seite mit dir wachsen soll.
+                Wenn dein 1-Jahr-Begleitungspaket ausläuft — diese drei Stufen führen die Pflege fort. Du wählst, wie aktiv deine Seite mit dir wachsen soll.
               </p>
             </div>
           </ScrollReveal>
@@ -933,8 +894,8 @@ export default function PremiumAngebotPage() {
             {[
               { q: "Wie lange dauert der gesamte Prozess?", a: "Plane für den gesamten Prozess ca. 12 bis 16 Wochen ein. Das hängt auch davon ab, wie intensiv unsere Zusammenarbeit verläuft und wie schnell wir das Feedback in den einzelnen Etappen integrieren." },
               { q: "Brauche ich vorher schon eine klare Positionierung?", a: "Nein, genau das erarbeiten wir gemeinsam im Fundament. Das ist der essenzielle Baustein für alles, was danach folgt – wir kümmern uns tiefenpsychologisch um deine echte Marken-Identität." },
-              { q: "Wer kümmert sich um die technische Umsetzung und das Hosting?", a: "Wir arbeiten technologisch auf dem allerneuesten Stand: Statt schwerfälliger Baukästen wie WordPress nutzen wir effiziente, durch KI unterstützte Workflows, um extrem schnelles, maßgeschneidertes HTML zu generieren. Die sauberen und schlanken Daten werden dann an unseren Hosting-Partner Christopher Buschor übergeben. Der riesige Vorteil für dich: Alles liegt in Deutschland, keine Dateien oder Bilder rutschen auf abstrakte US-Server ab, und DU bist der alleinige, unabhängige Eigentümer deines kompletten Codes." },
-              { q: "Muss ich mich nach dem Launch um Updates oder Datensicherung kümmern?", a: "Nein. Du kannst die technische Verantwortung komplett in die Hände unseres Partners abgeben. Über ein zubuchbares Wartungspaket kümmert sich Christopher im Hintergrund um Backups, Sicherheit und stets aktuelle DSGVO-Rechtstexte." },
+              { q: "Wer kümmert sich um die technische Umsetzung und das Hosting?", a: "Ich übernehme alles selbst. Die Seite wird via Vercel mit deutscher Edge-Region (Frankfurt) gehostet — DSGVO-konform, ohne Cookie-Banner-Pflicht, mit High-End PageSpeed. Kein WordPress, keine Plugin-Pflege. Du hast mit der Technik nichts zu tun. Falls du dir explizit eine WordPress-Lösung wünschst, biete ich das gemeinsam mit meinem Technik-Partner Christopher Buschor als individuelles Angebot via Beratungsgespräch an." },
+              { q: "Muss ich mich nach dem Launch um Updates oder Datensicherung kümmern?", a: "Nein. Im jeweiligen Pflege-Paket sind Anpassungen, Updates, Sicherheit und stets aktuelle DSGVO-Rechtstexte enthalten. Lite hat 6 Monate Mini-Pflege, Basis 12 Monate Plus-Pflege mit Monatsbericht, All-in 12 Monate Premium mit monatlichem Strategie-Call. Danach kannst du in eines der Folge-Pflege-Pakete wechseln (49/69/149 €/Monat)." },
               { q: "Was passiert, wenn sich mein Angebot nach dem Launch ändert?", a: "Dafür ist unsere Jahres-Guidance da! Wir passen die Seite an, wenn sich dein Business organisch weiterentwickelt." },
               { q: "Muss ich zu 100% kaufbereit sein, um einen Termin zu buchen?", a: "Überhaupt nicht. Das erste Kennenlernen ist zu 100% kostenfrei und unverbindlich. Es geht nur darum, herauszufinden, ob wir menschlich und fachlich matchen. Wenn du die Energie und den Wunsch nach Veränderung fühlst, ist das bereits die perfekte Basis, um einfach mal miteinander zu sprechen." }
             ].map((faq, i) => (

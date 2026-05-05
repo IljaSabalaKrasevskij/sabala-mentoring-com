@@ -267,17 +267,17 @@ export default function Home() {
                         <span className="font-instrument text-deep-charcoal text-xl">ab 8.000 €</span>
                       </div>
                       <div className="bg-warm-canvas border border-whisper-border rounded-2xl px-5 py-3">
-                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">All-in</span>
-                        <span className="font-instrument text-deep-charcoal text-xl">ab 15.000 €</span>
+                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">Basis</span>
+                        <span className="font-instrument text-deep-charcoal text-xl">ab 11.000 €</span>
                       </div>
                       <div className="bg-deep-charcoal border border-refined-gold/30 rounded-2xl px-5 py-3">
-                        <span className="font-geist text-refined-gold text-[0.65rem] uppercase tracking-widest block mb-1">Signature</span>
-                        <span className="font-instrument text-white text-xl">ab 35.000 €</span>
+                        <span className="font-geist text-refined-gold text-[0.65rem] uppercase tracking-widest block mb-1">All-in</span>
+                        <span className="font-instrument text-white text-xl">ab 15.000 €</span>
                       </div>
                     </div>
 
                     <div className="mt-auto inline-flex items-center gap-3 text-deep-charcoal font-satoshi font-medium">
-                      <span>Vier Stufen ansehen</span>
+                      <span>Drei Stufen ansehen</span>
                       <span className="w-10 h-10 rounded-full bg-refined-gold flex items-center justify-center text-white group-hover:translate-x-1 transition-transform">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                       </span>
@@ -296,14 +296,14 @@ export default function Home() {
                     <div className="p-6 md:p-8 flex flex-col flex-1">
                       <div className="flex items-start justify-between mb-3">
                         <p className="font-mono text-refined-gold text-xs tracking-widest uppercase">02 · OnePager</p>
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-warm-steel/60 bg-warm-canvas px-2 py-1 rounded-full border border-whisper-border">7 Tage Launch</span>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-warm-steel/60 bg-warm-canvas px-2 py-1 rounded-full border border-whisper-border">14 Tage Launch</span>
                       </div>
                       <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal leading-tight mb-3">
                         Schneller{" "}
                         <span className="italic text-refined-gold">Premium-Einstieg.</span>
                       </h3>
                       <p className="font-satoshi text-warm-steel text-sm md:text-base leading-relaxed mb-4 flex-1">
-                        Eine fokussierte Premium-OnePager mit Wow-Effekt — verkaufspsychologisch gebaut, in 7 Tagen live.
+                        Eine fokussierte Premium-OnePager mit Wow-Effekt — verkaufspsychologisch gebaut, in 14 Tagen live.
                       </p>
                       <div className="flex items-baseline gap-2 mb-4">
                         <span className="font-mono text-warm-steel text-xs uppercase tracking-widest">Reference</span>
@@ -347,36 +347,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Signature-Hinweis als Footer-Banner */}
-          <ScrollReveal delay={0.4}>
-            <div className="mt-10 md:mt-12">
-              <div className="relative rounded-[2rem] overflow-hidden p-[1px] bg-gradient-to-r from-refined-gold/40 via-refined-gold/10 to-refined-gold/40">
-                <div className="relative bg-deep-charcoal rounded-[calc(2rem-1px)] p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 overflow-hidden">
-                  {/* Signature image as background accent */}
-                  <div className="absolute inset-0 opacity-[0.18] mix-blend-screen pointer-events-none">
-                    <Image src="/images/homepage/signature-bespoke.jpg" alt="" fill className="object-cover" />
-                  </div>
-                  <div className="flex-1 relative z-10">
-                    <p className="font-mono text-refined-gold text-xs tracking-[0.2em] uppercase mb-2">04 · Sabala Signature</p>
-                    <h3 className="font-instrument text-2xl md:text-3xl text-white leading-tight mb-2">
-                      Du suchst{" "}
-                      <span className="italic text-refined-gold">Hochindividuelles?</span>
-                    </h3>
-                    <p className="font-satoshi text-white/70 text-base md:text-lg leading-relaxed">
-                      Bespoke ab 35.000 € — Custom 3D-Heroes, Scroll-Storytelling, unbegrenzte Möglichkeiten. Nur auf Anfrage. Nur für ausgewählte Projekte.
-                    </p>
-                  </div>
-                  <Link
-                    href="/premium-angebot#stufen"
-                    className="relative z-10 inline-flex items-center justify-center bg-refined-gold hover:bg-white text-deep-charcoal hover:text-deep-charcoal px-7 py-4 rounded-full font-satoshi font-medium text-sm transition-all shadow-lg hover:-translate-y-0.5 gap-3 group whitespace-nowrap shrink-0"
-                  >
-                    Signature ansehen
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
