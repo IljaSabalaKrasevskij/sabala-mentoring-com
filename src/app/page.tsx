@@ -195,16 +195,15 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1300px] mx-auto relative pb-12">
-          {/* Connecting Dotted Path (Desktop) */}
-          <svg className="hidden lg:block absolute top-[105px] left-[16%] right-[16%] h-12 w-[68%] z-10 pointer-events-none" viewBox="0 0 800 50" preserveAspectRatio="none" fill="none" stroke="currentColor">
-            <path d="M 20 25 Q 200 5, 400 25 T 780 25" strokeWidth="1.5" strokeDasharray="3 6" className="text-refined-gold/50" strokeLinecap="round" />
-            {/* 3 dots at the connection points */}
-            <circle cx="20" cy="25" r="4" className="fill-refined-gold" />
-            <circle cx="400" cy="25" r="4" className="fill-refined-gold" />
-            <circle cx="780" cy="25" r="4" className="fill-refined-gold" />
+          {/* Connecting Dotted Path (Desktop) — über den Cards, nicht durch sie */}
+          <svg className="hidden lg:block absolute -top-8 left-[10%] right-[10%] h-10 w-[80%] z-0 pointer-events-none" viewBox="0 0 800 40" preserveAspectRatio="none" fill="none" stroke="currentColor">
+            <path d="M 20 20 Q 200 5, 400 20 T 780 20" strokeWidth="1.5" strokeDasharray="3 6" className="text-refined-gold/40" strokeLinecap="round" />
+            <circle cx="20" cy="20" r="4" className="fill-refined-gold/70" />
+            <circle cx="400" cy="20" r="4" className="fill-refined-gold/70" />
+            <circle cx="780" cy="20" r="4" className="fill-refined-gold/70" />
           </svg>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10">
             {/* Phase 1 */}
             <ScrollReveal delay={0.1}>
               <div className="group relative h-full">
