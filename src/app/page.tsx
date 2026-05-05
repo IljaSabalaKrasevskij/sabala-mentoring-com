@@ -1,6 +1,7 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
 import { FloatingCard } from "@/components/ui/FloatingCard";
+import { GoldDust } from "@/components/ui/GoldDust";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -147,58 +148,190 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 1.4B: ANGEBOT PROZESS-SCHRITTE (ZIG-ZAG MIT FUSSABDRÜCKEN) */}
-      <section className="py-24 md:py-32 px-6 sm:px-12 md:px-24 bg-warm-canvas relative overflow-hidden">
-        
-        {/* Intro */}
-        <div className="max-w-[1200px] mx-auto text-center mb-24 relative z-10">
+      {/* SECTION 1.4B: ANGEBOT PROZESS-SCHRITTE (Editorial 3-Phasen) */}
+      <section className="py-24 md:py-40 px-6 sm:px-12 md:px-24 bg-warm-canvas relative overflow-hidden">
+        {/* Atmospheric Background — Topo Pattern + Gold Glow */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.06]">
+          <Image src="/images/homepage/drei-wege-hero.jpg" alt="" fill className="object-cover mix-blend-multiply" />
+        </div>
+        <div className="absolute top-1/4 left-0 w-[700px] h-[700px] bg-refined-gold/8 blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-refined-gold/5 blur-[150px] rounded-full pointer-events-none" />
+
+        {/* Subtle Sketchbook Lines Background */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.05]" preserveAspectRatio="none" viewBox="0 0 1200 800" fill="none" stroke="currentColor">
+          <path d="M 100 200 Q 400 100, 600 300 T 1100 250" strokeWidth="0.8" className="text-refined-gold" />
+          <path d="M 50 500 Q 350 400, 700 550 T 1150 500" strokeWidth="0.6" className="text-refined-gold" strokeDasharray="4 6" />
+        </svg>
+
+        <GoldDust />
+
+        {/* Eyebrow + Headline */}
+        <div className="max-w-[1200px] mx-auto text-center mb-20 md:mb-28 relative z-10">
           <ScrollReveal>
-            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] text-deep-charcoal mb-4">So entsteht dein Premium-Auftritt.</h2>
+            <div className="inline-flex items-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] md:text-xs tracking-[0.25em] uppercase font-bold">Der Sabala-Prozess</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <p className="font-satoshi text-warm-steel text-[1.125rem]">Drei Phasen. Ein klares Ziel: Dein neues Fundament.</p>
+            <h2 className="font-instrument text-[clamp(2.5rem,5.5vw,4.5rem)] text-deep-charcoal leading-[1.05] mb-6 tracking-[-0.01em]">
+              So entsteht dein{" "}
+              <span className="italic text-refined-gold relative inline-block">
+                Premium-Auftritt
+                <svg className="absolute -bottom-1 left-0 w-full h-3 text-refined-gold/40" viewBox="0 0 200 12" preserveAspectRatio="none" fill="none" stroke="currentColor">
+                  <path d="M2 8 Q 50 2, 100 6 T 198 4" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </span>
+              .
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-relaxed max-w-[560px] mx-auto">
+              Drei Phasen. Ein klares Ziel: Dein neues Fundament — Schritt für Schritt aufgebaut.
+            </p>
           </ScrollReveal>
         </div>
 
-        <div className="max-w-[1200px] mx-auto relative pb-24">
-          <div className="grid md:grid-cols-3 gap-8">
-             {/* Phase 1 */}
-             <ScrollReveal delay={0.1} className="h-full">
-               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
-                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 01</span>
-                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Essenz & Positionierung</h3>
-                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Wir betreiben kein Oberflächen-Marketing. Im tiefen Interview finden wir heraus, wofür du wirklich stehst, und übersetzen das in eine glasklare Positionierung.</p>
-               </div>
-             </ScrollReveal>
-             
-             {/* Phase 2 */}
-             <ScrollReveal delay={0.2} className="h-full">
-               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
-                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 02</span>
-                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Brand Identity & Formgebung</h3>
-                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Fleur entwickelt dein visuelles Zuhause. Von der Signatur-Farbe bis zur Typografie – alles wird präzise auf deine Persönlichkeit und Frequenz abgestimmt.</p>
-               </div>
-             </ScrollReveal>
-             
-             {/* Phase 3 */}
-             <ScrollReveal delay={0.3} className="h-full">
-               <div className="p-10 border border-refined-gold/30 rounded-3xl bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_60px_rgba(184,150,62,0.12)] transition-shadow duration-700 h-full flex flex-col relative z-20">
-                 <span className="font-mono text-refined-gold text-[0.8rem] tracking-[0.2em] uppercase mb-6 block font-bold">Phase 03</span>
-                 <h3 className="font-instrument text-3xl text-deep-charcoal mb-4">Premium-Website & Launch</h3>
-                 <p className="font-satoshi text-warm-steel leading-relaxed font-light">Deine voll animierte, performante Website geht live. Keine Templates, sondern ein digitales Erlebnis, das deine Zielgruppe intuitiv abholt und Vertrauen schafft.</p>
-               </div>
-             </ScrollReveal>
+        <div className="max-w-[1300px] mx-auto relative pb-12">
+          {/* Connecting Dotted Path (Desktop) */}
+          <svg className="hidden lg:block absolute top-[105px] left-[16%] right-[16%] h-12 w-[68%] z-10 pointer-events-none" viewBox="0 0 800 50" preserveAspectRatio="none" fill="none" stroke="currentColor">
+            <path d="M 20 25 Q 200 5, 400 25 T 780 25" strokeWidth="1.5" strokeDasharray="3 6" className="text-refined-gold/50" strokeLinecap="round" />
+            {/* 3 dots at the connection points */}
+            <circle cx="20" cy="25" r="4" className="fill-refined-gold" />
+            <circle cx="400" cy="25" r="4" className="fill-refined-gold" />
+            <circle cx="780" cy="25" r="4" className="fill-refined-gold" />
+          </svg>
+
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative">
+            {/* Phase 1 */}
+            <ScrollReveal delay={0.1}>
+              <div className="group relative h-full">
+                {/* Big Background Number */}
+                <div className="absolute -top-4 -right-2 lg:-top-6 lg:-right-4 font-instrument text-[8rem] lg:text-[11rem] leading-none text-refined-gold/[0.07] pointer-events-none select-none">
+                  01
+                </div>
+                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
+                  {/* Gold corner accent */}
+                  <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-refined-gold to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-[1px] h-16 bg-gradient-to-b from-refined-gold to-transparent"></div>
+
+                  {/* Custom Icon: Compass (Positionierung) */}
+                  <div className="mb-6 flex items-center gap-3">
+                    <div className="w-14 h-14 rounded-full border border-refined-gold/30 bg-refined-gold/5 flex items-center justify-center text-refined-gold group-hover:bg-refined-gold group-hover:text-white group-hover:rotate-45 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="9" />
+                        <polygon points="12 7 14 12 12 17 10 12 12 7" fill="currentColor" />
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                      </svg>
+                    </div>
+                    <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.25em] uppercase font-bold">Phase 01</span>
+                  </div>
+
+                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight">Essenz & <span className="italic text-refined-gold">Positionierung</span></h3>
+                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1">Wir betreiben kein Oberflächen-Marketing. Im tiefen Interview finden wir heraus, wofür du wirklich stehst, und übersetzen das in eine glasklare Positionierung.</p>
+
+                  {/* Bottom decorative line */}
+                  <div className="mt-6 pt-5 border-t border-whisper-border flex items-center gap-2 text-warm-steel/60 font-mono text-[0.65rem] uppercase tracking-[0.2em]">
+                    <div className="w-1.5 h-1.5 rounded-full bg-refined-gold"></div>
+                    <span>Tiefen-Interview · Brand Voice</span>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Phase 2 (Highlighted Mid) */}
+            <ScrollReveal delay={0.2}>
+              <div className="group relative h-full lg:-translate-y-4">
+                <div className="absolute -top-4 -right-2 lg:-top-6 lg:-right-4 font-instrument text-[8rem] lg:text-[11rem] leading-none text-refined-gold/[0.09] pointer-events-none select-none">
+                  02
+                </div>
+                <div className="relative h-full p-8 md:p-10 border-2 border-refined-gold/40 rounded-[28px] bg-pure-surface shadow-[0_30px_70px_rgba(184,150,62,0.12)] hover:shadow-[0_40px_90px_rgba(184,150,62,0.22)] hover:border-refined-gold/70 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
+                  <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-refined-gold to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-[1px] h-16 bg-gradient-to-b from-refined-gold to-transparent"></div>
+
+                  {/* Subtle Glow */}
+                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-refined-gold/12 blur-[60px] rounded-full pointer-events-none group-hover:bg-refined-gold/20 transition-colors duration-700"></div>
+
+                  {/* Custom Icon: Diamond/Brand (Identity) */}
+                  <div className="mb-6 flex items-center gap-3 relative z-10">
+                    <div className="w-14 h-14 rounded-full border border-refined-gold/30 bg-refined-gold/5 flex items-center justify-center text-refined-gold group-hover:bg-refined-gold group-hover:text-white group-hover:scale-110 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 3h12l4 6-10 13L2 9z" />
+                        <path d="M11 3 8 9l4 13 4-13-3-6" />
+                        <path d="M2 9h20" />
+                      </svg>
+                    </div>
+                    <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.25em] uppercase font-bold">Phase 02</span>
+                  </div>
+
+                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight relative z-10">Brand Identity & <span className="italic text-refined-gold">Formgebung</span></h3>
+                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1 relative z-10">Brand-Mini-Guide entsteht — Typografie, Farbwelt, Tonalität. Auf deine Persönlichkeit und Frequenz präzise abgestimmt. Logo optional als Add-on mit Fleur.</p>
+
+                  <div className="mt-6 pt-5 border-t border-whisper-border flex items-center gap-2 text-warm-steel/60 font-mono text-[0.65rem] uppercase tracking-[0.2em] relative z-10">
+                    <div className="w-1.5 h-1.5 rounded-full bg-refined-gold"></div>
+                    <span>Farben · Typo · Bildsprache</span>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Phase 3 */}
+            <ScrollReveal delay={0.3}>
+              <div className="group relative h-full">
+                <div className="absolute -top-4 -right-2 lg:-top-6 lg:-right-4 font-instrument text-[8rem] lg:text-[11rem] leading-none text-refined-gold/[0.07] pointer-events-none select-none">
+                  03
+                </div>
+                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
+                  <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-refined-gold to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-[1px] h-16 bg-gradient-to-b from-refined-gold to-transparent"></div>
+
+                  {/* Custom Icon: Globe + Sparkle (Launch) */}
+                  <div className="mb-6 flex items-center gap-3">
+                    <div className="w-14 h-14 rounded-full border border-refined-gold/30 bg-refined-gold/5 flex items-center justify-center text-refined-gold group-hover:bg-refined-gold group-hover:text-white group-hover:rotate-12 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3.6 9h16.8M3.6 15h16.8M12 3a14.6 14.6 0 0 1 0 18M12 3a14.6 14.6 0 0 0 0 18" />
+                      </svg>
+                    </div>
+                    <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.25em] uppercase font-bold">Phase 03</span>
+                  </div>
+
+                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight">Premium-Website & <span className="italic text-refined-gold">Launch</span></h3>
+                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1">Deine voll animierte, performante Website geht live. Hosting via Vercel · DSGVO · cookie-frei. Keine Templates — ein digitales Erlebnis, das Vertrauen schafft.</p>
+
+                  <div className="mt-6 pt-5 border-t border-whisper-border flex items-center gap-2 text-warm-steel/60 font-mono text-[0.65rem] uppercase tracking-[0.2em]">
+                    <div className="w-1.5 h-1.5 rounded-full bg-refined-gold"></div>
+                    <span>Animation · Speed · DSGVO</span>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
-          
-          <ScrollReveal delay={0.4} className="mt-20 flex justify-center text-center">
+
+          {/* Edler Outline-Button */}
+          <ScrollReveal delay={0.4} className="mt-20 md:mt-24 flex justify-center">
             <Link
               href="/premium-angebot"
-              className="group relative inline-flex items-center gap-4 bg-refined-gold hover:bg-[#A4842F] text-deep-charcoal px-8 md:px-10 py-4 md:py-5 rounded-full font-satoshi font-medium text-lg md:text-xl shadow-[0_10px_30px_rgba(184,150,62,0.20)] hover:shadow-[0_15px_40px_rgba(184,150,62,0.30)] transition-all duration-300 active:scale-95"
+              className="group relative inline-flex items-center gap-5 px-8 md:px-10 py-4 md:py-5 rounded-full overflow-hidden transition-all duration-500"
             >
-              Den detaillierten 7-Schritte-Fahrplan ansehen
-              <div className="w-10 h-10 rounded-full bg-deep-charcoal/10 flex items-center justify-center transform group-hover:translate-x-2 transition-transform duration-[400ms] ease-out">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </div>
+              {/* Outer Ring */}
+              <div className="absolute inset-0 rounded-full border-2 border-refined-gold/40 group-hover:border-refined-gold transition-colors duration-500"></div>
+              {/* Fill on Hover */}
+              <div className="absolute inset-0 rounded-full bg-refined-gold scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"></div>
+
+              {/* Text */}
+              <span className="relative z-10 font-satoshi font-medium text-base md:text-lg text-deep-charcoal group-hover:text-white transition-colors duration-500 tracking-wide">
+                Den detaillierten 7-Schritte-Fahrplan ansehen
+              </span>
+
+              {/* Arrow Icon in Circle */}
+              <span className="relative z-10 w-10 h-10 md:w-11 md:h-11 rounded-full bg-refined-gold group-hover:bg-white flex items-center justify-center transition-all duration-500">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white group-hover:text-refined-gold group-hover:translate-x-1 transition-all duration-500">
+                  <path d="M5 12h14"/>
+                  <path d="m12 5 7 7-7 7"/>
+                </svg>
+              </span>
             </Link>
           </ScrollReveal>
         </div>
@@ -266,13 +399,14 @@ export default function Home() {
                         <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">Lite</span>
                         <span className="font-instrument text-deep-charcoal text-xl">ab 8.000 €</span>
                       </div>
-                      <div className="bg-warm-canvas border border-whisper-border rounded-2xl px-5 py-3">
-                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">Basis</span>
-                        <span className="font-instrument text-deep-charcoal text-xl">ab 11.000 €</span>
+                      <div className="bg-deep-charcoal border border-refined-gold/30 rounded-2xl px-5 py-3 relative">
+                        <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-refined-gold text-[#050505] uppercase tracking-widest text-[8px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">Empfohlen</span>
+                        <span className="font-geist text-refined-gold text-[0.65rem] uppercase tracking-widest block mb-1">Basis</span>
+                        <span className="font-instrument text-white text-xl">ab 11.000 €</span>
                       </div>
-                      <div className="bg-deep-charcoal border border-refined-gold/30 rounded-2xl px-5 py-3">
-                        <span className="font-geist text-refined-gold text-[0.65rem] uppercase tracking-widest block mb-1">All-in</span>
-                        <span className="font-instrument text-white text-xl">ab 15.000 €</span>
+                      <div className="bg-warm-canvas border border-whisper-border rounded-2xl px-5 py-3">
+                        <span className="font-geist text-warm-steel text-[0.65rem] uppercase tracking-widest block mb-1">All-in</span>
+                        <span className="font-instrument text-deep-charcoal text-xl">ab 15.000 €</span>
                       </div>
                     </div>
 

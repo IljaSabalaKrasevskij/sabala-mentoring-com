@@ -642,7 +642,7 @@ export default function PremiumAngebotPage() {
               <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
                 <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">01 · Lite</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Der Einstieg ins Premium.</h3>
-                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Sauberer Premium-Auftritt für klar fokussierte Menschen, die wirklich etwas bewegen.</p>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Premium-Auftritt mit klarem Fundament — wertig vom ersten Klick an.</p>
                 <div className="border-t border-white/5 pt-5 mb-5">
                   <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">8.000 €</span>
@@ -659,18 +659,21 @@ export default function PremiumAngebotPage() {
               </div>
             </ScrollReveal>
 
-            {/* BASIS */}
-            <ScrollReveal delay={0.1} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-white/15 to-transparent" />
-              <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
-                <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">02 · Basis</div>
-                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Mit Marketing-System.</h3>
-                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Vollumfänglicher Premium-Auftritt mit Content-Start.</p>
-                <div className="border-t border-white/5 pt-5 mb-5">
-                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+            {/* BASIS (Highlighted - Mid-Anchor) */}
+            <ScrollReveal delay={0.1} className="group relative rounded-[2rem] p-[1px] overflow-hidden lg:-translate-y-4">
+              <div className="absolute inset-0 bg-gradient-to-b from-refined-gold/70 to-refined-gold/15" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-refined-gold to-transparent opacity-50" />
+              <div className="absolute top-8 right-8 w-24 h-24 bg-refined-gold/15 blur-[40px] rounded-full group-hover:bg-refined-gold/25 transition-colors duration-700" />
+              <div className="relative h-full bg-[#0E0B05] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col">
+                <div className="absolute top-4 right-4 bg-refined-gold text-[#050505] uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Empfohlen</div>
+                <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">02 · Basis</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Mit Marketing-System.</h3>
+                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Premium-Auftritt mit Content-Start — der stimmige Weg für die meisten.</p>
+                <div className="border-t border-white/10 pt-5 mb-5 relative z-10">
+                  <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">11.000 €</span>
                 </div>
-                <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
+                <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Lite</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 8 Seiten</strong> + Blog/Podcast-Setup</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel</strong> zu deinen Kernthemen</span></li>
@@ -683,21 +686,19 @@ export default function PremiumAngebotPage() {
               </div>
             </ScrollReveal>
 
-            {/* ALL-IN (Highlighted) */}
-            <ScrollReveal delay={0.15} className="group relative rounded-[2rem] p-[1px] overflow-hidden lg:-translate-y-4">
-              <div className="absolute inset-0 bg-gradient-to-b from-refined-gold/70 to-refined-gold/15" />
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-refined-gold to-transparent opacity-50" />
-              <div className="absolute top-8 right-8 w-24 h-24 bg-refined-gold/15 blur-[40px] rounded-full group-hover:bg-refined-gold/25 transition-colors duration-700" />
-              <div className="relative h-full bg-[#0E0B05] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col">
-                <div className="absolute top-4 right-4 bg-refined-gold text-[#050505] uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Empfohlen</div>
-                <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">03 · All-in</div>
-                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Komplette Begleitung.</h3>
-                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Du brennst, ich kümmere mich um alles drumherum.</p>
-                <div className="border-t border-white/10 pt-5 mb-5 relative z-10">
-                  <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
+            {/* ALL-IN (Standard) */}
+            <ScrollReveal delay={0.15} className="group relative rounded-[2rem] p-[1px] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
+              <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
+                <div className="absolute top-4 right-4 bg-white/5 text-white/70 border border-white/15 uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Auf Beratung</div>
+                <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">03 · All-in</div>
+                <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Komplette Begleitung.</h3>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Wenn du wirklich tief gehen willst — nach gemeinsamem Klärungsgespräch.</p>
+                <div className="border-t border-white/5 pt-5 mb-5">
+                  <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">15.000 €</span>
                 </div>
-                <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
+                <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Basis</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 12 Seiten</strong> + Tool-Orchestrierung</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Automation-Setup (Buchung → Zahlung → CRM)</span></li>
