@@ -1,7 +1,5 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
-import { FloatingCard } from "@/components/ui/FloatingCard";
-import { GoldDust } from "@/components/ui/GoldDust";
 import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
 import Image from "next/image";
 import Link from "next/link";
@@ -151,20 +149,9 @@ export default function Home() {
 
       {/* SECTION 1.4B: ANGEBOT PROZESS-SCHRITTE (Editorial 3-Phasen) */}
       <section className="py-24 md:py-40 px-6 sm:px-12 md:px-24 bg-warm-canvas relative overflow-hidden">
-        {/* Atmospheric Background — Topo Pattern + Gold Glow */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.06]">
-          <Image src="/images/homepage/drei-wege-hero.jpg" alt="" fill className="object-cover mix-blend-multiply" />
-        </div>
-        <div className="absolute top-1/4 left-0 w-[700px] h-[700px] bg-refined-gold/8 blur-[180px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-refined-gold/5 blur-[150px] rounded-full pointer-events-none" />
-
-        {/* Subtle Sketchbook Lines Background */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.05]" preserveAspectRatio="none" viewBox="0 0 1200 800" fill="none" stroke="currentColor">
-          <path d="M 100 200 Q 400 100, 600 300 T 1100 250" strokeWidth="0.8" className="text-refined-gold" />
-          <path d="M 50 500 Q 350 400, 700 550 T 1150 500" strokeWidth="0.6" className="text-refined-gold" strokeDasharray="4 6" />
-        </svg>
-
-        <GoldDust />
+        {/* Soft Gold Glows — atmospheric, no busy patterns */}
+        <div className="absolute top-1/4 -left-[20vw] w-[700px] h-[700px] bg-refined-gold/[0.05] blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-1/4 -right-[15vw] w-[600px] h-[600px] bg-refined-gold/[0.04] blur-[150px] rounded-full pointer-events-none" />
 
         {/* Eyebrow + Headline */}
         <div className="max-w-[1200px] mx-auto text-center mb-20 md:mb-28 relative z-10">
@@ -195,15 +182,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1300px] mx-auto relative pb-12">
-          {/* Connecting Dotted Path (Desktop) — über den Cards, nicht durch sie */}
-          <svg className="hidden lg:block absolute -top-8 left-[10%] right-[10%] h-10 w-[80%] z-0 pointer-events-none" viewBox="0 0 800 40" preserveAspectRatio="none" fill="none" stroke="currentColor">
-            <path d="M 20 20 Q 200 5, 400 20 T 780 20" strokeWidth="1.5" strokeDasharray="3 6" className="text-refined-gold/40" strokeLinecap="round" />
-            <circle cx="20" cy="20" r="4" className="fill-refined-gold/70" />
-            <circle cx="400" cy="20" r="4" className="fill-refined-gold/70" />
-            <circle cx="780" cy="20" r="4" className="fill-refined-gold/70" />
-          </svg>
-
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative">
             {/* Phase 1 */}
             <ScrollReveal delay={0.1}>
               <div className="group relative h-full">
@@ -211,7 +190,7 @@ export default function Home() {
                 <div className="absolute -top-4 -right-2 lg:-top-6 lg:-right-4 font-instrument text-[8rem] lg:text-[11rem] leading-none text-refined-gold/[0.07] pointer-events-none select-none">
                   01
                 </div>
-                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
+                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
                   {/* Gold corner accent */}
                   <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-refined-gold to-transparent"></div>
                   <div className="absolute top-0 left-0 w-[1px] h-16 bg-gradient-to-b from-refined-gold to-transparent"></div>
@@ -282,7 +261,7 @@ export default function Home() {
                 <div className="absolute -top-4 -right-2 lg:-top-6 lg:-right-4 font-instrument text-[8rem] lg:text-[11rem] leading-none text-refined-gold/[0.07] pointer-events-none select-none">
                   03
                 </div>
-                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
+                <div className="relative h-full p-8 md:p-10 border border-refined-gold/20 rounded-[28px] bg-pure-surface shadow-[0_20px_50px_rgba(26,26,24,0.06)] hover:shadow-[0_30px_70px_rgba(184,150,62,0.18)] hover:border-refined-gold/50 hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col z-20 overflow-hidden">
                   <div className="absolute top-0 left-0 w-16 h-[1px] bg-gradient-to-r from-refined-gold to-transparent"></div>
                   <div className="absolute top-0 left-0 w-[1px] h-16 bg-gradient-to-b from-refined-gold to-transparent"></div>
 
