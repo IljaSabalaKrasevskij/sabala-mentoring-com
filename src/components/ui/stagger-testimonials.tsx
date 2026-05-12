@@ -95,7 +95,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
         <div 
           className={cn(
-            "relative mb-8 h-16 w-16 shrink-0 overflow-hidden rounded-2xl border transition-colors duration-500",
+            "relative mb-8 h-16 w-16 shrink-0 overflow-hidden rounded-full border transition-colors duration-500",
             isCenter ? "border-refined-gold/40 shadow-[0_0_20px_rgba(184,150,62,0.2)]" : "border-white/10"
           )}
         >
@@ -103,7 +103,10 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
             src={testimonial.imgSrc}
             alt={testimonial.by.split(',')[0]}
             fill
-            className="object-cover object-top filter grayscale-[20%] contrast-110"
+            className={cn(
+              "object-cover filter grayscale-[20%] contrast-110 transition-transform duration-500",
+              testimonial.imgSrc.includes('Syllvia') ? "scale-[1.35] object-center" : "object-top"
+            )}
           />
         </div>
         <div className="overflow-y-auto flex-1 pr-4 pb-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
