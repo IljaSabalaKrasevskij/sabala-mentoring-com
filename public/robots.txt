@@ -1,0 +1,71 @@
+# robots.txt für sabala-mentoring.com
+# Stand: 2026-05-11
+#
+# Strategie: alle relevanten Crawler erlauben — klassische Suchmaschinen UND AI-Crawler.
+# Begründung: GEO-Strategie (Generative Engine Optimization) erfordert Zugang für
+# ChatGPT, Claude, Perplexity, Gemini, Microsoft Copilot u.a.
+
+User-agent: *
+Allow: /
+
+# Klassische Suchmaschinen-Crawler (Google, Bing, DuckDuckGo via Bing)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# AI-Search-Crawler — explizit erlauben für GEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Sitemap-Verweis (wird automatisch von Next.js generiert via app/sitemap.ts)
+Sitemap: https://sabala-mentoring.com/sitemap.xml
