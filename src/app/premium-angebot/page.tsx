@@ -611,7 +611,6 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-      
       {/* SECTION 10: DREI STUFEN — Lite · Basis · All-in */}
       <section id="stufen" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#050505]">
         {/* Soft Dusk Transitions */}

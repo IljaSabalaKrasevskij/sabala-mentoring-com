@@ -15,6 +15,7 @@ const MooniMascot = dynamic(() => import("@/components/ui/MooniMascot"), {
 
 
 import MarvelTeamShowcase from "@/components/ui/MarvelTeamShowcase";
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
 
 // --- FAQ ACCORDION COMPONENT ---
 const FAQItem = ({ question, answer }: { question: string, answer: React.ReactNode }) => {
@@ -261,6 +262,26 @@ export default function GPTTeamPage() {
                  </p>
               </div>
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 3 (TESTIMONIALS): STIMMEN & ERFAHRUNGEN */}
+      <section className="bg-transparent text-pure-surface py-24 md:py-32 px-4 md:px-12 relative overflow-hidden z-20">
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <div className="inline-block px-5 py-2 rounded-full border border-refined-gold/30 bg-refined-gold/5 backdrop-blur-md mb-8">
+                <span className="font-geist text-[0.65rem] md:text-sm tracking-[0.2em] uppercase text-refined-gold font-medium">Stimmen & Erfahrungen</span>
+              </div>
+              <h2 className="font-instrument text-[clamp(2.5rem,4vw,4rem)] text-white leading-[1.1] mb-6">
+                Was andere <span className="italic text-refined-gold">erlebt haben.</span>
+              </h2>
+            </div>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2} className="flex justify-center">
+            <StaggerTestimonials />
           </ScrollReveal>
         </div>
       </section>

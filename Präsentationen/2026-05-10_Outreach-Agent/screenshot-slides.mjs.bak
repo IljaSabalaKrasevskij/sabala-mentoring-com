@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+import { chromium } from "/Users/iljakrasevskij/npm-global/lib/node_modules/playwright/index.mjs";
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const HTML_PATH = path.join(__dirname, 'Sabala-Outreach-Agent-2026-05-10.html');
+const OUT_DIR = path.join(__dirname, 'screenshots-audit');
+
+if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+
+const VIEWPORT = { width: 1920, height: 1080 };
+
+(async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ viewport: VIEWPORT });
+  const page = await context.newPage();
+
+  const fileURL = 'file://' + HTML_PATH;
+  console.log(`Loading ${fileURL}`);
+  await page.goto(fileURL, { waitUntil: "commit", timeout: 60000 });
+  await page.waitForTimeout(2500);
+
+  const totalSlides = await page.$$eval('.slide', els => els.length);
+  console.log(`${totalSlides} Slides erkannt — Viewport ${VIEWPORT.width}x${VIEWPORT.height}`);
+
+  const audit = [];
+
+  for (let i = 0; i < totalSlides; i++) {
+    await page.$$eval('.slide', (slides, idx) => {
+      slides[idx].scrollIntoView({ behavior: 'instant', block: 'start' });
+    }, i);
+    await page.waitForTimeout(700);
+
+    const slideInfo = await page.$$eval('.slide', (slides, idx) => {
+      const slide = slides[idx];
+      const scrollHeight = slide.scrollHeight;
+      const offsetHeight = slide.offsetHeight;
+      const viewportH = window.innerHeight;
+      const overflow = scrollHeight > viewportH + 5;
+      const overflowAmount = scrollHeight - viewportH;
+      const firstHeading = slide.querySelector('h1, h2, .cover-title, .slide-title, .big-quote');
+      const headingText = firstHeading ? firstHeading.textContent.trim().substring(0, 80) : '(no heading)';
+      return { scrollHeight, offsetHeight, viewportH, overflow, overflowAmount, headingText };
+    }, i);
+
+    const padded = String(i + 1).padStart(2, '0');
+    const screenshotPath = path.join(OUT_DIR, `${padded}.png`);
+    await page.screenshot({ path: screenshotPath, fullPage: false });
+
+    const status = slideInfo.overflow ? 'OVERFLOW' : 'OK';
+    const issue = slideInfo.overflow ? ` (${slideInfo.overflowAmount}px zu viel)` : '';
+    console.log(`  [${padded}] ${status}${issue}  ${slideInfo.headingText}`);
+
+    audit.push({
+      slide: i + 1,
+      heading: slideInfo.headingText,
+      scrollHeight: slideInfo.scrollHeight,
+      viewportH: slideInfo.viewportH,
+      overflow: slideInfo.overflow,
+      overflowAmount: slideInfo.overflowAmount,
+      screenshot: screenshotPath,
+    });
+  }
+
+  await browser.close();
+  fs.writeFileSync(path.join(OUT_DIR, '_audit.json'), JSON.stringify(audit, null, 2));
+
+  console.log('\nAUDIT-ZUSAMMENFASSUNG');
+  console.log('======================');
+  const issues = audit.filter(a => a.overflow);
+  console.log(`Total Slides:  ${audit.length}`);
+  console.log(`OK:            ${audit.length - issues.length}`);
+  console.log(`Overflow:      ${issues.length}`);
+  if (issues.length > 0) {
+    console.log('\nSlides mit Overflow:');
+    issues.forEach(i => {
+      console.log(`   Slide ${i.slide}: "${i.heading}" - ${i.overflowAmount}px ueberschuessig`);
+    });
+  }
+  console.log(`\nScreenshots: ${OUT_DIR}`);
+})();
