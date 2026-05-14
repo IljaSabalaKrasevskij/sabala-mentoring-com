@@ -60,10 +60,6 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [ogImage],
   },
-  verification: {
-    // TODO: Wert aus Google Search Console einsetzen (Schritt B.1 der Komplettanleitung)
-    google: "REPLACE_WITH_GSC_VERIFICATION_CODE",
-  },
 };
 
 const organizationSchema = {
