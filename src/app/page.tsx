@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
+import { HeroSpline } from "@/components/ui/HeroSpline";
 import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,9 +8,10 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col w-full overflow-x-clip">
-      
-      {/* SECTION 1.1: DISSOLVE HERO (SCROLL DRIVEN) */}
-      <DissolveParticleHero />
+
+      {/* SECTION 1.1: HERO — Spline-Variante aktiv, Particle als Backup */}
+      <HeroSpline />
+      {/* <DissolveParticleHero /> */}
 
       {/* SECTION 1.2: TRUST-LEISTE (MARQUEE) */}
       <section className="bg-[#F0EDE8] border-y border-[rgba(181,176,168,0.3)] relative z-0 -mt-[40px] pt-[calc(1.5rem+40px)] pb-6 overflow-hidden">
@@ -23,8 +25,8 @@ export default function Home() {
           }
         `}} />
         <div className="max-w-[1400px] mx-auto flex flex-col items-center">
-          <p className="font-satoshi text-[#6B6963] text-[0.75rem] uppercase tracking-[0.15em] mb-5 text-center">
-            Vertraut von Coaches, Beratern und Trainern
+          <p className="font-satoshi text-[#6B6963] text-[0.75rem] uppercase tracking-[0.18em] mb-5 text-center">
+            Vertraut von kreativen Visionären, Pionieren und Machern
           </p>
           
           <div className="w-full relative flex overflow-hidden group">
@@ -35,23 +37,25 @@ export default function Home() {
             {/* The scrolling track */}
             <div className="flex gap-12 items-center w-max animate-marquee group-hover:[animation-play-state:paused]">
               
-              {/* Duplicate the array 4 times to ensure seamless infinite loop when moving by 50% */}
-              {[...Array(4)].map((_, i) => (
+              {/* Duplicate the array 2× for seamless 50%-translate loop (vorher 4×, war zu redundant) */}
+              {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-12 items-center whitespace-nowrap opacity-70 group-hover:opacity-90 transition-opacity duration-300">
                   <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Stefan Pons</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
-                  
+
                   <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Nadja Kirchner</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
-                  
+
                   <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Silke Ettrich</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
-                  
+
                   <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Philipp Siebler</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
-                  
+
+                  <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Stefanie Lommel</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
+
                   <span className="font-geist text-[0.9rem] text-[#B5B0A8]">Conversion Films</span>
-                  {/* Final separator of this loop block */}
                   <span className="w-1.5 h-1.5 rounded-full bg-[#B8963E]"></span>
                 </div>
               ))}
@@ -61,55 +65,78 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 1.3: PROBLEM-ERKENNUNG */}
-      <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-night-foundation text-night-text">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+      {/* SECTION 1.3: PAIN + MISSION (verschmolzen) — 4 visuelle Pain-Punkte plus Sabala-Quote als Guide */}
+      <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-night-foundation text-night-text relative overflow-hidden">
+        {/* Subtle Gold Glow */}
+        <div className="absolute top-1/3 -left-[15vw] w-[600px] h-[600px] bg-refined-gold/[0.06] blur-[180px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          {/* Eyebrow */}
           <ScrollReveal>
-            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] tracking-[-0.02em] text-night-text">
-              Du hast investiert.<br/>
-              <span className="text-night-secondary">Aber es fühlt sich nicht stimmig an.</span>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Warum dein Auftritt nicht wirkt</span>
+            </div>
+          </ScrollReveal>
+
+          {/* Hauptüberschrift */}
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] tracking-[-0.02em] text-night-text mb-20 md:mb-24 max-w-[20ch]">
+              Du hast investiert.<br />
+              <span className="text-night-secondary">Aber dein Außenauftritt liegt unter deinem Niveau.</span>
             </h2>
           </ScrollReveal>
-          <ScrollReveal delay={0.2} className="relative">
-            {/* Dekoratives Anführungszeichen */}
-            <span className="absolute -top-10 -left-6 md:-left-8 font-instrument text-[#B8963E] text-[5rem] opacity-35 leading-none select-none pointer-events-none">
-              &ldquo;
-            </span>
-            <p className="text-night-secondary text-[1.125rem] leading-[1.65] max-w-[65ch] relative z-10">
-              Du hast Geld für eine Website ausgegeben. Vielleicht für eine Agentur, einen Kurs, ein Coaching. Und trotzdem passt dein Außenauftritt nicht zu dem, was du wirklich anbietest. Die Website sieht aus wie tausend andere. Die Texte klingen nicht nach dir. Und neue Kunden kommen nicht, weil niemand versteht, was dich besonders macht.
-            </p>
-          </ScrollReveal>
+
+          {/* 4-Pain-Visualisierung als breites Grid (zentriert, max 1100px, Text dominant) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 md:gap-x-20 md:gap-y-10 max-w-[1100px]">
+            {[
+              { num: "01", text: "Deine Webseite sieht aus wie tausend andere." },
+              { num: "02", text: "Die Texte klingen nicht nach dir." },
+              { num: "03", text: "Niemand versteht, was dich besonders macht." },
+              { num: "04", text: "Neue Kunden kommen nicht." },
+            ].map((pain, i) => (
+              <ScrollReveal key={pain.num} delay={0.15 + i * 0.08}>
+                <div className="group flex items-start gap-6 border-l border-refined-gold/30 pl-6 md:pl-8 py-3 hover:border-refined-gold/70 transition-colors duration-500">
+                  <span className="font-mono text-refined-gold text-[1.5rem] md:text-[1.85rem] tracking-tight leading-none mt-2 group-hover:translate-x-1 transition-transform duration-500">{pain.num}</span>
+                  <p className="font-instrument text-night-text text-[1.35rem] md:text-[1.65rem] leading-[1.35] tracking-[-0.01em]">
+                    {pain.text}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* SECTION 1.3B: ZITAT ZWISCHENKOMPONENT */}
-      <section className="bg-warm-canvas py-20 md:py-32">
+      {/* SECTION 1.3B: ZITAT-ZWISCHENKOMPONENT (cream-Pause zwischen dunkler Pain und dunkler Angebot-Sektion) */}
+      <section className="bg-warm-canvas py-20 md:py-32 relative">
         <div className="w-full flex flex-col md:flex-row-reverse items-center justify-between">
-          {/* Image */}
+          {/* Portrait */}
           <div className="w-full md:w-[45%] relative h-[60vh] md:h-[70vh]">
-            <Image 
+            <Image
               src="/images/zitat-sabala-home.jpg"
               alt="Ilja Sabala Krasevskij"
               fill
+              sizes="(min-width: 768px) 45vw, 100vw"
               className="object-cover object-center"
             />
-            {/* Fade left into Warm Canvas on Desktop */}
+            {/* Fade left in Warm Canvas on Desktop */}
             <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-warm-canvas via-[#FAF8F5]/40 to-[#FAF8F5]/0 w-[101%] -translate-x-[1px] pointer-events-none"></div>
-            {/* Fade down into Warm Canvas on Mobile */}
+            {/* Fade down in Warm Canvas on Mobile */}
             <div className="md:hidden absolute inset-0 bg-gradient-to-b from-[#FAF8F5]/0 via-[#FAF8F5]/40 to-warm-canvas h-[101%] pointer-events-none"></div>
           </div>
-          
-          {/* Text */}
+
+          {/* Quote-Text */}
           <div className="w-full md:w-[55%] px-6 sm:px-12 md:pr-16 md:pl-24 lg:pl-32 max-w-[800px] mt-12 md:mt-0">
             <ScrollReveal className="relative">
-              <span className="absolute -top-10 -left-6 md:-left-10 font-instrument text-[#B8963E] text-[4rem] opacity-30 leading-none select-none pointer-events-none">
+              <span className="absolute -top-10 -left-6 md:-left-10 font-instrument text-refined-gold text-[5rem] md:text-[6rem] opacity-30 leading-none select-none pointer-events-none">
                 &ldquo;
               </span>
-              <p className="font-instrument text-[1.5rem] leading-[1.4] text-deep-charcoal relative z-10 mb-6">
-                Ich öffne Türen — und begleite Menschen hindurch. Umsetzung ist Pflicht. Aber der Weg darf sich richtig anfühlen.
+              <p className="font-instrument italic text-[1.5rem] md:text-[1.85rem] leading-[1.4] text-deep-charcoal relative z-10 mb-6">
+                Ich öffne Türen. Und begleite Menschen hindurch. Umsetzung ist Pflicht. Der Weg darf sich richtig anfühlen.
               </p>
-              <p className="font-satoshi text-warm-steel text-[0.9rem]">
-                — Ilja Sabala Krasevskij
+              <p className="font-mono text-warm-steel text-[0.75rem] uppercase tracking-[0.18em]">
+                Ilja Sabala Krasevskij
               </p>
             </ScrollReveal>
           </div>
@@ -135,13 +162,18 @@ export default function Home() {
 
         <div className="max-w-[1000px] mx-auto text-center relative z-10 flex flex-col items-center justify-center">
           <ScrollReveal>
+            <div className="inline-flex items-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Komplett gedacht. Aus einem Guss.</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
             <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] text-night-text tracking-[-0.02em] mb-6">
-              Alles aus einem Guss. Von der Essenz bis zur Erlebnis-Website.
+              Strategie, Brand, Technik und Pflege. Aus einem Guss.
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <p className="font-satoshi text-[#A09C95] text-[1.125rem] leading-[1.65] max-w-[65ch]">
-              Kein Stückwerk. Kein Abliefern. Ein durchdachter Prozess, der bei dir beginnt — und in einer Website mündet, die dich wirklich zeigt.
+              Kein Stückwerk. Kein Abliefern. Ein durchdachter Prozess, der bei dir beginnt und in einer Webseite mündet, die dich zeigt.
             </p>
           </ScrollReveal>
         </div>
@@ -245,7 +277,7 @@ export default function Home() {
                   </div>
 
                   <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight relative z-10">Brand Identity & <span className="italic text-refined-gold">Formgebung</span></h3>
-                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1 relative z-10">Brand-Mini-Guide entsteht — Typografie, Farbwelt, Tonalität. Auf deine Persönlichkeit und Frequenz präzise abgestimmt. Logo optional als Add-on mit Fleur.</p>
+                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1 relative z-10">Brand-Mini-Guide entsteht mit Typografie, Farbwelt und Tonalität. Auf deine Persönlichkeit und Frequenz präzise abgestimmt. Logo optional als Add-on mit Fleur.</p>
 
                   <div className="mt-6 pt-5 border-t border-whisper-border flex items-center gap-2 text-warm-steel/60 font-mono text-[0.65rem] uppercase tracking-[0.2em] relative z-10">
                     <div className="w-1.5 h-1.5 rounded-full bg-refined-gold"></div>
@@ -276,12 +308,12 @@ export default function Home() {
                     <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.25em] uppercase font-bold">Phase 03</span>
                   </div>
 
-                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight">Premium-Website & <span className="italic text-refined-gold">Launch</span></h3>
-                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1">Deine voll animierte, performante Website geht live. Hosting via Vercel · DSGVO · cookie-frei. Keine Templates — ein digitales Erlebnis, das Vertrauen schafft.</p>
+                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight">Live-Schaltung & <span className="italic text-refined-gold">Pflege</span></h3>
+                  <p className="font-satoshi text-warm-steel leading-[1.7] font-light flex-1">Deine voll animierte, performante Webseite geht live. Hosting via Vercel · DSGVO · cookie-frei. Keine Templates. Plus laufende Pflege im Recurring-Modell, damit dein Auftritt mit dir lebendig bleibt.</p>
 
                   <div className="mt-6 pt-5 border-t border-whisper-border flex items-center gap-2 text-warm-steel/60 font-mono text-[0.65rem] uppercase tracking-[0.2em]">
                     <div className="w-1.5 h-1.5 rounded-full bg-refined-gold"></div>
-                    <span>Animation · Speed · DSGVO</span>
+                    <span>Launch · Pflege · Recurring</span>
                   </div>
                 </div>
               </div>
@@ -316,6 +348,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECTION 1.4B+: ALL-IN-ONE DIFFERENZIATOR — was im Bundle drin ist (Tech/Mentoring/SEO/Analytics) */}
+      <section className="py-32 md:py-40 px-6 sm:px-12 md:px-24 bg-tech-bg text-night-text relative overflow-hidden">
+        {/* Dezenter Gold-Glow oben */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-refined-gold/[0.05] blur-[180px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1300px] mx-auto relative z-10">
+          {/* Eyebrow */}
+          <ScrollReveal>
+            <div className="flex items-center justify-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Was Sabala anders macht</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
+          </ScrollReveal>
+
+          {/* H2 */}
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] tracking-[-0.02em] text-night-text text-center mb-20 md:mb-24 max-w-[22ch] mx-auto">
+              Andere verkaufen Stunden.<br/>
+              <span className="italic text-refined-gold">Ich baue dein ganzes Setup.</span>
+            </h2>
+          </ScrollReveal>
+
+          {/* 6-Karten-Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {[
+              {num: "01", title: "Coaching + Mentoring", desc: "Was andere als 6-Monats-Online-Programme verkaufen, ist hier Teil der Begleitung. Eins zu eins, ohne Skool-Gruppe."},
+              {num: "02", title: "Premium-Webseite", desc: "Strategie, Brand, Technik aus einem Guss. Next.js, cookie-frei, performance-optimiert."},
+              {num: "03", title: "Premium-Pflege", desc: "Recurring-Modell statt One-Shot. Dein Auftritt lebt weiter, ohne dass du nachdenkst."},
+              {num: "04", title: "SEO + GEO", desc: "Sichtbarkeit in Google UND KI-Suchen. Schema-Markup, Pillar-Pages, GEO-Strategie."},
+              {num: "05", title: "Analytics + Berichte", desc: "Monatlicher Report: was rankt, was konvertiert, was als nächstes kommt. Daten statt Bauchgefühl."},
+              {num: "06", title: "Begleiter, nicht Agentur", desc: "Keine Hotline. Kein Ticket-System. Direkter Draht zu mir. Antworten in 24 Stunden."},
+            ].map((item, i) => (
+              <ScrollReveal key={item.num} delay={0.15 + i*0.06}>
+                <div className="group relative p-7 md:p-8 border border-white/10 rounded-[24px] bg-white/[0.02] hover:bg-white/[0.04] hover:border-refined-gold/40 transition-all duration-500 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="font-mono text-refined-gold text-[0.75rem] tracking-[0.22em] uppercase font-bold">{item.num}</span>
+                    <div className="h-[1px] flex-1 max-w-[40px] bg-refined-gold/40"></div>
+                  </div>
+                  <h3 className="font-instrument text-2xl md:text-[1.75rem] text-night-text mb-3 leading-tight">{item.title}</h3>
+                  <p className="font-satoshi text-night-secondary text-base leading-[1.6] flex-1">{item.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 1.4D: PROVEN-EXPERT TRUST-CARD (vorgezogen: Trust vor Pricing — Hormozi-Logik) */}
+      <section className="bg-warm-canvas py-20 md:py-28 px-6 sm:px-12 md:px-24 relative overflow-hidden border-t border-whisper-border">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-refined-gold/[0.04] blur-[150px] rounded-full pointer-events-none" />
+        <div className="max-w-[1100px] mx-auto relative z-10">
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-center">
+            <ScrollReveal>
+              <div>
+                <div className="inline-flex items-center gap-3 mb-6">
+                  <div className="h-[1px] w-10 bg-refined-gold" />
+                  <span className="font-mono text-refined-gold text-[0.65rem] md:text-xs tracking-[0.25em] uppercase font-bold">
+                    Verifizierte Auszeichnung
+                  </span>
+                </div>
+                <h2 className="font-instrument text-[clamp(2rem,4vw,3rem)] text-deep-charcoal leading-[1.1] mb-5">
+                  154 Bewertungen.{" "}
+                  <span className="italic text-refined-gold">Unabhängig verifiziert.</span>
+                </h2>
+                <p className="font-satoshi text-warm-steel text-base md:text-lg leading-[1.65]">
+                  Über die Jahre haben Menschen aus den unterschiedlichsten Bereichen mit mir gearbeitet. Jede Bewertung wird unabhängig über ProvenExpert geprüft. Das volle Profil ist öffentlich einsehbar.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <ProvenExpertCard variant="card" />
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 1.4C: DREI WEGE ZUR ZUSAMMENARBEIT */}
       <section className="bg-pure-surface py-24 md:py-32 px-6 sm:px-12 md:px-24 relative overflow-hidden border-t border-whisper-border">
         {/* Hero illustration as subtle background */}
@@ -335,7 +445,7 @@ export default function Home() {
                 <span className="italic text-refined-gold">gemeinsam starten.</span>
               </h2>
               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65]">
-                Drei Wege — je nachdem, wo du stehst und wie tief du gehen willst.
+                Drei Wege, je nachdem, wo du stehst und wie tief du gehen willst.
               </p>
             </div>
           </ScrollReveal>
@@ -366,11 +476,11 @@ export default function Home() {
                   <div className="p-8 md:p-10 lg:p-12 flex flex-col flex-1">
                     <p className="font-mono text-refined-gold text-xs tracking-widest uppercase mb-3">01 · Premium-Webseite</p>
                     <h3 className="font-instrument text-3xl md:text-4xl lg:text-5xl text-deep-charcoal leading-tight mb-4">
-                      Dein vollumfänglicher{" "}
-                      <span className="italic text-refined-gold">Premium-Auftritt.</span>
+                      Dein vollständiger{" "}
+                      <span className="italic text-refined-gold">Webauftritt.</span>
                     </h3>
                     <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed mb-8 max-w-[560px]">
-                      Bis zu 12 Seiten, individuell designt und animiert, mit Strategie · Brand · Pflege · Begleitung. Vier klare Stufen — vom sauberen Einstieg bis zur Bespoke-Edition.
+                      Bis zu 12 Seiten, individuell designt und animiert. Strategie, Brand, Technik und Pflege in einer Begleitung. Drei klare Stufen vom sauberen Einstieg bis zur Bespoke-Edition.
                     </p>
 
                     <div className="flex flex-wrap gap-4 mb-8">
@@ -463,45 +573,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 1.4D: PROVEN-EXPERT TRUST-CARD */}
-      <section className="bg-warm-canvas py-20 md:py-28 px-6 sm:px-12 md:px-24 relative overflow-hidden border-t border-whisper-border">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-refined-gold/[0.04] blur-[150px] rounded-full pointer-events-none" />
-        <div className="max-w-[1100px] mx-auto relative z-10">
-          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-center">
-            <ScrollReveal>
-              <div>
-                <div className="inline-flex items-center gap-3 mb-6">
-                  <div className="h-[1px] w-10 bg-refined-gold" />
-                  <span className="font-mono text-refined-gold text-[0.65rem] md:text-xs tracking-[0.25em] uppercase font-bold">
-                    Verifizierte Auszeichnung
-                  </span>
-                </div>
-                <h2 className="font-instrument text-[clamp(2rem,4vw,3rem)] text-deep-charcoal leading-[1.1] mb-5">
-                  Echte Stimmen.{" "}
-                  <span className="italic text-refined-gold">Echte Ergebnisse.</span>
-                </h2>
-                <p className="font-satoshi text-warm-steel text-base md:text-lg leading-[1.65]">
-                  Über die Jahre haben Menschen aus den unterschiedlichsten Bereichen mit mir gearbeitet. Ihre Bewertungen werden unabhängig über ProvenExpert verifiziert — das volle Profil ist öffentlich einsehbar.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.15}>
-              <ProvenExpertCard variant="card" />
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 1.5: TESTIMONIALS (BENT0-GRID) */}
+      {/* SECTION 1.5: TESTIMONIALS — Stimmen aus der Begleitung (Initial-Badges statt Stock-Avatare) */}
       <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-night-foundation text-night-text border-y border-white/5">
         <div className="max-w-[1200px] mx-auto overflow-hidden">
           <ScrollReveal>
-             <h2 className="font-instrument text-[clamp(2.5rem,5vw,3.5rem)] text-night-text mb-16 text-center leading-[1.1]">Wahre Tiefe zeigt sich in echten Ergebnissen.</h2>
+            <div className="flex items-center justify-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Stimmen aus der Begleitung</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
+            <h2 className="font-instrument text-[clamp(2.5rem,5vw,3.5rem)] text-night-text mb-16 text-center leading-[1.1]">
+              Was Menschen über die{" "}
+              <span className="italic text-refined-gold">Zusammenarbeit</span>{" "}
+              sagen.
+            </h2>
           </ScrollReveal>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            
+
             {/* Nadja - Große Box oben drüber */}
             <ScrollReveal delay={0.1} className="md:col-span-2">
               <div className="border border-white/10 p-10 md:p-14 rounded-[24px] bg-white/[0.02] hover:bg-white/[0.04] transition-colors backdrop-blur-sm h-full flex flex-col justify-between group">
@@ -512,8 +601,8 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 rounded-full hidden md:block bg-night-secondary/20 relative overflow-hidden">
-                    <Image src="https://picsum.photos/seed/nadjia/100/100" fill alt="Nadja" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center bg-refined-gold/15 border border-refined-gold/40 font-mono text-refined-gold text-[0.85rem] tracking-tight font-bold">
+                    NK
                   </div>
                   <div>
                     <p className="font-satoshi font-medium text-pure-surface">Nadja Kirchner</p>
@@ -533,8 +622,8 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 rounded-full hidden md:block bg-night-secondary/20 relative overflow-hidden">
-                    <Image src="https://picsum.photos/seed/philipp/100/100" fill alt="Philipp" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center bg-refined-gold/15 border border-refined-gold/40 font-mono text-refined-gold text-[0.85rem] tracking-tight font-bold">
+                    PS
                   </div>
                   <div>
                     <p className="font-satoshi font-medium text-pure-surface">Philipp Siebler</p>
@@ -554,8 +643,8 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 rounded-full hidden md:block bg-night-secondary/20 relative overflow-hidden">
-                    <Image src="https://picsum.photos/seed/silke/100/100" fill alt="Silke" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center bg-refined-gold/15 border border-refined-gold/40 font-mono text-refined-gold text-[0.85rem] tracking-tight font-bold">
+                    SE
                   </div>
                   <div>
                     <p className="font-satoshi font-medium text-pure-surface">Silke Ettrich</p>
@@ -574,17 +663,21 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto">
           <ScrollReveal>
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-              <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] text-deep-charcoal">Arbeiten, die für sich sprechen.</h2>
-              <span className="font-mono text-sm text-warm-steel uppercase tracking-widest mb-2 border border-warm-steel/20 px-4 py-2 rounded-full">Coming Soon</span>
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-[1px] w-10 bg-refined-gold"></div>
+                  <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Live im Web · Im Build · Auf der Liste</span>
+                </div>
+                <h2 className="font-instrument text-[clamp(2.5rem,5vw,4rem)] text-deep-charcoal">Arbeiten, die für sich sprechen.</h2>
+              </div>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[400px]">
-            {/* Primary Project — Stefanie Lommel (LIVE, Hero-Karte, klickbar) */}
-            <ScrollReveal delay={0.1} className="md:col-span-2 lg:col-span-2 row-span-2 group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
-              <a href="https://www.dielommel.de" target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-30" aria-label="dielommel.de in neuem Tab öffnen"></a>
+          {/* Stefanie als Hero-Karte (volle Breite, Live) */}
+          <ScrollReveal delay={0.1} className="mb-8 md:mb-10">
+            <a href="https://www.dielommel.de" target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-[28px] bg-pure-surface border border-whisper-border shadow-warm-shadow aspect-[16/9] md:aspect-[21/9]">
               <div className="absolute inset-0 z-0 bg-[#2E2B26]">
-                <Image src="/images/Referenz-Stefanie-Lommel.jpg" alt="Stefanie Lommel — Premium-Onepager" fill className="object-cover opacity-75 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
+                <Image src="/images/Referenz-Stefanie-Lommel.jpg" alt="Stefanie Lommel — Premium-Onepager" fill className="object-cover opacity-80 group-hover:scale-[1.02] transition-transform duration-700 ease-[0.16,1,0.3,1]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/90 via-deep-charcoal/40 to-transparent"></div>
               </div>
               <div className="absolute top-6 right-6 z-20">
@@ -592,45 +685,59 @@ export default function Home() {
                   Live
                 </span>
               </div>
-              <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12 text-pure-surface">
                 <p className="font-mono text-sm tracking-wider uppercase mb-3 opacity-90 text-refined-gold font-bold">Premium-Onepager · Veröffentlicht</p>
-                <h3 className="font-instrument text-4xl mb-4">Stefanie Lommel</h3>
-                <p className="text-pure-surface/80 max-w-md hidden md:block">Premium-Onepager-Paket bereits umgesetzt und live. Ein Auftritt, der die Tiefe und Klarheit ihrer Arbeit auf den ersten Blick spürbar macht.</p>
-                <p className="text-pure-surface/90 text-sm font-mono mt-4">dielommel.de &rarr;</p>
+                <h3 className="font-instrument text-4xl md:text-5xl mb-4">Stefanie Lommel</h3>
+                <p className="text-pure-surface/80 max-w-[600px] hidden md:block text-base md:text-lg leading-relaxed">Premium-Onepager bereits umgesetzt und live. Ein Auftritt, der die Tiefe und Klarheit ihrer Arbeit auf den ersten Blick spürbar macht.</p>
+                <p className="text-pure-surface/90 text-sm font-mono mt-4 inline-flex items-center gap-2">
+                  dielommel.de
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </p>
               </div>
-            </ScrollReveal>
+            </a>
+          </ScrollReveal>
 
-            {/* Fleur — In Arbeit (Golden Grid Brand Design) */}
-            <ScrollReveal delay={0.2} className="group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
+          {/* Sub-Eyebrow für die "im Build"-Reihe */}
+          <ScrollReveal delay={0.2}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-[1px] w-8 bg-refined-gold/50"></div>
+              <span className="font-mono text-warm-steel text-[0.65rem] tracking-[0.2em] uppercase">Aktuell im Build</span>
+            </div>
+          </ScrollReveal>
+
+          {/* Fleur + Max als kleinere Sub-Kacheln (2 Spalten, halbe Höhe) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            {/* Fleur — Im Build */}
+            <ScrollReveal delay={0.25} className="group relative overflow-hidden rounded-[20px] bg-pure-surface border border-whisper-border shadow-warm-shadow aspect-[16/10] flex flex-col justify-end">
               <div className="absolute inset-0 z-0">
-                <Image src="/images/Das-Team-Fleur.png" alt="Golden Grid (Fleur)" fill className="object-cover opacity-60 mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                <Image src="/images/Das-Team-Fleur.png" alt="Golden Grid (Fleur)" fill className="object-cover opacity-60 mix-blend-multiply group-hover:scale-[1.03] transition-transform duration-700 ease-[0.16,1,0.3,1]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
               </div>
-              <div className="absolute top-6 right-6 z-20">
-                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full font-bold">
-                  In Arbeit
+              <div className="absolute top-5 right-5 z-20">
+                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[9px] uppercase tracking-widest px-2.5 py-1 rounded-full font-bold">
+                  Im Build
                 </span>
               </div>
-              <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <p className="font-mono text-xs tracking-wider uppercase mb-2 text-night-gold opacity-90">Premium Brand Design & Website</p>
-                <h3 className="font-instrument text-3xl">Golden Grid (Fleur)</h3>
+              <div className="relative z-10 p-6 text-pure-surface">
+                <p className="font-mono text-[10px] tracking-wider uppercase mb-1.5 text-night-gold opacity-90">Premium Brand Design &amp; Website</p>
+                <h3 className="font-instrument text-2xl">Golden Grid (Fleur)</h3>
               </div>
             </ScrollReveal>
 
-            {/* Max Maute — In Arbeit (Vertriebsarchitekt) */}
-            <ScrollReveal delay={0.3} className="group relative overflow-hidden rounded-[24px] bg-pure-surface border border-whisper-border shadow-warm-shadow p-8 flex flex-col justify-end">
+            {/* Max Maute — Im Build */}
+            <ScrollReveal delay={0.3} className="group relative overflow-hidden rounded-[20px] bg-pure-surface border border-whisper-border shadow-warm-shadow aspect-[16/10] flex flex-col justify-end">
               <div className="absolute inset-0 z-0 bg-[#2E2B26]">
-                <Image src="/images/Referenz-Max-Maute.jpg" alt="Max Maute — Vertriebsarchitekt" fill className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                <Image src="/images/Referenz-Max-Maute.jpg" alt="Max Maute — Vertriebsarchitekt" fill className="object-cover opacity-65 group-hover:scale-[1.03] transition-transform duration-700 ease-[0.16,1,0.3,1]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
               </div>
-              <div className="absolute top-6 right-6 z-20">
-                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full font-bold">
-                  In Arbeit
+              <div className="absolute top-5 right-5 z-20">
+                <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[9px] uppercase tracking-widest px-2.5 py-1 rounded-full font-bold">
+                  Im Build
                 </span>
               </div>
-              <div className="relative z-10 text-pure-surface translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <p className="font-mono text-[10px] tracking-wider uppercase mb-2 text-night-gold opacity-90 leading-tight pr-4">Vertriebsarchitektur · Premium-Auftritt</p>
-                <h3 className="font-instrument text-3xl">Max Maute</h3>
+              <div className="relative z-10 p-6 text-pure-surface">
+                <p className="font-mono text-[10px] tracking-wider uppercase mb-1.5 text-night-gold opacity-90">Vertriebsarchitektur · Premium-Auftritt</p>
+                <h3 className="font-instrument text-2xl">Max Maute</h3>
               </div>
             </ScrollReveal>
           </div>
@@ -641,14 +748,20 @@ export default function Home() {
       <section id="kontakt" className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-pure-surface rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)] relative z-10">
         <div className="max-w-[1000px] mx-auto text-center flex flex-col items-center">
           <ScrollReveal>
-            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] tracking-[-0.02em] text-deep-charcoal mb-8 max-w-[800px] mx-auto">
-              Entdecke das exklusive Premium-Angebot.
+            <div className="inline-flex items-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Lass uns starten</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
+            <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.2] tracking-[-0.02em] text-deep-charcoal mb-8 max-w-[920px] mx-auto pt-2 pb-1">
+              Bereit für{" "}
+              <span className="italic text-refined-gold">Liebe auf den ersten Klick?</span>
             </h2>
           </ScrollReveal>
-          
+
           <ScrollReveal delay={0.1}>
             <p className="text-warm-steel text-xl leading-[1.65] max-w-[55ch] mb-12">
-              Ein vollumfängliches Paket für deinen transformativen Auftritt. Keine Standard-Templates, sondern tiefgreifende Markenstrategie und High-End Design.
+              Drei Stufen, ein Versprechen: dein Webauftritt zeigt, wer du bist. Strategie, Brand, Technik und Pflege in einer Hand. Recurring statt One-Shot.
             </p>
           </ScrollReveal>
 

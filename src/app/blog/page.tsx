@@ -57,7 +57,7 @@ export default function BlogPage() {
               Wissen & Mastermind
             </h1>
             <p className="text-deep-charcoal/70 text-lg max-w-[600px] font-satoshi">
-              Unterstützung für Mentoren, Coaches, Berater und Trainer. Interessante Artikel für den Aufbau deiner Marke und dein eigenes Wachstum.
+              Artikel für kreative Visionäre, Pioniere und Macher. Substanz für den Aufbau deiner Marke und dein eigenes Wachstum.
             </p>
           </div>
         </ScrollReveal>

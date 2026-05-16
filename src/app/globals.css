@@ -37,6 +37,14 @@
       transform: translate(-50%,-40%) scale(1);
     }
   }
+
+  /* Sanfte Schweb-Animation für Sabala auf der Wolke — bewusst ohne Rotation, damit Meditationspose ruhig bleibt */
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+  @keyframes float-slow {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-14px); }
+    100% { transform: translateY(0px); }
+  }
 }
 
 @layer base {

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dein Outreach-Agent — kinderleicht erklärt</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Satoshi:wght@400;500;700&family=Geist+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F1E8;
+    --cream-soft: #FAF6EE;
+    --deep: #2E2B26;
+    --deep-soft: #4A453E;
+    --gold: #B8963E;
+    --gold-soft: rgba(184, 150, 62, 0.12);
+    --green: #6B8E5E;
+    --red: #B85C5C;
+    --muted: #8A8275;
+    --border: rgba(184, 150, 62, 0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Satoshi', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body { padding: 0 0 80px 0; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 80px 24px 60px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--cream-soft) 0%, var(--cream) 100%);
+  }
+  .header__eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .header__title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .header__title em { font-style: italic; color: var(--gold); }
+  .header__sub {
+    font-size: 16px;
+    color: var(--deep-soft);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .header__meta {
+    margin-top: 32px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .section--alt { background: var(--cream-soft); max-width: none; }
+  .section--alt > * { max-width: 880px; margin-left: auto; margin-right: auto; }
+
+  .eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    color: var(--gold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(28px, 4.2vw, 42px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  h3 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 28px 0 12px 0;
+    color: var(--deep);
+  }
+  p { margin-bottom: 16px; color: var(--deep); }
+  p.lead {
+    font-size: 18px;
+    color: var(--deep-soft);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  strong { font-weight: 700; color: var(--deep); }
+  em { font-style: italic; color: var(--gold); font-family: 'Instrument Serif', Georgia, serif; }
+  code {
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    background: var(--gold-soft);
+    color: var(--deep);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* BOXES */
+  .box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .box--gold {
+    background: var(--gold-soft);
+    border-left: 3px solid var(--gold);
+  }
+  .box--green {
+    background: rgba(107, 142, 94, 0.08);
+    border-left: 3px solid var(--green);
+  }
+  .box--red {
+    background: rgba(184, 92, 92, 0.08);
+    border-left: 3px solid var(--red);
+  }
+  .box__title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--deep);
+  }
+  .box__title--gold { color: var(--gold); }
+
+  /* TIMELINE / PIPELINE */
+  .pipeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .step {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .step__num {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--gold);
+    font-style: italic;
+  }
+  .step__time {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+  .step__title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .step__desc { font-size: 14.5px; color: var(--deep-soft); line-height: 1.6; }
+
+  /* CHECK / KREUZ LISTEN */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li {
+    padding: 10px 0 10px 32px;
+    position: relative;
+    border-bottom: 1px solid rgba(184, 150, 62, 0.12);
+    font-size: 15px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 16px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+  }
+  .checklist--yes li::before { background: var(--green); }
+  .checklist--no li::before { background: var(--red); }
+  .checklist--yes li::after,
+  .checklist--no li::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 19px;
+    width: 10px; height: 6px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg);
+  }
+  .checklist--no li::after {
+    width: 12px; height: 2px; border: none;
+    background: white; left: 3px; top: 24px;
+    transform: rotate(45deg);
+  }
+
+  /* GRID 2-COL */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* TABLE */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .table th {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--gold);
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(184, 150, 62, 0.15);
+    vertical-align: top;
+  }
+
+  /* TERMINAL */
+  .terminal {
+    background: var(--deep);
+    color: #E8D9A8;
+    padding: 20px 24px;
+    border-radius: 10px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .terminal .prompt { color: var(--gold); }
+  .terminal .comment { color: #8A8275; }
+
+  /* METAPHOR */
+  .metaphor {
+    background: var(--cream-soft);
+    border: 1px dashed var(--gold);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-style: italic;
+    color: var(--deep-soft);
+    line-height: 1.7;
+  }
+  .metaphor__label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-style: normal;
+    margin-bottom: 8px;
+  }
+
+  /* TOC */
+  .toc {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(245, 241, 232, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    text-align: center;
+  }
+  .toc a {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    color: var(--deep-soft);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .toc a:hover { color: var(--gold); background: var(--gold-soft); }
+
+  /* FOOTER */
+  .footer {
+    max-width: 880px;
+    margin: 80px auto 0 auto;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Geist Mono', monospace;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOC -->
+<nav class="toc">
+  <a href="#start">01 · Start</a>
+  <a href="#pipeline">02 · Pipeline</a>
+  <a href="#vor">03 · Was läuft wo</a>
+  <a href="#kontrolle">04 · Kontrollen</a>
+  <a href="#dashboard">05 · Dashboard</a>
+  <a href="#alltag">06 · Alltag</a>
+  <a href="#troubleshoot">07 · Wenn was hakt</a>
+</nav>
+
+<!-- HEADER -->
+<header class="header" id="start">
+  <div class="header__eyebrow">Outreach Agent · Anleitung V1</div>
+  <h1 class="header__title">Dein <em>Outreach-Agent</em> —<br>kinderleicht erklärt.</h1>
+  <p class="header__sub">Wie täglich 20 Cold-Mails autonom rausgehen, ohne dass du dabei bist. Was im Hintergrund läuft, wo die Kontrollmechanismen sitzen, was dein MacBook tun muss — und was du jeden Morgen siehst.</p>
+  <div class="header__meta">Sabala Mentoring · Stand 12.05.2026</div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — KLARSTELLUNG -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="eyebrow">01 · Klarstellung</div>
+  <h2>Die 8 Minuten sind <em>zwischen</em> den Mails — nicht ein Send-Prozess.</h2>
+  <p class="lead">Ein Send selbst dauert weniger als eine Sekunde. Die 8 Minuten sind reiner Spam-Schutz für Gmail. Wenn 20 Mails in 10 Sekunden rausgehen, flaggt Google das als „bulk-sending" — Mails landen im Spam. Also: warten zwischen Sends.</p>
+
+  <div class="metaphor">
+    <div class="metaphor__label">Bild dazu</div>
+    Stell dir vor, du verteilst persönliche Einladungen für ein kleines Abendessen. Du wirfst sie nicht alle in einer Minute in 20 Briefkästen — das sähe nach Werbeflyer aus. Du gehst zu jedem Haus einzeln, klingelst, hinterlässt sie. Das dauert. <strong>Diese Pause zwischen den Klingeln ist der 8-Minuten-Abstand.</strong>
+  </div>
+
+  <h3>Wann ist der eigentliche Arbeitsaufwand?</h3>
+  <p>Die <strong>Recherche, Audit-PDF-Bau und Email-Verifikation</strong> passieren komplett <em>vorher</em> — entweder in der Nacht (Mining-Worker) oder in einer Claude-Session am Morgen. Wenn die Welle um 09:00 startet, sind die 20 Mails schon fertig vorbereitet und liegen versandbereit. Der Cron muss nur noch absenden.</p>
+
+  <div class="box box--gold">
+    <div class="box__title box__title--gold">Zeitplan einer typischen Welle</div>
+    <p style="margin-bottom: 0;">
+      <strong>02:00–06:00 Uhr (nachts):</strong> Mining-Worker findet 25 neue Prospects, schreibt research.md<br>
+      <strong>06:00–08:00 Uhr:</strong> Audit-Auto-Build baut 20 Audit-PDFs aus den research.md<br>
+      <strong>09:00 Uhr:</strong> LaunchAgent startet, sendet alle 8 Min eine Mail<br>
+      <strong>09:00–11:30 Uhr:</strong> 20 Mails draußen<br>
+      <strong>14:00 Uhr:</strong> Reply-Sentinel klassifiziert eingehende Antworten
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — DIE 3 SCHICHTEN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="pipeline">
+  <div class="eyebrow">02 · Die Pipeline</div>
+  <h2>Von „Person existiert irgendwo im Netz" zu „Mail im Postfach" — in 3 Schichten.</h2>
+  <p class="lead">Der Agent ist kein einzelnes Programm, sondern eine Kette aus drei Stufen. Jede Stufe hat eine klare Aufgabe und gibt das Ergebnis an die nächste weiter. So bleibt jede Stufe einfach und prüfbar.</p>
+
+  <div class="pipeline">
+    <div class="step">
+      <div class="step__num">1</div>
+      <div>
+        <div class="step__time">SCHICHT 1 · DISCOVERY (NACHTS)</div>
+        <div class="step__title">Wer sind die nächsten 25 Prospects?</div>
+        <div class="step__desc">
+          Der <strong>Mining-Worker</strong> durchsucht 20 vordefinierte Quellen (ProvenExpert, 5sterne-trainer, LinkedIn-DACH, Hamburger Coaches, etc.) per Firecrawl-Such-API. Pro Treffer prüft er: Existiert die Person schon in unserer DB? Trifft sie unser ICP-Profil (Premium-Coach, deutschsprachig, Solo)? Score ≥ 70? Wenn ja → research.md schreiben + DB-Insert.<br><br>
+          <strong>Output:</strong> 20–25 neue Prospects mit Status <code>researched</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num">2</div>
+      <div>
+        <div class="step__time">SCHICHT 2 · AUDIT-BUILD (FRÜH MORGENS)</div>
+        <div class="step__title">Personalisiertes Audit-PDF pro Person.</div>
+        <div class="step__desc">
+          Für jede neue Person aus Schicht 1 wird ein 3-Bullets-Audit-PDF gebaut: „Drei Beobachtungen zu deiner Webseite" — nach Voice-Guide, im Sabala-Stil. Außerdem wird die Email aus dem Impressum gescrapet. Vor dem Status-Wechsel auf <code>asset_ready</code> läuft der <strong>Pre-Send-Validator</strong> mit 13 Checks. Fail = Audit landet in „Approval Pending", nicht im Auto-Send.<br><br>
+          <strong>Output:</strong> 20 PDFs + 20 Email-Bodies, Status <code>asset_ready</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num">3</div>
+      <div>
+        <div class="step__time">SCHICHT 3 · SEND (09:00 – 12:00)</div>
+        <div class="step__title">LaunchAgent feuert. 20 Mails, je 8 Min Pause.</div>
+        <div class="step__desc">
+          Das macOS-System ruft pünktlich um 09:00 das Script <code>daily_outreach.py</code> auf. Das holt sich die 20 ICP-höchsten <code>asset_ready</code>-Prospects, sendet via Gmail-API in-thread, schreibt nach jedem Send: SQLite + Notion-Card auf Stage <code>📤 Sent</code> + Master-Log-Eintrag. Zwischen jedem Send 8 Min Pause (Spam-Schutz).<br><br>
+          <strong>Output:</strong> 20 Sent-Mails + 20 Notion-Cards + Day +7 Follow-Up-Timer aktiv.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num">4</div>
+      <div>
+        <div class="step__time">SCHICHT 4 · REPLY-WATCH (DURCHGÄNGIG)</div>
+        <div class="step__title">Reply-Sentinel klassifiziert Antworten.</div>
+        <div class="step__desc">
+          Alle 15 Minuten prüft ein Worker das Gmail-Postfach auf neue Antworten. Klassifiziert nach Sentiment (positiv / neutral / negativ / auto-reply / höfliche Absage). Bei Auto-Reply (Urlaub etc.) stoppt er den Day +7 Follow-Up automatisch. Bei positiver Antwort: Stage <code>💬 Replied</code> in Notion, du siehst sie morgens im Dashboard.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 3 — WAS MUSS LAUFEN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section" id="vor">
+  <div class="eyebrow">03 · Voraussetzungen</div>
+  <h2>Was muss <em>an</em> sein, damit der Agent läuft?</h2>
+
+  <div class="grid-2">
+    <div class="box box--green">
+      <div class="box__title">Das muss laufen</div>
+      <ul class="checklist checklist--yes">
+        <li><strong>MacBook ist an</strong> (Display darf dunkel sein)</li>
+        <li><strong>Du bist eingeloggt</strong> (Bildschirm muss nicht entsperrt sein)</li>
+        <li><strong>Internet aktiv</strong> (WiFi / LAN)</li>
+        <li><strong>iCloud-Files geladen</strong> (nicht „dataless")</li>
+        <li><strong>Gmail-OAuth-Token gültig</strong> (auto-refresh)</li>
+      </ul>
+    </div>
+    <div class="box box--red">
+      <div class="box__title">Das darf passieren</div>
+      <ul class="checklist checklist--no">
+        <li><strong>Mac herunterfahren</strong> während der Welle (09–12)</li>
+        <li><strong>Mac im Ruhezustand</strong> ohne Wake-Schedule</li>
+        <li><strong>WiFi-Trennung &gt; 5 Min</strong> während Send-Fenster</li>
+        <li><strong>Internet via VPN auf US/UK</strong> (Gmail flaggt geo-shift)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Was du <strong>NICHT</strong> brauchst</h3>
+  <ul class="checklist" style="list-style: none; padding-left: 0;">
+    <li style="padding-left: 0; border: none;">– Claude-App geöffnet</li>
+    <li style="padding-left: 0; border: none;">– Browser offen</li>
+    <li style="padding-left: 0; border: none;">– Terminal offen</li>
+    <li style="padding-left: 0; border: none;">– Dashboard offen</li>
+    <li style="padding-left: 0; border: none;">– iCloud-Login aktiv</li>
+    <li style="padding-left: 0; border: none;">– Notion-App offen</li>
+  </ul>
+  <p style="margin-top: 16px;">Der LaunchAgent (Apples eingebauter Cron) läuft als System-Service. Er feuert um 09:00 unabhängig davon, ob du gerade an der Maschine sitzt. Du kannst Kaffee holen, in einem Call sein, oder einfach im Bett liegen — die Mails gehen raus.</p>
+
+  <div class="metaphor">
+    <div class="metaphor__label">Bild dazu</div>
+    Wie ein <strong>Wecker</strong>. Der klingelt um 09:00 — egal ob du wach bist. Aber wenn du den Mac ausschaltest, ist es wie ein Wecker ohne Strom. Genauso wenn der Mac in tiefen Ruhezustand fällt: der Wecker pausiert, läuft nicht weiter. Display dunkel ist okay — System schläft nicht, nur der Bildschirm.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 4 — KONTROLLMECHANISMEN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="kontrolle">
+  <div class="eyebrow">04 · Kontrollmechanismen</div>
+  <h2>Wo schützt der Agent dich vor Fehlern? <em>An vier Stellen.</em></h2>
+  <p class="lead">Brand-Schutz ist mehrschichtig. Wenn eine Schicht versagt, hält die nächste. So gehen keine schlechten Mails raus — auch wenn der Agent autonom läuft.</p>
+
+  <table class="table">
+    <thead><tr>
+      <th>Wo</th><th>Wann</th><th>Was wird geprüft</th><th>Wenn FAIL</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Hard-Filter</strong><br>(Mining)</td>
+        <td>Bei jedem Discovery-Treffer</td>
+        <td>Englisch-only Webseite · Performance-Marketing-Sprache · Ego-Display · Coaching-Pathos · Scarcity-Manipulation · Spirit-Kitsch</td>
+        <td>Auto-Reject. Landet in „Closed-Lost" mit Begründung.</td>
+      </tr>
+      <tr>
+        <td><strong>Anti-Dubletten</strong><br>(Mining)</td>
+        <td>Bei jedem Discovery-Treffer</td>
+        <td>Steht die Person schon im Master-Outreach-Log oder in SQLite?</td>
+        <td>Skip. Doppelter Send wäre Spam-Tool-Look.</td>
+      </tr>
+      <tr>
+        <td><strong>ICP-Score-Filter</strong><br>(Audit)</td>
+        <td>Vor Audit-Build</td>
+        <td>Score &lt; 70 = nicht qualifiziert</td>
+        <td>Status bleibt <code>researched</code>, kein Audit gebaut.</td>
+      </tr>
+      <tr>
+        <td><strong>Pre-Send-Validator</strong><br>(Send)</td>
+        <td>Direkt vor jedem Send</td>
+        <td>13 Checks: Anrede gender-korrekt · URL im PDF an 5 Stellen · Voice-Tabus · Bio-Halluzination · etc.</td>
+        <td>Send wird abgebrochen, Stage „Approval Pending", du siehst es morgens im Dashboard.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box box--gold">
+    <div class="box__title box__title--gold">Die wichtigste Regel</div>
+    <p style="margin-bottom: 0;">Der <strong>Pre-Send-Validator</strong> ist ein HARD-GATE. Wenn auch nur ein Check fehlschlägt, geht die Mail <em>nicht</em> raus. Lieber 18 von 20 Mails sauber als 20 mit einem peinlichen „Liebe Lukas" dabei (das war ein echter Bug am 11.05., deshalb gibt's den Validator).</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 5 — DASHBOARD -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section" id="dashboard">
+  <div class="eyebrow">05 · Wo siehst du was</div>
+  <h2>Drei Orte, drei Aufgaben.</h2>
+
+  <div class="grid-2">
+    <div class="box">
+      <div class="box__title">Dashboard <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--gold);">localhost:3000</span></div>
+      <p>Live-Status: Pool, Sends heute, Replies, Autonomous-Mode-Toggle. Hier stellst du die <strong>Targets</strong> ein („20 Sends/Tag", „25 Discovery/Nacht"). Geöffnet via <code>Sabala Dashboard.app</code> oder im Browser.</p>
+    </div>
+    <div class="box">
+      <div class="box__title">Notion <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--gold);">Outreach-Pipeline DB</span></div>
+      <p>Detaillierte Sicht pro Prospect: Audit-PDF-Pfad, Email-Confidence, Voice-Check-Status, Reply-Content. Hier siehst du <strong>jede einzelne Person</strong> und kannst manuell Stages ändern.</p>
+    </div>
+    <div class="box">
+      <div class="box__title">Gmail <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--gold);">Outreach-Sabala Label</span></div>
+      <p>Alle gesendeten Mails + alle Antworten. Filter „Outreach Sabala / Sent" zeigt was rausging, „Replies" zeigt was reinkam. Antworten werden im Sentinel klassifiziert.</p>
+    </div>
+    <div class="box">
+      <div class="box__title">Vault <span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--gold);">Daily Notes + Master-Log</span></div>
+      <p>Tageslog mit Erkenntnissen + chronologischer Master-Outreach-Log für Anti-Dubletten-Schutz und Verlaufs-Rekonstruktion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 6 — DEIN ALLTAG -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section--alt" id="alltag">
+  <div class="eyebrow">06 · Dein Alltag</div>
+  <h2>Was du <em>jeden Tag</em> tust — und was du <em>nie wieder</em> tun musst.</h2>
+
+  <div class="grid-2">
+    <div class="box box--green">
+      <div class="box__title">Tut der Agent für dich</div>
+      <ul class="checklist checklist--yes">
+        <li>Prospects finden (Mining-Worker)</li>
+        <li>Webseite scrapen + analysieren</li>
+        <li>Audit-PDF bauen</li>
+        <li>Email aus Impressum scrapen</li>
+        <li>Voice-Check vor Send</li>
+        <li>Mail senden mit Mooni-Signatur</li>
+        <li>Notion-Card erstellen</li>
+        <li>Reply klassifizieren</li>
+        <li>Day +7 Follow-Up senden</li>
+        <li>Auto-Reply erkennen + stoppen</li>
+      </ul>
+    </div>
+    <div class="box box--gold">
+      <div class="box__title">Tust du selbst</div>
+      <ul class="checklist checklist--yes">
+        <li>Morgens 5 Min Dashboard checken (Pool + neue Replies)</li>
+        <li>Bei positiver Antwort: persönlich antworten</li>
+        <li>Targets im Dashboard anpassen (mehr/weniger pro Tag)</li>
+        <li>Im Master-Log Personen markieren, die du persönlich kennst (kein Cold-Outreach)</li>
+        <li>1× pro Woche: Conversion-Stats reviewen, Voice anpassen wenn nötig</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Dein 30-Sekunden-Morgen-Ritual</h3>
+  <div class="terminal">
+<span class="comment"># Terminal öffnen, eintippen:</span>
+<span class="prompt">$</span> sabala status
+
+<span class="comment"># Zeigt: Pool, Sends heute, Replies, LaunchAgent-Status</span>
+<span class="comment"># Wenn alles grün: nichts zu tun. Welle läuft um 9.</span>
+<span class="comment"># Wenn Pool &lt; 20: Mining-Worker triggern</span>
+
+<span class="prompt">$</span> sabala mining
+  </div>
+
+  <div class="metaphor">
+    <div class="metaphor__label">Bild dazu</div>
+    Wie ein <strong>guter Hausverwalter</strong>. Er macht morgens die Runde, gießt die Blumen, holt die Post, schaltet die Heizung an. Du musst nicht mal aufstehen. Du fragst ihn nur einmal am Tag: „Alles okay?" — er nickt oder zeigt dir die zwei Dinge, die deine Aufmerksamkeit brauchen.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECTION 7 — TROUBLESHOOTING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section" id="troubleshoot">
+  <div class="eyebrow">07 · Wenn etwas hakt</div>
+  <h2>Vier typische Probleme — und die einfachen Fixes.</h2>
+
+  <div class="box">
+    <div class="box__title">1 · Morgens 9:01 — keine Mails gehen raus</div>
+    <p style="margin-bottom: 8px;"><strong>Diagnose:</strong> <code>sabala status</code> — wahrscheinlich „Asset-Ready: 0". Pool war leer.</p>
+    <p><strong>Fix:</strong> <code>sabala mining</code> + 30 Min Claude-Session für Audit-Build. Wellen-Start nach hinten verschoben, läuft dann gegen 10:00.</p>
+  </div>
+
+  <div class="box">
+    <div class="box__title">2 · LaunchAgent crasht, Logs zeigen <code>ModuleNotFoundError</code></div>
+    <p style="margin-bottom: 8px;"><strong>Diagnose:</strong> Python hat neue Module verloren (z.B. nach macOS-Update).</p>
+    <p><strong>Fix:</strong> <code>/usr/bin/python3 -m pip install --user google-auth google-auth-oauthlib google-api-python-client</code></p>
+  </div>
+
+  <div class="box">
+    <div class="box__title">3 · Dashboard zeigt „Resource deadlock avoided"</div>
+    <p style="margin-bottom: 8px;"><strong>Diagnose:</strong> iCloud hat Code-Files ausgelagert (dataless).</p>
+    <p><strong>Fix:</strong> Sabala Dashboard.app neu starten — der Launcher macht automatisch einen Force-Read. Alternativ in Systemeinstellungen iCloud → „Mac-Speicher optimieren" abschalten.</p>
+  </div>
+
+  <div class="box">
+    <div class="box__title">4 · Eine Mail mit falscher Anrede ging raus</div>
+    <p style="margin-bottom: 8px;"><strong>Diagnose:</strong> Vornamen fehlt in der Validator-Heuristik-Liste.</p>
+    <p><strong>Fix:</strong> Validator hat ihn beim nächsten Send geblockt — Vorname zur <code>_MALE_GERMAN_FIRST_NAMES</code> oder <code>_FEMALE_GERMAN_FIRST_NAMES</code> hinzufügen in <code>email_body_generator.py</code>. Sofortige Korrektur-Mail an Empfänger senden mit <code>sabala send-correction &lt;slug&gt;</code> (V2-Feature).</p>
+  </div>
+
+  <h3>Wenn nichts mehr hilft</h3>
+  <div class="terminal">
+<span class="comment"># Alles stoppen</span>
+<span class="prompt">$</span> sabala stop
+
+<span class="comment"># Logs lesen</span>
+<span class="prompt">$</span> sabala logs
+
+<span class="comment"># Dashboard neu starten</span>
+<span class="prompt">$</span> sabala dashboard
+
+<span class="comment"># Status checken</span>
+<span class="prompt">$</span> sabala status
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ZUSAMMENFASSUNG -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section--alt">
+  <div class="eyebrow">Quintessenz</div>
+  <h2>In einem Satz: Wie der Agent funktioniert.</h2>
+  <p class="lead">Der Agent ist eine <strong>Kette aus drei Stufen</strong> — Discovery findet, Audit baut, Send verschickt — kontrolliert durch <strong>vier Tor-Wächter</strong> (Hard-Filter, Anti-Dubletten, ICP-Score, Pre-Send-Validator). Er läuft <strong>autonom auf deinem Mac</strong>, du musst nur das MacBook anlassen und Internet haben. Steuern tust du über das <strong>Dashboard</strong> (Targets, Toggle) oder das <strong>Terminal</strong> (<code>sabala status</code>, <code>sabala mining</code>). Brand-Schutz ist im Code verankert, nicht in deiner Aufmerksamkeit.</p>
+
+  <div class="box box--gold" style="text-align: center; padding: 32px;">
+    <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; line-height: 1.3; color: var(--deep);">
+      „Ich kontrolliere meine eigenen Daten,<br>
+      mache mich nicht abhängig —<br>
+      und der Agent kümmert sich um den Rest."
+    </div>
+    <div style="margin-top: 16px; font-family: 'Geist Mono', monospace; font-size: 10.5px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase;">
+      Sabalas Brand-Statement zur Self-Hosted-Doktrin
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Sabala Outreach Agent · Anleitung V1 · 12.05.2026<br>
+  Verbunden mit: AGENT-AUTONOMOUS-BUILD.md · Discovery-Strategy.md · ICP-v2.0 · Voice-Guide
+</footer>
+
+</body>
+</html>

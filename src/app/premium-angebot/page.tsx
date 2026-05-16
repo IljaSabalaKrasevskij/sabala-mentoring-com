@@ -27,13 +27,13 @@ export default function PremiumAngebotPage() {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <h1 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] text-deep-charcoal tracking-tight mb-8">
-                Dein kompletter Auftritt. <br />
-                <span className="italic text-refined-gold">Von der Essenz bis zur Erlebnis-Website.</span>
+                Liebe auf den ersten Klick. <br />
+                <span className="italic text-refined-gold">Dein kompletter Auftritt aus einem Guss.</span>
               </h1>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
               <p className="font-satoshi text-warm-steel text-lg leading-relaxed max-w-[520px]">
-                Wir schleifen dich nicht. Wir gehen aus dem Inneren heraus und stellen deinen ungeschliffenen Diamanten ins Licht. Genau dort entsteht echte Strahlkraft — wertvoller als jeder perfekt geschliffene Auftritt.
+                Für Pioniere und Visionäre mit kreativen Lösungen. Strategie, Brand, Webseite und Pflege in einer Begleitung. Kein 6-Monats-Coaching plus extra Setup, sondern alles in einem Setup. Klare Strategie, echte Umsetzung, Premium-Auftritt.
               </p>
             </ScrollReveal>
             
@@ -84,7 +84,7 @@ export default function PremiumAngebotPage() {
             <ScrollReveal delay={0.2}>
               <h3 className="font-geist text-refined-gold text-sm tracking-widest uppercase mb-4">Der falsche Filter</h3>
               <p>
-                Weil dein Auftritt nicht deine wahre Tiefe spiegelt, ziehst du oft Menschen an, denen du erst mühsam erklären musst, warum du anders (und teurer) bist als der Rest. Du bist müde davon, in Erstgesprächen Überzeugungsarbeit leisten zu müssen, weil deine Website ihren Job nicht macht.
+                Weil dein Auftritt deine Tiefe nicht spiegelt, ziehst du oft Menschen an, denen du erst mühsam erklären musst, warum du anders (und teurer) bist als der Rest. Du bist müde davon, in Erstgesprächen Überzeugungsarbeit leisten zu müssen, weil deine Webseite ihren Job nicht macht.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.3}>
@@ -94,6 +94,138 @@ export default function PremiumAngebotPage() {
               </p>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* SECTION 2b: WAS DU DIR SPARST + BRAND-MANIFEST + FILTER (Marktführer-Block) */}
+      <section className="py-28 md:py-40 px-6 sm:px-12 md:px-24 bg-warm-canvas relative overflow-hidden">
+        <div className="absolute top-1/3 -left-[15vw] w-[600px] h-[600px] bg-refined-gold/[0.06] blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-1/4 -right-[15vw] w-[500px] h-[500px] bg-refined-gold/[0.05] blur-[160px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1300px] mx-auto relative z-10">
+
+          {/* Block 0: Persönliches Wertversprechen — Sabala als Partner für die Vision */}
+          <ScrollReveal>
+            <div className="max-w-[900px] mx-auto text-center mb-24 md:mb-32">
+              <div className="inline-flex items-center gap-3 mb-7">
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+                <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Dein Partner für die Vision</span>
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+              </div>
+              <h2 className="font-instrument text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.15] tracking-[-0.015em] text-deep-charcoal mb-10">
+                Du trägst eine Vision in deinem Herzen.<br/>
+                <span className="italic text-refined-gold">Wie bringst du sie zum Leben?</span>
+              </h2>
+              <p className="font-instrument text-[1.35rem] md:text-[1.6rem] leading-[1.5] text-deep-charcoal max-w-[760px] mx-auto">
+                Ich gebe deiner Vision die Kraft, mit der sie Impact in der Welt schafft. Als dein strategischer Partner und Begleiter. Der mitdenkt. Der dabei ist.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Block A: Mentoring-Vergleich */}
+          <ScrollReveal>
+            <div className="flex items-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Warum Sabala anders ist</span>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] tracking-[-0.02em] text-deep-charcoal mb-6 max-w-[24ch]">
+              Andere Mentoring-Programme kosten 6 bis 12 Tausend.<br/>
+              <span className="italic text-refined-gold">Und dann fehlt immer noch der Auftritt.</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.15}>
+            <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.6] max-w-[760px] mb-16 md:mb-20">
+              Hier nicht. Sabala bündelt Coaching, Mentoring, Premium-Webseite und Pflege in einem Setup. Aus fünf Jahren Begleitungs-Erfahrung entstanden, damit du nicht zweimal zahlst und nicht zweimal alleine umsetzt.
+            </p>
+          </ScrollReveal>
+
+          {/* 2-Spalten-Gegenüberstellung */}
+          <ScrollReveal delay={0.2}>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-24 md:mb-32">
+
+              {/* Klassisch */}
+              <div className="p-8 md:p-10 rounded-[24px] border border-warm-steel/20 bg-pure-surface/50">
+                <p className="font-mono text-warm-steel text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Klassischer Weg</p>
+                <ul className="space-y-4 font-satoshi text-warm-steel text-base md:text-lg">
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>6 bis 12 Tausend für 6-Monats-Coaching</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für Webseite</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für Tech-Setup</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für SEO und GEO</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Du bist mit der Umsetzung allein</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Theorie, dann mühsame Praxis</li>
+                </ul>
+              </div>
+
+              {/* Sabala */}
+              <div className="p-8 md:p-10 rounded-[24px] border-2 border-refined-gold/50 bg-deep-charcoal shadow-[0_30px_70px_rgba(184,150,62,0.12)] relative">
+                <span className="absolute -top-3 left-8 bg-refined-gold text-deep-charcoal text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">Bei Sabala</span>
+                <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Aus einem Guss</p>
+                <ul className="space-y-4 font-satoshi text-pure-surface text-base md:text-lg">
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>8 bis 15 Tausend für komplettes Setup</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Alles in einer Begleitung</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Strategie, Brand, Technik, Pflege</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>SEO und GEO inklusive</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Ein Partner für alles</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Praxis bis zur Marktreife</li>
+                </ul>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Block B: Brand-Manifest */}
+          <ScrollReveal delay={0.25}>
+            <div className="max-w-[860px] mx-auto text-center mb-24 md:mb-32">
+              <div className="inline-flex items-center gap-3 mb-7">
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+                <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Was Sabala bewegt</span>
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+              </div>
+              <h2 className="font-instrument text-[clamp(2rem,3.5vw,3rem)] leading-[1.2] text-deep-charcoal mb-10">
+                Ich arbeite mit Menschen, die etwas bewegen wollen.<br/>
+                <span className="italic text-refined-gold">Nicht mit denen, die ein Ego polieren wollen.</span>
+              </h2>
+              <div className="space-y-4 font-instrument text-[1.35rem] md:text-[1.6rem] leading-[1.5] text-deep-charcoal">
+                <p>Aus Tiefe entsteht Klarheit.</p>
+                <p>Aus Klarheit entsteht Wirkung.</p>
+                <p>Aus Wirkung entstehen die richtigen Kunden.</p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Block C: Filter — Nicht-für-dich LINKS, Für-dich RECHTS (Bewegung vom Filter zum Ja) */}
+          <ScrollReveal delay={0.3}>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-[1100px] mx-auto">
+
+              {/* Nicht für dich (links) */}
+              <div className="p-8 md:p-10 rounded-[24px] bg-warm-canvas border border-warm-steel/20">
+                <p className="font-mono text-warm-steel text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Nicht für dich, wenn</p>
+                <ul className="space-y-3.5 font-satoshi text-warm-steel text-base md:text-lg">
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-0.5">✗</span>Du Quick-Fix willst</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-0.5">✗</span>Du primär Conversion-Tricks suchst</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-0.5">✗</span>Du Standard-Template-Setup willst</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-0.5">✗</span>Du Premium nur als Status verstehst</li>
+                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-0.5">✗</span>Du noch nicht weißt, wofür du stehst</li>
+                </ul>
+              </div>
+
+              {/* Für dich (rechts, hervorgehoben) */}
+              <div className="p-8 md:p-10 rounded-[24px] bg-pure-surface border border-refined-gold/30 shadow-[0_20px_50px_rgba(184,150,62,0.08)]">
+                <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Für dich, wenn</p>
+                <ul className="space-y-3.5 font-satoshi text-deep-charcoal text-base md:text-lg">
+                  <li className="flex gap-3"><span className="text-refined-gold mt-0.5">✓</span>Du Pionier oder Visionär bist</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-0.5">✓</span>Du kreative Lösungen für echte Probleme hast</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-0.5">✓</span>Du Substanz vor Show stellst</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-0.5">✓</span>Du Partner suchst, keinen Service-Provider</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-0.5">✓</span>Dein Antrieb Impact ist, nicht Ego-Massage</li>
+                </ul>
+              </div>
+            </div>
+          </ScrollReveal>
+
         </div>
       </section>
 
@@ -120,19 +252,19 @@ export default function PremiumAngebotPage() {
 
             <ScrollReveal delay={0.2} className="space-y-6">
               <p className="font-satoshi text-deep-charcoal text-xl md:text-2xl leading-[1.6]">
-                Eigentlich sehnst du dich danach, wundervolle Arbeit zu leisten und in echter Verbundenheit zu wirken – und damit finanziell völlig frei zu sein.
+                Du sehnst dich danach, deine Arbeit in voller Tiefe zu leisten, in echter Verbundenheit zu wirken und damit finanziell völlig frei zu sein.
               </p>
               <p className="font-satoshi text-warm-steel text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-2">
-                Doch die Realität? Ohne einen professionellen, fühlbaren Auftritt verpufft die beste Expertise oft in der Masse. Alles im Alleingang aufzubauen, kostet dich am Ende nur unverhältnismäßig viel Zeit, wertvolle Energie und Nerven.
+                Doch die Realität: ohne einen professionellen, fühlbaren Auftritt verpufft die beste Expertise oft in der Masse. Alles im Alleingang aufzubauen, kostet dich Zeit, Energie und Nerven.
               </p>
-              
+
               <div className="w-16 h-[1px] bg-refined-gold/30 mx-auto my-10"></div>
-              
+
               <p className="font-satoshi text-deep-charcoal font-medium text-xl md:text-2xl leading-[1.6] max-w-[750px] mx-auto">
-                Genau an diesem Punkt übernehmen wir.
+                Genau an diesem Punkt übernehme ich.
               </p>
               <p className="font-satoshi text-warm-steel text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-12">
-                Wir nehmen dir die gesamte strategische und technische Last ab, die dich jetzt noch zurückhält. Du findest zurück in deine totale kreative Flow-Zone – während wir dir eine exklusive Premium-Plattform erschaffen, die im Hintergrund unermüdlich für dich arbeitet und deine Vision endlich wirtschaftlich kraftvoll übersetzt.
+                Ich nehme dir die strategische und technische Last ab, die dich zurückhält. Du findest zurück in deine kreative Flow-Zone, während ich dir eine Premium-Plattform baue, die im Hintergrund für dich arbeitet und deine Vision wirtschaftlich kraftvoll übersetzt.
               </p>
               
               <div className="flex flex-col items-center pt-8 border-t border-refined-gold/10 max-w-[500px] mx-auto">
@@ -212,8 +344,9 @@ export default function PremiumAngebotPage() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
                 {[
-                  { title: "Positionierung & Botschaft", desc: "Brand Identity Sessions (2× 90 Min): Personal-Brand-Interview + Strategie. Wir finden Brand Voice und Texte, die exakt nach dir klingen.", class: "md:col-span-2 lg:col-span-2 relative overflow-hidden group" },
-                  { title: "Brand Mini-Guide", desc: "Typografie, Farben, Tonalität und Bildsprache. Auf Google Fonts — ohne Lizenz-Risiko. Logo & Branddesign optional als Add-on (Fleur, +1.500 €).", class: "group relative overflow-hidden" },
+                  { title: "Marktposition-Audit", desc: "Detaillierte Wettbewerbsanalyse mit Premium-Präsentation. Wir messen Design, Sprache, Pricing und SEO der Top-Anbieter in deiner Nische, finden ihre Schwächen und arbeiten deine Einzigartigkeit heraus. Der Anspruch: das beste Marktergebnis nicht erreichen, sondern toppen.", class: "md:col-span-2 lg:col-span-3 min-h-[300px] group relative overflow-hidden border border-refined-gold/30 shadow-[inset_0_0_80px_rgba(184,150,62,0.05)]" },
+                  { title: "Positionierung & Botschaft", desc: "Brand Identity Sessions (2× 90 Min): Personal-Brand-Interview + Strategie. Ich finde mit dir Brand Voice und Texte, die exakt nach dir klingen.", class: "md:col-span-2 lg:col-span-2 relative overflow-hidden group" },
+                  { title: "Brand Mini-Guide", desc: "Typografie, Farben, Tonalität und Bildsprache. Auf Google Fonts, ohne Lizenz-Risiko. Logo & Branddesign optional als Add-on (Fleur, +1.500 €).", class: "group relative overflow-hidden" },
                   { title: "Erlebnis-Website", desc: "5 bis 12 Seiten je nach Stufe. Individuell designt, animiert, optimiert. Hosting via Vercel · DSGVO · cookie-frei.", class: "md:col-span-1 lg:col-span-1 group relative overflow-hidden" },
                   { title: "SEO & Datenanalyse", desc: "Saubere SEO-Basis und Analyse-Setup. Plus Starter-Blog-Artikel ab Stufe Basis (3 in Basis · monatlich 1 in All-in).", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
                   { title: "Content & Social-Media", desc: "Newsletter-Welcome-Sequence ab Basis. In All-in zusätzlich: wöchentlich 1 LinkedIn-Karussell, Content-Säulen + Themen-Plan + Vorlagen.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
@@ -327,9 +460,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={true}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">01</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Personal Brand Interview</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Beratungsgespräch</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Wir tauchen in deine Geschichte, deine Werte und deine Vision ein. Wir finden deine Kernbotschaft und nutzen ab jetzt exakt deine Sprache — denn im Kern geht es um den authentischen Ausdruck deiner echten Identität.
+                      Wir lernen uns kennen. Du erzählst von deiner Vision, deinem Markt, deinem Ziel. Ich höre zu, frage präzise, prüfe ob wir zueinander passen. Kein Verkaufsgespräch, sondern eine ehrliche Standortbestimmung.
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -342,9 +475,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={false}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">02</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Positionierung & Angebot</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Marktposition-Audit</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Wir definieren, wofür du stehst, wen du ansprichst und was du anbietest. Klare Positionierung, klares Angebot, klare Kommunikation — in einer Sprache, die deine Zielgruppe wirklich versteht.
+                      Ich analysiere live den Markt deiner Nische: Top-Anbieter, Design, Sprache, Pricing-Logik. Wir finden wo du anders bist und wo du anders sein darfst. Premium-Präsentation plus 1:1 Strategie-Call.
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -357,9 +490,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={true}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">03</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Brand-Strategie & Customer Journey</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Drei Personal Brand Interviews</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Wir entwickeln eine klare Strategie für dein gesamtes Business: Vom ersten Touchpoint auf Social Media über den Weg auf deine Website bis zum Kennenlerngespräch. Jeder Schritt ist durchdacht.
+                      Drei fokussierte Sessions: <strong className="text-deep-charcoal font-medium">Über-mich</strong> (deine Geschichte, deine Werte, deine Vision für die Brand). <strong className="text-deep-charcoal font-medium">Angebot &amp; Zielgruppe</strong> (für wen du da bist, was sie wirklich brauchen). <strong className="text-deep-charcoal font-medium">Angebotsklarheit</strong> (Stufen, Pricing, Customer Journey). Hier entsteht die Substanz, mit der ich ins Branding und in die Webseite gehe.
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -372,9 +505,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={false}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">04</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Brand Mini-Guide <span className="text-warm-steel/60 font-normal text-base align-middle">— Logo optional als Add-on</span></h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Brand Mini-Guide <span className="text-warm-steel/60 font-normal text-base align-middle">(Logo optional als Add-on)</span></h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Im Hauptpaket inklusive: Typografie, Farben, Tonalität, Bildsprache — alles auf deine Persönlichkeit abgestimmt. Wenn du bereits ein Logo mitbringst, gleiche ich es leicht an deine Markenwelt an. Wenn du noch kein Logo hast, entwickelt Fleur Logo + erstes Branddesign als Add-on (+1.500 €).
+                      Im Hauptpaket inklusive: Typografie, Farben, Tonalität, Bildsprache, alles auf deine Persönlichkeit abgestimmt. Wenn du bereits ein Logo mitbringst, gleiche ich es leicht an deine Markenwelt an. Wenn du noch kein Logo hast, entwickelt Fleur Logo + erstes Branddesign als Add-on (+1.500 €).
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -387,9 +520,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={true}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">05</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Premium-Erlebnis-Website</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Premium-Erlebnis-Webseite</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Wir bauen eine Website, die vom ersten Moment begeistert. Mit eleganten Animationen, modernem Aufbau und Texten, die nach dir klingen. Ein digitales Wohnzimmer, in dem man bleiben möchte.
+                      Ich baue deine Webseite mit Strategie, eleganten Animationen und Texten, die nach dir klingen. Wir treffen uns regelmäßig in Abstimmungs-Calls, bis jede Sektion sitzt. Kein „Lieferung und tschüss", sondern iterative Begleitung bis es perfekt ist.
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -402,12 +535,9 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={false}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">06</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Launch der Premium-Webseite</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Launch, SEO + GEO, Blog</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65]">
-                      Deine Seite geht live — Hosting via Vercel, deutsche Edge-Region, DSGVO-konform und cookie-frei. Keine WordPress-Sorgen, keine Plugin-Updates, kein Cookie-Banner. Ich übernehme die technische Pflege komplett.
-                    </p>
-                    <p className="font-satoshi text-warm-steel/80 leading-[1.65] mt-3 italic text-[0.95rem]">
-                      Du wünschst dir WordPress oder einen anderen Stack? Dann gibt&apos;s ein individuelles Angebot via Beratungsgespräch.
+                      Deine Seite geht live, Hosting via Vercel, deutsche Edge-Region, DSGVO-konform und cookie-frei. Ich richte SEO und GEO ein, damit du in Google und in KI-Suchen (ChatGPT, Perplexity, Gemini) gefunden wirst. Plus erste Blogartikel für deine Sichtbarkeit.
                     </p>
                   </Timeline3DBox>
                 </div>
@@ -420,13 +550,13 @@ export default function PremiumAngebotPage() {
                 <div className="w-full max-w-[480px]">
                   <Timeline3DBox isLeft={true}>
                     <span className="block font-instrument text-[3.5rem] md:text-[4rem] text-refined-gold opacity-50 leading-none mb-3">07</span>
-                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Begleitung & Pflege</h4>
+                    <h4 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4">Vertrieb, Pflege &amp; Bewegungsanalyse</h4>
                     <p className="font-satoshi text-warm-steel leading-[1.65] mb-3">
-                      Wir lassen dich nicht allein. Pflege, Updates und Begleitung sind in jeder Stufe enthalten — die Tiefe variiert je nach Paket:
+                      Ich lasse dich nicht allein. Erste Vertriebs-Ideen für deine Marktpositionierung, plus laufende Pflege und Monatsberichte mit Heatmap, die zeigen wie sich Menschen auf deiner Webseite bewegen, wo sie klicken, wo sie abbrechen. Die Tiefe variiert je nach Paket:
                     </p>
                     <ul className="font-satoshi text-warm-steel leading-[1.65] space-y-2 text-[0.95rem]">
                       <li>· <strong className="text-deep-charcoal">Lite:</strong> 6 Monate Mini-Pflege (Anpassungen + Hosting)</li>
-                      <li>· <strong className="text-deep-charcoal">Basis:</strong> 12 Monate Plus + Monatsbericht + 1× Mid-Year-Strategie-Call</li>
+                      <li>· <strong className="text-deep-charcoal">Basis:</strong> 12 Monate Plus + Monatsbericht (Zahlen, Heatmap, Empfehlungen) + 1× Mid-Year-Strategie-Call</li>
                       <li>· <strong className="text-deep-charcoal">All-in:</strong> 12 Monate Premium + monatlich Strategie-Call + 4 Event-Landingpages + Quartals-Brand-Guidance</li>
                     </ul>
                   </Timeline3DBox>
@@ -438,86 +568,6 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-      {/* SECTION 8: DAS TEAM (Trio) */}
-      <section className="py-24 md:py-40 px-6 sm:px-12 md:px-24 bg-pure-surface border-t border-whisper-border relative z-10">
-        <div className="max-w-[1200px] mx-auto">
-          <ScrollReveal>
-            <div className="flex flex-col md:flex-row justify-between md:items-end mb-16 gap-8">
-              <div>
-                <h2 className="font-instrument text-[clamp(2.5rem,4vw,3.5rem)] text-deep-charcoal mb-4">
-                  Ein Team. Drei Disziplinen.
-                </h2>
-                <p className="font-satoshi text-warm-steel text-lg max-w-[500px]">
-                  Wir sind keine klassische Agentur. Wir sind eine kuratierte Allianz aus Spezialisten, die ihre handwerkliche Meisterschaft bündeln.
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-12 gap-y-16">
-            
-            {/* PERSON 1 */}
-            <ScrollReveal delay={0.1}>
-              <div className="relative aspect-[3/4] w-full rounded-[24px] overflow-hidden mb-6 group cursor-pointer border border-[#EBEAE5] shadow-[0_20px_40px_rgba(26,26,24,0.04)]">
-                <div className="absolute inset-0 bg-[#F5F3ED] animate-[pulse_3s_ease-in-out_infinite]" />
-                {/* Crisp Golden Hover Filter */}
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 z-0">
-                  <Image src="/images/Das-Team-Sabala.jpg" alt="Sabala" fill className="object-cover object-[75%_30%] w-full h-full grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                </div>
-                
-                {/* Hover Text in Image */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Gründer von Sabala Mentoring & Connecting Herzkreative</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Ilja 'Sabala'</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Essenz & Strategie</p>
-              <p className="font-satoshi text-warm-steel leading-[1.65]">Von der Essenz über die Positionierung bis zur strategischen Customer Journey. Ich tauche tief in deine Vision ein und übersetze sie in ein Fundament, das trägt.</p>
-            </ScrollReveal>
-
-            {/* PERSON 2 */}
-            <ScrollReveal delay={0.2} className="md:translate-y-12">
-              <div className="relative aspect-[3/4] w-full rounded-[24px] overflow-hidden mb-6 group cursor-pointer border border-[#EBEAE5] shadow-[0_20px_40px_rgba(26,26,24,0.04)]">
-                <div className="absolute inset-0 bg-[#E8E6DF] animate-[pulse_3s_ease-in-out_infinite_animation-delay-500ms]" />
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 z-0">
-                  <Image src="/images/Das-Team-Fleur.png" alt="Fleur" fill className="object-cover w-full h-full grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                </div>
-                
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Spezialistin für Premium Brand Identities & Ästhetik</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Fleur</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Brand Design · Add-on</p>
-              <p className="font-satoshi text-warm-steel leading-[1.65]">Wenn du noch kein Logo hast: Fleur entwickelt Logo, Farbwelten und visuelle DNA — als Add-on für 1.500 €. Ohne Logo bleibst du im Hauptpaket: ich übernehme das Webdesign komplett.</p>
-            </ScrollReveal>
-
-            {/* PERSON 3 */}
-            <ScrollReveal delay={0.3} className="md:translate-y-24">
-               <div className="relative aspect-[3/4] w-full rounded-[24px] overflow-hidden mb-6 group cursor-pointer border border-[#EBEAE5] shadow-[0_20px_40px_rgba(26,26,24,0.04)]">
-                <div className="absolute inset-0 bg-[#DDDCD5] animate-[pulse_3s_ease-in-out_infinite_animation-delay-1000ms]" />
-                <div className="absolute inset-0 bg-refined-gold mix-blend-overlay z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 bg-night-foundation mix-blend-multiply z-10 opacity-20 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
-                <div className="absolute inset-0 z-0">
-                  <Image src="/images/Das-Team-Christopher.jpg" alt="Christopher" fill className="object-cover w-full h-full grayscale opacity-90 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                </div>
-                
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 pointer-events-none flex items-end">
-                  <p className="text-pure-surface font-satoshi text-sm md:text-base leading-snug">Experte für High-Speed Server & Technische Infrastruktur</p>
-                </div>
-              </div>
-              <h3 className="font-instrument text-2xl lg:text-3xl text-deep-charcoal">Christopher</h3>
-              <p className="font-mono text-xs lg:text-sm text-refined-gold tracking-wider uppercase my-3 border-b border-refined-gold/20 pb-2 inline-block">Optional · WordPress-Pfad</p>
-              <p className="font-satoshi text-warm-steel leading-[1.65]">Falls du dir explizit eine WordPress-Lösung wünschst, übernimmt Christopher die technische Umsetzung — als individuelles Angebot via Beratungsgespräch. Im Standard-Premium-Pfad mache ich alles selbst.</p>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
 {/* SECTION 9: DAS NETZWERK & DER FIT */}
       <section className="bg-[#050505] text-pure-surface py-32 md:py-48 px-6 relative overflow-hidden z-20">
         
@@ -547,7 +597,7 @@ export default function PremiumAngebotPage() {
                    <div className="absolute bottom-10 left-10 right-10">
                       <p className="font-geist text-sm tracking-[0.2em] uppercase text-refined-gold mb-3 drop-shadow-md">Die Vision</p>
                       <h3 className="font-instrument text-4xl md:text-5xl text-white drop-shadow-lg mb-2">Weltweite Freiheit.</h3>
-                      <p className="font-satoshi text-warm-steel text-lg drop-shadow-md max-w-[450px]">Ein Business-Setup, das sich deinem Leben anpasst — nicht umgekehrt.</p>
+                      <p className="font-satoshi text-warm-steel text-lg drop-shadow-md max-w-[450px]">Ein Business-Setup, das sich deinem Leben anpasst, nicht umgekehrt.</p>
                    </div>
                  </div>
               </ScrollReveal>
@@ -611,7 +661,96 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-      {/* SECTION 10: DREI STUFEN — Lite · Basis · All-in */}
+      {/* SECTION 9b: SABALA MARKTPOSITION-AUDIT (Premium-Pre-Step, 690€, verrechenbar) */}
+      <section id="markt-audit" className="relative py-28 md:py-40 px-6 sm:px-12 md:px-24 bg-warm-canvas overflow-hidden">
+        {/* Soft Gold Glows */}
+        <div className="absolute top-1/4 -left-[15vw] w-[600px] h-[600px] bg-refined-gold/[0.06] blur-[180px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-1/4 -right-[15vw] w-[500px] h-[500px] bg-refined-gold/[0.05] blur-[160px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1300px] mx-auto relative z-10">
+          {/* Eyebrow */}
+          <ScrollReveal>
+            <div className="flex items-center justify-center gap-3 mb-7">
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+              <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Vor dem Bau steht die Strategie</span>
+              <div className="h-[1px] w-10 bg-refined-gold"></div>
+            </div>
+          </ScrollReveal>
+
+          {/* H2 */}
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] tracking-[-0.02em] text-deep-charcoal text-center mb-6 max-w-[24ch] mx-auto">
+              Marktposition-Audit.<br/>
+              <span className="italic text-refined-gold">Wir messen das beste Marktergebnis. Dann bauen wir, was es toppt.</span>
+            </h2>
+          </ScrollReveal>
+
+          {/* Sub */}
+          <ScrollReveal delay={0.15}>
+            <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.6] text-center max-w-[680px] mx-auto mb-16 md:mb-20">
+              Die meisten bauen erst und fragen sich später, warum nichts wirkt. Pioniere machen es andersherum.
+            </p>
+          </ScrollReveal>
+
+          {/* 6 Karten Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-16 md:mb-20">
+            {[
+              {num: "01", title: "Live-SERP-Scan", desc: "Vier Keyword-Cluster über Google, Perplexity und ChatGPT-Suchen. Heute, nicht aus dem letzten Quartal."},
+              {num: "02", title: "Deep-Scrape 15-20 Konkurrenten", desc: "Wir lesen jede Top-Page deiner Nische. Hero, Pricing, Trust, Design, Copy, SEO und GEO."},
+              {num: "03", title: "10-Dimensionen-Analyse", desc: "Zielgruppe, Pains, Gains, Use Cases, Hero-Copy, Pricing, Design, Trust, SEO, GEO. Pro Konkurrent."},
+              {num: "04", title: "Deine Position im Markt", desc: "Wo du heute stehst. Weiße Flecken, in die niemand reingeht. No-Gos, die alle machen. Dein Differential."},
+              {num: "05", title: "Premium-Präsentation", desc: "Marketing-Essenz in einem Dokument zum Mitnehmen. Klar, edel, sofort umsetzbar."},
+              {num: "06", title: "1:1 Strategie-Call", desc: "60 Minuten mit Ilja persönlich. Wir gehen Punkt für Punkt durch. Deine Roadmap entsteht im Gespräch."},
+            ].map((item, i) => (
+              <ScrollReveal key={item.num} delay={0.2 + i*0.06}>
+                <div className="group relative p-7 md:p-8 border border-refined-gold/20 rounded-[24px] bg-pure-surface hover:border-refined-gold/50 hover:shadow-[0_30px_70px_rgba(184,150,62,0.12)] transition-all duration-500 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="font-mono text-refined-gold text-[0.75rem] tracking-[0.22em] uppercase font-bold">{item.num}</span>
+                    <div className="h-[1px] flex-1 max-w-[40px] bg-refined-gold/40"></div>
+                  </div>
+                  <h3 className="font-instrument text-2xl md:text-[1.65rem] text-deep-charcoal mb-3 leading-tight">{item.title}</h3>
+                  <p className="font-satoshi text-warm-steel text-base leading-[1.6] flex-1">{item.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Pricing-Box */}
+          <ScrollReveal delay={0.4}>
+            <div className="max-w-[820px] mx-auto bg-deep-charcoal rounded-[28px] overflow-hidden border border-refined-gold/30 shadow-[0_30px_80px_rgba(46,43,38,0.15)]">
+              <div className="p-8 md:p-12">
+                <div className="grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+                  <div>
+                    <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-3">Dein Audit als Einstieg</p>
+                    <h3 className="font-instrument text-[clamp(1.75rem,2.5vw,2.5rem)] text-pure-surface leading-tight mb-4">
+                      Lieferzeit <span className="italic text-refined-gold">5 bis 7 Tage.</span>
+                    </h3>
+                    <p className="font-satoshi text-pure-surface/70 text-base md:text-lg leading-[1.6]">
+                      Verrechenbar auf jedes Premium-Projekt. Wenn du nach dem Audit weiter mit mir baust, ist der Audit-Preis voll im Premium-Paket eingerechnet.
+                    </p>
+                  </div>
+                  <div className="md:text-right">
+                    <p className="font-mono text-pure-surface/50 text-[0.65rem] tracking-[0.2em] uppercase mb-2">Einmalig</p>
+                    <p className="font-instrument text-[clamp(3rem,5vw,4.5rem)] text-pure-surface leading-none mb-4">690 €</p>
+                    <p className="font-satoshi text-pure-surface/60 text-sm leading-[1.5] max-w-[220px] md:ml-auto">
+                      In allen Premium-Stufen bereits inklusive. Sprechen wir im Beratungsgespräch über deinen Pfad.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Brand-Anker-Quote */}
+              <div className="px-8 md:px-12 py-6 border-t border-refined-gold/20 bg-[#050505]">
+                <p className="font-instrument italic text-pure-surface/90 text-base md:text-lg text-center">
+                  &ldquo;Wir schlagen das beste Marktergebnis. Das ist der Anspruch.&rdquo;
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 10: DREI STUFEN, Lite · Basis · All-in */}
       <section id="stufen" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#050505]">
         {/* Soft Dusk Transitions */}
         <div className="absolute top-0 left-0 w-full h-[200px] md:h-[300px] bg-gradient-to-b from-warm-canvas to-transparent z-10 pointer-events-none opacity-30 mix-blend-overlay" />
@@ -628,7 +767,16 @@ export default function PremiumAngebotPage() {
                 <span className="italic text-refined-gold">Tiefe.</span>
               </h2>
               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65]">
-                Drei klare Stufen mit Festpreis. Alle drei mit derselben Begleiter-Haltung — du wählst, wie tief wir gemeinsam gehen.
+                Drei klare Stufen mit Festpreis. Alle drei mit derselben Begleiter-Haltung, du wählst, wie tief wir gemeinsam gehen.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Hinweis-Banner: Marktposition-Audit inklusive in allen Stufen */}
+          <ScrollReveal delay={0.02}>
+            <div className="max-w-[760px] mx-auto mb-10 px-6 py-4 rounded-full border border-refined-gold/30 bg-refined-gold/5 backdrop-blur-md text-center">
+              <p className="font-mono text-refined-gold text-[0.7rem] md:text-xs tracking-[0.2em] uppercase">
+                <span className="text-refined-gold/70">In jeder Stufe enthalten:</span> <span className="font-bold">Marktposition-Audit (Wert 690 €)</span>
               </p>
             </div>
           </ScrollReveal>
@@ -641,12 +789,13 @@ export default function PremiumAngebotPage() {
               <div className="relative h-full bg-[#0A0A0A] p-7 md:p-8 rounded-[calc(2rem-1px)] flex flex-col border-t border-white/5">
                 <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">01 · Lite</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Der Einstieg ins Premium.</h3>
-                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Premium-Auftritt mit klarem Fundament — wertig vom ersten Klick an.</p>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Premium-Auftritt mit klarem Fundament, wertig vom ersten Klick an.</p>
                 <div className="border-t border-white/5 pt-5 mb-5">
                   <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">8.000 €</span>
                 </div>
                 <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span><strong className="text-white font-medium">Marktposition-Audit</strong> (Wert 690 €)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Identity Sessions (2× 90 Min)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Mini-Guide (Typo · Farben · Tonalität)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 5 Seiten</strong></span></li>
@@ -667,12 +816,13 @@ export default function PremiumAngebotPage() {
                 <div className="absolute top-4 right-4 bg-refined-gold text-[#050505] uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Empfohlen</div>
                 <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">02 · Basis</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Mit Marketing-System.</h3>
-                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Premium-Auftritt mit Content-Start — der stimmige Weg für die meisten.</p>
+                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Premium-Auftritt mit Content-Start, der stimmige Weg für die meisten.</p>
                 <div className="border-t border-white/10 pt-5 mb-5 relative z-10">
                   <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">11.000 €</span>
                 </div>
                 <ul className="space-y-3 font-satoshi text-white/80 text-sm leading-relaxed flex-1 relative z-10">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span><strong className="text-white font-medium">Marktposition-Audit</strong> (Wert 690 €)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Lite</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 8 Seiten</strong> + Blog/Podcast-Setup</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel</strong> zu deinen Kernthemen</span></li>
@@ -692,12 +842,13 @@ export default function PremiumAngebotPage() {
                 <div className="absolute top-4 right-4 bg-white/5 text-white/70 border border-white/15 uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Auf Beratung</div>
                 <div className="font-mono text-white/40 text-[0.7rem] tracking-[0.2em] uppercase mb-3">03 · All-in</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2">Komplette Begleitung.</h3>
-                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Wenn du wirklich tief gehen willst — nach gemeinsamem Klärungsgespräch.</p>
+                <p className="font-satoshi text-white/50 text-sm mb-6 italic">Wenn du wirklich tief gehen willst, nach gemeinsamem Klärungsgespräch.</p>
                 <div className="border-t border-white/5 pt-5 mb-5">
                   <span className="font-geist text-white/40 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">15.000 €</span>
                 </div>
                 <ul className="space-y-3 font-satoshi text-white/70 text-sm leading-relaxed flex-1">
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span><strong className="text-white font-medium">Marktposition-Audit</strong> (Wert 690 €)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Alles aus Basis</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 12 Seiten</strong> + Tool-Orchestrierung</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Automation-Setup (Buchung → Zahlung → CRM)</span></li>
@@ -727,7 +878,7 @@ export default function PremiumAngebotPage() {
                   <span className="italic text-refined-gold">dazu nehmen kannst.</span>
                 </h3>
                 <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed max-w-[600px]">
-                  In jeder Stufe individuell zubuchbar — wenn du noch tiefer gehen willst.
+                  In jeder Stufe individuell zubuchbar, wenn du noch tiefer gehen willst.
                 </p>
               </div>
 
@@ -742,7 +893,7 @@ export default function PremiumAngebotPage() {
                         <span className="font-mono text-refined-gold text-sm tracking-widest">+1.500 €</span>
                       </div>
                       <p className="font-satoshi text-white/60 text-sm md:text-base leading-relaxed">
-                        Falls du noch kein Logo hast: Fleur entwickelt Logo + erstes Branddesign (Farbwelt, Logo-Erstentwurf, visuelle DNA). Wenn du bereits ein Logo mitbringst, gleichen wir es im Hauptpaket leicht an deine Markenwelt an — das ist <strong className="text-white font-medium">in jedem Paket inklusive</strong>.
+                        Falls du noch kein Logo hast: Fleur entwickelt Logo + erstes Branddesign (Farbwelt, Logo-Erstentwurf, visuelle DNA). Wenn du bereits ein Logo mitbringst, gleichen wir es im Hauptpaket leicht an deine Markenwelt an, das ist <strong className="text-white font-medium">in jedem Paket inklusive</strong>.
                       </p>
                     </div>
                   </div>
@@ -759,7 +910,7 @@ export default function PremiumAngebotPage() {
                 <span className="italic text-refined-gold">Beidseitig unverbindlich.</span>
               </h3>
               <p className="font-satoshi text-warm-steel text-lg leading-relaxed mb-10">
-                30-Min-Klärungsgespräch — kein Verkaufsgespräch. Wir prüfen gemeinsam, ob wir zueinander passen. Wenn ja, geht&apos;s los. Wenn nicht — keine Kosten, keine Folgen.
+                30-Min-Klärungsgespräch, kein Verkaufsgespräch. Wir prüfen gemeinsam, ob wir zueinander passen. Wenn ja, geht&apos;s los. Wenn nicht, keine Kosten, keine Folgen.
               </p>
               <Link
                 href="/termin-buchen"
@@ -775,7 +926,7 @@ export default function PremiumAngebotPage() {
           </ScrollReveal>
         </div>
       </section>
-{/* SECTION 10b: SABALA SERVICE-PAKETE (Begleitung nach Launch — Sabala-Pfad) */}
+{/* SECTION 10b: SABALA SERVICE-PAKETE (Begleitung nach Launch, Sabala-Pfad) */}
       <section className="bg-warm-canvas py-24 md:py-32 px-6 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-refined-gold/10 blur-[150px] rounded-full pointer-events-none" />
 
@@ -789,7 +940,7 @@ export default function PremiumAngebotPage() {
                 Damit deine Seite <span className="italic text-refined-gold">wirklich performt.</span>
               </h2>
               <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-relaxed">
-                Wenn dein 1-Jahr-Begleitungspaket ausläuft — diese drei Stufen führen die Pflege fort. Du wählst, wie aktiv deine Seite mit dir wachsen soll.
+                Wenn dein 1-Jahr-Begleitungspaket ausläuft, diese drei Stufen führen die Pflege fort. Du wählst, wie aktiv deine Seite mit dir wachsen soll.
               </p>
             </div>
           </ScrollReveal>
@@ -803,7 +954,7 @@ export default function PremiumAngebotPage() {
                 <div className="font-geist text-refined-gold tracking-widest text-sm uppercase mb-6">49,- € / Monat</div>
                 <p className="font-satoshi text-warm-steel mb-8 leading-relaxed">Der ruhige Begleiter für kleine, regelmäßige Anpassungen. Ohne Analyse, ohne Schnickschnack.</p>
                 <ul className="space-y-4 font-satoshi text-deep-charcoal w-full mb-8">
-                  <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Kleine Text- und Bildänderungen — schnell erledigt</span></li>
+                  <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Kleine Text- und Bildänderungen, schnell erledigt</span></li>
                   <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Direkter Ansprechpartner per Mail</span></li>
                   <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Sicheres Hosting & laufende Pflege deiner Sabala-Seite</span></li>
                 </ul>
@@ -832,10 +983,10 @@ export default function PremiumAngebotPage() {
               <div className="relative h-full bg-pure-surface p-8 md:p-10 rounded-[calc(2rem-1px)] flex flex-col items-start border border-whisper-border">
                 <h3 className="font-instrument text-2xl text-deep-charcoal mb-2">Premium · mit Strategie-Call</h3>
                 <div className="font-geist text-refined-gold tracking-widest text-sm uppercase mb-6">149,- € / Monat</div>
-                <p className="font-satoshi text-warm-steel mb-8 leading-relaxed">Für alle, die ihre Seite aktiv weiterentwickeln — mit persönlichem Sparring zur Auswertung der Analyse.</p>
+                <p className="font-satoshi text-warm-steel mb-8 leading-relaxed">Für alle, die ihre Seite aktiv weiterentwickeln, mit persönlichem Sparring zur Auswertung der Analyse.</p>
                 <ul className="space-y-4 font-satoshi text-deep-charcoal w-full mb-8">
                   <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Alles aus dem Plus-Paket</span></li>
-                  <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span><strong>30-Min-Strategie-Call pro Monat</strong> — Analyse besprechen, nächste Schritte festlegen</span></li>
+                  <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span><strong>30-Min-Strategie-Call pro Monat</strong>, Analyse besprechen, nächste Schritte festlegen</span></li>
                   <li className="flex items-start gap-4"><span className="text-refined-gold mt-1">✦</span><span>Höchste Priorität bei Anpassungen</span></li>
                 </ul>
               </div>
@@ -862,10 +1013,10 @@ export default function PremiumAngebotPage() {
                 <p className="font-satoshi text-warm-steel text-base md:text-lg leading-relaxed mb-2">
                   Falls du WordPress, ein Membership-System oder eine sehr spezifische technische Lösung wünschst, arbeiten wir mit unserem Technik-Partner{" "}
                   <strong className="text-deep-charcoal font-medium">Christopher Buschor</strong>{" "}
-                  zusammen. Du bekommst ein <strong className="text-deep-charcoal font-medium">individuelles Angebot</strong> nach Beratungsgespräch — Hosting in Deutschland, du bleibst alleiniger Eigentümer.
+                  zusammen. Du bekommst ein <strong className="text-deep-charcoal font-medium">individuelles Angebot</strong> nach Beratungsgespräch, Hosting in Deutschland, du bleibst alleiniger Eigentümer.
                 </p>
                 <p className="font-satoshi text-warm-steel/80 text-sm md:text-base leading-relaxed italic">
-                  Hinweis: Das ist außerhalb der vier Stufen — wir besprechen Scope und Preis individuell im Klärungsgespräch.
+                  Hinweis: Das ist außerhalb der vier Stufen, wir besprechen Scope und Preis individuell im Klärungsgespräch.
                 </p>
               </div>
               <div className="shrink-0">
@@ -894,7 +1045,7 @@ export default function PremiumAngebotPage() {
             {[
               { q: "Wie lange dauert der gesamte Prozess?", a: "Plane für den gesamten Prozess ca. 12 bis 16 Wochen ein. Das hängt auch davon ab, wie intensiv unsere Zusammenarbeit verläuft und wie schnell wir das Feedback in den einzelnen Etappen integrieren." },
               { q: "Brauche ich vorher schon eine klare Positionierung?", a: "Nein, genau das erarbeiten wir gemeinsam im Fundament. Das ist der essenzielle Baustein für alles, was danach folgt – wir kümmern uns tiefenpsychologisch um deine echte Marken-Identität." },
-              { q: "Wer kümmert sich um die technische Umsetzung und das Hosting?", a: "Ich übernehme alles selbst. Die Seite wird via Vercel mit deutscher Edge-Region (Frankfurt) gehostet — DSGVO-konform, ohne Cookie-Banner-Pflicht, mit High-End PageSpeed. Kein WordPress, keine Plugin-Pflege. Du hast mit der Technik nichts zu tun. Falls du dir explizit eine WordPress-Lösung wünschst, biete ich das gemeinsam mit meinem Technik-Partner Christopher Buschor als individuelles Angebot via Beratungsgespräch an." },
+              { q: "Wer kümmert sich um die technische Umsetzung und das Hosting?", a: "Ich übernehme alles selbst. Die Seite wird via Vercel mit deutscher Edge-Region (Frankfurt) gehostet, DSGVO-konform, ohne Cookie-Banner-Pflicht, mit High-End PageSpeed. Kein WordPress, keine Plugin-Pflege. Du hast mit der Technik nichts zu tun. Falls du dir explizit eine WordPress-Lösung wünschst, biete ich das gemeinsam mit meinem Technik-Partner Christopher Buschor als individuelles Angebot via Beratungsgespräch an." },
               { q: "Muss ich mich nach dem Launch um Updates oder Datensicherung kümmern?", a: "Nein. Im jeweiligen Pflege-Paket sind Anpassungen, Updates, Sicherheit und stets aktuelle DSGVO-Rechtstexte enthalten. Lite hat 6 Monate Mini-Pflege, Basis 12 Monate Plus-Pflege mit Monatsbericht, All-in 12 Monate Premium mit monatlichem Strategie-Call. Danach kannst du in eines der Folge-Pflege-Pakete wechseln (49/69/149 €/Monat)." },
               { q: "Was passiert, wenn sich mein Angebot nach dem Launch ändert?", a: "Dafür ist unsere Jahres-Guidance da! Wir passen die Seite an, wenn sich dein Business organisch weiterentwickelt." },
               { q: "Muss ich zu 100% kaufbereit sein, um einen Termin zu buchen?", a: "Überhaupt nicht. Das erste Kennenlernen ist zu 100% kostenfrei und unverbindlich. Es geht nur darum, herauszufinden, ob wir menschlich und fachlich matchen. Wenn du die Energie und den Wunsch nach Veränderung fühlst, ist das bereits die perfekte Basis, um einfach mal miteinander zu sprechen." }
@@ -911,6 +1062,56 @@ export default function PremiumAngebotPage() {
                  </details>
               </ScrollReveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 13: PARTNER-NETZWERK (kompakt, ganz unten) */}
+      <section className="bg-pure-surface py-20 md:py-28 px-6 sm:px-12 md:px-24 border-t border-whisper-border">
+        <div className="max-w-[1100px] mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 mb-5">
+                <div className="h-[1px] w-10 bg-refined-gold/50"></div>
+                <span className="font-mono text-refined-gold text-[0.65rem] tracking-[0.22em] uppercase font-bold">Mein Netzwerk</span>
+                <div className="h-[1px] w-10 bg-refined-gold/50"></div>
+              </div>
+              <h3 className="font-instrument text-[clamp(1.5rem,2.5vw,2.25rem)] text-deep-charcoal leading-tight max-w-[700px] mx-auto">
+                Ich arbeite selbst an deinem Auftritt. Wenn du Spezial-Wünsche hast, bringe ich Partner mit.
+              </h3>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-[900px] mx-auto">
+
+            {/* Fleur — Brand Design Add-on */}
+            <ScrollReveal delay={0.1}>
+              <div className="flex gap-5 p-6 md:p-7 rounded-[20px] border border-whisper-border bg-warm-canvas">
+                <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-2xl overflow-hidden">
+                  <Image src="/images/Das-Team-Fleur.png" alt="Fleur" fill className="object-cover" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-mono text-refined-gold text-[0.65rem] tracking-[0.2em] uppercase font-bold mb-1">Brand-Design · Add-on</p>
+                  <h4 className="font-instrument text-xl text-deep-charcoal mb-2">Fleur</h4>
+                  <p className="font-satoshi text-warm-steel text-sm leading-[1.6]">Wenn du noch kein Logo hast: Fleur entwickelt Logo, Farbwelten und visuelle DNA als Add-on für 1.500 €.</p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Christopher — WordPress-Pfad */}
+            <ScrollReveal delay={0.2}>
+              <div className="flex gap-5 p-6 md:p-7 rounded-[20px] border border-whisper-border bg-warm-canvas">
+                <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-2xl overflow-hidden">
+                  <Image src="/images/Das-Team-Christopher.jpg" alt="Christopher" fill className="object-cover" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-mono text-refined-gold text-[0.65rem] tracking-[0.2em] uppercase font-bold mb-1">WordPress · Optional</p>
+                  <h4 className="font-instrument text-xl text-deep-charcoal mb-2">Christopher</h4>
+                  <p className="font-satoshi text-warm-steel text-sm leading-[1.6]">Wenn du meine Erfahrung explizit auf WordPress umgesetzt willst, übernimmt Christopher als Partner die technische Umsetzung. Individuelles Angebot via Beratungsgespräch.</p>
+                </div>
+              </div>
+            </ScrollReveal>
+
           </div>
         </div>
       </section>

@@ -125,7 +125,7 @@ const memoryData = [
     year: "2026",
     title: "Premium Erlebnis Webseiten",
     kicker: "Phase 9: Heute",
-    desc: "Der Startschuss für Premium Erlebnis Webseiten für herzverbundene Dienstleister und Coaches. Die Verschmelzung aus tiefer psychologischer Sichtbarkeit, emotionalem Brand Design und hochmoderner technischer Exzellenz.",
+    desc: "Der Startschuss für Premium-Erlebnis-Webseiten für kreative Visionäre, Pioniere und Macher. Die Verschmelzung aus tiefer psychologischer Sichtbarkeit, emotionalem Brand Design und hochmoderner technischer Exzellenz.",
     skills: [
       "Entwicklung immersiver, konvertierender Web-Erlebnisse",
       "Zusammenführung von Architektur (Code) und Emotion (Design)",
