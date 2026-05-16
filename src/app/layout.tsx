@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 
 const siteUrl = "https://sabala-mentoring.com";
 const siteName = "Sabala Mentoring";
-const siteTitle = "Sabala Mentoring | Klarheit in der Positionierung. Kraft im Auftritt.";
+const siteTitle = "Sabala Mentoring | Liebe auf den ersten Klick. Dein Premium-Webauftritt aus einem Guss.";
 const siteDescription =
-  "Premium-Mentoring für Coaches, Therapeuten, Trainer und Speaker, die wirklich etwas bewegen. Begleitung in Positionierung, Webauftritt und Pflege — geführt von Ilja Krasevskij.";
+  "Premium-Webauftritt und Begleitung für kreative Visionäre, Pioniere und Macher. Die Welten verbinden, sich ausdrücken und etwas bewegen wollen. Strategie, Brand, Webseite und Pflege aus einer Hand. Geführt von Ilja Krasevskij.";
 // TODO: og-image.jpg (1200×630) in /public/ ablegen, sobald Brand-OG-Image vorbereitet ist
 const ogImage = `${siteUrl}/og-image.jpg`;
 
@@ -59,6 +59,9 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     images: [ogImage],
+  },
+  other: {
+    "p:domain_verify": "ae6015677907add7c11655c028f413e1",
   },
 };
 
@@ -101,9 +104,12 @@ const personSchema = {
   email: "mailto:ilja.krasevskij@gmail.com",
   knowsAbout: [
     "Premium-Positionierung",
-    "Webdesign für Coaches",
-    "Mentoring",
-    "KI im Coaching-Business",
+    "Premium-Webauftritt für kreative Visionäre",
+    "Webdesign für Pioniere",
+    "Brand-Strategie & Customer Journey",
+    "Marktposition-Audit",
+    "Mentoring & strategische Begleitung",
+    "SEO und GEO für KI-Suchen",
   ],
 };
 
