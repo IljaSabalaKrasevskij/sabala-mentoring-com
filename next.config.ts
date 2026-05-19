@@ -29,6 +29,29 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  // SEO: 301 Permanent Redirects fuer alte WordPress-Slugs auf neue /blog/ Pfade.
+  // Hintergrund: GSC zeigt fuer drei dieser URLs >300 Impressions/90T —
+  // ohne Redirect verlieren wir den ganzen Search-Equity.
+  async redirects() {
+    return [
+      {
+        source: "/warum-business-mentoring-programme-scheitern",
+        destination: "/blog/warum-business-mentoring-programme-scheitern",
+        permanent: true,
+      },
+      {
+        source: "/chatgpt-custom-gpts-richtig-nutzen",
+        destination: "/blog/chatgpt-custom-gpts-richtig-nutzen",
+        permanent: true,
+      },
+      {
+        source: "/technik-setup-online-coach",
+        destination: "/blog/technik-setup-online-coach",
+        permanent: true,
+      },
+    ];
+  },
+
   // Static Asset Caching — Browser cached 1 Jahr (immutable per Next.js Hash)
   async headers() {
     return [
