@@ -26,10 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/agb", priority: 0.3, changeFrequency: "yearly" },
   ];
 
-  const blogPosts = [
-    "chatgpt-custom-gpts-richtig-nutzen",
-    "technik-setup-online-coach",
-    "warum-business-mentoring-programme-scheitern",
+  const blogPosts: Array<{ slug: string; priority: number; isPillar?: boolean }> = [
+    { slug: "seo-und-geo-fuer-personal-brands-2026", priority: 0.9, isPillar: true },
+    { slug: "chatgpt-custom-gpts-richtig-nutzen", priority: 0.7 },
+    { slug: "technik-setup-online-coach", priority: 0.7 },
+    { slug: "warum-business-mentoring-programme-scheitern", priority: 0.7 },
   ];
 
   return [
@@ -39,11 +40,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: r.changeFrequency,
       priority: r.priority,
     })),
-    ...blogPosts.map((slug) => ({
-      url: `${baseUrl}/blog/${slug}`,
+    ...blogPosts.map((p) => ({
+      url: `${baseUrl}/blog/${p.slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
-      priority: 0.7,
+      priority: p.priority,
     })),
   ];
 }

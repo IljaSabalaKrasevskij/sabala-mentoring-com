@@ -2,45 +2,58 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import TreeBookshelfScrollytelling from "@/components/ui/TreeBookshelfScrollytelling";
+import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
+import { Compass, Sparkles } from "lucide-react";
 
 const featuredArticle = {
-  title: "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt.",
-  excerpt: "Ein schlechtes Mikrofon zerstört selbst die tiefste energetische Übertragung. Wie du ortsunabhängig arbeitest, ohne an Qualität und Ausstrahlung zu verlieren.",
-  category: "Business",
-  date: "Januar 2026",
-  readTime: "6 Min",
-  image: "https://picsum.photos/seed/sabala_office/1600/900",
-  slug: "/blog/technik-setup-online-coach"
+  title: "SEO und Generative Engine Optimization (GEO). Wie deine Personal Brand 2026 in Google und ChatGPT gefunden wird.",
+  excerpt: "Pillar-Hub für Personal Brands. Sechs SEO-Tools, vier GEO-Methoden, ein 30-Minuten-Sprint. ICP-validiert. Kein Agentur-Sprech.",
+  category: "SEO & GEO",
+  date: "Mai 2026",
+  readTime: "14 Min",
+  image: "/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg",
+  slug: "/blog/seo-und-geo-fuer-personal-brands-2026",
+  isPillar: true
 };
 
 const articles = [
   {
     id: 2,
-    title: "Warum viele Business Mentoring Programme scheitern",
-    excerpt: "Und warum klassische Schablonen für tief und relational arbeitende Menschen keine Lösung sind.",
+    title: "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt.",
+    excerpt: "Ein schlechtes Mikrofon zerstört selbst die tiefste energetische Übertragung. Wie du ortsunabhängig arbeitest, ohne an Qualität und Ausstrahlung zu verlieren.",
     category: "Business",
-    date: "Januar 2025",
-    readTime: "8 Min",
-    image: "https://picsum.photos/seed/mentoring_fail/600/600",
-    slug: "/blog/warum-business-mentoring-programme-scheitern",
+    date: "Januar 2026",
+    readTime: "6 Min",
+    image: "/blog/technik-setup-online-coach/cover.jpg",
+    slug: "/blog/technik-setup-online-coach",
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
   },
   {
     id: 3,
+    title: "Warum viele Business Mentoring Programme scheitern",
+    excerpt: "Und warum klassische Schablonen für tief und relational arbeitende Menschen keine Lösung sind.",
+    category: "Business",
+    date: "Januar 2026",
+    readTime: "8 Min",
+    image: "/blog/warum-business-mentoring-programme-scheitern/cover.jpg",
+    slug: "/blog/warum-business-mentoring-programme-scheitern",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square"
+  },
+  {
+    id: 4,
     title: "99% aller Selbstständigen nutzen ChatGPT falsch",
     excerpt: "Fehlender Kontext, unstimmige Sprache, ein Textwall der nicht zu dir passt. Warum Custom GPTs mit klaren Rollen der echte Hebel für Solopreneure sind.",
     category: "KI & Workflow",
     date: "April 2026",
-    readTime: "7 Min",
-    image: "https://picsum.photos/seed/sabala_ki_workflow/800/1200",
+    readTime: "9 Min",
+    image: "/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
     slug: "/blog/chatgpt-custom-gpts-richtig-nutzen",
     layout: "col-span-1 md:col-span-1 row-span-2",
     aspect: "aspect-[2/3]"
   }
 ];
-
-const categories = ["Alle", "Gedanken", "Business", "Design", "Meditation", "Leben"];
 
 export default function BlogPage() {
   return (
@@ -84,7 +97,10 @@ export default function BlogPage() {
 
             {/* Content Container */}
             <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 lg:p-24 flex flex-col justify-end">
-              <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-refined-gold mb-6">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-widest text-refined-gold mb-6">
+                {featuredArticle.isPillar && (
+                  <span className="bg-refined-gold/90 text-deep-charcoal px-3 py-1 rounded-full backdrop-blur-sm">Pillar-Hub</span>
+                )}
                 <span className="bg-refined-gold/10 px-3 py-1 rounded-full backdrop-blur-sm border border-refined-gold/20">{featuredArticle.category}</span>
                 <span className="text-white/70">{featuredArticle.date}</span>
                 <span className="text-white/70 hidden sm:inline-block">•</span>
@@ -100,24 +116,6 @@ export default function BlogPage() {
               </p>
             </div>
           </Link>
-        </ScrollReveal>
-      </section>
-
-      {/* FILTER STICKY BAR */}
-      <section className="px-6 sm:px-12 md:px-24 mb-16 max-w-[1400px] mx-auto w-full sticky top-0 z-20 bg-pure-surface/90 backdrop-blur-md py-4 border-y border-whisper-border/50">
-        <ScrollReveal>
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto hide-scrollbar whitespace-nowrap">
-            {categories.map((cat, index) => (
-              <button 
-                key={index} 
-                className={`font-mono text-sm tracking-widest uppercase transition-colors duration-300 ${
-                  index === 0 ? "text-deep-charcoal border-b border-deep-charcoal pb-1" : "text-soft-stone hover:text-refined-gold border-b border-transparent hover:border-refined-gold pb-1"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </ScrollReveal>
       </section>
 
@@ -167,35 +165,31 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* NEWSLETTER / CTA */}
-      <section className="py-32 md:py-48 px-6 sm:px-12 md:px-24 bg-night-foundation text-night-text text-center border-t border-white/5 rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)]">
-        <div className="max-w-[700px] mx-auto">
+      {/* AUDIT-LEAD-MAGNET */}
+      <section className="py-24 md:py-32 px-6 sm:px-12 md:px-24 bg-[#2E2B26] text-white border-t border-white/5 rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)]">
+        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center">
           <ScrollReveal>
-            <div className="w-12 h-12 mx-auto mb-8 text-night-gold border border-white/10 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div className="flex items-center gap-3 mb-6">
+              <Compass className="w-5 h-5 text-refined-gold" />
+              <span className="font-mono text-xs uppercase tracking-widest text-refined-gold">Kostenloses Premium-Audit</span>
             </div>
-            <h2 className="font-instrument text-[clamp(2rem,4vw,3.5rem)] mb-6">Die Essenz frisch<br/> in dein Postfach.</h2>
-            <p className="text-night-secondary font-satoshi leading-relaxed mb-10">
-              Einmal im Monat destilliere ich die wichtigsten Erkenntnisse aus Deep Work, Positionierung und Design in einen Brief an meinen engsten Kreis. Kein Spalier. Nur Wert.
+            <h2 className="font-instrument text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] mb-6">
+              Gib mir deine Webseite. Ich gebe dir den Blick eines Premium-Brand-Mentors zurück.
+            </h2>
+            <p className="text-white/70 font-satoshi text-lg leading-relaxed mb-8">
+              Ein persönlicher Audit-Brief mit den drei größten Hebeln deines Auftritts. Was trägt, was schwächt, was fehlt. Substanz statt Funnel-Floskeln. In den kommenden Tagen direkt in deinem Postfach.
             </p>
-            
-            <form className="flex flex-col sm:flex-row gap-4 max-w-[500px] mx-auto">
-              <input 
-                type="email" 
-                placeholder="Deine E-Mail Adresse" 
-                className="flex-grow bg-white/5 border border-white/10 rounded-full px-6 py-4 text-white placeholder-white/40 focus:outline-none focus:border-night-gold transition-colors font-satoshi"
-                required
-              />
-              <button 
-                type="submit"
-                className="bg-night-gold hover:bg-white text-night-foundation px-8 py-4 rounded-full font-medium transition-colors whitespace-nowrap"
-              >
-                Eintragen
-              </button>
-            </form>
-            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mt-6">
-              Kein Spam. Abmeldung jederzeit möglich.
-            </p>
+            <ul className="space-y-3 font-satoshi text-white/60">
+              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Drei konkrete Hebel, sortiert nach Wirkungsgrad</span></li>
+              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Erste Einschätzung von SEO, GEO und E-E-A-T-Signalen</span></li>
+              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Persönlich geschrieben, kein Template, kein automatisierter Funnel</span></li>
+            </ul>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="bg-pure-surface/5 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-sm">
+              <AuditRequestForm />
+            </div>
           </ScrollReveal>
         </div>
       </section>
