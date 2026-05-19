@@ -27,17 +27,25 @@ function validateEmail(raw: unknown): string | null {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) ? trimmed : null;
 }
 
-async function saveToFile(payload: AuditRequest) {
-  const dir = process.env.AUDIT_REQUESTS_DIR ||
-    path.join(process.env.HOME || "", "Documents", "_Obsidian_Vault", "04_Ressourcen", "Audit-Requests");
-  await fs.mkdir(dir, { recursive: true });
-  const filename = `${new Date().toISOString().replace(/[:.]/g, "-")}_${payload.email.replace(/[^a-z0-9]/gi, "-")}.json`;
-  const filepath = path.join(dir, filename);
-  await fs.writeFile(filepath, JSON.stringify({ ...payload, receivedAt: new Date().toISOString() }, null, 2), "utf-8");
-  return filepath;
+const isLocalDev = process.env.NODE_ENV !== "production" && !process.env.VERCEL;
+
+async function saveToFile(payload: AuditRequest): Promise<string | null> {
+  if (!isLocalDev) return null;
+  try {
+    const dir = process.env.AUDIT_REQUESTS_DIR ||
+      path.join(process.env.HOME || "", "Documents", "_Obsidian_Vault", "04_Ressourcen", "Audit-Requests");
+    await fs.mkdir(dir, { recursive: true });
+    const filename = `${new Date().toISOString().replace(/[:.]/g, "-")}_${payload.email.replace(/[^a-z0-9]/gi, "-")}.json`;
+    const filepath = path.join(dir, filename);
+    await fs.writeFile(filepath, JSON.stringify({ ...payload, receivedAt: new Date().toISOString() }, null, 2), "utf-8");
+    return filepath;
+  } catch (err) {
+    console.error("[audit-request] File-Save fehlgeschlagen:", err);
+    return null;
+  }
 }
 
-async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; reason?: string }> {
+async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pageId?: string; reason?: string }> {
   const NOTION_TOKEN = process.env.NOTION_API_KEY;
   const NOTION_DB_ID = process.env.NOTION_AUDIT_REQUESTS_DB_ID;
   if (!NOTION_TOKEN || !NOTION_DB_ID) {
@@ -66,9 +74,37 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; re
       const errText = await res.text();
       return { saved: false, reason: `Notion-API-Fehler ${res.status}: ${errText.slice(0, 200)}` };
     }
-    return { saved: true };
+    const data = await res.json();
+    return { saved: true, pageId: data.id };
   } catch (err) {
     return { saved: false, reason: err instanceof Error ? err.message : "Notion-Netzwerkfehler" };
+  }
+}
+
+async function pushWhatsApp(payload: AuditRequest): Promise<{ sent: boolean; reason?: string }> {
+  const PHONE = process.env.CALLMEBOT_PHONE;
+  const KEY = process.env.CALLMEBOT_API_KEY;
+  if (!PHONE || !KEY) {
+    return { sent: false, reason: "CallMeBot-Credentials nicht gesetzt (CALLMEBOT_PHONE + CALLMEBOT_API_KEY)" };
+  }
+
+  const message =
+    `🎯 Neue Audit-Anfrage\n\n` +
+    `🌐 ${payload.url}\n` +
+    `📧 ${payload.email}\n\n` +
+    `👉 Audit erstellen + persönlich versenden.\n` +
+    `Notion: https://www.notion.so/sabala (Status = Neu)`;
+
+  try {
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(PHONE)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(KEY)}`;
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) {
+      const errText = await res.text();
+      return { sent: false, reason: `CallMeBot ${res.status}: ${errText.slice(0, 200)}` };
+    }
+    return { sent: true };
+  } catch (err) {
+    return { sent: false, reason: err instanceof Error ? err.message : "CallMeBot-Netzwerkfehler" };
   }
 }
 
@@ -90,18 +126,22 @@ export async function POST(req: NextRequest) {
 
   const payload: AuditRequest = { url, email, consent: true };
 
-  const fileResult = await saveToFile(payload).catch((err) => {
-    console.error("[audit-request] Datei-Save fehlgeschlagen:", err);
-    return null;
-  });
+  const [fileResult, notionResult, whatsappResult] = await Promise.all([
+    saveToFile(payload),
+    saveToNotion(payload),
+    pushWhatsApp(payload),
+  ]);
 
-  const notionResult = await saveToNotion(payload);
-  if (!notionResult.saved) {
-    console.warn("[audit-request] Notion nicht erreicht:", notionResult.reason);
-  }
+  if (!notionResult.saved) console.warn("[audit-request] Notion:", notionResult.reason);
+  if (!whatsappResult.sent) console.warn("[audit-request] WhatsApp:", whatsappResult.reason);
 
-  if (!fileResult && !notionResult.saved) {
-    return NextResponse.json({ error: "Speichern fehlgeschlagen. Versuch es bitte später." }, { status: 500 });
+  const anyPersistence = notionResult.saved || !!fileResult;
+  if (!anyPersistence) {
+    console.error("[audit-request] Kein Save-Backend erreichbar. Payload verloren:", payload);
+    return NextResponse.json(
+      { error: "Speichern fehlgeschlagen. Versuch es bitte später." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({
@@ -110,6 +150,7 @@ export async function POST(req: NextRequest) {
     storage: {
       file: !!fileResult,
       notion: notionResult.saved,
+      whatsapp: whatsappResult.sent,
     },
   });
 }

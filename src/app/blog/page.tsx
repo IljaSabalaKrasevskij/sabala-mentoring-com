@@ -182,7 +182,7 @@ export default function BlogPage() {
             <ul className="space-y-3 font-satoshi text-white/60">
               <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Drei konkrete Hebel, sortiert nach Wirkungsgrad</span></li>
               <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Erste Einschätzung von SEO, GEO und E-E-A-T-Signalen</span></li>
-              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Persönlich geschrieben, kein Template, kein automatisierter Funnel</span></li>
+              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Klarer Fokus: du weißt sofort, womit du den größten Hebel ziehst</span></li>
             </ul>
           </ScrollReveal>
 
