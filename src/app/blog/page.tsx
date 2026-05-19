@@ -1,9 +1,34 @@
+import type { Metadata } from "next";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import TreeBookshelfScrollytelling from "@/components/ui/TreeBookshelfScrollytelling";
 import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
 import { Compass, Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Wissen & Mastermind",
+  description:
+    "Substanz statt Marketing-Sprech. Artikel für Visionäre, Pioniere und Macher: SEO und GEO für Personal Brands, Custom-GPTs richtig nutzen, warum Business-Mentoring-Programme scheitern, Technik-Setup für Online-Coaches.",
+  alternates: {
+    canonical: "https://sabala-mentoring.com/blog",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://sabala-mentoring.com/blog",
+    title: "Wissen & Mastermind — Sabala Blog",
+    description:
+      "Substanz statt Marketing-Sprech. Pillar-Hub zu SEO + GEO, Custom-GPTs, Mentoring-Architektur und Premium-Technik. Für Visionäre, Pioniere und Macher.",
+    images: [
+      {
+        url: "https://sabala-mentoring.com/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Sabala Blog — Wissen & Mastermind",
+      },
+    ],
+  },
+};
 
 const featuredArticle = {
   title: "SEO und Generative Engine Optimization (GEO). Wie deine Personal Brand 2026 in Google und ChatGPT gefunden wird.",
