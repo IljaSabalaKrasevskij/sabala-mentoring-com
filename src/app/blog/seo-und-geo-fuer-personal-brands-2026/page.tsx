@@ -392,28 +392,85 @@ export default function SeoGeoPersonalBrandsPage() {
         Wer SEO macht, baut das Fundament für GEO mit. Es ist ein System, kein Buffet.
       </PullQuote>
 
-      {/* FÜNF HEBEL · Long-Prose pro Hebel + Summary-Cards */}
+      {/* FÜNF HEBEL · Strukturierte Hebel-Blöcke mit Nummer-Badge */}
       <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[820px] mx-auto w-full">
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Die fünf Hebel für beide Welten gleichzeitig</h2>
             <p className={dropCapClass}><strong>Jetzt zur Praxis.</strong> Diese fünf Hebel zahlen auf SEO und GEO gleichzeitig ein. Was du einmal aufbaust, wirkt in beiden Systemen. Drei Welten, ein System.</p>
-            <h3>Hebel 1: Fragen-Überschriften statt Schlagwort-Überschriften</h3>
-            <p>Schreibe deine H2- und H3-Überschriften als echte Klienten-Fragen. <em>Was passiert in unserem Erstgespräch?</em> funktioniert besser als <em>Mein Coaching-Ansatz</em>. <em>Wie genau arbeitest du mit deinen Klienten?</em> zieht mehr als das nüchterne <em>Methodik</em>.</p>
-            <p>Warum das so stark ist? Google liebt es, weil es die Suchintention exakt spiegelt. ChatGPT liebt es, weil es den Inhalt einer Antwort sofort versteht. Und deine Klienten lieben es, weil sie ihre eigene Sprache wiederfinden.</p>
-            <h3>Hebel 2: Pyramidenstruktur in jeder Sektion</h3>
-            <p>Jede Sektion startet mit einer direkten Antwort in zwei bis drei Sätzen. Danach kommt die Tiefe, die Beispiele, die Belege. Das nennt sich Pyramidenstruktur.</p>
-            <p>Diese Reihenfolge bedient drei Welten gleichzeitig: AEO bekommt das Snippet-fähige Material oben, SEO bekommt die Tiefe darunter für das Ranking, und GEO bekommt die klar zitierbaren Aussagen, die KIs gerne übernehmen. Eine Struktur, drei Gewinne.</p>
-            <h3>Hebel 3: FAQ-Sektion mit Schema-Markup</h3>
-            <p>Eine FAQ-Sektion mit sechs bis neun Fragen ist 2026 nicht optional. Sie ist die Eintrittskarte zur Citation-Welt. Jede Frage bekommt eine Antwort von fünfzig bis hundert Wörtern. Das ist die Länge, die KIs am liebsten zitieren.</p>
-            <p>Wichtig: Die FAQ braucht das passende Schema-Markup (FAQPage-Schema). Ohne das Markup wird die FAQ nur von Menschen gelesen, nicht von Maschinen. Schema-Generatoren wie technicalseo.com oder Schema.dev nehmen dir die Technik ab. Du gibst deine Fragen und Antworten ein, kopierst den generierten Code und packst ihn in den head-Bereich deiner Seite.</p>
-            <h3>Hebel 4: E-E-A-T konsequent zeigen</h3>
-            <p>E-E-A-T steht für Experience, Expertise, Authoritativeness und Trustworthiness. Google hat das Konzept geprägt, und KI-Modelle haben es vollständig übernommen, weil sie nicht halluzinieren wollen. Sie wollen sich auf glaubwürdige Quellen stützen können.</p>
-            <p>Konkret heißt das: Eine echte Autoren-Bio auf jeder Seite. Mit Foto, Lebenslauf-Highlights und einem Link zu deinen relevanten Vorträgen, Podcasts oder Publikationen. Verifizierte Bewertungen (zum Beispiel über ProvenExpert) inklusive der Bewertungs-Zahl und des Durchschnitts. Konkrete Kunden-Cases mit Namen, wenn der Klient zustimmt. Ein klares Impressum mit Anschrift, das auch echte Erreichbarkeit signalisiert.</p>
-            <p>Bei mir steht zum Beispiel auf jeder Seite: 4,96 von 5 bei 154 verifizierten ProvenExpert-Bewertungen. Das ist eine konkrete Zahl, kein Marketing-Sprech. Genau das, was KIs für eine Citation brauchen.</p>
-            <h3>Hebel 5: Pillar-Page-Architektur mit semantischen Clustern</h3>
-            <p>Wenn du als Personal Brand für mehrere Themen oder Zielgruppen arbeitest, baust du keine Sammelseite. Du baust einen Pillar-Hub plus Cluster-Seiten.</p>
-            <p>Beispiel aus meiner Praxis: Mein Hauptthema ist Premium-Webseiten für Personal Brands. Daraus werden Cluster: Personal-Brand-Webseite mit Methodik, Webseite für Solopreneure mit Newsletter-Stärke, Founder-Webseite mit Vision. Jede Cluster-Seite ranked für ihr eigenes Spezial-Keyword, verlinkt aber zurück zum Pillar-Hub. Das schafft thematische Autorität, die Google belohnt und KIs als Tiefe interpretieren.</p>
+          </div>
+        </ScrollReveal>
+
+        <div className="mt-12 flex flex-col gap-10">
+          {[
+            {
+              num: "01",
+              title: "Fragen-Überschriften statt Schlagwort-Überschriften",
+              body: (
+                <>
+                  <p>Schreibe deine H2- und H3-Überschriften als echte Klienten-Fragen. <em>Was passiert in unserem Erstgespräch?</em> funktioniert besser als <em>Mein Coaching-Ansatz</em>. <em>Wie genau arbeitest du mit deinen Klienten?</em> zieht mehr als das nüchterne <em>Methodik</em>.</p>
+                  <p>Warum das so stark ist? Google liebt es, weil es die Suchintention exakt spiegelt. ChatGPT liebt es, weil es den Inhalt einer Antwort sofort versteht. Und deine Klienten lieben es, weil sie ihre eigene Sprache wiederfinden.</p>
+                </>
+              ),
+            },
+            {
+              num: "02",
+              title: "Pyramidenstruktur in jeder Sektion",
+              body: (
+                <>
+                  <p>Jede Sektion startet mit einer direkten Antwort in zwei bis drei Sätzen. Danach kommt die Tiefe, die Beispiele, die Belege. Das nennt sich Pyramidenstruktur.</p>
+                  <p>Diese Reihenfolge bedient drei Welten gleichzeitig: AEO bekommt das Snippet-fähige Material oben, SEO bekommt die Tiefe darunter für das Ranking, und GEO bekommt die klar zitierbaren Aussagen, die KIs gerne übernehmen. Eine Struktur, drei Gewinne.</p>
+                </>
+              ),
+            },
+            {
+              num: "03",
+              title: "FAQ-Sektion mit Schema-Markup",
+              body: (
+                <>
+                  <p>Eine FAQ-Sektion mit sechs bis neun Fragen ist 2026 nicht optional. Sie ist die Eintrittskarte zur Citation-Welt. Jede Frage bekommt eine Antwort von fünfzig bis hundert Wörtern. Das ist die Länge, die KIs am liebsten zitieren.</p>
+                  <p>Wichtig: Die FAQ braucht das passende Schema-Markup (FAQPage-Schema). Ohne das Markup wird die FAQ nur von Menschen gelesen, nicht von Maschinen. Schema-Generatoren wie technicalseo.com oder Schema.dev nehmen dir die Technik ab. Du gibst deine Fragen und Antworten ein, kopierst den generierten Code und packst ihn in den head-Bereich deiner Seite.</p>
+                </>
+              ),
+            },
+            {
+              num: "04",
+              title: "E-E-A-T konsequent zeigen",
+              body: (
+                <>
+                  <p>E-E-A-T steht für Experience, Expertise, Authoritativeness und Trustworthiness. Google hat das Konzept geprägt, und KI-Modelle haben es vollständig übernommen, weil sie nicht halluzinieren wollen. Sie wollen sich auf glaubwürdige Quellen stützen können.</p>
+                  <p>Konkret heißt das: Eine echte Autoren-Bio auf jeder Seite. Mit Foto, Lebenslauf-Highlights und einem Link zu deinen relevanten Vorträgen, Podcasts oder Publikationen. Verifizierte Bewertungen (zum Beispiel über ProvenExpert) inklusive der Bewertungs-Zahl und des Durchschnitts. Konkrete Kunden-Cases mit Namen, wenn der Klient zustimmt. Ein klares Impressum mit Anschrift, das auch echte Erreichbarkeit signalisiert.</p>
+                  <p>Bei mir steht zum Beispiel auf jeder Seite: 4,96 von 5 bei 154 verifizierten ProvenExpert-Bewertungen. Das ist eine konkrete Zahl, kein Marketing-Sprech. Genau das, was KIs für eine Citation brauchen.</p>
+                </>
+              ),
+            },
+            {
+              num: "05",
+              title: "Pillar-Page-Architektur mit semantischen Clustern",
+              body: (
+                <>
+                  <p>Wenn du als Personal Brand für mehrere Themen oder Zielgruppen arbeitest, baust du keine Sammelseite. Du baust einen Pillar-Hub plus Cluster-Seiten.</p>
+                  <p>Beispiel aus meiner Praxis: Mein Hauptthema ist Premium-Webseiten für Personal Brands. Daraus werden Cluster: Personal-Brand-Webseite mit Methodik, Webseite für Solopreneure mit Newsletter-Stärke, Founder-Webseite mit Vision. Jede Cluster-Seite ranked für ihr eigenes Spezial-Keyword, verlinkt aber zurück zum Pillar-Hub. Das schafft thematische Autorität, die Google belohnt und KIs als Tiefe interpretieren.</p>
+                </>
+              ),
+            },
+          ].map((hebel, i) => (
+            <ScrollReveal key={hebel.num} delay={i * 0.05}>
+              <article className="relative bg-warm-light/30 border-l-4 border-refined-gold rounded-r-2xl pl-8 pr-6 md:pl-10 md:pr-10 py-8 md:py-10 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                <div className="flex items-baseline gap-4 mb-4">
+                  <span className="font-instrument text-4xl md:text-5xl text-refined-gold/40 leading-none tracking-tight">{hebel.num}</span>
+                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal font-medium leading-[1.15] m-0">{hebel.title}</h3>
+                </div>
+                <div className="text-warm-steel font-satoshi text-base md:text-lg leading-relaxed space-y-4 [&_em]:text-deep-charcoal [&_em]:not-italic [&_em]:font-medium">
+                  {hebel.body}
+                </div>
+              </article>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal>
+          <div className={`${proseBlock} mt-10`}>
             <p>Diese fünf Hebel sind die Substanz hinter dem Hype. Wer sie umsetzt, wird langfristig sichtbar. Wer ihnen ausweicht, optimiert für 2022.</p>
           </div>
         </ScrollReveal>
@@ -581,7 +638,7 @@ export default function SeoGeoPersonalBrandsPage() {
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
           <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-4 text-center">Häufige Fragen</p>
-          <h2 className="font-instrument text-3xl md:text-5xl text-deep-charcoal text-center mb-12 leading-[1.1]">Was deine Klienten<br/>typischerweise fragen.</h2>
+          <h2 className="font-instrument text-3xl md:text-5xl text-deep-charcoal text-center mb-12 leading-[1.1]">Was meine Klienten<br/>typischerweise fragen.</h2>
         </ScrollReveal>
         <div className="flex flex-col gap-3">
           {faq.map((f, i) => (
@@ -598,7 +655,7 @@ export default function SeoGeoPersonalBrandsPage() {
         </div>
       </section>
 
-      {/* Audit-Lead-Magnet — niedrigschwelliger Einstieg vor dem Premium-CTA */}
+      {/* CTA: Audit als einziger Call-to-Action — bewusste 1-CTA-Strategie (Hick's Law) */}
       <ScrollReveal>
         <ArticleAuditCTA
           eyebrow="Persönliches Audit — kostenlos"
@@ -607,40 +664,9 @@ export default function SeoGeoPersonalBrandsPage() {
         />
       </ScrollReveal>
 
-      {/* CTA */}
-      <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[1100px] mx-auto w-full">
-        <ScrollReveal>
-          <div className="bg-[#2E2B26] text-pure-surface p-10 md:p-16 rounded-3xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
-              <Image src="/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg" alt="" fill className="object-cover" />
-            </div>
-            <div className="relative z-10 max-w-[700px]">
-              <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-6">Wenn du das nicht alleine machen willst</p>
-              <h2 className="font-instrument text-3xl md:text-5xl leading-[1.1] mb-6">Eine Premium-Webseite,<br/>die in beiden Welten trägt.</h2>
-              <p className="text-pure-surface/80 text-lg md:text-xl font-satoshi leading-relaxed mb-6">
-                Bis hierhin hast du den kompletten Werkzeugkasten. Wenn du das alles selbst umsetzen willst, brauchst du keinen Berater. Die Anleitung steht oben.
-              </p>
-              <p className="text-pure-surface/80 text-lg font-satoshi leading-relaxed mb-6">
-                Wenn du eine Premium-Webseite haben willst, die SEO und GEO von Anfang an mitdenkt, FAQ-Schema, E-E-A-T-Signale und Pillar-Architektur sauber implementiert hat und deine Personal-Brand-Position klar transportiert, dann ist Sabala Mentoring dafür gebaut.
-              </p>
-              <p className="text-pure-surface/80 text-lg font-satoshi leading-relaxed mb-6">
-                Ich arbeite mit Visionären, Pionieren und Machern. Personal Brands, die etwas bewegen. Sichtbar in Google. Zitiert in ChatGPT. Geliebt vom ersten Klick.
-              </p>
-              <p className="text-pure-surface/60 text-base font-satoshi mb-10">
-                AI-Search-Visitors konvertieren statistisch <span className="text-refined-gold font-medium">11× höher</span> als klassische Organic-Traffic-Besucher.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold hover:bg-pure-surface text-deep-charcoal px-8 py-4 rounded-full font-medium font-satoshi transition-colors">
-                  <Compass className="w-4 h-4" /> Premium-Angebot ansehen
-                </Link>
-                <Link href="/gpt-team" className="inline-flex items-center justify-center gap-2 border border-pure-surface/30 hover:bg-pure-surface/10 px-8 py-4 rounded-full font-medium font-satoshi transition-colors">
-                  <Bot className="w-4 h-4" /> Mein KI-Team kennenlernen
-                </Link>
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
+      {/* Hinweis: Premium-CTA-Block (Premium-Angebot + KI-Team) wurde am 20.05.2026 entfernt
+          zugunsten einer 1-CTA-Strategie (nur Audit-Form oben). Hick's Law: weniger Optionen,
+          höhere Conversion. Premium-Service erreichbar via Header-Navigation oder Audit-Follow-up. */}
 
       {/* SPOKES */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[1200px] mx-auto w-full">
