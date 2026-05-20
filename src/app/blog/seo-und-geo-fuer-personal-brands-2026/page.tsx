@@ -595,24 +595,41 @@ export default function SeoGeoPersonalBrandsPage() {
         Diese fünf Hebel sind die Substanz hinter dem Hype. Wer ihnen ausweicht, optimiert für 2022.
       </PullQuote>
 
-      {/* HÄUFIGE FEHLER · Long-Prose pro Fehler */}
+      {/* HÄUFIGE FEHLER · Strukturierte Fehler-Cards mit Nummer-Badge */}
       <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[820px] mx-auto w-full">
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Häufige Fehler, die du vermeidest</h2>
             <p className={dropCapClass}><strong>Es gibt sechs Fehler, die Personal-Brand-Webseiten 2026 zuverlässig unsichtbar machen.</strong> Einer davon kommt aus der Tool-Welt, fünf aus der Inhalts-Welt.</p>
-            <h3>Fehler 1: Keyword-Stuffing</h3>
-            <p>Wenn dein Text wirkt, als hättest du ein Wort dreißigmal eingebaut, sind Google und KI gleichermaßen abgestoßen. Schreibe für Menschen, dann findet die Suche dich auch. KI-Modelle erkennen unnatürliche Wortwiederholungen heute besser als jeder klassische Algorithmus.</p>
-            <h3>Fehler 2: Wall-of-Text ohne Struktur</h3>
-            <p>Lange Absätze ohne Zwischen-Überschriften, ohne Aufzählungen, ohne klare Hierarchie. KIs lieben Struktur. Menschen auch. Faustregel: alle 200 bis 400 Wörter eine visuelle Atempause (Bild, Liste, Zwischenüberschrift, Card).</p>
-            <h3>Fehler 3: Fehlende Autoren-Bio</h3>
-            <p>Wenn auf deiner Webseite nicht klar ist, wer du bist, woher deine Expertise kommt und warum man dir glauben sollte, wirst du nicht zitiert. Punkt. KI-Modelle haben gelernt, anonyme Quellen zu meiden. Eine Person mit Geschichte schlägt eine Marke ohne Gesicht.</p>
-            <h3>Fehler 4: Lifestyle-Content ohne konkrete Lösung</h3>
-            <p>Finde dein wahres Selbst rankt nirgendwo. Wie ich Solopreneuren helfe, ihre Stundensätze von 80 auf 250 Euro zu erhöhen rankt überall. Konkrete Outcomes mit Zahlen werden überall bevorzugt, von Google bis ChatGPT.</p>
-            <h3>Fehler 5: Auf Tools setzen statt auf Substanz</h3>
-            <p>Es gibt SEO-Tools, die dir versprechen, dass du in drei Wochen rankst. Das ist Unsinn. Substanz bauen dauert. Aber sie hält dann auch. Wer drei Tools für 200 Euro pro Monat abonniert und dann doch kein Ranking baut, hat das Problem nicht verstanden.</p>
-            <h3>Fehler 6: Kein Tracking</h3>
-            <p>Wenn du nicht weißt, was funktioniert, kannst du nichts verbessern. Google Search Console, ein einfaches Analytics-Tool (Umami, Plausible) und einmal monatlich zehn Minuten Review reichen aus. Mehr ist Overengineering.</p>
+          </div>
+        </ScrollReveal>
+
+        <div className="mt-12 flex flex-col gap-8">
+          {[
+            { num: "01", title: "Keyword-Stuffing", body: "Wenn dein Text wirkt, als hättest du ein Wort dreißigmal eingebaut, sind Google und KI gleichermaßen abgestoßen. Schreibe für Menschen, dann findet die Suche dich auch. KI-Modelle erkennen unnatürliche Wortwiederholungen heute besser als jeder klassische Algorithmus." },
+            { num: "02", title: "Wall-of-Text ohne Struktur", body: "Lange Absätze ohne Zwischen-Überschriften, ohne Aufzählungen, ohne klare Hierarchie. KIs lieben Struktur. Menschen auch. Faustregel: alle 200 bis 400 Wörter eine visuelle Atempause (Bild, Liste, Zwischenüberschrift, Card)." },
+            { num: "03", title: "Fehlende Autoren-Bio", body: "Wenn auf deiner Webseite nicht klar ist, wer du bist, woher deine Expertise kommt und warum man dir glauben sollte, wirst du nicht zitiert. Punkt. KI-Modelle haben gelernt, anonyme Quellen zu meiden. Eine Person mit Geschichte schlägt eine Marke ohne Gesicht." },
+            { num: "04", title: "Lifestyle-Content ohne konkrete Lösung", body: "„Finde dein wahres Selbst" rankt nirgendwo. „Wie ich Solopreneuren helfe, ihre Stundensätze von 80 auf 250 Euro zu erhöhen" rankt überall. Konkrete Outcomes mit Zahlen werden überall bevorzugt, von Google bis ChatGPT." },
+            { num: "05", title: "Auf Tools setzen statt auf Substanz", body: "Es gibt SEO-Tools, die dir versprechen, dass du in drei Wochen rankst. Das ist Unsinn. Substanz bauen dauert. Aber sie hält dann auch. Wer drei Tools für 200 Euro pro Monat abonniert und dann doch kein Ranking baut, hat das Problem nicht verstanden." },
+            { num: "06", title: "Kein Tracking", body: "Wenn du nicht weißt, was funktioniert, kannst du nichts verbessern. Google Search Console, ein einfaches Analytics-Tool (Umami, Plausible) und einmal monatlich zehn Minuten Review reichen aus. Mehr ist Overengineering." },
+          ].map((fehler, i) => (
+            <ScrollReveal key={fehler.num} delay={i * 0.04}>
+              <article className="relative bg-warm-light/30 border-l-4 border-refined-gold/60 rounded-r-2xl pl-8 pr-6 md:pl-10 md:pr-10 py-7 md:py-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+                <div className="flex items-baseline gap-4 mb-3">
+                  <span className="font-instrument text-3xl md:text-4xl text-refined-gold/40 leading-none tracking-tight">{fehler.num}</span>
+                  <h3 className="font-instrument text-xl md:text-2xl text-deep-charcoal font-medium leading-[1.2] m-0">
+                    <span className="font-mono text-xs uppercase tracking-widest text-refined-gold/80 block mb-1">Fehler {fehler.num}</span>
+                    {fehler.title}
+                  </h3>
+                </div>
+                <p className="text-warm-steel font-satoshi text-base md:text-lg leading-relaxed m-0">{fehler.body}</p>
+              </article>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal>
+          <div className={`${proseBlock} mt-10`}>
             <p>Wenn du diese sechs Fehler vermeidest, bist du in den Top zwanzig Prozent der Personal-Brand-Webseiten im DACH-Raum. Ohne ein einziges teures Tool.</p>
           </div>
         </ScrollReveal>
