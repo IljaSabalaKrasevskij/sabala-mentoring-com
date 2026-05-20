@@ -81,31 +81,61 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pa
   }
 }
 
-async function pushWhatsApp(payload: AuditRequest): Promise<{ sent: boolean; reason?: string }> {
+async function pushNtfy(payload: AuditRequest): Promise<{ sent: boolean; reason?: string; channel?: string }> {
+  // Primary: ntfy.sh (Open-Source, Self-hosted-ready, robust)
+  const NTFY_TOPIC = process.env.NTFY_TOPIC;
+  const NTFY_SERVER = process.env.NTFY_SERVER || "https://ntfy.sh";
+
+  if (NTFY_TOPIC) {
+    const message =
+      `🌐 ${payload.url}\n` +
+      `📧 ${payload.email}\n\n` +
+      `Tap zum Öffnen in Notion (Status = Neu).`;
+
+    try {
+      const res = await fetch(`${NTFY_SERVER}/${NTFY_TOPIC}`, {
+        method: "POST",
+        headers: {
+          "Title": "🎯 Neue Audit-Anfrage",
+          "Tags": "dart,email",
+          "Priority": "4",
+          "Click": "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12",
+        },
+        body: message,
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        return { sent: false, reason: `ntfy ${res.status}: ${errText.slice(0, 200)}`, channel: "ntfy" };
+      }
+      return { sent: true, channel: "ntfy" };
+    } catch (err) {
+      return { sent: false, reason: err instanceof Error ? err.message : "ntfy-Netzwerkfehler", channel: "ntfy" };
+    }
+  }
+
+  // Fallback (Legacy): CallMeBot — wenn ntfy nicht konfiguriert ist, aber CallMeBot noch existiert
   const PHONE = process.env.CALLMEBOT_PHONE;
   const KEY = process.env.CALLMEBOT_API_KEY;
-  if (!PHONE || !KEY) {
-    return { sent: false, reason: "CallMeBot-Credentials nicht gesetzt (CALLMEBOT_PHONE + CALLMEBOT_API_KEY)" };
-  }
-
-  const message =
-    `🎯 Neue Audit-Anfrage\n\n` +
-    `🌐 ${payload.url}\n` +
-    `📧 ${payload.email}\n\n` +
-    `👉 Audit erstellen + persönlich versenden.\n` +
-    `Notion: https://www.notion.so/sabala (Status = Neu)`;
-
-  try {
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(PHONE)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(KEY)}`;
-    const res = await fetch(url, { method: "GET" });
-    if (!res.ok) {
-      const errText = await res.text();
-      return { sent: false, reason: `CallMeBot ${res.status}: ${errText.slice(0, 200)}` };
+  if (PHONE && KEY) {
+    const message =
+      `🎯 Neue Audit-Anfrage\n\n` +
+      `🌐 ${payload.url}\n` +
+      `📧 ${payload.email}\n\n` +
+      `Notion: https://www.notion.so/sabala (Status = Neu)`;
+    try {
+      const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(PHONE)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(KEY)}`;
+      const res = await fetch(url, { method: "GET" });
+      if (!res.ok) {
+        const errText = await res.text();
+        return { sent: false, reason: `CallMeBot ${res.status}: ${errText.slice(0, 200)}`, channel: "callmebot" };
+      }
+      return { sent: true, channel: "callmebot" };
+    } catch (err) {
+      return { sent: false, reason: err instanceof Error ? err.message : "CallMeBot-Netzwerkfehler", channel: "callmebot" };
     }
-    return { sent: true };
-  } catch (err) {
-    return { sent: false, reason: err instanceof Error ? err.message : "CallMeBot-Netzwerkfehler" };
   }
+
+  return { sent: false, reason: "Kein Push-Channel konfiguriert (NTFY_TOPIC oder CALLMEBOT_*)" };
 }
 
 export async function POST(req: NextRequest) {
@@ -126,14 +156,14 @@ export async function POST(req: NextRequest) {
 
   const payload: AuditRequest = { url, email, consent: true };
 
-  const [fileResult, notionResult, whatsappResult] = await Promise.all([
+  const [fileResult, notionResult, pushResult] = await Promise.all([
     saveToFile(payload),
     saveToNotion(payload),
-    pushWhatsApp(payload),
+    pushNtfy(payload),
   ]);
 
   if (!notionResult.saved) console.warn("[audit-request] Notion:", notionResult.reason);
-  if (!whatsappResult.sent) console.warn("[audit-request] WhatsApp:", whatsappResult.reason);
+  if (!pushResult.sent) console.warn(`[audit-request] Push (${pushResult.channel || "none"}):`, pushResult.reason);
 
   const anyPersistence = notionResult.saved || !!fileResult;
   if (!anyPersistence) {
@@ -150,7 +180,8 @@ export async function POST(req: NextRequest) {
     storage: {
       file: !!fileResult,
       notion: notionResult.saved,
-      whatsapp: whatsappResult.sent,
+      push: pushResult.sent,
+      pushChannel: pushResult.channel,
     },
   });
 }
