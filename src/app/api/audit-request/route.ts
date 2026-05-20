@@ -87,21 +87,21 @@ async function pushNtfy(payload: AuditRequest): Promise<{ sent: boolean; reason?
   const NTFY_SERVER = process.env.NTFY_SERVER || "https://ntfy.sh";
 
   if (NTFY_TOPIC) {
-    const message =
-      `🌐 ${payload.url}\n` +
-      `📧 ${payload.email}\n\n` +
-      `Tap zum Öffnen in Notion (Status = Neu).`;
+    // JSON-Mode: alles im Body als JSON, vermeidet HTTP-Header-Encoding-Issues mit UTF-8/Emojis
+    const ntfyPayload = {
+      topic: NTFY_TOPIC,
+      title: "Neue Audit-Anfrage",
+      message: `URL: ${payload.url}\nEmail: ${payload.email}\n\nTap zum Öffnen in Notion (Status = Neu).`,
+      tags: ["dart", "email"],
+      priority: 4,
+      click: "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12",
+    };
 
     try {
-      const res = await fetch(`${NTFY_SERVER}/${NTFY_TOPIC}`, {
+      const res = await fetch(NTFY_SERVER, {
         method: "POST",
-        headers: {
-          "Title": "🎯 Neue Audit-Anfrage",
-          "Tags": "dart,email",
-          "Priority": "4",
-          "Click": "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12",
-        },
-        body: message,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ntfyPayload),
       });
       if (!res.ok) {
         const errText = await res.text();
@@ -182,6 +182,9 @@ export async function POST(req: NextRequest) {
       notion: notionResult.saved,
       push: pushResult.sent,
       pushChannel: pushResult.channel,
+      // Debug-Info nur in Entwicklungsphase — entfernen sobald stabil
+      pushReason: pushResult.sent ? undefined : pushResult.reason,
+      notionReason: notionResult.saved ? undefined : notionResult.reason,
     },
   });
 }
