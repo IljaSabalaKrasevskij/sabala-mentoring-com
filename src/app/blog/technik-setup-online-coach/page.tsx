@@ -1,4 +1,5 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ArticleAuditCTA } from "@/components/blog/ArticleAuditCTA";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -328,6 +329,15 @@ export default function BlogPostPage() {
           ))}
         </div>
       </section>
+
+      {/* Audit-Lead-Magnet — niedrigschwelliger Einstieg vor dem Premium-CTA */}
+      <ScrollReveal>
+        <ArticleAuditCTA
+          eyebrow="Persönliches Audit — kostenlos"
+          headline={<>Steht dein Setup —<br/>aber deine Webseite noch nicht?</>}
+          bridge={<>Du hast jetzt die Hardware-Liste, das Tool-Setup, die Premium-Energie für deine Calls. Was fehlt vielleicht noch: ein Online-Auftritt, der zu dieser Qualität passt. Schick mir deine Webseite, ich schaue persönlich drauf und gebe dir drei konkrete Hebel zurück. Ohne Funnel, ohne Sales-Sprech.</>}
+        />
+      </ScrollReveal>
 
       {/* CTA SECTION - DIAMOND FORCE / PREMIUM */}
       <section className="px-6 md:px-12 mt-24 max-w-[1000px] mx-auto w-full">

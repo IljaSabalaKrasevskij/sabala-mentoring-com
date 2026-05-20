@@ -295,18 +295,18 @@ export default function BlogChatGPTCustomGPTsPage() {
             <div className="flex-1 relative z-10 text-center md:text-left">
               <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
                 <Workflow className="w-5 h-5 text-refined-gold" />
-                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">Ein KI-Team, das wirklich für dich arbeitet</span>
+                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">Mein KI-Team arbeitet jeden Tag mit mir</span>
               </div>
-              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Bereit für deinen eigenen sauberen Workflow?</h3>
+              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Vielleicht bald auch für dich.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du spürst, dass dein aktueller KI-Einsatz mehr Energie kostet als zurückgibt, lass uns gemeinsam dein 7-Kasten-System aufbauen. Mit deiner Stimme, deinen Werten, deinen wirklichen Aufgaben.
+                Mooni, Aurel, Lia und die anderen begleiten meine Arbeit — Recherche, Texte, Strategie, Brand-Voice. Wenn du selbst so ein Team willst: ich baue customized AI Agents auf deine Brand, deine Aufgaben, deine Stimme zugeschnitten. Mit deinen Werten, deinen wirklichen Aufgaben.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/termin-buchen" className="inline-flex items-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto justify-center">
-                  <Zap className="w-4 h-4" /> Sabala persönlich sprechen
+                <Link href="/gpt-team" className="inline-flex items-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto justify-center">
+                  <Zap className="w-4 h-4" /> Mein KI-Team kennenlernen
                 </Link>
-                <Link href="/gpt-team" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Mein KI-Team ansehen
+                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  Eigenes Team bauen lassen
                 </Link>
               </div>
             </div>

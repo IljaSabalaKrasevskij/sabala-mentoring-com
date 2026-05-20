@@ -1,5 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { CountUp } from "@/components/blog/CountUp";
+import { ArticleAuditCTA } from "@/components/blog/ArticleAuditCTA";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -596,6 +597,15 @@ export default function SeoGeoPersonalBrandsPage() {
           ))}
         </div>
       </section>
+
+      {/* Audit-Lead-Magnet — niedrigschwelliger Einstieg vor dem Premium-CTA */}
+      <ScrollReveal>
+        <ArticleAuditCTA
+          eyebrow="Persönliches Audit — kostenlos"
+          headline={<>Wie sichtbar bist du<br/>in Google und ChatGPT?</>}
+          bridge={<>Schick mir deine Webseite — ich schaue persönlich drauf. SEO-Status, GEO-Zitierfähigkeit, FAQ-Schema, E-E-A-T-Signale, Trust-Elemente. Du bekommst drei konkrete Hebel, die du sofort umsetzen kannst. Kein Funnel, kein Sales-Call dahinter. Nur Substanz.</>}
+        />
+      </ScrollReveal>
 
       {/* CTA */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[1100px] mx-auto w-full">
