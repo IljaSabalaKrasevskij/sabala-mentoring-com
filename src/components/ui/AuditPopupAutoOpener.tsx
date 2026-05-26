@@ -7,7 +7,7 @@ import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
 
 const STORAGE_KEY = "sabala_audit_popup_v1";
 const COOLDOWN_DAYS = 30;
-const TIME_TRIGGER_MS = 8_000;
+const TIME_TRIGGER_MS = 12_000;
 const SCROLL_TRIGGER_PCT = 0.5;
 
 type Trigger = "time" | "scroll" | "exit";
@@ -174,35 +174,47 @@ export function AuditPopupAutoOpener() {
           <button
             onClick={dismiss}
             aria-label="Schließen"
-            className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-white/60 hover:text-white flex items-center justify-center transition-colors z-20"
+            className="absolute top-5 right-5 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white/80 hover:text-white flex items-center justify-center transition-colors z-30 backdrop-blur-sm"
           >
             <X className="w-4 h-4" />
           </button>
 
-          <div className="relative p-8 sm:p-12 pt-14">
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-refined-gold/10 pointer-events-none rounded-b-[2rem]" />
+          {/* Hero-Image mit Aura — visueller Hook */}
+          <div className="relative w-full h-[200px] sm:h-[240px] overflow-hidden rounded-t-[2rem]">
+            <img
+              src="/audit/ilja-goku-aura.jpg"
+              alt="Premium-Audit von Ilja Krasevskij"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: "center 18%" }}
+              loading="eager"
+              decoding="async"
+            />
+            {/* Gradient Overlay: Top leicht abgedunkelt (Close-Button-Lesbarkeit), Bottom hart zum Modal-BG */}
+            <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#2E2B26] via-[#2E2B26]/85 to-transparent pointer-events-none" />
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-5">
-                <Sparkles className="w-4 h-4 text-refined-gold animate-pulse" />
-                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">
-                  Kostenfreies Webseiten-Audit
-                </span>
-              </div>
-
-              <h2
-                id="audit-popup-title"
-                className="font-instrument text-3xl sm:text-4xl text-white leading-[1.1] mb-5"
-              >
-                Ein persönlicher Blick auf deine Seite — mit drei konkreten Hebeln.
-              </h2>
-
-              <p className="text-white/60 font-satoshi text-base sm:text-lg leading-relaxed mb-8">
-                Ich schaue mir deine Webseite an: Substanz, Voice, Sichtbarkeit, Trust. Du bekommst eine ehrliche Einschätzung per Email — kein Funnel, kein Pitch, kein Verkaufsgespräch im Anschluss. Du entscheidest, was du daraus machst.
-              </p>
-
-              <AuditRequestForm onSuccess={handleSuccess} />
+            {/* Eyebrow auf Bild, bottom */}
+            <div className="absolute bottom-5 left-8 right-8 flex items-center gap-3 z-10">
+              <Sparkles className="w-4 h-4 text-refined-gold animate-pulse" />
+              <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">
+                Kostenfreies Premium-Audit
+              </span>
             </div>
+          </div>
+
+          <div className="relative px-8 sm:px-12 pt-6 pb-10 sm:pb-12">
+            <h2
+              id="audit-popup-title"
+              className="font-instrument text-3xl sm:text-[2.5rem] text-white leading-[1.08] tracking-tight mb-5"
+            >
+              Was deine Webseite dich kostet — und wo der größte Hebel liegt.
+            </h2>
+
+            <p className="text-white/70 font-satoshi text-base sm:text-[1.05rem] leading-relaxed mb-8">
+              Schwache Voice. Fehlender Trust. Unsichtbar für Google und KI. Die meisten Premium-Brands verlieren Kunden schon vor dem ersten Klick. Du bekommst per Email einen schriftlichen Audit-Bericht: <span className="text-refined-gold">drei konkrete Hebel, persönlich begründet.</span> Kein Pitch hinterher.
+            </p>
+
+            <AuditRequestForm onSuccess={handleSuccess} />
           </div>
         </div>
       </div>
