@@ -200,63 +200,91 @@ export default function PremiumAngebotPage() {
               <svg viewBox="0 0 800 800" className="absolute inset-0 w-full h-full" aria-hidden="true">
                 <defs>
                   <linearGradient id="spoke-cosmic" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#B8963E" stopOpacity="0.95" />
-                    <stop offset="50%" stopColor="#B8963E" stopOpacity="0.55" />
-                    <stop offset="100%" stopColor="#B8963E" stopOpacity="0.15" />
+                    <stop offset="0%" stopColor="#B8963E" stopOpacity="1" />
+                    <stop offset="60%" stopColor="#B8963E" stopOpacity="0.75" />
+                    <stop offset="100%" stopColor="#D4AE5A" stopOpacity="0.95" />
                   </linearGradient>
                   <radialGradient id="cosmic-aura" cx="0.5" cy="0.5" r="0.5">
-                    <stop offset="0%" stopColor="#B8963E" stopOpacity="0.5" />
-                    <stop offset="50%" stopColor="#B8963E" stopOpacity="0.18" />
+                    <stop offset="0%" stopColor="#B8963E" stopOpacity="0.55" />
+                    <stop offset="50%" stopColor="#B8963E" stopOpacity="0.2" />
                     <stop offset="100%" stopColor="#B8963E" stopOpacity="0" />
                   </radialGradient>
+                  <filter id="connector-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
                 </defs>
 
-                {/* Center aura */}
-                <circle cx="400" cy="400" r="330" fill="url(#cosmic-aura)" />
+                {/* Center aura — größer für stärkere Sphere-Präsenz */}
+                <circle cx="400" cy="400" r="370" fill="url(#cosmic-aura)" />
 
-                {/* 6 spokes — animated draw-in, staggered */}
+                {/* 6 spokes — kürzer (radius 305) damit Gap zur Card bei radius 360 entsteht */}
                 {[0, 60, 120, 180, 240, 300].map((deg, i) => {
                   const rad = ((deg - 90) * Math.PI) / 180;
-                  const x = 400 + Math.cos(rad) * 340;
-                  const y = 400 + Math.sin(rad) * 340;
+                  const startX = 400 + Math.cos(rad) * 150; // Start außerhalb der 290px Sphere
+                  const startY = 400 + Math.sin(rad) * 150;
+                  const endX = 400 + Math.cos(rad) * 305;
+                  const endY = 400 + Math.sin(rad) * 305;
                   return (
                     <line
                       key={deg}
-                      x1="400"
-                      y1="400"
-                      x2={x}
-                      y2={y}
+                      x1={startX}
+                      y1={startY}
+                      x2={endX}
+                      y2={endY}
                       stroke="url(#spoke-cosmic)"
-                      strokeWidth="2.5"
+                      strokeWidth="3"
                       strokeLinecap="round"
                       className="hub-spoke-anim"
                       style={{ animationDelay: `${0.4 + i * 0.18}s` }}
                     />
                   );
                 })}
+
+                {/* Gold-Connector-Dots am Linien-Ende — visualisiert "Linie führt zu Card" */}
+                {[0, 60, 120, 180, 240, 300].map((deg, i) => {
+                  const rad = ((deg - 90) * Math.PI) / 180;
+                  const x = 400 + Math.cos(rad) * 305;
+                  const y = 400 + Math.sin(rad) * 305;
+                  return (
+                    <circle
+                      key={`dot-${deg}`}
+                      cx={x}
+                      cy={y}
+                      r="6"
+                      fill="#D4AE5A"
+                      filter="url(#connector-glow)"
+                      className="hub-spoke-anim"
+                      style={{ animationDelay: `${1.6 + i * 0.18}s` }}
+                    />
+                  );
+                })}
               </svg>
 
-              {/* Center: 3D Sphere with breathing glow */}
+              {/* Center: 3D Sphere — größer, prominenter Kristall */}
               <div
-                className="hub-center-3d absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full flex flex-col items-center justify-center text-center"
+                className="hub-center-3d absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[290px] h-[290px] rounded-full flex flex-col items-center justify-center text-center"
                 style={{
-                  background: "radial-gradient(circle at 30% 25%, #4a3f2f 0%, #1a1612 55%, #08070a 100%)",
+                  background: "radial-gradient(circle at 30% 25%, #5a4d39 0%, #1f1813 50%, #08070a 100%)",
                 }}
               >
                 <div
-                  className="relative w-14 h-20 mb-3"
+                  className="relative w-20 h-28 mb-3"
                   style={{
                     filter:
-                      "drop-shadow(0 0 15px rgba(184,150,62,0.85)) drop-shadow(0 0 35px rgba(184,150,62,0.4))",
+                      "drop-shadow(0 0 20px rgba(184,150,62,1)) drop-shadow(0 0 45px rgba(184,150,62,0.5))",
                   }}
                 >
                   <Image src="/images/sabala-kristall.png" alt="Sabala Kristall" fill className="object-contain" />
                 </div>
-                <p className="font-instrument text-pure-surface text-xl leading-tight mb-1">deine</p>
-                <p className="font-instrument text-refined-gold italic text-3xl leading-tight">Webseite</p>
+                <p className="font-instrument text-pure-surface text-2xl leading-tight mb-1">deine</p>
+                <p className="font-instrument text-refined-gold italic text-[2.75rem] leading-[1] tracking-tight">Webseite</p>
               </div>
 
-              {/* Outer Cards — Glassmorphic dark mit Gold-Glow + Float */}
+              {/* Outer Cards — Glassmorphic dark mit Gold-Glow + Float, radius 45% = mehr Platz für Connector-Dot */}
               {[
                 { label: "YouTube", deg: 0 },
                 { label: "Pinterest", deg: 60 },
@@ -266,20 +294,20 @@ export default function PremiumAngebotPage() {
                 { label: "Blog & SEO", deg: 300 },
               ].map(({ label, deg }, i) => {
                 const rad = ((deg - 90) * Math.PI) / 180;
-                const x = 50 + Math.cos(rad) * 42;
-                const y = 50 + Math.sin(rad) * 42;
+                const x = 50 + Math.cos(rad) * 45;
+                const y = 50 + Math.sin(rad) * 45;
                 return (
                   <div
                     key={label}
-                    className="hub-card-float absolute rounded-full px-6 py-3.5 border border-refined-gold/40"
+                    className="hub-card-float absolute rounded-full px-6 py-3.5 border border-refined-gold/50"
                     style={{
                       top: `${y}%`,
                       left: `${x}%`,
-                      background: "rgba(15,12,10,0.82)",
+                      background: "rgba(15,12,10,0.85)",
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       boxShadow:
-                        "0 10px 40px rgba(184,150,62,0.18), 0 0 20px rgba(184,150,62,0.12), inset 0 1px 0 rgba(255,255,255,0.08)",
+                        "0 10px 40px rgba(184,150,62,0.22), 0 0 24px rgba(184,150,62,0.18), inset 0 1px 0 rgba(255,255,255,0.1)",
                       animationDelay: `${i * 0.5}s`,
                     }}
                   >
