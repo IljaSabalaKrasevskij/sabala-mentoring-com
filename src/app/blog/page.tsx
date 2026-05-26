@@ -43,6 +43,83 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 8,
+    title: "Webseite mit KI bauen 2026: Der Premium-Stack, den niemand zeigt",
+    excerpt: "Diese Seite ist mit Antigravity, Spline und Claude Code gebaut. Der Unterschied zwischen Baukasten-KI und Pro-Tool-Stack ist nicht graduell. Es ist eine andere Liga.",
+    category: "KI & Webseiten",
+    date: "Mai 2026",
+    readTime: "9 Min",
+    slug: "/blog/webseite-mit-ki-bauen-2026",
+    layout: "col-span-1 md:col-span-2 row-span-1",
+    aspect: "aspect-[2/1] md:aspect-[2.4/1]",
+    gradient: "from-[#2E2B26] via-[#15110b] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 7,
+    title: "EU AI Act ab August 2026: Was Coaches jetzt klären müssen",
+    excerpt: "Am 2. August 2026 ist der EU AI Act vollständig anwendbar. Acht Wochen ab heute. Was du in deiner Praxis konkret tun musst.",
+    category: "Recht & KI",
+    date: "Mai 2026",
+    readTime: "7 Min",
+    slug: "/blog/eu-ai-act-coach-2026",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#1f1813] via-[#15110b] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 9,
+    title: "Wenn dein Webdesigner verschwindet: Code-Eigentum als Versicherung",
+    excerpt: "Webseiten-Lock-in auf drei Ebenen: Plattform, Hosting, Person. Warum Code-Eigentum die einzige echte Versicherung gegen Webdesigner-Abhängigkeit ist.",
+    category: "Code-Eigentum",
+    date: "Mai 2026",
+    readTime: "8 Min",
+    slug: "/blog/webdesigner-verschwunden-code-eigentum",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 10,
+    title: "Cookie-Banner ade? DSGVO-Reform 2026 + warum cookie-frei jetzt Premium ist",
+    excerpt: "Die EU plant 2026 eine Lockerung der Cookie-Banner-Pflicht. Warum cookie-frei trotzdem der Premium-Standard ist, mit konkretem Stack.",
+    category: "DSGVO",
+    date: "Mai 2026",
+    readTime: "7 Min",
+    slug: "/blog/dsgvo-cookie-banner-reform-2026",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#1a1814] via-[#15110b] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 11,
+    title: "Baukasten vs. eigene Webseite: Die ehrliche 3-Jahres-Rechnung",
+    excerpt: "Webflow vs. Premium-Webseite. Echte Markt-Preise, Break-Even-Punkt, Hidden Costs. Wann sich Premium für Coaches wirklich lohnt.",
+    category: "Kosten-Vergleich",
+    date: "Mai 2026",
+    readTime: "8 Min",
+    slug: "/blog/baukasten-vs-eigene-webseite-kosten-2026",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 4,
+    title: "99% aller Selbstständigen nutzen ChatGPT falsch",
+    excerpt: "Fehlender Kontext, unstimmige Sprache, ein Textwall der nicht zu dir passt. Warum Custom GPTs mit klaren Rollen der echte Hebel für Solopreneure sind.",
+    category: "KI & Workflow",
+    date: "April 2026",
+    readTime: "9 Min",
+    image: "/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
+    slug: "/blog/chatgpt-custom-gpts-richtig-nutzen",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square"
+  },
+  {
     id: 2,
     title: "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt.",
     excerpt: "Ein schlechtes Mikrofon zerstört selbst die tiefste energetische Übertragung. Wie du ortsunabhängig arbeitest, ohne an Qualität und Ausstrahlung zu verlieren.",
@@ -65,18 +142,6 @@ const articles = [
     slug: "/blog/warum-business-mentoring-programme-scheitern",
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
-  },
-  {
-    id: 4,
-    title: "99% aller Selbstständigen nutzen ChatGPT falsch",
-    excerpt: "Fehlender Kontext, unstimmige Sprache, ein Textwall der nicht zu dir passt. Warum Custom GPTs mit klaren Rollen der echte Hebel für Solopreneure sind.",
-    category: "KI & Workflow",
-    date: "April 2026",
-    readTime: "9 Min",
-    image: "/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
-    slug: "/blog/chatgpt-custom-gpts-richtig-nutzen",
-    layout: "col-span-1 md:col-span-1 row-span-2",
-    aspect: "aspect-[2/3]"
   }
 ];
 
@@ -154,21 +219,39 @@ export default function BlogPage() {
               className={`group flex flex-col ${article.layout}`}
             >
               <Link href={article.slug || `/blog/article-${article.id}`} className="block h-full group">
-                <div className={`relative ${article.aspect} w-full mb-6 overflow-hidden bg-warm-canvas`}>
-                  {/* Image */}
-                  <Image 
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:grayscale"
-                  />
-                  {/* Subtle Gold Layer on Hover */}
-                  <div className="absolute inset-0 bg-refined-gold/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  
-                  {/* Category Badge Bubble */}
-                  <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-pure-surface bg-deep-charcoal/90 backdrop-blur-md px-3 py-1 rounded-full opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                    {article.category}
-                  </div>
+                <div className={`relative ${article.aspect} w-full mb-6 overflow-hidden bg-warm-canvas rounded-[12px]`}>
+                  {article.image ? (
+                    <>
+                      {/* Image-Card (existing articles) */}
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        fill
+                        className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:grayscale"
+                      />
+                      <div className="absolute inset-0 bg-refined-gold/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Gradient-Card (new articles ohne Cover-Image) */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${article.gradient ?? "from-[#2E2B26] via-[#15110b] to-[#08070a]"}`} />
+                      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-refined-gold/[0.18] blur-[120px] rounded-full pointer-events-none" />
+                      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                        <span className="font-mono text-[0.65rem] tracking-[0.22em] uppercase text-refined-gold mb-3 font-bold">{article.category}</span>
+                        <h4 className="font-instrument text-pure-surface text-xl md:text-2xl leading-[1.15] group-hover:text-refined-gold transition-colors duration-500">
+                          {article.title.length > 65 ? article.title.slice(0, 62) + "…" : article.title}
+                        </h4>
+                      </div>
+                      <div className="absolute inset-0 bg-refined-gold/[0.12] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    </>
+                  )}
+
+                  {/* Category Badge Bubble (only for image-cards, gradient-cards show category inline) */}
+                  {article.image && (
+                    <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-pure-surface bg-deep-charcoal/90 backdrop-blur-md px-3 py-1 rounded-full opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                      {article.category}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col flex-grow">
