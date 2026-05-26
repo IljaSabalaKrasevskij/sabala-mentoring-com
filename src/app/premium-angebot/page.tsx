@@ -97,6 +97,136 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
+      {/* SECTION 2c: HUB-FRAME — Webseite als Fundament für alle Marketing-Kanäle */}
+      <section className="bg-warm-canvas py-28 md:py-40 px-6 relative overflow-hidden border-t border-whisper-border">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[700px] h-[700px] bg-refined-gold/[0.07] blur-[170px] rounded-full" />
+        </div>
+
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-3">
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+                <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Bevor du in Reichweite investierst</span>
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] text-deep-charcoal text-center mb-8 max-w-[26ch] mx-auto">
+              Deine Webseite ist nicht <span className="italic">ein</span> Marketing-Kanal.<br/>
+              <span className="italic text-refined-gold">Sie ist der Hub, der alle anderen erst sinnvoll macht.</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65] text-center max-w-[780px] mx-auto mb-20 md:mb-24">
+              YouTube, Pinterest, Instagram, LinkedIn — jeder Kanal leitet irgendwann auf eine Seite. Wenn diese Seite nicht trägt, verbrennst du Reichweite. Wir bauen das Fundament zuerst, sodass jede Marketing-Maßnahme darauf einzahlt.
+            </p>
+          </ScrollReveal>
+
+          {/* Hub-Diagramm — Desktop */}
+          <ScrollReveal delay={0.3}>
+            <div className="hidden md:block relative w-full max-w-[760px] aspect-square mx-auto">
+              {/* SVG-Spokes-Layer */}
+              <svg viewBox="0 0 800 800" className="absolute inset-0 w-full h-full" aria-hidden="true">
+                <defs>
+                  <linearGradient id="spoke-grad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#B8963E" stopOpacity="0.75" />
+                    <stop offset="100%" stopColor="#B8963E" stopOpacity="0.15" />
+                  </linearGradient>
+                  <radialGradient id="hub-glow" cx="0.5" cy="0.5" r="0.5">
+                    <stop offset="0%" stopColor="#B8963E" stopOpacity="0.18" />
+                    <stop offset="100%" stopColor="#B8963E" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                {/* subtle center glow */}
+                <circle cx="400" cy="400" r="240" fill="url(#hub-glow)" />
+                {/* 6 spokes */}
+                {[0, 60, 120, 180, 240, 300].map((deg) => {
+                  const rad = ((deg - 90) * Math.PI) / 180;
+                  const x = 400 + Math.cos(rad) * 320;
+                  const y = 400 + Math.sin(rad) * 320;
+                  return (
+                    <line
+                      key={deg}
+                      x1="400"
+                      y1="400"
+                      x2={x}
+                      y2={y}
+                      stroke="url(#spoke-grad)"
+                      strokeWidth="1.5"
+                    />
+                  );
+                })}
+              </svg>
+
+              {/* Center: Webseite */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-deep-charcoal flex flex-col items-center justify-center text-center border border-refined-gold/40 shadow-[0_30px_80px_rgba(184,150,62,0.25)]">
+                <div className="relative w-10 h-14 mb-2 opacity-90">
+                  <Image src="/images/sabala-kristall.png" alt="Sabala Kristall" fill className="object-contain" />
+                </div>
+                <p className="font-instrument text-pure-surface text-lg leading-tight">deine</p>
+                <p className="font-instrument text-refined-gold italic text-xl leading-tight">Webseite</p>
+              </div>
+
+              {/* Outer cards — Sechseck-Positionen */}
+              {[
+                { label: "YouTube", deg: 0 },
+                { label: "Pinterest", deg: 60 },
+                { label: "Instagram", deg: 120 },
+                { label: "LinkedIn", deg: 180 },
+                { label: "Newsletter", deg: 240 },
+                { label: "Blog & SEO", deg: 300 },
+              ].map(({ label, deg }) => {
+                const rad = ((deg - 90) * Math.PI) / 180;
+                const x = 50 + Math.cos(rad) * 42;
+                const y = 50 + Math.sin(rad) * 42;
+                return (
+                  <div
+                    key={label}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 bg-pure-surface border border-refined-gold/30 rounded-full px-5 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.07)]"
+                    style={{ top: `${y}%`, left: `${x}%` }}
+                  >
+                    <span className="font-satoshi text-deep-charcoal text-sm md:text-base font-medium whitespace-nowrap">{label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollReveal>
+
+          {/* Mobile-Fallback: vertikale Liste */}
+          <ScrollReveal delay={0.3}>
+            <div className="md:hidden">
+              <div className="bg-deep-charcoal rounded-[28px] p-10 mb-6 text-center border border-refined-gold/40 shadow-[0_20px_50px_rgba(184,150,62,0.15)]">
+                <div className="relative w-10 h-14 mx-auto mb-3 opacity-90">
+                  <Image src="/images/sabala-kristall.png" alt="Sabala Kristall" fill className="object-contain" />
+                </div>
+                <p className="font-instrument text-pure-surface text-2xl leading-tight">deine</p>
+                <p className="font-instrument text-refined-gold italic text-2xl leading-tight">Webseite</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {["YouTube", "Pinterest", "Instagram", "LinkedIn", "Newsletter", "Blog & SEO"].map((label) => (
+                  <div key={label} className="text-center bg-pure-surface border border-refined-gold/30 rounded-full px-4 py-3">
+                    <span className="font-satoshi text-deep-charcoal text-sm font-medium">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Closing Statement — Hormozi-direct */}
+          <ScrollReveal delay={0.4}>
+            <p className="font-instrument text-deep-charcoal text-xl md:text-2xl text-center mt-20 md:mt-24 max-w-[780px] mx-auto leading-[1.5]">
+              Wenn das Fundament trägt, multipliziert jede Marketing-Investition.<br className="hidden md:block" />
+              <span className="italic text-refined-gold">Wenn nicht — verbrennt sie.</span>
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* SECTION 2b: WAS DU DIR SPARST + BRAND-MANIFEST + FILTER (Marktführer-Block) */}
       <section className="py-28 md:py-40 px-6 sm:px-12 md:px-24 bg-warm-canvas relative overflow-hidden">
         <div className="absolute top-1/3 -left-[15vw] w-[600px] h-[600px] bg-refined-gold/[0.06] blur-[180px] rounded-full pointer-events-none" />
@@ -348,7 +478,7 @@ export default function PremiumAngebotPage() {
                   { title: "Positionierung & Botschaft", desc: "Brand Identity Sessions (2× 90 Min): Personal-Brand-Interview + Strategie. Ich finde mit dir Brand Voice und Texte, die exakt nach dir klingen.", class: "md:col-span-2 lg:col-span-2 relative overflow-hidden group" },
                   { title: "Brand Mini-Guide", desc: "Typografie, Farben, Tonalität und Bildsprache. Auf Google Fonts, ohne Lizenz-Risiko. Logo & Branddesign optional als Add-on (Fleur, +1.500 €).", class: "group relative overflow-hidden" },
                   { title: "Erlebnis-Website", desc: "5 bis 12 Seiten je nach Stufe. Individuell designt, animiert, optimiert. Hosting via Vercel · DSGVO · cookie-frei.", class: "md:col-span-1 lg:col-span-1 group relative overflow-hidden" },
-                  { title: "SEO & Datenanalyse", desc: "Saubere SEO-Basis und Analyse-Setup. Plus Starter-Blog-Artikel ab Stufe Basis (3 in Basis · monatlich 1 in All-in).", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
+                  { title: "SEO & Datenanalyse", desc: "Saubere SEO + GEO-Basis und Analyse-Setup. Plus 3 Starter-Blog-Artikel in jeder Stufe (in All-in zusätzlich monatlich 1 — 15/Jahr gesamt). Das Fundament für jede Social-Media- und Reichweiten-Strategie.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
                   { title: "Content & Social-Media", desc: "Newsletter-Welcome-Sequence ab Basis. In All-in zusätzlich: wöchentlich 1 LinkedIn-Karussell, Content-Säulen + Themen-Plan + Vorlagen.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
                   { title: "Recht & Technik", desc: "Rechtssicher und DSGVO-konform: Impressum, Datenschutz, kein Cookie-Banner. Hosting-Setup und High-End PageSpeed.", class: "group relative overflow-hidden" },
                   { title: "Begleitung & Pflege", desc: "Pflege ist in jeder Stufe enthalten. Lite: 6 Monate Mini. Basis: 12 Monate Plus + Monatsbericht + Mid-Year-Strategie-Call. All-in: 12 Monate Premium + monatlich Strategie-Call + 4 Event-Landingpages + Quartals-Brand-Guidance.", class: "md:col-span-2 lg:col-span-3 min-h-[300px] group relative overflow-hidden border border-refined-gold/20 shadow-[inset_0_0_80px_rgba(184,150,62,0.03)]" }
@@ -799,6 +929,7 @@ export default function PremiumAngebotPage() {
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Identity Sessions (2× 90 Min)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Mini-Guide (Typo · Farben · Tonalität)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 5 Seiten</strong></span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel</strong> für SEO + GEO-Fundament</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>1 Tool-Embed (Buchung/Zahlung/Newsletter)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Hosting · DSGVO · cookie-frei</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>6 Monate Pflege Mini</span></li>
@@ -854,7 +985,7 @@ export default function PremiumAngebotPage() {
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Automation-Setup (Buchung → Zahlung → CRM)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">4× Event-/Webinar-Landingpages</strong></span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Wöchentlich LinkedIn-Karussell</strong> (52/Jahr)</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Monatlich 1 Blog-Artikel</strong> (12/Jahr)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel + monatlich 1</strong> (15/Jahr gesamt)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Content-Säulen + Themen-Plan + Vorlagen</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>12 Monate Pflege Premium + Monatsanalyse</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Monatlich 30-Min-Strategie-Call</strong></span></li>
