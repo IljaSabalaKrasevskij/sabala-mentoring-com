@@ -730,7 +730,7 @@ export default function PremiumAngebotPage() {
                   { title: "Brand Mini-Guide", desc: "Typografie, Farben, Tonalität und Bildsprache. Auf Google Fonts, ohne Lizenz-Risiko. Logo & Branddesign optional als Add-on (Fleur, +1.500 €).", class: "group relative overflow-hidden" },
                   { title: "Erlebnis-Website", desc: "5 bis 12 Seiten je nach Stufe. Individuell designt, animiert, optimiert. Hosting via Vercel · DSGVO · cookie-frei.", class: "md:col-span-1 lg:col-span-1 group relative overflow-hidden" },
                   { title: "SEO & Blog-Fundament", desc: "Saubere SEO + GEO-Basis und Analyse-Setup. Blog-Artikel mit Zielgruppen-Recherche, gestaffelt nach Stufe: 3 in Lite · 5 in Basis · 6 + monatlich 1 in All-in (18/Jahr gesamt). Das Fundament, auf das jede Social-Media-, YouTube-, Pinterest- und Newsletter-Strategie einzahlt.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
-                  { title: "Content & Social-Media", desc: "Newsletter-Welcome-Sequence ab Basis. In All-in zusätzlich: wöchentlich 1 LinkedIn-Karussell, Content-Säulen + Themen-Plan + Vorlagen.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
+                  { title: "Leadgenerierung & Newsletter", desc: "Damit deine Webseite nicht nur erzählt, sondern Leads sammelt. Lead-Magnet (Freebie/Mini-Guide/Audit) auf der Page, Newsletter-Welcome-Sequence ab Basis, in All-in zusätzlich Application-Funnel für Premium-Anfragen + automatische Lead-Qualifizierung.", class: "md:col-span-2 lg:col-span-2 group relative overflow-hidden" },
                   { title: "Recht & Technik", desc: "Rechtssicher und DSGVO-konform: Impressum, Datenschutz, kein Cookie-Banner. Hosting-Setup und High-End PageSpeed.", class: "group relative overflow-hidden" },
                   { title: "Begleitung & Pflege", desc: "Pflege ist in jeder Stufe enthalten. Lite: 6 Monate Mini. Basis: 12 Monate Plus + Monatsbericht + Mid-Year-Strategie-Call. All-in: 12 Monate Premium + monatlich Strategie-Call + 4 Event-Landingpages + Quartals-Brand-Guidance.", class: "md:col-span-2 lg:col-span-3 min-h-[300px] group relative overflow-hidden border border-refined-gold/20 shadow-[inset_0_0_80px_rgba(184,150,62,0.03)]" }
                 ].map((item, i) => (
@@ -777,26 +777,82 @@ export default function PremiumAngebotPage() {
                 Es geht darum, technologisch mit der Zeit zu gehen – auch wenn du die Technik dahinter nicht selbst durchdringen musst. Du hebst dich mit einer maßgeschneiderten Premium-Plattform deutlich vom Markt ab und etablierst eine Infrastruktur, die im Hintergrund unermüdlich für dich arbeitet, um das nachhaltige Wachstum deines Business zu stützen.
               </p>
               
-              <div className="grid md:grid-cols-3 gap-8 mt-16 text-left">
-                <div className="p-8 rounded-[2rem] bg-[#17130D] border border-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-transform duration-500 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/[0.02] mix-blend-overlay group-hover:bg-white/[0.04] transition-colors" />
-                  <span className="text-refined-gold font-instrument text-5xl mb-6 block relative z-10">01</span>
-                  <strong className="block text-pure-surface mb-3 font-instrument text-2xl relative z-10">Exklusivität, die man spürt.</strong>
-                  <span className="text-pure-surface/70 leading-relaxed block relative z-10">Keine Baukasten-Ästhetik. Dein Auftritt wird maßgeschneidert designt, elegant animiert und wirkt wie ein High-End Editorial, das dich visuell sofort von 99% des Marktes abhebt.</span>
-                </div>
-                <div className="p-8 rounded-[2rem] bg-[#17130D] border border-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-transform duration-500 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/[0.02] mix-blend-overlay group-hover:bg-white/[0.04] transition-colors" />
-                  <span className="text-refined-gold font-instrument text-5xl mb-6 block relative z-10">02</span>
-                  <strong className="block text-pure-surface mb-3 font-instrument text-2xl relative z-10">Automatisierter Vertrauensaufbau.</strong>
-                  <span className="text-pure-surface/70 leading-relaxed block relative z-10">Deine Kunden betreten das Kennenlerngespräch bereits qualifiziert und überzeugt von deinem tiefen Wert. Das mühsame "Überreden" im Verkaufsgespräch entfällt.</span>
-                </div>
-                <div className="p-8 rounded-[2rem] bg-[#17130D] border border-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-transform duration-500 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/[0.02] mix-blend-overlay group-hover:bg-white/[0.04] transition-colors" />
-                  <span className="text-refined-gold font-instrument text-5xl mb-6 block relative z-10">03</span>
-                  <strong className="block text-pure-surface mb-3 font-instrument text-2xl relative z-10">Totale Entlastung im Alltag.</strong>
-                  <span className="text-pure-surface/70 leading-relaxed block relative z-10">Durch unser Wartungs- und Technik-Setup im Hintergrund kannst du dich zu 100% auf deine Kernarbeit fokussieren. Hosting, Technik, DSGVO und Backups sichern wir.</span>
-                </div>
+              <div className="grid md:grid-cols-3 gap-8 mt-16 text-left" style={{ perspective: "1500px" }}>
+                {[
+                  {
+                    num: "01",
+                    title: "Exklusivität, die man spürt.",
+                    body: "Keine Baukasten-Ästhetik. Dein Auftritt wird maßgeschneidert designt, elegant animiert und wirkt wie ein High-End Editorial, das dich visuell sofort von 99% des Marktes abhebt.",
+                  },
+                  {
+                    num: "02",
+                    title: "Automatisierter Vertrauensaufbau.",
+                    body: "Deine Kunden betreten das Kennenlerngespräch bereits qualifiziert und überzeugt von deinem tiefen Wert. Das mühsame „Überreden“ im Verkaufsgespräch entfällt.",
+                  },
+                  {
+                    num: "03",
+                    title: "Totale Entlastung im Alltag.",
+                    body: "Durch unser Wartungs- und Technik-Setup im Hintergrund kannst du dich zu 100% auf deine Kernarbeit fokussieren. Hosting, Technik, DSGVO und Backups sichern wir.",
+                  },
+                ].map((card) => (
+                  <div
+                    key={card.num}
+                    className="nutzen-card group relative p-9 rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-3 hover:scale-[1.02]"
+                    style={{
+                      background:
+                        "linear-gradient(140deg, #221c14 0%, #17130d 45%, #0e0b08 100%)",
+                      border: "1.5px solid rgba(184,150,62,0.35)",
+                      boxShadow:
+                        "0 25px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(184,150,62,0.15), inset 0 1px 0 rgba(184,150,62,0.18), inset 0 -1px 0 rgba(0,0,0,0.4)",
+                      transformStyle: "preserve-3d",
+                    }}
+                  >
+                    {/* Gold Top-Accent Line */}
+                    <div className="absolute top-0 left-9 right-9 h-[2px] bg-gradient-to-r from-transparent via-refined-gold to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+
+                    {/* Subtle gold gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-refined-gold/[0.04] via-transparent to-refined-gold/[0.08] pointer-events-none rounded-[2rem]" />
+
+                    {/* Hover Gold-Glow Layer */}
+                    <div className="absolute inset-0 bg-refined-gold/[0.06] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />
+
+                    {/* 3D Gold-Gradient Nummer */}
+                    <span
+                      className="font-instrument text-[5.5rem] mb-6 block relative z-10 leading-none tracking-tight"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #D4AE5A 0%, #B8963E 45%, #8a7030 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        filter: "drop-shadow(0 4px 12px rgba(184,150,62,0.35))",
+                      }}
+                    >
+                      {card.num}
+                    </span>
+
+                    <strong className="block text-pure-surface mb-4 font-instrument text-2xl md:text-[1.65rem] leading-tight relative z-10 tracking-tight">
+                      {card.title}
+                    </strong>
+                    <span className="text-pure-surface/70 leading-[1.65] block relative z-10 font-satoshi">
+                      {card.body}
+                    </span>
+
+                    {/* Bottom Gold-Accent on Hover */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-3/4 h-[2px] bg-gradient-to-r from-transparent via-refined-gold to-transparent transition-all duration-700" />
+                  </div>
+                ))}
               </div>
+              <style>{`
+                .nutzen-card:hover {
+                  box-shadow:
+                    0 40px 80px rgba(184,150,62,0.25),
+                    0 0 0 1.5px rgba(184,150,62,0.55),
+                    inset 0 1px 0 rgba(184,150,62,0.3),
+                    inset 0 -1px 0 rgba(0,0,0,0.4) !important;
+                  border-color: rgba(184,150,62,0.7) !important;
+                }
+              `}</style>
               
               <div className="mt-20 pt-16 border-t border-white/[0.05] flex flex-col items-center">
                 <p className="font-satoshi text-pure-surface/70 text-lg mb-8 max-w-[600px] text-center">
@@ -1253,7 +1309,7 @@ export default function PremiumAngebotPage() {
                 <div className="absolute top-4 right-4 bg-refined-gold text-[#050505] uppercase tracking-widest text-[10px] font-bold px-3 py-1 rounded-full">Empfohlen</div>
                 <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 relative z-10">02 · Basis</div>
                 <h3 className="font-instrument text-2xl md:text-3xl text-white mb-2 relative z-10">Mit Marketing-System.</h3>
-                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Premium-Auftritt mit Content-Start, der stimmige Weg für die meisten.</p>
+                <p className="font-satoshi text-white/60 text-sm mb-6 italic relative z-10">Premium-Auftritt mit Leadgen-System, der stimmige Weg für die meisten.</p>
                 <div className="border-t border-white/10 pt-5 mb-5 relative z-10">
                   <span className="font-geist text-white/50 uppercase tracking-[0.18em] text-[0.65rem] block mb-1">ab</span>
                   <span className="font-instrument text-[2.5rem] text-refined-gold leading-none">11.000 €</span>
@@ -1290,9 +1346,9 @@ export default function PremiumAngebotPage() {
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 12 Seiten</strong> + Tool-Orchestrierung</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Automation-Setup (Buchung → Zahlung → CRM)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">4× Event-/Webinar-Landingpages</strong></span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Wöchentlich LinkedIn-Karussell</strong> (52/Jahr)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">6 Starter-Blog-Artikel + monatlich 1</strong> (18/Jahr gesamt) · mit tiefer Wettbewerbs-Recherche</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Content-Säulen + Themen-Plan + Vorlagen</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Lead-Magnet-System</strong>: Freebie/Mini-Guide auf der Page + Welcome-Sequence (7 Mails)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Application-Funnel</strong> für Premium-Kunden-Anfragen + Lead-Qualifizierung</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>12 Monate Pflege Premium + Monatsanalyse</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Monatlich 30-Min-Strategie-Call</strong></span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Sabala Diamond Force Bundle (Wert 1.490 €)</span></li>
