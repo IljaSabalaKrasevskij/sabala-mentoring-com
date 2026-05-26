@@ -153,7 +153,7 @@ export default function BlogEuAiActCoachPage() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {[
             { num: "01", title: "AI-Tool-Inventar", body: "Liste alle AI-Tools auf, die du nutzt: ChatGPT, Claude, Midjourney, KIE AI, Otter, Fathom, Calendly mit AI-Features. Pro Tool dokumentieren: Was tut es? Welche Daten gehen rein? Wo gespeichert?" },
-            { num: "02", title: "Transparenz-Pflicht umsetzen", body: "Wenn du AI-Texte oder AI-Bilder nutzt, kennzeichne das. Beispiel: Blog-Artikel-Ende „Erstellt mit Unterstützung von Claude, manuell überarbeitet". AI-Bilder im Alt-Text als AI-generiert markieren. AI-Chatbots am Anfang als AI ausweisen." },
+            { num: "02", title: "Transparenz-Pflicht umsetzen", body: "Wenn du AI-Texte oder AI-Bilder nutzt, kennzeichne das. Beispiel: Blog-Artikel-Ende „Erstellt mit Unterstützung von Claude, manuell überarbeitet“. AI-Bilder im Alt-Text als AI-generiert markieren. AI-Chatbots am Anfang als AI ausweisen." },
             { num: "03", title: "Datenschutz-Erklärung prüfen", body: "Wenn deine AI-Tools personenbezogene Daten verarbeiten, muss das in der Datenschutz-Erklärung stehen: Welche Tools, wo verarbeitet (EU/USA), Rechtsgrundlage, Speicherdauer." },
             { num: "04", title: "Pflicht-Schulung dokumentieren", body: "Wer AI nutzt, sollte AI-kompetent sein. Dokumentiere kurz, dass du dich mit den Grundlagen deiner Tools beschäftigt hast. Eine Notiz in den Geschäftsunterlagen reicht." },
             { num: "05", title: "AI-Richtlinie anlegen", body: "Wenn du jemals einen Audit hast: zeige deine AI-Politik. Eine einseitige interne AI-Richtlinie mit Tool-Liste, Transparenz-Maßnahmen und Verantwortlichkeiten reicht." },
@@ -188,7 +188,7 @@ export default function BlogEuAiActCoachPage() {
             <h2>Was bedeutet das für deine Webseite konkret?</h2>
             <p>Drei sichtbare Änderungen empfehle ich:</p>
             <ol>
-              <li><strong>AI-Hinweis im Footer oder Impressum</strong>: „Diese Webseite nutzt AI-Tools für Code-Generierung und Illustration. Texte sind menschlich verfasst und manuell überarbeitet."</li>
+              <li><strong>AI-Hinweis im Footer oder Impressum</strong>: „Diese Webseite nutzt AI-Tools für Code-Generierung und Illustration. Texte sind menschlich verfasst und manuell überarbeitet.“</li>
               <li><strong>Kennzeichnung pro Blog-Artikel</strong>: wenn AI-Unterstützung genutzt, kurze Notiz am Ende.</li>
               <li><strong>Datenschutz-Erklärung erweitern</strong>: AI-Tool-Liste plus Verarbeitungs-Hinweise.</li>
             </ol>

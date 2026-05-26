@@ -52,7 +52,7 @@ const faq = [
   },
   {
     q: "Wer kann eine Code-Eigentums-Webseite weiterpflegen, wenn ich den Erstaussteller verliere?",
-    a: "Jeder Entwickler, der Next.js und React kennt. Das ist 2026 Industry-Standard. Suche auf Toptal, Upwork oder über LinkedIn nach „Next.js Freelancer Deutschland". Tagessatz typischerweise 600-1.000 Euro. Eine Routine-Änderung dauert 1-2 Stunden, also 75-200 Euro Aufwand.",
+    a: "Jeder Entwickler, der Next.js und React kennt. Das ist 2026 Industry-Standard. Suche auf Toptal, Upwork oder über LinkedIn nach „Next.js Freelancer Deutschland“. Tagessatz typischerweise 600-1.000 Euro. Eine Routine-Änderung dauert 1-2 Stunden, also 75-200 Euro Aufwand.",
   },
 ];
 
@@ -170,7 +170,7 @@ export default function BlogWebdesignerVerschwundenPage() {
             <p>Vercel ist mein Standard. Aber dein Code ist nicht an Vercel gebunden. Wenn Vercel morgen verschwindet, deployst du den gleichen Code in 30 Minuten auf Netlify, Cloudflare Pages oder Render.</p>
 
             <h3>3. Claude Code als CLI</h3>
-            <p>Hier kommt der entscheidende Punkt: du kannst mit Claude Code (oder Cursor, oder Antigravity) direkt mit deinem Code sprechen. Auf Deutsch. „Änder die Telefonnummer im Footer." „Mach das Hero-Bild dunkler." Das Tool ändert den Code, du pushst es, deine Webseite ist 40 Sekunden später aktualisiert.</p>
+            <p>Hier kommt der entscheidende Punkt: du kannst mit Claude Code (oder Cursor, oder Antigravity) direkt mit deinem Code sprechen. Auf Deutsch. „Änder die Telefonnummer im Footer.“ „Mach das Hero-Bild dunkler.“ Das Tool ändert den Code, du pushst es, deine Webseite ist 40 Sekunden später aktualisiert.</p>
             <p>Du brauchst keinen Webdesigner mehr für Routine-Änderungen. Du brauchst einen, wenn du strategisch etwas neu denken willst. Aber Texte ändern, Bilder tauschen, Footer pflegen: das machst du selbst mit Claude Code.</p>
 
             <h3>4. Dokumentation im Code</h3>
@@ -198,7 +198,7 @@ export default function BlogWebdesignerVerschwundenPage() {
               <li><strong>Claude-Code-Einführung im Onboarding</strong>: ich zeige dir, wie du selbst Texte änderst</li>
             </ul>
             <p>Wenn ich morgen nicht mehr erreichbar wäre, könntest du: den Code auf GitHub anschauen, einen neuen Entwickler beauftragen, der den Code in einer Stunde versteht, selbst kleine Änderungen mit Claude Code machen, auf ein anderes Hosting umziehen ohne Code-Anpassung.</p>
-            <p>Das ist nicht „nice to have". Das ist Versicherung. Premium-Position ist auch: du gehörst nicht jemandem. Deine Webseite gehört auch nicht jemandem. Du bist frei.</p>
+            <p>Das ist nicht „nice to have“. Das ist Versicherung. Premium-Position ist auch: du gehörst nicht jemandem. Deine Webseite gehört auch nicht jemandem. Du bist frei.</p>
           </div>
         </ScrollReveal>
       </section>

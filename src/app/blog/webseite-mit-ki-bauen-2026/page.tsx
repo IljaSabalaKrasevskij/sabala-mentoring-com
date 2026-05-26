@@ -64,7 +64,7 @@ const faq = [
   },
   {
     q: "Wie unterscheidet sich AI-Coding von ChatGPT?",
-    a: "ChatGPT ist ein Chatbot. Du fragst, er antwortet, du kopierst Text. AI-Coding-Tools (Claude Code, Cursor, Antigravity) integrieren sich direkt in deine Code-Umgebung. Sie sehen deine Dateien, verstehen den Kontext und schreiben den Code direkt rein. Du sagst „mach die Hero-Sektion dunkler", und sie ändert die richtige Stelle.",
+    a: "ChatGPT ist ein Chatbot. Du fragst, er antwortet, du kopierst Text. AI-Coding-Tools (Claude Code, Cursor, Antigravity) integrieren sich direkt in deine Code-Umgebung. Sie sehen deine Dateien, verstehen den Kontext und schreiben den Code direkt rein. Du sagst „mach die Hero-Sektion dunkler“, und sie ändert die richtige Stelle.",
   },
 ];
 
@@ -142,8 +142,8 @@ export default function BlogWebseiteMitKIBauenPage() {
             <p>Das ist nicht nur ein Tool-Unterschied. Es ist ein Eigentums-Unterschied.</p>
 
             <h2>Warum sehen Coaches diesen Unterschied nicht?</h2>
-            <p>Weil Suchmaschinen dir Anbieter zeigen, die Werbebudget haben. Jimdo und IONOS sind in jeder SERP-Position 1-3 für „Webseite selbst bauen". Antigravity ist ein Tool von Google, das du in der Suche fast nie findest, weil die Zielgruppe Entwickler sind, nicht Coaches.</p>
-            <p>Das Ergebnis: die Mehrheit der Coaches glaubt, „mit KI bauen" heißt Jimdo-Schablone mit AI-Text. Es geht um Welten mehr.</p>
+            <p>Weil Suchmaschinen dir Anbieter zeigen, die Werbebudget haben. Jimdo und IONOS sind in jeder SERP-Position 1-3 für „Webseite selbst bauen“. Antigravity ist ein Tool von Google, das du in der Suche fast nie findest, weil die Zielgruppe Entwickler sind, nicht Coaches.</p>
+            <p>Das Ergebnis: die Mehrheit der Coaches glaubt, „mit KI bauen“ heißt Jimdo-Schablone mit AI-Text. Es geht um Welten mehr.</p>
           </div>
         </ScrollReveal>
       </section>

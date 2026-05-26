@@ -44,7 +44,7 @@ const faq = [
   },
   {
     q: "Was sind die Vorteile von cookie-frei für SEO?",
-    a: "Indirekt mehrere: bessere PageSpeed (kein Cookie-Banner-Script blockt Rendering), bessere Core Web Vitals, bessere Mobile-Experience, kein „interstitial penalty" durch das Banner. Google rankt Seiten ohne Cookie-Banner-Blocker tendenziell höher.",
+    a: "Indirekt mehrere: bessere PageSpeed (kein Cookie-Banner-Script blockt Rendering), bessere Core Web Vitals, bessere Mobile-Experience, kein „interstitial penalty“ durch das Banner. Google rankt Seiten ohne Cookie-Banner-Blocker tendenziell höher.",
   },
   {
     q: "Was bedeutet die DSGVO-Reform 2026 für mich konkret?",
@@ -114,9 +114,9 @@ export default function BlogDsgvoCookieBannerPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was ist die geplante DSGVO-Reform 2026?</h2>
-            <p><strong>Der „Digital Omnibus"</strong> ist ein Reform-Paket der EU-Kommission, das im November 2025 vorgestellt wurde. Ziel: Bürokratie-Abbau bei DSGVO und ePrivacy-Richtlinie. Konkret könnten sich ändern:</p>
+            <p><strong>Der „Digital Omnibus“</strong> ist ein Reform-Paket der EU-Kommission, das im November 2025 vorgestellt wurde. Ziel: Bürokratie-Abbau bei DSGVO und ePrivacy-Richtlinie. Konkret könnten sich ändern:</p>
             <ul>
-              <li><strong>Cookie-Banner-Pflicht</strong>: Lockerung bei technisch notwendigen und reinen Analytik-Cookies (Plausible, Umami). Voraussichtlich keine Pflicht mehr für „minimale" Cookie-Verwendung.</li>
+              <li><strong>Cookie-Banner-Pflicht</strong>: Lockerung bei technisch notwendigen und reinen Analytik-Cookies (Plausible, Umami). Voraussichtlich keine Pflicht mehr für „minimale“ Cookie-Verwendung.</li>
               <li><strong>Einwilligungs-Pflicht</strong>: Vereinfachung bei wiederholten Besuchen.</li>
               <li><strong>Dokumentations-Pflicht</strong>: Geringere Pflichten für KMU und Einzel-Selbstständige.</li>
             </ul>
@@ -126,10 +126,10 @@ export default function BlogDsgvoCookieBannerPage() {
             <p>Cookie-Banner sind 2026 das, was Flash-Pop-ups 2012 waren: ein nerviges Relikt, das niemand mehr will, aber das aus Reflex implementiert wird.</p>
 
             <h3>1. Sie ruinieren den ersten Eindruck</h3>
-            <p>Ein potenzieller Kunde besucht deine Premium-Webseite. Erstes Gefühl: Wow-Moment, Brand-Resonanz, ich will mehr. Erste Aktion erforderlich: „Akzeptieren oder Ablehnen?" Du hast den Moment getötet. Verkaufspsychologisch ein Premium-Killer.</p>
+            <p>Ein potenzieller Kunde besucht deine Premium-Webseite. Erstes Gefühl: Wow-Moment, Brand-Resonanz, ich will mehr. Erste Aktion erforderlich: „Akzeptieren oder Ablehnen?“ Du hast den Moment getötet. Verkaufspsychologisch ein Premium-Killer.</p>
 
             <h3>2. Sie haben kaum messbaren Mehrwert</h3>
-            <p>Die meisten Cookie-Banner sind dazu da, Google Analytics und Facebook Pixel zu legalisieren. Aber: 50-70 Prozent der Besucher klicken „Ablehnen" oder schließen den Tab. Du verlierst Daten und Conversions für Banner-„Compliance".</p>
+            <p>Die meisten Cookie-Banner sind dazu da, Google Analytics und Facebook Pixel zu legalisieren. Aber: 50-70 Prozent der Besucher klicken „Ablehnen“ oder schließen den Tab. Du verlierst Daten und Conversions für Banner-„Compliance“.</p>
 
             <h3>3. Sie sind unnötig bei cookie-freiem Tracking</h3>
             <p>Die Lösung ist seit 2020 da: cookie-freie Analyse-Tools wie Plausible, Umami, Fathom. Diese tracken ohne personenbezogene Cookies. Keine Banner-Pflicht. Bessere Daten. Sauberer Premium-Eindruck.</p>
@@ -149,7 +149,7 @@ export default function BlogDsgvoCookieBannerPage() {
             { num: "01", title: "Hosting ohne Tracking-Cookies", body: "Vercel mit deutscher Edge-Region. Setzt keine personenbezogenen Cookies. Performance-Tracking läuft anonym. Cookie-freie Basis out-of-the-box." },
             { num: "02", title: "Analytics ohne Cookies", body: "Umami, Plausible oder Fathom. Trackt Seitenaufrufe, Verweildauer, Klick-Pfade, Referrer — ohne personenbezogene Cookies, ohne IP-Speicherung. Umami self-hosted 0 Euro, Cloud 9-19 Euro/Monat." },
             { num: "03", title: "Newsletter ohne Cookies", body: "ConvertKit, Brevo oder Buttondown statt Mailchimp. Die meisten neuen Newsletter-Anbieter haben einen Privacy-Mode, der ohne Tracking läuft." },
-            { num: "04", title: "Embeds prüfen", body: "Cookie-Banner kommen oft von Embeds: YouTube → youtube-nocookie.com. Vimeo Pro mit „Do Not Track". Google Maps → OpenStreetMap. Calendly → Direkter Link statt Embed." },
+            { num: "04", title: "Embeds prüfen", body: "Cookie-Banner kommen oft von Embeds: YouTube → youtube-nocookie.com. Vimeo Pro mit „Do Not Track“. Google Maps → OpenStreetMap. Calendly → Direkter Link statt Embed." },
           ].map((item) => (
             <ScrollReveal key={item.num}>
               <div className="h-full bg-warm-light/30 border border-refined-gold/15 hover:border-refined-gold/40 transition-all duration-500 rounded-[24px] p-7 md:p-8 group">
@@ -172,7 +172,7 @@ export default function BlogDsgvoCookieBannerPage() {
           <div className={proseBlock}>
             <h2>Was deine Konkurrenz NICHT macht</h2>
             <p>Schau dir die Top-10-Coaches deiner Nische an. Wie viele haben Cookie-Banner? Sehr wahrscheinlich 80-90 Prozent. Was das für dich heißt: wenn du als einer der wenigen ohne Banner bist, hast du ein sichtbares Premium-Signal.</p>
-            <p>Ein potenzieller Kunde wird denken „die Seite fühlt sich anders an", ohne zu artikulieren warum. Das ist der fehlende Reibungs-Moment beim ersten Besuch. Premium-Architektur: viele kleine Entscheidungen, die zusammen ein Gefühl ergeben.</p>
+            <p>Ein potenzieller Kunde wird denken „die Seite fühlt sich anders an“, ohne zu artikulieren warum. Das ist der fehlende Reibungs-Moment beim ersten Besuch. Premium-Architektur: viele kleine Entscheidungen, die zusammen ein Gefühl ergeben.</p>
 
             <h2>Konkrete Schritte für dich</h2>
             <p>Wenn du eine bestehende Webseite hast mit Cookie-Banner-Plage:</p>
