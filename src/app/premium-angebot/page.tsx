@@ -495,55 +495,76 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-      {/* SECTION 3: FÜLLE IM HERZEN */}
-      <section className="bg-warm-canvas py-32 md:py-48 px-6 relative overflow-hidden flex flex-col items-center text-center">
-        {/* Subtile Gold Glow Hintergrund Dekor */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-refined-gold/10 blur-[150px] rounded-full pointer-events-none"></div>
-        
-        <div className="max-w-[800px] mx-auto relative z-10 flex flex-col items-center">
-            
+      {/* SECTION 3: FÜLLE IM HERZEN — Cinematic-Dark mit atmosphärischem Hintergrundbild */}
+      <section className="relative py-32 md:py-48 px-6 overflow-hidden flex flex-col items-center text-center">
+        {/* Background Image Layer — Sabala-Speaker-Atmosphäre */}
+        <div className="absolute inset-0">
+          <Image
+            src="/sections/fuelle-hintergrund.jpg"
+            alt=""
+            fill
+            priority={false}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Dark Gradient Overlay — sorgt für Lesbarkeit + Brand-Gold-Stimmung */}
+        <div className="absolute inset-0 bg-[#0e0b08]/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0e0b08]/95 via-[#0e0b08]/75 to-[#0e0b08]/95" />
+
+        {/* Smooth Top + Bottom Fades zu warm-canvas-Nachbarsektionen */}
+        <div className="absolute top-0 inset-x-0 h-[120px] bg-gradient-to-b from-warm-canvas via-warm-canvas/50 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-[140px] bg-gradient-to-t from-warm-canvas via-warm-canvas/40 to-transparent pointer-events-none" />
+
+        {/* Gold Glow für Brand-Wärme */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-refined-gold/[0.12] blur-[180px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[820px] mx-auto relative z-10 flex flex-col items-center">
+
             <ScrollReveal delay={0.1} className="flex flex-col items-center">
-              <div className="relative w-16 h-20 mb-8 opacity-90 drop-shadow-[0_0_15px_rgba(184,150,62,0.4)]">
-                <Image 
-                  src="/images/sabala-kristall.png" 
-                  alt="Sabala Kristall" 
+              <div className="relative w-20 h-28 mb-10 opacity-100"
+                   style={{ filter: "drop-shadow(0 0 20px rgba(184,150,62,0.9)) drop-shadow(0 0 40px rgba(184,150,62,0.4))" }}>
+                <Image
+                  src="/images/sabala-kristall.png"
+                  alt="Sabala Kristall"
                   fill
                   className="object-contain"
                 />
               </div>
-              <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] text-deep-charcoal mb-10">
+              <h2 className="font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] text-pure-surface mb-10">
                 Fülle im Herzen.<br />Fülle auf <span className="italic text-refined-gold">dem Konto.</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2} className="space-y-6">
-              <p className="font-satoshi text-deep-charcoal text-xl md:text-2xl leading-[1.6]">
+              <p className="font-satoshi text-pure-surface text-xl md:text-2xl leading-[1.6]">
                 Du sehnst dich danach, deine Arbeit in voller Tiefe zu leisten, in echter Verbundenheit zu wirken und damit finanziell völlig frei zu sein.
               </p>
-              <p className="font-satoshi text-warm-steel text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-2">
+              <p className="font-satoshi text-pure-surface/65 text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-2">
                 Doch die Realität: ohne einen professionellen, fühlbaren Auftritt verpufft die beste Expertise oft in der Masse. Alles im Alleingang aufzubauen, kostet dich Zeit, Energie und Nerven.
               </p>
 
-              <div className="w-16 h-[1px] bg-refined-gold/30 mx-auto my-10"></div>
+              <div className="w-16 h-[1px] bg-refined-gold/50 mx-auto my-10"></div>
 
-              <p className="font-satoshi text-deep-charcoal font-medium text-xl md:text-2xl leading-[1.6] max-w-[750px] mx-auto">
+              <p className="font-instrument italic text-refined-gold text-2xl md:text-3xl leading-[1.4] max-w-[750px] mx-auto">
                 Genau an diesem Punkt übernehme ich.
               </p>
-              <p className="font-satoshi text-warm-steel text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-12">
+              <p className="font-satoshi text-pure-surface/70 text-lg md:text-[1.3rem] leading-[1.6] max-w-[750px] mx-auto mb-12">
                 Ich nehme dir die strategische und technische Last ab, die dich zurückhält. Du findest zurück in deine kreative Flow-Zone, während ich dir eine Premium-Plattform baue, die im Hintergrund für dich arbeitet und deine Vision wirtschaftlich kraftvoll übersetzt.
               </p>
-              
-              <div className="flex flex-col items-center pt-8 border-t border-refined-gold/10 max-w-[500px] mx-auto">
-                <Link 
+
+              <div className="flex flex-col items-center pt-8 border-t border-refined-gold/20 max-w-[500px] mx-auto">
+                <Link
                   href="/termin-buchen"
-                  className="bg-deep-charcoal text-pure-surface px-10 md:px-12 py-4 rounded-full font-satoshi font-medium text-lg transition-transform duration-500 hover:scale-105 shadow-[0_15px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] inline-flex items-center gap-3 group"
+                  className="bg-refined-gold hover:bg-refined-gold/90 text-[#0e0b08] px-10 md:px-12 py-4 rounded-full font-satoshi font-medium text-lg transition-all duration-500 hover:scale-105 shadow-[0_15px_40px_rgba(184,150,62,0.25)] hover:shadow-[0_20px_60px_rgba(184,150,62,0.45)] inline-flex items-center gap-3 group"
                 >
                   Kostenfreien Termin buchen
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </Link>
               </div>
             </ScrollReveal>
-            
+
         </div>
       </section>
 
