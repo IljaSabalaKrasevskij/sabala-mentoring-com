@@ -613,7 +613,101 @@ export default function PremiumAngebotPage() {
         </div>
       </section>
 
-      
+
+      {/* SECTION 4b: SABALA ARBEITSWEISE — Warum kein Template das ersetzen kann */}
+      <section className="bg-warm-canvas py-28 md:py-40 px-6 relative overflow-hidden border-t border-whisper-border">
+        {/* Subtle dot-grid background — Notion-Vault-Vibe */}
+        <div
+          className="absolute inset-0 opacity-[0.35] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(46,43,38,0.12) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+        {/* Soft gold glow */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-refined-gold/[0.06] blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="max-w-[1200px] mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-3">
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+                <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Hinter den Kulissen</span>
+                <div className="h-[1px] w-10 bg-refined-gold"></div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] text-deep-charcoal text-center mb-8 max-w-[26ch] mx-auto">
+              Warum kein Template <br className="hidden md:block"/>
+              <span className="italic text-refined-gold">das ersetzen kann.</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.15}>
+            <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.65] text-center max-w-[780px] mx-auto mb-20 md:mb-24">
+              Eine Agentur baut für 100 Kunden gleich. Ich baue für deinen einen Markt — und behalte ihn dauerhaft im Kopf. Mein Arbeitssystem macht das möglich.
+            </p>
+          </ScrollReveal>
+
+          {/* 3 Karten — Notion-Mockup-Style */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-7 mb-20">
+            {[
+              {
+                num: "01",
+                title: "Ein eigenes System pro Kunde",
+                body: "Für jeden Kunden lege ich einen eigenen Vault an. Recherche, Notes, Gespräche, Insights, Brand-Material — alles strukturiert verbunden, jederzeit wieder zugänglich. Bei dir, später bei mir, kein Excel-Wust.",
+                accent: "Vault-System",
+              },
+              {
+                num: "02",
+                title: "Jeder Call bleibt erhalten",
+                body: "Was wir in Woche 2 besprochen haben, weiß ich auch in Woche 12 noch. Daily-Notes als Gedächtnis-System, transkribierte Gespräche, festgehaltene Entscheidungen. Du musst nichts zweimal erklären.",
+                accent: "Daily-Notes",
+              },
+              {
+                num: "03",
+                title: "Recherche statt Vorlage",
+                body: "Vor jeder Session lese ich neu ein: dein Markt, deine Top-Konkurrenten, deine Zielgruppe, neue Entwicklungen in deiner Nische. Kein vorgekochter Pitch — Antworten auf deine spezifischen Fragen.",
+                accent: "Custom-Recherche",
+              },
+            ].map((item, i) => (
+              <ScrollReveal key={item.num} delay={0.2 + i * 0.08}>
+                <div className="group h-full p-7 md:p-8 rounded-[24px] bg-pure-surface border border-whisper-border hover:border-refined-gold/40 hover:shadow-[0_30px_70px_rgba(184,150,62,0.1)] hover:-translate-y-1 transition-all duration-500 flex flex-col">
+                  {/* Header-Strich wie Notion-Doc */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">{item.num}</span>
+                    <div className="h-[1px] flex-1 bg-refined-gold/30 group-hover:bg-refined-gold/60 transition-colors" />
+                  </div>
+
+                  {/* Fake "page-meta" line — Notion-Style */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1.5 h-1.5 rounded-full bg-refined-gold/60" />
+                    <span className="font-mono text-warm-steel/70 text-[0.65rem] tracking-widest uppercase">{item.accent}</span>
+                  </div>
+
+                  <h3 className="font-instrument text-2xl md:text-[1.75rem] text-deep-charcoal mb-4 leading-[1.2]">{item.title}</h3>
+                  <p className="font-satoshi text-warm-steel text-base leading-[1.65] flex-1">{item.body}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Closing Statement — Hormozi-direct */}
+          <ScrollReveal delay={0.45}>
+            <div className="max-w-[820px] mx-auto text-center">
+              <div className="w-12 h-[1px] bg-refined-gold/50 mx-auto mb-8" />
+              <p className="font-instrument text-deep-charcoal text-2xl md:text-[1.85rem] leading-[1.45]">
+                Andere liefern ein Setup.<br/>
+                <span className="italic text-refined-gold">Du bekommst eine Begleitung mit Gedächtnis.</span>
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* SECTION 5: Scope of Work (Investition) */}
       <section className="bg-[#050505] py-24 md:py-40 px-6 relative overflow-hidden z-20">
          {/* Soft Dusk Transitions */}
@@ -1031,6 +1125,61 @@ export default function PremiumAngebotPage() {
                 <p className="font-instrument italic text-pure-surface/90 text-base md:text-lg text-center">
                   &ldquo;Wir schlagen das beste Marktergebnis. Das ist der Anspruch.&rdquo;
                 </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Tiefen-Staffelung pro Premium-Stufe */}
+          <ScrollReveal delay={0.5}>
+            <div className="max-w-[1100px] mx-auto mt-20 md:mt-24">
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center gap-3 mb-6">
+                  <div className="h-[1px] w-10 bg-refined-gold"></div>
+                  <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Tiefe pro Premium-Stufe</span>
+                  <div className="h-[1px] w-10 bg-refined-gold"></div>
+                </div>
+                <h3 className="font-instrument text-[clamp(1.75rem,3vw,2.5rem)] text-deep-charcoal leading-tight max-w-[640px] mx-auto">
+                  Je tiefer dein Premium-Paket, <span className="italic text-refined-gold">desto tiefer die Analyse.</span>
+                </h3>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+                {/* LITE */}
+                <div className="bg-pure-surface border border-whisper-border rounded-[24px] p-7 md:p-8 flex flex-col">
+                  <div className="font-mono text-warm-steel text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">01 · Lite</div>
+                  <h4 className="font-instrument text-2xl text-deep-charcoal mb-5 leading-tight">Standard-Audit</h4>
+                  <ul className="space-y-3 font-satoshi text-warm-steel text-sm md:text-base leading-relaxed flex-1">
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>6-Punkte-Marktanalyse</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>15-20 Konkurrenten gescraped</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Premium-Präsentation als PDF</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>60-Min Strategie-Call</span></li>
+                  </ul>
+                </div>
+
+                {/* BASIS — Highlighted */}
+                <div className="relative bg-deep-charcoal text-pure-surface rounded-[24px] p-7 md:p-8 flex flex-col border border-refined-gold/40 shadow-[0_30px_70px_rgba(184,150,62,0.15)]">
+                  <div className="absolute -top-3 left-7 bg-refined-gold text-deep-charcoal text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">+ Stärken-Schwächen</div>
+                  <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">02 · Basis</div>
+                  <h4 className="font-instrument text-2xl text-pure-surface mb-5 leading-tight">Audit + Stärken-Schwächen-Map</h4>
+                  <ul className="space-y-3 font-satoshi text-pure-surface/80 text-sm md:text-base leading-relaxed flex-1">
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span>Alles aus Lite</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white">3 stärkste Hebel</strong> deiner Marke gegen den Markt</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white">3 kritische Stolperfallen</strong>, die deine Konkurrenz unterschätzt</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Konkrete Voice/Trust/SEO-Hebel pro Schwäche</span></li>
+                  </ul>
+                </div>
+
+                {/* ALL-IN */}
+                <div className="bg-pure-surface border border-refined-gold/30 rounded-[24px] p-7 md:p-8 flex flex-col shadow-[0_20px_50px_rgba(184,150,62,0.08)]">
+                  <div className="font-mono text-warm-steel text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">03 · All-in</div>
+                  <h4 className="font-instrument text-2xl text-deep-charcoal mb-5 leading-tight">Differential-Map + Quartals-Refresh</h4>
+                  <ul className="space-y-3 font-satoshi text-warm-steel text-sm md:text-base leading-relaxed flex-1">
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span>Alles aus Basis</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-deep-charcoal">Differential-Map</strong>: visuelle Positionierung gegen Markt — wo bist du, wo sind die Lücken</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-deep-charcoal">Quartals-Refresh</strong>: alle 3 Monate neue Marktrecherche im Pflege-Paket</span></li>
+                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Anpassung deiner Strategie bei Marktveränderungen</span></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </ScrollReveal>
