@@ -1035,6 +1035,11 @@ export default function PresentationPage() {
                   value: 3000,
                 },
                 {
+                  label: "3 Starter-Blog-Artikel",
+                  sublabel: "Zielgruppen-Recherche · SEO + GEO · Fundament für Pinterest, YouTube, Social",
+                  value: 600,
+                },
+                {
                   label: "Pflege + Monatsbericht (Plus-Niveau)",
                   sublabel: "12 Monate · Updates + Analyse-Bericht inklusive",
                   value: 828,
@@ -1046,9 +1051,9 @@ export default function PresentationPage() {
                   isBonus: true,
                 },
               ]}
-              totalValue={5328}
+              totalValue={5928}
               referencePrice={2490}
-              savingsPercent={53}
+              savingsPercent={58}
             />
           </ScrollReveal>
 
@@ -1057,7 +1062,7 @@ export default function PresentationPage() {
               Regulär 4.900 € + 49 €/Monat Pflege.
               <br />
               <span className="text-refined-gold font-medium">
-                Heute Reference-Slot — 53% sparen.
+                Heute Reference-Slot — 58% sparen.
               </span>
             </p>
 
