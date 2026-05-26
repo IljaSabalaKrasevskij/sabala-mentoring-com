@@ -1170,13 +1170,13 @@ export default function PremiumAngebotPage() {
             ))}
           </div>
 
-          {/* Pricing-Box */}
+          {/* Pricing-Box — Standalone-Einstiegsangebot mit Single-CTA */}
           <ScrollReveal delay={0.4}>
             <div className="max-w-[820px] mx-auto bg-deep-charcoal rounded-[28px] overflow-hidden border border-refined-gold/30 shadow-[0_30px_80px_rgba(46,43,38,0.15)]">
               <div className="p-8 md:p-12">
                 <div className="grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
                   <div>
-                    <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-3">Dein Audit als Einstieg</p>
+                    <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-3">Dein Einstieg ins Premium · oder dein einzelner Markt-Check</p>
                     <h3 className="font-instrument text-[clamp(1.75rem,2.5vw,2.5rem)] text-pure-surface leading-tight mb-4">
                       Lieferzeit <span className="italic text-refined-gold">5 bis 7 Tage.</span>
                     </h3>
@@ -1188,9 +1188,23 @@ export default function PremiumAngebotPage() {
                     <p className="font-mono text-pure-surface/50 text-[0.65rem] tracking-[0.2em] uppercase mb-2">Einmalig</p>
                     <p className="font-instrument text-[clamp(3rem,5vw,4.5rem)] text-pure-surface leading-none mb-4">690 €</p>
                     <p className="font-satoshi text-pure-surface/60 text-sm leading-[1.5] max-w-[220px] md:ml-auto">
-                      In allen Premium-Stufen bereits inklusive. Sprechen wir im Beratungsgespräch über deinen Pfad.
+                      Im Beratungsgespräch entscheiden wir gemeinsam: nur Audit oder direkt komplettes Premium-Paket.
                     </p>
                   </div>
+                </div>
+
+                {/* Single-CTA: Beratungsgespräch buchen */}
+                <div className="mt-8 pt-8 border-t border-refined-gold/20 flex flex-col items-center text-center">
+                  <Link
+                    href="/termin-buchen"
+                    className="inline-flex items-center justify-center gap-3 bg-refined-gold hover:bg-refined-gold/90 text-[#0e0b08] px-10 md:px-14 py-5 rounded-full font-satoshi font-medium text-lg transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_15px_40px_rgba(184,150,62,0.3)] hover:shadow-[0_20px_60px_rgba(184,150,62,0.5)] group"
+                  >
+                    Beratungsgespräch buchen
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </Link>
+                  <p className="font-satoshi text-pure-surface/55 text-xs md:text-sm mt-4 max-w-[480px]">
+                    30-Min kostenfrei · Wir prüfen Brand-Fit · Anschließend Audit oder direkt Premium-Paket
+                  </p>
                 </div>
               </div>
 
@@ -1199,61 +1213,6 @@ export default function PremiumAngebotPage() {
                 <p className="font-instrument italic text-pure-surface/90 text-base md:text-lg text-center">
                   &ldquo;Wir schlagen das beste Marktergebnis. Das ist der Anspruch.&rdquo;
                 </p>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Tiefen-Staffelung pro Premium-Stufe */}
-          <ScrollReveal delay={0.5}>
-            <div className="max-w-[1100px] mx-auto mt-20 md:mt-24">
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-3 mb-6">
-                  <div className="h-[1px] w-10 bg-refined-gold"></div>
-                  <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Tiefe pro Premium-Stufe</span>
-                  <div className="h-[1px] w-10 bg-refined-gold"></div>
-                </div>
-                <h3 className="font-instrument text-[clamp(1.75rem,3vw,2.5rem)] text-deep-charcoal leading-tight max-w-[640px] mx-auto">
-                  Je tiefer dein Premium-Paket, <span className="italic text-refined-gold">desto tiefer die Analyse.</span>
-                </h3>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-5 md:gap-6">
-                {/* LITE */}
-                <div className="bg-pure-surface border border-whisper-border rounded-[24px] p-7 md:p-8 flex flex-col">
-                  <div className="font-mono text-warm-steel text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">01 · Lite</div>
-                  <h4 className="font-instrument text-2xl text-deep-charcoal mb-5 leading-tight">Standard-Audit</h4>
-                  <ul className="space-y-3 font-satoshi text-warm-steel text-sm md:text-base leading-relaxed flex-1">
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>6-Punkte-Marktanalyse</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>15-20 Konkurrenten gescraped</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Premium-Präsentation als PDF</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>60-Min Strategie-Call</span></li>
-                  </ul>
-                </div>
-
-                {/* BASIS — Highlighted */}
-                <div className="relative bg-deep-charcoal text-pure-surface rounded-[24px] p-7 md:p-8 flex flex-col border border-refined-gold/40 shadow-[0_30px_70px_rgba(184,150,62,0.15)]">
-                  <div className="absolute -top-3 left-7 bg-refined-gold text-deep-charcoal text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">+ Stärken-Schwächen</div>
-                  <div className="font-mono text-refined-gold/80 text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">02 · Basis</div>
-                  <h4 className="font-instrument text-2xl text-pure-surface mb-5 leading-tight">Audit + Stärken-Schwächen-Map</h4>
-                  <ul className="space-y-3 font-satoshi text-pure-surface/80 text-sm md:text-base leading-relaxed flex-1">
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span>Alles aus Lite</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white">3 stärkste Hebel</strong> deiner Marke gegen den Markt</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white">3 kritische Stolperfallen</strong>, die deine Konkurrenz unterschätzt</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Konkrete Voice/Trust/SEO-Hebel pro Schwäche</span></li>
-                  </ul>
-                </div>
-
-                {/* ALL-IN */}
-                <div className="bg-pure-surface border border-refined-gold/30 rounded-[24px] p-7 md:p-8 flex flex-col shadow-[0_20px_50px_rgba(184,150,62,0.08)]">
-                  <div className="font-mono text-warm-steel text-[0.7rem] tracking-[0.2em] uppercase mb-3 font-medium">03 · All-in</div>
-                  <h4 className="font-instrument text-2xl text-deep-charcoal mb-5 leading-tight">Differential-Map + Quartals-Refresh</h4>
-                  <ul className="space-y-3 font-satoshi text-warm-steel text-sm md:text-base leading-relaxed flex-1">
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">★</span><span>Alles aus Basis</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-deep-charcoal">Differential-Map</strong>: visuelle Positionierung gegen Markt — wo bist du, wo sind die Lücken</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-deep-charcoal">Quartals-Refresh</strong>: alle 3 Monate neue Marktrecherche im Pflege-Paket</span></li>
-                    <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Anpassung deiner Strategie bei Marktveränderungen</span></li>
-                  </ul>
-                </div>
               </div>
             </div>
           </ScrollReveal>
