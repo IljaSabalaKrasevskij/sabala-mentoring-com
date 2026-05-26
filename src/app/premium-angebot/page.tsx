@@ -397,47 +397,65 @@ export default function PremiumAngebotPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] tracking-[-0.02em] text-deep-charcoal mb-6 max-w-[24ch]">
-              Andere Mentoring-Programme kosten 6 bis 12 Tausend.<br/>
-              <span className="italic text-refined-gold">Und dann fehlt immer noch der Auftritt.</span>
+            <h2 className="font-instrument text-[clamp(2.5rem,4.5vw,4rem)] leading-[1.1] tracking-[-0.02em] text-deep-charcoal mb-6 max-w-[26ch]">
+              Andere bauen in Etappen, mit sechs Anbietern.<br/>
+              <span className="italic text-refined-gold">Zusammengerechnet: 20 bis 35 Tausend.</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.15}>
             <p className="font-satoshi text-warm-steel text-lg md:text-xl leading-[1.6] max-w-[760px] mb-16 md:mb-20">
-              Hier nicht. Sabala bündelt Coaching, Mentoring, Premium-Webseite und Pflege in einem Setup. Aus fünf Jahren Begleitungs-Erfahrung entstanden, damit du nicht zweimal zahlst und nicht zweimal alleine umsetzt.
+              Sabala bündelt Strategie, Brand, Premium-Webseite, SEO, Leadgen und Pflege in einer Begleitung. Aus fünf Jahren Erfahrung entstanden, damit du nicht zweimal zahlst und nicht fünfmal alleine umsetzt.
             </p>
           </ScrollReveal>
 
-          {/* 2-Spalten-Gegenüberstellung */}
+          {/* 2-Spalten-Gegenüberstellung — Markt-Bundle vs. Sabala */}
           <ScrollReveal delay={0.2}>
             <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-24 md:mb-32">
 
-              {/* Klassisch */}
+              {/* Klassisch — Konkrete Markt-Preise */}
               <div className="p-8 md:p-10 rounded-[24px] border border-warm-steel/20 bg-pure-surface/50">
-                <p className="font-mono text-warm-steel text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Klassischer Weg</p>
-                <ul className="space-y-4 font-satoshi text-warm-steel text-base md:text-lg">
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>6 bis 12 Tausend für 6-Monats-Coaching</li>
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für Webseite</li>
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für Tech-Setup</li>
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Extra-Kosten für SEO und GEO</li>
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Du bist mit der Umsetzung allein</li>
-                  <li className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Theorie, dann mühsame Praxis</li>
+                <p className="font-mono text-warm-steel text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Wenn du es einzeln zusammenstellst</p>
+                <ul className="space-y-3 font-satoshi text-warm-steel text-base md:text-lg">
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Coach/Mentor (6 Monate)</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">6 – 12 k</span></li>
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Brand-Strategin</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">3 – 5 k</span></li>
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Premium-Webdesigner</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">6 – 10 k</span></li>
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>SEO + GEO + Wettbewerbsanalyse</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">3 – 5 k</span></li>
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Leadgen + Newsletter-Setup</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">1 – 2 k</span></li>
+                  <li className="flex justify-between gap-3 items-baseline"><span className="flex gap-3"><span className="text-warm-steel/50 mt-1">·</span>Hosting + Pflege (Jahr 1)</span><span className="font-mono text-warm-steel/80 text-sm whitespace-nowrap">1 – 2 k</span></li>
                 </ul>
+                <div className="mt-6 pt-5 border-t border-warm-steel/15">
+                  <div className="flex justify-between items-baseline">
+                    <span className="font-mono text-warm-steel text-[0.7rem] tracking-[0.22em] uppercase font-bold">Summe</span>
+                    <span className="font-instrument text-deep-charcoal text-2xl md:text-3xl">20 – 36 k</span>
+                  </div>
+                  <p className="font-satoshi text-warm-steel/70 text-sm mt-3 italic">
+                    Verteilt auf 5 – 6 Anbieter, die untereinander nicht reden. Koordination ist dein Job.
+                  </p>
+                </div>
               </div>
 
               {/* Sabala */}
               <div className="p-8 md:p-10 rounded-[24px] border-2 border-refined-gold/50 bg-deep-charcoal shadow-[0_30px_70px_rgba(184,150,62,0.12)] relative">
                 <span className="absolute -top-3 left-8 bg-refined-gold text-deep-charcoal text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">Bei Sabala</span>
                 <p className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-5">Aus einem Guss</p>
-                <ul className="space-y-4 font-satoshi text-pure-surface text-base md:text-lg">
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>8 bis 15 Tausend für komplettes Setup</li>
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Alles in einer Begleitung</li>
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Strategie, Brand, Technik, Pflege</li>
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>SEO und GEO inklusive</li>
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Ein Partner für alles</li>
-                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Praxis bis zur Marktreife</li>
+                <ul className="space-y-3 font-satoshi text-pure-surface text-base md:text-lg">
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Strategie + Brand + Premium-Webseite</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>SEO + GEO + Wettbewerbsanalyse</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>3 – 6 Blogartikel mit Zielgruppen-Recherche</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Leadgen + Newsletter-Welcome-Sequence</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>12 Monate Begleitung + Pflege inklusive</li>
+                  <li className="flex gap-3"><span className="text-refined-gold mt-1">✓</span>Ein Partner — kein Koordinations-Job für dich</li>
                 </ul>
+                <div className="mt-6 pt-5 border-t border-refined-gold/20">
+                  <div className="flex justify-between items-baseline">
+                    <span className="font-mono text-refined-gold text-[0.7rem] tracking-[0.22em] uppercase font-bold">Summe</span>
+                    <span className="font-instrument text-refined-gold text-2xl md:text-3xl">8 – 15 k</span>
+                  </div>
+                  <p className="font-satoshi text-pure-surface/70 text-sm mt-3 italic">
+                    Drei Stufen mit Festpreis. Marktposition-Audit (Wert 690 €) in jeder Stufe inklusive.
+                  </p>
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -1292,6 +1310,7 @@ export default function PremiumAngebotPage() {
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Brand Mini-Guide (Typo · Farben · Tonalität)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 5 Seiten</strong></span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">3 Starter-Blog-Artikel</strong> · Zielgruppen-Recherche + SEO + GEO-Basis</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Newsletter-Anbindung</strong> (Tool deiner Wahl, Single-Opt-In auf Page)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>1 Tool-Embed (Buchung/Zahlung/Newsletter)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Hosting · DSGVO · cookie-frei</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>6 Monate Pflege Mini</span></li>
@@ -1320,7 +1339,8 @@ export default function PremiumAngebotPage() {
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Bis zu 8 Seiten</strong> + Blog/Podcast-Setup</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">5 Starter-Blog-Artikel</strong> · Zielgruppen-Recherche + SEO + GEO</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Tool-Beratung + Setup (3 Tools deiner Wahl)</span></li>
-                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>Newsletter-Welcome-Sequence Vorlage</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Lead-Magnet auf Page</strong> (Freebie/Mini-Guide)</span></li>
+                  <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span><strong className="text-white font-medium">Newsletter-Welcome-Sequence</strong> (5 Mails)</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>2× Event-/Webinar-Landingpages</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>12 Monate Pflege Plus + Monatsbericht</span></li>
                   <li className="flex items-start gap-3"><span className="text-refined-gold mt-1 shrink-0">✦</span><span>1× Mid-Year-Strategie-Call (60 Min)</span></li>
