@@ -2,6 +2,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { DissolveParticleHero } from "@/components/ui/DissolveParticleHero";
 import { HeroSpline } from "@/components/ui/HeroSpline";
 import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
+import { AuditPopupAutoOpener } from "@/components/ui/AuditPopupAutoOpener";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -782,6 +783,8 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
+
+      <AuditPopupAutoOpener />
     </div>
   );
 }

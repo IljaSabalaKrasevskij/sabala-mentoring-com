@@ -5,7 +5,11 @@ import { ArrowRight, Check, Loader2, AlertCircle } from "lucide-react";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
-export function AuditRequestForm() {
+interface AuditRequestFormProps {
+  onSuccess?: () => void;
+}
+
+export function AuditRequestForm({ onSuccess }: AuditRequestFormProps = {}) {
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -54,6 +58,7 @@ export function AuditRequestForm() {
         throw new Error(data.error || "Etwas ist schiefgelaufen.");
       }
       setState("success");
+      onSuccess?.();
     } catch (err) {
       setState("error");
       setErrorMessage(err instanceof Error ? err.message : "Verbindungsproblem. Versuch es bitte später.");
