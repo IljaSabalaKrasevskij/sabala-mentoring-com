@@ -7,8 +7,8 @@ import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
 
 const STORAGE_KEY = "sabala_audit_popup_v1";
 const COOLDOWN_DAYS = 30;
-const TIME_TRIGGER_MS = 35_000;
-const SCROLL_TRIGGER_PCT = 0.6;
+const TIME_TRIGGER_MS = 12_000;
+const SCROLL_TRIGGER_PCT = 0.5;
 
 type Trigger = "time" | "scroll" | "exit";
 
@@ -137,20 +137,26 @@ export function AuditPopupAutoOpener() {
           to { opacity: 1; }
         }
         @keyframes sabalaAuditModalIn {
-          from { opacity: 0; transform: translateY(16px) scale(0.97); }
-          to   { opacity: 1; transform: translateY(0) scale(1); }
+          0%   { opacity: 0; transform: translateY(40px) scale(0.94); }
+          60%  { opacity: 1; transform: translateY(-6px) scale(1.01); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes sabalaAuditGoldPulse {
+          0%   { box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 0 rgba(184,150,62,0.45); }
+          70%  { box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 18px rgba(184,150,62,0.0); }
+          100% { box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 0 rgba(184,150,62,0.0); }
         }
       `}</style>
       <div
         className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
-        style={{ animation: "sabalaAuditFadeIn 220ms ease-out both" }}
+        style={{ animation: "sabalaAuditFadeIn 240ms ease-out both" }}
         onClick={(e) => {
           if (e.target === e.currentTarget) dismiss();
         }}
       >
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-deep-charcoal/80 backdrop-blur-sm"
+          className="absolute inset-0 bg-deep-charcoal/85 backdrop-blur-md"
           onClick={dismiss}
         />
 
@@ -158,8 +164,12 @@ export function AuditPopupAutoOpener() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="audit-popup-title"
-          className="relative z-10 w-full max-w-[640px] max-h-[92vh] overflow-y-auto bg-[#2E2B26] border border-white/10 rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
-          style={{ animation: "sabalaAuditModalIn 320ms cubic-bezier(0.16,1,0.3,1) both" }}
+          className="relative z-10 w-full max-w-[640px] max-h-[92vh] overflow-y-auto bg-[#2E2B26] border border-refined-gold/30 rounded-[2rem]"
+          style={{
+            animation:
+              "sabalaAuditModalIn 520ms cubic-bezier(0.34,1.56,0.64,1) both, sabalaAuditGoldPulse 2400ms ease-out 600ms 2 forwards",
+            boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
+          }}
         >
           <button
             onClick={dismiss}
@@ -174,7 +184,7 @@ export function AuditPopupAutoOpener() {
 
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-5">
-                <Sparkles className="w-4 h-4 text-refined-gold" />
+                <Sparkles className="w-4 h-4 text-refined-gold animate-pulse" />
                 <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">
                   Kostenfreies Webseiten-Audit
                 </span>
