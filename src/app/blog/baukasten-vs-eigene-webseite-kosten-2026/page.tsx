@@ -148,10 +148,10 @@ export default function BlogBaukastenVsEigenePage() {
 
             <h3>Was die Baukasten-Rechnung verschleiert</h3>
             <ul>
-              <li><strong>Kein Lock-in-Schutz</strong>: wenn Webflow Preise verdoppelt (was 2024 passierte), zahlst du oder migrierst aufwendig.</li>
+              <li><strong>Kein Lock-in-Schutz</strong>: wenn Webflow Preise verdoppelt (was 2024 passierte), zahlst du oder migrierst aufwendig. Die <Link href="/blog/webdesigner-verschwunden-code-eigentum">Lock-in-Falle im Detail</Link> habe ich auseinandergenommen.</li>
               <li><strong>Migration nach Jahr 3-5</strong>: realistisch wechseln Coaches alle 3-5 Jahre den Anbieter. Migration kostet 1.500-4.000 Euro plus Inhalt-Verlust.</li>
-              <li><strong>Premium-Look-Limit</strong>: Baukasten-Webseiten sehen aus wie Baukasten-Webseiten. Bei 12k-Programmen wird die Inkonsistenz teuer in entgangenen Verkäufen.</li>
-              <li><strong>Cookie-Banner-Pflicht</strong>: alle großen Baukasten setzen Tracking-Cookies, du musst Banner einbauen, verlierst Conversion.</li>
+              <li><strong>Premium-Look-Limit</strong>: Baukasten-Webseiten sehen aus wie Baukasten-Webseiten. Bei 12k-Programmen wird die Inkonsistenz teuer in entgangenen Verkaeufen.</li>
+              <li><strong>Cookie-Banner-Pflicht</strong>: alle grossen Baukasten setzen Tracking-Cookies, du musst Banner einbauen, verlierst Conversion. Mehr dazu in <Link href="/blog/dsgvo-cookie-banner-reform-2026">DSGVO-Reform 2026 + cookie-frei</Link>.</li>
               <li><strong>SEO-Limit</strong>: Baukasten-Code ist nicht performance-optimiert. Du rankst schlechter, weniger organische Besucher.</li>
             </ul>
 
@@ -234,7 +234,7 @@ export default function BlogBaukastenVsEigenePage() {
               <li><strong>Premium-Webseite + Premium-Pricing</strong> macht psychologisch Sinn: Kongruenz schafft Vertrauen</li>
               <li><strong>Baukasten-Webseite + 12k-Programm</strong> ist Inkongruenz, die ein potenzieller Kunde unbewusst registriert</li>
             </ul>
-            <p>Wenn dein Coaching-Tagessatz bei 1.500 Euro liegt, aber deine Webseite wie 19-Euro-Squarespace aussieht: jeder Kunde fragt sich „warum kostet ihr Programm 12k". Das musst du dann am Telefon erklären statt es vorher zu zeigen.</p>
+            <p>Wenn dein Coaching-Tagessatz bei 1.500 Euro liegt, aber deine Webseite wie 19-Euro-Squarespace aussieht: jeder Kunde fragt sich „warum kostet ihr Programm 12k“. Das musst du dann am Telefon erklaeren statt es vorher zu zeigen. Wie eine cookie-freie Premium-Webseite gebaut wird, die mit echtem <Link href="/blog/webseite-mit-ki-bauen-2026">AI-Coding-Stack</Link> entsteht, habe ich in einem eigenen Artikel beschrieben.</p>
           </div>
         </ScrollReveal>
       </section>
@@ -270,14 +270,17 @@ export default function BlogBaukastenVsEigenePage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Lass uns deine Zahlen anschauen.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du wissen willst, was eine Premium-Lösung für DICH konkret bedeutet (basierend auf deinem Tagessatz, deiner Zielgruppe, deinem Zeithorizont), buch ein 30-Min-Beratungsgespräch.
+                Wenn du wissen willst, was eine Premium-Loesung fuer DICH konkret bedeutet (basierend auf deinem Tagessatz, deiner Zielgruppe, deinem Zeithorizont), buch ein 30-Min-Beratungsgespraech. Fuer einen schlanken Einstieg mit klarem Festpreis: Sabala-OnePager 2.490 Euro (Reference) oder 4.900 Euro regulaer.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
-                  Kostenfreies Gespräch buchen
+                <Link href="/special-launch-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                  OnePager-Einstieg ansehen
                 </Link>
-                <Link href="/premium-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Premium-Angebot ansehen
+                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  Beratungsgespräch buchen
+                </Link>
+                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                  Mini-Audit anfragen
                 </Link>
               </div>
             </div>

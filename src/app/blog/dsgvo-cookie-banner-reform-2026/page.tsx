@@ -120,7 +120,7 @@ export default function BlogDsgvoCookieBannerPage() {
               <li><strong>Einwilligungs-Pflicht</strong>: Vereinfachung bei wiederholten Besuchen.</li>
               <li><strong>Dokumentations-Pflicht</strong>: Geringere Pflichten für KMU und Einzel-Selbstständige.</li>
             </ul>
-            <p>Status Mai 2026: der Vorschlag liegt im EU-Parlament. Realistische Verabschiedung 2027. Bis dahin gilt: aktuelle DSGVO unverändert, Cookie-Banner-Pflicht bleibt.</p>
+            <p>Status Mai 2026: der Vorschlag liegt im EU-Parlament. Realistische Verabschiedung 2027. Bis dahin gilt: aktuelle DSGVO unveraendert, Cookie-Banner-Pflicht bleibt. Wer parallel auch <Link href="/blog/eu-ai-act-coach-2026">AI-Act-Compliance</Link> umsetzen muss (anwendbar ab August 2026), ist mit beiden Themen besser dran wenn beide gleichzeitig sortiert werden.</p>
 
             <h2>Warum Cookie-Banner ein Premium-Problem sind</h2>
             <p>Cookie-Banner sind 2026 das, was Flash-Pop-ups 2012 waren: ein nerviges Relikt, das niemand mehr will, aber das aus Reflex implementiert wird.</p>
@@ -172,7 +172,7 @@ export default function BlogDsgvoCookieBannerPage() {
           <div className={proseBlock}>
             <h2>Was deine Konkurrenz NICHT macht</h2>
             <p>Schau dir die Top-10-Coaches deiner Nische an. Wie viele haben Cookie-Banner? Sehr wahrscheinlich 80-90 Prozent. Was das für dich heißt: wenn du als einer der wenigen ohne Banner bist, hast du ein sichtbares Premium-Signal.</p>
-            <p>Ein potenzieller Kunde wird denken „die Seite fühlt sich anders an“, ohne zu artikulieren warum. Das ist der fehlende Reibungs-Moment beim ersten Besuch. Premium-Architektur: viele kleine Entscheidungen, die zusammen ein Gefühl ergeben.</p>
+            <p>Ein potenzieller Kunde wird denken „die Seite fuehlt sich anders an“, ohne zu artikulieren warum. Das ist der fehlende Reibungs-Moment beim ersten Besuch. Premium-Architektur: viele kleine Entscheidungen, die zusammen ein Gefuehl ergeben. Wie ein cookie-frei gebauter <Link href="/blog/webseite-mit-ki-bauen-2026">AI-Coding-Stack</Link> diese Premium-Architektur von Anfang an mitliefert, habe ich separat aufgeschrieben.</p>
 
             <h2>Konkrete Schritte für dich</h2>
             <p>Wenn du eine bestehende Webseite hast mit Cookie-Banner-Plage:</p>
@@ -219,14 +219,17 @@ export default function BlogDsgvoCookieBannerPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Premium ohne Banner-Plage.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du eine Premium-Webseite willst, die von Anfang an cookie-frei läuft (oder eine bestehende migrieren willst), ist das in jedem Sabala-Premium-Paket Standard.
+                Wenn du eine bestehende Webseite cookie-frei migrieren willst, sprechen wir am besten in einem Beratungsgespraech darueber. Falls du neu baust: cookie-frei ist in jedem Sabala-Premium-Paket Standard.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                  Cookie-frei-Migration prüfen
+                </Link>
+                <Link href="/premium-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   Premium-Angebot ansehen
                 </Link>
-                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Cookie-frei-Migration prüfen
+                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                  Mini-Audit anfragen
                 </Link>
               </div>
             </div>

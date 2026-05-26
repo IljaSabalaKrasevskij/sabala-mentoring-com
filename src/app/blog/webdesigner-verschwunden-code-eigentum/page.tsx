@@ -121,7 +121,7 @@ export default function BlogWebdesignerVerschwundenPage() {
               <li><strong>Hosting-Lock-in</strong>: Ein 1and1-Account ohne FTP-Zugang. Ein WordPress-Server, dessen Login der Webdesigner hat. Ein eigenes Hosting, das niemand mehr versteht.</li>
               <li><strong>Personen-Lock-in</strong>: Der Webdesigner hat die Schlüssel. Du nicht. Wenn er weg ist, sind die Schlüssel weg.</li>
             </ul>
-            <p>Der dritte Punkt ist der schmerzhafteste, weil er emotional verschleiert ist. Du vertraust einer Person, überreichst die Verantwortung, und denkst nicht an den Fall, dass die Person nicht mehr da ist.</p>
+            <p>Der dritte Punkt ist der schmerzhafteste, weil er emotional verschleiert ist. Du vertraust einer Person, überreichst die Verantwortung, und denkst nicht an den Fall, dass die Person nicht mehr da ist. Die naechste Frage ist dann: <Link href="/blog/baukasten-vs-eigene-webseite-kosten-2026">was kostet Lock-in eigentlich</Link>? Die 3- und 5-Jahres-Rechnung Baukasten vs. eigene Webseite habe ich separat aufgeschrieben.</p>
           </div>
         </ScrollReveal>
       </section>
@@ -170,7 +170,7 @@ export default function BlogWebdesignerVerschwundenPage() {
             <p>Vercel ist mein Standard. Aber dein Code ist nicht an Vercel gebunden. Wenn Vercel morgen verschwindet, deployst du den gleichen Code in 30 Minuten auf Netlify, Cloudflare Pages oder Render.</p>
 
             <h3>3. Claude Code als CLI</h3>
-            <p>Hier kommt der entscheidende Punkt: du kannst mit Claude Code (oder Cursor, oder Antigravity) direkt mit deinem Code sprechen. Auf Deutsch. „Änder die Telefonnummer im Footer.“ „Mach das Hero-Bild dunkler.“ Das Tool ändert den Code, du pushst es, deine Webseite ist 40 Sekunden später aktualisiert.</p>
+            <p>Hier kommt der entscheidende Punkt: du kannst mit Claude Code (oder Cursor, oder Antigravity) direkt mit deinem Code sprechen. Auf Deutsch. „Änder die Telefonnummer im Footer.“ „Mach das Hero-Bild dunkler.“ Das Tool ändert den Code, du pushst es, deine Webseite ist 40 Sekunden später aktualisiert. Wie genau dieser <Link href="/blog/webseite-mit-ki-bauen-2026">AI-Coding-Stack im Detail funktioniert</Link>, habe ich in einem eigenen Artikel beschrieben.</p>
             <p>Du brauchst keinen Webdesigner mehr für Routine-Änderungen. Du brauchst einen, wenn du strategisch etwas neu denken willst. Aber Texte ändern, Bilder tauschen, Footer pflegen: das machst du selbst mit Claude Code.</p>
 
             <h3>4. Dokumentation im Code</h3>
@@ -234,14 +234,17 @@ export default function BlogWebdesignerVerschwundenPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Eine Webseite, die wirklich dir gehört.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du eine Premium-Webseite willst, die du auch dann pflegen kannst, wenn ich nicht mehr da bin: Code-Eigentum, GitHub, Vercel und Claude-Code-Onboarding sind im Sabala-Premium-Angebot Standard.
+                Wenn du eine Premium-Webseite willst, die du auch dann pflegen kannst, wenn ich nicht mehr da bin: Code-Eigentum, GitHub, Vercel und Claude-Code-Onboarding sind im Sabala-Premium-Angebot Standard. Fuer den schlanken Einstieg gibts den OnePager mit gleichem Eigentums-Prinzip.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Premium-Angebot ansehen
                 </Link>
-                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Lock-in-Check buchen
+                <Link href="/special-launch-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  OnePager-Einstieg
+                </Link>
+                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                  Lock-in-Check (Mini-Audit)
                 </Link>
               </div>
             </div>

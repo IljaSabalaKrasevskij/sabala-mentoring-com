@@ -143,7 +143,7 @@ export default function BlogWebseiteMitKIBauenPage() {
 
             <h2>Warum sehen Coaches diesen Unterschied nicht?</h2>
             <p>Weil Suchmaschinen dir Anbieter zeigen, die Werbebudget haben. Jimdo und IONOS sind in jeder SERP-Position 1-3 für „Webseite selbst bauen“. Antigravity ist ein Tool von Google, das du in der Suche fast nie findest, weil die Zielgruppe Entwickler sind, nicht Coaches.</p>
-            <p>Das Ergebnis: die Mehrheit der Coaches glaubt, „mit KI bauen“ heißt Jimdo-Schablone mit AI-Text. Es geht um Welten mehr.</p>
+            <p>Das Ergebnis: die Mehrheit der Coaches glaubt, „mit KI bauen“ heißt Jimdo-Schablone mit AI-Text. Es geht um Welten mehr. Wer hier den Unterschied versteht, hat einen <Link href="/blog/webdesigner-verschwunden-code-eigentum">echten Eigentums-Vorteil gegenüber Baukasten</Link>, den ich in einem eigenen Artikel auseinandergenommen habe.</p>
           </div>
         </ScrollReveal>
       </section>
@@ -235,7 +235,7 @@ export default function BlogWebseiteMitKIBauenPage() {
               <li><strong>Voice in dir finden</strong>: AI kann Sätze in deiner Voice umformulieren, aber nicht deine Voice schaffen. Das ist Personal-Brand-Arbeit.</li>
               <li><strong>Foto-Authentizität</strong>: AI-generierte Portraits sehen 2026 immer noch wie AI-generierte Portraits aus. Du brauchst echte Fotos.</li>
             </ul>
-            <p>Genau hier setze ich an. Der AI-Stack ist Werkzeug. Die Substanz dahinter ist Sabala-Arbeit: Brand-Strategie, Voice, Customer-Journey, Foto-Direction, Trust-Architektur.</p>
+            <p>Genau hier setze ich an. Der AI-Stack ist Werkzeug. Die Substanz dahinter ist Sabala-Arbeit: Brand-Strategie, Voice, Customer-Journey, Foto-Direction, Trust-Architektur. Wer AI nicht nur fuers Coden, sondern fuer den ganzen Arbeitsalltag nutzen will, schaut sich am besten <Link href="/gpt-team">mein eigenes KI-Team</Link> an. Sieben spezialisierte Custom GPTs, die Sabala-Stimme verstehen.</p>
 
             <h2>Was kostet das alles?</h2>
             <p>Realistische Markt-Preise 2026:</p>
@@ -245,7 +245,7 @@ export default function BlogWebseiteMitKIBauenPage() {
               <li><strong>Vercel</strong>: kostenlos für kleine Seiten, 20 Euro pro Monat für Pro</li>
               <li><strong>GitHub</strong>: kostenlos für Private Repos</li>
             </ul>
-            <p><strong>Tools insgesamt: etwa 50 Euro pro Monat.</strong> Das ist weniger als ein typisches Webflow-Abo.</p>
+            <p><strong>Tools insgesamt: etwa 50 Euro pro Monat.</strong> Das ist weniger als ein typisches Webflow-Abo. Die <Link href="/blog/baukasten-vs-eigene-webseite-kosten-2026">vollstaendige 5-Jahres-Rechnung Baukasten vs. eigene Webseite</Link> habe ich in einem eigenen Artikel mit konkreten Markt-Preisen aufgeschluesselt.</p>
             <p>Was den Preis macht, ist nicht das Werkzeug. Es ist die Arbeit, die jemand reinsteckt, der versteht WAS gebaut werden muss und WIE.</p>
           </div>
         </ScrollReveal>
@@ -284,14 +284,17 @@ export default function BlogWebseiteMitKIBauenPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Tools sind verfügbar. Substanz bleibt deine.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du eine Premium-Webseite willst, die mit AI-Tools gebaut ist und dir wirklich gehört, plus die strategische Begleitung dazu (Brand, Voice, Customer-Journey, SEO+GEO), ist das genau was Sabala macht.
+                Wenn du eine Premium-Webseite willst, die mit AI-Tools gebaut ist und dir wirklich gehört, plus die strategische Begleitung dazu (Brand, Voice, Customer-Journey, SEO+GEO), ist das genau was Sabala macht. Fuer den schlanken Einstieg gibts die Premium-OnePager-Variante.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Premium-Angebot ansehen
                 </Link>
-                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Kostenfreies Beratungsgespräch
+                <Link href="/special-launch-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  OnePager-Einstieg
+                </Link>
+                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                  Kostenfreies Mini-Audit
                 </Link>
               </div>
             </div>

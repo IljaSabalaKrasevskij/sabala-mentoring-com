@@ -274,7 +274,7 @@ export default function BlogPage() {
       </section>
 
       {/* AUDIT-LEAD-MAGNET */}
-      <section className="py-24 md:py-32 px-6 sm:px-12 md:px-24 bg-[#2E2B26] text-white border-t border-white/5 rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)]">
+      <section id="audit" className="py-24 md:py-32 px-6 sm:px-12 md:px-24 bg-[#2E2B26] text-white border-t border-white/5 rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)] scroll-mt-24">
         <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-6">

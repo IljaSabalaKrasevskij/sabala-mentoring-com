@@ -121,7 +121,7 @@ export default function BlogEuAiActCoachPage() {
               <li><strong>August 2026</strong>: Vollständige Anwendung für Hoch-Risiko-Systeme und alle anderen Bereiche</li>
             </ul>
             <p>Der AI Act ist kein KI-Verbot. Er ist ein <strong>Risiko-basierter Rahmen</strong>: je höher das Risiko deiner AI-Anwendung, desto mehr Pflichten hast du. Bei minimal-riskanten Anwendungen (Spam-Filter, Grammatik-Check) hast du fast keine Pflichten. Bei Hoch-Risiko-Systemen (Bewerber-Screening, Kreditbewertung) hast du strenge Dokumentations-, Test- und Transparenz-Pflichten.</p>
-            <p>Wichtig: <strong>der AI Act ersetzt die DSGVO nicht.</strong> Beide gelten parallel.</p>
+            <p>Wichtig: <strong>der AI Act ersetzt die DSGVO nicht.</strong> Beide gelten parallel. Eine zweite Reform-Welle 2026 betrifft auch das Cookie-Banner-Regime: <Link href="/blog/dsgvo-cookie-banner-reform-2026">was die DSGVO-Reform 2026 fuer dich bedeutet</Link>, habe ich separat aufgeschrieben.</p>
 
             <h2>Die 4 Risiko-Kategorien</h2>
 
@@ -183,7 +183,7 @@ export default function BlogEuAiActCoachPage() {
               <li><strong>Realistisch für Einzel-Coaches</strong>: erste Prüfungen ab 2027, vermutlich nach Beschwerden.</li>
               <li><strong>Höhere Wahrscheinlichkeit</strong>: Abmahnung durch Wettbewerbszentrale wegen fehlender AI-Kennzeichnung.</li>
             </ul>
-            <p>Mein eigenes Vorgehen: AI-Bilder im Sabala-Blog seit Februar 2026 gekennzeichnet, AI-Hinweis im Newsletter-Footer, AI-Stack intern dokumentiert. Aufwand: einmalig 2 Stunden plus 5 Minuten pro Veröffentlichung.</p>
+            <p>Mein eigenes Vorgehen: AI-Bilder im Sabala-Blog seit Februar 2026 gekennzeichnet, AI-Hinweis im Newsletter-Footer, AI-Stack intern dokumentiert. Aufwand: einmalig 2 Stunden plus 5 Minuten pro Veröffentlichung. Wer AI bewusst und verantwortungsvoll in der Praxis einsetzen will, schaut sich auch <Link href="/blog/chatgpt-custom-gpts-richtig-nutzen">Custom GPTs als strukturiertes AI-System</Link> an. Strukturierte Custom GPTs sind transparenter als Default-ChatGPT-Sessions, was im AI-Act-Audit hilft.</p>
 
             <h2>Was bedeutet das für deine Webseite konkret?</h2>
             <p>Drei sichtbare Änderungen empfehle ich:</p>
@@ -228,14 +228,17 @@ export default function BlogEuAiActCoachPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Klarheit statt raten.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du AI in deiner Praxis nutzt und sicherstellen willst, dass deine Webseite, dein Marketing und deine Tools AI-Act-konform sind, ist das im Sabala-Premium-Angebot Standard. Compliance-Check Teil der technischen Begleitung.
+                Wenn du AI in deiner Praxis nutzt und sicherstellen willst, dass deine Webseite, dein Marketing und deine Tools AI-Act-konform sind, sprechen wir am besten in einem Beratungsgespraech daruber. Compliance-Check ist Teil meiner technischen Begleitung. Wer AI-Workflows aufbauen will, schaut sich auch mein KI-Team an.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
-                  Premium-Angebot ansehen
-                </Link>
-                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Beratungsgespräch buchen
+                </Link>
+                <Link href="/gpt-team" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  KI-Team kennenlernen
+                </Link>
+                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                  Mini-Audit anfragen
                 </Link>
               </div>
             </div>
