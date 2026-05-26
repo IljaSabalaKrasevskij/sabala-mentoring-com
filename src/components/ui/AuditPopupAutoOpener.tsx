@@ -7,7 +7,7 @@ import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
 
 const STORAGE_KEY = "sabala_audit_popup_v1";
 const COOLDOWN_DAYS = 30;
-const TIME_TRIGGER_MS = 12_000;
+const TIME_TRIGGER_MS = 8_000;
 const SCROLL_TRIGGER_PCT = 0.5;
 
 type Trigger = "time" | "scroll" | "exit";
