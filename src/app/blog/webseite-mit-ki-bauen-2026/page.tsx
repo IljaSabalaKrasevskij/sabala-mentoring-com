@@ -1,4 +1,5 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Code, Layers, Cpu, Lock } from "lucide-react";
@@ -87,29 +88,28 @@ export default function BlogWebseiteMitKIBauenPage() {
       <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
       <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
 
-      <div className="pt-24 md:pt-32 w-full bg-[#08070a]"></div>
+      <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Cosmic Gradient */}
-      <section className="relative w-full min-h-[60vh] md:min-h-[70vh] bg-[#08070a] overflow-hidden flex items-end">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2E2B26]/70 via-[#15110b] to-[#08070a]" />
-        <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-refined-gold/[0.15] blur-[180px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-[180px] bg-gradient-to-t from-pure-surface via-pure-surface/40 to-transparent pointer-events-none" />
-
-        <div className="relative z-10 px-6 sm:px-12 md:px-24 max-w-[1400px] mx-auto pt-32 pb-24 md:pb-32 w-full">
+      {/* HERO — Sketch-Cover */}
+      <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
+        <Image src="/blog/webseite-mit-ki-bauen-2026/cover.jpg" alt="Skizze: Crystal mit floating Tool-Icons als Symbol für den Premium-AI-Webseiten-Stack" fill className="object-cover opacity-90" priority />
+        <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-            <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
             <div className="flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-widest text-refined-gold mb-6">
               <span className="bg-refined-gold/10 px-3 py-1 rounded-full border border-refined-gold/30">KI &amp; Webseiten</span>
-              <span className="text-pure-surface/70">Mai 2026</span>
-              <span className="text-pure-surface/70 hidden sm:inline-block">•</span>
-              <span className="text-pure-surface/70 hidden sm:inline-block">9 Min Lesezeit</span>
+              <span className="text-deep-charcoal/80">Mai 2026</span>
+              <span className="text-deep-charcoal/80 hidden sm:inline-block">•</span>
+              <span className="text-deep-charcoal/80 hidden sm:inline-block">9 Min Lesezeit</span>
             </div>
-            <h1 className="font-instrument text-[clamp(2.5rem,5vw,5rem)] text-pure-surface leading-[1.05] max-w-[1100px] mb-6">
+            <h1 className="font-instrument text-[clamp(2.5rem,5vw,5rem)] text-deep-charcoal leading-[1.05] max-w-[1100px] mb-6">
               Webseite mit KI bauen 2026: Der Premium-Stack, <span className="italic text-refined-gold">den niemand zeigt.</span>
             </h1>
-            <p className="text-pure-surface/70 text-lg md:text-xl font-satoshi max-w-[760px] leading-relaxed">
+            <p className="text-warm-steel text-lg md:text-xl font-satoshi max-w-[760px] leading-relaxed">
               Diese Seite ist mit Antigravity, Spline und Claude Code gebaut. In neun Tagen. Was 99 Prozent der Coaches verpassen: der Unterschied zwischen Baukasten-KI und Pro-Tool-Stack ist nicht graduell. Es ist eine andere Liga.
             </p>
           </ScrollReveal>
