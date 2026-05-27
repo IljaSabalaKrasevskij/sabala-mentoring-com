@@ -90,7 +90,7 @@ export default function BlogWebseiteMitKIBauenPage() {
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Sketch-Cover */}
+      {/* HERO | Sketch-Cover */}
       <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/webseite-mit-ki-bauen-2026/cover.jpg" alt="Skizze: Crystal mit floating Tool-Icons als Symbol für den Premium-AI-Webseiten-Stack" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
@@ -223,19 +223,74 @@ export default function BlogWebseiteMitKIBauenPage() {
         </ScrollReveal>
       </section>
 
-      {/* WAS AI NICHT KANN */}
+      {/* INSPIRATIONSQUELLEN | Hinter den Kulissen */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[820px] mx-auto w-full">
         <ScrollReveal>
           <div className={proseBlock}>
-            <h2>Was AI nicht kann (Stand 2026)</h2>
-            <p>Ehrlichkeit gehört dazu. Diese vier Sachen kann auch der beste AI-Stack 2026 nicht ersetzen:</p>
+            <h2>Wo der Pro-Stack lernt: meine 5 Inspirationsquellen</h2>
+            <p>Eine Webseite entsteht nie aus dem Nichts. Auch mit AI-Tools brauchst du Quellen, die dir zeigen, was 2026 möglich ist. Hier sind die fünf, die ich täglich öffne:</p>
             <ul>
-              <li><strong>Brand-Identität entwickeln</strong>: AI schreibt keine Voice, die nach dir klingt, wenn du sie nicht vorher hast.</li>
-              <li><strong>Customer-Journey designen</strong>: AI weiß nicht, in welcher Reihenfolge ein potenzieller Kunde von Vertrauen zu Kauf geführt werden muss. Das ist UX-Insight.</li>
-              <li><strong>Voice in dir finden</strong>: AI kann Sätze in deiner Voice umformulieren, aber nicht deine Voice schaffen. Das ist Personal-Brand-Arbeit.</li>
-              <li><strong>Foto-Authentizität</strong>: AI-generierte Portraits sehen 2026 immer noch wie AI-generierte Portraits aus. Du brauchst echte Fotos.</li>
+              <li><strong><a href="https://21st.dev" target="_blank" rel="noopener noreferrer">21st.dev</a></strong>: kuratierte Premium-UI-Komponenten von führenden Entwickler-Teams. Wenn ich für einen Kunden ein neues Animations-Pattern brauche, schaue ich zuerst hier. Aktueller als jede Tutorial-Seite, näher an der Realität von Production-Code.</li>
+              <li><strong><a href="https://v0.dev" target="_blank" rel="noopener noreferrer">v0.dev (Vercel)</a></strong>: AI-Generator für UI-Komponenten. Du beschreibst auf Englisch, was du willst, bekommst React-Code zurück. Gut für erste Drafts, fast nie das Endprodukt. Aber ein schneller Startpunkt.</li>
+              <li><strong><a href="https://awwwards.com" target="_blank" rel="noopener noreferrer">Awwwards</a></strong>: Premium-Webseiten kuratiert von einer Jury. Inspiration für „was 2026 möglich ist". Vorsicht: viele Awwwards-Seiten sind extrem komplex und nicht für Coaching-Brands passend. Ich nutze sie als Vokabular, nicht als Blaupause.</li>
+              <li><strong><a href="https://spline.design/community" target="_blank" rel="noopener noreferrer">Spline Community</a></strong>: 3D-Szenen, die ich zerlegen kann, um zu lernen, wie ein Effekt gebaut wurde. Open-Source-Beispiele für jeden Brand-Stil.</li>
+              <li><strong><a href="https://land-book.com" target="_blank" rel="noopener noreferrer">Land-book</a></strong> und <strong><a href="https://httpster.net" target="_blank" rel="noopener noreferrer">Httpster</a></strong>: kuratierte Landing-Pages für Personal Brands und kreative Marken. Näher an Coaches als Awwwards.</li>
             </ul>
-            <p>Genau hier setze ich an. Der AI-Stack ist Werkzeug. Die Substanz dahinter ist Sabala-Arbeit: Brand-Strategie, Voice, Customer-Journey, Foto-Direction, Trust-Architektur. Wer AI nicht nur fuers Coden, sondern fuer den ganzen Arbeitsalltag nutzen will, schaut sich am besten <Link href="/gpt-team">mein eigenes KI-Team</Link> an. Sieben spezialisierte Custom GPTs, die Sabala-Stimme verstehen.</p>
+            <p>Diese Quellen sind keine Templates. Sie sind Schule.</p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* SKILLS + AGENTS | Konzept-Erklaerung */}
+      <section className="px-6 sm:px-12 md:px-24 pt-20 max-w-[820px] mx-auto w-full">
+        <ScrollReveal>
+          <div className={proseBlock}>
+            <h2>Skills und Agents: was sind das eigentlich?</h2>
+            <p>Wer 2026 mit AI baut, hört zwei Begriffe ständig: Skills und Agents. Beide verändern, wie professionell mit AI gearbeitet wird. Hier kurz, was sie unterscheidet.</p>
+            <h3>Skills</h3>
+            <p>Ein Skill ist eine konfigurierte Anleitung, die ein AI-Tool wie Claude Code automatisch lädt, wenn ein bestimmter Trigger erkannt wird. Beispiel: wenn ich „bau mir einen Audit für diese Webseite" sage, lädt Claude meinen <code>sabala-page-mastery</code>-Skill. Der enthält Methodik, Voice-Regeln, Checklisten. Skills sind wiederverwendbar, versioniert über GitHub, kombinierbar.</p>
+            <p>Was das praktisch bedeutet: ich erkläre Claude die Sabala-Methodik einmal, danach ist sie für jede neue Aufgabe verfügbar. Kein Neu-Erklären, keine Verwässerung, keine Inkonsistenz zwischen Projekten.</p>
+            <h3>Agents</h3>
+            <p>Ein Agent ist ein autonomer Sub-Worker. Du gibst ihm eine Aufgabe (z.B. „recherchiere die Top 15 Konkurrenten dieser Brand, scrape ihre Hero-Sections, sammle Pricing-Logik"), und er arbeitet sie eigenständig ab. Eigenes Toolset, eigener Prompt, eigener Arbeitsspeicher.</p>
+            <p>Praktisches Beispiel aus meiner Sabala-Arbeit: vor jedem Premium-Projekt schickt ein Agent für 30-45 Minuten autonomes Recherche-Sprint los, kommt mit einem strukturierten Marktbericht zurück. Das, was vor zwei Jahren zwei Tage manuelle Arbeit war, läuft jetzt im Hintergrund während ich an anderen Sachen arbeite.</p>
+            <p>In meiner Praxis kombiniere ich beides: Skills für wiederkehrende Qualitäts-Standards (Brand-Audit, Carousel-Bau, Wettbewerbsanalyse), Agents für autonome Sprints (Recherche, Lead-Mining, Multi-Step-Implementierungen). Das ist die eigentliche AI-Coding-Revolution 2026. Nicht ChatGPT im Browser, sondern strukturierte Workflows.</p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* TOP 5 DESIGN-SKILLS | Praxis-Block */}
+      <section className="px-6 sm:px-12 md:px-24 pt-20 max-w-[820px] mx-auto w-full">
+        <ScrollReveal>
+          <div className={proseBlock}>
+            <h2>Meine Top 5 Design-Skills auf GitHub</h2>
+            <p>Wer selbst mit AI-Coding-Tools arbeitet, sollte diese fünf öffentlich verfügbaren Skills kennen. Alle sind über GitHub installierbar, alle nutze ich täglich.</p>
+            <ul>
+              <li><strong>huashu-design</strong>: HTML-Prototyping mit Design-Direction-Beratung. Wenn das Briefing unklar ist, schlägt der Skill 3 Design-Richtungen vor und baut parallel 3 Demos. Spart Stunden Diskussion und zeigt dir früh, welche Richtung trägt.</li>
+              <li><strong>frontend-design</strong>: konsequent Premium-Frontend-Code mit Anti-AI-Slop-Filter eingebaut. Kein generischer „Tech-Bro-Look", sondern eigene Design-Sprache pro Projekt.</li>
+              <li><strong>ui-ux-pro-max</strong>: 50+ Styles, 161 Color-Paletten, 99 UX-Guidelines. Wenn ich eine neue Komponente brauche, ist das mein erstes Tool. Praktisch ein Designer im Hintergrund.</li>
+              <li><strong>anthropic-skills:high-end-visual-design</strong>: trainiert auf „looks expensive". Definiert die genauen Fonts, Spacings, Shadows, die Premium-Marken nutzen. Blockiert AI-Default-Patterns, die billig wirken.</li>
+              <li><strong>impeccable</strong>: Live-Iteration im Browser. Wenn eine Sektion noch nicht sitzt, lässt der Skill 3 Varianten parallel bauen und testen. Schneller von gut zu großartig.</li>
+            </ul>
+            <p>Plus drei eigene Sabala-Skills, die ich aus meiner Praxis entwickelt habe: <code>sabala-page-mastery</code> (Premium-Sales-Page-Audit), <code>sabala-competitor-analysis</code> (Pflicht-Vorstufe vor jedem Webseiten-Build) und <code>sabala-blog-from-trends</code> (GEO-Trend-Recherche für Blog-Pipelines). Diese sind teil meiner Begleitung, wenn du mit mir baust.</p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* STRATEGIE-ANKER | Tools sind kein Strategie-Ersatz */}
+      <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[820px] mx-auto w-full">
+        <ScrollReveal>
+          <div className={proseBlock}>
+            <h2>Aber: Tools sind kein Strategie-Ersatz</h2>
+            <p>Die meisten KI-Webseiten 2026 sehen sich erstaunlich ähnlich. Hero-Sektion mit Gradient, drei Bento-Cards, Pricing-Tabelle, FAQ, Footer. Warum? Weil die AI ohne strategische Ausrichtung den statistischen Durchschnitt produziert. Sie macht das wahrscheinlichste, nicht das richtigste.</p>
+            <p>Diese vier Sachen kann auch der beste AI-Stack 2026 nicht ersetzen:</p>
+            <ul>
+              <li><strong>Brand-Identität entwickeln</strong>: AI schreibt keine Voice, die nach dir klingt, wenn du sie nicht vorher hast. Sie kann eine bestehende Voice imitieren, aber nicht aus dem Nichts erschaffen.</li>
+              <li><strong>Customer-Journey designen</strong>: AI weiß nicht, in welcher Reihenfolge ein potenzieller Kunde von Vertrauen zu Kauf geführt werden muss. Das ist UX-Insight aus echten Gesprächen, nicht aus Training-Data.</li>
+              <li><strong>Strategische Ausrichtung</strong>: was soll deine Webseite überhaupt erreichen? Wer ist die eine Person, die du ansprechen willst? Welcher der 100 möglichen Hebel ist DEINER? Das ist Strategie-Arbeit, kein Tool-Job.</li>
+              <li><strong>Foto-Authentizität</strong>: AI-generierte Portraits sehen 2026 immer noch wie AI-generierte Portraits aus. Du brauchst echte Fotos, echte Geschichte, echte Bewegung.</li>
+            </ul>
+            <p>Hier setze ich an. Der AI-Stack ist Werkzeug. Die Substanz dahinter ist Sabala-Arbeit: Brand-Strategie, Voice, Customer-Journey, Foto-Direction, Trust-Architektur. Eine KI-Webseite ohne diese Substanz sieht aus wie jede andere KI-Webseite. Mit dieser Substanz sieht sie aus wie deine.</p>
+            <p>Wer AI auch für den Arbeitsalltag jenseits der Webseite nutzen will, schaut sich <Link href="/gpt-team">mein eigenes KI-Team</Link> an. Sieben spezialisierte Custom GPTs, die Sabala-Stimme verstehen.</p>
 
             <h2>Was kostet das alles?</h2>
             <p>Realistische Markt-Preise 2026:</p>
@@ -282,9 +337,9 @@ export default function BlogWebseiteMitKIBauenPage() {
                 <Sparkles className="w-5 h-5 text-refined-gold" />
                 <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">Premium-Auftritt mit AI-Stack</span>
               </div>
-              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Tools sind verfügbar. Substanz bleibt deine.</h3>
+              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Wenn deine KI-Webseite nicht aussehen soll wie jede andere.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du eine Premium-Webseite willst, die mit AI-Tools gebaut ist und dir wirklich gehört, plus die strategische Begleitung dazu (Brand, Voice, Customer-Journey, SEO+GEO), ist das genau was Sabala macht. Fuer den schlanken Einstieg gibts die Premium-OnePager-Variante.
+                Wer Premium will, braucht mehr als Tools. Wer mit AI baut und sich dabei nicht in der Mainstream-Optik wiederfinden will, braucht jemanden, der den Stack UND deine Brand versteht. Genau das ist Sabala-Arbeit: Pro-Tool-Stack plus strategische Begleitung (Brand, Voice, Customer-Journey, SEO + GEO). Für den schlanken Einstieg gibt es die Premium-OnePager-Variante.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
