@@ -52,7 +52,7 @@ const faq = [
   },
   {
     q: "Gilt der AI Act auch außerhalb der EU?",
-    a: "Der AI Act gilt für alle AI-Systeme, die in der EU eingesetzt werden, unabhängig vom Sitz des Anbieters. Wenn du als deutsche Coach AI nutzt, gilt der AI Act für dich. Wenn du als nicht-EU-Coach Kunden in der EU bedienst, ebenfalls.",
+    a: "Der AI Act gilt für alle AI-Systeme, die in der EU eingesetzt werden, unabhängig vom Sitz des Anbieters. Wenn du als deutscher Coach AI nutzt, gilt der AI Act für dich. Wenn du als nicht-EU-Coach Kunden in der EU bedienst, ebenfalls.",
   },
 ];
 
@@ -104,7 +104,7 @@ export default function BlogEuAiActCoachPage() {
           <div className="bg-warm-light/40 border-l-2 border-refined-gold p-8 md:p-10 rounded-r-lg">
             <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-6">Quick Answer in 3 Sätzen</p>
             <p className="font-satoshi text-deep-charcoal text-lg leading-relaxed">
-              Der EU AI Act ist ab 2. August 2026 vollständig anwendbar und gilt für jede:n, der AI-Tools in der EU einsetzt, auch für Einzel-Coaches. Er ergänzt die DSGVO, ersetzt sie nicht. Was du konkret tun musst: AI-Tool-Inventar machen, Transparenz-Pflicht auf der Webseite umsetzen, Risiko-Kategorie deiner Anwendung prüfen, Dokumentation anlegen. Bußgelder gehen bis 35 Millionen Euro für Verstöße, aber realistisch sind erste Prüfungen 2027.
+              Der EU AI Act ist ab 2. August 2026 vollständig anwendbar und gilt für jeden, der AI-Tools in der EU einsetzt, auch für Einzel-Coaches. Er ergänzt die DSGVO, ersetzt sie nicht. Was du konkret tun musst: AI-Tool-Inventar machen, Transparenz-Pflicht auf der Webseite umsetzen, Risiko-Kategorie deiner Anwendung prüfen, Dokumentation anlegen. Bußgelder gehen bis 35 Millionen Euro für Verstöße, aber realistisch sind erste Prüfungen 2027.
             </p>
           </div>
         </ScrollReveal>

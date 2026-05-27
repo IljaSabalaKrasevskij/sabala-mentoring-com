@@ -93,7 +93,7 @@ export default function BlogBaukastenVsEigenePage() {
               Baukasten vs. eigene Webseite für Coaches: <span className="italic text-refined-gold">Die ehrliche 3-Jahres-Rechnung.</span>
             </h1>
             <p className="text-pure-surface/70 text-lg md:text-xl font-satoshi max-w-[760px] leading-relaxed">
-              Eine Coachin fragt mich: was wäre meine echte Ersparnis, wenn ich von Webflow auf Premium-Webseite wechsele? Hier ist die Rechnung, inklusive Lock-in-Kosten und Hidden Costs. Ohne Marketing-Schönfärberei.
+              Ein Coach fragt mich: was wäre meine echte Ersparnis, wenn ich von Webflow auf Premium-Webseite wechsele? Hier ist die Rechnung, inklusive Lock-in-Kosten und Hidden Costs. Ohne Marketing-Schönfärberei.
             </p>
           </ScrollReveal>
         </div>
