@@ -74,7 +74,7 @@ export default function BlogBaukastenVsEigenePage() {
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Sketch-Cover */}
+      {/* HERO | Sketch-Cover */}
       <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/baukasten-vs-eigene-webseite-kosten-2026/cover.jpg" alt="Skizze: Goldwaage mit Münzen und Krone als Symbol für Kostenvergleich Baukasten vs eigene Webseite" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
@@ -236,6 +236,10 @@ export default function BlogBaukastenVsEigenePage() {
               <li><strong>Baukasten-Webseite + 12k-Programm</strong> ist Inkongruenz, die ein potenzieller Kunde unbewusst registriert</li>
             </ul>
             <p>Wenn dein Coaching-Tagessatz bei 1.500 Euro liegt, aber deine Webseite wie 19-Euro-Squarespace aussieht: jeder Kunde fragt sich „warum kostet ihr Programm 12k“. Das musst du dann am Telefon erklaeren statt es vorher zu zeigen. Wie eine cookie-freie Premium-Webseite gebaut wird, die mit echtem <Link href="/blog/webseite-mit-ki-bauen-2026">AI-Coding-Stack</Link> entsteht, habe ich in einem eigenen Artikel beschrieben.</p>
+
+            <h3>Ein typischer Fall aus meiner Praxis (anonymisiert)</h3>
+            <p>Ein Coach kommt zu mir nach drei Jahren Webflow. Monatliche Kosten waren in der Zwischenzeit von 16 Euro auf 38 Euro gestiegen, dazu Add-ons für Booking und Newsletter. Über drei Jahre summiert: Tool-Kosten plus eine Brand-Anpassung durch einen externen Designer plus die geplante Migration auf etwas Premiumeres. Schätzung 5-Jahres-Pfad: irgendwo zwischen 8.000 und 11.000 Euro für eine Seite, die sich nie premium anfühlte.</p>
+            <p>Sabala-Premium-Lite kostet 8.000 Euro einmalig: eigenes GitHub-Repo, Vercel-Hosting unter Kunden-Account, cookie-frei, drei Blogartikel im Setup. Differenz auf 5 Jahre: vergleichbar im Preis. Differenz in der Wirkung: nicht vergleichbar. Anfrage-Zahl steigt typischerweise messbar in den ersten Monaten nach Launch, plus erste Premium-Anfragen oberhalb 5k pro Klient.</p>
           </div>
         </ScrollReveal>
       </section>

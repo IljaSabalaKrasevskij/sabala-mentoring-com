@@ -74,7 +74,7 @@ export default function BlogWebdesignerVerschwundenPage() {
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Sketch-Cover */}
+      {/* HERO | Sketch-Cover */}
       <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/webdesigner-verschwunden-code-eigentum/cover.jpg" alt="Skizze: Adventure-Game-Schatztruhe mit Kristall und Schriftrollen als Symbol für Code-Eigentum" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
@@ -200,6 +200,10 @@ export default function BlogWebdesignerVerschwundenPage() {
             </ul>
             <p>Wenn ich morgen nicht mehr erreichbar wäre, könntest du: den Code auf GitHub anschauen, einen neuen Entwickler beauftragen, der den Code in einer Stunde versteht, selbst kleine Änderungen mit Claude Code machen, auf ein anderes Hosting umziehen ohne Code-Anpassung.</p>
             <p>Das ist nicht „nice to have“. Das ist Versicherung. Premium-Position ist auch: du gehörst nicht jemandem. Deine Webseite gehört auch nicht jemandem. Du bist frei.</p>
+
+            <h3>Konkretes Beispiel aus meinem Sabala-Studio</h3>
+            <p>Ein Coaching-Kunde kommt zu mir mit der Frage „kann ich die behalten, wenn du mal nicht mehr verfügbar bist". Ergebnis: ein eigenes GitHub-Repo unter seinem Account, Next.js 16 + Vercel, Code mit Komponenten-Namen, die ein anderer Entwickler in 5 Minuten versteht. Wenn er heute einen neuen Frontend-Developer beauftragt, schaut der ins Repo, liest die README, ist nach einer Stunde Onboarding produktiv.</p>
+            <p>Das ist der unsichtbare Mehrwert von Code-Eigentum: er zahlt nicht für ein Hosting-Abo bis er stirbt. Er zahlt einmalig für eine Webseite, die ihm gehört, und entscheidet danach selbst, wie er sie weiterbetreut.</p>
           </div>
         </ScrollReveal>
       </section>

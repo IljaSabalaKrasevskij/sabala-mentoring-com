@@ -74,7 +74,7 @@ export default function BlogDsgvoCookieBannerPage() {
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Sketch-Cover */}
+      {/* HERO | Sketch-Cover */}
       <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/dsgvo-cookie-banner-reform-2026/cover.jpg" alt="Skizze: Stein-Tafel umgeben von goldenen Orbs als Symbol für cookie-freie Webseite" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
@@ -148,7 +148,7 @@ export default function BlogDsgvoCookieBannerPage() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-12">
           {[
             { num: "01", title: "Hosting ohne Tracking-Cookies", body: "Vercel mit deutscher Edge-Region. Setzt keine personenbezogenen Cookies. Performance-Tracking läuft anonym. Cookie-freie Basis out-of-the-box." },
-            { num: "02", title: "Analytics ohne Cookies", body: "Umami, Plausible oder Fathom. Trackt Seitenaufrufe, Verweildauer, Klick-Pfade, Referrer — ohne personenbezogene Cookies, ohne IP-Speicherung. Umami self-hosted 0 Euro, Cloud 9-19 Euro/Monat." },
+            { num: "02", title: "Analytics ohne Cookies", body: "Umami, Plausible oder Fathom. Trackt Seitenaufrufe, Verweildauer, Klick-Pfade, Referrer. ohne personenbezogene Cookies, ohne IP-Speicherung. Umami self-hosted 0 Euro, Cloud 9-19 Euro/Monat." },
             { num: "03", title: "Newsletter ohne Cookies", body: "ConvertKit, Brevo oder Buttondown statt Mailchimp. Die meisten neuen Newsletter-Anbieter haben einen Privacy-Mode, der ohne Tracking läuft." },
             { num: "04", title: "Embeds prüfen", body: "Cookie-Banner kommen oft von Embeds: YouTube → youtube-nocookie.com. Vimeo Pro mit „Do Not Track“. Google Maps → OpenStreetMap. Calendly → Direkter Link statt Embed." },
           ].map((item) => (
@@ -185,6 +185,10 @@ export default function BlogDsgvoCookieBannerPage() {
               <li><strong>Cookie-Banner entfernen</strong> (15 Min): Plugin deinstallieren, Code-Snippets entfernen, Datenschutz-Erklärung anpassen.</li>
             </ol>
             <p>Gesamt: 2-3 Stunden. Danach hast du eine cookie-freie Webseite und musst dir um die DSGVO-Reform 2027 keine Gedanken machen.</p>
+
+            <h3>Wie ich das in der Sabala-Praxis löse</h3>
+            <p>Mein Standard-Setup für Premium-Kunden ist seit 2023 cookie-frei: Vercel-Hosting (Edge-Region Frankfurt), Umami für Analytics (self-hosted oder Cloud), Brevo für Newsletter im Privacy-Mode, YouTube-nocookie für Video-Embeds, OpenStreetMap statt Google Maps. Migration einer bestehenden WordPress-Seite dauert typischerweise 3-5 Stunden, ist im Mini-Pflege-Paket (49 Euro pro Monat) sofort abrufbar.</p>
+            <p>Konkretes Beispiel: bei einem Coaching-Relaunch in diesem Quartal haben wir eine alte WordPress-Seite mit Cookie-Banner und drei Tracking-Plugins komplett ersetzt. Heute: cookie-frei, ohne Banner, PageSpeed-Score deutlich über 90 mobil. Aufwand-Differenz zu einer Standard-Migration: null Stunden, weil cookie-frei der Default ist, nicht eine Spar-Variante.</p>
           </div>
         </ScrollReveal>
       </section>

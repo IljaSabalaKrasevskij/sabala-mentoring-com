@@ -74,7 +74,7 @@ export default function BlogEuAiActCoachPage() {
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
-      {/* HERO — Sketch-Cover */}
+      {/* HERO | Sketch-Cover */}
       <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/eu-ai-act-coach-2026/cover.jpg" alt="Skizze: Pergament mit EU-Sternen und ornamentaler Schlüssel als Symbol für AI Act Compliance" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
@@ -185,6 +185,10 @@ export default function BlogEuAiActCoachPage() {
               <li><strong>Höhere Wahrscheinlichkeit</strong>: Abmahnung durch Wettbewerbszentrale wegen fehlender AI-Kennzeichnung.</li>
             </ul>
             <p>Mein eigenes Vorgehen: AI-Bilder im Sabala-Blog seit Februar 2026 gekennzeichnet, AI-Hinweis im Newsletter-Footer, AI-Stack intern dokumentiert. Aufwand: einmalig 2 Stunden plus 5 Minuten pro Veröffentlichung. Wer AI bewusst und verantwortungsvoll in der Praxis einsetzen will, schaut sich auch <Link href="/blog/chatgpt-custom-gpts-richtig-nutzen">Custom GPTs als strukturiertes AI-System</Link> an. Strukturierte Custom GPTs sind transparenter als Default-ChatGPT-Sessions, was im AI-Act-Audit hilft.</p>
+
+            <h3>Wie ich das bei Sabala-Kunden umsetze</h3>
+            <p>In jedem aktuellen Sabala-Projekt baue ich beim Launch ein AI-Inventar in Notion: welche Tools nutzt der Kunde (ChatGPT, Claude, Midjourney, KIE AI), wo läuft was, welche Daten gehen rein, welche kommen raus. Plus ein AI-Hinweis im Footer der neuen Webseite, plus eine kurze AI-Richtlinie als interne Notion-Page. Das ist Compliance-by-Setup, nicht Compliance-als-Nacharbeit. Wenn 2027 ein Audit kommt, hat der Kunde alles griffbereit.</p>
+            <p>Konkretes Beispiel aus dem letzten Quartal: eine Coachin wollte ChatGPT für Klienten-Reflexionen vor Sessions einsetzen. In 30 Minuten haben wir geklärt: Kategorie 3 (Transparenz-Pflicht), nicht Hoch-Risiko. Lösung: kurzer Hinweis im Klienten-Onboarding („wir nutzen ChatGPT als Vorbereitung, deine Antworten werden nicht an OpenAI übermittelt") plus passender Datenschutz-Absatz. Aufwand: eine Stunde. Risiko gegen null.</p>
 
             <h2>Was bedeutet das für deine Webseite konkret?</h2>
             <p>Drei sichtbare Änderungen empfehle ich:</p>
