@@ -25,6 +25,18 @@ const testimonials = [
     testimonial: "Das Interagieren ist flüssig, nicht so oberflächlich, wie wenn man nur einen Chat startet. Man kann diskutieren und vor allem: Sie verstehen auch gleich, um was es geht. Hilfreich finde ich, dass ich meinen eigenen Text nicht perfekt oder ganz exakt formulieren muss. Mir gefallen die kleinen Persönlichkeiten 😉",
     by: "Sylvia Kirchner, Backoffice-Unterstützung & Business-Organisation",
     imgSrc: "/images/Testimonial Syllvia Kirchner.jpeg"
+  },
+  {
+    tempId: 3,
+    testimonial: "Was Ilja da gezaubert hat, ist krass. Ich habe mir die ChatGPT-Bots geholt – die Installation und Anwendung ist mehr als user-friendly. Vor allem mag ich Lia, die mir geholfen hat, mein kreatives Chaos und meine Ideen in ein Angebot zu bringen. Siris ist der Oberhammer: den habe ich über meine Seite laufen lassen und konstruktives Feedback bekommen, keine Schonkost sondern Wahrheit, die mich weiterbringt. Danach war meine Positionierung nochmal stärker. Und ich habe gesehen, man kann sogar seinen eigenen ChatGPT-Bot bauen, wie cool ist das denn? Holt euch dieses Geschenk!",
+    by: "Elaine Puhek, Brand Designerin",
+    imgSrc: "/images/Testimonial Elaine Puhek.jpeg"
+  },
+  {
+    tempId: 4,
+    testimonial: "Einfach wundervoll, wie du mich in der Umsetzung meiner neuen Ausrichtung begleitest – Branding und Sichtbarkeit. Deine wundervollen KI-Bots haben mir in kurzer Zeit neue Impulse und Wege aufgezeigt. Herzensdank dafür.",
+    by: "Stefan Pons, Klangtherapeut & Resilienzcoach",
+    imgSrc: "/images/Testimonial Stefan Pons.jpeg"
   }
 ];
 
