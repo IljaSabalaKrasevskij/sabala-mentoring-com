@@ -710,7 +710,7 @@ export default function GPTTeamPage() {
                            </div>
                            <div className="flex flex-col items-center justify-center gap-1">
                               <div className="flex items-baseline gap-2 mb-4">
-                                 <p className="font-instrument text-[5.5rem] md:text-[7rem] text-refined-gold drop-shadow-[0_0_40px_rgba(184,150,62,0.8)] leading-none">97</p>
+                                 <p className="font-instrument text-[5.5rem] md:text-[7rem] text-refined-gold drop-shadow-[0_0_40px_rgba(184,150,62,0.8)] leading-none">67</p>
                                  <div className="flex flex-col pt-2">
                                     <span className="text-4xl text-refined-gold font-light opacity-80 leading-none">€</span>
                                     <span className="text-[10px] text-refined-gold/60 font-mono uppercase tracking-widest mt-1">netto</span>
@@ -727,7 +727,7 @@ export default function GPTTeamPage() {
 
                               <div className="bg-black/40 border border-white/5 px-6 py-3 rounded-xl w-full mb-6 text-center">
                                 <p className="text-sm text-white/80">
-                                  Regulärer Preis: <span className="line-through text-white/40 ml-1">279,– €</span> netto
+                                  Regulärer Preis: <span className="line-through text-white/40 ml-1">147,– €</span> netto
                                 </p>
                               </div>
                            </div>
