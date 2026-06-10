@@ -661,7 +661,12 @@ export default function GPTTeamPage() {
                  {/* Right/Pricing Card (Marvel System Style) */}
                  <div className="w-full md:w-[450px] z-10">
                     <TiltCard>
-                      <div className="bg-[#020202]/95 border border-refined-gold/40 p-10 rounded-[3rem] shadow-[0_0_50px_rgba(184,150,62,0.2)] ring-1 ring-refined-gold/20 relative group">
+                      <a
+                        href="https://sabala-mentoring.thrivecart.com/sabalas-diamond-force/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Diamond Force aktivieren - 67 Euro fuer die ersten 50 Kaeufe"
+                        className="block bg-[#020202]/95 border border-refined-gold/40 p-10 rounded-[3rem] shadow-[0_0_50px_rgba(184,150,62,0.2)] ring-1 ring-refined-gold/20 relative group cursor-pointer no-underline text-inherit hover:border-refined-gold/70 hover:shadow-[0_0_60px_rgba(184,150,62,0.35)] transition-all duration-500">
                          
                          {/* Digital Scanline Background */}
                          <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(184,150,62,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(184,150,62,0.1)_1px,transparent_1px)] bg-[size:15px_15px] pointer-events-none"></div>
@@ -733,18 +738,16 @@ export default function GPTTeamPage() {
                            </div>
                          </div>
 
-                         {/* Checkout Button */}
-                         <div className="relative z-10 mb-6">
-                           <a href="https://sabala-mentoring.thrivecart.com/sabalas-diamond-force/" target="_blank" rel="noopener noreferrer" className="relative w-full overflow-hidden bg-white hover:bg-refined-gold text-deep-charcoal hover:text-white py-6 rounded-2xl font-bold text-[15px] uppercase tracking-[0.2em] transition-all duration-500 transform hover:scale-[1.03] active:scale-95 group/btn flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(184,150,62,0.5)]">
-                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
-                             <CheckCircle2 className="w-5 h-5" /> Team aktivieren
-                           </a>
+                         {/* Visueller Checkout-Button (Card selbst ist der Link) */}
+                         <div className="relative z-10 mb-6 w-full overflow-hidden bg-white group-hover:bg-refined-gold text-deep-charcoal group-hover:text-white py-6 rounded-2xl font-bold text-[15px] uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.15)] group-hover:shadow-[0_0_50px_rgba(184,150,62,0.5)]">
+                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
+                           <CheckCircle2 className="w-5 h-5" /> Team aktivieren
                          </div>
 
                          <div className="relative z-10 flex items-center justify-center gap-2 text-xs text-white/50 uppercase tracking-widest font-mono">
                            <CheckCircle2 className="w-3.5 h-3.5 text-refined-gold/60" /> Einmalige Investition (Kein Abo)
                          </div>
-                      </div>
+                      </a>
                     </TiltCard>
                  </div>
              </div>
