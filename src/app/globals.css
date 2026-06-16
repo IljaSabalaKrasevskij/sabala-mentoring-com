@@ -18,6 +18,13 @@
   --color-gold: #B8963E;
   --color-gold-light: #D4AE5A;
 
+  /* Akademie-Seite: Alias-Tokens (additiv, kollidieren nicht mit Bestand) */
+  --color-cream: #FAF8F5;
+  --color-deep: #2E2B26;
+  --color-warm-mid: #7A7268;
+  --font-serif: var(--font-instrument);
+  --font-sans: "Satoshi", system-ui, -apple-system, sans-serif;
+
   --color-whisper-border: rgba(181, 176, 168, 0.3);
   --color-warm-shadow: rgba(46, 43, 38, 0.06);
   --color-gold-glow: rgba(184, 150, 62, 0.08);
@@ -53,6 +60,15 @@
   :root {
     --background: var(--color-warm-canvas);
     --foreground: var(--color-deep-charcoal);
+
+    /* Akademie-Seite: rohe Vars für inline var(--x)-Nutzung */
+    --cream: #faf8f5;
+    --warm-light: #ede8e0;
+    --warm-mid: #7a7268;
+    --deep: #2e2b26;
+    --gold: #b8963e;
+    --gold-light: #d4ae5a;
+    --tech-bg: #0a0806;
   }
 }
 
@@ -115,4 +131,16 @@ body {
     position: relative;
     overflow: hidden !important;
   }
+}
+
+/* Studios-Relaunch: rohe Tokens für inline var(--x) der neuen Startseite + Unterseiten */
+:root {
+  --cream: #faf8f5;
+  --warm-light: #ede8e0;
+  --warm-mid: #7a7268;
+  --gold: #b8963e;
+  --gold-light: #d4ae5a;
+  --tech-bg: #0a0806;
+  --deep: #2e2b26;
+  --font-instrument-serif: var(--font-instrument);
 }
