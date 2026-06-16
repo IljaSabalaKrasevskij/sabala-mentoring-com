@@ -132,3 +132,15 @@ body {
     overflow: hidden !important;
   }
 }
+
+/* Studios-Relaunch: rohe Tokens für inline var(--x) der neuen Startseite + Unterseiten */
+:root {
+  --cream: #faf8f5;
+  --warm-light: #ede8e0;
+  --warm-mid: #7a7268;
+  --gold: #b8963e;
+  --gold-light: #d4ae5a;
+  --tech-bg: #0a0806;
+  --deep: #2e2b26;
+  --font-instrument-serif: var(--font-instrument);
+}

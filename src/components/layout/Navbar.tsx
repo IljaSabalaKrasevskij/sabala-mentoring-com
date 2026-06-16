@@ -35,6 +35,9 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
+  // Auf der neuen Startseite bewusst kein Menü, nur auf Unterseiten
+  if (pathname === "/") return null;
+
   return (
     <>
       {/* Top Bar */}
@@ -57,18 +60,15 @@ export default function Navbar() {
               </button>
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                 <div className="bg-pure-surface border border-whisper-border rounded-xl shadow-[0_10px_30px_rgba(26,26,24,0.08)] py-2 min-w-[220px] flex flex-col overflow-hidden">
-                  <Link href="/premium-angebot" className="px-5 py-2.5 text-refined-gold font-medium bg-refined-gold/5 hover:bg-refined-gold/10 transition-colors text-sm border-b border-refined-gold/10">Premium-Angebot</Link>
-                  <Link href="/special-launch-angebot" className="px-5 py-2.5 hover:bg-warm-canvas text-deep-charcoal transition-colors text-sm font-medium">One-Pager Angebot</Link>
+                  <Link href="/webseiten" className="px-5 py-2.5 text-refined-gold font-medium bg-refined-gold/5 hover:bg-refined-gold/10 transition-colors text-sm border-b border-refined-gold/10">Webseiten</Link>
+                  <Link href="/mitentwickelt" className="px-5 py-2.5 hover:bg-warm-canvas text-deep-charcoal transition-colors text-sm font-medium">Mit dir entwickelt</Link>
+                  <Link href="/akademie" className="px-5 py-2.5 hover:bg-warm-canvas text-deep-charcoal transition-colors text-sm font-medium">KI-Akademie</Link>
                   <Link href="/gpt-team" className="px-5 py-2.5 hover:bg-warm-canvas text-deep-charcoal transition-colors text-sm border-t border-whisper-border font-medium">KI-Assistenzteam</Link>
                 </div>
               </div>
             </div>
             <Link href="/ueber-mich" className="hover:text-deep-charcoal transition-colors">About</Link>
             <Link href="/blog" className="hover:text-deep-charcoal transition-colors">Blog</Link>
-            <Link href="/podcast" className="flex items-center gap-1.5 hover:text-deep-charcoal transition-colors group">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:text-refined-gold transition-colors"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-              Podcast
-            </Link>
           </div>
 
           {/* Right side: Termin (Desktop) + Burger (Mobile) */}
@@ -134,18 +134,25 @@ export default function Navbar() {
               <span className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-warm-steel/70">Angebote</span>
             </div>
             <Link
-              href="/premium-angebot"
+              href="/webseiten"
               className="block py-4 border-b border-whisper-border text-refined-gold font-instrument text-2xl"
             >
-              Premium-Angebot
-              <span className="block text-[0.7rem] font-mono tracking-widest uppercase text-refined-gold/70 mt-1">Komplette Premium-Webseite</span>
+              Webseiten
+              <span className="block text-[0.7rem] font-mono tracking-widest uppercase text-refined-gold/70 mt-1">Premium-Auftritt mit Wow-Effekt</span>
             </Link>
             <Link
-              href="/special-launch-angebot"
+              href="/mitentwickelt"
               className="block py-4 border-b border-whisper-border text-deep-charcoal font-instrument text-2xl"
             >
-              One-Pager Angebot
-              <span className="block text-[0.7rem] font-mono tracking-widest uppercase text-warm-steel/70 mt-1">Premium-Onepager &amp; Quick-Services</span>
+              Mit dir entwickelt
+              <span className="block text-[0.7rem] font-mono tracking-widest uppercase text-warm-steel/70 mt-1">Co-Development &amp; Rescue</span>
+            </Link>
+            <Link
+              href="/akademie"
+              className="block py-4 border-b border-whisper-border text-deep-charcoal font-instrument text-2xl"
+            >
+              KI-Akademie
+              <span className="block text-[0.7rem] font-mono tracking-widest uppercase text-warm-steel/70 mt-1">Dein erster KI-Kurs</span>
             </Link>
             <Link
               href="/gpt-team"
@@ -164,9 +171,6 @@ export default function Navbar() {
             </Link>
             <Link href="/blog" className="block py-4 border-b border-whisper-border text-deep-charcoal font-instrument text-2xl">
               Blog
-            </Link>
-            <Link href="/podcast" className="block py-4 border-b border-whisper-border text-deep-charcoal font-instrument text-2xl">
-              Podcast
             </Link>
             <Link href="/referenzen" className="block py-4 border-b border-whisper-border text-deep-charcoal font-instrument text-2xl">
               Referenzen
