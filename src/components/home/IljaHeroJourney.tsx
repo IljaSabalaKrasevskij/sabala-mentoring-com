@@ -53,6 +53,9 @@ export default function IljaHeroJourney() {
 
     const ir = img.naturalWidth / img.naturalHeight;
     const cr = cw / ch;
+    // Fokus-Punkt im Bild (0..1). Auf Mobile (Hochformat) Gesicht rechts holen,
+    // damit Ilja im sichtbaren Crop steht; sonst mittig.
+    const focusX = cr < 0.85 ? 0.72 : 0.5;
     let dw: number, dh: number, dx: number, dy: number;
     if (cr > ir) {
       dw = cw;
@@ -63,7 +66,7 @@ export default function IljaHeroJourney() {
       dh = ch;
       dw = ch * ir;
       dy = 0;
-      dx = (cw - dw) / 2;
+      dx = cw * 0.5 - dw * focusX;
     }
     ctx.clearRect(0, 0, cw, ch);
     ctx.drawImage(img, dx, dy, dw, dh);
@@ -176,7 +179,7 @@ export default function IljaHeroJourney() {
                 alt=""
                 fill
                 priority
-                className="object-cover"
+                className="object-cover object-[70%_center] md:object-center"
                 sizes="100vw"
               />
             </div>
@@ -194,7 +197,7 @@ export default function IljaHeroJourney() {
                 alt="Ilja Krasevskij — Sabala Studios"
                 fill
                 priority
-                className="object-cover"
+                className="object-cover object-[70%_center] md:object-center"
                 sizes="100vw"
               />
             </div>
