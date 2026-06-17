@@ -1,26 +1,22 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { insertLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Kontakt-Endpoint
    - Validiert die Eingabe (zod), Honeypot gegen Bots, einfaches Rate-Limit.
-   - Schreibt die Anfrage als Seite in eine Notion-Datenbank.
+   - Schreibt die Anfrage in den Lead-Speicher (Turso/libSQL) -> Dashboard-Pipeline.
    - Benachrichtigt per WhatsApp (CallMeBot), best-effort.
-   - Wenn Notion nicht konfiguriert ist, antwortet die Route mit 503; das
+   - Wenn Turso nicht konfiguriert ist, antwortet die Route mit 503; das
      Frontend faellt dann sichtbar auf mailto zurueck (kein stiller Verlust).
 
    Benoetigte Env-Variablen (Vercel, Production):
-     NOTION_TOKEN        Internal-Integration-Secret (notion.so/my-integrations)
-     NOTION_KONTAKT_DB   ID der Datenbank "Website-Anfragen"
-     CALLMEBOT_PHONE     z.B. +995591443665   (optional, fuer WhatsApp-Push)
-     CALLMEBOT_APIKEY    CallMeBot-API-Key     (optional)
-
-   Erwartetes Notion-DB-Schema (Property-Namen exakt):
-     Name (Title) · Vorname (Text) · Nachname (Text) · Email (Email) ·
-     Unternehmen (Text) · Webseite (URL) · Anliegen (Text) ·
-     Quelle (Text) · Status (Select)
+     TURSO_DATABASE_URL   libsql://<db>-<org>.turso.io
+     TURSO_AUTH_TOKEN     Turso-Datenbank-Token
+     CALLMEBOT_PHONE      z.B. +995591443665   (optional, fuer WhatsApp-Push)
+     CALLMEBOT_APIKEY     CallMeBot-API-Key     (optional)
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
@@ -49,41 +45,6 @@ function rateLimited(ip: string, now: number): boolean {
   arr.push(now);
   HITS.set(ip, arr);
   return arr.length > LIMIT;
-}
-
-async function writeToNotion(data: z.infer<typeof Schema>): Promise<boolean> {
-  const token = process.env.NOTION_TOKEN;
-  const db = process.env.NOTION_KONTAKT_DB;
-  if (!token || !db) return false;
-
-  const res = await fetch("https://api.notion.com/v1/pages", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Notion-Version": "2022-06-28",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      parent: { database_id: db },
-      properties: {
-        Name: { title: [{ text: { content: `${data.vorname} ${data.nachname}`.trim() } }] },
-        Vorname: { rich_text: [{ text: { content: data.vorname } }] },
-        Nachname: { rich_text: [{ text: { content: data.nachname } }] },
-        Email: { email: data.email },
-        Unternehmen: { rich_text: [{ text: { content: data.unternehmen || "" } }] },
-        Webseite: data.webseite ? { url: data.webseite } : { url: null },
-        Anliegen: { rich_text: [{ text: { content: data.anliegen } }] },
-        Quelle: { rich_text: [{ text: { content: data.quelle || "Website" } }] },
-        Status: { select: { name: "Neu" } },
-      },
-    }),
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Notion ${res.status}: ${body.slice(0, 300)}`);
-  }
-  return true;
 }
 
 async function notifyWhatsApp(data: z.infer<typeof Schema>): Promise<void> {
@@ -127,7 +88,15 @@ export async function POST(req: Request) {
 
   // 4) Speichern
   try {
-    const stored = await writeToNotion(data);
+    const stored = await insertLead({
+      vorname: data.vorname,
+      nachname: data.nachname,
+      email: data.email,
+      unternehmen: data.unternehmen,
+      webseite: data.webseite,
+      anliegen: data.anliegen,
+      quelle: data.quelle || "Website",
+    });
     if (!stored) {
       // Backend noch nicht konfiguriert → Frontend nutzt mailto-Fallback
       return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
@@ -135,7 +104,7 @@ export async function POST(req: Request) {
     await notifyWhatsApp(data);
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[kontakt] Notion-Fehler:", err);
+    console.error("[kontakt] Lead-Speicher-Fehler:", err);
     return NextResponse.json({ ok: false, reason: "store_failed" }, { status: 502 });
   }
 }
