@@ -11,13 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   }> = [
     { path: "", priority: 1.0, changeFrequency: "weekly" },
+    { path: "/webseiten", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/akademie", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/mitentwickelt", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/premium-angebot", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/special-launch-angebot", priority: 0.8, changeFrequency: "monthly" },
     { path: "/referenzen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/podcast", priority: 0.7, changeFrequency: "weekly" },
     { path: "/gpt-team", priority: 0.7, changeFrequency: "monthly" },
     { path: "/brandguide", priority: 0.6, changeFrequency: "monthly" },
     { path: "/meditation", priority: 0.6, changeFrequency: "monthly" },

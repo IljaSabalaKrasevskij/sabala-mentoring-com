@@ -18,10 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://sabala-mentoring.com";
-const siteName = "Sabala Mentoring";
-const siteTitle = "Sabala Mentoring | Liebe auf den ersten Klick. Dein Premium-Webauftritt aus einem Guss.";
+const siteName = "Sabala Studios";
+const siteTitle = "Sabala Studios · Ich bringe KI in dein Unternehmen";
 const siteDescription =
-  "Premium-Webauftritt und Begleitung für kreative Visionäre, Pioniere und Macher. Die Welten verbinden, sich ausdrücken und etwas bewegen wollen. Strategie, Brand, Webseite und Pflege aus einer Hand. Geführt von Ilja Krasevskij.";
+  "KI-Lösungen, Premium-Webseiten und eine Akademie für Unternehmen, die KI wirklich nutzen wollen. Für dich gebaut, mit dir entwickelt, dir beigebracht. Von Ilja Krasevskij.";
 // TODO: og-image.jpg (1200×630) in /public/ ablegen, sobald Brand-OG-Image vorbereitet ist
 const ogImage = `${siteUrl}/og-image.jpg`;
 
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: "%s | Sabala Mentoring",
+    template: "%s · Sabala Studios",
   },
   description: siteDescription,
   authors: [{ name: "Ilja Krasevskij", url: `${siteUrl}/ueber-mich` }],
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Sabala Mentoring — Premium-Auftritt für Menschen, die wirklich etwas bewegen",
+        alt: "Sabala Studios. Ich bringe KI in dein Unternehmen.",
       },
     ],
   },
@@ -99,17 +99,17 @@ const personSchema = {
   "@id": `${siteUrl}/#ilja`,
   name: "Ilja Krasevskij",
   url: `${siteUrl}/ueber-mich`,
-  jobTitle: "Founder & Premium-Mentor",
+  jobTitle: "Founder, Sabala Studios",
   worksFor: { "@id": `${siteUrl}/#organization` },
   email: "mailto:ilja.krasevskij@gmail.com",
   knowsAbout: [
-    "Premium-Positionierung",
-    "Premium-Webauftritt für kreative Visionäre",
-    "Webdesign für Pioniere",
-    "Brand-Strategie & Customer Journey",
-    "Marktposition-Audit",
-    "Mentoring & strategische Begleitung",
+    "KI-Integration für Unternehmen",
+    "Custom GPTs",
+    "KI-Agenten und Agent OS",
+    "Premium-Webseiten mit eigenem Code",
     "SEO und GEO für KI-Suchen",
+    "KI-Akademie und Workshops",
+    "Co-Development",
   ],
 };
 
