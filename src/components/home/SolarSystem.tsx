@@ -215,6 +215,7 @@ function Planet({
   focused,
   anyFocused,
   look,
+  mobile,
   onSelect,
   onHover,
 }: {
@@ -223,6 +224,7 @@ function Planet({
   focused: boolean;
   anyFocused: boolean;
   look: Look;
+  mobile: boolean;
   onSelect: (i: number) => void;
   onHover: (i: number | null) => void;
 }) {
@@ -290,7 +292,7 @@ function Planet({
   });
 
   return (
-    <group position={data.position}>
+    <group position={mobile ? data.mPos : data.position}>
       <group ref={groupRef}>
         <mesh ref={coreRef}>
           <sphereGeometry args={[data.size, 128, 128]} />
@@ -384,9 +386,7 @@ function Planet({
 /* ─────────────────────────────────────────────────────────────────────────
    Kamera-Rig — Maus-Parallax + Dive-In (Planet nach links)
    ───────────────────────────────────────────────────────────────────────── */
-const DEFAULT_CAM = new THREE.Vector3(0, 0, 15);
-
-function CameraRig({ focusIndex }: { focusIndex: number | null }) {
+function CameraRig({ focusIndex, mobile }: { focusIndex: number | null; mobile: boolean }) {
   const { camera, pointer } = useThree();
   const lookAt = useRef(new THREE.Vector3(0, 0, 0));
   useFrame((_, delta) => {
@@ -394,13 +394,20 @@ function CameraRig({ focusIndex }: { focusIndex: number | null }) {
     let targetPos: THREE.Vector3;
     let targetLook: THREE.Vector3;
     if (focusIndex !== null) {
-      const p = new THREE.Vector3(...SYSTEM[focusIndex].position);
+      const sp = mobile ? SYSTEM[focusIndex].mPos : SYSTEM[focusIndex].position;
+      const p = new THREE.Vector3(...sp);
       const d = SYSTEM[focusIndex].size + 4.0;
-      // Blickpunkt rechts vom Planeten → Planet rückt nach links, rechts Platz fürs Panel
-      targetPos = new THREE.Vector3(p.x + 1.0, p.y + 0.3, p.z + d);
-      targetLook = new THREE.Vector3(p.x + 3.6, p.y, p.z);
+      if (mobile) {
+        // Panel ist auf Mobile fast Vollbild → einfach gerade reinzoomen, Planet zentriert
+        targetPos = new THREE.Vector3(p.x, p.y, p.z + d);
+        targetLook = new THREE.Vector3(p.x, p.y, p.z);
+      } else {
+        // Blickpunkt rechts vom Planeten → Planet rückt nach links, rechts Platz fürs Panel
+        targetPos = new THREE.Vector3(p.x + 1.0, p.y + 0.3, p.z + d);
+        targetLook = new THREE.Vector3(p.x + 3.6, p.y, p.z);
+      }
     } else {
-      targetPos = DEFAULT_CAM.clone();
+      targetPos = new THREE.Vector3(0, 0, mobile ? 16 : 15);
       targetPos.x += pointer.x * 0.9;
       targetPos.y += pointer.y * 0.6;
       targetLook = new THREE.Vector3(0, 0, 0);
@@ -419,10 +426,12 @@ function CameraRig({ focusIndex }: { focusIndex: number | null }) {
 function ScreenProjector({
   hover,
   focusActive,
+  mobile,
   labelRef,
 }: {
   hover: number | null;
   focusActive: boolean;
+  mobile: boolean;
   labelRef: { current: HTMLDivElement | null };
 }) {
   const { camera, size } = useThree();
@@ -435,10 +444,11 @@ function ScreenProjector({
       return;
     }
     const p = SYSTEM[hover];
+    const sp = mobile ? p.mPos : p.position;
     v.set(
-      p.position[0] + p.labelSide * (p.size * 1.15 + 0.45),
-      p.position[1] + p.size * 0.45 + (p.labelDy || 0),
-      p.position[2]
+      sp[0] + p.labelSide * (p.size * 1.15 + 0.45),
+      sp[1] + p.size * 0.45 + (p.labelDy || 0),
+      sp[2]
     );
     v.project(camera);
     el.style.transform = `translate(${(v.x * 0.5 + 0.5) * size.width}px, ${(-v.y * 0.5 + 0.5) * size.height}px)`;
@@ -483,6 +493,7 @@ function Scene({
   focusIndex,
   hover,
   look,
+  mobile,
   labelRef,
   onSelect,
   onHover,
@@ -490,6 +501,7 @@ function Scene({
   focusIndex: number | null;
   hover: number | null;
   look: Look;
+  mobile: boolean;
   labelRef: { current: HTMLDivElement | null };
   onSelect: (i: number) => void;
   onHover: (i: number | null) => void;
@@ -507,13 +519,14 @@ function Scene({
             focused={focusIndex === i}
             anyFocused={focusIndex !== null}
             look={look}
+            mobile={mobile}
             onSelect={onSelect}
             onHover={onHover}
           />
         ))}
       </group>
-      <ScreenProjector hover={hover} focusActive={focusIndex !== null} labelRef={labelRef} />
-      <CameraRig focusIndex={focusIndex} />
+      <ScreenProjector hover={hover} focusActive={focusIndex !== null} mobile={mobile} labelRef={labelRef} />
+      <CameraRig focusIndex={focusIndex} mobile={mobile} />
       <EffectComposer>
         <Bloom intensity={look.bloom} luminanceThreshold={look.threshold} luminanceSmoothing={0.8} mipmapBlur radius={0.55} />
         <Vignette eskil={false} offset={0.22} darkness={0.72} />
@@ -670,8 +683,15 @@ export default function SolarSystem() {
   const [focus, setFocus] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
   const [inside, setInside] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const labelRef = useRef<HTMLDivElement>(null);
   useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const onR = () => setMobile(window.innerWidth < 768);
+    onR();
+    window.addEventListener("resize", onR);
+    return () => window.removeEventListener("resize", onR);
+  }, []);
 
   const selected = useMemo(() => (focus !== null ? SYSTEM[focus] : null), [focus]);
   const hovered = useMemo(() => (hover !== null ? SYSTEM[hover] : null), [hover]);
@@ -690,13 +710,13 @@ export default function SolarSystem() {
       <div className="absolute inset-0 z-0">
         {mounted && (
           <Canvas
-            camera={{ position: [0, 0, 15], fov: 50 }}
-            dpr={[1, 2]}
+            camera={{ position: [0, 0, mobile ? 16 : 15], fov: 50 }}
+            dpr={mobile ? [1, 1.5] : [1, 2]}
             gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
             onPointerMissed={() => setFocus(null)}
             style={{ background: "#0A0806" }}
           >
-            <Scene focusIndex={focus} hover={hover} look={look} labelRef={labelRef} onSelect={setFocus} onHover={setHover} />
+            <Scene focusIndex={focus} hover={hover} look={look} mobile={mobile} labelRef={labelRef} onSelect={setFocus} onHover={setHover} />
           </Canvas>
         )}
       </div>
