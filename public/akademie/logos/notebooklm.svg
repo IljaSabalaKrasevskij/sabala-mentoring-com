@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="nlm-bg" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4285F4"/>
+      <stop offset="0.5" stop-color="#9334E9"/>
+      <stop offset="1" stop-color="#E94334"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="88" height="88" rx="22" fill="url(#nlm-bg)"/>
+  <path d="M50 22 C 52 38, 62 48, 78 50 C 62 52, 52 62, 50 78 C 48 62, 38 52, 22 50 C 38 48, 48 38, 50 22 Z" fill="white"/>
+  <path d="M72 26 C 73 31, 75 33, 80 34 C 75 35, 73 37, 72 42 C 71 37, 69 35, 64 34 C 69 33, 71 31, 72 26 Z" fill="white" opacity="0.85"/>
+</svg>

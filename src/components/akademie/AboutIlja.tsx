@@ -22,7 +22,7 @@ export default function AboutIlja() {
         >
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 24px 60px rgba(80,60,20,0.18)" }}>
             <Brackets color="rgba(184,150,62,0.6)" inset={12} size={14} />
-            <Image src="/hero/ilja-default.png" alt="Ilja Krasevskij" fill className="object-cover object-top" />
+            <Image src="/akademie/ilja-trainer.jpg" alt="Ilja Krasevskij" fill sizes="(max-width: 768px) 90vw, 400px" className="object-cover object-center" priority={false} />
           </div>
           {/* Gold-Akzent-Linie */}
           <span className="absolute -bottom-3 left-8 right-8 h-px" style={{ background: "linear-gradient(90deg, transparent, var(--gold), transparent)" }} />
@@ -52,6 +52,33 @@ export default function AboutIlja() {
                 {b}
               </span>
             ))}
+          </div>
+
+          {/* Trust-Bar — Zertifizierungen / Verbände */}
+          <div className="ilja-trust mt-10 border-t pt-7" style={{ borderColor: "rgba(184,150,62,0.22)" }}>
+            <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.26em]" style={{ color: "rgba(80,60,20,0.55)" }}>
+              // verifiziert & zertifiziert
+            </p>
+            <div className="flex flex-wrap items-center gap-x-9 gap-y-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/trust/avendoo.svg"
+                alt="Avendoo · Digitaler Trainer seit 5 Jahren"
+                className="h-9 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/trust/icf.png"
+                alt="ICF Germany — International Coaching Federation"
+                className="h-9 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/trust/provenexpert.png"
+                alt="ProvenExpert — geprüfte Bewertungen"
+                className="h-7 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              />
+            </div>
           </div>
         </motion.div>
       </div>
