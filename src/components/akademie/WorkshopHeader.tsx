@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Brackets } from "./shared";
+import { ACADEMY_CHECKOUT_URL, Brackets } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WorkshopHeader — der eigentliche, IMMER sichtbare Workshop-Kopf. Titel, Termine,
@@ -88,7 +88,9 @@ export default function WorkshopHeader() {
           className="mt-9 flex flex-wrap items-center gap-5"
         >
           <a
-            href="#preis"
+            href={ACADEMY_CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "#b8963e", color: "#0a0806", letterSpacing: "0.08em", padding: "17px 38px", fontSize: "1rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}

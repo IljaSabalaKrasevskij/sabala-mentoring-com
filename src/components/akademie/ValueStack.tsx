@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Brackets, Eyebrow } from "./shared";
+import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    ValueStack — Hormozi-Methode. Jede Zeile lädt einzeln ein, der Gesamtwert
@@ -59,7 +59,7 @@ export default function ValueStack() {
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[60vh] w-[70vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.12), transparent 70%)" }} />
 
       <div className="relative mx-auto max-w-2xl">
-        <Eyebrow>// was drin ist</Eyebrow>
+        <Eyebrow>{"// was drin ist"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +126,9 @@ export default function ValueStack() {
           </p>
           <div className="mt-7 flex justify-center">
             <a
-              href="#preis"
+              href={ACADEMY_CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 font-sans font-semibold transition-all"
               style={{ background: "#0a0806", color: "var(--gold-light)", letterSpacing: "0.08em", padding: "18px 40px", fontSize: "1rem" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#2e2b26")}

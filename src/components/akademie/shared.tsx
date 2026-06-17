@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 
+export const ACADEMY_CHECKOUT_URL = "https://sabala-mentoring.thrivecart.com/sabala-academy-claude-memorysystem/";
+
 /* HUD-Eck-Brackets — gibt Karten/Buttons einen „digitalen Rahmen" (aus ValuesManifesto übernommen) */
 export function Brackets({
   color,

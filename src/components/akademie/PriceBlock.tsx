@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brackets, Eyebrow } from "./shared";
+import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
 
 /* Preis + Dringlichkeit + CTA. Gold-Glow-Rahmen, klar, ohne Druck-Pathos. */
 
@@ -20,7 +20,7 @@ export default function PriceBlock() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.16), transparent 65%)" }} />
 
       <div className="relative mx-auto max-w-xl text-center">
-        <Eyebrow>// dein platz im ersten durchlauf</Eyebrow>
+        <Eyebrow>{"// dein platz im ersten durchlauf"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +84,9 @@ export default function PriceBlock() {
 
           {/* CTA */}
           <a
-            href="#"
+            href={ACADEMY_CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group mt-9 inline-flex w-full items-center justify-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "var(--gold)", color: "#0a0806", letterSpacing: "0.08em", padding: "20px 32px", fontSize: "1.05rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)")}
