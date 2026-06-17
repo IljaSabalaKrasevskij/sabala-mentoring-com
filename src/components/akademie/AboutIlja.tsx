@@ -59,24 +59,30 @@ export default function AboutIlja() {
             <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.26em]" style={{ color: "rgba(80,60,20,0.55)" }}>
               // verifiziert & zertifiziert
             </p>
-            <div className="flex flex-wrap items-center gap-x-9 gap-y-5">
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/trust/avendoo.svg"
-                alt="Avendoo · Digitaler Trainer seit 5 Jahren"
-                className="h-9 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                src="/trust/emrich.gif"
+                alt="EMRICH Consulting — Business-Trainer-Ausbildung 2022"
+                className="h-10 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/trust/icf.png"
-                alt="ICF Germany — International Coaching Federation"
-                className="h-9 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                src="/trust/ica.png"
+                alt="ICA — International Coaching Association · Certified Trainer"
+                className="h-14 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/trust/fhm-virtuelle.png"
+                alt="FHM-Gütesiegel — Zertifizierter eTrainer · Virtuelle Unterrichtsqualität"
+                className="h-14 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/trust/provenexpert.png"
                 alt="ProvenExpert — geprüfte Bewertungen"
-                className="h-7 w-auto opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                className="h-7 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
               />
             </div>
           </div>
