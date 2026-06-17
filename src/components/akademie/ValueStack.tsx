@@ -112,7 +112,7 @@ export default function ValueStack() {
 
         {/* Preis-Kipp — edler, mit Shimmer-Sweep + sanftem Glow-Pulse */}
         <div
-          className="vs-price vs-price-reveal relative mt-10 overflow-hidden rounded-2xl px-8 py-10 text-center"
+          className="vs-price relative mt-10 overflow-hidden rounded-2xl px-8 py-10 text-center"
           style={{ background: "linear-gradient(135deg, #B8963E 0%, #d4ae5a 45%, #B8963E 100%)" }}
         >
           {/* Shimmer-Sweep über den Block */}
