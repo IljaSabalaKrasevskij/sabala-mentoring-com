@@ -1,144 +1,139 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Mit dir entwickelt",
-  description:
-    "Co-Development, Project-Rescue und Agentensysteme. Ich steige als technischer Partner in dein Projekt ein und wir bauen es gemeinsam zu Ende.",
-};
+import { motion } from "motion/react";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   /mitentwickelt — zwei Säulen, High-End editorial.
+   Säule 1: Co-Development & Frontend/Design  ·  Säule 2: Agentensysteme.
+   Der Kontakt-Block kommt global aus dem Layout darunter.
+   ───────────────────────────────────────────────────────────────────────── */
 
 const SAEULEN = [
   {
-    eyebrow: "Säule 01",
+    n: "01",
     accent: "#D4823C",
-    title: "Co-Development & Rescue",
-    lead: "Dein Projekt läuft schon, steckt aber fest, oder dir fehlt jemand, der den technischen Teil mit dir auf Augenhöhe trägt. Ich steige als Partner in dein bestehendes Projekt ein, und wir bringen es gemeinsam dahin, wo es hingehört.",
+    eyebrow: "Co-Development & Design",
+    title: "Wir bauen dein Projekt gemeinsam weiter.",
+    lead: "Du hast ein laufendes Projekt und brauchst jemanden, der den technischen Teil mit dir auf Augenhöhe trägt. Ich steige als Partner in deinen Code ein, und sehr oft ist es genau das Design, das am Ende den Unterschied macht.",
+    bg: "var(--tech-bg)",
     points: [
-      {
-        id: "rescue",
-        name: "Project Rescue",
-        body: "Festgefahrene Projekte bringe ich wieder ins Rollen, indem ich technische Schulden aufräume, den Code sortiere und aus einem hängenden Stand wieder ein Projekt mache, das vorankommt.",
-      },
-      {
-        id: "frontend",
-        name: "Frontend & UX",
-        body: "Ich baue das Frontend so, dass es sich für deine Nutzer richtig anfühlt, klar, schnell und mit einem Design, das deine Marke ernst nimmt.",
-      },
-      {
-        id: "partner",
-        name: "Partner auf Augenhöhe",
-        body: "Du bekommst ein Gegenüber, das deine Architektur versteht, mitdenkt und ehrlich sagt, was trägt und was du besser anders löst.",
-      },
+      { id: "codev", name: "Co-Development", body: "Ich arbeite in deinem Repo mit, denke in deiner Architektur und bringe das Projekt mit dir Schritt für Schritt dahin, wo es hin soll." },
+      { id: "frontend", name: "Frontend & Design", body: "Gerade bei technik- und backendlastigen Teams hebt ein starkes Frontend alles, ich baue Oberflächen, die sich klar, schnell und hochwertig anfühlen." },
+      { id: "partner", name: "Partner auf Augenhöhe", body: "Du bekommst ein Gegenüber, das mitdenkt, ehrlich sagt was trägt, und dir den Rücken freihält, statt nur Tickets abzuarbeiten." },
     ],
-    fuer: "Für Gründer und Teams mit einem laufenden Projekt, die einen technischen Partner suchen, der mehr tut als Tickets abarbeiten.",
+    fuer: "Für Gründer und Teams mit laufendem Projekt, die einen Entwickler mit echtem Gespür für Design suchen.",
   },
   {
-    eyebrow: "Säule 02",
-    accent: "#B8963E",
-    title: "Agentensysteme & Automatisierung",
-    lead: "Wenn in deinem Business immer wieder dieselbe Arbeit anfällt, bauen wir gemeinsam KI-Agenten, die sie übernehmen, sauber in deine Abläufe eingebettet und auf deine Daten zugeschnitten.",
+    n: "02",
+    accent: "#D4AE5A",
+    eyebrow: "Agentensysteme & Automatisierung",
+    title: "Wir bauen KI fest in deinen Alltag ein.",
+    lead: "Wenn in deinem Business immer wieder dieselbe Arbeit anfällt, entwickeln wir gemeinsam KI-Agenten, die sie übernehmen, sauber in deine Abläufe eingebettet und auf deine Daten zugeschnitten.",
+    bg: "#0E0B08",
     points: [
-      {
-        id: "agenten",
-        name: "KI-Agenten für wiederkehrende Arbeit",
-        body: "Recherche, Aufbereitung, Antwortentwürfe und Reporting nehmen wir aus deinem Tag heraus und geben sie an Agenten, die rund um die Uhr für dich laufen.",
-      },
-      {
-        id: "workflows",
-        name: "Workflow-Automatisierung",
-        body: "Deine Tools reden endlich miteinander, sodass Informationen automatisch dort landen, wo du sie brauchst, ganz ohne Copy-Paste zwischen zehn Programmen.",
-      },
-      {
-        id: "agent-os",
-        name: "Agent OS",
-        body: "Du bekommst ein eigenes Cockpit, in dem du deine Agenten siehst, steuerst und erweiterst, damit das System mit deinem Business mitwächst.",
-      },
+      { id: "agenten", name: "KI-Agenten für wiederkehrende Arbeit", body: "Recherche, Aufbereitung, Antwortentwürfe und Reporting nehmen wir aus deinem Tag heraus und geben sie an Agenten, die rund um die Uhr für dich laufen." },
+      { id: "workflows", name: "Workflow-Automatisierung", body: "Deine Tools reden endlich miteinander, sodass Informationen automatisch dort landen, wo du sie brauchst, ganz ohne Copy-Paste zwischen zehn Programmen." },
+      { id: "agent-os", name: "Agent OS", body: "Du bekommst ein eigenes Cockpit, in dem du deine Agenten siehst, steuerst und erweiterst, damit das System mit deinem Business mitwächst." },
     ],
     fuer: "Für Unternehmen, die KI fest in ihren Alltag einbauen wollen, über das reine Ausprobieren hinaus.",
   },
 ];
 
 const ABLAUF = [
-  { n: "01", t: "Wir reden", b: "In einem ersten Gespräch schaue ich mir an, wo du stehst, was klemmt und was du erreichen willst, ganz ohne Verpflichtung." },
+  { n: "01", t: "Wir reden", b: "In einem ersten Gespräch schaue ich mir an, wo du stehst und was du erreichen willst, ganz ohne Verpflichtung." },
   { n: "02", t: "Wir steigen ein", b: "Ich arbeite mich in deinen Code oder deine Abläufe ein, und wir legen gemeinsam fest, was zuerst dran ist." },
   { n: "03", t: "Wir bauen weiter", b: "Wir entwickeln Schritt für Schritt, du bleibst jederzeit im Bild, und am Ende führst du es selbst weiter oder behältst mich an Bord." },
 ];
+
+const fade = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+};
 
 export default function MitentwickeltPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 pb-24 pt-40" style={{ background: "var(--tech-bg)" }}>
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[60vh] w-[85vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(212,130,60,0.12), transparent 70%)" }} />
-        <div className="relative mx-auto max-w-3xl text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.34em] text-gold">// mit dir entwickelt</p>
-          <h1 className="mt-6 font-serif leading-[1.04] text-cream" style={{ fontSize: "clamp(2.8rem, 7vw, 5.5rem)", letterSpacing: "-0.015em" }}>
+      <section className="relative flex min-h-[80vh] items-center overflow-hidden px-6" style={{ background: "var(--tech-bg)" }}>
+        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[70vh] w-[90vw] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(ellipse at center, rgba(212,130,60,0.14), transparent 68%)" }} />
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative mx-auto max-w-4xl text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-gold">// mit dir entwickelt</p>
+          <h1 className="mx-auto mt-8 font-serif leading-[1.02] text-cream" style={{ fontSize: "clamp(2.9rem, 8vw, 6.5rem)", letterSpacing: "-0.02em" }}>
             Wir bauen es<br />gemeinsam zu Ende.
           </h1>
-          <p className="mx-auto mt-8 max-w-xl text-[1.25rem] leading-relaxed text-warm-light/85">
-            Manche Projekte brauchen ein technisches Gegenüber auf Augenhöhe, jemanden, der mit dir in den Code steigt, dein Vorhaben wirklich versteht und es mit dir fertig macht. Genau dafür gibt es diesen Weg.
+          <p className="mx-auto mt-9 max-w-xl text-[1.25rem] leading-relaxed text-warm-light/85">
+            Manche Projekte brauchen ein technisches Gegenüber auf Augenhöhe, jemanden, der mit dir in den Code steigt, dein Vorhaben wirklich versteht und es mit dir fertig macht. Zwei Wege, wie das aussieht.
           </p>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Zwei Säulen */}
-      <section className="px-6 py-24" style={{ background: "var(--cream)" }}>
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-          {SAEULEN.map((s) => (
-            <div key={s.title} className="flex flex-col rounded-[1.75rem] bg-white p-9 sm:p-11" style={{ border: "1px solid rgba(46,43,38,0.08)", boxShadow: "0 20px 50px rgba(46,43,38,0.05)" }}>
+      {/* Zwei Säulen — große, alternierende Blöcke */}
+      {SAEULEN.map((s) => (
+        <section key={s.n} className="relative overflow-hidden px-6 py-[16vh]" style={{ background: s.bg }}>
+          {/* Riesige Wasserzeichen-Nummer */}
+          <span
+            className="pointer-events-none absolute -top-10 right-2 select-none font-serif leading-none sm:right-10"
+            style={{ fontSize: "clamp(9rem, 26vw, 22rem)", color: s.accent, opacity: 0.07 }}
+            aria-hidden
+          >
+            {s.n}
+          </span>
+
+          <div className="relative mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.85fr_1fr]">
+            {/* Linke Spalte: Titel */}
+            <motion.div {...fade} transition={{ duration: 0.6 }}>
               <div className="flex items-center gap-3">
                 <span className="h-2.5 w-2.5 rounded-full" style={{ background: s.accent }} />
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em]" style={{ color: s.accent }}>{s.eyebrow}</span>
               </div>
-              <h2 className="mt-5 font-serif text-[2.2rem] leading-tight text-deep">{s.title}</h2>
-              <p className="mt-4 text-[1.05rem] leading-relaxed text-warm-mid">{s.lead}</p>
-
-              <div className="mt-8 flex flex-col gap-6">
-                {s.points.map((p) => (
-                  <div key={p.id} id={p.id} className="scroll-mt-28 border-t pt-5" style={{ borderColor: "rgba(46,43,38,0.08)" }}>
-                    <h3 className="font-serif text-[1.3rem] text-deep">{p.name}</h3>
-                    <p className="mt-2 text-[0.98rem] leading-relaxed text-warm-mid">{p.body}</p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-8 rounded-xl px-4 py-3 text-[0.9rem] leading-relaxed text-warm-mid" style={{ background: "var(--warm-light)" }}>
+              <h2 className="mt-6 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.2rem, 4.6vw, 3.6rem)", letterSpacing: "-0.015em" }}>
+                {s.title}
+              </h2>
+              <p className="mt-7 max-w-md text-[1.1rem] leading-relaxed text-warm-light/75">{s.lead}</p>
+              <p className="mt-9 inline-block rounded-full px-4 py-2 font-mono text-[0.62rem] uppercase tracking-[0.18em]" style={{ border: `1px solid ${s.accent}55`, color: s.accent }}>
                 {s.fuer}
               </p>
-            </div>
-          ))}
-        </div>
-      </section>
+            </motion.div>
+
+            {/* Rechte Spalte: Punkte mit Hairlines */}
+            <motion.div {...fade} transition={{ duration: 0.6, delay: 0.12 }} className="flex flex-col">
+              {s.points.map((p, i) => (
+                <div
+                  key={p.id}
+                  id={p.id}
+                  className="scroll-mt-28 border-t py-7"
+                  style={{ borderColor: "rgba(255,255,255,0.09)", borderBottom: i === s.points.length - 1 ? "1px solid rgba(255,255,255,0.09)" : "none" }}
+                >
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-[12px]" style={{ color: s.accent }}>{String(i + 1).padStart(2, "0")}</span>
+                    <div>
+                      <h3 className="font-serif text-[1.6rem] text-cream">{p.name}</h3>
+                      <p className="mt-2 text-[1rem] leading-relaxed text-warm-light/70">{p.body}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      ))}
 
       {/* Wie es läuft */}
-      <section className="px-6 py-24" style={{ background: "var(--cream)" }}>
+      <section className="px-6 py-[15vh]" style={{ background: "var(--tech-bg)" }}>
         <div className="mx-auto max-w-5xl">
-          <p className="text-center font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// wie es läuft</p>
-          <div className="mt-12 grid gap-10 sm:grid-cols-3">
-            {ABLAUF.map((a) => (
-              <div key={a.n}>
-                <span className="font-mono text-[2rem] text-gold/40">{a.n}</span>
-                <h3 className="mt-3 font-serif text-[1.5rem] text-deep">{a.t}</h3>
-                <p className="mt-3 text-[0.98rem] leading-relaxed text-warm-mid">{a.b}</p>
-              </div>
+          <motion.p {...fade} transition={{ duration: 0.5 }} className="text-center font-mono text-[11px] uppercase tracking-[0.32em] text-gold">
+            // wie es läuft
+          </motion.p>
+          <div className="mt-14 grid gap-12 sm:grid-cols-3">
+            {ABLAUF.map((a, i) => (
+              <motion.div key={a.n} {...fade} transition={{ duration: 0.5, delay: i * 0.1 }}>
+                <span className="font-serif text-[2.6rem] text-gold/30">{a.n}</span>
+                <h3 className="mt-2 font-serif text-[1.6rem] text-cream">{a.t}</h3>
+                <p className="mt-3 text-[1rem] leading-relaxed text-warm-light/70">{a.b}</p>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="relative overflow-hidden px-6 py-28 text-center" style={{ background: "var(--tech-bg)" }}>
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[45vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.12), transparent 70%)" }} />
-        <div className="relative mx-auto max-w-2xl">
-          <h2 className="font-serif leading-[1.05] text-cream" style={{ fontSize: "clamp(2.4rem, 5.5vw, 4rem)" }}>
-            Steckt dein Projekt fest?
-          </h2>
-          <p className="mx-auto mt-6 max-w-lg text-[1.15rem] leading-relaxed text-warm-light/80">
-            Erzähl mir kurz, wo du stehst, und wir schauen gemeinsam, ob ich der richtige Partner für deinen nächsten Schritt bin.
-          </p>
-          <Link href="/#kontakt" className="mt-10 inline-flex items-center justify-center rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold">
-            Lass uns reden
-          </Link>
         </div>
       </section>
     </main>
