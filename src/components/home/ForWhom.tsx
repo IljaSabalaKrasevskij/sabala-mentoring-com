@@ -63,8 +63,8 @@ export default function ForWhom() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.05 }}
-          className="mx-auto mt-5 max-w-2xl text-center font-serif text-cream"
-          style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", lineHeight: 1.05 }}
+          className="mx-auto mt-5 max-w-3xl text-center font-serif text-cream"
+          style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.6rem)", lineHeight: 1.04, letterSpacing: "-0.01em" }}
         >
           Erkennst du dich?
         </motion.h2>
@@ -74,12 +74,12 @@ export default function ForWhom() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mx-auto mt-5 max-w-xl text-center text-[1.05rem] leading-relaxed text-warm-light/75"
+          className="mx-auto mt-6 max-w-2xl text-center text-[1.3rem] leading-relaxed text-warm-light/80"
         >
           Egal wo du gerade stehst, es gibt einen Weg, KI in dein Business zu bringen.
         </motion.p>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-20 grid gap-8 md:grid-cols-3">
           {SEGMENTS.map((s, i) => (
             <motion.div
               key={s.n}
@@ -87,24 +87,24 @@ export default function ForWhom() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.12 * i }}
-              whileHover={{ y: -6 }}
-              className="group relative flex flex-col rounded-2xl p-8"
+              whileHover={{ y: -8 }}
+              className="group relative flex flex-col rounded-3xl p-10"
               style={{
-                background: "linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012))",
-                border: "1px solid rgba(184,150,62,0.18)",
+                background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012))",
+                border: "1px solid rgba(184,150,62,0.2)",
                 backdropFilter: "blur(6px)",
               }}
             >
               {/* obere Akzentlinie in der Modus-Farbe */}
-              <span className="absolute left-8 right-8 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
+              <span className="absolute left-10 right-10 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
 
-              <span className="font-mono text-[11px] tracking-[0.3em]" style={{ color: s.color }}>
+              <span className="font-mono text-[12px] tracking-[0.3em]" style={{ color: s.color }}>
                 {s.n}
               </span>
 
-              <h3 className="mt-5 font-serif text-[1.65rem] leading-tight text-cream">{s.title}</h3>
+              <h3 className="mt-6 font-serif text-[2.1rem] leading-tight text-cream">{s.title}</h3>
 
-              <p className="mt-4 flex-1 text-[0.95rem] leading-relaxed text-warm-light/70">{s.pain}</p>
+              <p className="mt-5 flex-1 text-[1.12rem] leading-relaxed text-warm-light/75">{s.pain}</p>
 
               <span
                 className="mt-7 inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors"

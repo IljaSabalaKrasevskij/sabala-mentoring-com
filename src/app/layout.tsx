@@ -3,7 +3,7 @@ import { Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/Footer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 
 const instrumentSerif = Instrument_Serif({
