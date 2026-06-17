@@ -302,9 +302,9 @@ export default function ValuesManifesto() {
           style={{ width: "58vmin", height: "58vmin", background: "radial-gradient(circle, rgba(184,150,62,0.16), rgba(184,150,62,0.04) 45%, transparent 70%)" }}
         />
 
-        {/* Digitale Fäden — Verbindung von Mooni zu jeder Bubble (hinter Mooni) */}
+        {/* Digitale Fäden — Verbindung von Mooni zu jeder Bubble (nur Desktop) */}
         {vp.w > 0 && (
-          <svg className="pointer-events-none absolute inset-0 z-[5]" width={vp.w} height={vp.h}>
+          <svg className="pointer-events-none absolute inset-0 z-[5] hidden md:block" width={vp.w} height={vp.h}>
             {VALUES.map((v, i) => {
               const angle = (-90 + i * 60) * (Math.PI / 180);
               const tf = 0.74; // Faden endet VOR der Bubble (kein Durchqueren)
@@ -350,63 +350,122 @@ export default function ValuesManifesto() {
           It&apos;s all about
         </p>
 
-        {/* Die sechs Werte — 3D-Digital-Chips, radial, spreizen mit Scroll */}
-        {VALUES.map((v, i) => {
-          const angle = (-90 + i * 60) * (Math.PI / 180);
-          const x = Math.cos(angle) * rx;
-          const y = Math.sin(angle) * ry;
-          const isHot = hovered === i;
-          return (
-            <div
-              key={v.word}
-              className="absolute left-1/2 top-1/2 z-20 flex flex-col items-center text-center"
-              style={{ transform: `translate(calc(-50% + ${x}vmin), calc(-50% + ${y}vmin))`, transition: "transform 0.12s linear" }}
-            >
-              <button
-                type="button"
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => setHovered(hovered === i ? null : i)}
-                className="relative flex items-center gap-2.5 transition-all duration-300 ease-out"
-                style={{
-                  padding: "11px 22px",
-                  borderRadius: 13,
-                  background: isHot ? v.color : "linear-gradient(180deg, #ffffff, #f1ece2)",
-                  border: `1.5px solid ${v.color}`,
-                  boxShadow: isHot
-                    ? `0 18px 40px ${v.color}70, 0 5px 14px rgba(0,0,0,0.28)`
-                    : `0 13px 28px rgba(80,60,20,0.22), 0 3px 0 ${v.color}40, inset 0 1px 0 rgba(255,255,255,0.95)`,
-                  transform: isHot ? "translateY(-4px) scale(1.05)" : "translateY(0) scale(1)",
-                }}
+        {/* ───── Desktop: radiale 3D-Chips, spreizen mit Scroll ───── */}
+        <div className="hidden md:contents">
+          {VALUES.map((v, i) => {
+            const angle = (-90 + i * 60) * (Math.PI / 180);
+            const x = Math.cos(angle) * rx;
+            const y = Math.sin(angle) * ry;
+            const isHot = hovered === i;
+            return (
+              <div
+                key={v.word}
+                className="absolute left-1/2 top-1/2 z-20 flex flex-col items-center text-center"
+                style={{ transform: `translate(calc(-50% + ${x}vmin), calc(-50% + ${y}vmin))`, transition: "transform 0.12s linear" }}
               >
-                <Brackets color={isHot ? "#ffffff" : v.color} />
-                <span style={{ width: 9, height: 9, borderRadius: "50%", background: isHot ? "#fff" : v.color, boxShadow: `0 0 10px ${v.color}`, flex: "none" }} />
-                <span style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.2rem, 2.5vw, 2.05rem)", lineHeight: 1, color: isHot ? "#fff" : v.color }}>
-                  {v.word}
-                </span>
-              </button>
-              {isHot && (
-                <div
-                  className={`absolute left-1/2 z-30 w-[min(74vw,300px)] -translate-x-1/2 rounded-2xl p-5 text-center ${y < 0 ? "bottom-full mb-4" : "top-full mt-4"}`}
+                <button
+                  type="button"
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => setHovered(hovered === i ? null : i)}
+                  className="relative flex items-center gap-2.5 transition-all duration-300 ease-out"
                   style={{
-                    background: "rgba(255,255,255,0.95)",
+                    padding: "11px 22px",
+                    borderRadius: 13,
+                    background: isHot ? v.color : "linear-gradient(180deg, #ffffff, #f1ece2)",
                     border: `1.5px solid ${v.color}`,
-                    boxShadow: `0 24px 50px ${v.color}45, 0 8px 22px rgba(0,0,0,0.14)`,
-                    backdropFilter: "blur(10px)",
-                    animation: "value-pop 0.22s cubic-bezier(0.16,1,0.3,1) both",
+                    boxShadow: isHot
+                      ? `0 18px 40px ${v.color}70, 0 5px 14px rgba(0,0,0,0.28)`
+                      : `0 13px 28px rgba(80,60,20,0.22), 0 3px 0 ${v.color}40, inset 0 1px 0 rgba(255,255,255,0.95)`,
+                    transform: isHot ? "translateY(-4px) scale(1.05)" : "translateY(0) scale(1)",
                   }}
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: v.color }}>
+                  <Brackets color={isHot ? "#ffffff" : v.color} />
+                  <span style={{ width: 9, height: 9, borderRadius: "50%", background: isHot ? "#fff" : v.color, boxShadow: `0 0 10px ${v.color}`, flex: "none" }} />
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.2rem, 2.5vw, 2.05rem)", lineHeight: 1, color: isHot ? "#fff" : v.color }}>
                     {v.word}
                   </span>
-                  <p className="mt-2 text-[1.02rem] font-medium leading-relaxed" style={{ color: "#3A332C" }}>
-                    {v.desc}
-                  </p>
-                </div>
-              )}
+                </button>
+                {isHot && (
+                  <div
+                    className={`absolute left-1/2 z-30 w-[min(74vw,300px)] -translate-x-1/2 rounded-2xl p-5 text-center ${y < 0 ? "bottom-full mb-4" : "top-full mt-4"}`}
+                    style={{
+                      background: "rgba(255,255,255,0.95)",
+                      border: `1.5px solid ${v.color}`,
+                      boxShadow: `0 24px 50px ${v.color}45, 0 8px 22px rgba(0,0,0,0.14)`,
+                      backdropFilter: "blur(10px)",
+                      animation: "value-pop 0.22s cubic-bezier(0.16,1,0.3,1) both",
+                    }}
+                  >
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: v.color }}>
+                      {v.word}
+                    </span>
+                    <p className="mt-2 text-[1.02rem] font-medium leading-relaxed" style={{ color: "#3A332C" }}>
+                      {v.desc}
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ───── Mobile: kompakte Tab-Leiste am unteren Rand + Detail-Panel ───── */}
+        <div className="md:hidden absolute inset-x-0 bottom-0 z-20 px-4 pb-7 pt-4">
+          {/* Hauch von Backdrop für Lesbarkeit, lässt Mooni leicht durchschimmern */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[58%]" style={{ background: "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.85) 60%, var(--cream) 100%)" }} />
+
+          {/* Detail-Panel oben (über den Chips) — sanft animiert beim Tap */}
+          {hovered !== null && (
+            <div
+              key={`detail-${hovered}`}
+              className="mb-3 rounded-2xl p-4 text-center"
+              style={{
+                background: "rgba(255,255,255,0.96)",
+                border: `1.5px solid ${VALUES[hovered].color}`,
+                boxShadow: `0 18px 38px ${VALUES[hovered].color}40, 0 6px 16px rgba(0,0,0,0.1)`,
+                backdropFilter: "blur(8px)",
+                animation: "value-pop-mobile 0.24s cubic-bezier(0.16,1,0.3,1) both",
+              }}
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: VALUES[hovered].color }}>
+                {VALUES[hovered].word}
+              </span>
+              <p className="mt-1.5 text-[0.95rem] font-medium leading-snug" style={{ color: "#3A332C" }}>
+                {VALUES[hovered].desc}
+              </p>
             </div>
-          );
-        })}
+          )}
+
+          {/* 3×2 Chip-Grid */}
+          <div className="grid grid-cols-3 gap-2">
+            {VALUES.map((v, i) => {
+              const isHot = hovered === i;
+              return (
+                <button
+                  key={v.word}
+                  type="button"
+                  onClick={() => setHovered(hovered === i ? null : i)}
+                  className="relative flex items-center justify-center gap-1.5 px-2 py-2.5 transition-all duration-200"
+                  style={{
+                    borderRadius: 11,
+                    background: isHot ? v.color : "linear-gradient(180deg, #ffffff, #f3eee4)",
+                    border: `1.4px solid ${v.color}`,
+                    boxShadow: isHot
+                      ? `0 8px 20px ${v.color}55`
+                      : `0 5px 12px rgba(80,60,20,0.18), inset 0 1px 0 rgba(255,255,255,0.9)`,
+                    transform: isHot ? "scale(1.04)" : "scale(1)",
+                  }}
+                >
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: isHot ? "#fff" : v.color, boxShadow: `0 0 8px ${v.color}`, flex: "none" }} />
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: "0.95rem", lineHeight: 1, color: isHot ? "#fff" : v.color }}>
+                    {v.word}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Easter-Egg: klein, oben rechts, dezent cyan — wer's findet, klickt Mooni */}
         <button
@@ -424,7 +483,7 @@ export default function ValuesManifesto() {
       {/* Übergang in die dunkle Planeten-Sektion */}
       <div className="pointer-events-none absolute bottom-0 left-0 h-[28vh] w-full" style={{ background: "linear-gradient(to bottom, rgba(250,248,245,0), var(--tech-bg))" }} />
 
-      <style>{`@keyframes thread-flow { to { stroke-dashoffset: -9 } } @keyframes value-pop { from { opacity: 0; transform: translate(-50%, 8px) } to { opacity: 1; transform: translate(-50%, 0) } }`}</style>
+      <style>{`@keyframes thread-flow { to { stroke-dashoffset: -9 } } @keyframes value-pop { from { opacity: 0; transform: translate(-50%, 8px) } to { opacity: 1; transform: translate(-50%, 0) } } @keyframes value-pop-mobile { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }`}</style>
 
       {portal && <HeadPortal onClose={() => setPortal(false)} />}
     </section>
