@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const pathname = usePathname();
 
   // Menü beim Routenwechsel automatisch schließen
@@ -35,8 +36,25 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  // Auf der neuen Startseite bewusst kein Menü, nur auf Unterseiten
-  if (pathname === "/") return null;
+  // Startseite: Menü erst zeigen, wenn man am Hero vorbeigescrollt ist
+  // (rAF-Polling, weil Lenis native scroll-Events kappt)
+  useEffect(() => {
+    if (pathname !== "/") {
+      setRevealed(true);
+      return;
+    }
+    setRevealed(false);
+    let raf = 0;
+    const tick = () => {
+      setRevealed(window.scrollY > window.innerHeight * 0.85);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [pathname]);
+
+  // Über dem Hero kein Menü; auf der Startseite erscheint es erst nach dem Hero
+  if (pathname === "/" && !revealed) return null;
 
   return (
     <>
