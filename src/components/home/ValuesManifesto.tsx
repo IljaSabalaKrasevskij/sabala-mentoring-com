@@ -13,12 +13,12 @@ import * as THREE from "three";
 type Value = { word: string; desc: string; color: string };
 
 const VALUES: Value[] = [
-  { word: "love", desc: "Ich liebe, was ich baue.", color: "#C57B6F" }, // staubiges Terrakotta-Rosé
-  { word: "passion", desc: "Feuer. Bei jedem Projekt.", color: "#B14A33" }, // gedämpfte Glut
-  { word: "creativity", desc: "Wege, die keiner vorher ging.", color: "#CE9248" }, // warmes Amber
-  { word: "simplicity", desc: "Kompliziert raus, klar rein.", color: "#B8963E" }, // Marken-Gold
-  { word: "clarity", desc: "Klarheit vor Effekt.", color: "#5F8A86" }, // gedämpftes Teal
-  { word: "customization", desc: "Auf dich. Nicht von der Stange.", color: "#876F9C" }, // gedämpftes Pflaume
+  { word: "love", desc: "Dein Projekt wird mit echtem Herzblut gebaut und nicht im Akkord abgearbeitet.", color: "#C57B6F" }, // staubiges Terrakotta-Rosé
+  { word: "passion", desc: "Ich gebe bei deinem Projekt jedes Mal alles, vom ersten Entwurf bis zum Launch.", color: "#B14A33" }, // gedämpfte Glut
+  { word: "creativity", desc: "Du bekommst Lösungen, die deine Konkurrenz so nicht hat, statt Vorlagen von der Stange.", color: "#CE9248" }, // warmes Amber
+  { word: "simplicity", desc: "Komplizierte Technik mache ich für dich und dein Team kinderleicht nutzbar.", color: "#B8963E" }, // Marken-Gold
+  { word: "clarity", desc: "Du verstehst jederzeit, was passiert und warum, ganz ohne Fachchinesisch.", color: "#5F8A86" }, // gedämpftes Teal
+  { word: "customization", desc: "Alles wird genau auf dein Unternehmen zugeschnitten und kommt nie von der Stange.", color: "#876F9C" }, // gedämpftes Pflaume
 ];
 
 // Mooni's Geschichte — Terminal-Struktur (Header `h` / Absatz `p`)
@@ -287,7 +287,6 @@ export default function ValuesManifesto() {
   const radius = 24 + a * 16; // vmin
   const rx = radius * 1.18; // breiter horizontal
   const ry = radius * 0.9; // flacher vertikal
-  const descOpacity = Math.min(1, Math.max(0, (a - 0.1) / 0.4));
 
   // Pixel-Geometrie für die digitalen Fäden
   const vmin = Math.min(vp.w, vp.h) / 100;
@@ -385,9 +384,25 @@ export default function ValuesManifesto() {
                   {v.word}
                 </span>
               </button>
-              <p className="mt-3 max-w-[30vmin] text-[0.92rem] font-medium leading-snug" style={{ color: "#46403A", opacity: isHot ? 1 : 0.6 + descOpacity * 0.4, transition: "opacity 0.3s" }}>
-                {v.desc}
-              </p>
+              {isHot && (
+                <div
+                  className={`absolute left-1/2 z-30 w-[min(74vw,300px)] -translate-x-1/2 rounded-2xl p-5 text-center ${y < 0 ? "bottom-full mb-4" : "top-full mt-4"}`}
+                  style={{
+                    background: "rgba(255,255,255,0.95)",
+                    border: `1.5px solid ${v.color}`,
+                    boxShadow: `0 24px 50px ${v.color}45, 0 8px 22px rgba(0,0,0,0.14)`,
+                    backdropFilter: "blur(10px)",
+                    animation: "value-pop 0.22s cubic-bezier(0.16,1,0.3,1) both",
+                  }}
+                >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: v.color }}>
+                    {v.word}
+                  </span>
+                  <p className="mt-2 text-[1.02rem] font-medium leading-relaxed" style={{ color: "#3A332C" }}>
+                    {v.desc}
+                  </p>
+                </div>
+              )}
             </div>
           );
         })}
@@ -408,7 +423,7 @@ export default function ValuesManifesto() {
       {/* Übergang in die dunkle Planeten-Sektion */}
       <div className="pointer-events-none absolute bottom-0 left-0 h-[28vh] w-full" style={{ background: "linear-gradient(to bottom, rgba(250,248,245,0), var(--tech-bg))" }} />
 
-      <style>{`@keyframes thread-flow { to { stroke-dashoffset: -9 } }`}</style>
+      <style>{`@keyframes thread-flow { to { stroke-dashoffset: -9 } } @keyframes value-pop { from { opacity: 0; transform: translate(-50%, 8px) } to { opacity: 1; transform: translate(-50%, 0) } }`}</style>
 
       {portal && <HeadPortal onClose={() => setPortal(false)} />}
     </section>
