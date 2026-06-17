@@ -141,6 +141,7 @@ export default function Sessions() {
           sub="Obsidian + NotebookLM. Das Fundament, auf das Claude zugreift."
           modules={S1}
           after={S1_AFTER}
+          featured
         />
 
         {/* Video in der Mitte */}

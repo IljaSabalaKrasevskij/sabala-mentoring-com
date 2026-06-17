@@ -23,6 +23,13 @@ type Node = {
   x: number;
   y: number;
   side: "left" | "right" | "bottom";
+  // Schwebendes Original-Logo
+  logo: string;
+  // Wo das schwebende Logo relativ zur Pill sitzt (px-Offset)
+  logoDx: number;
+  logoDy: number;
+  // Phasenversatz für die Bob-Animation (s), damit alle drei asynchron schweben
+  floatPhase: number;
 };
 
 const NODES: Node[] = [
@@ -37,6 +44,10 @@ const NODES: Node[] = [
     x: 17,
     y: 24,
     side: "left",
+    logo: "/akademie/logos/obsidian.svg",
+    logoDx: -52,
+    logoDy: -68,
+    floatPhase: 0,
   },
   {
     key: "notebooklm",
@@ -49,6 +60,10 @@ const NODES: Node[] = [
     x: 83,
     y: 24,
     side: "right",
+    logo: "/akademie/logos/notebooklm.svg",
+    logoDx: 52,
+    logoDy: -68,
+    floatPhase: 1.3,
   },
   {
     key: "claude",
@@ -61,6 +76,10 @@ const NODES: Node[] = [
     x: 50,
     y: 74,
     side: "bottom",
+    logo: "/akademie/logos/claude.svg",
+    logoDx: 118,
+    logoDy: -6,
+    floatPhase: 2.6,
   },
 ];
 
@@ -165,6 +184,32 @@ export default function SystemConstellation() {
                 onMouseEnter={() => setHot(i)}
                 onMouseLeave={() => setHot(null)}
               >
+                {/* Schwebendes Original-Logo — sanftes Bobbing, drum herum
+                    versetzt zur Pill (logoDx/logoDy in px). Nicht-klickbar,
+                    damit die Pill darunter weiter den Hover triggert. */}
+                <motion.img
+                  src={n.logo}
+                  alt={`${n.name} Logo`}
+                  draggable={false}
+                  initial={{ opacity: 0, scale: 0.4 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.7, delay: 0.4 + 0.18 * i, ease: [0.16, 1, 0.3, 1] }}
+                  className="pointer-events-none absolute z-20 select-none"
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                    width: isHot ? 64 : 52,
+                    height: isHot ? 64 : 52,
+                    marginLeft: n.logoDx - (isHot ? 32 : 26),
+                    marginTop: n.logoDy - (isHot ? 32 : 26),
+                    filter: isHot
+                      ? `drop-shadow(0 8px 22px ${n.color}99) drop-shadow(0 0 18px ${n.color}66)`
+                      : `drop-shadow(0 6px 14px rgba(80,60,20,0.22))`,
+                    animation: `logo-float 5.2s ease-in-out ${n.floatPhase}s infinite`,
+                    transition: "width .3s, height .3s, margin .3s, filter .3s",
+                  }}
+                />
+
                 <motion.div
                   initial={{ opacity: 0, scale: 0.6 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -215,6 +260,10 @@ export default function SystemConstellation() {
       <style>{`
         @keyframes syn-flow { to { stroke-dashoffset: -3.6 } }
         @keyframes pulse-core { 0%,100% { transform: scale(1); opacity: .7 } 50% { transform: scale(1.35); opacity: 1 } }
+        @keyframes logo-float {
+          0%,100% { transform: translateY(0) rotate(-2deg) }
+          50%     { transform: translateY(-10px) rotate(2deg) }
+        }
       `}</style>
     </section>
   );
