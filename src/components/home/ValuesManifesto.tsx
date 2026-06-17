@@ -410,10 +410,10 @@ export default function ValuesManifesto() {
           })}
         </div>
 
-        {/* ───── Mobile: kompakte Tab-Leiste am unteren Rand + Detail-Panel ───── */}
-        <div className="md:hidden absolute inset-x-0 bottom-0 z-20 px-4 pb-7 pt-4">
+        {/* ───── Mobile: zentrierte Tab-Leiste + Detail-Panel ───── */}
+        <div className="md:hidden absolute inset-x-0 bottom-[8vh] z-20 mx-auto w-full max-w-[340px] px-4">
           {/* Hauch von Backdrop für Lesbarkeit, lässt Mooni leicht durchschimmern */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[58%]" style={{ background: "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.85) 60%, var(--cream) 100%)" }} />
+          <div className="pointer-events-none absolute inset-x-[-30vw] -bottom-[10vh] -top-[10vh] -z-10" style={{ background: "radial-gradient(ellipse at center, rgba(250,248,245,0.92), rgba(250,248,245,0.6) 55%, rgba(250,248,245,0) 85%)" }} />
 
           {/* Detail-Panel oben (über den Chips) — sanft animiert beim Tap */}
           {hovered !== null && (
@@ -437,8 +437,8 @@ export default function ValuesManifesto() {
             </div>
           )}
 
-          {/* 3×2 Chip-Grid */}
-          <div className="grid grid-cols-3 gap-2">
+          {/* 2×3 Chip-Grid — breitere Boxen, klar lesbar */}
+          <div className="grid grid-cols-2 gap-2.5">
             {VALUES.map((v, i) => {
               const isHot = hovered === i;
               return (
@@ -446,19 +446,19 @@ export default function ValuesManifesto() {
                   key={v.word}
                   type="button"
                   onClick={() => setHovered(hovered === i ? null : i)}
-                  className="relative flex items-center justify-center gap-1.5 px-2 py-2.5 transition-all duration-200"
+                  className="relative flex items-center justify-center gap-2 px-3 py-3 transition-all duration-200"
                   style={{
-                    borderRadius: 11,
+                    borderRadius: 12,
                     background: isHot ? v.color : "linear-gradient(180deg, #ffffff, #f3eee4)",
-                    border: `1.4px solid ${v.color}`,
+                    border: `1.5px solid ${v.color}`,
                     boxShadow: isHot
-                      ? `0 8px 20px ${v.color}55`
-                      : `0 5px 12px rgba(80,60,20,0.18), inset 0 1px 0 rgba(255,255,255,0.9)`,
+                      ? `0 10px 24px ${v.color}66`
+                      : `0 6px 14px rgba(80,60,20,0.2), inset 0 1px 0 rgba(255,255,255,0.9)`,
                     transform: isHot ? "scale(1.04)" : "scale(1)",
                   }}
                 >
-                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: isHot ? "#fff" : v.color, boxShadow: `0 0 8px ${v.color}`, flex: "none" }} />
-                  <span style={{ fontFamily: "var(--font-serif)", fontSize: "0.95rem", lineHeight: 1, color: isHot ? "#fff" : v.color }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: isHot ? "#fff" : v.color, boxShadow: `0 0 8px ${v.color}`, flex: "none" }} />
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.05rem", lineHeight: 1, color: isHot ? "#fff" : v.color }}>
                     {v.word}
                   </span>
                 </button>
