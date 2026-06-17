@@ -12,14 +12,14 @@ type PE = { score: string; reviews: string; rate: number; url: string };
 export default function Kontakt({ pe }: { pe?: PE }) {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "mailto">("idle");
-  const [form, setForm] = useState({ name: "", email: "", firma: "", anliegen: "", website: "" });
+  const [form, setForm] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const mailtoFallback = () => {
-    const body = [`Name: ${form.name}`, `E-Mail: ${form.email}`, `Firma: ${form.firma}`, "", form.anliegen].join("\n");
-    window.location.href = `mailto:sabala@sabala-mentoring.com?subject=${encodeURIComponent(`Anfrage: ${form.name || form.firma}`)}&body=${encodeURIComponent(body)}`;
+    const body = [`Vorname: ${form.vorname}`, `Nachname: ${form.nachname}`, `E-Mail: ${form.email}`, `Unternehmen: ${form.unternehmen}`, `Webseite: ${form.webseite}`, "", form.anliegen].join("\n");
+    window.location.href = `mailto:sabala@sabala-mentoring.com?subject=${encodeURIComponent(`Anfrage: ${form.vorname} ${form.nachname}`)}&body=${encodeURIComponent(body)}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -92,14 +92,18 @@ export default function Kontakt({ pe }: { pe?: PE }) {
             className="mt-12 space-y-4"
           >
             <div className="grid gap-4 sm:grid-cols-2">
-              <input className={field} style={fieldStyle} placeholder="Name" required value={form.name} onChange={set("name")} />
-              <input type="email" required className={field} style={fieldStyle} placeholder="E-Mail" value={form.email} onChange={set("email")} />
+              <input className={field} style={fieldStyle} placeholder="Vorname" required value={form.vorname} onChange={set("vorname")} />
+              <input className={field} style={fieldStyle} placeholder="Nachname" required value={form.nachname} onChange={set("nachname")} />
             </div>
-            <input className={field} style={fieldStyle} placeholder="Firma (optional)" value={form.firma} onChange={set("firma")} />
+            <input type="email" required className={field} style={fieldStyle} placeholder="E-Mail" value={form.email} onChange={set("email")} />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <input className={field} style={fieldStyle} placeholder="Unternehmen (optional)" value={form.unternehmen} onChange={set("unternehmen")} />
+              <input className={field} style={fieldStyle} placeholder="Deine Webseite (optional)" value={form.webseite} onChange={set("webseite")} />
+            </div>
             <textarea className={field} style={fieldStyle} rows={5} required placeholder="Was ist dein Wunsch? Woran steckst du fest? Schreib einfach drauflos." value={form.anliegen} onChange={set("anliegen")} />
 
             {/* Honeypot — fuer Menschen unsichtbar */}
-            <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={set("website")} className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden />
+            <input type="text" name="fax" tabIndex={-1} autoComplete="off" value={form.fax} onChange={set("fax")} className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden />
 
             <div className="flex flex-col items-center gap-4 pt-2 sm:flex-row sm:justify-between">
               <button type="submit" disabled={status === "sending"} className="w-full rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold disabled:opacity-60 sm:w-auto">
