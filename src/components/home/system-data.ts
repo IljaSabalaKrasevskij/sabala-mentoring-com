@@ -47,8 +47,8 @@ export const SYSTEM: PlanetData[] = [
     labelDy: 0.0,
     moons: [
       { name: "Webseiten", href: "/webseiten", desc: "Premium-Auftritt, der verkauft" },
-      { name: "Custom GPTs", href: "/webseiten#gpt", desc: "Dein Wissen als KI-Assistent" },
-      { name: "Agent OS", href: "/webseiten#agent-os", desc: "Autonome Agenten für dein Business" },
+      { name: "Custom GPTs", href: "/gpt-team", desc: "Dein Wissen als KI-Assistent" },
+      { name: "Agent OS", href: "/mitentwickelt#agenten", desc: "Autonome Agenten für dein Business" },
     ],
   },
   {

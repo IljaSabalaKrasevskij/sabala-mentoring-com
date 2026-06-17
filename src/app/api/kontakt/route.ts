@@ -18,22 +18,25 @@ export const runtime = "nodejs";
      CALLMEBOT_APIKEY    CallMeBot-API-Key     (optional)
 
    Erwartetes Notion-DB-Schema (Property-Namen exakt):
-     Name (Title) · Email (Email) · Firma (Text) · Anliegen (Text) ·
+     Name (Title) · Vorname (Text) · Nachname (Text) · Email (Email) ·
+     Unternehmen (Text) · Webseite (URL) · Anliegen (Text) ·
      Quelle (Text) · Status (Select)
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
-  name: z.string().trim().min(2, "Name zu kurz").max(120),
+  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
+  nachname: z.string().trim().min(1, "Nachname fehlt").max(80),
   email: z
     .string()
     .trim()
     .max(160)
     .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
-  firma: z.string().trim().max(160).optional().default(""),
+  unternehmen: z.string().trim().max(160).optional().default(""),
+  webseite: z.string().trim().max(200).optional().default(""),
   anliegen: z.string().trim().min(5, "Bitte ein paar Worte mehr").max(4000),
   quelle: z.string().trim().max(200).optional().default(""),
-  // Honeypot: echtes Feld heisst "website", muss leer bleiben
-  website: z.string().max(0).optional().default(""),
+  // Honeypot: Feld "fax" muss leer bleiben
+  fax: z.string().max(0).optional().default(""),
 });
 
 // Best-effort In-Memory-Rate-Limit (pro Lambda-Instanz): 5 Anfragen / 10 Min / IP
@@ -63,9 +66,12 @@ async function writeToNotion(data: z.infer<typeof Schema>): Promise<boolean> {
     body: JSON.stringify({
       parent: { database_id: db },
       properties: {
-        Name: { title: [{ text: { content: data.name } }] },
+        Name: { title: [{ text: { content: `${data.vorname} ${data.nachname}`.trim() } }] },
+        Vorname: { rich_text: [{ text: { content: data.vorname } }] },
+        Nachname: { rich_text: [{ text: { content: data.nachname } }] },
         Email: { email: data.email },
-        Firma: { rich_text: [{ text: { content: data.firma || "—" } }] },
+        Unternehmen: { rich_text: [{ text: { content: data.unternehmen || "" } }] },
+        Webseite: data.webseite ? { url: data.webseite } : { url: null },
         Anliegen: { rich_text: [{ text: { content: data.anliegen } }] },
         Quelle: { rich_text: [{ text: { content: data.quelle || "Website" } }] },
         Status: { select: { name: "Neu" } },
@@ -85,7 +91,7 @@ async function notifyWhatsApp(data: z.infer<typeof Schema>): Promise<void> {
   const apikey = process.env.CALLMEBOT_APIKEY;
   if (!phone || !apikey) return;
 
-  const text = `Neue Website-Anfrage\nVon: ${data.name}${data.firma ? ` (${data.firma})` : ""}\nMail: ${data.email}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen}`;
+  const text = `Neue Website-Anfrage\nVon: ${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\nMail: ${data.email}${data.webseite ? `\nWeb: ${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen}`;
   const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(text)}`;
   try {
     await fetch(url, { method: "GET" });
@@ -115,7 +121,7 @@ export async function POST(req: Request) {
   const data = parsed.data;
 
   // 3) Honeypot: stilles OK, nichts speichern
-  if (data.website) {
+  if (data.fax) {
     return NextResponse.json({ ok: true });
   }
 
