@@ -154,15 +154,14 @@ export default function Sessions() {
           <p className="mb-4 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-warm-mid">// 2 Minuten · warum das wichtig ist</p>
           <div className="group relative aspect-video overflow-hidden rounded-xl" style={{ background: "linear-gradient(135deg, #15110b, #0a0806)", border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 30px 70px rgba(0,0,0,0.5)" }}>
             <Brackets color="rgba(184,150,62,0.5)" inset={14} size={14} />
-            {/* Play-Button-Platzhalter */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full transition-transform group-hover:scale-110" style={{ background: "var(--gold)", boxShadow: "0 0 40px rgba(184,150,62,0.5)" }}>
-                <svg width="26" height="30" viewBox="0 0 26 30" fill="#0a0806">
-                  <path d="M0 0v30l26-15z" />
-                </svg>
-              </div>
-              <p className="mt-5 font-mono text-[12px] tracking-wide text-warm-light/50">[ Video-Platzhalter — Demo deines eigenen Systems ]</p>
-            </div>
+            <video
+              controls
+              preload="metadata"
+              poster="/akademie/akademie-intro-poster.jpg"
+              className="absolute inset-0 h-full w-full rounded-xl object-cover"
+            >
+              <source src="/akademie/akademie-intro-web.mp4" type="video/mp4" />
+            </video>
           </div>
         </motion.div>
 
