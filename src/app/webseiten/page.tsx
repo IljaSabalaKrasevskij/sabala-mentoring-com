@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 
@@ -49,7 +48,6 @@ export default function WebseitenPage() {
       <Signale />
       <Eigentum />
       <Typen />
-      <KontaktForm />
     </main>
   );
 }
@@ -83,7 +81,7 @@ function Hero() {
         <p className="mx-auto mt-9 max-w-2xl text-[1.3rem] leading-relaxed text-warm-light/85">
           Premium meint nicht teuer, Premium meint Substanz, die zu dem passt, was du verkaufst, und genau die baue ich dir, mit eigenem Code und deiner eigenen Stimme.
         </p>
-        <a href="#projekt" className="mt-12 inline-flex items-center gap-2 rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold">
+        <a href="#kontakt" className="mt-12 inline-flex items-center gap-2 rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold">
           Lass uns reden <span>↓</span>
         </a>
       </motion.div>
@@ -283,85 +281,3 @@ function Typen() {
   );
 }
 
-/* ── Kontakt-Formular ──────────────────────────────────────────────────── */
-function KontaktForm() {
-  const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ firma: "", name: "", email: "", budget: "", deadline: "", website: "", wunsch: "" });
-
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const body = [
-      `Firma: ${form.firma}`,
-      `Ansprechpartner: ${form.name}`,
-      `E-Mail: ${form.email}`,
-      `Budget: ${form.budget}`,
-      `Deadline: ${form.deadline}`,
-      `Bisherige Webseite: ${form.website}`,
-      "",
-      "Wunsch / Projekt:",
-      form.wunsch,
-    ].join("\n");
-    window.location.href = `mailto:ilja.krasevskij@gmail.com?subject=${encodeURIComponent(`Webseiten-Anfrage: ${form.firma || form.name}`)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-  };
-
-  const field = "w-full rounded-lg border bg-white/70 px-4 py-3 text-[0.95rem] outline-none transition-colors focus:border-[var(--gold)]";
-  const fieldStyle = { borderColor: "rgba(184,150,62,0.3)", color: "#2A2520" } as const;
-
-  return (
-    <section id="projekt" className="px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
-      <div className="mx-auto max-w-2xl">
-        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6 }} className="text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Erzähl mir von deinem Projekt</p>
-          <h2 className="mt-5 font-serif leading-[1.1] text-cream" style={{ fontSize: "clamp(2rem, 4.4vw, 3rem)" }}>
-            Ein paar Zeilen reichen.
-          </h2>
-          <p className="mx-auto mt-5 max-w-lg text-[1.02rem] leading-relaxed text-warm-light/75">
-            Schreib mir, wo du stehst und was du dir wünschst, dann antworte ich dir mit einem Terminvorschlag, 30 Minuten, in denen wir gemeinsam prüfen, ob wir zueinander passen, und du danach entscheidest.
-          </p>
-        </motion.div>
-
-        {sent ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-12 rounded-2xl p-8 text-center" style={{ border: "1px solid rgba(184,150,62,0.3)", background: "rgba(255,255,255,0.03)" }}>
-            <p className="font-serif text-[1.5rem] text-cream">Danke, das ist unterwegs.</p>
-            <p className="mt-3 text-warm-light/70">Dein Mailprogramm sollte sich geöffnet haben. Ich melde mich mit einem Terminvorschlag.</p>
-          </motion.div>
-        ) : (
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            onSubmit={handleSubmit}
-            className="mt-12 space-y-4"
-          >
-            <div className="grid gap-4 sm:grid-cols-2">
-              <input className={field} style={fieldStyle} placeholder="Firma" value={form.firma} onChange={set("firma")} />
-              <input className={field} style={fieldStyle} placeholder="Ansprechpartner" value={form.name} onChange={set("name")} />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <input type="email" required className={field} style={fieldStyle} placeholder="E-Mail" value={form.email} onChange={set("email")} />
-              <input className={field} style={fieldStyle} placeholder="Budget (ungefähr)" value={form.budget} onChange={set("budget")} />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <input className={field} style={fieldStyle} placeholder="Deadline" value={form.deadline} onChange={set("deadline")} />
-              <input className={field} style={fieldStyle} placeholder="Bisherige Webseite (Link)" value={form.website} onChange={set("website")} />
-            </div>
-            <textarea className={field} style={fieldStyle} rows={4} placeholder="Was wünschst du dir? Ein, zwei Sätze reichen." value={form.wunsch} onChange={set("wunsch")} />
-
-            <div className="flex flex-col items-center gap-4 pt-2 sm:flex-row sm:justify-between">
-              <button type="submit" className="w-full rounded-full bg-gold-light px-7 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold sm:w-auto">
-                Anfrage senden
-              </button>
-              <a href="https://wa.me/" className="font-mono text-[12px] uppercase tracking-[0.18em] text-warm-light/60 transition-colors hover:text-gold">
-                oder schreib mir auf WhatsApp →
-              </a>
-            </div>
-          </motion.form>
-        )}
-      </div>
-    </section>
-  );
-}

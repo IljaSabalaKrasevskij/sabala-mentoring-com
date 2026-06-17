@@ -57,7 +57,7 @@ export const SYSTEM: PlanetData[] = [
     title: "Mit dir entwickelt",
     subtitle: "deine Vision, unser gemeinsamer Code",
     pitch:
-      "Dein Projekt steckt fest, oder dir fehlt das technische Gegenüber auf Augenhöhe. Ich steige in deinen Code ein — als Partner, nicht als Dienstleister. Wir bauen es gemeinsam zu Ende.",
+      "Du hast ein laufendes Projekt und brauchst einen technischen Partner auf Augenhöhe, der mit dir weiterbaut, oft genau da, wo starkes Design den Unterschied macht. Wir entwickeln es gemeinsam, vom Frontend bis zu KI-Agenten.",
     href: "/mitentwickelt",
     cta: "Lass uns reden",
     // Kupfer-Rost — deutlich wärmer/orange, menschlicher
@@ -71,9 +71,9 @@ export const SYSTEM: PlanetData[] = [
     labelSide: 1,
     labelDy: 0.0,
     moons: [
-      { name: "Co-Development", href: "/mitentwickelt", desc: "Ich steige in dein Projekt ein" },
-      { name: "Project Rescue", href: "/mitentwickelt#rescue", desc: "Festgefahrenes wieder flott" },
-      { name: "Frontend & UX", href: "/mitentwickelt#frontend", desc: "Design, das sich richtig anfühlt" },
+      { name: "Co-Development", href: "/mitentwickelt", desc: "Ich baue mit dir weiter" },
+      { name: "Frontend & Design", href: "/mitentwickelt#frontend", desc: "Design, das den Unterschied macht" },
+      { name: "Agentensysteme", href: "/mitentwickelt#agenten", desc: "KI, die euch Arbeit abnimmt" },
     ],
   },
   {
