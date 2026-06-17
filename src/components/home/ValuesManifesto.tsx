@@ -366,6 +366,7 @@ export default function ValuesManifesto() {
                 type="button"
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
+                onClick={() => setHovered(hovered === i ? null : i)}
                 className="relative flex items-center gap-2.5 transition-all duration-300 ease-out"
                 style={{
                   padding: "11px 22px",

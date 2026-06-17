@@ -223,8 +223,8 @@ export default function IljaHeroJourney() {
           </div>
         </div>
 
-        {/* Hover-Hinweis, mittig und sichtbar */}
-        <div ref={cueRef} className="pointer-events-none absolute inset-x-0 top-[57%] flex justify-center">
+        {/* Hover-Hinweis, mittig und sichtbar — nur auf Maus-Geräten */}
+        <div ref={cueRef} className="mouse-hint pointer-events-none absolute inset-x-0 top-[57%] flex justify-center">
           <span
             className="font-mono text-[13px] tracking-[0.22em] text-gold-light"
             style={{ textShadow: "0 2px 14px rgba(0,0,0,0.75)" }}
@@ -232,6 +232,7 @@ export default function IljaHeroJourney() {
             ◉ bewege die maus über mich
           </span>
         </div>
+        <style>{`@media (hover: none) { .mouse-hint { display: none } }`}</style>
 
         {/* Scroll-Cue */}
         <div

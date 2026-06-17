@@ -14,7 +14,8 @@ export type PlanetData = {
   cta: string;
   color: string; // Highlight / Glow
   color2: string; // tiefer Schatten-Ton
-  position: [number, number, number];
+  position: [number, number, number]; // Desktop (horizontal)
+  mPos: [number, number, number]; // Mobile (vertikal gestapelt, Hochformat)
   size: number;
   grid: [number, number]; // Dichte des digitalen Grids (lon, lat)
   fresnel: number; // Rim-Schärfe (kleiner = breiter/weicher)
@@ -38,6 +39,7 @@ export const SYSTEM: PlanetData[] = [
     color: "#EAC86A",
     color2: "#6E5212",
     position: [-5.6, 0.8, 0.0],
+    mPos: [0, 4.4, 0],
     size: 1.3,
     grid: [90, 46],
     fresnel: 2.8,
@@ -62,6 +64,7 @@ export const SYSTEM: PlanetData[] = [
     color: "#D4823C",
     color2: "#5E2E10",
     position: [0.3, -2.9, -0.4],
+    mPos: [0, 0, 0],
     size: 1.0,
     grid: [54, 28],
     fresnel: 2.2,
@@ -86,6 +89,7 @@ export const SYSTEM: PlanetData[] = [
     color: "#6FA382",
     color2: "#2E4A39",
     position: [5.5, 1.3, 0.0],
+    mPos: [0, -4.4, 0],
     size: 1.15,
     grid: [70, 36],
     fresnel: 3.1,
