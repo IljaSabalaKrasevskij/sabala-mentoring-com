@@ -43,6 +43,34 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 13,
+    title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
+    excerpt: "Baukasten 1.500-3.500 Euro über 3 Jahre, eigene Webseite 8.000-15.000 einmalig. Wo der Break-Even liegt, welche Kosten beide verschleiern, und welche Frage am Ende mehr zählt als der Preis.",
+    category: "Pricing & ROI",
+    date: "Juni 2026",
+    readTime: "6 Min",
+    image: "/blog/was-kostet-ki-webseite/cover.jpg",
+    slug: "/blog/was-kostet-ki-webseite",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 12,
+    title: "Premium-Webseite oder Baukasten: 5 Anti-Patterns und 7 Signale",
+    excerpt: "5 Anti-Patterns, die deine Webseite billig wirken lassen, und 7 stille Signale, die Premium von austauschbar trennen. Ehrlich, mit echten Beispielen, ohne Agentur-Sprech.",
+    category: "Premium & Brand",
+    date: "Juni 2026",
+    readTime: "9 Min",
+    image: "/blog/premium-webseite-oder-baukasten/cover.jpg",
+    slug: "/blog/premium-webseite-oder-baukasten",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 8,
     title: "Webseite mit KI bauen 2026: Der Premium-Stack, den niemand zeigt",
     excerpt: "Diese Seite ist mit Antigravity, Spline und Claude Code gebaut. Der Unterschied zwischen Baukasten-KI und Pro-Tool-Stack ist nicht graduell. Es ist eine andere Liga.",
