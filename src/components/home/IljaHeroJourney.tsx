@@ -236,12 +236,22 @@ export default function IljaHeroJourney() {
 
         {/* Scroll-Cue */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center"
+          className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center z-20"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-warm-mid">
             ↓ scroll · komm in meinen Kopf
           </span>
         </div>
+
+        {/* Sanftes Auslaufen am Bottom — das Hero-Bild fadet in den dunklen Boden */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[28vh] z-10"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(10,8,6,0.35) 35%, rgba(10,8,6,0.8) 70%, #0A0806 100%)",
+          }}
+        />
       </div>
     </section>
   );
