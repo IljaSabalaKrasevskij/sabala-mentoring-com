@@ -212,23 +212,29 @@ export default function IljaHeroJourney() {
               >
                 Ich bringe
                 <br />
-                KI in dein
+                <span className="text-gold-light">KI</span> in dein
                 <br />
                 Unternehmen.
               </h1>
-              <p className="mt-8 max-w-md text-[1.1rem] text-warm-light/85">
+              <p className="mt-8 max-w-lg text-warm-light/90" style={{ fontSize: "clamp(1.25rem, 2.1vw, 1.7rem)", lineHeight: 1.4 }}>
                 Für dich gebaut. Mit dir entwickelt. Dir beigebracht.
-              </p>
-              <p className="mt-10 font-mono text-[10px] uppercase tracking-[0.28em] text-warm-mid">
-                Bewege die Maus über mich
               </p>
             </div>
           </div>
         </div>
 
+        {/* Hover-Hinweis, mittig und sichtbar */}
+        <div ref={cueRef} className="pointer-events-none absolute inset-x-0 top-[57%] flex justify-center">
+          <span
+            className="font-mono text-[13px] tracking-[0.22em] text-gold-light"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.75)" }}
+          >
+            ◉ bewege die maus über mich
+          </span>
+        </div>
+
         {/* Scroll-Cue */}
         <div
-          ref={cueRef}
           className="pointer-events-none absolute inset-x-0 bottom-8 flex justify-center"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-warm-mid">
