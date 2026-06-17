@@ -20,7 +20,9 @@ export const metadata = {
 export default function AkademiePage() {
   return (
     <main className="flex-1">
-      <DiscoveryHero />
+      <div className="hidden md:block">
+        <DiscoveryHero />
+      </div>
       <WorkshopHeader />
       <TrustBar />
       <MemoryDemo />

@@ -7,6 +7,8 @@ import { Eyebrow } from "./shared";
 
 const FOR = [
   "Du bereits mit Kunden oder an eigenen Projekten arbeitest",
+  "Du an beiden Live-Terminen dabei sein kannst",
+  "Du bereit bist, dich für zwei Wochen wirklich zu committen",
   "Du Token sparen und spürbar effektiver arbeiten möchtest",
   "Du die Qualität deiner Arbeit steigern möchtest",
   "Du bessere Ergebnisse für deine Kundenprojekte willst",
@@ -14,7 +16,9 @@ const FOR = [
 ];
 
 const NOT_FOR = [
-  "Du für Session 2 nicht bereit bist, die Pro-Version von Claude Code zu holen",
+  "Du für Session 2 nicht bereit bist, Claude Code Pro zu holen",
+  "Du nur die Aufzeichnung anschauen möchtest",
+  "Du einen der beiden Live-Termine nicht einplanen kannst",
   "Du an deinem Setup grundsätzlich nichts ändern möchtest",
   "Du komplett am Anfang stehst, ohne Kunden- oder Projektbezug",
 ];
@@ -23,7 +27,7 @@ export default function Qualify() {
   return (
     <section className="relative overflow-hidden px-6 py-[16vh]" style={{ background: "var(--cream)" }}>
       <div className="relative mx-auto max-w-4xl">
-        <Eyebrow>// ehrlich gesagt</Eyebrow>
+        <Eyebrow>{"// ehrlich gesagt"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

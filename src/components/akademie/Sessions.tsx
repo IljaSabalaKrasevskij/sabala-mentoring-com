@@ -19,12 +19,12 @@ const S1: Module[] = [
 const S1_AFTER = ["Ein funktionierendes zweites Gehirn, das Claude versteht", "Eine Expertendatenbank aus allem, was du je gelernt hast", "Präsentationen und Zusammenfassungen aus YouTube und PDFs — auf Knopfdruck"];
 
 const S2: Module[] = [
-  { name: "Terminal + Claude Code", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Du verlässt die Session mit einer funktionierenden Umgebung — auch wenn du das Terminal nie geöffnet hast." },
+  { name: "Terminal + Claude Code Pro", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Wichtig: Für diese Session brauchst du Claude Code Pro, sonst kannst du nicht sinnvoll mitarbeiten." },
   { name: "MCP-Verbindungen — Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und NotebookLM. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung — nicht nur Chat." },
   { name: "Memory-System + meine Skills", body: "Closing Session (auto Daily Note), Memory (projektübergreifend) und Cybersecurity (Schutz vor gefährlichen Skripten). Meine eigenen Skills, die ich täglich nutze." },
 ];
 
-const S2_AFTER = ['Du sagst: "Woran haben wir gearbeitet?" — Claude weiß es. Exakt.', "Claude schreibt nach jeder Session automatisch eine Daily Note", "Das Basic-Setup, mit dem die großen Profis arbeiten"];
+const S2_AFTER = ['Du sagst: "Woran haben wir gearbeitet?" — Claude weiß es. Exakt.', "Claude schreibt nach jeder Session automatisch eine Daily Note", "Du hast das Setup live eingerichtet und kannst direkt weiterarbeiten"];
 
 function SessionBlock({
   index,
@@ -122,7 +122,7 @@ export default function Sessions() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
 
       <div className="relative">
-        <Eyebrow>// der ablauf</Eyebrow>
+        <Eyebrow>{"// der ablauf"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +151,7 @@ export default function Sessions() {
           transition={{ duration: 0.7 }}
           className="mx-auto my-24 max-w-3xl"
         >
-          <p className="mb-4 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-warm-mid">// 2 Minuten · warum das wichtig ist</p>
+          <p className="mb-4 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-warm-mid">{"// 2 Minuten · warum das wichtig ist"}</p>
           <div className="group relative aspect-video overflow-hidden rounded-xl" style={{ background: "linear-gradient(135deg, #15110b, #0a0806)", border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 30px 70px rgba(0,0,0,0.5)" }}>
             <Brackets color="rgba(184,150,62,0.5)" inset={14} size={14} />
             {/* Play-Button-Platzhalter */}
@@ -170,7 +170,7 @@ export default function Sessions() {
           index="02"
           badge="Session 2 · 2 Stunden live"
           title="Dein KI-Mitarbeiter ×10"
-          sub="Claude Code, verbunden und mit Gedächtnis. Das Pflicht-Setup."
+          sub="Claude Code Pro, verbunden und mit Gedächtnis. Das Pflicht-Setup."
           modules={S2}
           after={S2_AFTER}
           flip

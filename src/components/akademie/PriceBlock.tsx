@@ -7,9 +7,9 @@ import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
 
 const INCLUDES = [
   "Session 1: Obsidian + NotebookLM",
-  "Session 2: Claude Code + Memory-System",
+  "Session 2: Claude Code Pro + Memory-System",
   "3 Skills: Closing Session, Memory, Cybersecurity",
-  "Aufzeichnung beider Sessions",
+  "Live-Umsetzung an beiden Terminen",
   "PARA-Vorlage für Obsidian",
 ];
 
@@ -115,7 +115,7 @@ export default function PriceBlock() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mx-auto mt-7 max-w-md text-[0.9rem] leading-relaxed text-warm-mid"
         >
-          Keine langen Wartelisten. Sind die 10 Plätze weg, sind sie weg. Der Preis steigt nach dem ersten Durchlauf auf €247.
+          Keine langen Wartelisten. Sind die 10 Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.
         </motion.p>
       </div>
     </section>

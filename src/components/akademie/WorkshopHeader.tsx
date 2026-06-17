@@ -103,7 +103,7 @@ export default function WorkshopHeader() {
           </a>
           <span className="flex flex-col font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
             <span>oder 2× €103</span>
-            <span>nur 10 Plätze</span>
+            <span>beide Termine live</span>
           </span>
         </motion.div>
       </div>

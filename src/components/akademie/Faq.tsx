@@ -6,9 +6,10 @@ import { Eyebrow } from "./shared";
 
 const QA: [string, string][] = [
   ["Ich habe noch nie das Terminal benutzt. Ist das ein Problem?", "Nein. Wir richten das Terminal in Session 2 gemeinsam ein, von Anfang an. Du verlässt die Session mit einer funktionierenden Umgebung — unabhängig von deiner technischen Vorbildung."],
-  ["Brauche ich eine Claude Pro Subscription?", "Für Claude im Browser reicht der kostenlose Plan. Für Claude Code empfehle ich Claude Pro — das besprechen wir in der Session."],
+  ["Brauche ich Claude Code Pro?", "Ja. Für Session 2 ist Claude Code Pro Pflicht, sonst kannst du nicht sinnvoll mitarbeiten. Session 1 funktioniert ohne Claude Code Pro, aber für das fertige Memory-System brauchst du es."],
   ["Ich habe Obsidian schon. Fange ich trotzdem von vorne an?", "Nein. Wir schauen gemeinsam auf dein bestehendes Setup und integrieren das System dort, wo es Sinn macht."],
-  ["Was, wenn ich an dem Termin nicht kann?", "Du bekommst die Aufzeichnung beider Sessions. Ich empfehle aber, dabei zu sein — wir richten alles live ein, und du gehst mit einem fertigen System raus."],
+  ["Was, wenn ich an einem Termin nicht kann?", "Dann ist dieser Durchlauf wahrscheinlich nicht der richtige. Der Kurs ist kein Aufzeichnungsprodukt. Wir bauen dein System live. Du solltest an beiden Terminen dabei sein, damit du wirklich weiterarbeiten kannst."],
+  ["Für wen ist der Kurs nicht gedacht?", "Nicht für Menschen, die nur nebenbei schauen wollen. Die Plätze sind für Teilnehmer:innen, die sich committen, beide Termine blocken und das Setup wirklich einrichten wollen."],
   ["Ist das für Mac und Windows?", "Beides funktioniert. Obsidian, NotebookLM und Claude Code laufen auf beiden Systemen. Etwaige Unterschiede klären wir in der Session."],
 ];
 
@@ -44,7 +45,7 @@ export default function Faq() {
   return (
     <section className="relative px-6 py-[16vh]" style={{ background: "var(--cream)" }}>
       <div className="mx-auto max-w-2xl">
-        <Eyebrow>// noch fragen?</Eyebrow>
+        <Eyebrow>{"// noch fragen?"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

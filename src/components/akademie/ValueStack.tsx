@@ -11,11 +11,11 @@ import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
 
 const ITEMS: { label: string; value: number }[] = [
   { label: "Session 1 live (2h): Obsidian + NotebookLM Setup", value: 99 },
-  { label: "Session 2 live (2h): Claude Code + MCP-Verbindungen", value: 99 },
+  { label: "Session 2 live (2h): Claude Code Pro + MCP-Verbindungen", value: 99 },
   { label: "Closing Session Skill (mein persönlicher Skill)", value: 19 },
   { label: "Memory Skill + PARA-Automatisierung", value: 19 },
   { label: "Cybersecurity Skill", value: 19 },
-  { label: "Aufzeichnung beider Sessions", value: 29 },
+  { label: "Live-Umsetzung an beiden Terminen", value: 29 },
 ];
 
 const TOTAL = ITEMS.reduce((s, i) => s + i.value, 0); // 284
