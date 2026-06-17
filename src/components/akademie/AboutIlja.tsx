@@ -62,12 +62,6 @@ export default function AboutIlja() {
             <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/trust/emrich.gif"
-                alt="EMRICH Consulting — Business-Trainer-Ausbildung 2022"
-                className="h-10 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
                 src="/trust/ica.png"
                 alt="ICA — International Coaching Association · Certified Trainer"
                 className="h-14 w-auto opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
