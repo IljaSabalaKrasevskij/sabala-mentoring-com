@@ -27,7 +27,7 @@ const EVENTS: CourseEvent[] = [
     time: "15:00–17:00 MEZ",
     label: "Session 1",
     session: 1,
-    href: "#details",
+    href: "/akademie/ki-mitarbeiter",
     spots: 8,
   },
   {
@@ -36,7 +36,7 @@ const EVENTS: CourseEvent[] = [
     time: "15:00–17:00 MEZ",
     label: "Session 2",
     session: 2,
-    href: "#details",
+    href: "/akademie/ki-mitarbeiter",
     spots: 8,
   },
 ];

@@ -15,7 +15,8 @@ export default function AcademyHero() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
+    const c = canvas;
+    const ctx = c.getContext("2d")!;
 
     let W = 0, H = 0;
     let mx = -9999, my = -9999;
@@ -49,8 +50,8 @@ export default function AcademyHero() {
     }
 
     function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+      W = c.width  = window.innerWidth;
+      H = c.height = window.innerHeight;
       initPts();
     }
 
@@ -246,7 +247,7 @@ export default function AcademyHero() {
             Kurse entdecken
           </a>
           <a
-            href="#kalender"
+            href="/akademie/ki-mitarbeiter"
             style={{
               padding: "13px 28px",
               border: "1px solid rgba(201,166,86,0.45)",
