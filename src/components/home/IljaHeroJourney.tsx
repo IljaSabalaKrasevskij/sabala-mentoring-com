@@ -19,6 +19,8 @@ export default function IljaHeroJourney() {
 
   // ── Frames vorladen ───────────────────────────────────────────────
   useEffect(() => {
+    // Mobile: kein Frame-Scrub — statisches Portrait reicht, 6.9 MB gespart
+    if (window.innerWidth < 768) return;
     let cancelled = false;
     const imgs: HTMLImageElement[] = [];
     for (let i = 1; i <= FRAME_COUNT; i++) {
@@ -81,6 +83,8 @@ export default function IljaHeroJourney() {
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const section = sectionRef.current;
     if (!section) return;
+    // Mobile: Overlay bleibt sichtbar (opacity 1), kein Frame-Scrub
+    if (window.innerWidth < 768) return;
     const rect = section.getBoundingClientRect();
     const total = rect.height - window.innerHeight;
     const progress = total > 0 ? clamp(-rect.top / total) : 0;
@@ -144,6 +148,14 @@ export default function IljaHeroJourney() {
       el.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerleave", onLeave);
     };
+  }, []);
+
+  // Auf Mobile: Section auf 100vh reduzieren (kein Scroll-Scrub nötig)
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (section && window.innerWidth < 768) {
+      section.style.height = "100vh";
+    }
   }, []);
 
   return (
