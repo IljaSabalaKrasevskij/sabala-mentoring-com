@@ -2,7 +2,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, Sparkles, Layers, Mail } from "lucide-react";
+import { ArrowLeft, Sparkles, Layers } from "lucide-react";
 
 const slug = "webseiten-bau-mit-claude-anfaenger";
 const url = `https://sabala-mentoring.com/blog/${slug}`;
@@ -179,33 +179,6 @@ export default function BlogWebseitenBauMitClaudePage() {
 
             <h3>5. Brand-Strategie fehlt komplett</h3>
             <p>Claude baut, was du beschreibst, aber nicht, <em>was du brauchst.</em> Wer ohne Brand-Vorgaben (Farben, Schrift, Voice, Zielgruppe) startet, bekommt ein technisch korrektes, aber generisches Ergebnis. <strong>Brand-Klarheit muss vor der ersten Code-Zeile stehen.</strong></p>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* LEAD-MAGNET */}
-      <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[820px] mx-auto w-full">
-        <ScrollReveal>
-          <div className="bg-warm-light/40 border border-refined-gold/30 rounded-2xl p-8 md:p-10">
-            <div className="flex items-start gap-4">
-              <Mail className="w-6 h-6 text-refined-gold flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-3">Die ausführliche Setup-Anleitung</p>
-                <h2 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-tight">
-                  Hol dir das komplette Setup als PDF.
-                </h2>
-                <p className="font-satoshi text-warm-steel leading-relaxed mb-6">
-                  Pro-Account anlegen, Claude Code installieren, CLAUDE.md generieren, deinen ersten Skill bauen. Schritt für Schritt, mit Code-Beispielen und Screenshots aus meiner Praxis. Direkt in dein Postfach, plus du landest im <strong className="text-deep-charcoal">Sabala Academy Newsletter</strong> mit weiteren konkreten Workflows.
-                </p>
-                <Link
-                  href="/akademie#newsletter"
-                  className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-deep-charcoal hover:text-refined-gold px-7 py-3 rounded-full font-medium transition-colors"
-                >
-                  Setup-Anleitung anfordern
-                </Link>
-                <p className="font-satoshi text-xs text-warm-steel/70 mt-3">Kostenfrei. Jederzeit abbestellbar.</p>
-              </div>
-            </div>
           </div>
         </ScrollReveal>
       </section>
