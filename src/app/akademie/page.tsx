@@ -1,5 +1,6 @@
-import DiscoveryHero from "@/components/akademie/DiscoveryHero";
-import WorkshopHeader from "@/components/akademie/WorkshopHeader";
+import AcademyHero from "@/components/akademie/AcademyHero";
+import CourseGrid from "@/components/akademie/CourseGrid";
+import CourseCalendar from "@/components/akademie/CourseCalendar";
 import TrustBar from "@/components/akademie/TrustBar";
 import MemoryDemo from "@/components/akademie/MemoryDemo";
 import SystemConstellation from "@/components/akademie/SystemConstellation";
@@ -12,28 +13,32 @@ import PriceBlock from "@/components/akademie/PriceBlock";
 import Faq from "@/components/akademie/Faq";
 
 export const metadata = {
-  title: "Sabala Academy · Dein KI-Mitarbeiter ×10",
+  title: "Sabala KI Academy · Live-Trainings für Selbstständige",
   description:
-    "In 2×2 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Obsidian + NotebookLM + Claude Code, live aufgebaut. Launch-Preis €197.",
+    "KI-Praxistrainings live — erprobte Setups für Selbstständige, Solopreneure und Unternehmer. Obsidian + Claude Second Brain, KI-Automation, Content-Systeme.",
 };
 
 export default function AkademiePage() {
   return (
     <main className="flex-1">
-      <div className="hidden md:block">
-        <DiscoveryHero />
+      {/* Hub: Hero + Kurs-Übersicht + Kalender */}
+      <AcademyHero />
+      <CourseGrid />
+      <CourseCalendar />
+
+      {/* Kurs-Detail: Dein KI-Mitarbeiter (Obsidian + Claude) */}
+      <div id="details">
+        <TrustBar />
+        <MemoryDemo />
+        <SystemConstellation />
+        <Sessions />
+        <ValueStack />
+        <Qualify />
+        <AboutIlja />
+        <BeforeAfter />
+        <PriceBlock />
+        <Faq />
       </div>
-      <WorkshopHeader />
-      <TrustBar />
-      <MemoryDemo />
-      <SystemConstellation />
-      <Sessions />
-      <ValueStack />
-      <Qualify />
-      <AboutIlja />
-      <BeforeAfter />
-      <PriceBlock />
-      <Faq />
     </main>
   );
 }
