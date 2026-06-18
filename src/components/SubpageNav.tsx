@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/webseiten", label: "Webseiten" },
   { href: "/mitentwickelt", label: "Mitentwickelt" },
-  { href: "/akademie", label: "Akademie" },
+  { href: "/akademie-hub", label: "Akademie" },
 ];
 
 export default function SubpageNav() {

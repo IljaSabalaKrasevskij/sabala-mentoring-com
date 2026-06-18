@@ -82,7 +82,7 @@ export const SYSTEM: PlanetData[] = [
     subtitle: "du willst es selbst können",
     pitch:
       "Du willst, dass dein Team KI wirklich nutzt — nicht nur darüber redet. Ich bring es euch bei, kinderleicht und mit direktem Praxisbezug. Akademie für Solopreneure, Workshops für dein Unternehmen.",
-    href: "/akademie",
+    href: "/akademie-hub",
     cta: "Zur Akademie",
     // Gedämpftes Sage-Grün — Wachstum/Lernen, ohne Ring (gleiche Technik wie die anderen)
     color: "#6FA382",
@@ -95,8 +95,8 @@ export const SYSTEM: PlanetData[] = [
     labelSide: -1,
     labelDy: 0.4,
     moons: [
-      { name: "KI-Akademie", href: "/akademie", desc: "Für Webdesigner & Solopreneure" },
-      { name: "Team-Workshops", href: "/akademie#workshops", desc: "Dein Unternehmen wird KI-fit" },
+      { name: "KI-Akademie", href: "/akademie-hub", desc: "Für Webdesigner & Solopreneure" },
+      { name: "Team-Workshops", href: "/akademie-hub#kurse", desc: "Dein Unternehmen wird KI-fit" },
     ],
   },
 ];
