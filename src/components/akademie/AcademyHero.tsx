@@ -189,7 +189,7 @@ export default function AcademyHero() {
         style={{ zIndex: 3, padding: "0 24px 72px" }}
       >
         <p
-          className="font-mono text-[10px] tracking-[0.35em] uppercase mb-4"
+          className="font-mono text-[12px] tracking-[0.28em] uppercase mb-4"
           style={{ color: "#C9A656" }}
         >
           Sabala KI Academy

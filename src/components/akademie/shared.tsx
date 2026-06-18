@@ -60,6 +60,76 @@ export function Reveal({
   );
 }
 
+/* TiltCard — maus-getrackte 3D-Neigung mit Cursor-folgendem Glow.
+   Gibt Karten ein hochwertiges „pop on hover"-Gefühl. Kein Klick-Verlust,
+   solange der Inhalt selbst kein verschachtelter Link mit eigener Transform ist. */
+export function TiltCard({
+  children,
+  max = 7,
+  lift = 8,
+  glow = "rgba(212,174,90,0.20)",
+  radius = 8,
+  className,
+  style,
+}: {
+  children: React.ReactNode;
+  max?: number;
+  lift?: number;
+  glow?: string;
+  radius?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+
+  function onMove(e: React.MouseEvent) {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    setT({ rx: (0.5 - py) * max * 2, ry: (px - 0.5) * max * 2, gx: px * 100, gy: py * 100, active: true });
+  }
+  function onLeave() {
+    setT({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+  }
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={className}
+      style={{
+        position: "relative",
+        borderRadius: radius,
+        transformStyle: "preserve-3d",
+        transform: `perspective(900px) rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.active ? -lift : 0}px)`,
+        transition: t.active ? "transform 0.08s linear" : "transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s",
+        ...style,
+      }}
+    >
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "inherit",
+          background: `radial-gradient(420px circle at ${t.gx}% ${t.gy}%, ${glow}, transparent 62%)`,
+          opacity: t.active ? 1 : 0,
+          transition: "opacity 0.35s",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      />
+      <div style={{ position: "relative", zIndex: 2, height: "100%", transform: "translateZ(28px)", transformStyle: "preserve-3d" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /* HUD-Eck-Brackets — gibt Karten/Buttons einen „digitalen Rahmen" (aus ValuesManifesto übernommen) */
 export function Brackets({
   color,

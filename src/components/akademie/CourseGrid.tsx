@@ -86,7 +86,7 @@ export default function CourseGrid() {
       <div style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
         {/* Persönliche Einladung */}
         <Reveal>
-          <p className="font-mono" style={{ fontSize: 11, letterSpacing: "0.35em", textTransform: "uppercase", color: gold, marginBottom: 20 }}>
+          <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.24em", textTransform: "uppercase", color: gold, marginBottom: 20 }}>
             Persönliche Einladung
           </p>
         </Reveal>
@@ -103,7 +103,7 @@ export default function CourseGrid() {
               marginBottom: 22,
             }}
           >
-            Lern, was wirklich funktioniert.{" "}
+            Lerne, was wirklich funktioniert.{" "}
             <em style={{ fontStyle: "italic", color: gold }}>Mit mir, live.</em>
           </h2>
         </Reveal>
@@ -117,8 +117,8 @@ export default function CourseGrid() {
         {/* ── Jetzt buchbar ── */}
         <Reveal delay={0.05}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
-            <span style={{ width: 7, height: 7, borderRadius: "50%", background: gold, boxShadow: `0 0 12px ${gold}` }} />
-            <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase", color: gold }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: gold, boxShadow: `0 0 12px ${gold}` }} />
+            <span className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: gold }}>
               Jetzt buchbar
             </span>
           </div>
@@ -158,7 +158,7 @@ export default function CourseGrid() {
               <div style={{ flex: "1 1 340px", minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
                   <span style={{ color: gold }}>{IconBrain}</span>
-                  <span className="font-mono" style={{ fontSize: 9.5, letterSpacing: "0.22em", textTransform: "uppercase", color: gold, border: `1px solid rgba(212,174,90,0.4)`, padding: "4px 9px", borderRadius: 2 }}>
+                  <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, border: `1px solid rgba(212,174,90,0.4)`, padding: "5px 11px", borderRadius: 2 }}>
                     Live-Training
                   </span>
                 </div>
@@ -174,10 +174,10 @@ export default function CourseGrid() {
                 >
                   Dein KI-Mitarbeiter
                 </h3>
-                <p className="font-mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
+                <p className="font-mono" style={{ fontSize: 12.5, letterSpacing: "0.1em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
                   Obsidian + Claude Second Brain
                 </p>
-                <p style={{ fontSize: 15.5, color: "rgba(250,248,245,0.66)", lineHeight: 1.65, maxWidth: 440, marginBottom: 22 }}>
+                <p style={{ fontSize: 16.5, color: "rgba(250,248,245,0.72)", lineHeight: 1.68, maxWidth: 440, marginBottom: 24 }}>
                   In 2×2 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Live mit
                   dir aufgebaut, am selben Abend einsatzbereit.
                 </p>
@@ -191,7 +191,7 @@ export default function CourseGrid() {
               {/* Rechts: Preis + CTA */}
               <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16, paddingLeft: 8 }}>
                 <div>
-                  <span className="font-mono" style={{ display: "block", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(250,248,245,0.4)", marginBottom: 4 }}>
+                  <span className="font-mono" style={{ display: "block", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.5)", marginBottom: 5 }}>
                     Beide Sessions
                   </span>
                   <span style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 46, color: gold, fontStyle: "italic", lineHeight: 1 }}>
@@ -227,8 +227,8 @@ export default function CourseGrid() {
         {/* ── In Kürze verfügbar ── */}
         <Reveal delay={0.05}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
-            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "rgba(255,255,255,0.25)" }} />
-            <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(250,248,245,0.5)" }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,255,255,0.3)" }} />
+            <span className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(250,248,245,0.6)" }}>
               In Kürze verfügbar
             </span>
           </div>
@@ -270,11 +270,11 @@ export default function CourseGrid() {
                 >
                   {c.title}
                 </h3>
-                <p className="font-mono" style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(212,174,90,0.65)", marginBottom: 16 }}>
+                <p className="font-mono" style={{ fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(212,174,90,0.75)", marginBottom: 16 }}>
                   {c.sub}
                 </p>
-                <p style={{ fontSize: 14, color: "rgba(250,248,245,0.5)", lineHeight: 1.6, marginBottom: 22 }}>{c.desc}</p>
-                <span className="font-mono" style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.32)" }}>
+                <p style={{ fontSize: 15, color: "rgba(250,248,245,0.58)", lineHeight: 1.62, marginBottom: 22 }}>{c.desc}</p>
+                <span className="font-mono" style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
                   Termin folgt
                 </span>
               </div>
@@ -289,8 +289,8 @@ export default function CourseGrid() {
 function Meta({ label }: { label: string }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-      <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#D4AE5A" }} />
-      <span className="font-mono" style={{ fontSize: 12, color: "rgba(250,248,245,0.55)", letterSpacing: "0.03em" }}>
+      <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#D4AE5A" }} />
+      <span className="font-mono" style={{ fontSize: 13.5, color: "rgba(250,248,245,0.62)", letterSpacing: "0.02em" }}>
         {label}
       </span>
     </span>

@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { insertLead } from "@/lib/leads";
+import { subscribeToAcademy } from "@/lib/activecampaign";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Akademie-Newsletter-Anmeldung (vorbereitet)
-   - Nimmt nur eine E-Mail entgegen, optional einen Vornamen.
-   - Speichert als Lead (quelle "Akademie-Newsletter") in dieselbe Turso-DB,
-     damit keine Anmeldung verloren geht. Der eigentliche Versand kommt später.
+   Akademie-Newsletter-Anmeldung
+   - Nimmt eine E-Mail entgegen, optional einen Vornamen.
+   - Trägt den Kontakt in ActiveCampaign ein (Akademie-Liste → Welcome-Mail),
+     sofern AC konfiguriert ist.
+   - Spiegelt die Anmeldung zusätzlich in die Turso-DB (quelle "Akademie-Newsletter"),
+     damit das Dashboard sie sieht und nichts verloren geht.
+   - Erfolgreich, sobald MINDESTENS einer der beiden Speicher greift.
    - Honeypot "fax", einfaches In-Memory-Rate-Limit.
-   - Turso nicht konfiguriert → 503, Frontend zeigt freundlichen Hinweis.
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
@@ -55,8 +58,19 @@ export async function POST(req: Request) {
   // Honeypot: stilles OK
   if (data.fax) return NextResponse.json({ ok: true });
 
+  // 1) ActiveCampaign (Newsletter + Welcome-Mail) — best effort
+  let acState: "ok" | "skipped" | "error" = "skipped";
   try {
-    const stored = await insertLead({
+    acState = await subscribeToAcademy(data.email, data.vorname || "");
+  } catch (err) {
+    console.error("[akademie-newsletter] AC-Fehler:", err);
+    acState = "error";
+  }
+
+  // 2) Turso-Spiegel fürs Dashboard — best effort
+  let stored = false;
+  try {
+    stored = await insertLead({
       vorname: data.vorname || "Newsletter",
       nachname: "Abo",
       email: data.email,
@@ -65,12 +79,14 @@ export async function POST(req: Request) {
       anliegen: "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.",
       quelle: "Akademie-Newsletter",
     });
-    if (!stored) {
-      return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
-    }
-    return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[akademie-newsletter] Speicher-Fehler:", err);
-    return NextResponse.json({ ok: false, reason: "store_failed" }, { status: 502 });
+    console.error("[akademie-newsletter] Turso-Fehler:", err);
   }
+
+  // Erfolg, sobald einer der beiden Wege gegriffen hat
+  if (acState === "ok" || stored) {
+    return NextResponse.json({ ok: true });
+  }
+  // Nichts konfiguriert/erreichbar → Frontend zeigt freundlichen Fallback
+  return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
 }
