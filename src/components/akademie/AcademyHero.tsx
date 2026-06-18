@@ -247,7 +247,7 @@ export default function AcademyHero() {
             Kurse entdecken
           </a>
           <a
-            href="/akademie/ki-mitarbeiter"
+            href="/akademie"
             style={{
               padding: "13px 28px",
               border: "1px solid rgba(201,166,86,0.45)",
