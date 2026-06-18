@@ -51,7 +51,7 @@ const MODI: Modus[] = [
     t: "Dir beigebracht",
     s: "du willst es selbst können",
     d: "Die KI-Akademie für Webdesigner und Solopreneure, plus Team-Workshops für dein Unternehmen.",
-    href: "/akademie",
+    href: "/akademie-hub",
     cta: "Zur Akademie",
     x: "64%",
     y: "56%",

@@ -7,7 +7,7 @@ const COLS: { title: string; links: { label: string; href: string; ext?: boolean
     links: [
       { label: "Webseiten", href: "/webseiten" },
       { label: "Mit dir entwickelt", href: "/mitentwickelt" },
-      { label: "KI-Akademie", href: "/akademie" },
+      { label: "KI-Akademie", href: "/akademie-hub" },
       { label: "KI-Assistenzteam", href: "/gpt-team" },
     ],
   },

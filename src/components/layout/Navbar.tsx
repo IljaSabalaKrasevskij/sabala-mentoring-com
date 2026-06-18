@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const ANGEBOT = [
   { href: "/webseiten", label: "Webseiten", note: "Premium-Auftritt, der verkauft" },
   { href: "/mitentwickelt", label: "Mit dir entwickelt", note: "Co-Development & Agentensysteme" },
-  { href: "/akademie", label: "KI-Akademie", note: "Dein Team wird KI-fit" },
+  { href: "/akademie-hub", label: "KI-Akademie", note: "Dein Team wird KI-fit" },
   { href: "/gpt-team", label: "KI-Assistenzteam", note: "Dein Wissen als GPT-Team" },
 ];
 
