@@ -1,0 +1,39 @@
+import TrustBar from "@/components/akademie/TrustBar";
+import MemoryDemo from "@/components/akademie/MemoryDemo";
+import SystemConstellation from "@/components/akademie/SystemConstellation";
+import Sessions from "@/components/akademie/Sessions";
+import ValueStack from "@/components/akademie/ValueStack";
+import Qualify from "@/components/akademie/Qualify";
+import AboutIlja from "@/components/akademie/AboutIlja";
+import BeforeAfter from "@/components/akademie/BeforeAfter";
+import PriceBlock from "@/components/akademie/PriceBlock";
+import Faq from "@/components/akademie/Faq";
+import WorkshopHeader from "@/components/akademie/WorkshopHeader";
+import DiscoveryHero from "@/components/akademie/DiscoveryHero";
+
+export const metadata = {
+  title: "Dein KI-Mitarbeiter · Sabala KI Academy",
+  description:
+    "In 2×2 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Obsidian + NotebookLM + Claude Code, live aufgebaut. Launch-Preis €197.",
+};
+
+export default function KiMitarbeiterPage() {
+  return (
+    <main className="flex-1">
+      <div className="hidden md:block">
+        <DiscoveryHero />
+      </div>
+      <WorkshopHeader />
+      <TrustBar />
+      <MemoryDemo />
+      <SystemConstellation />
+      <Sessions />
+      <ValueStack />
+      <Qualify />
+      <AboutIlja />
+      <BeforeAfter />
+      <PriceBlock />
+      <Faq />
+    </main>
+  );
+}

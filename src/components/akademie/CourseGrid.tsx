@@ -21,7 +21,7 @@ const COURSES = [
     time: "15:00 MEZ",
     level: "Einsteiger",
     price: "€197",
-    href: "#details",
+    href: "/akademie/ki-mitarbeiter",
   },
   {
     id: "webseite",
