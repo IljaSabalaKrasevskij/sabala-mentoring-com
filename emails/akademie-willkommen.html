@@ -1,0 +1,133 @@
+<!--
+  Sabala KI Academy - Willkommens-E-Mail
+  ---------------------------------------
+  Zweck: Wird in der ActiveCampaign-Automation "Akademie-Liste abonniert"
+         als Welcome-Mail versendet.
+  Einsatz: In AC eine Automation anlegen (Trigger: "Abonniert Liste = Akademie"),
+           Schritt "E-Mail senden", als Custom-HTML diesen Inhalt einfuegen.
+  Encoding: bewusst ASCII / HTML-Entities (AC deklariert intern oft Latin-1,
+            UTF-8-Umlaute werden sonst zu Mojibake). Keine Gedankenstriche.
+-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willkommen in der Sabala KI Academy</title>
+</head>
+<body style="margin:0; padding:0; background-color:#EDE8E0;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EDE8E0;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <!-- Container -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background-color:#FAF8F5;">
+
+          <!-- Kopf -->
+          <tr>
+            <td style="padding:40px 48px 8px 48px;">
+              <p style="margin:0; font-family:'Courier New',monospace; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#B8963E;">
+                Sabala KI Academy
+              </p>
+            </td>
+          </tr>
+
+          <!-- Headline -->
+          <tr>
+            <td style="padding:8px 48px 0 48px;">
+              <h1 style="margin:0; font-family:Georgia,'Times New Roman',serif; font-weight:400; font-size:34px; line-height:1.15; color:#2E2B26;">
+                Willkommen. Sch&ouml;n, dass du dabei bist.
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:24px 48px 0 48px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.7; color:#4F4A42;">
+              <p style="margin:0 0 18px 0;">
+                Hey, ich freu mich, dass du dich eingetragen hast.
+              </p>
+              <p style="margin:0 0 18px 0;">
+                In der Sabala KI Academy zeige ich dir live die KI-Tools, die ich selbst jeden Tag nutze.
+                Klein, machbar, direkt anwendbar. Kein Theorie-Geballer, sondern Setups, die nach dem
+                Training wirklich bei dir laufen.
+              </p>
+              <p style="margin:0 0 8px 0;">
+                Du bekommst von mir Bescheid, sobald:
+              </p>
+            </td>
+          </tr>
+
+          <!-- Liste -->
+          <tr>
+            <td style="padding:6px 48px 0 48px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.6; color:#4F4A42;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="22" valign="top" style="color:#B8963E; font-size:16px; padding:4px 0;">&bull;</td>
+                  <td style="padding:4px 0;">ein neuer Kurs oder Termin startet</td>
+                </tr>
+                <tr>
+                  <td width="22" valign="top" style="color:#B8963E; font-size:16px; padding:4px 0;">&bull;</td>
+                  <td style="padding:4px 0;">ich ein neues Thema in die Academy aufnehme</td>
+                </tr>
+                <tr>
+                  <td width="22" valign="top" style="color:#B8963E; font-size:16px; padding:4px 0;">&bull;</td>
+                  <td style="padding:4px 0;">es etwas gibt, das deinen Business-Alltag mit KI leichter macht</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding:32px 48px 8px 48px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" bgcolor="#B8963E" style="border-radius:2px;">
+                    <a href="https://sabala-mentoring.com/akademie-hub"
+                       style="display:inline-block; padding:15px 34px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; color:#0A0806; text-decoration:none; letter-spacing:0.5px;">
+                      Zur Academy
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Sign-off -->
+          <tr>
+            <td style="padding:28px 48px 0 48px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.6; color:#4F4A42;">
+              <p style="margin:0 0 4px 0;">Bis ganz bald,</p>
+              <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:22px; color:#2E2B26;">Ilja</p>
+              <p style="margin:4px 0 0 0; font-family:'Courier New',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:#7A7268;">
+                Sabala KI Academy
+              </p>
+            </td>
+          </tr>
+
+          <!-- Trenner -->
+          <tr>
+            <td style="padding:36px 48px 0 48px;">
+              <div style="border-top:1px solid #E2DACE; font-size:0; line-height:0;">&nbsp;</div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 48px 40px 48px; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.6; color:#9B9488;">
+              <p style="margin:0 0 6px 0;">
+                Du bekommst diese E-Mail, weil du dich auf sabala-mentoring.com fuer den Academy-Newsletter eingetragen hast.
+              </p>
+              <p style="margin:0;">
+                Kein Interesse mehr? <a href="%UNSUBSCRIBELINK%" style="color:#B8963E; text-decoration:underline;">Hier abmelden</a>.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

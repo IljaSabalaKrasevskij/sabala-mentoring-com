@@ -62,7 +62,7 @@ export default function CourseCalendar() {
       <div style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
         {/* Header */}
         <Reveal>
-          <p className="font-mono" style={{ fontSize: 11, letterSpacing: "0.35em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
+          <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.24em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
             Kurs-Kalender
           </p>
         </Reveal>
@@ -120,20 +120,20 @@ export default function CourseCalendar() {
             <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
               {/* Datums-Chip */}
               <div style={{ textAlign: "center", lineHeight: 1, flexShrink: 0 }}>
-                <div style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 40, color: gold }}>{NEXT.day}</div>
-                <div className="font-mono" style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(250,248,245,0.55)", marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 44, color: gold }}>{NEXT.day}</div>
+                <div className="font-mono" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.6)", marginTop: 4 }}>
                   {monthName(NEXT.month)}
                 </div>
               </div>
               <div style={{ width: 1, height: 46, background: "rgba(212,174,90,0.3)" }} />
               <div>
-                <p className="font-mono" style={{ fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: gold, marginBottom: 7 }}>
+                <p className="font-mono" style={{ fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, marginBottom: 7 }}>
                   Nächster Termin · {NEXT.label}
                 </p>
-                <p style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 22, color: "#FAF8F5", lineHeight: 1.15 }}>
+                <p style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 24, color: "#FAF8F5", lineHeight: 1.15 }}>
                   {NEXT.title}
                 </p>
-                <p className="font-mono" style={{ fontSize: 12, color: "rgba(250,248,245,0.55)", marginTop: 5 }}>
+                <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.6)", marginTop: 6 }}>
                   {NEXT.time}
                   {NEXT.spots !== undefined && <span style={{ color: "#E8A87C", marginLeft: 14 }}>· {NEXT.spots} Plätze frei</span>}
                 </p>
@@ -196,7 +196,7 @@ export default function CourseCalendar() {
             }}
           >
             <div>
-              <p className="font-mono" style={{ fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: gold, marginBottom: 8 }}>
+              <p className="font-mono" style={{ fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, marginBottom: 8 }}>
                 {activeEvent.label} · {activeEvent.day}. {monthName(activeEvent.month)} {activeEvent.year}
               </p>
               <h3 style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 24, fontWeight: 400, color: "#FAF8F5", marginBottom: 6 }}>
@@ -247,7 +247,7 @@ function Legend({ dot, label, glow, ring }: { dot: string; label: string; glow?:
           border: ring ? "1px solid rgba(255,255,255,0.4)" : "none",
         }}
       />
-      <span className="font-mono" style={{ fontSize: 12, color: "rgba(255,255,255,0.42)" }}>{label}</span>
+      <span className="font-mono" style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>{label}</span>
     </div>
   );
 }
@@ -273,13 +273,13 @@ function MonthView({
         padding: "26px 24px 28px",
       }}
     >
-      <p className="font-mono" style={{ fontSize: 12, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(250,248,245,0.55)", marginBottom: 20 }}>
+      <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(250,248,245,0.62)", marginBottom: 20 }}>
         {name}
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 4, marginBottom: 8 }}>
         {WEEKDAYS.map((d) => (
-          <div key={d} style={{ textAlign: "center", fontSize: 10, fontFamily: "monospace", letterSpacing: "0.08em", color: "rgba(255,255,255,0.25)", paddingBottom: 6 }}>
+          <div key={d} style={{ textAlign: "center", fontSize: 11.5, fontFamily: "monospace", letterSpacing: "0.06em", color: "rgba(255,255,255,0.38)", paddingBottom: 6 }}>
             {d}
           </div>
         ))}

@@ -65,7 +65,7 @@ export default function AcademyNewsletter() {
             />
 
             <div style={{ position: "relative", maxWidth: 560 }}>
-              <p className="font-mono" style={{ fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
+              <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
                 Akademie-Newsletter
               </p>
               <h2

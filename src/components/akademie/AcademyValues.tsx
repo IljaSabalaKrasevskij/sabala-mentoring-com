@@ -1,12 +1,12 @@
 "use client";
 
-import { Reveal } from "./shared";
+import { Reveal, TiltCard } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyValues — „Was hier entsteht"
    Warme Cream-Sektion als Kontrast zum dunklen Hero. Persönliche Botschaft
-   plus vier Werte-Säulen: Qualität · Lerntransfer · Einfachheit · Customization.
-   Sanfte Gradient-Übergänge oben/unten blenden zwischen Dunkel und Cream.
+   plus vier Werte-Karten: Qualität · Lerntransfer · Einfachheit · Customization.
+   High-End-Anmutung: Gold-Icon-Badges mit Glow, 3D-Tilt + Hover-Lift.
    ───────────────────────────────────────────────────────────────────────── */
 
 type Pillar = { title: string; body: string; icon: React.ReactNode };
@@ -14,7 +14,7 @@ type Pillar = { title: string; body: string; icon: React.ReactNode };
 const stroke = {
   fill: "none",
   stroke: "#B8963E",
-  strokeWidth: 1.4,
+  strokeWidth: 1.5,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
 };
@@ -24,7 +24,7 @@ const PILLARS: Pillar[] = [
     title: "Hohe Qualität",
     body: "Erprobte Setups statt Tool-Hopping. Nur was sich in der Praxis wirklich bewährt hat.",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" {...stroke}>
+      <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M12 3l2.5 5.2 5.7.8-4.1 4 1 5.7L12 16l-5.1 2.7 1-5.7-4.1-4 5.7-.8z" />
       </svg>
     ),
@@ -33,7 +33,7 @@ const PILLARS: Pillar[] = [
     title: "Lerntransfer",
     body: "Du setzt live um, nicht erst zuhause. Am Ende steht ein fertiges System, kein Notizzettel.",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" {...stroke}>
+      <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M4 8h13M13 4l4 4-4 4" />
         <path d="M20 16H7M11 12l-4 4 4 4" />
       </svg>
@@ -43,7 +43,7 @@ const PILLARS: Pillar[] = [
     title: "Einfachheit",
     body: "Kinderleicht erklärt. Keine Insider-Begriffe ohne Übersetzung, keine Vollballerei.",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" {...stroke}>
+      <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M12 3c0 4-3 5-3 8a3 3 0 006 0c0-3-3-4-3-8z" />
         <path d="M9.5 18.5h5M10.5 21h3" />
       </svg>
@@ -53,7 +53,7 @@ const PILLARS: Pillar[] = [
     title: "Customization",
     body: "Angepasst an dein Business. Dein Wissen, deine Themen, dein Workflow, deine Stimme.",
     icon: (
-      <svg width="30" height="30" viewBox="0 0 24 24" {...stroke}>
+      <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
         <circle cx="16" cy="7" r="2.4" />
         <circle cx="8" cy="17" r="2.4" />
@@ -76,10 +76,10 @@ export default function AcademyValues() {
         }}
       />
 
-      <div style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "120px 24px 110px" }}>
+      <div style={{ position: "relative", maxWidth: 1140, margin: "0 auto", padding: "130px 24px 120px" }}>
         {/* Botschaft */}
         <Reveal>
-          <p className="font-mono" style={{ fontSize: 11, letterSpacing: "0.35em", textTransform: "uppercase", color: "#B8963E", marginBottom: 22 }}>
+          <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.26em", textTransform: "uppercase", color: "#B8963E", marginBottom: 24 }}>
             Was hier entsteht
           </p>
         </Reveal>
@@ -88,13 +88,13 @@ export default function AcademyValues() {
           <h2
             style={{
               fontFamily: "var(--font-instrument-serif), Georgia, serif",
-              fontSize: "clamp(32px, 4.6vw, 58px)",
+              fontSize: "clamp(34px, 5vw, 64px)",
               fontWeight: 400,
               color: "#2E2B26",
-              lineHeight: 1.08,
+              lineHeight: 1.07,
               letterSpacing: "-0.01em",
-              maxWidth: 760,
-              marginBottom: 26,
+              maxWidth: 820,
+              marginBottom: 28,
             }}
           >
             Kein Kurs zum Wegklicken.{" "}
@@ -105,11 +105,11 @@ export default function AcademyValues() {
         <Reveal delay={0.12}>
           <p
             style={{
-              fontSize: "clamp(16px, 1.7vw, 19px)",
-              color: "#5C564E",
-              lineHeight: 1.7,
-              maxWidth: 600,
-              marginBottom: 72,
+              fontSize: "clamp(17px, 1.8vw, 20px)",
+              color: "#4F4A42",
+              lineHeight: 1.68,
+              maxWidth: 640,
+              marginBottom: 80,
             }}
           >
             Du lernst hier nicht Theorie über KI. Du baust mit mir live dein eigenes System auf,
@@ -117,39 +117,80 @@ export default function AcademyValues() {
           </p>
         </Reveal>
 
-        {/* Vier Säulen */}
+        {/* Vier Werte-Karten */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: 0,
-            borderTop: "1px solid rgba(46,43,38,0.10)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(248px, 1fr))",
+            gap: 24,
           }}
         >
           {PILLARS.map((p, i) => (
-            <Reveal key={p.title} delay={0.1 + i * 0.08}>
-              <div
-                style={{
-                  padding: "40px 28px 40px 0",
-                  borderRight: i < PILLARS.length - 1 ? "1px solid rgba(46,43,38,0.10)" : "none",
-                  height: "100%",
-                  paddingLeft: i === 0 ? 0 : 28,
-                }}
+            <Reveal key={p.title} delay={0.12 + i * 0.09}>
+              <TiltCard
+                style={{ height: "100%" }}
+                glow="rgba(184,150,62,0.16)"
+                radius={14}
               >
-                <div style={{ marginBottom: 22 }}>{p.icon}</div>
-                <h3
+                <div
+                  className="value-card"
                   style={{
-                    fontFamily: "var(--font-instrument-serif), Georgia, serif",
-                    fontSize: 23,
-                    fontWeight: 400,
-                    color: "#2E2B26",
-                    marginBottom: 12,
+                    height: "100%",
+                    background: "#FFFFFF",
+                    border: "1px solid rgba(46,43,38,0.08)",
+                    borderRadius: 14,
+                    padding: "38px 30px 36px",
+                    boxShadow: "0 18px 40px -28px rgba(46,43,38,0.35)",
+                    transition: "box-shadow 0.4s, border-color 0.4s",
                   }}
                 >
-                  {p.title}
-                </h3>
-                <p style={{ fontSize: 14.5, color: "#6B655C", lineHeight: 1.62 }}>{p.body}</p>
-              </div>
+                  {/* Icon-Badge mit Glow */}
+                  <div style={{ position: "relative", width: 72, height: 72, marginBottom: 26 }}>
+                    <div
+                      aria-hidden
+                      className="value-glow"
+                      style={{
+                        position: "absolute",
+                        inset: -6,
+                        borderRadius: "50%",
+                        background: "radial-gradient(circle, rgba(212,174,90,0.45) 0%, rgba(212,174,90,0) 70%)",
+                        opacity: 0.55,
+                        transition: "opacity 0.4s",
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "relative",
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "linear-gradient(150deg, #FBF6EC 0%, #F3E9D2 100%)",
+                        border: "1px solid rgba(184,150,62,0.35)",
+                        boxShadow: "inset 0 1px 2px rgba(255,255,255,0.9)",
+                      }}
+                    >
+                      {p.icon}
+                    </div>
+                  </div>
+
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-instrument-serif), Georgia, serif",
+                      fontSize: 27,
+                      fontWeight: 400,
+                      color: "#2E2B26",
+                      marginBottom: 14,
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    {p.title}
+                  </h3>
+                  <p style={{ fontSize: 15.5, color: "#5A554C", lineHeight: 1.62 }}>{p.body}</p>
+                </div>
+              </TiltCard>
             </Reveal>
           ))}
         </div>
@@ -165,6 +206,14 @@ export default function AcademyValues() {
           background: "linear-gradient(180deg, rgba(10,8,6,0.0) 0%, #0a0806 100%)",
         }}
       />
+
+      <style>{`
+        .value-card:hover {
+          box-shadow: 0 34px 70px -34px rgba(184,150,62,0.55) !important;
+          border-color: rgba(184,150,62,0.4) !important;
+        }
+        .value-card:hover .value-glow { opacity: 1 !important; }
+      `}</style>
     </section>
   );
 }
