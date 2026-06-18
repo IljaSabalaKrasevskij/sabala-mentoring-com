@@ -17,12 +17,12 @@ export const runtime = "nodejs";
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
+  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
   email: z
     .string()
     .trim()
     .max(160)
     .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
-  vorname: z.string().trim().max(80).optional().default(""),
   fax: z.string().max(0).optional().default(""),
 });
 

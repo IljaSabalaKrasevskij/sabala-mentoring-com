@@ -14,6 +14,7 @@ const gold = "#D4AE5A";
 type Status = "idle" | "loading" | "success" | "error" | "unconfigured";
 
 export default function AcademyNewsletter() {
+  const [vorname, setVorname] = useState("");
   const [email, setEmail] = useState("");
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
@@ -26,7 +27,7 @@ export default function AcademyNewsletter() {
       const res = await fetch("/api/akademie-newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, fax }),
+        body: JSON.stringify({ vorname, email, fax }),
       });
       if (res.ok) setStatus("success");
       else if (res.status === 503) setStatus("unconfigured");
@@ -118,11 +119,35 @@ export default function AcademyNewsletter() {
                     style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
                   />
                   <input
+                    type="text"
+                    required
+                    value={vorname}
+                    onChange={(e) => { setVorname(e.target.value); if (status !== "idle") setStatus("idle"); }}
+                    placeholder="Vorname"
+                    autoComplete="given-name"
+                    style={{
+                      flex: "1 1 180px",
+                      minWidth: 0,
+                      background: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(255,255,255,0.15)",
+                      borderRadius: 2,
+                      padding: "16px 18px",
+                      fontSize: 15,
+                      color: "#FAF8F5",
+                      outline: "none",
+                      fontFamily: "var(--font-satoshi), system-ui",
+                      transition: "border-color 0.2s",
+                    }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)")}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+                  />
+                  <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); if (status !== "idle") setStatus("idle"); }}
                     placeholder="deine@email.de"
+                    autoComplete="email"
                     style={{
                       flex: "1 1 240px",
                       minWidth: 0,
