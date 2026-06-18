@@ -43,6 +43,20 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 14,
+    title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
+    excerpt: "Vier Setup-Schritte, drei Pflicht-Dateien, fünf typische Anfänger-Fehler. Mit Boris Chernys eigenen Tipps und Sebastian Kaufmanns Setup-Logik, durchgehend mit Quellen.",
+    category: "KI Academy",
+    date: "Juni 2026",
+    readTime: "8 Min",
+    image: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
+    slug: "/blog/webseiten-bau-mit-claude-anfaenger",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 13,
     title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
     excerpt: "Baukasten 1.500-3.500 Euro über 3 Jahre, eigene Webseite 8.000-15.000 einmalig. Wo der Break-Even liegt, welche Kosten beide verschleiern, und welche Frage am Ende mehr zählt als der Preis.",
