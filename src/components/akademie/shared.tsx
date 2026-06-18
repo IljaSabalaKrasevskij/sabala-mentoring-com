@@ -1,8 +1,64 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export const ACADEMY_CHECKOUT_URL = "https://sabala-mentoring.thrivecart.com/sabala-academy-claude-memorysystem/";
+
+/* Reveal — robuste Scroll-Einblendung.
+   Default-State ist SICHTBAR (SSR/no-JS zeigt Inhalt). Erst nach Mount wird
+   verborgen + per IntersectionObserver eingeblendet. Schlägt der Observer fehl,
+   bleibt der Inhalt sichtbar (kein opacity:0-Stuck wie bei framer whileInView). */
+export function Reveal({
+  children,
+  delay = 0,
+  y = 22,
+  className,
+  style,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  y?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [armed, setArmed] = useState(false);
+  const [seen, setSeen] = useState(false);
+
+  useEffect(() => {
+    setArmed(true);
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setSeen(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "-40px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const hidden = armed && !seen;
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: hidden ? 0 : 1,
+        transform: hidden ? `translateY(${y}px)` : "none",
+        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 /* HUD-Eck-Brackets — gibt Karten/Buttons einen „digitalen Rahmen" (aus ValuesManifesto übernommen) */
 export function Brackets({
