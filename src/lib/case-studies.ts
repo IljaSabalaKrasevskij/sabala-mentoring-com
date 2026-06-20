@@ -33,21 +33,21 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Live on sabala-mentoring.com. Launched the KI Akademie sales page with two sold out cohorts and an active leads pipeline through the contact form into a self hosted dashboard.",
     tags: ["Claude Code", "Next.js 16", "React Three Fiber", "Turso"],
     url: "https://sabala-mentoring.com",
-    // image: "/case-studies/sabala-mentoring.jpg",
+    image: "/case-studies/sabala-mentoring.jpg",
   },
   {
     id: "dielommel",
     title: "Stefanie Lommel: Coaching for Family Businesses",
     industry: "Coaching · B2B",
     challenge:
-      "Sharpen a broad consulting practice into one clear positioning: change guidance for family run companies before transformation becomes crisis. The previous site read like a generic coach, not a specialist.",
+      "Sharpen a broad consulting practice into one clear positioning: change guidance for family run companies before change turns into a crisis. The previous site read like a generic coach, not a specialist.",
     claudeUsage:
       "Worked with Claude on positioning, voice, page structure and Schema.org markup in parallel. Same Claude session went from interview transcript to live page in one continuous flow, with copy iterations grounded in the client's own language.",
     result:
       "Live on dielommel.de with structured Person, Organization and Service schema, clear two step offer (15 min call, 90 min session), indexable from day one. Owner now gets inbound from her actual ideal client profile.",
     tags: ["Claude", "Next.js", "Schema.org", "Editorial design"],
     url: "https://dielommel.de",
-    // image: "/case-studies/dielommel.jpg",
+    image: "/case-studies/dielommel.jpg",
   },
   {
     id: "connecting-herzkreative",
@@ -61,7 +61,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Live on connecting-herzkreative.com. Applicants go through a real vetting flow, approved members get a profile and can find each other on the map, and the podcast and newsletter feed straight into the application funnel.",
     tags: ["Claude Code", "Next.js 16", "Leaflet", "Framer Motion"],
     url: "https://connecting-herzkreative.com",
-    // image: "/case-studies/connecting-herzkreative.jpg",
+    image: "/case-studies/connecting-herzkreative.jpg",
   },
   {
     id: "operations-dashboard",
@@ -75,6 +75,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Replaces a stack of separate tools. Leads from the public site flow straight in, voice queries hit a custom Whisper service, content plans and agent jobs live in the same canvas. Currently in daily production use.",
     tags: ["Claude Code", "MCP", "Whisper", "Next.js 16", "FastAPI"],
     isPrivate: true,
-    // image: "/case-studies/operations-dashboard.jpg",
+    image: "/case-studies/operations-dashboard.jpg",
   },
 ];
