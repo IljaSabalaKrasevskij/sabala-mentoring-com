@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CaseStudiesHero } from "@/components/case-studies/CaseStudiesHero";
 import { CaseStudyGrid } from "@/components/case-studies/CaseStudyGrid";
 import { CASE_STUDIES } from "@/lib/case-studies";
 
@@ -21,88 +21,76 @@ export default function CaseStudiesPage() {
   return (
     <div
       lang="en"
-      className="min-h-[100dvh] bg-warm-canvas text-deep-charcoal selection:bg-refined-gold selection:text-white"
+      className="bg-warm-canvas text-deep-charcoal selection:bg-refined-gold selection:text-white"
     >
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-pure-surface px-6 pb-20 pt-36 sm:px-10 md:px-16 md:pb-28 md:pt-48">
-        <div className="pointer-events-none absolute right-[-18vw] top-[-18vw] h-[48vw] w-[48vw] animate-float-slow rounded-full bg-gold-glow opacity-25 blur-[120px]" />
+      <CaseStudiesHero />
 
-        <div className="relative mx-auto max-w-5xl">
-          <div className="cs-rise">
-            <p className="flex items-center gap-2.5 font-geist text-[0.7rem] font-medium uppercase tracking-[0.22em] text-warm-steel">
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-refined-gold" />
-              Built with Claude
-            </p>
-            <h1 className="mt-6 font-instrument text-[clamp(3.4rem,8vw,7.2rem)] leading-[0.94] tracking-tight">
-              Real websites.
-              <br />
-              <span className="italic text-warm-steel">Real clients.</span>
-              <br />
-              Real results.
-            </h1>
-          </div>
+      {/* Soft dark → cream transition (no hard cut) */}
+      <div
+        aria-hidden
+        className="h-[14vh] w-full"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0A0806 0%, #14100c 16%, #2a2118 34%, #6b5a45 56%, #b6a079 76%, #e4d6ba 90%, var(--color-warm-canvas) 100%)",
+        }}
+      />
 
-          <div className="cs-rise" style={{ "--cs-d": "0.1s" } as CSSProperties}>
-            <p className="mt-10 max-w-2xl font-satoshi text-lg leading-relaxed text-warm-steel md:text-xl">
-              I run a small studio that builds premium websites and AI systems for founders
-              and small teams. Every project on this page was designed and built with Claude
-              and Claude Code, Anthropic&rsquo;s AI, from the first architecture decision
-              through to the final deploy. Real clients, real work, all live in production.
-            </p>
-          </div>
-
-          <div className="cs-rise" style={{ "--cs-d": "0.2s" } as CSSProperties}>
-            <div className="mt-12 flex items-center gap-5">
-              <span className="h-px w-12 bg-refined-gold/50" />
-              <p className="font-geist text-[0.65rem] uppercase tracking-[0.22em] text-warm-steel/70">
-                Four projects · all in production
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Case Study Grid */}
-      <section className="bg-warm-canvas px-6 py-24 sm:px-10 md:px-16 md:py-32">
+      {/* Case study grid */}
+      <section className="px-6 pb-24 sm:px-10 md:px-16 md:pb-32">
         <div className="mx-auto max-w-7xl">
+          <div className="cs-rise mb-14 max-w-2xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#8A6E1F]">
+              {"// selected work"}
+            </p>
+            <h2 className="mt-5 font-instrument text-[clamp(2.1rem,4.5vw,3.6rem)] leading-[1.05] tracking-tight">
+              Four projects, start to finish.
+            </h2>
+          </div>
+
           <CaseStudyGrid items={CASE_STUDIES} />
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative overflow-hidden bg-pure-surface px-6 py-24 md:py-32">
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[44vh] w-[70vw] -translate-x-1/2 animate-float-slow rounded-full bg-refined-gold/10 blur-[120px]" />
-        <div className="cs-rise">
-          <div className="relative mx-auto max-w-3xl text-center">
-            <p className="font-geist text-[0.7rem] font-medium uppercase tracking-[0.22em] text-warm-steel">
-              Want a website built with AI?
-            </p>
-            <h2 className="mt-5 font-instrument text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] text-deep-charcoal">
-              Let&rsquo;s talk about your project.
-            </h2>
-            <div className="mt-10 flex justify-center">
-              <Link
-                href="/#kontakt"
-                className="group inline-flex items-center gap-4 rounded-full bg-refined-gold py-2 pl-8 pr-2 font-satoshi font-medium text-white transition-colors duration-300 hover:bg-deep-charcoal"
-              >
-                Contact me
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    aria-hidden="true"
-                    className="transition-transform duration-300 ease-out group-hover:translate-x-1"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </Link>
-            </div>
+      {/* CTA — dark rounded close */}
+      <section
+        className="relative overflow-hidden rounded-t-[2.5rem] px-6 py-24 md:py-32"
+        style={{ background: "var(--tech-bg)" }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-0 h-[44vh] w-[70vw] -translate-x-1/2 animate-float-slow rounded-full"
+          style={{ background: "radial-gradient(ellipse at center, rgba(184,150,62,0.16), transparent 65%)" }}
+        />
+
+        <div className="cs-rise relative mx-auto max-w-3xl text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold-light">
+            Want a website built with AI?
+          </p>
+          <h2 className="mt-5 font-instrument text-cream text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.05]">
+            Let&rsquo;s talk about your project.
+          </h2>
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/#kontakt"
+              className="group inline-flex items-center gap-4 rounded-full bg-gold-light py-2 pl-8 pr-2 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors duration-300 hover:bg-gold"
+            >
+              Contact me
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-tech-bg/15">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                  className="transition-transform duration-300 ease-out group-hover:translate-x-1"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </span>
+            </Link>
           </div>
         </div>
       </section>
