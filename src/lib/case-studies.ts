@@ -1,5 +1,5 @@
 /**
- * Case Studies — projects built end to end with Claude.
+ * Case Studies: projects built end to end with Claude.
  *
  * To add a screenshot: drop a 16:9 image into /public/case-studies/ and set
  * `image: "/case-studies/your-file.jpg"` on the entry. Until then, leave `image`
@@ -23,7 +23,7 @@ export type CaseStudy = {
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: "sabala-mentoring",
-    title: "Sabala Mentoring — AI Studio & Academy",
+    title: "Sabala Mentoring: AI Studio & Academy",
     industry: "AI Studio · own brand",
     challenge:
       "Position a one person AI studio that does three different things (websites, co-development, an AI academy) on a single homepage, without the visitor losing the thread.",
@@ -37,7 +37,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: "dielommel",
-    title: "Stefanie Lommel — Coaching for Family Businesses",
+    title: "Stefanie Lommel: Coaching for Family Businesses",
     industry: "Coaching · B2B",
     challenge:
       "Sharpen a broad consulting practice into one clear positioning: change guidance for family run companies before transformation becomes crisis. The previous site read like a generic coach, not a specialist.",
@@ -51,7 +51,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: "connecting-herzkreative",
-    title: "Connecting Herzkreative — Curated Maker Network",
+    title: "Connecting Herzkreative: Curated Maker Network",
     industry: "Community Platform · Curated Network",
     challenge:
       "Launch a curated network where independent makers find each other, not just a landing page. It needed an application flow, member profiles and a way to actually discover one another, built and run by a single founder without renting an off the shelf community SaaS.",
@@ -65,7 +65,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: "operations-dashboard",
-    title: "AI Operations Dashboard — Internal",
+    title: "AI Operations Dashboard",
     industry: "Internal tool · Agentic system",
     challenge:
       "Run a one person studio at agency scale: track leads, content plans, financial KPIs and ongoing agent jobs in one place, without subscribing to ten SaaS tools.",

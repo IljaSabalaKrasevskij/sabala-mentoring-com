@@ -7,7 +7,7 @@ import { CASE_STUDIES } from "@/lib/case-studies";
 export const metadata: Metadata = {
   title: "Case Studies · Built with Claude",
   description:
-    "Real websites built end to end with Claude and Claude Code. Case studies from Sabala Studios for the Anthropic Claude Partner Network.",
+    "Real websites and AI systems, designed and built end to end with Claude and Claude Code. Selected work from Sabala Studios.",
   alternates: { canonical: "/case-studies" },
   openGraph: {
     title: "Case Studies · Built with Claude",
@@ -42,20 +42,12 @@ export default function CaseStudiesPage() {
             </h1>
           </div>
 
-          {/*
-            TODO (Ilja): rewrite this in your own voice for the Anthropic submission.
-            This is the single highest leverage paragraph on the page — it is the pitch
-            a reviewer reads before looking at any project. Keep it to 3-5 sentences:
-            1) what you do, 2) how Claude fits into the workflow (not just "we use AI"),
-            3) why the projects below are evidence.
-          */}
           <div className="cs-rise" style={{ "--cs-d": "0.1s" } as CSSProperties}>
             <p className="mt-10 max-w-2xl font-satoshi text-lg leading-relaxed text-warm-steel md:text-xl">
-              Every project on this page was designed and developed with Claude and Claude
-              Code, from initial architecture decisions through deployment. Claude is not a
-              code generator bolted on top of an existing workflow here, it is the workflow:
-              positioning, copy, component design, infrastructure, reviews. The projects
-              below are live in production.
+              I run a small studio that builds premium websites and AI systems for founders
+              and small teams. Every project on this page was designed and built with Claude
+              and Claude Code, Anthropic&rsquo;s AI, from the first architecture decision
+              through to the final deploy. Real clients, real work, all live in production.
             </p>
           </div>
 
