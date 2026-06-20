@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/akademie", priority: 0.9, changeFrequency: "monthly" },
     { path: "/mitentwickelt", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/referenzen", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/case-studies", priority: 0.8, changeFrequency: "monthly" },
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/gpt-team", priority: 0.7, changeFrequency: "monthly" },

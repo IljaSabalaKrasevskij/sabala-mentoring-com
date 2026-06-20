@@ -49,6 +49,12 @@ const nextConfig: NextConfig = {
         destination: "/blog/technik-setup-online-coach",
         permanent: true,
       },
+      {
+        // /referenzen wurde in /case-studies konsolidiert (Search-Equity erhalten)
+        source: "/referenzen",
+        destination: "/case-studies",
+        permanent: true,
+      },
     ];
   },
 

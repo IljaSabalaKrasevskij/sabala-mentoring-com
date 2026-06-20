@@ -16,7 +16,7 @@ const COLS: { title: string; links: { label: string; href: string; ext?: boolean
     links: [
       { label: "Blog", href: "/blog" },
       { label: "Über mich", href: "/ueber-mich" },
-      { label: "Referenzen", href: "/referenzen" },
+      { label: "Case Studies", href: "/case-studies" },
     ],
   },
   {
