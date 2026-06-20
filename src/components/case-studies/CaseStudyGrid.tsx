@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { CaseStudy } from "@/lib/case-studies";
+import { STRINGS, type CaseStudy, type Locale } from "@/lib/case-studies";
 
 /**
  * Case-study grid. Reveal-on-scroll and all hover states are pure CSS, so the
  * content is always present in the SSR HTML and never depends on JS animation to
- * be visible (see `.cs-reveal` in globals.css — it only hides inside a
- * prefers-reduced-motion:no-preference + @supports guard).
+ * be visible (see `.cs-reveal` in globals.css). Text reads the active language.
  */
-export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
+export function CaseStudyGrid({ items, lang }: { items: CaseStudy[]; lang: Locale }) {
+  const s = STRINGS[lang];
   return (
     <div className="grid gap-7 md:grid-cols-2 md:gap-9">
       {items.map((cs, i) => (
@@ -27,7 +27,7 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
             {cs.image ? (
               <Image
                 src={cs.image}
-                alt={`${cs.title}, built with Claude`}
+                alt={`${cs.title[lang]}, built with Claude`}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
@@ -35,7 +35,7 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
             ) : (
               <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-warm-canvas to-pure-surface">
                 <span className="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-warm-steel/50">
-                  Screenshot pending
+                  Screenshot
                 </span>
               </div>
             )}
@@ -53,7 +53,7 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
 
             {cs.isPrivate && (
               <span className="absolute right-4 top-4 rounded-full bg-deep-charcoal/85 px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-cream backdrop-blur-sm">
-                Private Project
+                {s.privateBadge}
               </span>
             )}
           </div>
@@ -61,30 +61,30 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
           {/* Body */}
           <div className="flex flex-1 flex-col p-8 md:p-9">
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-[#8A6E1F]">
-              {cs.industry}
+              {cs.industry[lang]}
             </p>
             <h3 className="mt-3 font-instrument text-3xl leading-[1.08] text-deep-charcoal md:text-[2.3rem]">
-              {cs.title}
+              {cs.title[lang]}
             </h3>
 
             <dl className="mt-6 space-y-5 font-satoshi text-[0.95rem] leading-relaxed text-deep-charcoal/80">
               <div>
                 <dt className="font-mono text-[0.6rem] uppercase tracking-[0.22em] text-warm-steel">
-                  Challenge
+                  {s.labelChallenge}
                 </dt>
-                <dd className="mt-1.5">{cs.challenge}</dd>
+                <dd className="mt-1.5">{cs.challenge[lang]}</dd>
               </div>
               <div>
                 <dt className="font-mono text-[0.6rem] uppercase tracking-[0.22em] text-warm-steel">
-                  How Claude was used
+                  {s.labelClaude}
                 </dt>
-                <dd className="mt-1.5">{cs.claudeUsage}</dd>
+                <dd className="mt-1.5">{cs.claudeUsage[lang]}</dd>
               </div>
               <div>
                 <dt className="font-mono text-[0.6rem] uppercase tracking-[0.22em] text-warm-steel">
-                  Result
+                  {s.labelResult}
                 </dt>
-                <dd className="mt-1.5">{cs.result}</dd>
+                <dd className="mt-1.5">{cs.result[lang]}</dd>
               </div>
             </dl>
 
@@ -104,7 +104,7 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
             <div className="mt-8 flex items-center justify-between border-t border-deep-charcoal/8 pt-6">
               {cs.isPrivate ? (
                 <span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-warm-steel">
-                  Internal · no public URL
+                  {s.privateInternal}
                 </span>
               ) : cs.url ? (
                 <Link
@@ -113,7 +113,7 @@ export function CaseStudyGrid({ items }: { items: CaseStudy[] }) {
                   rel="noopener noreferrer"
                   className="group/link inline-flex items-center gap-2 font-mono text-[0.75rem] font-medium uppercase tracking-[0.18em] text-[#8A6E1F] transition-colors hover:text-deep-charcoal"
                 >
-                  View website
+                  {s.viewWebsite}
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-refined-gold/10 transition-colors duration-300 group-hover/link:bg-refined-gold/20">
                     <svg
                       width="13"

@@ -1,16 +1,18 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import SabalaLogo from "@/components/brand/SabalaLogo";
+import { STRINGS, type Locale } from "@/lib/case-studies";
 
 /**
  * Cinematic dark hero for /case-studies.
  *
  * tech-bg base + the brand liquid-gold video (screen blend) + gold radial glow,
- * with a strong top-to-bottom overlay so the cream type stays legible. All copy
- * rises in via the robust .cs-rise CSS (visible by default, animates only when
- * motion is allowed) — nothing depends on JS to be seen.
+ * with a strong overlay so the cream type stays legible. Copy rises in via the
+ * robust .cs-rise CSS (visible by default). `toggle` is the language switch,
+ * injected by the parent so the hero stays presentation-only.
  */
-export function CaseStudiesHero() {
+export function CaseStudiesHero({ lang, toggle }: { lang: Locale; toggle: ReactNode }) {
+  const s = STRINGS[lang];
   return (
     <section
       className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-28 pb-16 sm:px-10 md:px-16"
@@ -55,12 +57,15 @@ export function CaseStudiesHero() {
       />
 
       <div className="relative mx-auto w-full max-w-5xl">
-        {/* Logo + wordmark */}
-        <div className="cs-rise flex items-center gap-3">
-          <SabalaLogo size={42} />
-          <span className="font-mono text-[12px] uppercase tracking-[0.34em] text-gold-light">
-            Sabala Studios
-          </span>
+        {/* Logo + language toggle */}
+        <div className="cs-rise flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <SabalaLogo size={42} />
+            <span className="font-mono text-[12px] uppercase tracking-[0.34em] text-gold-light">
+              Sabala Studios
+            </span>
+          </div>
+          {toggle}
         </div>
 
         {/* Eyebrow */}
@@ -69,7 +74,7 @@ export function CaseStudiesHero() {
           style={{ "--cs-d": "0.08s" } as CSSProperties}
         >
           <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-gold-light" />
-          Built with Claude
+          {s.heroEyebrow}
         </p>
 
         {/* Headline */}
@@ -82,11 +87,11 @@ export function CaseStudiesHero() {
             "--cs-d": "0.14s",
           } as CSSProperties}
         >
-          Real websites.
+          {s.heroHeadline[0]}
           <br />
-          <span className="italic text-gold-light/90">Real clients.</span>
+          <span className="italic text-gold-light/90">{s.heroHeadline[1]}</span>
           <br />
-          Real results.
+          {s.heroHeadline[2]}
         </h1>
 
         {/* Lead */}
@@ -94,21 +99,13 @@ export function CaseStudiesHero() {
           className="cs-rise mt-9 max-w-2xl font-satoshi text-warm-light/85"
           style={{ fontSize: "clamp(1.05rem, 2vw, 1.3rem)", lineHeight: 1.55, "--cs-d": "0.2s" } as CSSProperties}
         >
-          I run a small studio that builds premium websites and AI systems for founders and small
-          teams. Every project on this page was designed and built with Claude and Claude Code,
-          Anthropic&rsquo;s AI, from the first architecture decision through to the final deploy.
-          Real clients, real work, all live in production.
+          {s.heroLead}
         </p>
 
         {/* Meta rule */}
-        <div
-          className="cs-rise mt-12 flex items-center gap-5"
-          style={{ "--cs-d": "0.26s" } as CSSProperties}
-        >
+        <div className="cs-rise mt-12 flex items-center gap-5" style={{ "--cs-d": "0.26s" } as CSSProperties}>
           <span className="h-px w-12 bg-gold-light/50" />
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-warm-light/55">
-            Four projects · all in production
-          </p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-warm-light/55">{s.heroMeta}</p>
         </div>
       </div>
     </section>
