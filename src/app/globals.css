@@ -98,6 +98,37 @@ body {
   100% { transform: translateY(0px) rotate(0deg); }
 }
 
+/*
+ * Case-studies reveals — robust by design.
+ * Base state is always visible (opacity:1). The hidden+animate state only
+ * applies inside @media (prefers-reduced-motion: no-preference), so content
+ * never depends on animation to be seen (no-JS, reduced-motion, or an
+ * unsupported browser all fall back to plain visible content).
+ */
+@keyframes cs-reveal-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Above-the-fold elements: gentle rise on load, staggered via --cs-d */
+  .cs-rise {
+    opacity: 0;
+    animation: cs-reveal-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--cs-d, 0s);
+  }
+
+  /* Scroll-driven reveal for cards in supporting browsers (Chrome/Edge) */
+  @supports (animation-timeline: view()) {
+    .cs-reveal {
+      opacity: 0;
+      animation: cs-reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
+}
+
 @media print {
   @page {
     size: 1920px 1080px;
