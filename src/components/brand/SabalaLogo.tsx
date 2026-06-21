@@ -1,6 +1,6 @@
-type Props = { size?: number; className?: string };
+type Props = { size?: number; className?: string; light?: boolean };
 
-export default function SabalaLogo({ size = 56, className }: Props) {
+export default function SabalaLogo({ size = 56, className, light = false }: Props) {
   return (
     <svg
       width={size}
@@ -26,6 +26,8 @@ export default function SabalaLogo({ size = 56, className }: Props) {
           <stop offset="1" stopColor="#AD9553" />
         </linearGradient>
       </defs>
+      {/* Weiße Scheibe hinter dem evenodd-Gold-Pfad: macht den Berg auf dunklem Grund weiß. */}
+      {light && <circle cx="572.42" cy="572.42" r="402" fill="#FFFFFF" />}
       <path
         fillRule="evenodd"
         fill="url(#sabala-logo-gradient)"

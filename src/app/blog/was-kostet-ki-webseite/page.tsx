@@ -1,6 +1,9 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass, PullQuote } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Calculator } from "lucide-react";
 
@@ -75,6 +78,9 @@ export default function BlogWasKostetKiWebseitePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0e0c0a]/85 via-[#1a1612]/35 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -111,13 +117,22 @@ export default function BlogWasKostetKiWebseitePage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was meint <em>KI-Webseite</em>?</h2>
-            <p>Vorweg eine Klarstellung. KI-Webseite meint <strong>keine Seite, die magisch von allein entsteht.</strong> Gemeint ist eine Seite mit eigenem Code (Next.js, Vercel, GitHub), die du mit KI-Werkzeugen wie Claude Code selbst pflegen und erweitern kannst, statt monatlich an einen Baukasten zu zahlen, dem die Seite gehört.</p>
+            <p className={dropCapClass}>Vorweg eine Klarstellung. KI-Webseite meint <strong>keine Seite, die magisch von allein entsteht.</strong> Gemeint ist eine Seite mit eigenem Code (Next.js, Vercel, GitHub), die du mit KI-Werkzeugen wie Claude Code selbst pflegen und erweitern kannst, statt monatlich an einen Baukasten zu zahlen, dem die Seite gehört.</p>
             <p>Der Unterschied ist nicht „mit oder ohne KI". Der Unterschied ist <strong>Eigentum</strong>.</p>
 
             <h2>Was beide Optionen wirklich kosten</h2>
             <p><strong>Baukasten (Webflow als Beispiel):</strong> 27 Euro im Monat plus Erweiterungen, Plugins, Lizenzen, Bilder. Realistisch über 3 Jahre: <strong>1.500 bis 3.500 Euro</strong>. Squarespace und Wix ähnlich, günstiger im Grundpreis, teurer in den Add-ons.</p>
             <p><strong>Eigene Webseite (Sabala-Lite als Beispiel):</strong> 8.000 Euro einmalig, inklusive Brand-Audit, fünf Premium-Seiten, drei Blog-Artikel, sechs Monate Pflege. Danach Hosting plus 49 bis 149 Euro Pflege im Monat. Realistisch über 3 Jahre: <strong>9.500 bis 11.900 Euro</strong>.</p>
             <p>Auf den ersten Blick ist Baukasten günstiger. Aber das ist nicht die ganze Wahrheit.</p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Visueller Anker: Waage */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src={`/blog/${slug}/scale.jpg`} alt="Skizze: eine Waage wiegt zwei Münzstapel gegeneinander, Baukasten gegen eigene Webseite über die Jahre" fill className="object-cover" />
           </div>
         </ScrollReveal>
       </section>
@@ -178,6 +193,8 @@ export default function BlogWasKostetKiWebseitePage() {
           </div>
         </ScrollReveal>
       </section>
+
+      <PullQuote>Rechne nicht nur, was die Webseite kostet. Rechne, was dich eine Webseite kostet, die unter deinem Niveau verkauft.</PullQuote>
 
       {/* WANN LOHNT SICH WAS */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[820px] mx-auto w-full">
@@ -246,7 +263,7 @@ export default function BlogWasKostetKiWebseitePage() {
                 <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Beratungsgespräch buchen
                 </Link>
-                <Link href="/premium-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                <Link href="/webseiten" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   Premium-Angebot ansehen
                 </Link>
               </div>
@@ -254,6 +271,7 @@ export default function BlogWasKostetKiWebseitePage() {
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["baukasten-vs-eigene-webseite-kosten-2026", "premium-webseite-oder-baukasten", "webseite-mit-ki-bauen-2026"]} />
     </main>
   );
 }

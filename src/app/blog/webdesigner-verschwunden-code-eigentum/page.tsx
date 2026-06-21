@@ -1,8 +1,11 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
-import { ArrowLeft, Lock, AlertTriangle, Github, KeyRound, FileText } from "lucide-react";
+import { ArrowLeft, Lock, AlertTriangle, KeyRound, FileText } from "lucide-react";
 
 const slug = "webdesigner-verschwunden-code-eigentum";
 const url = `https://sabala-mentoring.com/blog/${slug}`;
@@ -81,6 +84,9 @@ export default function BlogWebdesignerVerschwundenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -115,7 +121,7 @@ export default function BlogWebdesignerVerschwundenPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was ist Webseiten-Lock-in eigentlich?</h2>
-            <p><strong>Webseiten-Lock-in ist die Abhängigkeit von einer Person, Plattform oder einem Anbieter</strong>, ohne die du deine eigene Webseite nicht mehr ändern oder umziehen kannst. Du besitzt nominal die Webseite, aber faktisch nicht die Kontrolle.</p>
+            <p className={dropCapClass}><strong>Webseiten-Lock-in ist die Abhängigkeit von einer Person, Plattform oder einem Anbieter</strong>, ohne die du deine eigene Webseite nicht mehr ändern oder umziehen kannst. Du besitzt nominal die Webseite, aber faktisch nicht die Kontrolle.</p>
             <p>Drei Ebenen, auf denen Lock-in passiert:</p>
             <ul>
               <li><strong>Plattform-Lock-in</strong>: Webflow, Squarespace, Wix, Jimdo. Dein Inhalt liegt in einer geschlossenen Datenbank des Anbieters. Wenn du kündigst, ist die Seite weg. Export geht meist nur eingeschränkt.</li>
@@ -208,6 +214,15 @@ export default function BlogWebdesignerVerschwundenPage() {
         </ScrollReveal>
       </section>
 
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/webdesigner-verschwunden-code-eigentum/key.jpg" alt="Skizze: eine Hand uebergibt einen goldenen Schluessel an eine andere Hand ueber einem Bauplan, Symbol fuer Eigentums-Uebergabe" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
+      </section>
+
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
           <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-4 text-center">Häufige Fragen</p>
@@ -242,10 +257,10 @@ export default function BlogWebdesignerVerschwundenPage() {
                 Wenn du eine Premium-Webseite willst, die du auch dann pflegen kannst, wenn ich nicht mehr da bin: Code-Eigentum, GitHub, Vercel und Claude-Code-Onboarding sind im Sabala-Premium-Angebot Standard. Fuer den schlanken Einstieg gibts den OnePager mit gleichem Eigentums-Prinzip.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                <Link href="/webseiten" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Premium-Angebot ansehen
                 </Link>
-                <Link href="/special-launch-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                <Link href="/webseiten" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   OnePager-Einstieg
                 </Link>
                 <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
@@ -256,6 +271,7 @@ export default function BlogWebdesignerVerschwundenPage() {
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["webseite-mit-ki-bauen-2026", "premium-webseite-oder-baukasten", "was-kostet-ki-webseite"]} />
     </main>
   );
 }

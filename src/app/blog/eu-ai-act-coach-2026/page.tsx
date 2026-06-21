@@ -1,6 +1,9 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, AlertTriangle } from "lucide-react";
 
@@ -81,6 +84,9 @@ export default function BlogEuAiActCoachPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -115,7 +121,7 @@ export default function BlogEuAiActCoachPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was ist der EU AI Act eigentlich?</h2>
-            <p><strong>Der EU AI Act ist die erste umfassende KI-Regulierung der Welt.</strong> Er trat am 1. August 2024 in Kraft und wird in Stufen anwendbar:</p>
+            <p className={dropCapClass}><strong>Der EU AI Act ist die erste umfassende KI-Regulierung der Welt.</strong> Er trat am 1. August 2024 in Kraft und wird in Stufen anwendbar:</p>
             <ul>
               <li><strong>Februar 2025</strong>: Verbote bestimmter AI-Praktiken (z.B. Social Scoring, manipulative KI)</li>
               <li><strong>August 2025</strong>: Pflichten für General Purpose AI (GPT-4, Claude, Gemini)</li>
@@ -202,6 +208,15 @@ export default function BlogEuAiActCoachPage() {
         </ScrollReveal>
       </section>
 
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/eu-ai-act-coach-2026/rules.jpg" alt="Skizze: ein offenes Notizbuch mit einer Checkliste und ein kleiner KI-Assistent daneben, Klarheit ueber neue Regeln" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
+      </section>
+
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
           <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-4 text-center">Häufige Fragen</p>
@@ -229,27 +244,25 @@ export default function BlogEuAiActCoachPage() {
             <div className="flex-1 relative z-10 text-center md:text-left">
               <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
                 <AlertTriangle className="w-5 h-5 text-refined-gold" />
-                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">AI Act Compliance + Premium-Auftritt</span>
+                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">KI sicher nutzen, in der Akademie</span>
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Klarheit statt raten.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wenn du AI in deiner Praxis nutzt und sicherstellen willst, dass deine Webseite, dein Marketing und deine Tools AI-Act-konform sind, sprechen wir am besten in einem Beratungsgespraech daruber. Compliance-Check ist Teil meiner technischen Begleitung. Wer AI-Workflows aufbauen will, schaut sich auch mein KI-Team an.
+                Der AI Act klingt nach Bürokratie, ist aber machbar. Wenn du KI in deiner Praxis nutzen willst, ohne ständig zu raten, was erlaubt ist, lernst du in der KI-Akademie das sichere, praktische Setup, Schritt für Schritt.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                <Link href="/akademie" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                  KI-Akademie ansehen
+                </Link>
+                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   Beratungsgespräch buchen
-                </Link>
-                <Link href="/gpt-team" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  KI-Team kennenlernen
-                </Link>
-                <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
-                  Mini-Audit anfragen
                 </Link>
               </div>
             </div>
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["chatgpt-custom-gpts-richtig-nutzen", "claude-code-weniger-code-ponytail", "dsgvo-cookie-banner-reform-2026"]} />
     </main>
   );
 }

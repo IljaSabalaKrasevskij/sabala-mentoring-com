@@ -1,6 +1,9 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass, PullQuote } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Eye } from "lucide-react";
 
@@ -101,6 +104,9 @@ export default function BlogPremiumOderBaukastenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0e0c0a]/85 via-[#1a1612]/35 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -137,7 +143,7 @@ export default function BlogPremiumOderBaukastenPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was meint <em>Premium</em> hier eigentlich?</h2>
-            <p>Premium meint nicht teuer. Premium meint <strong>Substanz, die kongruent ist mit dem, was du verkaufst.</strong> Wenn dein Programm 12.000 Euro kostet, muss deine Webseite das auf den ersten Blick stützen, nicht widerlegen.</p>
+            <p className={dropCapClass}>Premium meint nicht teuer. Premium meint <strong>Substanz, die kongruent ist mit dem, was du verkaufst.</strong> Wenn dein Programm 12.000 Euro kostet, muss deine Webseite das auf den ersten Blick stützen, nicht widerlegen.</p>
             <p>Eine Premium-Webseite tut drei Dinge gleichzeitig: sie zeigt, was du kannst (Beweis). Sie klingt nach dir (Stimme). Sie führt zu der einen Aktion, die wirklich zählt (Klarheit). Eine Baukasten-Webseite kann all das auch, theoretisch. Praktisch verführt sie zu Default-Entscheidungen, die im Einzelnen unsichtbar sind und in Summe deine Position senken.</p>
           </div>
         </ScrollReveal>
@@ -165,6 +171,15 @@ export default function BlogPremiumOderBaukastenPage() {
             </ScrollReveal>
           ))}
         </div>
+      </section>
+
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/premium-webseite-oder-baukasten/bespoke.jpg" alt="Skizze: links ein massgeschneidertes Jackett, rechts ein schlichter Flatpack-Bausatz, der Qualitaetskontrast" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* 7 PREMIUM SIGNALE */}
@@ -247,7 +262,7 @@ export default function BlogPremiumOderBaukastenPage() {
                 <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   Beratungsgespräch buchen
                 </Link>
-                <Link href="/premium-angebot" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
+                <Link href="/webseiten" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
                   Premium-Angebot ansehen
                 </Link>
               </div>
@@ -255,6 +270,7 @@ export default function BlogPremiumOderBaukastenPage() {
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["baukasten-vs-eigene-webseite-kosten-2026", "was-kostet-ki-webseite", "webseite-mit-ki-bauen-2026"]} />
     </main>
   );
 }

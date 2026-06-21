@@ -1,6 +1,9 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass, PullQuote } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Code, Layers, Cpu, Lock } from "lucide-react";
 
@@ -97,6 +100,9 @@ export default function BlogWebseiteMitKIBauenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -133,7 +139,7 @@ export default function BlogWebseiteMitKIBauenPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Was ist eine KI-gebaute Premium-Webseite eigentlich?</h2>
-            <p><strong>Eine KI-gebaute Premium-Webseite ist eine Webseite, deren Code von dir oder einem AI-Coding-Tool generiert wird</strong> (statt von einer Baukasten-Software gerendert). Sie liegt als eigenständige Codebasis auf GitHub, von wo aus sie über jeden Hosting-Anbieter deployed werden kann.</p>
+            <p className={dropCapClass}><strong>Eine KI-gebaute Premium-Webseite ist eine Webseite, deren Code von dir oder einem AI-Coding-Tool generiert wird</strong> (statt von einer Baukasten-Software gerendert). Sie liegt als eigenständige Codebasis auf GitHub, von wo aus sie über jeden Hosting-Anbieter deployed werden kann.</p>
             <p>Der entscheidende Unterschied zur Baukasten-KI:</p>
             <ul>
               <li><strong>Baukasten-KI</strong> (Jimdo, Wix AI, Squarespace Blueprint) rendert dir ein Template aus einer geschlossenen Datenbank. Du kannst Texte tauschen, Farben anpassen, Bilder hochladen. Sobald du etwas willst, das die Software nicht vorsieht, hast du keine Möglichkeit.</li>
@@ -144,6 +150,15 @@ export default function BlogWebseiteMitKIBauenPage() {
             <h2>Warum sehen Coaches diesen Unterschied nicht?</h2>
             <p>Weil Suchmaschinen dir Anbieter zeigen, die Werbebudget haben. Jimdo und IONOS sind in jeder SERP-Position 1-3 für „Webseite selbst bauen“. Antigravity ist ein Tool von Google, das du in der Suche fast nie findest, weil die Zielgruppe Entwickler sind, nicht Coaches.</p>
             <p>Das Ergebnis: die Mehrheit der Coaches glaubt, „mit KI bauen“ heißt Jimdo-Schablone mit AI-Text. Es geht um Welten mehr. Wer hier den Unterschied versteht, hat einen <Link href="/blog/webdesigner-verschwunden-code-eigentum">echten Eigentums-Vorteil gegenüber Baukasten</Link>, den ich in einem eigenen Artikel auseinandergenommen habe.</p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/webseite-mit-ki-bauen-2026/layers.jpg" alt="Skizze: eine Premium-Webseite wird aus leuchtenden gestapelten Ebenen ueber einem Laptop zusammengesetzt" fill className="object-cover" />
           </div>
         </ScrollReveal>
       </section>
@@ -342,10 +357,10 @@ export default function BlogWebseiteMitKIBauenPage() {
                 Wer Premium will, braucht mehr als Tools. Wer mit AI baut und sich dabei nicht in der Mainstream-Optik wiederfinden will, braucht jemanden, der den Stack UND deine Brand versteht. Genau das ist Sabala-Arbeit: Pro-Tool-Stack plus strategische Begleitung (Brand, Voice, Customer-Journey, SEO + GEO). Für den schlanken Einstieg gibt es die Premium-OnePager-Variante.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/premium-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                <Link href="/webseiten" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   Premium-Angebot ansehen
                 </Link>
-                <Link href="/special-launch-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                <Link href="/webseiten" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   OnePager-Einstieg
                 </Link>
                 <Link href="/blog#audit" className="text-refined-gold/90 hover:text-refined-gold px-6 py-4 transition-colors font-medium text-sm w-full sm:w-auto text-center underline-offset-4 hover:underline">
@@ -356,6 +371,7 @@ export default function BlogWebseiteMitKIBauenPage() {
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["webseiten-bau-mit-claude-anfaenger", "was-kostet-ki-webseite", "premium-webseite-oder-baukasten"]} />
     </main>
   );
 }

@@ -1,6 +1,8 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Calculator } from "lucide-react";
 
@@ -81,6 +83,9 @@ export default function BlogBaukastenVsEigenePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -244,6 +249,15 @@ export default function BlogBaukastenVsEigenePage() {
         </ScrollReveal>
       </section>
 
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/baukasten-vs-eigene-webseite-kosten-2026/houses.jpg" alt="Skizze: zwei kleine Hausmodelle nebeneinander, ein schlichtes Fertighaus und ein individuell gebautes Haus mit Charakter" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
+      </section>
+
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
           <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-4 text-center">Häufige Fragen</p>
@@ -278,7 +292,7 @@ export default function BlogBaukastenVsEigenePage() {
                 Wenn du wissen willst, was eine Premium-Loesung fuer DICH konkret bedeutet (basierend auf deinem Tagessatz, deiner Zielgruppe, deinem Zeithorizont), buch ein 30-Min-Beratungsgespraech. Fuer einen schlanken Einstieg mit klarem Festpreis: Sabala-OnePager 2.490 Euro (Reference) oder 4.900 Euro regulaer.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/special-launch-angebot" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                <Link href="/webseiten" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
                   OnePager-Einstieg ansehen
                 </Link>
                 <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
@@ -292,6 +306,7 @@ export default function BlogBaukastenVsEigenePage() {
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["premium-webseite-oder-baukasten", "was-kostet-ki-webseite", "webseite-mit-ki-bauen-2026"]} />
     </main>
   );
 }
