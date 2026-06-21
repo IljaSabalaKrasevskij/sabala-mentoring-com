@@ -2,6 +2,8 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ArticleAuditCTA } from "@/components/blog/ArticleAuditCTA";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Mic, MonitorPlay, Code2, Quote } from "lucide-react";
 
@@ -116,7 +118,10 @@ export default function BlogPostPage() {
         
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
+             <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
+            <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
                 <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
              </Link>
              
@@ -309,6 +314,15 @@ export default function BlogPostPage() {
 
       </section>
 
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/technik-setup-online-coach/studio.jpg" alt="Skizze: ein aufgeraeumter Home-Studio-Schreibtisch fuer Online-Coaches mit Mikrofon, Ringlicht, Laptop und Kopfhoerern" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
+      </section>
+
       {/* FAQ */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
@@ -353,7 +367,7 @@ export default function BlogPostPage() {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row items-center gap-4">
-                     <Link href="/premium-angebot" className="bg-refined-gold hover:bg-white text-deep-charcoal px-8 py-4 rounded-full font-medium transition-colors w-full sm:w-auto text-center">
+                     <Link href="/webseiten" className="bg-refined-gold hover:bg-white text-deep-charcoal px-8 py-4 rounded-full font-medium transition-colors w-full sm:w-auto text-center">
                         Zum Premium Mentoring
                      </Link>
                      <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
@@ -371,6 +385,7 @@ export default function BlogPostPage() {
          </ScrollReveal>
       </section>
 
+      <BlogSpokes slugs={["webseiten-bau-mit-claude-anfaenger", "webseite-mit-ki-bauen-2026", "was-kostet-ki-webseite"]} />
     </main>
   );
 }

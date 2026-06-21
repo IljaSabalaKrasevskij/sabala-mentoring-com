@@ -1,6 +1,9 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogSpokes } from "@/components/blog/BlogSpokes";
+import { dropCapClass } from "@/components/blog/BlogProse";
+import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Layers } from "lucide-react";
 
@@ -79,6 +82,9 @@ export default function BlogWebseitenBauMitClaudePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0e0c0a]/85 via-[#1a1612]/35 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
+            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+              <SabalaLogo light size={64} />
+            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>
@@ -116,7 +122,7 @@ export default function BlogWebseitenBauMitClaudePage() {
           <div className={proseBlock}>
             <h2>Warum die meisten am ersten Tag scheitern</h2>
 
-            <p>Du sitzt vor einem leeren Terminal, der Cursor blinkt, und plötzlich ist jeder Schritt eine Frage. Du hast irgendwo gelesen, dass man mit Claude Code in einem Nachmittag eine Webseite baut, und jetzt funktioniert bei dir nichts so, wie es bei anderen scheint zu funktionieren.</p>
+            <p className={dropCapClass}>Du sitzt vor einem leeren Terminal, der Cursor blinkt, und plötzlich ist jeder Schritt eine Frage. Du hast irgendwo gelesen, dass man mit Claude Code in einem Nachmittag eine Webseite baut, und jetzt funktioniert bei dir nichts so, wie es bei anderen scheint zu funktionieren.</p>
 
             <p>Diese Lücke zwischen <em>„geht angeblich"</em> und <em>„läuft bei mir"</em> hat genau eine Ursache: <strong>Claude Code ist kein Chat.</strong> Es ist ein Werkzeug im Terminal, das deinen Projekt-Ordner liest, deine Dateien öffnet, neuen Code schreibt und Tests ausführt. Wenn du es mit dem Chat-Muster fütterst, das du von ChatGPT kennst, bekommst du Chat-Antworten zurück. Wenn du es mit einem <strong>klaren Setup</strong> fütterst, bekommst du fertige Webseiten-Komponenten.</p>
 
@@ -200,6 +206,15 @@ export default function BlogWebseitenBauMitClaudePage() {
       </section>
 
       {/* FAQ */}
+      {/* Visueller Anker */}
+      <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
+        <ScrollReveal>
+          <div className="aspect-[16/9] relative rounded-2xl overflow-hidden border border-refined-gold/15">
+            <Image src="/blog/webseiten-bau-mit-claude-anfaenger/firststeps.jpg" alt="Skizze: ein aufgeraeumter Anfaenger-Schreibtisch mit offenem Laptop und ersten Code-Zeilen, ein klarer erster Aufbau" fill className="object-cover" />
+          </div>
+        </ScrollReveal>
+      </section>
+
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
           <p className="font-mono text-xs uppercase tracking-widest text-refined-gold mb-4 text-center">Häufige Fragen</p>
@@ -228,24 +243,25 @@ export default function BlogWebseitenBauMitClaudePage() {
             <div className="flex-1 relative z-10 text-center md:text-left">
               <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
                 <Sparkles className="w-5 h-5 text-refined-gold" />
-                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">Den Einstieg gemeinsam machen</span>
+                <span className="text-xs font-mono tracking-widest uppercase text-refined-gold">Claude Code richtig lernen</span>
               </div>
-              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Zwei Stunden Begleitung schlagen zwei Wochen Trial-and-Error.</h3>
+              <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Den Einstieg gemeinsam machen, in der KI-Akademie.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Wer Claude Code für eine echte Premium-Webseite einsetzen will, profitiert vom direkten Sparring mehr als von zehn YouTube-Tutorials. Buch ein 30-Min-Gespräch, ich rechne dir vor, wie viele Stunden Begleitung dich vor Wochen Such-Frust schützen.
+                Wer Claude Code wirklich für die eigene Webseite nutzen will, kommt mit Anleitung schneller voran als mit zehn YouTube-Tutorials. In der KI-Akademie zeige ich dir das ganze Setup, Schritt für Schritt und ohne Tech-Studium.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/termin-buchen" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
-                  Beratungsgespräch buchen
+                <Link href="/akademie" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">
+                  KI-Akademie ansehen
                 </Link>
-                <Link href="/premium-angebot" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
-                  Premium-Angebot ansehen
+                <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
+                  Beratungsgespräch buchen
                 </Link>
               </div>
             </div>
           </div>
         </ScrollReveal>
       </section>
+      <BlogSpokes slugs={["claude-code-weniger-code-ponytail", "webseite-mit-ki-bauen-2026", "chatgpt-custom-gpts-richtig-nutzen"]} />
     </main>
   );
 }

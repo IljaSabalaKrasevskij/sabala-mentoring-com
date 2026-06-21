@@ -43,6 +43,20 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 15,
+    title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
+    excerpt: "Claude Code baut oft zu viel und steht damit schnell am Limit. Ein kostenloses Plugin dreht das um, rund 54 Prozent weniger Code bei voller Sicherheit. Ehrlich nachgerechnet statt viral nachgeplappert.",
+    category: "KI Academy",
+    date: "Juni 2026",
+    readTime: "8 Min",
+    image: "/blog/claude-code-weniger-code-ponytail/cover.jpg",
+    slug: "/blog/claude-code-weniger-code-ponytail",
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 14,
     title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
     excerpt: "Vier Setup-Schritte, drei Pflicht-Dateien, fünf typische Anfänger-Fehler. Mit Boris Chernys eigenen Tipps und Sebastian Kaufmanns Setup-Logik, durchgehend mit Quellen.",
