@@ -3,8 +3,8 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import TreeBookshelfScrollytelling from "@/components/ui/TreeBookshelfScrollytelling";
-import { AuditRequestForm } from "@/components/blog/AuditRequestForm";
-import { Compass, Sparkles } from "lucide-react";
+import { BlogSearch } from "@/components/blog/BlogSearch";
+import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 
 export const metadata: Metadata = {
   title: "Wissen & Mastermind",
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 };
 
 const featuredArticle = {
+  id: 1,
   title: "SEO und Generative Engine Optimization (GEO). Wie deine Personal Brand 2026 in Google und ChatGPT gefunden wird.",
   excerpt: "Pillar-Hub für Personal Brands. Sechs SEO-Tools, vier GEO-Methoden, ein 30-Minuten-Sprint. ICP-validiert. Kein Agentur-Sprech.",
   category: "SEO & GEO",
@@ -38,6 +39,7 @@ const featuredArticle = {
   readTime: "14 Min",
   image: "/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg",
   slug: "/blog/seo-und-geo-fuer-personal-brands-2026",
+  keywords: ["seo", "geo", "google", "chatgpt", "perplexity", "sichtbarkeit", "ranking", "schema markup", "e-e-a-t", "ai overviews", "personal brand", "gefunden werden"],
   isPillar: true
 };
 
@@ -51,6 +53,7 @@ const articles = [
     readTime: "8 Min",
     image: "/blog/claude-code-weniger-code-ponytail/cover.jpg",
     slug: "/blog/claude-code-weniger-code-ponytail",
+    keywords: ["claude code", "tokens", "token-limit", "ponytail", "ki tools", "weniger code", "kosten sparen", "fable", "opus", "plugin"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -65,6 +68,7 @@ const articles = [
     readTime: "8 Min",
     image: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
     slug: "/blog/webseiten-bau-mit-claude-anfaenger",
+    keywords: ["claude code", "anfänger", "einstieg", "setup", "ki tools", "vs code", "tutorial", "claude.md", "skills"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -79,6 +83,7 @@ const articles = [
     readTime: "6 Min",
     image: "/blog/was-kostet-ki-webseite/cover.jpg",
     slug: "/blog/was-kostet-ki-webseite",
+    keywords: ["kosten", "preis", "preise", "budget", "roi", "webflow", "baukasten", "investition", "5-jahres-rechnung"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -93,6 +98,7 @@ const articles = [
     readTime: "9 Min",
     image: "/blog/premium-webseite-oder-baukasten/cover.jpg",
     slug: "/blog/premium-webseite-oder-baukasten",
+    keywords: ["premium", "baukasten", "branding", "anti-patterns", "signale", "webflow", "wix", "squarespace", "webdesign"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -107,6 +113,7 @@ const articles = [
     readTime: "9 Min",
     image: "/blog/webseite-mit-ki-bauen-2026/cover.jpg",
     slug: "/blog/webseite-mit-ki-bauen-2026",
+    keywords: ["ki tools", "claude code", "antigravity", "spline", "premium stack", "no-code", "vibe coding", "webseite bauen"],
     layout: "col-span-1 md:col-span-2 row-span-1",
     aspect: "aspect-[2/1] md:aspect-[2.4/1]",
     gradient: "from-[#2E2B26] via-[#15110b] to-[#08070a]",
@@ -121,6 +128,7 @@ const articles = [
     readTime: "7 Min",
     image: "/blog/eu-ai-act-coach-2026/cover.jpg",
     slug: "/blog/eu-ai-act-coach-2026",
+    keywords: ["ai act", "recht", "datenschutz", "compliance", "regulierung", "transparenzpflicht", "ki gesetz", "bußgeld", "ki recht"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#1f1813] via-[#15110b] to-[#08070a]",
@@ -135,6 +143,7 @@ const articles = [
     readTime: "8 Min",
     image: "/blog/webdesigner-verschwunden-code-eigentum/cover.jpg",
     slug: "/blog/webdesigner-verschwunden-code-eigentum",
+    keywords: ["lock-in", "code eigentum", "webflow", "wordpress", "migration", "abhängigkeit", "hosting", "github", "vercel", "webdesigner"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -149,6 +158,7 @@ const articles = [
     readTime: "7 Min",
     image: "/blog/dsgvo-cookie-banner-reform-2026/cover.jpg",
     slug: "/blog/dsgvo-cookie-banner-reform-2026",
+    keywords: ["dsgvo", "datenschutz", "cookie", "cookie-banner", "tracking", "consent", "analytics", "plausible", "umami", "recht", "digital omnibus"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#1a1814] via-[#15110b] to-[#08070a]",
@@ -163,6 +173,7 @@ const articles = [
     readTime: "8 Min",
     image: "/blog/baukasten-vs-eigene-webseite-kosten-2026/cover.jpg",
     slug: "/blog/baukasten-vs-eigene-webseite-kosten-2026",
+    keywords: ["kosten", "preis", "preise", "webflow", "baukasten", "vergleich", "break-even", "hidden costs", "3-jahres-rechnung"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square",
     gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
@@ -177,6 +188,7 @@ const articles = [
     readTime: "9 Min",
     image: "/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
     slug: "/blog/chatgpt-custom-gpts-richtig-nutzen",
+    keywords: ["chatgpt", "custom gpt", "custom gpts", "gpts", "ki tools", "automatisierung", "prompt", "openai", "workflow", "solopreneur"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
   },
@@ -189,6 +201,7 @@ const articles = [
     readTime: "6 Min",
     image: "/blog/technik-setup-online-coach/cover.jpg",
     slug: "/blog/technik-setup-online-coach",
+    keywords: ["equipment", "technik", "mikrofon", "kamera", "setup", "podcast", "video", "online coach", "studio", "licht", "homeoffice"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
   },
@@ -201,6 +214,7 @@ const articles = [
     readTime: "8 Min",
     image: "/blog/warum-business-mentoring-programme-scheitern/cover.jpg",
     slug: "/blog/warum-business-mentoring-programme-scheitern",
+    keywords: ["mentoring", "mentor", "coaching", "programme", "business", "positionierung", "begleitung", "gruppenprogramm"],
     layout: "col-span-1 md:col-span-1 row-span-1",
     aspect: "aspect-square"
   }
@@ -270,98 +284,11 @@ export default function BlogPage() {
         </ScrollReveal>
       </section>
 
-      {/* ASYMMETRIC BENTO GRID (MAGAZINE STYLE) */}
-      <section className="px-6 sm:px-12 md:px-24 mb-32 max-w-[1400px] mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 auto-rows-auto">
-          {articles.map((article, index) => (
-            <ScrollReveal 
-              key={article.id} 
-              delay={index * 0.1}
-              className={`group flex flex-col ${article.layout}`}
-            >
-              <Link href={article.slug || `/blog/article-${article.id}`} className="block h-full group">
-                <div className={`relative ${article.aspect} w-full mb-6 overflow-hidden bg-warm-canvas rounded-[12px]`}>
-                  {article.image ? (
-                    <>
-                      {/* Image-Card (existing articles) */}
-                      <Image
-                        src={article.image}
-                        alt={article.title}
-                        fill
-                        className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:grayscale"
-                      />
-                      <div className="absolute inset-0 bg-refined-gold/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    </>
-                  ) : (
-                    <>
-                      {/* Gradient-Card (new articles ohne Cover-Image) */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${article.gradient ?? "from-[#2E2B26] via-[#15110b] to-[#08070a]"}`} />
-                      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-refined-gold/[0.18] blur-[120px] rounded-full pointer-events-none" />
-                      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                        <span className="font-mono text-[0.65rem] tracking-[0.22em] uppercase text-refined-gold mb-3 font-bold">{article.category}</span>
-                        <h4 className="font-instrument text-pure-surface text-xl md:text-2xl leading-[1.15] group-hover:text-refined-gold transition-colors duration-500">
-                          {article.title.length > 65 ? article.title.slice(0, 62) + "…" : article.title}
-                        </h4>
-                      </div>
-                      <div className="absolute inset-0 bg-refined-gold/[0.12] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    </>
-                  )}
+      {/* SUCHE + THEMEN-FILTER + ARTIKEL-GRID */}
+      <BlogSearch featured={featuredArticle} articles={articles} />
 
-                  {/* Category Badge Bubble (only for image-cards, gradient-cards show category inline) */}
-                  {article.image && (
-                    <div className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-pure-surface bg-deep-charcoal/90 backdrop-blur-md px-3 py-1 rounded-full opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                      {article.category}
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col flex-grow">
-                  <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-wider text-soft-stone mb-3">
-                    <span>{article.date}</span>
-                    <span className="w-1 h-1 rounded-full bg-refined-gold/50"></span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  <h3 className="font-instrument text-2xl md:text-3xl text-deep-charcoal mb-4 leading-snug group-hover:text-refined-gold transition-colors duration-300">
-                    {article.title}
-                  </h3>
-                  <p className="text-warm-steel text-sm leading-relaxed mt-auto">
-                    {article.excerpt}
-                  </p>
-                </div>
-              </Link>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* AUDIT-LEAD-MAGNET */}
-      <section id="audit" className="py-24 md:py-32 px-6 sm:px-12 md:px-24 bg-[#2E2B26] text-white border-t border-white/5 rounded-t-[40px] shadow-[0_-40px_60px_rgba(26,26,24,0.02)] scroll-mt-24">
-        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center">
-          <ScrollReveal>
-            <div className="flex items-center gap-3 mb-6">
-              <Compass className="w-5 h-5 text-refined-gold" />
-              <span className="font-mono text-xs uppercase tracking-widest text-refined-gold">Kostenloses Premium-Audit</span>
-            </div>
-            <h2 className="font-instrument text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] mb-6">
-              Gib mir deine Webseite. Ich gebe dir den Blick eines Premium-Brand-Mentors zurück.
-            </h2>
-            <p className="text-white/70 font-satoshi text-lg leading-relaxed mb-8">
-              Ein persönlicher Audit-Brief mit den drei größten Hebeln deines Auftritts. Was trägt, was schwächt, was fehlt. Substanz statt Funnel-Floskeln. In den kommenden Tagen direkt in deinem Postfach.
-            </p>
-            <ul className="space-y-3 font-satoshi text-white/60">
-              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Drei konkrete Hebel, sortiert nach Wirkungsgrad</span></li>
-              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Erste Einschätzung von SEO, GEO und E-E-A-T-Signalen</span></li>
-              <li className="flex items-start gap-3"><Sparkles className="w-4 h-4 text-refined-gold flex-shrink-0 mt-1" /><span>Klarer Fokus: du weißt sofort, womit du den größten Hebel ziehst</span></li>
-            </ul>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.1}>
-            <div className="bg-pure-surface/5 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-sm">
-              <AuditRequestForm />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* ABSCHLUSS-CTA: Akademie-Newsletter (Lead-Capture fuer kuenftige Kurse) */}
+      <AcademyNewsletter />
 
     </div>
   );
