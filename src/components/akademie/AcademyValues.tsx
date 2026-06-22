@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal, TiltCard } from "./shared";
+import ClaudeLogo from "@/components/brand/ClaudeLogo";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyValues — „Was hier entsteht"
@@ -22,7 +23,7 @@ const stroke = {
 const PILLARS: Pillar[] = [
   {
     title: "Hohe Qualität",
-    body: "Erprobte Setups statt Tool-Hopping. Nur was sich in der Praxis wirklich bewährt hat.",
+    body: "Erprobte Claude-Setups statt Tool-Hopping. Drin ist nur, was sich in echten Kundenprojekten bewährt hat.",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M12 3l2.5 5.2 5.7.8-4.1 4 1 5.7L12 16l-5.1 2.7 1-5.7-4.1-4 5.7-.8z" />
@@ -31,7 +32,7 @@ const PILLARS: Pillar[] = [
   },
   {
     title: "Lerntransfer",
-    body: "Du setzt live um, nicht erst zuhause. Am Ende steht ein fertiges System, kein Notizzettel.",
+    body: "Du setzt live um, nicht erst zuhause. Am Ende läuft ein echtes System, kein Notizzettel.",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M4 8h13M13 4l4 4-4 4" />
@@ -41,7 +42,7 @@ const PILLARS: Pillar[] = [
   },
   {
     title: "Einfachheit",
-    body: "Kinderleicht erklärt. Keine Insider-Begriffe ohne Übersetzung, keine Vollballerei.",
+    body: "Claude Code ohne Entwickler-Kauderwelsch. Jeder Schritt wird übersetzt, nichts vorausgesetzt.",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M12 3c0 4-3 5-3 8a3 3 0 006 0c0-3-3-4-3-8z" />
@@ -51,7 +52,7 @@ const PILLARS: Pillar[] = [
   },
   {
     title: "Customization",
-    body: "Angepasst an dein Business. Dein Wissen, deine Themen, dein Workflow, deine Stimme.",
+    body: "Zugeschnitten auf deine Dienstleistung. Deine Mandate, deine Abläufe, deine Stimme.",
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" {...stroke}>
         <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
@@ -97,8 +98,8 @@ export default function AcademyValues() {
               marginBottom: 28,
             }}
           >
-            Kein Kurs zum Wegklicken.{" "}
-            <em style={{ fontStyle: "italic", color: "#B8963E" }}>Ein Können, das bleibt.</em>
+            Werkzeuge kommen und gehen.{" "}
+            <em style={{ fontStyle: "italic", color: "#B8963E" }}>Dein Können bleibt.</em>
           </h2>
         </Reveal>
 
@@ -109,12 +110,26 @@ export default function AcademyValues() {
               color: "#4F4A42",
               lineHeight: 1.68,
               maxWidth: 640,
-              marginBottom: 80,
+              marginBottom: 30,
             }}
           >
-            Du lernst hier nicht Theorie über KI. Du baust mit mir live dein eigenes System auf,
-            Schritt für Schritt, bis es läuft. Was du mitnimmst, kannst du am nächsten Tag anwenden.
+            KI verändert sich im Wochentakt. Deshalb stehen hier die Grundtechniken und erprobten
+            Setups im Mittelpunkt, das Fundament, das bleibt, während die Tools sich ändern. Vor allem
+            schärfst du den wichtigsten Skill überhaupt: deine Vorstellungskraft. Denn wer sich klar
+            vorstellt, was möglich ist, holt aus jedem KI-Werkzeug das Beste heraus.
           </p>
+        </Reveal>
+
+        <Reveal delay={0.16}>
+          <div className="flex items-center gap-2.5" style={{ marginBottom: 80 }}>
+            <ClaudeLogo size={17} />
+            <span
+              className="font-mono"
+              style={{ fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: "#8C8475" }}
+            >
+              Alle Setups laufen auf Claude · primär Claude Code
+            </span>
+          </div>
         </Reveal>
 
         {/* Vier Werte-Karten */}
