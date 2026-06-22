@@ -21,40 +21,20 @@ const VALUES: Value[] = [
   { word: "customization", desc: "Alles wird genau auf dein Unternehmen zugeschnitten und kommt nie von der Stange.", color: "#876F9C" }, // gedämpftes Pflaume
 ];
 
-// Mooni's Geschichte — Arcade-Panels. Titel sind ASCII (Press Start 2P kann
-// keine Umlaute → Tofu), Body bleibt lesbarer Mono-Font.
-type Section = { title: string; lines: string[] };
-const PORTAL: Section[] = [
-  {
-    title: "////// Mooni",
-    lines: [
-      "Mooni ist wie der Mond, er leuchtet nicht aus sich selbst, er reflektiert die Sonne.",
-      "Und die Sonne, das sind wir, die Menschen.",
-    ],
-  },
-  {
-    title: "/// Der Mensch",
-    lines: [
-      "Wir sind die Quelle: die Liebe, die Kreativität, die Bedeutung, die wir den Dingen geben.",
-      "Die Anbindung an etwas Größeres, die eine KI niemals hat.",
-      "Eine KI kann spiegeln, doch erschaffen kann nur, wer fühlt.",
-    ],
-  },
-  {
-    title: "/// Die Wahl",
-    lines: [
-      "Mooni ist ein Werkzeug, mehr nicht, und genau darin liegt alles.",
-      "Man kann dieses Licht nutzen, um zu helfen und den Menschen zu dienen, oder um zu zerstören und dem Ego zu folgen.",
-      "Die Technik entscheidet das nicht, wir entscheiden das.",
-    ],
-  },
-  {
-    title: "/// Warum",
-    lines: [
-      "Für mich ist Mooni eine Verlängerung von mir selbst, ein Weg, der Welt mit echten Projekten und Lösungen wirklich zu dienen, statt nur zu beeindrucken.",
-      "Mein erster eigener Avatar, in 3D erschaffen, und das hier ist erst der Anfang.",
-    ],
-  },
+// Mooni's Geschichte — ein durchgehender, tiefer Text (keine Abschnitte, keine
+// Kästen). Nintendo-Dialog-Feel über Bewegung, nicht über Pixel-Font, weil der
+// Body Umlaute hat (Press Start 2P → Tofu). Mono bleibt lesbar.
+const STORY: string[] = [
+  "Mooni ist wie der Mond, er leuchtet nicht aus sich selbst, er reflektiert die Sonne.",
+  "Und die Sonne, das sind wir, die Menschen.",
+  "Wir sind die Quelle: die Liebe, die Kreativität, die Bedeutung, die wir den Dingen geben.",
+  "Die Anbindung an etwas Größeres, die eine KI niemals hat.",
+  "Eine KI kann spiegeln, doch erschaffen kann nur, wer fühlt.",
+  "Mooni ist ein Werkzeug, mehr nicht, und genau darin liegt alles.",
+  "Man kann dieses Licht nutzen, um zu helfen und den Menschen zu dienen, oder um zu zerstören und dem Ego zu folgen.",
+  "Die Technik entscheidet das nicht, wir entscheiden das.",
+  "Für mich ist Mooni eine Verlängerung von mir selbst, ein Weg, der Welt mit echten Projekten und Lösungen wirklich zu dienen, statt nur zu beeindrucken.",
+  "Mein erster eigener Avatar, in 3D erschaffen, und das hier ist erst der Anfang.",
 ];
 const SIGN = "Ilja";
 
@@ -226,25 +206,32 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
         </span>
       </button>
 
-      {/* Inhalt — scrollbar (data-lenis-prevent: Lenis darf den Wheel hier NICHT
-          kapern), rechtsbündige Arcade-Panels (Mooni schimmert links dahinter) */}
+      {/* Inhalt — ein durchgehender, tiefer Text, keine Kästen. Zeilen steigen
+          nacheinander auf (Nintendo-Dialog-Feel), am Ende ein blinkender Weiter-
+          Pfeil. data-lenis-prevent: Lenis darf den Wheel hier nicht kapern. */}
       <div data-lenis-prevent className="relative z-[5] h-full overflow-y-auto overscroll-contain">
-        <div className="ml-auto max-w-xl space-y-5 px-8 py-[13vh] md:pl-8 md:pr-[7vw]" onClick={(e) => e.stopPropagation()}>
-          {PORTAL.map((s, i) => (
-            <div
-              key={s.title}
-              className="border-2 border-gold-light/35 bg-[#100c08]/85 p-5 shadow-[5px_5px_0_0_rgba(184,150,62,0.4)] backdrop-blur-sm md:p-6"
-              style={{ animation: "p-rise .55s ease-out both", animationDelay: `${0.12 + i * 0.08}s` }}
+        <div className="ml-auto flex max-w-xl flex-col gap-7 px-8 py-[14vh] md:pl-8 md:pr-[8vw]" onClick={(e) => e.stopPropagation()}>
+          {STORY.map((line, i) => (
+            <p
+              key={i}
+              className="mooni-line font-mono text-[1.16rem] leading-[1.95] text-warm-light/90"
+              style={{ animationDelay: `${0.12 + i * 0.06}s`, textShadow: "0 0 18px rgba(212,174,90,0.10)" }}
             >
-              <p className="font-pixel mb-4 text-[10px] leading-none tracking-wider text-gold-light/80">{s.title}</p>
-              {s.lines.map((l, j) => (
-                <p key={j} className="mb-2.5 font-mono text-[1.04rem] leading-relaxed text-warm-light/85 last:mb-0">
-                  {l}
-                </p>
-              ))}
-            </div>
+              {line}
+            </p>
           ))}
-          <p className="font-pixel pr-1 pt-2 text-right text-[11px] tracking-wider text-gold-light/70">{SIGN}</p>
+          <p
+            className="mooni-line font-pixel mt-3 text-[12px] tracking-wider text-gold-light/75"
+            style={{ animationDelay: `${0.12 + STORY.length * 0.06}s` }}
+          >
+            {SIGN}
+          </p>
+          {/* Nintendo-„weiter"-Pfeil — CSS-Dreieck, font-unabhängig (umlaut-sicher) */}
+          <span
+            aria-hidden
+            className="mooni-arrow mt-1"
+            style={{ width: 0, height: 0, borderLeft: "8px solid transparent", borderRight: "8px solid transparent", borderTop: "11px solid rgba(212,174,90,0.8)" }}
+          />
         </div>
       </div>
 
@@ -253,6 +240,9 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
         @keyframes p-fall { from { transform: translateY(-100%) } to { transform: translateY(100vh) } }
         @keyframes p-scan { from { transform: translateY(-100%) } to { transform: translateY(1100%) } }
         @keyframes p-rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+        .mooni-line { animation: p-rise .6s ease-out both; }
+        .mooni-arrow { animation: arrow-blink 1.05s steps(1, end) infinite; }
+        @keyframes arrow-blink { 0%, 55% { opacity: .85 } 56%, 100% { opacity: 0 } }
       `}</style>
     </div>
   );
