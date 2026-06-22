@@ -21,25 +21,42 @@ const VALUES: Value[] = [
   { word: "customization", desc: "Alles wird genau auf dein Unternehmen zugeschnitten und kommt nie von der Stange.", color: "#876F9C" }, // gedämpftes Pflaume
 ];
 
-// Mooni's Geschichte — Terminal-Struktur (Header `h` / Absatz `p`)
-type Block = { h?: string; p?: string };
-const PORTAL: Block[] = [
-  { h: "////// Mooni" },
-  { p: "Mooni ist wie der Mond, er leuchtet nicht aus sich selbst, er reflektiert die Sonne." },
-  { p: "Und die Sonne, das sind wir, die Menschen." },
-  { h: "/// Der Mensch" },
-  { p: "Wir sind die Quelle: die Liebe, die Kreativität, die Bedeutung, die wir den Dingen geben." },
-  { p: "Die Anbindung an etwas Größeres, die eine KI niemals hat." },
-  { p: "Eine KI kann spiegeln, doch erschaffen kann nur, wer fühlt." },
-  { h: "/// Die Wahl" },
-  { p: "Mooni ist ein Werkzeug, mehr nicht, und genau darin liegt alles." },
-  { p: "Man kann dieses Licht nutzen, um zu helfen und den Menschen zu dienen, oder um zu zerstören und dem Ego zu folgen." },
-  { p: "Die Technik entscheidet das nicht, wir entscheiden das." },
-  { h: "/// Warum" },
-  { p: "Für mich ist Mooni eine Verlängerung von mir selbst, ein Weg, der Welt mit echten Projekten und Lösungen wirklich zu dienen, statt nur zu beeindrucken." },
-  { p: "Mein erster eigener Avatar, in 3D erschaffen, und das hier ist erst der Anfang." },
-  { p: "Ilja" },
+// Mooni's Geschichte — Arcade-Panels. Titel sind ASCII (Press Start 2P kann
+// keine Umlaute → Tofu), Body bleibt lesbarer Mono-Font.
+type Section = { title: string; lines: string[] };
+const PORTAL: Section[] = [
+  {
+    title: "////// Mooni",
+    lines: [
+      "Mooni ist wie der Mond, er leuchtet nicht aus sich selbst, er reflektiert die Sonne.",
+      "Und die Sonne, das sind wir, die Menschen.",
+    ],
+  },
+  {
+    title: "/// Der Mensch",
+    lines: [
+      "Wir sind die Quelle: die Liebe, die Kreativität, die Bedeutung, die wir den Dingen geben.",
+      "Die Anbindung an etwas Größeres, die eine KI niemals hat.",
+      "Eine KI kann spiegeln, doch erschaffen kann nur, wer fühlt.",
+    ],
+  },
+  {
+    title: "/// Die Wahl",
+    lines: [
+      "Mooni ist ein Werkzeug, mehr nicht, und genau darin liegt alles.",
+      "Man kann dieses Licht nutzen, um zu helfen und den Menschen zu dienen, oder um zu zerstören und dem Ego zu folgen.",
+      "Die Technik entscheidet das nicht, wir entscheiden das.",
+    ],
+  },
+  {
+    title: "/// Warum",
+    lines: [
+      "Für mich ist Mooni eine Verlängerung von mir selbst, ein Weg, der Welt mit echten Projekten und Lösungen wirklich zu dienen, statt nur zu beeindrucken.",
+      "Mein erster eigener Avatar, in 3D erschaffen, und das hier ist erst der Anfang.",
+    ],
+  },
 ];
+const SIGN = "Ilja";
 
 /* HUD-Eck-Brackets — gibt Chips/Buttons einen „digitalen Rahmen" */
 function Brackets({ color, inset = 4, size = 7 }: { color: string; inset?: number; size?: number }) {
@@ -165,9 +182,9 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
       <div className="pointer-events-none absolute inset-0">
         <PortalMooniBG />
       </div>
-      {/* Dunkel-Verlauf: links dunkler für Text-Lesbarkeit, Mooni schimmert rechts/mittig durch */}
-      <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(4,3,2,0.94) 0%, rgba(4,3,2,0.55) 58%, rgba(4,3,2,0.8) 100%)" }} />
-      <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(circle at 62% 46%, transparent 28%, rgba(4,3,2,0.7) 86%)" }} />
+      {/* Dunkel-Verlauf: rechts dunkler für Text-Lesbarkeit, Mooni schimmert links/mittig durch */}
+      <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(4,3,2,0.8) 0%, rgba(4,3,2,0.5) 42%, rgba(4,3,2,0.95) 100%)" }} />
+      <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(circle at 38% 46%, transparent 28%, rgba(4,3,2,0.7) 86%)" }} />
 
       {/* Matrix-Glyphen-Regen (dezent) */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ maskImage: "radial-gradient(circle at 50% 45%, black, transparent 80%)" }}>
@@ -193,6 +210,8 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
         }}
       />
       <div className="pointer-events-none absolute inset-x-0 h-24" style={{ background: "linear-gradient(rgba(212,174,90,0.06), transparent)", animation: "p-scan 6s linear infinite" }} />
+      {/* CRT-Scanlines (Arcade-Feel, wie im Web-Design-OS-FAQ) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.35) 2px 4px)", opacity: 0.22 }} />
 
       {/* MOONI-Wortmarke oben links */}
       <span className="pointer-events-none absolute left-8 top-7 font-mono text-lg tracking-[0.3em]" style={{ color: "#EFE4CB", textShadow: "0 0 18px rgba(212,174,90,0.4)" }}>
@@ -207,28 +226,25 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
         </span>
       </button>
 
-      {/* Inhalt — scrollbar, linksbündige Spalte (Mooni schimmert rechts dahinter) */}
-      <div className="relative z-[5] h-full overflow-y-auto">
-        <div className="mr-auto max-w-2xl px-8 py-[13vh] md:pl-[8vw] md:pr-8 font-mono" onClick={(e) => e.stopPropagation()}>
-          {PORTAL.map((b, i) =>
-            b.h ? (
-              <p
-                key={i}
-                className="mb-3 mt-11 text-[13px] tracking-[0.22em] first:mt-0"
-                style={{ color: "rgba(212,174,90,0.6)", animation: "p-rise .55s ease-out both", animationDelay: `${0.12 + i * 0.04}s` }}
-              >
-                {b.h}
-              </p>
-            ) : (
-              <p
-                key={i}
-                className="glint mb-2.5 text-[1.18rem] leading-relaxed"
-                style={{ animation: "p-rise .55s ease-out both", animationDelay: `${0.12 + i * 0.04}s` }}
-              >
-                {b.p}
-              </p>
-            )
-          )}
+      {/* Inhalt — scrollbar (data-lenis-prevent: Lenis darf den Wheel hier NICHT
+          kapern), rechtsbündige Arcade-Panels (Mooni schimmert links dahinter) */}
+      <div data-lenis-prevent className="relative z-[5] h-full overflow-y-auto overscroll-contain">
+        <div className="ml-auto max-w-xl space-y-5 px-8 py-[13vh] md:pl-8 md:pr-[7vw]" onClick={(e) => e.stopPropagation()}>
+          {PORTAL.map((s, i) => (
+            <div
+              key={s.title}
+              className="border-2 border-gold-light/35 bg-[#100c08]/85 p-5 shadow-[5px_5px_0_0_rgba(184,150,62,0.4)] backdrop-blur-sm md:p-6"
+              style={{ animation: "p-rise .55s ease-out both", animationDelay: `${0.12 + i * 0.08}s` }}
+            >
+              <p className="font-pixel mb-4 text-[10px] leading-none tracking-wider text-gold-light/80">{s.title}</p>
+              {s.lines.map((l, j) => (
+                <p key={j} className="mb-2.5 font-mono text-[1.04rem] leading-relaxed text-warm-light/85 last:mb-0">
+                  {l}
+                </p>
+              ))}
+            </div>
+          ))}
+          <p className="font-pixel pr-1 pt-2 text-right text-[11px] tracking-wider text-gold-light/70">{SIGN}</p>
         </div>
       </div>
 
@@ -237,19 +253,6 @@ function HeadPortal({ onClose }: { onClose: () => void }) {
         @keyframes p-fall { from { transform: translateY(-100%) } to { transform: translateY(100vh) } }
         @keyframes p-scan { from { transform: translateY(-100%) } to { transform: translateY(1100%) } }
         @keyframes p-rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
-        .glint {
-          background-image: linear-gradient(100deg, #CCC1A4 0%, #FFF7E0 50%, #CCC1A4 100%);
-          background-size: 240% 100%;
-          background-position: 135% 0;
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          transition: background-position .6s ease, text-shadow .3s ease;
-        }
-        .glint:hover {
-          background-position: -35% 0;
-          text-shadow: 0 0 18px rgba(212,174,90,0.30);
-        }
       `}</style>
     </div>
   );
