@@ -28,8 +28,7 @@ import { cn } from "@/lib/utils";
 /* ------------------------------------------------------------------ */
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
-// TODO: echten ThriveCart-Checkout-Link einsetzen, sobald das Produkt angelegt ist
-const CHECKOUT_URL = "https://sabala.thrivecart.com/web-design-os/";
+const CHECKOUT_URL = "https://sabala-mentoring.thrivecart.com/sabalas-webdesign-os/";
 const PRICE = "147";
 type Icon = ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
 
