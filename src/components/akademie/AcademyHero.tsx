@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import ClaudeLogo from "@/components/brand/ClaudeLogo";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyHero — Fullscreen hero with interactive triangle-mesh canvas orb.
@@ -57,18 +58,19 @@ export default function AcademyHero() {
 
     function update() {
       for (const p of pts) {
-        p.vx += (p.ox - p.x) * 0.038;
-        p.vy += (p.oy - p.y) * 0.038;
+        p.vx += (p.ox - p.x) * 0.032;
+        p.vy += (p.oy - p.y) * 0.032;
         if (mx > -9000) {
           const dx = p.x - mx, dy = p.y - my;
           const d  = Math.hypot(dx, dy);
-          if (d < 150 && d > 0.1) {
-            const f = Math.pow((150 - d) / 150, 1.6) * 8;
+          const R0 = 130;
+          if (d < R0 && d > 0.1) {
+            const f = Math.pow((R0 - d) / R0, 2) * 2.6;
             p.vx += (dx / d) * f;
             p.vy += (dy / d) * f;
           }
         }
-        p.vx *= 0.83; p.vy *= 0.83;
+        p.vx *= 0.87; p.vy *= 0.87;
         p.x  += p.vx; p.y  += p.vy;
       }
     }
@@ -77,14 +79,14 @@ export default function AcademyHero() {
       ctx.clearRect(0, 0, W, H);
       const cx   = W * 0.5, cy = H * 0.42;
       const R    = Math.min(W, H) * 0.20;
-      const CONN = R * 1.15;
+      const CONN = R * 0.95;
       const n    = pts.length;
       const md   = pts.map(p => Math.hypot(p.x - mx, p.y - my));
 
       // Central glow
       const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.4);
-      g.addColorStop(0.00, `rgba(${GR},${GG},${GB},0.38)`);
-      g.addColorStop(0.40, `rgba(${GR},${GG},${GB},0.13)`);
+      g.addColorStop(0.00, `rgba(${GR},${GG},${GB},0.26)`);
+      g.addColorStop(0.40, `rgba(${GR},${GG},${GB},0.09)`);
       g.addColorStop(0.80, `rgba(${GR},${GG},${GB},0.03)`);
       g.addColorStop(1.00, `rgba(${GR},${GG},${GB},0.00)`);
       ctx.beginPath();
@@ -99,12 +101,12 @@ export default function AcademyHero() {
           const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
           if (d > CONN) continue;
           const prox = 1 - d / CONN;
-          const near = Math.min(md[i], md[j]) < 150;
+          const near = Math.min(md[i], md[j]) < 130;
           ctx.beginPath();
           ctx.moveTo(pts[i].x, pts[i].y);
           ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.strokeStyle = `rgba(${GR},${GG},${GB},${prox * (near ? 0.75 : 0.28)})`;
-          ctx.lineWidth   = near ? 0.9 : 0.5;
+          ctx.strokeStyle = `rgba(${GR},${GG},${GB},${prox * (near ? 0.32 : 0.13)})`;
+          ctx.lineWidth   = near ? 0.6 : 0.4;
           ctx.stroke();
         }
       }
@@ -112,18 +114,18 @@ export default function AcademyHero() {
       // Nodes
       for (let i = 0; i < n; i++) {
         const p    = pts[i];
-        const near = md[i] < 120;
+        const near = md[i] < 110;
         if (near) {
-          const h = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 14);
-          h.addColorStop(0, `rgba(${GR},${GG},${GB},0.30)`);
+          const h = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 10);
+          h.addColorStop(0, `rgba(${GR},${GG},${GB},0.16)`);
           h.addColorStop(1, `rgba(${GR},${GG},${GB},0.00)`);
           ctx.beginPath();
-          ctx.arc(p.x, p.y, 14, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 10, 0, Math.PI * 2);
           ctx.fillStyle = h; ctx.fill();
         }
         ctx.beginPath();
-        ctx.arc(p.x, p.y, near ? 3.2 : 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${GR},${GG},${GB},${near ? 1 : 0.6})`;
+        ctx.arc(p.x, p.y, near ? 2.4 : 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${GR},${GG},${GB},${near ? 0.85 : 0.45})`;
         ctx.fill();
       }
     }
@@ -159,6 +161,8 @@ export default function AcademyHero() {
           backgroundImage: "url('/akademie/ki-library-bg.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 38%",
+          filter: "blur(2.5px) brightness(0.82) saturate(0.96)",
+          transform: "scale(1.06)",
         }}
       />
 
@@ -167,7 +171,7 @@ export default function AcademyHero() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 28% 30% at 50% 43%, rgba(4,2,1,0.96) 0%, rgba(4,2,1,0.78) 45%, rgba(4,2,1,0.00) 100%)",
+            "radial-gradient(ellipse 44% 46% at 50% 43%, rgba(4,2,1,0.94) 0%, rgba(4,2,1,0.74) 38%, rgba(4,2,1,0.34) 70%, rgba(4,2,1,0.00) 100%)",
         }}
       />
 
@@ -188,12 +192,30 @@ export default function AcademyHero() {
         className="absolute inset-0 flex flex-col items-center justify-end text-center"
         style={{ zIndex: 3, padding: "0 24px 72px" }}
       >
-        <p
-          className="font-mono text-[12px] tracking-[0.28em] uppercase mb-4"
-          style={{ color: "#C9A656" }}
-        >
-          Sabala KI Academy
-        </p>
+        <div className="mb-5 flex flex-col items-center gap-3">
+          <p
+            className="font-mono text-[12px] tracking-[0.28em] uppercase"
+            style={{ color: "#C9A656" }}
+          >
+            Sabala KI Academy
+          </p>
+          <div
+            className="flex items-center gap-2 rounded-full"
+            style={{
+              padding: "6px 14px",
+              border: "1px solid rgba(201,166,86,0.32)",
+              background: "rgba(201,166,86,0.06)",
+            }}
+          >
+            <ClaudeLogo size={15} />
+            <span
+              className="font-mono uppercase"
+              style={{ fontSize: 10.5, letterSpacing: "0.16em", color: "rgba(250,248,245,0.78)" }}
+            >
+              Live mit Claude · primär Claude Code
+            </span>
+          </div>
+        </div>
 
         <h1
           className="font-serif"
@@ -208,8 +230,8 @@ export default function AcademyHero() {
             textShadow: "0 2px 30px rgba(0,0,0,0.7)",
           }}
         >
-          KI-Tools, die wirklich funktionieren —{" "}
-          <em style={{ color: "#C9A656", fontStyle: "italic" }}>live erklärt.</em>
+          KI, die im Dienstleister-Alltag wirklich liefert.{" "}
+          <em style={{ color: "#C9A656", fontStyle: "italic" }}>Live mit Claude.</em>
         </h1>
 
         <p
@@ -217,14 +239,14 @@ export default function AcademyHero() {
           style={{
             fontSize: "clamp(15px, 1.8vw, 18px)",
             color: "rgba(250,248,245,0.62)",
-            maxWidth: 520,
+            maxWidth: 540,
             lineHeight: 1.65,
             fontWeight: 300,
             fontFamily: "var(--font-geist-sans, system-ui)",
           }}
         >
-          Live-Trainings mit echtem Praxisbezug. Erprobte Setups, die du sofort
-          in deinem Business einsetzen kannst.
+          Live-Trainings für Dienstleister im B2B. Du baust mit Claude und Claude Code
+          erprobte Setups auf, die ab dem nächsten Kundenprojekt Zeit sparen.
         </p>
 
         <div className="mt-9 flex gap-4 items-center">
