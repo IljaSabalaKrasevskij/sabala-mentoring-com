@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist_Mono, Instrument_Serif, Press_Start_2P } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -17,6 +17,13 @@ const instrumentSerif = Instrument_Serif({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const pressStart = Press_Start_2P({
+  variable: "--font-press-start",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
 
 const siteUrl = "https://sabala-mentoring.com";
@@ -131,7 +138,7 @@ export default async function RootLayout({
   return (
     <html
       lang="de"
-      className={`${instrumentSerif.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      className={`${instrumentSerif.variable} ${geistMono.variable} ${pressStart.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>

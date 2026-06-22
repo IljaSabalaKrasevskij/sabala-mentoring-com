@@ -223,7 +223,7 @@ export default function IljaHeroJourney() {
               </p>
               <h1
                 className="mt-7 font-serif text-cream"
-                style={{ fontSize: "clamp(2.6rem, 9vw, 8.5rem)", lineHeight: 0.95, letterSpacing: "-0.015em" }}
+                style={{ fontSize: "clamp(2.4rem, 7vw, 6.5rem)", lineHeight: 0.98, letterSpacing: "-0.015em" }}
               >
                 Ich bringe
                 <br />
@@ -239,7 +239,7 @@ export default function IljaHeroJourney() {
         </div>
 
         {/* Hover-Hinweis, mittig und sichtbar — nur auf Maus-Geräten */}
-        <div ref={cueRef} className="mouse-hint pointer-events-none absolute inset-x-0 top-[57%] flex justify-center">
+        <div ref={cueRef} className="mouse-hint pointer-events-none absolute right-[7vw] top-[64%]">
           <span
             className="font-mono text-[13px] tracking-[0.22em] text-gold-light"
             style={{ textShadow: "0 2px 14px rgba(0,0,0,0.75)" }}

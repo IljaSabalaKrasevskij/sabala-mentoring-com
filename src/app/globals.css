@@ -175,3 +175,31 @@ body {
   --deep: #2e2b26;
   --font-instrument-serif: var(--font-instrument);
 }
+
+/* ============================================================
+   Web Design OS Sales-Page: eigenständige Motion-Bausteine
+   (Aurora-Gold-Mesh + Skill-Marquee). Pure CSS, reduced-motion-safe.
+   ============================================================ */
+@keyframes wd-aurora-a {
+  0%, 100% { transform: translate3d(-6%, -4%, 0) scale(1); }
+  50%      { transform: translate3d(8%, 6%, 0) scale(1.18); }
+}
+@keyframes wd-aurora-b {
+  0%, 100% { transform: translate3d(10%, 8%, 0) scale(1.12); }
+  50%      { transform: translate3d(-8%, -6%, 0) scale(1); }
+}
+@keyframes wd-marquee-l { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
+@keyframes wd-marquee-r { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+
+.wd-aurora-a { animation: wd-aurora-a 24s ease-in-out infinite; }
+.wd-aurora-b { animation: wd-aurora-b 30s ease-in-out infinite; }
+.wd-marquee-track-l { animation: wd-marquee-l 80s linear infinite; }
+.wd-marquee-track-r { animation: wd-marquee-r 80s linear infinite; }
+.wd-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+.font-pixel { font-family: var(--font-press-start), monospace; }
+@media (prefers-reduced-motion: reduce) {
+  /* Marquee bleibt bewusst aktiv: rein dekorativ (aria-hidden), vom Owner gewuenscht. Aurora bleibt gated. */
+  .wd-aurora-a, .wd-aurora-b { animation: none !important; }
+}
