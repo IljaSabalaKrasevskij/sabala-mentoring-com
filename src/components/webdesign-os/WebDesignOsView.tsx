@@ -121,10 +121,10 @@ const TRANSFORM: { icon: Icon; t: string }[] = [
 ];
 
 const STEPS = [
-  { t: "Download & entpacken", d: "Du lädst das Paket und öffnest den Ordner. Zwei Minuten.", img: "/webdesign-os/backdrop-1.jpg" },
-  { t: "Briefing einfügen", d: "Du kopierst einen fertigen Text in Claude Code. Mehr tippst du nicht.", img: "/webdesign-os/backdrop-2.jpg" },
-  { t: "Claude richtet ein", d: "Voraussetzungen, Fähigkeiten, Keys: alles geführt. Du beantwortest nur Fragen.", img: "/webdesign-os/backdrop-3.jpg" },
-  { t: "Dein Design-Guide entsteht", d: "Hast du einen, importiert Claude ihn. Hast du keinen, baut er einen mit dir.", img: "/webdesign-os/backdrop-4.jpg" },
+  { t: "Download & entpacken", d: "Du lädst das Paket und öffnest den Ordner. Zwei Minuten.", img: "/webdesign-os/step-1.jpg" },
+  { t: "Briefing einfügen", d: "Du kopierst einen fertigen Text in Claude Code. Mehr tippst du nicht.", img: "/webdesign-os/step-2.jpg" },
+  { t: "Claude richtet ein", d: "Voraussetzungen, Fähigkeiten, Keys: alles geführt. Du beantwortest nur Fragen.", img: "/webdesign-os/step-3.jpg" },
+  { t: "Dein Design-Guide entsteht", d: "Hast du einen, importiert Claude ihn. Hast du keinen, baut er einen mit dir.", img: "/webdesign-os/step-4.jpg" },
 ];
 
 const PRINCIPLES: { icon: Icon; t: string; d: string }[] = [
