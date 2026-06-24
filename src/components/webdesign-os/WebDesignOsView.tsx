@@ -172,7 +172,7 @@ function Reveal({ children, delay = 0, className }: { children: ReactNode; delay
   );
 }
 
-function MagneticCTA({ href, children, tone = "gold", className = "" }: { href: string; children: ReactNode; tone?: "gold" | "dark" | "cream"; className?: string }) {
+function MagneticCTA({ href, children, tone = "gold", className = "", newTab = false }: { href: string; children: ReactNode; tone?: "gold" | "dark" | "cream"; className?: string; newTab?: boolean }) {
   const reduce = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -190,9 +190,10 @@ function MagneticCTA({ href, children, tone = "gold", className = "" }: { href: 
     y.set((e.clientY - (r.top + r.height / 2)) * 0.28);
   }
   function leave() { x.set(0); y.set(0); }
-  if (!mounted || reduce) return <Link href={href} className={cls}>{children}</Link>;
+  const extra = newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  if (!mounted || reduce) return <Link href={href} className={cls} {...extra}>{children}</Link>;
   return (
-    <motion.a ref={ref} href={href} onPointerMove={move} onPointerLeave={leave} style={{ x: sx, y: sy }} className={`${cls} transition-[filter] hover:brightness-105`}>
+    <motion.a ref={ref} href={href} {...extra} onPointerMove={move} onPointerLeave={leave} style={{ x: sx, y: sy }} className={`${cls} transition-[filter] hover:brightness-105`}>
       {children}
     </motion.a>
   );
@@ -493,7 +494,7 @@ export default function WebDesignOsView() {
               25+ Fähigkeiten, mit denen ich Premium-Webseiten baue. In einer Stunde eingerichtet und auf deinen Brand-Guide und deine Dateien zugeschnitten.
             </p>
             <div className="cs-rise mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center" style={{ "--cs-d": "0.26s" } as CSSProperties}>
-              <MagneticCTA href={CHECKOUT_URL} tone="gold">Jetzt holen · {PRICE}&nbsp;&euro;</MagneticCTA>
+              <MagneticCTA href="#kaufen" tone="gold">Jetzt holen · {PRICE}&nbsp;&euro;</MagneticCTA>
               <a href="#drin" className="font-satoshi text-base text-warm-light/70 underline-offset-4 hover:text-gold-light hover:underline">Was ist drin?</a>
             </div>
             <p className="cs-rise mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-warm-light/45" style={{ "--cs-d": "0.32s" } as CSSProperties}>
@@ -694,7 +695,7 @@ export default function WebDesignOsView() {
       </section>
 
       {/* ====================== PREIS (frueh: nach Proof-Cluster) ====================== */}
-      <section className="relative overflow-hidden px-6 py-24 sm:px-10 md:px-16 md:py-32" style={{ background: "linear-gradient(180deg, #2E2B26 0%, #0A0806 100%)" }}>
+      <section id="kaufen" className="relative overflow-hidden px-6 py-24 sm:px-10 md:px-16 md:py-32" style={{ background: "linear-gradient(180deg, #2E2B26 0%, #0A0806 100%)" }}>
         <SectionBg src="/webdesign-os/backdrop-5.jpg" opacity={0.5} dark />
         <AuroraMesh />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -725,7 +726,7 @@ export default function WebDesignOsView() {
               <p className="mt-4 font-instrument text-[5.5rem] leading-none text-cream drop-shadow-[0_2px_20px_rgba(212,174,90,0.25)]">{PRICE}&nbsp;&euro;</p>
               <p className="mt-3 font-satoshi text-sm text-gold-light/80">Einmalzahlung · alle Updates inklusive</p>
               <div className="mt-9">
-                <MagneticCTA href={CHECKOUT_URL} tone="gold">Jetzt holen</MagneticCTA>
+                <MagneticCTA href={CHECKOUT_URL} tone="gold" newTab>Jetzt holen</MagneticCTA>
               </div>
               <p className="mx-auto mt-6 max-w-sm font-satoshi text-[14px] leading-relaxed text-warm-light/70">
                 Sofort als Download. In einer Stunde startklar, auf deine Marke zugeschnitten.
@@ -911,7 +912,7 @@ export default function WebDesignOsView() {
                   {"„"}Ich gebe dir kein Tutorial. Ich gebe dir mein Werkzeug.{"“"}
                 </blockquote>
                 <div className="mt-7">
-                  <MagneticCTA href={CHECKOUT_URL} tone="dark">Jetzt holen · {PRICE}&nbsp;&euro;</MagneticCTA>
+                  <MagneticCTA href={CHECKOUT_URL} tone="dark" newTab>Jetzt holen · {PRICE}&nbsp;&euro;</MagneticCTA>
                 </div>
               </figure>
             </Reveal>
