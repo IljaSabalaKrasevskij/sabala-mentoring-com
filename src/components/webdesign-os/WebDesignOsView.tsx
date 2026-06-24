@@ -121,10 +121,10 @@ const TRANSFORM: { icon: Icon; t: string }[] = [
 ];
 
 const STEPS = [
-  { t: "Download & entpacken", d: "Du lädst das Paket und öffnest den Ordner. Zwei Minuten." },
-  { t: "Briefing einfügen", d: "Du kopierst einen fertigen Text in Claude Code. Mehr tippst du nicht." },
-  { t: "Claude richtet ein", d: "Voraussetzungen, Fähigkeiten, Keys: alles geführt. Du beantwortest nur Fragen." },
-  { t: "Dein Design-Guide entsteht", d: "Hast du einen, importiert Claude ihn. Hast du keinen, baut er einen mit dir." },
+  { t: "Download & entpacken", d: "Du lädst das Paket und öffnest den Ordner. Zwei Minuten.", img: "/webdesign-os/step-1.jpg" },
+  { t: "Briefing einfügen", d: "Du kopierst einen fertigen Text in Claude Code. Mehr tippst du nicht.", img: "/webdesign-os/step-2.jpg" },
+  { t: "Claude richtet ein", d: "Voraussetzungen, Fähigkeiten, Keys: alles geführt. Du beantwortest nur Fragen.", img: "/webdesign-os/step-3.jpg" },
+  { t: "Dein Design-Guide entsteht", d: "Hast du einen, importiert Claude ihn. Hast du keinen, baut er einen mit dir.", img: "/webdesign-os/step-4.jpg" },
 ];
 
 const PRINCIPLES: { icon: Icon; t: string; d: string }[] = [
@@ -269,47 +269,6 @@ function CoverageDonut() {
 }
 
 /** Stilisierte Claude-Code-Eingabe-Maske: zeigt, wie simpel der Ablauf ist. */
-function ClaudeCodeMock() {
-  const lines = [
-    { mark: "✓", t: "Stil aus deinem Design-Guide gewählt" },
-    { mark: "✓", t: "Grundstruktur mit Tiefe gebaut" },
-    { mark: "✓", t: "Sauber geprüft, bereit zum Weiterbauen" },
-  ];
-  return (
-    <div className="overflow-hidden rounded-2xl border border-gold-light/20 bg-[#0d0a07] shadow-[0_40px_100px_-50px_rgba(0,0,0,0.9)]">
-      {/* Fenster-Leiste */}
-      <div className="flex items-center gap-2 border-b border-white/8 bg-white/[0.03] px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-soft-stone/50" />
-        <span className="h-2.5 w-2.5 rounded-full bg-soft-stone/35" />
-        <span className="h-2.5 w-2.5 rounded-full bg-soft-stone/25" />
-        <span className="ml-3 font-mono text-[11px] text-warm-light/40">Claude Code · ~/mein-projekt</span>
-      </div>
-      {/* Verlauf */}
-      <div className="space-y-3.5 px-5 py-6 font-mono text-[12.5px]">
-        <p className="text-cream">
-          <span className="text-gold-light">&gt;</span> Bau mir eine ruhige, hochwertige Portfolio-Seite.
-        </p>
-        <p className="text-warm-light/40">Setup aktiv · die passenden Fähigkeiten greifen ineinander</p>
-        {lines.map((l) => (
-          <p key={l.t} className="flex items-center gap-2.5 text-warm-light/75">
-            <span className="text-gold-light">{l.mark}</span> {l.t}
-          </p>
-        ))}
-      </div>
-      {/* Eingabe-Maske */}
-      <div className="flex items-center gap-3 border-t border-white/8 bg-white/[0.02] px-4 py-3.5">
-        <span className="flex-1 font-mono text-[12.5px] text-warm-light/35">
-          Beschreibe deine nächste Idee
-          <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-gold-light align-middle" />
-        </span>
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg text-tech-bg" style={{ background: "linear-gradient(135deg, #D4AE5A, #B8963E)" }}>
-          <ArrowRight size={16} strokeWidth={2.4} />
-        </span>
-      </div>
-    </div>
-  );
-}
-
 /** Section-Hintergrund: KI-Bild + Scrim (dunkel) bzw. heller Schleier (light) fuer Lesbarkeit. */
 function SectionBg({ src, opacity = 0.5, dark = false }: { src: string; opacity?: number; dark?: boolean }) {
   return (
@@ -785,46 +744,31 @@ export default function WebDesignOsView() {
             <h2 className="mt-5 font-instrument text-[clamp(2.1rem,4.6vw,3.6rem)] leading-[1.05] tracking-tight">In einer Stunde startklar.</h2>
             <p className="mt-5 max-w-xl font-satoshi text-[17px] leading-relaxed text-warm-steel">Du fügst ein Briefing in Claude Code ein, beantwortest ein paar Fragen, fertig. Du sprichst mit Claude, der Rest läuft geführt.</p>
           </Reveal>
-          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-            {/* Eingabe-Maske */}
-            <Reveal>
-              <ClaudeCodeMock />
-            </Reveal>
-            {/* Stepper: gestaffelte Reveal-Animation + sich zeichnende Linie */}
-            <Reveal delay={0.1}>
-              <motion.ol
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={{ show: { transition: { staggerChildren: 0.16 } } }}
-                className="relative space-y-9"
-              >
-                <motion.span
-                  aria-hidden
-                  className="absolute left-[27px] top-5 bottom-5 w-px origin-top bg-gradient-to-b from-refined-gold/50 via-refined-gold/25 to-refined-gold/5"
-                  initial={{ scaleY: 0 }}
-                  whileInView={{ scaleY: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                />
-                {STEPS.map((s, i) => (
-                  <motion.li
-                    key={s.t}
-                    variants={{ hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } }}
-                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative flex items-start gap-5"
-                  >
-                    <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-refined-gold/45 bg-[#EFE9E0] font-instrument text-2xl text-refined-gold shadow-[0_6px_20px_-12px_rgba(184,150,62,0.55)]">
-                      {i + 1}
+          {/* 4 Kacheln nebeneinander: Bild + grosse 01-04 Nummer */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((s, i) => (
+              <Reveal key={s.t} delay={i * 0.08}>
+                <div className="group h-full overflow-hidden rounded-2xl border border-refined-gold/15 bg-white/65 shadow-[0_22px_55px_-32px_rgba(46,43,38,0.55)] transition-transform duration-300 hover:-translate-y-1.5">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={s.img}
+                      alt={s.t}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                    />
+                    <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-deep-charcoal/55 via-deep-charcoal/10 to-transparent" />
+                    <span className="absolute left-4 top-3 font-instrument text-4xl leading-none text-cream drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <div className="pt-2.5">
-                      <h3 className="font-instrument text-xl text-deep-charcoal">{s.t}</h3>
-                      <p className="mt-1.5 font-satoshi text-[15px] leading-relaxed text-warm-steel">{s.d}</p>
-                    </div>
-                  </motion.li>
-                ))}
-              </motion.ol>
-            </Reveal>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-instrument text-xl leading-tight text-deep-charcoal">{s.t}</h3>
+                    <p className="mt-2 font-satoshi text-[14px] leading-relaxed text-warm-steel">{s.d}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
