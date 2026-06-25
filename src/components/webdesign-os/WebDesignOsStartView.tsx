@@ -294,6 +294,20 @@ export default function WebDesignOsStartView() {
                         {s.hint}
                       </p>
                     </div>
+                    {i === 1 && (
+                      <figure className="mt-4 overflow-hidden rounded-xl border border-[#B8963E]/20 bg-white shadow-[0_10px_30px_-18px_rgba(46,43,38,0.5)]">
+                        <Image
+                          src="/webdesign-os/claude-ordner-hinzufuegen.jpg"
+                          alt="In Claude Code das Plus-Menü öffnen und Ordner hinzufügen"
+                          width={1500}
+                          height={440}
+                          className="h-auto w-full"
+                        />
+                        <figcaption className="px-4 py-2.5 text-[13px] leading-relaxed text-[#7c6334]">
+                          So sieht es aus: klick unten auf das <strong>+</strong> und wähle <strong>„Ordner hinzufügen“</strong>, dann den Ordner <strong>sabala-webdesign-os</strong>.
+                        </figcaption>
+                      </figure>
+                    )}
                   </div>
                 </motion.li>
               );
