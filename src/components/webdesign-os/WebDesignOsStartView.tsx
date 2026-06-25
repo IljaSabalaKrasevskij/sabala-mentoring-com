@@ -62,13 +62,13 @@ const SETUP_STEPS = [
     icon: Package,
     title: "Paket herunterladen und entpacken",
     body: "Klick oben auf „Paket herunterladen“. Es kommt eine ZIP-Datei. Doppelklick drauf, dann liegt daneben der Ordner „sabala-webdesign-os“.",
-    hint: "Merk dir, wo der Ordner liegt, zum Beispiel im Download-Ordner oder auf dem Schreibtisch. Den brauchst du gleich.",
+    hint: "Merk dir, wo der Ordner liegt (Download-Ordner oder Schreibtisch). Den brauchst du gleich, und behalte ihn auch danach, für spätere Updates ist er praktisch.",
   },
   {
     icon: FolderOpen,
     title: "Claude Code in genau diesem Ordner öffnen",
-    body: "Öffne Claude Code und wähle den Ordner „sabala-webdesign-os“ als deinen Arbeitsordner. Du musst nichts tippen, nur den richtigen Ordner auswählen.",
-    hint: "Kurzer Check: Oben in Claude muss „sabala-webdesign-os“ stehen. Steht da was anderes, bist du im falschen Ordner.",
+    body: "Öffne die Claude-App, geh oben in den Reiter „Code“ und wähle dort den Ordner „sabala-webdesign-os“ als deinen Arbeitsordner. Du musst nichts tippen, nur den richtigen Ordner auswählen.",
+    hint: "Kurzer Check: Oben in Claude muss „sabala-webdesign-os“ stehen. Steht da was anderes, bist du im falschen Ordner. Kommst du nicht weiter, frag Claude einfach „wie öffne ich dich in meinem Ordner?“.",
   },
   {
     icon: ClipboardPaste,
