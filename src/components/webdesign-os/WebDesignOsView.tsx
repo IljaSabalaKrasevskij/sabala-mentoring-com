@@ -143,6 +143,7 @@ const VALUESTACK = [
 
 const FAQ = [
   { q: "Brauche ich Programmier-Kenntnisse?", a: "Nein. Du fügst einen Text in Claude Code ein, der Rest passiert geführt. Du beantwortest Fragen, Claude baut." },
+  { q: "Ist das Setup das Richtige für mich?", a: "Wenn du mit Claude Code schon erste Schritte gemacht hast und deine eigene Webseite oder Landingpage auf ein höheres Niveau bringen willst: ja. Es ist für Selbermacher und Dienstleister zwischen Anfänger und Fortgeschritten gedacht, nicht für blutige Einsteiger und nicht für Profi-Entwickler. Technik-Profi musst du keiner sein, das Setup führt dich Schritt für Schritt." },
   { q: "Sind das nicht teils kostenlose Fähigkeiten?", a: "Einiges gibt es einzeln, ja. Der Wert ist die Auswahl, das Verzahnen und das geführte Setup, damit alles zusammen funktioniert. Du sparst dir Wochen Suchen und Ausprobieren." },
   { q: "Baut das meine Webseite komplett fertig?", a: "Nein, und das verspreche ich auch nicht. Du bekommst die Fähigkeiten und einen klaren Ablauf, damit du auf einem deutlich besseren Niveau startest und in deinem Stil weiterbaust. Den letzten Schliff machst du." },
   { q: "Brauche ich noch andere Tools?", a: "Das Setup läuft in Claude Code, dafür brauchst du ein Claude-Abo (Pro oder höher). Manche Fähigkeiten nutzen externe Dienste wie Web-Recherche oder Bild-Generierung. Die meisten haben Gratis-Kontingente, ein paar kosten extra. Du entscheidest, was du nutzt." },
@@ -591,8 +592,7 @@ export default function WebDesignOsView() {
           <div className="grid gap-6 sm:grid-cols-2">
             {SHOWCASE.map((p, i) => (
               <Reveal key={p.name} delay={i * 0.06}>
-                <a href={p.url} target={p.url.startsWith("http") ? "_blank" : undefined} rel={p.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group block overflow-hidden rounded-2xl border border-deep-charcoal/10 bg-pure-surface shadow-[0_18px_50px_-30px_rgba(46,43,38,0.5)] transition-shadow hover:shadow-[0_28px_70px_-30px_rgba(184,150,62,0.45)]">
+                <div className="group block overflow-hidden rounded-2xl border border-deep-charcoal/10 bg-pure-surface shadow-[0_18px_50px_-30px_rgba(46,43,38,0.5)] transition-shadow hover:shadow-[0_28px_70px_-30px_rgba(184,150,62,0.45)]">
                   <div className="flex items-center gap-2 border-b border-deep-charcoal/8 bg-[#f4f0ea] px-4 py-2.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-soft-stone/60" />
                     <span className="h-2.5 w-2.5 rounded-full bg-soft-stone/40" />
@@ -604,9 +604,9 @@ export default function WebDesignOsView() {
                   </div>
                   <div className="flex items-center justify-between gap-3 px-6 py-5">
                     <p className="font-instrument text-xl text-deep-charcoal">{p.name}</p>
-                    <span aria-hidden className="font-satoshi text-sm text-refined-gold transition-transform group-hover:translate-x-1">ansehen &rarr;</span>
+                    <span aria-hidden className="font-satoshi text-[13px] text-warm-steel/70">{p.host}</span>
                   </div>
-                </a>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -782,10 +782,18 @@ export default function WebDesignOsView() {
             <span className="font-instrument text-2xl text-soft-stone">&times;</span>
             <SabalaLogo size={38} />
           </div>
-          <h2 className="mt-8 font-instrument text-[clamp(1.8rem,3.6vw,2.8rem)] leading-tight text-deep-charcoal">Läuft in Claude Code.</h2>
-          <p className="mx-auto mt-5 max-w-xl font-satoshi text-[16px] leading-relaxed text-warm-steel">
-            Das Setup arbeitet in Claude Code, der KI-Entwicklungsumgebung von Anthropic. Du brauchst ein Claude-Abo
-            (Pro oder höher). Hast du das, bist du in einer Stunde startklar.
+          <h2 className="mt-8 font-instrument text-[clamp(1.8rem,3.6vw,2.8rem)] leading-tight text-deep-charcoal">Läuft in Claude Code. Für Macher, die schon angefangen haben.</h2>
+          <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-refined-gold/40 bg-refined-gold/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#8A6E1F]">
+            Skill-Level · fortgeschritten
+          </span>
+          <p className="mx-auto mt-6 max-w-xl font-satoshi text-[16px] leading-relaxed text-warm-steel">
+            Gedacht für Selbermacher und Dienstleister, die mit Claude Code schon erste Schritte an einer Webseite gemacht
+            haben und jetzt auf ein höheres Niveau wollen. Kein blutiger Einsteiger, kein Profi-Entwickler, irgendwo dazwischen.
+          </p>
+          <p className="mx-auto mt-4 max-w-xl font-satoshi text-[16px] leading-relaxed text-warm-steel">
+            Keine Sorge vor Technik: Begriffe wie API-Schlüssel oder MCP klingen sperrig, aber das Setup richtet alles Schritt
+            für Schritt mit dir ein. Du beantwortest Fragen, der Rest läuft geführt. Du brauchst nur ein Claude-Abo (Pro oder
+            höher), dann bist du in einer Stunde startklar.
           </p>
         </Reveal>
       </section>
