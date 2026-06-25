@@ -8,7 +8,7 @@ const ANGEBOT = [
   { href: "/webseiten", label: "Webseiten", note: "Premium-Auftritt, der verkauft" },
   { href: "/mitentwickelt", label: "Mit dir entwickelt", note: "Co-Development & Agentensysteme" },
   { href: "/akademie-hub", label: "KI-Akademie", note: "Dein Team wird KI-fit" },
-  { href: "/gpt-team", label: "KI-Assistenzteam", note: "Dein Wissen als GPT-Team" },
+  { href: "/shop", label: "Shop", note: "Werkzeuge & Wissen für Claude" },
 ];
 
 const MEHR = [
