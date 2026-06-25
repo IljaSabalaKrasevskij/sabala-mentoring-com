@@ -31,7 +31,6 @@ const siteName = "Sabala Studios";
 const siteTitle = "Sabala Studios · Ich bringe KI in dein Unternehmen";
 const siteDescription =
   "KI-Lösungen, Premium-Webseiten und eine Akademie für Unternehmen, die KI wirklich nutzen wollen. Für dich gebaut, mit dir entwickelt, dir beigebracht. Von Ilja Krasevskij.";
-// TODO: og-image.jpg (1200×630) in /public/ ablegen, sobald Brand-OG-Image vorbereitet ist
 const ogImage = `${siteUrl}/og-image.jpg`;
 
 export const metadata: Metadata = {
