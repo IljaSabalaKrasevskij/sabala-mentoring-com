@@ -10,8 +10,8 @@ import { ACADEMY_CHECKOUT_URL, Brackets } from "./shared";
    ───────────────────────────────────────────────────────────────────────── */
 
 const DATES = [
-  { label: "Session 1", date: "Fr · 26. Juni 2026", time: "15:00 MEZ" },
-  { label: "Session 2", date: "Fr · 3. Juli 2026", time: "15:00 MEZ" },
+  { label: "Session 1", date: "Fr · 10. Juli 2026", time: "15:00 MEZ" },
+  { label: "Session 2", date: "Fr · 17. Juli 2026", time: "15:00 MEZ" },
 ];
 
 export default function WorkshopHeader() {

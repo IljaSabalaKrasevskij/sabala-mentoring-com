@@ -169,7 +169,7 @@ export default function Sessions() {
         <SessionBlock
           index="02"
           badge="Session 2 · 2 Stunden live"
-          title="Dein KI-Mitarbeiter ×10"
+          title="Dein Second Brain ×10"
           sub="Claude Code, verbunden und mit Gedächtnis. Das Pflicht-Setup."
           modules={S2}
           after={S2_AFTER}

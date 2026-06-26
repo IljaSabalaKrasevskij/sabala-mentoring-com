@@ -61,8 +61,8 @@ export default function PriceBlock() {
           {/* Termine */}
           <div className="mx-auto mt-8 flex max-w-sm flex-wrap justify-center gap-3">
             {[
-              { l: "Session 1", d: "Fr · 26. Juni", t: "15:00 MEZ" },
-              { l: "Session 2", d: "Fr · 3. Juli", t: "15:00 MEZ" },
+              { l: "Session 1", d: "Fr · 10. Juli", t: "15:00 MEZ" },
+              { l: "Session 2", d: "Fr · 17. Juli", t: "15:00 MEZ" },
             ].map((s) => (
               <span key={s.l} className="flex flex-col px-4 py-2.5 text-left" style={{ background: "rgba(184,150,62,0.08)", border: "1px solid rgba(184,150,62,0.25)" }}>
                 <span className="font-mono text-[9px] uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>{s.l}</span>
