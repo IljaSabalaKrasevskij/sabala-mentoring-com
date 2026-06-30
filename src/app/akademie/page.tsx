@@ -7,6 +7,7 @@ import Qualify from "@/components/akademie/Qualify";
 import AboutIlja from "@/components/akademie/AboutIlja";
 import BeforeAfter from "@/components/akademie/BeforeAfter";
 import PriceBlock from "@/components/akademie/PriceBlock";
+import Termine from "@/components/akademie/Termine";
 import Faq from "@/components/akademie/Faq";
 import WorkshopHeader from "@/components/akademie/WorkshopHeader";
 import DiscoveryHero from "@/components/akademie/DiscoveryHero";
@@ -32,6 +33,7 @@ export default function AkademiePage() {
       <Qualify />
       <AboutIlja />
       <BeforeAfter />
+      <Termine />
       <PriceBlock />
       <Faq />
     </main>

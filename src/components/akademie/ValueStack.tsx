@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
+import { Brackets, Eyebrow } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    ValueStack — Hormozi-Anchor. Items glide einzeln rein (CSS-Stagger),
@@ -134,9 +134,7 @@ export default function ValueStack() {
           </p>
           <div className="relative mt-8 flex justify-center">
             <a
-              href={ACADEMY_CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#termine"
               className="group relative inline-flex items-center gap-3 overflow-hidden font-sans font-semibold transition-all"
               style={{ background: "#0a0806", color: "var(--gold-light)", letterSpacing: "0.08em", padding: "18px 40px", fontSize: "1rem", boxShadow: "0 12px 28px rgba(10,8,6,0.35)" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#1a1612")}

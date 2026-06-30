@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ACADEMY_CHECKOUT_URL, Brackets, Eyebrow } from "./shared";
+import { Brackets, Eyebrow } from "./shared";
+import { COHORTS } from "./cohorts";
 
 /* Preis + Dringlichkeit + CTA. Gold-Glow-Rahmen, klar, ohne Druck-Pathos. */
 
@@ -20,7 +21,7 @@ export default function PriceBlock() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.16), transparent 65%)" }} />
 
       <div className="relative mx-auto max-w-xl text-center">
-        <Eyebrow>{"// dein platz im ersten durchlauf"}</Eyebrow>
+        <Eyebrow>{"// dein platz im naechsten lauf"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,19 +56,16 @@ export default function PriceBlock() {
             einmal €197 oder bequem 2× €103
           </p>
           <p className="mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
-            ab der 2. Kohorte €247
+            Einführungspreis. Steigt auf €247, sobald die ersten Bewertungen da sind.
           </p>
 
           {/* Termine */}
           <div className="mx-auto mt-8 flex max-w-sm flex-wrap justify-center gap-3">
-            {[
-              { l: "Session 1", d: "Fr · 10. Juli", t: "15:00 MEZ" },
-              { l: "Session 2", d: "Fr · 17. Juli", t: "15:00 MEZ" },
-            ].map((s) => (
-              <span key={s.l} className="flex flex-col px-4 py-2.5 text-left" style={{ background: "rgba(184,150,62,0.08)", border: "1px solid rgba(184,150,62,0.25)" }}>
-                <span className="font-mono text-[9px] uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>{s.l}</span>
-                <span className="mt-0.5 font-serif text-[1rem] text-cream">{s.d}</span>
-                <span className="font-mono text-[10px]" style={{ color: "rgba(250,248,245,0.5)" }}>{s.t}</span>
+            {COHORTS[0].sessions.map((s) => (
+              <span key={s.label} className="flex flex-col px-4 py-2.5 text-left" style={{ background: "rgba(184,150,62,0.08)", border: "1px solid rgba(184,150,62,0.25)" }}>
+                <span className="font-mono text-[9px] uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>{s.label}</span>
+                <span className="mt-0.5 font-serif text-[1rem] text-cream">{s.date}</span>
+                <span className="font-mono text-[10px]" style={{ color: "rgba(250,248,245,0.5)" }}>{s.time}</span>
               </span>
             ))}
           </div>
@@ -84,9 +82,7 @@ export default function PriceBlock() {
 
           {/* CTA */}
           <a
-            href={ACADEMY_CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#termine"
             className="group mt-9 inline-flex w-full items-center justify-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "var(--gold)", color: "#0a0806", letterSpacing: "0.08em", padding: "20px 32px", fontSize: "1.05rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)")}
