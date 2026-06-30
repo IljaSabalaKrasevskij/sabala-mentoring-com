@@ -202,4 +202,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   /* Marquee bleibt bewusst aktiv: rein dekorativ (aria-hidden), vom Owner gewuenscht. Aurora bleibt gated. */
   .wd-aurora-a, .wd-aurora-b { animation: none !important; }
+  /* Dekorative Loops ruhigstellen (Mooni-Logo-Schweben, blinkender Cursor) */
+  .animate-float-slow, .animate-pulse { animation: none !important; }
 }
