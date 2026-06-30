@@ -73,6 +73,22 @@ const PRODUCTS: Product[] = [
     href: "/webdesign-os",
     cta: "Ansehen",
   },
+  {
+    kicker: "Open Source",
+    title: "Mooni Voice",
+    desc: "Lokale Sprache-zu-Text für den Mac. Sprich, und der Text steht da, in jeder App, auch in Claude Code und Terminal. Lokal, privat, mehrsprachig.",
+    points: [
+      "100 % lokal, deine Stimme bleibt auf dem Gerät",
+      "In jeder App, auch Dev- und KI-Tools",
+      "Gratis und quelloffen (MIT)",
+    ],
+    price: "0",
+    badge: "Gratis",
+    cover: "/shop/mooni-voice-cover.png",
+    href: "/open-source-projekte/mooni-voice",
+    cta: "Laden",
+    available: true,
+  },
 ];
 
 const LADDER = [
@@ -180,8 +196,14 @@ export default function ShopView() {
                     <div className="mt-auto flex items-end justify-between pt-7">
                       <div>
                         <p className="font-serif text-cream">
-                          <span className="text-[2.2rem] leading-none">{p.price}</span>
-                          <span className="ml-1 text-lg text-gold-light">€</span>
+                          {p.price === "0" ? (
+                            <span className="text-[2.2rem] leading-none">Gratis</span>
+                          ) : (
+                            <>
+                              <span className="text-[2.2rem] leading-none">{p.price}</span>
+                              <span className="ml-1 text-lg text-gold-light">€</span>
+                            </>
+                          )}
                         </p>
                         {p.priceNote && <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-warm-mid">{p.priceNote}</p>}
                       </div>

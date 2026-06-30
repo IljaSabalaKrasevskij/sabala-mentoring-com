@@ -10,27 +10,30 @@
      AC_API_URL            https://<account>.api-us1.com   (ohne /api/3)
      AC_API_KEY            ActiveCampaign API-Key (Einstellungen > Entwickler)
      AC_AKADEMIE_LIST_ID   numerische Listen-ID der Akademie-Liste
-     AC_AKADEMIE_TAG       Tag-Name, der die Welcome-Automation triggert
+     AC_AKADEMIE_TAG       Tag-Name, der die Akademie-Welcome-Automation triggert
                            (Default: "Sabala Academy Newsletter")
+     AC_MOONI_LIST_ID      numerische Listen-ID der Mooni-Voice-Liste (Default: 28)
+     AC_MOONI_TAG          Tag-Name fuer den Mooni-Voice-Funnel
+                           (Default: "Mooni Voice Beta")
 
    Siehe Vault: 04_Ressourcen/Systeme/ActiveCampaign-Architektur.md
    ────────────────────────────────────────────────────────────────────────── */
 
 type AcResult = "ok" | "skipped" | "error";
 
-const DEFAULT_TAG = "Sabala Academy Newsletter";
+const AKADEMIE_DEFAULT_TAG = "Sabala Academy Newsletter";
+const MOONI_DEFAULT_TAG = "Mooni Voice Beta";
 
-function cfg() {
+/* Account-Basis (URL + Key) — Listen-/Tag-Auswahl liegt pro Funnel daneben. */
+function cfgBase() {
   const url = process.env.AC_API_URL?.replace(/\/+$/, "");
   const key = process.env.AC_API_KEY;
-  const listId = process.env.AC_AKADEMIE_LIST_ID;
-  const tagName = process.env.AC_AKADEMIE_TAG || DEFAULT_TAG;
-  if (!url || !key || !listId) return null;
-  return { url, key, listId, tagName };
+  if (!url || !key) return null;
+  return { url, key };
 }
 
 export function activeCampaignConfigured(): boolean {
-  return cfg() !== null;
+  return cfgBase() !== null;
 }
 
 /* Liefert die Tag-ID zum Tag-Namen. Sucht zuerst per /tags?search,
@@ -82,15 +85,23 @@ async function resolveTagId(
   }
 }
 
-export async function subscribeToAcademy(email: string, firstName = ""): Promise<AcResult> {
-  const c = cfg();
-  if (!c) return "skipped";
+/* Generischer Funnel-Subscribe: Kontakt syncen → auf Liste setzen → Tag setzen.
+   Sabala-Pattern: Tag triggert die Automation, Liste ist der Versand-Container.
+   "skipped", wenn AC-Basis oder Listen-ID fehlt. */
+async function subscribeToList(
+  email: string,
+  firstName: string,
+  listId: string | undefined,
+  tagName: string
+): Promise<AcResult> {
+  const base = cfgBase();
+  if (!base || !listId) return "skipped";
 
-  const headers = { "Api-Token": c.key, "Content-Type": "application/json" };
+  const headers = { "Api-Token": base.key, "Content-Type": "application/json" };
 
   try {
     // 1) Kontakt anlegen/aktualisieren (idempotent via /contact/sync)
-    const syncRes = await fetch(`${c.url}/api/3/contact/sync`, {
+    const syncRes = await fetch(`${base.url}/api/3/contact/sync`, {
       method: "POST",
       headers,
       body: JSON.stringify({ contact: { email, firstName } }),
@@ -103,24 +114,24 @@ export async function subscribeToAcademy(email: string, firstName = ""): Promise
     const contactId = synced.contact?.id;
     if (!contactId) return "error";
 
-    // 2) Auf die Akademie-Liste setzen (Versand-Container)
-    const listRes = await fetch(`${c.url}/api/3/contactLists`, {
+    // 2) Auf die Liste setzen (Versand-Container)
+    const listRes = await fetch(`${base.url}/api/3/contactLists`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ contactList: { list: Number(c.listId), contact: Number(contactId), status: 1 } }),
+      body: JSON.stringify({ contactList: { list: Number(listId), contact: Number(contactId), status: 1 } }),
     });
     if (!listRes.ok) {
       console.error("[activecampaign] contactLists fehlgeschlagen:", listRes.status);
       return "error";
     }
 
-    // 3) Tag setzen — DAS triggert die Welcome-Automation (Sabala-Pattern: Tag triggert, Liste versendet)
-    const tagId = await resolveTagId(c.url, c.key, c.tagName);
+    // 3) Tag setzen — DAS triggert die Welcome-Automation
+    const tagId = await resolveTagId(base.url, base.key, tagName);
     if (!tagId) {
-      console.error("[activecampaign] Tag-Resolve fehlgeschlagen:", c.tagName);
+      console.error("[activecampaign] Tag-Resolve fehlgeschlagen:", tagName);
       return "error";
     }
-    const tagRes = await fetch(`${c.url}/api/3/contactTags`, {
+    const tagRes = await fetch(`${base.url}/api/3/contactTags`, {
       method: "POST",
       headers,
       body: JSON.stringify({ contactTag: { contact: Number(contactId), tag: tagId } }),
@@ -136,4 +147,26 @@ export async function subscribeToAcademy(email: string, firstName = ""): Promise
     console.error("[activecampaign] Netzwerkfehler:", err);
     return "error";
   }
+}
+
+/* Akademie-Newsletter → Akademie-Liste + Akademie-Tag (Welcome-Automation). */
+export async function subscribeToAcademy(email: string, firstName = ""): Promise<AcResult> {
+  return subscribeToList(
+    email,
+    firstName,
+    process.env.AC_AKADEMIE_LIST_ID,
+    process.env.AC_AKADEMIE_TAG || AKADEMIE_DEFAULT_TAG
+  );
+}
+
+/* Mooni-Voice-Funnel → Mooni-Liste + Mooni-Tag.
+   ponytail: feste Default-Liste 28 / Tag "Mooni Voice Beta" — bekannte stabile
+   IDs aus dem Standalone-Funnel (gleicher AC-Account). Per Env ueberschreibbar. */
+export async function subscribeMooniVoice(email: string, firstName = ""): Promise<AcResult> {
+  return subscribeToList(
+    email,
+    firstName,
+    process.env.AC_MOONI_LIST_ID || "28",
+    process.env.AC_MOONI_TAG || MOONI_DEFAULT_TAG
+  );
 }
