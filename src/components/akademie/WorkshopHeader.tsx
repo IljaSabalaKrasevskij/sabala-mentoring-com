@@ -2,17 +2,13 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ACADEMY_CHECKOUT_URL, Brackets } from "./shared";
+import { Brackets } from "./shared";
+import { COHORTS } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WorkshopHeader — der eigentliche, IMMER sichtbare Workshop-Kopf. Titel, Termine,
    CTA. Kommt direkt nach dem Entdecker-Hero, damit man den Workshop-Titel garantiert sieht.
    ───────────────────────────────────────────────────────────────────────── */
-
-const DATES = [
-  { label: "Session 1", date: "Fr · 26. Juni 2026", time: "15:00 MEZ" },
-  { label: "Session 2", date: "Fr · 3. Juli 2026", time: "15:00 MEZ" },
-];
 
 export default function WorkshopHeader() {
   return (
@@ -66,7 +62,7 @@ export default function WorkshopHeader() {
           transition={{ duration: 0.6, delay: 0.18 }}
           className="mt-9 flex flex-wrap gap-3"
         >
-          {DATES.map((d) => (
+          {COHORTS[0].sessions.map((d) => (
             <span key={d.label} className="relative flex flex-col px-5 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
               <Brackets color="rgba(184,150,62,0.45)" inset={6} size={8} />
               <span className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: "#b8963e" }}>
@@ -88,9 +84,7 @@ export default function WorkshopHeader() {
           className="mt-9 flex flex-wrap items-center gap-5"
         >
           <a
-            href={ACADEMY_CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#termine"
             className="group inline-flex items-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "#b8963e", color: "#0a0806", letterSpacing: "0.08em", padding: "17px 38px", fontSize: "1rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}

@@ -68,9 +68,9 @@ const NODES: Node[] = [
   {
     key: "claude",
     name: "Claude Code",
-    role: "Dein Mitarbeiter",
+    role: "Dein Gedächtnis",
     session: "Session 2 · 2h live",
-    boxTitle: "Claude wird zum Mitarbeiter",
+    boxTitle: "Claude vergisst nie mehr",
     boxBody: "Terminal, Claude Code, MCP-Verbindungen, Memory-System und kleine Skills. Claude greift auf alles zu und erinnert sich — über Tage.",
     color: "#B8963E",
     x: 50,

@@ -1,6 +1,9 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Reveal } from "./shared";
+import LevelBadge from "./LevelBadge";
+import type { Level } from "./levels";
 
 /* ─────────────────────────────────────────────────────────────────────────
    CourseGrid — „Was du hier lernst"
@@ -50,10 +53,37 @@ const IconPen = (
   </svg>
 );
 
-const SOON = [
-  { icon: IconWeb, title: "Webseite mit KI bauen", sub: "Für Coaches & Berater", desc: "Von der leeren Seite zur fertigen Webseite, die verkauft. Mit den Tools, die ich selbst nutze." },
-  { icon: IconFlow, title: "KI-Automation", sub: "Abläufe, die für dich arbeiten", desc: "Wiederkehrende Aufgaben in deinem Business automatisieren, ganz ohne Code-Vorkenntnisse." },
-  { icon: IconPen, title: "Content-System mit KI", sub: "Newsletter · LinkedIn · Podcast", desc: "Dein Content-Workflow mit KI: konsistent, schnell und trotzdem in deiner eigenen Stimme." },
+const IconSpark = (
+  <svg width="32" height="32" viewBox="0 0 24 24" {...stroke}>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.6 2.6M15.1 15.1l2.6 2.6M17.7 6.3l-2.6 2.6M8.9 15.1l-2.6 2.6" />
+  </svg>
+);
+
+/* Jetzt buchbare Kurse — neuer Kurs = ein Eintrag. Reihenfolge = Level aufsteigend. */
+const BOOKABLE: {
+  href: string; icon: ReactNode; level: Level; title: string; sub: string;
+  desc: string; metas: string[]; priceLabel: string; price: string;
+}[] = [
+  {
+    href: "/claude-starter", icon: IconSpark, level: 1, title: "Claude Starter",
+    sub: "Dein erster Abend mit Claude, von null auf läuft",
+    desc: "An einem Abend installierst du Claude, lernst die Oberfläche und vermeidest die typischen Anfängerfehler. Live, an deiner Seite.",
+    metas: ["Termin folgt", "2 Stunden live", "Kein Vorwissen nötig"],
+    priceLabel: "Ein Abend", price: "€99",
+  },
+  {
+    href: "/akademie", icon: IconBrain, level: 2, title: "Dein Second Brain",
+    sub: "Deine lokale Datenbasis, mit der Claude niemals vergisst",
+    desc: "In 2 Sessions à 2h richtest du dein lokales KI-Gehirn ein, das sich an alles erinnert. Live mit dir aufgebaut, am Ende einsatzbereit.",
+    metas: ["9. + 16. Juli 2026", "16-18 Uhr · 2× 2h", "Einsteiger willkommen"],
+    priceLabel: "Beide Sessions", price: "€197",
+  },
+];
+
+const SOON: { icon: ReactNode; title: string; sub: string; desc: string; level: Level }[] = [
+  { icon: IconWeb, level: 2, title: "Webseite mit KI bauen", sub: "Für Coaches & Berater", desc: "Von der leeren Seite zur fertigen Webseite, die verkauft. Mit den Tools, die ich selbst nutze." },
+  { icon: IconFlow, level: 3, title: "KI-Automation", sub: "Abläufe, die für dich arbeiten", desc: "Wiederkehrende Aufgaben in deinem Business automatisieren, ganz ohne Code-Vorkenntnisse." },
+  { icon: IconPen, level: 2, title: "Content-System mit KI", sub: "Newsletter · LinkedIn · Podcast", desc: "Dein Content-Workflow mit KI: konsistent, schnell und trotzdem in deiner eigenen Stimme." },
 ];
 
 export default function CourseGrid() {
@@ -110,7 +140,7 @@ export default function CourseGrid() {
         <Reveal delay={0.12}>
           <p style={{ fontSize: "clamp(15px, 1.7vw, 18px)", color: "rgba(250,248,245,0.62)", lineHeight: 1.7, maxWidth: 580, marginBottom: 56 }}>
             Ich nehme dich mit in die Tools, die ich selbst jeden Tag nutze. Klein, machbar,
-            direkt anwendbar. Den Anfang macht dein eigener KI-Mitarbeiter.
+            direkt anwendbar. Den Anfang macht dein eigenes Second Brain.
           </p>
         </Reveal>
 
@@ -124,105 +154,11 @@ export default function CourseGrid() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <a
-            href="/akademie"
-            className="group"
-            style={{
-              display: "block",
-              position: "relative",
-              textDecoration: "none",
-              background: "linear-gradient(135deg, rgba(212,174,90,0.16) 0%, rgba(20,15,9,0.92) 55%)",
-              border: "1px solid rgba(212,174,90,0.45)",
-              borderRadius: 4,
-              padding: "clamp(28px, 4vw, 48px)",
-              marginBottom: 72,
-              boxShadow: "0 30px 80px -40px rgba(212,174,90,0.5)",
-              transition: "border-color 0.3s, box-shadow 0.3s, transform 0.3s",
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = gold;
-              el.style.boxShadow = "0 40px 100px -40px rgba(212,174,90,0.7)";
-              el.style.transform = "translateY(-3px)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = "rgba(212,174,90,0.45)";
-              el.style.boxShadow = "0 30px 80px -40px rgba(212,174,90,0.5)";
-              el.style.transform = "none";
-            }}
-          >
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 40, alignItems: "center", justifyContent: "space-between" }}>
-              {/* Links: Inhalt */}
-              <div style={{ flex: "1 1 340px", minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                  <span style={{ color: gold }}>{IconBrain}</span>
-                  <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, border: `1px solid rgba(212,174,90,0.4)`, padding: "5px 11px", borderRadius: 2 }}>
-                    Live-Training
-                  </span>
-                </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-instrument-serif), Georgia, serif",
-                    fontSize: "clamp(28px, 3.4vw, 40px)",
-                    fontWeight: 400,
-                    color: "#FAF8F5",
-                    lineHeight: 1.1,
-                    marginBottom: 8,
-                  }}
-                >
-                  Dein KI-Mitarbeiter
-                </h3>
-                <p className="font-mono" style={{ fontSize: 12.5, letterSpacing: "0.1em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
-                  Obsidian + Claude Second Brain
-                </p>
-                <p style={{ fontSize: 16.5, color: "rgba(250,248,245,0.72)", lineHeight: 1.68, maxWidth: 440, marginBottom: 24 }}>
-                  In 2×2 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Live mit
-                  dir aufgebaut, am selben Abend einsatzbereit.
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 24px" }}>
-                  <Meta label="26. Juni & 3. Juli 2026" />
-                  <Meta label="15:00 MEZ · 2× 2 Stunden" />
-                  <Meta label="Einsteiger willkommen" />
-                </div>
-              </div>
-
-              {/* Rechts: Preis + CTA */}
-              <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16, paddingLeft: 8 }}>
-                <div>
-                  <span className="font-mono" style={{ display: "block", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.5)", marginBottom: 5 }}>
-                    Beide Sessions
-                  </span>
-                  <span style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 46, color: gold, fontStyle: "italic", lineHeight: 1 }}>
-                    €197
-                  </span>
-                </div>
-                <span
-                  className="group-hover:gap-3"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 10,
-                    background: gold,
-                    color: "#0a0806",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    letterSpacing: "0.04em",
-                    padding: "16px 30px",
-                    borderRadius: 2,
-                    transition: "gap 0.25s",
-                  }}
-                >
-                  Zum Kurs
-                  <svg width="18" height="12" viewBox="0 0 20 12" fill="none">
-                    <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </a>
-        </Reveal>
+        {BOOKABLE.map((c, i) => (
+          <Reveal key={c.title} delay={0.1 + i * 0.06}>
+            <BookableCard {...c} />
+          </Reveal>
+        ))}
 
         {/* ── In Kürze verfügbar ── */}
         <Reveal delay={0.05}>
@@ -257,7 +193,10 @@ export default function CourseGrid() {
                   el.style.borderColor = "rgba(255,255,255,0.08)";
                 }}
               >
-                <div style={{ marginBottom: 20, opacity: 0.85 }}>{c.icon}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+                  <span style={{ opacity: 0.85 }}>{c.icon}</span>
+                  <LevelBadge level={c.level} withName={false} />
+                </div>
                 <h3
                   style={{
                     fontFamily: "var(--font-instrument-serif), Georgia, serif",
@@ -283,6 +222,85 @@ export default function CourseGrid() {
         </div>
       </div>
     </section>
+  );
+}
+
+function BookableCard({ href, icon, level, title, sub, desc, metas, priceLabel, price }: {
+  href: string; icon: ReactNode; level: Level; title: string; sub: string;
+  desc: string; metas: string[]; priceLabel: string; price: string;
+}) {
+  return (
+    <a
+      href={href}
+      className="group"
+      style={{
+        display: "block",
+        position: "relative",
+        textDecoration: "none",
+        background: "linear-gradient(135deg, rgba(212,174,90,0.16) 0%, rgba(20,15,9,0.92) 55%)",
+        border: "1px solid rgba(212,174,90,0.45)",
+        borderRadius: 4,
+        padding: "clamp(28px, 4vw, 48px)",
+        marginBottom: 24,
+        boxShadow: "0 30px 80px -40px rgba(212,174,90,0.5)",
+        transition: "border-color 0.3s, box-shadow 0.3s, transform 0.3s",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = gold;
+        el.style.boxShadow = "0 40px 100px -40px rgba(212,174,90,0.7)";
+        el.style.transform = "translateY(-3px)";
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "rgba(212,174,90,0.45)";
+        el.style.boxShadow = "0 30px 80px -40px rgba(212,174,90,0.5)";
+        el.style.transform = "none";
+      }}
+    >
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 40, alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ flex: "1 1 340px", minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 20 }}>
+            <span style={{ color: gold }}>{icon}</span>
+            <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, border: `1px solid rgba(212,174,90,0.4)`, padding: "5px 11px", borderRadius: 2 }}>
+              Live-Training
+            </span>
+            <LevelBadge level={level} />
+          </div>
+          <h3 style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: "clamp(28px, 3.4vw, 40px)", fontWeight: 400, color: "#FAF8F5", lineHeight: 1.1, marginBottom: 8 }}>
+            {title}
+          </h3>
+          <p className="font-mono" style={{ fontSize: 12.5, letterSpacing: "0.1em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
+            {sub}
+          </p>
+          <p style={{ fontSize: 16.5, color: "rgba(250,248,245,0.72)", lineHeight: 1.68, maxWidth: 440, marginBottom: 24 }}>
+            {desc}
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 24px" }}>
+            {metas.map((m) => (
+              <Meta key={m} label={m} />
+            ))}
+          </div>
+        </div>
+
+        <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16, paddingLeft: 8 }}>
+          <div>
+            <span className="font-mono" style={{ display: "block", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.5)", marginBottom: 5 }}>
+              {priceLabel}
+            </span>
+            <span style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 46, color: gold, fontStyle: "italic", lineHeight: 1 }}>
+              {price}
+            </span>
+          </div>
+          <span className="group-hover:gap-3" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: gold, color: "#0a0806", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em", padding: "16px 30px", borderRadius: 2, transition: "gap 0.25s" }}>
+            Zum Kurs
+            <svg width="18" height="12" viewBox="0 0 20 12" fill="none">
+              <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
   );
 }
 

@@ -1,5 +1,6 @@
 import AcademyHero from "@/components/akademie/AcademyHero";
 import AcademyValues from "@/components/akademie/AcademyValues";
+import AcademyLevels from "@/components/akademie/AcademyLevels";
 import CourseGrid from "@/components/akademie/CourseGrid";
 import CourseCalendar from "@/components/akademie/CourseCalendar";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
@@ -15,6 +16,7 @@ export default function AkademieHubPage() {
     <main className="flex-1">
       <AcademyHero />
       <AcademyValues />
+      <AcademyLevels />
       <CourseGrid />
       <CourseCalendar />
       <AcademyNewsletter />

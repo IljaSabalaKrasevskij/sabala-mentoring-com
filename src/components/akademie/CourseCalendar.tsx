@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Reveal } from "./shared";
+import LevelBadge from "./LevelBadge";
+import type { Level } from "./levels";
 
 /* ─────────────────────────────────────────────────────────────────────────
    CourseCalendar — Monatssicht Juni + Juli 2026.
@@ -15,19 +17,25 @@ type CourseEvent = {
   day: number;
   month: number; // 6 = Juni, 7 = Juli
   year: number;
+  level: Level;
   title: string;
+  sub?: string;
   time: string;
   label: string;
   href: string;
   spots?: number;
+  done?: boolean; // bereits gelaufen → nicht mehr buchbar
 };
 
+const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergisst";
+
 const EVENTS: CourseEvent[] = [
-  { day: 26, month: 6, year: 2026, title: "Dein KI-Mitarbeiter", time: "15:00–17:00 MEZ", label: "Session 1", href: "/akademie", spots: 8 },
-  { day: 3, month: 7, year: 2026, title: "Dein KI-Mitarbeiter", time: "15:00–17:00 MEZ", label: "Session 2", href: "/akademie", spots: 8 },
+  { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
+  { day: 9, month: 7, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "16-18 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
 ];
 
-const NEXT = EVENTS[0]; // Nächster Termin für den Highlight-Banner
+// Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener.
+const NEXT = EVENTS.find((e) => !e.done) ?? EVENTS[EVENTS.length - 1];
 
 const MONTHS = [
   { month: 6, year: 2026, name: "Juni 2026" },
@@ -82,7 +90,7 @@ export default function CourseCalendar() {
         </Reveal>
         <Reveal delay={0.1}>
           <p style={{ fontSize: 15, color: "rgba(250,248,245,0.5)", marginBottom: 44, maxWidth: 480, lineHeight: 1.6 }}>
-            Klick auf einen Termin für Details. Der Kurs ist nur als Paket buchbar, beide Sessions zusammen.
+            Klick auf einen Termin für Details und Buchung. Jeder Termin ist einzeln und live buchbar, mit eigenem Level.
           </p>
         </Reveal>
 
@@ -133,7 +141,9 @@ export default function CourseCalendar() {
                 <p style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 24, color: "#FAF8F5", lineHeight: 1.15 }}>
                   {NEXT.title}
                 </p>
-                <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.6)", marginTop: 6 }}>
+                {NEXT.sub && <p style={{ fontSize: 13.5, color: "rgba(250,248,245,0.62)", lineHeight: 1.5, marginTop: 5, maxWidth: 360 }}>{NEXT.sub}</p>}
+                <div style={{ marginTop: 9 }}><LevelBadge level={NEXT.level} /></div>
+                <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.6)", marginTop: 9 }}>
                   {NEXT.time}
                   {NEXT.spots !== undefined && <span style={{ color: "#E8A87C", marginLeft: 14 }}>· {NEXT.spots} Plätze frei</span>}
                 </p>
@@ -202,17 +212,27 @@ export default function CourseCalendar() {
               <h3 style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 24, fontWeight: 400, color: "#FAF8F5", marginBottom: 6 }}>
                 {activeEvent.title}
               </h3>
+              {activeEvent.sub && <p style={{ fontSize: 13.5, color: "rgba(250,248,245,0.6)", lineHeight: 1.5, marginBottom: 10, maxWidth: 380 }}>{activeEvent.sub}</p>}
+              <div style={{ marginBottom: 10 }}><LevelBadge level={activeEvent.level} /></div>
               <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.55)" }}>
                 {activeEvent.time}
-                {activeEvent.spots !== undefined && (
+                {activeEvent.done ? (
+                  <span style={{ marginLeft: 16, color: "rgba(250,248,245,0.45)" }}>· gelaufen</span>
+                ) : activeEvent.spots !== undefined ? (
                   <span style={{ marginLeft: 16, color: activeEvent.spots <= 3 ? "#E8A87C" : "rgba(250,248,245,0.55)" }}>· {activeEvent.spots} Plätze frei</span>
-                )}
+                ) : null}
               </p>
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <a href={activeEvent.href} style={{ padding: "13px 30px", background: gold, color: "#0A0806", fontSize: 13, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", borderRadius: 2 }}>
-                Jetzt buchen
-              </a>
+              {activeEvent.done ? (
+                <span className="font-mono" style={{ padding: "13px 24px", border: "1px solid rgba(255,255,255,0.14)", color: "rgba(250,248,245,0.5)", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", borderRadius: 2 }}>
+                  Gelaufen
+                </span>
+              ) : (
+                <a href={activeEvent.href} style={{ padding: "13px 30px", background: gold, color: "#0A0806", fontSize: 13, fontWeight: 600, letterSpacing: "0.04em", textDecoration: "none", borderRadius: 2 }}>
+                  Jetzt buchen
+                </a>
+              )}
               <button
                 onClick={() => setActiveEvent(null)}
                 aria-label="Schließen"
