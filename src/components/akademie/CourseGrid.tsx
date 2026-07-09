@@ -75,7 +75,7 @@ const BOOKABLE: {
     href: "/akademie", icon: IconBrain, level: 2, title: "Dein Second Brain",
     sub: "Deine lokale Datenbasis, mit der Claude niemals vergisst",
     desc: "In 2 Sessions à 2h richtest du dein lokales KI-Gehirn ein, das sich an alles erinnert. Live mit dir aufgebaut, am Ende einsatzbereit.",
-    metas: ["9. + 16. Juli 2026", "16-18 Uhr · 2× 2h", "Einsteiger willkommen"],
+    metas: ["23. + 30. Juli 2026", "16-18 Uhr · 2× 2h", "Einsteiger willkommen"],
     priceLabel: "Beide Sessions", price: "€197",
   },
 ];
