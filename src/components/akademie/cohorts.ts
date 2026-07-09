@@ -16,11 +16,11 @@ export type Cohort = {
 
 export const COHORTS: Cohort[] = [
   {
-    id: "second-brain-2026-07-09",
-    start: "2026-07-09",
+    id: "second-brain-2026-07-23",
+    start: "2026-07-23",
     sessions: [
-      { label: "Session 1", date: "Do · 9. Juli 2026", time: "16-18 Uhr" },
-      { label: "Session 2", date: "Do · 16. Juli 2026", time: "16-18 Uhr" },
+      { label: "Session 1", date: "Do · 23. Juli 2026", time: "16-18 Uhr" },
+      { label: "Session 2", date: "Do · 30. Juli 2026", time: "16-18 Uhr" },
     ],
     capacity: 10,
     checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-juli-26/",
