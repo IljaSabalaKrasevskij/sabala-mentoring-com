@@ -31,7 +31,6 @@ const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergis
 
 const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
-  { day: 9, month: 7, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "16-18 Uhr", label: "Zweiter Lauf", href: "/akademie", done: true },
   { day: 23, month: 7, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "16-18 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
 ];
 
