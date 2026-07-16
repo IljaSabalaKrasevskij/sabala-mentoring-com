@@ -287,7 +287,7 @@ export default function ValuesManifesto() {
   const cy = vp.h / 2;
 
   return (
-    <section ref={wrapRef} className="relative" style={{ height: "460vh", background: "var(--cream)" }}>
+    <section ref={wrapRef} className="relative" style={{ height: "300vh", background: "var(--cream)" }}>
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
         {/* warmer Halo hinter Mooni */}
         <div
@@ -379,28 +379,33 @@ export default function ValuesManifesto() {
                     {v.word}
                   </span>
                 </button>
-                {isHot && (
-                  <div
-                    className={`absolute left-1/2 z-30 w-[min(74vw,300px)] -translate-x-1/2 rounded-2xl p-5 text-center ${y < 0 ? "bottom-full mb-4" : "top-full mt-4"}`}
-                    style={{
-                      background: "rgba(255,255,255,0.95)",
-                      border: `1.5px solid ${v.color}`,
-                      boxShadow: `0 24px 50px ${v.color}45, 0 8px 22px rgba(0,0,0,0.14)`,
-                      backdropFilter: "blur(10px)",
-                      animation: "value-pop 0.22s cubic-bezier(0.16,1,0.3,1) both",
-                    }}
-                  >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: v.color }}>
-                      {v.word}
-                    </span>
-                    <p className="mt-2 text-[1.02rem] font-medium leading-relaxed" style={{ color: "#3A332C" }}>
-                      {v.desc}
-                    </p>
-                  </div>
-                )}
               </div>
             );
           })}
+        </div>
+
+        {/* ───── Desktop: EIN fester Detail-Text — immer im Rahmen, nie am Rand abgeschnitten ───── */}
+        <div className="pointer-events-none absolute inset-x-0 top-[63%] z-40 mx-auto hidden max-w-[440px] px-6 md:block">
+          {hovered !== null && (
+            <div
+              key={`d-${hovered}`}
+              className="relative rounded-2xl p-5 text-center"
+              style={{
+                background: "rgba(255,255,255,0.96)",
+                border: `1.5px solid ${VALUES[hovered].color}`,
+                boxShadow: `0 24px 50px ${VALUES[hovered].color}45, 0 8px 22px rgba(0,0,0,0.14)`,
+                backdropFilter: "blur(10px)",
+                animation: "value-pop-mobile 0.22s cubic-bezier(0.16,1,0.3,1) both",
+              }}
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em]" style={{ color: VALUES[hovered].color }}>
+                {VALUES[hovered].word}
+              </span>
+              <p className="mt-2 text-[1.05rem] font-medium leading-relaxed" style={{ color: "#3A332C" }}>
+                {VALUES[hovered].desc}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* ───── Mobile: zentrierte Tab-Leiste + Detail-Panel ───── */}

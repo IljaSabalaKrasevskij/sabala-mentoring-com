@@ -1,7 +1,9 @@
 import IljaHeroJourney from "@/components/home/IljaHeroJourney";
 import ValuesManifesto from "@/components/home/ValuesManifesto";
+import MooniVoiceTeaser from "@/components/home/MooniVoiceTeaser";
 import ForWhom from "@/components/home/ForWhom";
 import SolarSystem from "@/components/home/SolarSystem";
+import ShopTeaser from "@/components/home/ShopTeaser";
 import DerMensch from "@/components/home/DerMensch";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -20,8 +22,10 @@ export default function Home() {
         }}
       />
       <ValuesManifesto />
+      <MooniVoiceTeaser />
       <ForWhom />
       <SolarSystem />
+      <ShopTeaser />
       <DerMensch />
     </SmoothScroll>
   );

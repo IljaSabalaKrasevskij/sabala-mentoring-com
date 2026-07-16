@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -12,6 +13,7 @@ type Segment = {
   pain: string;
   tag: string;
   color: string;
+  href: string;
 };
 
 const SEGMENTS: Segment[] = [
@@ -21,6 +23,7 @@ const SEGMENTS: Segment[] = [
     pain: "Fünf bis fünfzig Leute mit echter Ambition, aber ohne internes KI-Know-how, mitten im Tool-Chaos und ohne die Zeit, während der Druck weiter wächst.",
     tag: "Für dich gebaut",
     color: "#EAC86A",
+    href: "/webseiten",
   },
   {
     n: "02",
@@ -28,6 +31,7 @@ const SEGMENTS: Segment[] = [
     pain: "Große Vision, du kommst weit allein, doch bei Frontend, UX oder Architektur ist Schluss, und du brauchst jemanden, der mit dir über die Ziellinie geht.",
     tag: "Mit dir entwickelt",
     color: "#D4823C",
+    href: "/mitentwickelt",
   },
   {
     n: "03",
@@ -35,6 +39,7 @@ const SEGMENTS: Segment[] = [
     pain: "Dein Team nutzt KI nur an der Oberfläche, oder du willst selbst bauen, aber dein Wissen liegt verteilt auf zwölf Tools.",
     tag: "Dir beigebracht",
     color: "#6FA382",
+    href: "/akademie-hub",
   },
 ];
 
@@ -88,31 +93,39 @@ export default function ForWhom() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.12 * i }}
               whileHover={{ y: -8 }}
-              className="group relative flex flex-col rounded-3xl p-10"
-              style={{
-                background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012))",
-                border: "1px solid rgba(184,150,62,0.2)",
-                backdropFilter: "blur(6px)",
-              }}
+              className="h-full"
             >
-              {/* obere Akzentlinie in der Modus-Farbe */}
-              <span className="absolute left-10 right-10 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
-
-              <span className="font-mono text-[12px] tracking-[0.3em]" style={{ color: s.color }}>
-                {s.n}
-              </span>
-
-              <h3 className="mt-6 font-serif text-[2.1rem] leading-tight text-cream">{s.title}</h3>
-
-              <p className="mt-5 flex-1 text-[1.12rem] leading-relaxed text-warm-light/75">{s.pain}</p>
-
-              <span
-                className="mt-7 inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors"
-                style={{ color: s.color }}
+              <Link
+                href={s.href}
+                className="group relative flex h-full flex-col rounded-3xl p-10"
+                style={{
+                  background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012))",
+                  border: "1px solid rgba(184,150,62,0.2)",
+                  backdropFilter: "blur(6px)",
+                }}
               >
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: s.color, boxShadow: `0 0 8px ${s.color}` }} />
-                {s.tag}
-              </span>
+                {/* obere Akzentlinie in der Modus-Farbe */}
+                <span className="absolute left-10 right-10 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${s.color}, transparent)` }} />
+
+                <span className="font-mono text-[12px] tracking-[0.3em]" style={{ color: s.color }}>
+                  {s.n}
+                </span>
+
+                <h3 className="mt-6 font-serif text-[2.1rem] leading-tight text-cream">{s.title}</h3>
+
+                <p className="mt-5 flex-1 text-[1.12rem] leading-relaxed text-warm-light/75">{s.pain}</p>
+
+                <span
+                  className="mt-7 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors"
+                  style={{ color: s.color }}
+                >
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: s.color, boxShadow: `0 0 8px ${s.color}` }} />
+                  {s.tag}
+                  <span aria-hidden className="ml-auto text-[15px] transition-transform duration-300 group-hover:translate-x-1.5">
+                    →
+                  </span>
+                </span>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -124,7 +137,7 @@ export default function ForWhom() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-16 text-center font-mono text-[12px] uppercase tracking-[0.25em] text-warm-mid"
         >
-          Drei Modi, wie wir zusammenarbeiten, die du gleich erkunden kannst.
+          Drei Modi, wie wir zusammenarbeiten. Klick dich rein.
         </motion.p>
       </div>
     </section>
