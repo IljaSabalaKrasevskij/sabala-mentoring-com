@@ -9,8 +9,11 @@
 export type Locale = "de" | "en";
 export type Localized = { de: string; en: string };
 
+export type CategoryKey = "webseiten" | "agent-os" | "lead-gen" | "weitere";
+
 export type CaseStudy = {
   id: string;
+  category: CategoryKey;
   title: Localized;
   industry: Localized;
   challenge: Localized;
@@ -22,9 +25,46 @@ export type CaseStudy = {
   image?: string;
 };
 
+/** Rubriken in Anzeige-Reihenfolge. */
+export const CATEGORIES: { key: CategoryKey; label: Localized; line: Localized }[] = [
+  {
+    key: "webseiten",
+    label: { de: "Webseiten & Plattformen", en: "Websites & Platforms" },
+    line: {
+      de: "Premium-Auftritte und Plattformen, live bei echten Kunden.",
+      en: "Premium sites and platforms, live with real clients.",
+    },
+  },
+  {
+    key: "agent-os",
+    label: { de: "Agent-OS-Systeme", en: "Agent OS Systems" },
+    line: {
+      de: "Dashboards und Agenten, die täglich echte Arbeit übernehmen.",
+      en: "Dashboards and agents doing real daily work.",
+    },
+  },
+  {
+    key: "lead-gen",
+    label: { de: "Lead-Gen-Systeme", en: "Lead Gen Systems" },
+    line: {
+      de: "Systeme, die täglich passende Kunden finden und bewerten.",
+      en: "Systems that find and score the right prospects every day.",
+    },
+  },
+  {
+    key: "weitere",
+    label: { de: "Weitere Use Cases", en: "More Use Cases" },
+    line: {
+      de: "Werkzeuge und Experimente, die den Alltag leichter machen.",
+      en: "Tools and experiments that make everyday work lighter.",
+    },
+  },
+];
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: "sabala-mentoring",
+    category: "webseiten",
     title: {
       de: "Sabala Mentoring: KI-Studio & Akademie",
       en: "Sabala Mentoring: AI Studio & Academy",
@@ -48,6 +88,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: "dielommel",
+    category: "webseiten",
     title: {
       de: "Stefanie Lommel: Begleitung für Familienunternehmen",
       en: "Stefanie Lommel: Coaching for Family Businesses",
@@ -70,33 +111,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/dielommel.jpg",
   },
   {
-    id: "connecting-herzkreative",
-    title: {
-      de: "Connecting Herzkreative: Kuratiertes Macher-Netzwerk",
-      en: "Connecting Herzkreative: Curated Maker Network",
-    },
-    industry: {
-      de: "Community-Plattform · Kuratiertes Netzwerk",
-      en: "Community Platform · Curated Network",
-    },
-    challenge: {
-      de: "Ein kuratiertes Netzwerk starten, in dem sich selbstständige Macher finden, nicht nur eine Landingpage. Es brauchte einen Bewerbungs-Flow, Mitglieder-Profile und einen Weg, einander wirklich zu entdecken, gebaut und betrieben von einer einzelnen Gründerin ohne fertiges Community-SaaS.",
-      en: "Launch a curated network where independent makers find each other, not just a landing page. It needed an application flow, member profiles and a way to actually discover one another, built and run by a single founder without renting an off the shelf community SaaS.",
-    },
-    claudeUsage: {
-      de: "Mit Claude Code auf Next.js 16 gebaut: Aufnahme- und Bewerbungs-Flow, Mitglieder-Profile, interaktive Mitglieder-Karte mit Leaflet, dazu Events, Blog und Podcast. Claude hat Architektur, Komponenten-System und datenschutzfreundliche Formulare mit Altcha statt Dritt-Captcha übernommen.",
-      en: "Built with Claude Code on Next.js 16: a vetting and application flow, member profiles, an interactive member map with Leaflet, plus events, blog and podcast sections. Claude handled the architecture, the component system and privacy first form handling with Altcha instead of a third party captcha.",
-    },
-    result: {
-      de: "Live auf connecting-herzkreative.com. Bewerber durchlaufen einen echten Aufnahme-Flow, aufgenommene Mitglieder bekommen ein Profil und finden sich auf der Karte, und Podcast und Newsletter speisen direkt den Bewerbungs-Funnel.",
-      en: "Live on connecting-herzkreative.com. Applicants go through a real vetting flow, approved members get a profile and can find each other on the map, and the podcast and newsletter feed straight into the application funnel.",
-    },
-    tags: ["Claude Code", "Next.js 16", "Leaflet", "Framer Motion"],
-    url: "https://connecting-herzkreative.com",
-    image: "/case-studies/connecting-herzkreative.jpg",
-  },
-  {
     id: "operations-dashboard",
+    category: "agent-os",
     title: { de: "KI-Operations-Dashboard", en: "AI Operations Dashboard" },
     industry: { de: "Internes Tool · Agenten-System", en: "Internal tool · Agentic system" },
     challenge: {
@@ -114,6 +130,126 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ["Claude Code", "MCP", "Whisper", "Next.js 16", "FastAPI"],
     isPrivate: true,
     image: "/case-studies/operations-dashboard.jpg",
+  },
+  {
+    id: "cyber-sales",
+    category: "webseiten",
+    title: {
+      de: "Max Maute: Vertriebssystem für Cybersecurity",
+      en: "Max Maute: Sales System for Cybersecurity",
+    },
+    industry: { de: "Cybersecurity · B2B-Vertrieb", en: "Cybersecurity · B2B Sales" },
+    challenge: {
+      de: "Cybersecurity verkauft sich nicht über Erklärungen: Der Wunschkunde glaubt, sicher zu sein, und sagt später. Die Seite muss die Gefahr erlebbar machen, statt sie zu beschreiben, und den Fünf-Schritte-Vertrieb (Brief, QR-Code, Video, E-Mail, Anruf) tragen.",
+      en: "Cybersecurity does not sell through explanations: the ideal client believes he is safe and says later. The site had to make the danger tangible instead of describing it, and carry the five step sales motion (letter, QR code, video, email, call).",
+    },
+    claudeUsage: {
+      de: "Positionierung, Texte und Seite mit Claude Code in einem Fluss gebaut: die Klick-Mechanik als Scroll-Erlebnis inszeniert, NIS2-Pflicht und Ernstfall als zwei Einstiege erzählt, dazu Rechner und Erstgespräch-Funnel.",
+      en: "Positioning, copy and site built with Claude Code in one flow: the click mechanic staged as a scroll experience, NIS2 obligations and incident response told as two entry points, plus a calculator and discovery call funnel.",
+    },
+    result: {
+      de: "Live auf cyber-sales.de. Die Pilot-Kampagne erreichte 20 Prozent Scan-Rate, und das Angebot ist zu 100 Prozent erfolgsbasiert positioniert.",
+      en: "Live on cyber-sales.de. The pilot campaign reached a 20 percent scan rate, and the offer is positioned as 100 percent performance based.",
+    },
+    tags: ["Claude Code", "Next.js", "Sales-Page", "B2B"],
+    url: "https://cyber-sales.de",
+    image: "/case-studies/cyber-sales.jpg",
+  },
+  {
+    id: "fleur-lead-agent",
+    category: "lead-gen",
+    title: {
+      de: "Fleur: Lead-Agent für Automotive",
+      en: "Fleur: Lead Agent for Automotive",
+    },
+    industry: { de: "Live-Chat-Service · Automotive B2B", en: "Live Chat Service · Automotive B2B" },
+    challenge: {
+      de: "Fleur bietet Autohäusern einen Live-Chat-Service und brauchte täglich frische, passende Händler-Leads im DACH-Raum, ohne teure Lead-Datenbanken zu abonnieren und ohne jeden Morgen selbst zu recherchieren.",
+      en: "Fleur offers car dealerships a live chat service and needed fresh, well matched dealer leads across the DACH region every day, without renting expensive lead databases or researching manually every morning.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code als lokalen Research-Agenten gebaut: findet täglich Autohäuser, bewertet sie gegen ihr Wunschkunden-Profil, erklärt jeden Score und lernt aus Verwerfungen. Dashboard mit Freigabe, Excel-Export und täglichem Selbst-Check, alles auf ihrem eigenen Mac.",
+      en: "Built with Claude Code as a local research agent: finds dealerships daily, scores them against her ideal client profile, explains every score and learns from rejections. Dashboard with approval flow, Excel export and a daily self check, all running on her own Mac.",
+    },
+    result: {
+      de: "Seit Juli 2026 bei Fleur im täglichen Einsatz. Der Agent läuft mit lokalem Modell praktisch kostenlos, sie passt das Wunschkunden-Profil selbst an, und freigegebene Leads gehen direkt in ihre Ansprache.",
+      en: "In daily use at Fleur's since July 2026. The agent runs on a local model at practically zero cost, she tunes the ideal client profile herself, and approved leads flow straight into her outreach.",
+    },
+    tags: ["Claude Code", "Agent", "Ollama", "Firecrawl"],
+    isPrivate: true,
+    image: "/case-studies/fleur-lead-agent.jpg",
+  },
+  {
+    id: "webseiten-analytics",
+    category: "agent-os",
+    title: {
+      de: "Webseiten-Analytics: Alle Seiten in einer Sicht",
+      en: "Website Analytics: Every Site in One View",
+    },
+    industry: { de: "Internes Tool · Self-hosted Analytics", en: "Internal Tool · Self-hosted Analytics" },
+    challenge: {
+      de: "Eigene Seiten und Kundenseiten beobachten, ohne Google Analytics und ohne zehn Tabs: Besucher, Top-Seiten, Suchbegriffe und Blog-Performance gehören in eine Ansicht, datenschutzfreundlich und ohne Abo.",
+      en: "Watch your own sites and client sites without Google Analytics and without ten tabs: visitors, top pages, search queries and blog performance belong in one view, privacy friendly and without a subscription.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code gebaut: selbst gehostetes Umami für Besucher-Daten, Google Search Console über OAuth angebunden (Keywords, Seiten-Performance), Bing Webmaster für die KI-Suche, alles im eigenen Dashboard mit Blog-Leaderboard.",
+      en: "Built with Claude Code: self hosted Umami for visitor data, Google Search Console connected via OAuth (keywords, page performance), Bing Webmaster for AI search, all inside the own dashboard with a blog leaderboard.",
+    },
+    result: {
+      de: "Eigene Projekte und Kundenseiten laufen in derselben Ansicht. Suchbegriffe fließen täglich rein, der Blog zeigt, welche Artikel wirklich arbeiten, und alle Daten bleiben auf dem eigenen Server.",
+      en: "Own projects and client sites run in the same view. Search queries flow in daily, the blog shows which articles actually work, and all data stays on the own server.",
+    },
+    tags: ["Claude Code", "Umami", "Search Console", "Self-hosted"],
+    isPrivate: true,
+    image: "/case-studies/webseiten-analytics.jpg",
+  },
+  {
+    id: "mooni-voice",
+    category: "weitere",
+    title: {
+      de: "Mooni Voice: Deine Stimme wird Text",
+      en: "Mooni Voice: Your Voice Becomes Text",
+    },
+    industry: { de: "Open Source · macOS-App", en: "Open Source · macOS App" },
+    challenge: {
+      de: "Diktieren sollte überall funktionieren, auch im Terminal und in Claude Code, ohne Abo, ohne Konto und ohne dass die Stimme in eine Cloud wandert.",
+      en: "Dictation should work everywhere, including the terminal and Claude Code, without a subscription, without an account, and without your voice travelling to a cloud.",
+    },
+    claudeUsage: {
+      de: "Fork einer Open-Source-Diktier-App, mit Claude Code zur eigenen Mac-App ausgebaut: lokale Modelle (Parakeet, Whisper), gehärtetes Download-Formular, Produktseite und Release-Pipeline über GitHub.",
+      en: "Forked an open source dictation app and extended it into its own Mac app with Claude Code: local models (Parakeet, Whisper), a hardened download form, product page and release pipeline via GitHub.",
+    },
+    result: {
+      de: "Kostenlos verfügbar, läuft 100 Prozent lokal auf Apple Silicon und ist Teil der eigenen täglichen Arbeit, vom LinkedIn-Posteingang bis zum Terminal.",
+      en: "Available for free, runs 100 percent locally on Apple Silicon and is part of daily work here, from the LinkedIn inbox to the terminal.",
+    },
+    tags: ["Open Source", "Lokale KI", "Whisper", "Parakeet"],
+    url: "/open-source-projekte/mooni-voice",
+    image: "/case-studies/mooni-voice.jpg",
+  },
+  {
+    id: "second-brain",
+    category: "weitere",
+    title: {
+      de: "Second Brain 2.0: Wissen, das antwortet",
+      en: "Second Brain 2.0: Knowledge That Answers",
+    },
+    industry: { de: "Wissenssystem · Lokale KI", en: "Knowledge System · Local AI" },
+    challenge: {
+      de: "Fast 1.400 Markdown-Notizen aus Business und Projekten sind nur so viel wert, wie sie beim Arbeiten helfen: Wissen soll in Millisekunden auffindbar sein und auf Zuruf antworten, ohne dass eine Cloud mitliest.",
+      en: "Almost 1,400 markdown notes from business and projects are only worth as much as they help during work: knowledge should be findable in milliseconds and answer on demand, without a cloud reading along.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code als mehrschichtiges System gebaut: deterministisches Retrieval ohne Modell im Suchpfad, ein JARVIS-Cockpit im Dashboard mit Schicht-Ringen für Apps, Routinen, Memory und Skills, dazu lokale Stimme: diktieren, Enter, und die Antwort wird vorgelesen.",
+      en: "Built with Claude Code as a layered system: deterministic retrieval with no model in the search path, a JARVIS style cockpit in the dashboard with layer rings for apps, routines, memory and skills, plus a local voice: dictate, hit enter, and the answer is read out loud.",
+    },
+    result: {
+      de: "Täglich im Einsatz: Wissensfragen beantwortet das System in Sekunden aus den eigenen Notizen, komplett lokal mit Ollama und neuronaler Stimme, und jede Claude-Session bekommt das passende Vorwissen automatisch zugespielt.",
+      en: "In daily use: the system answers knowledge questions in seconds from the own notes, fully local with Ollama and a neural voice, and every Claude session automatically receives the matching prior knowledge.",
+    },
+    tags: ["Claude Code", "Ollama", "Piper TTS", "Markdown"],
+    isPrivate: true,
+    image: "/case-studies/second-brain.jpg",
   },
 ];
 
@@ -157,9 +293,9 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Echte Webseiten.", "Echte Kunden.", "Echte Ergebnisse."],
     heroLead:
       "Ich führe ein kleines Studio, das Premium-Webseiten und KI-Systeme für Gründer und kleine Teams baut. Jedes Projekt auf dieser Seite wurde mit Claude und Claude Code entworfen und gebaut, der KI von Anthropic, von der ersten Architektur-Entscheidung bis zum finalen Deploy. Echte Kunden, echte Arbeit, alles live im Einsatz.",
-    heroMeta: "Vier Projekte · alle live",
+    heroMeta: "Acht Projekte · alle im Einsatz",
     sectionEyebrow: "// ausgewählte arbeiten",
-    sectionHeadline: "Vier Projekte, von Anfang bis Ende.",
+    sectionHeadline: "Von der Webseite bis zum Agenten, von Anfang bis Ende.",
     labelChallenge: "Herausforderung",
     labelClaude: "Wie Claude geholfen hat",
     labelResult: "Ergebnis",
@@ -177,9 +313,9 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Real websites.", "Real clients.", "Real results."],
     heroLead:
       "I run a small studio that builds premium websites and AI systems for founders and small teams. Every project on this page was designed and built with Claude and Claude Code, Anthropic's AI, from the first architecture decision through to the final deploy. Real clients, real work, all live in production.",
-    heroMeta: "Four projects · all in production",
+    heroMeta: "Eight projects · all in production",
     sectionEyebrow: "// selected work",
-    sectionHeadline: "Four projects, start to finish.",
+    sectionHeadline: "From websites to agents, start to finish.",
     labelChallenge: "Challenge",
     labelClaude: "How Claude was used",
     labelResult: "Result",

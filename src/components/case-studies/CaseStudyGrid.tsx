@@ -7,7 +7,15 @@ import { STRINGS, type CaseStudy, type Locale } from "@/lib/case-studies";
  * content is always present in the SSR HTML and never depends on JS animation to
  * be visible (see `.cs-reveal` in globals.css). Text reads the active language.
  */
-export function CaseStudyGrid({ items, lang }: { items: CaseStudy[]; lang: Locale }) {
+export function CaseStudyGrid({
+  items,
+  lang,
+  startIndex = 0,
+}: {
+  items: CaseStudy[];
+  lang: Locale;
+  startIndex?: number;
+}) {
   const s = STRINGS[lang];
   return (
     <div className="grid gap-7 md:grid-cols-2 md:gap-9">
@@ -48,7 +56,7 @@ export function CaseStudyGrid({ items, lang }: { items: CaseStudy[]; lang: Local
 
             {/* Editorial index */}
             <span className="absolute bottom-3.5 left-5 font-instrument text-[2rem] italic leading-none text-cream/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-              {String(i + 1).padStart(2, "0")}
+              {String(startIndex + i + 1).padStart(2, "0")}
             </span>
 
             {cs.isPrivate && (

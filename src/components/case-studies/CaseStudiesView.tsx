@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CaseStudiesHero } from "./CaseStudiesHero";
 import { CaseStudyGrid } from "./CaseStudyGrid";
-import { CASE_STUDIES, STRINGS, TESTIMONIAL, type Locale } from "@/lib/case-studies";
+import { CASE_STUDIES, CATEGORIES, STRINGS, TESTIMONIAL, type Locale } from "@/lib/case-studies";
 
 /**
  * Bilingual shell for /case-studies. Holds the active language (DE default,
@@ -77,7 +77,7 @@ export function CaseStudiesView({ initialLang }: { initialLang: Locale }) {
         }}
       />
 
-      {/* Case study grid */}
+      {/* Case studies, gruppiert nach Rubriken */}
       <section className="px-6 pb-24 sm:px-10 md:px-16 md:pb-28">
         <div className="mx-auto max-w-7xl">
           <div className="cs-rise mb-14 max-w-2xl">
@@ -89,7 +89,34 @@ export function CaseStudiesView({ initialLang }: { initialLang: Locale }) {
             </h2>
           </div>
 
-          <CaseStudyGrid items={CASE_STUDIES} lang={lang} />
+          {(() => {
+            let offset = 0;
+            return CATEGORIES.map((cat) => {
+              const items = CASE_STUDIES.filter((c) => c.category === cat.key);
+              if (items.length === 0) return null;
+              const start = offset;
+              offset += items.length;
+              return (
+                <div key={cat.key} className="mt-20 first:mt-0">
+                  {/* Rubrik-Kopf */}
+                  <div className="cs-rise mb-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
+                    <h3 className="font-instrument text-[clamp(1.6rem,3vw,2.3rem)] leading-none tracking-tight">
+                      {cat.label[lang]}
+                    </h3>
+                    <span
+                      aria-hidden
+                      className="hidden h-px min-w-16 flex-1 self-center bg-gradient-to-r from-refined-gold/50 to-transparent sm:block"
+                    />
+                    <p className="w-full font-satoshi text-[0.95rem] text-deep-charcoal/60 sm:w-auto sm:max-w-sm">
+                      {cat.line[lang]}
+                    </p>
+                  </div>
+
+                  <CaseStudyGrid items={items} lang={lang} startIndex={start} />
+                </div>
+              );
+            });
+          })()}
         </div>
       </section>
 
