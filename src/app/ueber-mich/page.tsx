@@ -16,7 +16,7 @@ const memoryData = [
     year: "1989–2006",
     title: "Herkunft & Aufwachsen",
     kicker: "Phase 1: Kiew → Hilden",
-    desc: "In Kiew geboren. Mit 3 Jahren nach Deutschland gezogen. Neben der Schule wurde Fußball zur großen Leidenschaft. Talent bis hin zur Mittelrheinauswahl und Alemannia Aachen. Der Druck war groß, das Herz am Ende nicht dabei — aber der Sport hat den Charakter geformt.",
+    desc: "In Kiew geboren. Mit 3 Jahren nach Deutschland gezogen. Neben der Schule wurde Fußball zur großen Leidenschaft. Talent bis hin zur Mittelrheinauswahl und Alemannia Aachen. Der Druck war groß, das Herz am Ende nicht dabei, aber der Sport hat den Charakter geformt.",
     skills: [
       "Anpassungsfähigkeit (Kulturen, Umzüge, neue Umfelder)",
       "Disziplin und Leistungsbereitschaft durch Leistungssport",
@@ -29,7 +29,7 @@ const memoryData = [
     year: "2007–2015",
     title: "Systemgastronomie & Führung",
     kicker: "Phase 2: McDonald's",
-    desc: "Der Weg, den niemand erwartet hat. 8 Jahre im größten Franchise-System der Welt. Führungsverantwortung ab dem 18. Lebensjahr. Duales BWL-Studium in Köln. Schließlich die Leitung des Flagship Stores am Münchner Flughafen — 5,5 Millionen Euro Jahresumsatz.",
+    desc: "Der Weg, den niemand erwartet hat. 8 Jahre im größten Franchise-System der Welt. Führungsverantwortung ab dem 18. Lebensjahr. Duales BWL-Studium in Köln. Schließlich die Leitung des Flagship Stores am Münchner Flughafen, 5,5 Millionen Euro Jahresumsatz.",
     skills: [
       "Führung und Teamaufbau (seit dem 18. Lebensjahr)",
       "Arbeit in Systemen, Standards und Prozessen auf Konzern-Niveau",
@@ -43,11 +43,11 @@ const memoryData = [
     year: "2016–2018",
     title: "Individualgastronomie & Neuorientierung",
     kicker: "Phase 3: München",
-    desc: "Bewusste Kündigung. Raus aus dem Konzern, rein in die Individualgastronomie. Kellnern, verschiedene Betriebe kennenlernen — eine komplett andere Welt. Weniger System, mehr Persönlichkeit und direkter Kundenkontakt.",
+    desc: "Bewusste Kündigung. Raus aus dem Konzern, rein in die Individualgastronomie. Kellnern, verschiedene Betriebe kennenlernen, eine komplett andere Welt. Weniger System, mehr Persönlichkeit und direkter Kundenkontakt.",
     skills: [
       "Kennenlernen beider Welten: Konzern vs. Individualunternehmen",
       "Direkter Kundenkontakt und Service auf persönlicher Ebene",
-      "Mut zur Veränderung — auch wenn es bedeutet, von vorne anzufangen"
+      "Mut zur Veränderung, auch wenn es bedeutet, von vorne anzufangen"
     ],
     image: "/images/sabala-portrait-hero.png", // Temp placeholder, da McDonalds Bilder hier nicht zum Text passen
   },
@@ -69,7 +69,7 @@ const memoryData = [
     year: "2018–2020",
     title: "Content Creator & Akademie-Aufbau",
     kicker: "Phase 5: dean&david",
-    desc: "Zurück in der Systemgastronomie in neuer Rolle: Aufbau der dean&david Online-Akademie aus dem Nichts. Erste Videokonzepte und Produktionen. Komplette kreative Freiheit — Raum für eigene Ideen. Erfolgreiche Projekte, die bis heute laufen.",
+    desc: "Zurück in der Systemgastronomie in neuer Rolle: Aufbau der dean&david Online-Akademie aus dem Nichts. Erste Videokonzepte und Produktionen. Komplette kreative Freiheit, Raum für eigene Ideen. Erfolgreiche Projekte, die bis heute laufen.",
     skills: [
       "Content Creation: Videokonzeption, Produktion, Storytelling",
       "Aufbau digitaler Lernplattformen (LMS)",
@@ -226,7 +226,7 @@ function VerticalTimeline() {
       <div className="absolute top-0 bottom-0 left-[38px] md:left-1/2 w-[2px] -ml-[1px] bg-gradient-to-b from-transparent via-refined-gold/40 to-transparent z-0"></div>
 
       {memoryData.map((station, i) => (
-        <ScrollReveal key={station.id} delay={0.05} threshold={0.1}>
+        <ScrollReveal key={station.id} delay={0.05}>
            <VerticalTimelineStation station={station} index={i} />
         </ScrollReveal>
       ))}
@@ -393,8 +393,8 @@ export default function UeberMichPage() {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <p className="text-white/95 text-lg md:text-2xl lg:text-3xl font-light leading-[1.5] max-w-4xl mx-auto drop-shadow-md">
-                Die Vielfalt der Stationen ist kein Zufall — sie ist das Fundament.<br/>
-                <strong className="font-medium">Man kann dem Herzen folgen UND materiell erfolgreich sein.</strong> Beides geht zusammen. Ich verstehe beide Welten — das Strukturierte und das Intuitive — und bringe sie für dich zusammen.
+                Die Vielfalt der Stationen ist kein Zufall, sie ist das Fundament.<br/>
+                <strong className="font-medium">Man kann dem Herzen folgen UND materiell erfolgreich sein.</strong> Beides geht zusammen. Ich verstehe beide Welten, das Strukturierte und das Intuitive, und bringe sie für dich zusammen.
               </p>
             </ScrollReveal>
             
@@ -441,7 +441,7 @@ export default function UeberMichPage() {
           <ScrollReveal delay={0.1}>
             <div className="flex flex-col items-center gap-6">
               <Link 
-                href="https://tidycal.com/sabala" 
+                href="https://tidycal.com/sabala-mentoring"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-refined-gold hover:bg-deep-charcoal hover:text-white text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] shadow-[0_15px_40px_rgba(184,150,62,0.3)] text-sm md:text-base hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]"

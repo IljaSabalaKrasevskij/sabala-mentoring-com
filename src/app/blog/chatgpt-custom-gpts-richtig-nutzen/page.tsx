@@ -10,7 +10,7 @@ export const metadata = {
   title: "99% aller Selbstständigen nutzen ChatGPT falsch (Custom GPTs ändern alles)",
   description: "Fehlender Kontext, unstimmige Sprache, manipulative Antworten. Warum die meisten Solopreneure das volle Potenzial von ChatGPT verschenken und wie ein Custom-GPT-System mit 7 Rollen alles verändert.",
   openGraph: {
-    title: "99% aller Selbstständigen nutzen ChatGPT falsch · Custom GPTs als Gamechanger",
+    title: "99% aller Selbstständigen nutzen ChatGPT falsch · Custom GPTs richtig einsetzen",
     description: "Wie ein 7-Kasten-Custom-GPT-System deine Solo-Arbeit auf Premium-Niveau hebt.",
     images: ["/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg"],
     type: "article",
@@ -109,7 +109,7 @@ export default function BlogChatGPTCustomGPTsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+            <Link href="/" aria-label="Sabala Mentoring · Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
               <SabalaLogo light size={64} />
             </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
@@ -246,11 +246,11 @@ export default function BlogChatGPTCustomGPTsPage() {
         </ScrollReveal>
       </section>
 
-      {/* GAMECHANGER */}
+      {/* WARUM DAS ALLES AENDERT */}
       <section className="px-6 sm:px-12 md:px-24 pt-20 max-w-[820px] mx-auto w-full">
         <ScrollReveal>
           <div className={proseBlock}>
-            <h2>Warum genau das ein Gamechanger für Selbstständige ist</h2>
+            <h2>Warum genau das für Selbstständige alles ändert</h2>
             <p className={dropCapClass}><strong>Solopreneure haben kein Personalbüro, keine Marketing-Abteilung, keinen Vertriebsleiter.</strong> Aber sie haben dieselben wiederkehrenden Aufgaben wie jedes andere Unternehmen, nur müssen sie sie alle selbst tragen.</p>
             <p>Genau hier setzt das System an. Ein gut gebautes Custom-GPT ersetzt keine deiner Werte und keine deiner Beziehungen. Aber es übernimmt die Reibung, die zwischen Idee und Umsetzung liegt. Es ist der Unterschied zwischen <strong>Ich müsste mal</strong> und <strong>Ist gemacht</strong>.</p>
             <p>Konkret bedeutet das im Alltag:</p>
@@ -313,7 +313,7 @@ export default function BlogChatGPTCustomGPTsPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Vielleicht bald auch für dich.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Mooni, Aurel, Lia und die anderen begleiten meine Arbeit — Recherche, Texte, Strategie, Brand-Voice. Wenn du selbst so ein Team willst: ich baue customized AI Agents auf deine Brand, deine Aufgaben, deine Stimme zugeschnitten. Mit deinen Werten, deinen wirklichen Aufgaben.
+                Mooni, Aurel, Lia und die anderen begleiten meine Arbeit: Recherche, Texte, Strategie, Brand-Voice. Wenn du selbst so ein Team willst: ich baue customized AI Agents auf deine Brand, deine Aufgaben, deine Stimme zugeschnitten. Mit deinen Werten, deinen wirklichen Aufgaben.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link href="/gpt-team" className="inline-flex items-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto justify-center">

@@ -104,7 +104,7 @@ export default function BlogPremiumOderBaukastenPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0e0c0a]/85 via-[#1a1612]/35 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-            <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+            <Link href="/" aria-label="Sabala Mentoring · Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
               <SabalaLogo light size={64} />
             </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
@@ -253,7 +253,7 @@ export default function BlogPremiumOderBaukastenPage() {
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-6">Lass uns die zwölf Stellen bei dir anschauen.</h3>
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8">
-                Schick mir den Link zu deiner Seite. Ich schaue mir das in 20 ruhigen Minuten an und sag dir die zwei oder drei Punkte mit dem höchsten Hebel. Kostenfrei, ohne Pitch. Oder buch direkt ein Gespräch — 30 Minuten, ich frage dir Löcher in den Bauch.
+                Schick mir den Link zu deiner Seite. Ich schaue mir das in 20 ruhigen Minuten an und sag dir die zwei oder drei Punkte mit dem höchsten Hebel. Kostenfrei, ohne Pitch. Oder buch direkt ein Gespräch: 30 Minuten, ich frage dir Löcher in den Bauch.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link href="/blog#audit" className="inline-flex items-center justify-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto">

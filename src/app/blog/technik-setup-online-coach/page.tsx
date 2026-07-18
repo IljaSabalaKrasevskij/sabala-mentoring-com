@@ -118,7 +118,7 @@ export default function BlogPostPage() {
         
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-             <Link href="/" aria-label="Sabala Mentoring — Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
+             <Link href="/" aria-label="Sabala Mentoring · Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
               <SabalaLogo light size={64} />
             </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
@@ -347,8 +347,8 @@ export default function BlogPostPage() {
       {/* Audit-Lead-Magnet — niedrigschwelliger Einstieg vor dem Premium-CTA */}
       <ScrollReveal>
         <ArticleAuditCTA
-          eyebrow="Persönliches Audit — kostenlos"
-          headline={<>Steht dein Setup —<br/>aber deine Webseite noch nicht?</>}
+          eyebrow="Persönliches Audit · kostenlos"
+          headline={<>Steht dein Setup,<br/>aber deine Webseite noch nicht?</>}
           bridge={<>Du hast jetzt die Hardware-Liste, das Tool-Setup, die Premium-Energie für deine Calls. Was fehlt vielleicht noch: ein Online-Auftritt, der zu dieser Qualität passt. Schick mir deine Webseite, ich schaue persönlich drauf und gebe dir drei konkrete Hebel zurück. Ohne Funnel, ohne Sales-Sprech.</>}
         />
       </ScrollReveal>
