@@ -215,9 +215,66 @@ const FAQ = [
   },
 ];
 
+/* ── Schema.org (GEO): Service + Pakete + FAQ, gespeist aus den Page-Daten ── */
+const SITE = "https://sabala-mentoring.com";
+
+const SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${SITE}/webseiten#service`,
+      name: "Premium-Webdesign mit KI",
+      serviceType: "Webdesign & Webentwicklung",
+      url: `${SITE}/webseiten`,
+      provider: { "@id": `${SITE}/#organization` },
+      description:
+        "Premium-Webauftritte für Start-ups, Agenturen und B2B-Dienstleister: umfangreiche Webseiten-Analyse, Design und Texte 100 Prozent zugeschnitten, eigener Code im eigenen Repo, SEO und GEO im Fundament, laufende Pflege und ein eigenes Analytics-Dashboard als Upgrade.",
+      availableLanguage: "de",
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicepakete",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            name: "Projekt",
+            description:
+              "Premium-Webseite ab 4.900 Euro einmalig: Analyse, Design, eigener Code, SEO und GEO im Fundament, Launch inklusive. Vom OnePager bis zur kompletten Markenwelt.",
+            priceSpecification: { "@type": "PriceSpecification", minPrice: 4900, priceCurrency: "EUR" },
+          },
+          {
+            "@type": "Offer",
+            name: "Pflege & Service",
+            description:
+              "Laufende Betreuung ab 49 Euro im Monat: Updates, SEO- und GEO-Pflege, Monatsbericht. Stufen 49, 99 und 149 Euro je nach Umfang.",
+            priceSpecification: { "@type": "PriceSpecification", minPrice: 49, priceCurrency: "EUR" },
+          },
+          {
+            "@type": "Offer",
+            name: "Analytics-Dashboard",
+            description:
+              "Eigenes Cockpit für SEO, GEO und Analytics als Upgrade, self-hosted, auf Anfrage.",
+          },
+        ],
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE}/webseiten#faq`,
+      mainEntity: FAQ.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+};
+
 export default function WebseitenPage() {
   return (
     <main className="flex-1" style={{ background: "var(--cream)" }}>
+      {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA).replace(/</g, "\\u003c") }} />
       <Hero />
       <FuerWen />
       <Problem />
