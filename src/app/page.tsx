@@ -10,9 +10,13 @@ import SmoothScroll from "@/components/SmoothScroll";
 export default function Home() {
   return (
     <SmoothScroll>
+      {/* Reihenfolge folgt der Verkaufslogik: erst die drei Angebote (ForWhom +
+          Planeten), dann die Marke (Mooni), dann Produkte (Voice, Shop), zuletzt
+          der Mensch. Hero, ForWhom und Planeten sind alle dunkel, laufen also
+          nahtlos ineinander; der cream-Übergang sitzt vor der Mooni-Sektion. */}
       <IljaHeroJourney />
-      {/* Sanfter Übergang vom dunklen Universum zur cream-Welt darunter —
-          lang gezogener Multistop-Verlauf, kein harter Schnitt */}
+      <ForWhom />
+      <SolarSystem />
       <div
         aria-hidden
         className="h-[32vh] w-full"
@@ -23,8 +27,6 @@ export default function Home() {
       />
       <ValuesManifesto />
       <MooniVoiceTeaser />
-      <ForWhom />
-      <SolarSystem />
       <ShopTeaser />
       <DerMensch />
     </SmoothScroll>

@@ -9,6 +9,7 @@ export type PlanetData = {
   code: string; // digitaler Code fürs HUD, z.B. "MODE_01"
   title: string;
   subtitle: string;
+  tag: string; // dauerhaft sichtbares Mini-Label am Planeten (konkretes Angebot)
   pitch: string; // 1-2 Sätze, sprechen den ICP an
   href: string;
   cta: string;
@@ -31,6 +32,7 @@ export const SYSTEM: PlanetData[] = [
     code: "MODE_01",
     title: "Für dich gebaut",
     subtitle: "du sagst was, ich baue es",
+    tag: "Webseiten",
     pitch:
       "Du führst ein wachsendes Unternehmen und brauchst einen Auftritt oder ein KI-System, das einfach läuft. Du sagst, was du brauchst — ich baue es fertig und übergebe es dir.",
     href: "/webseiten",
@@ -55,6 +57,7 @@ export const SYSTEM: PlanetData[] = [
     code: "MODE_02",
     title: "Mit dir entwickelt",
     subtitle: "deine Vision, unser gemeinsamer Code",
+    tag: "Agentensysteme",
     pitch:
       "Du hast ein laufendes Projekt und brauchst einen technischen Partner auf Augenhöhe, der mit dir weiterbaut, oft genau da, wo starkes Design den Unterschied macht. Wir entwickeln es gemeinsam, vom Frontend bis zu KI-Agenten.",
     href: "/mitentwickelt",
@@ -80,6 +83,7 @@ export const SYSTEM: PlanetData[] = [
     code: "MODE_03",
     title: "Dir beigebracht",
     subtitle: "du willst es selbst können",
+    tag: "KI-Akademie",
     pitch:
       "Du willst, dass dein Team KI wirklich nutzt — nicht nur darüber redet. Ich bring es euch bei, kinderleicht und mit direktem Praxisbezug. Akademie für Solopreneure, Workshops für dein Unternehmen.",
     href: "/akademie-hub",

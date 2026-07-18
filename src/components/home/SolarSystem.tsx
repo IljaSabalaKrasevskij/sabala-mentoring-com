@@ -457,6 +457,43 @@ function ScreenProjector({
   return null;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Dauerhafte Mini-Tags unter jedem Planeten — machen ohne Hover sichtbar,
+   wofür jeder Planet steht (wichtig auf Mobile, wo es kein Hover gibt).
+   Blenden aus, sobald ein Planet fokussiert ist oder das grosse Hover-Label
+   diesen Planeten schon beschriftet.
+   ───────────────────────────────────────────────────────────────────────── */
+function TagProjector({
+  tagRefs,
+  hover,
+  focusActive,
+  mobile,
+}: {
+  tagRefs: { current: (HTMLDivElement | null)[] };
+  hover: number | null;
+  focusActive: boolean;
+  mobile: boolean;
+}) {
+  const { camera, size } = useThree();
+  const v = useMemo(() => new THREE.Vector3(), []);
+  useFrame(() => {
+    SYSTEM.forEach((p, i) => {
+      const el = tagRefs.current[i];
+      if (!el) return;
+      if (focusActive || hover === i) {
+        el.style.opacity = "0";
+        return;
+      }
+      const sp = mobile ? p.mPos : p.position;
+      v.set(sp[0], sp[1] - p.size - 0.6, sp[2]);
+      v.project(camera);
+      el.style.transform = `translate(calc(${(v.x * 0.5 + 0.5) * size.width}px - 50%), ${(-v.y * 0.5 + 0.5) * size.height}px)`;
+      el.style.opacity = hover === null ? "1" : "0.35";
+    });
+  });
+  return null;
+}
+
 /* Volles Hover-Label — reines DOM, außerhalb des Canvas */
 function PlanetLabel({ data }: { data: PlanetData }) {
   const left = data.labelSide < 0;
@@ -495,6 +532,7 @@ function Scene({
   look,
   mobile,
   labelRef,
+  tagRefs,
   onSelect,
   onHover,
 }: {
@@ -503,6 +541,7 @@ function Scene({
   look: Look;
   mobile: boolean;
   labelRef: { current: HTMLDivElement | null };
+  tagRefs: { current: (HTMLDivElement | null)[] };
   onSelect: (i: number) => void;
   onHover: (i: number | null) => void;
 }) {
@@ -526,6 +565,7 @@ function Scene({
         ))}
       </group>
       <ScreenProjector hover={hover} focusActive={focusIndex !== null} mobile={mobile} labelRef={labelRef} />
+      <TagProjector tagRefs={tagRefs} hover={hover} focusActive={focusIndex !== null} mobile={mobile} />
       <CameraRig focusIndex={focusIndex} mobile={mobile} />
       <EffectComposer>
         <Bloom intensity={look.bloom} luminanceThreshold={look.threshold} luminanceSmoothing={0.8} mipmapBlur radius={0.55} />
@@ -685,6 +725,7 @@ export default function SolarSystem() {
   const [inside, setInside] = useState(false);
   const [mobile, setMobile] = useState(false);
   const labelRef = useRef<HTMLDivElement>(null);
+  const tagRefs = useRef<(HTMLDivElement | null)[]>([]);
   useEffect(() => setMounted(true), []);
   useEffect(() => {
     const onR = () => setMobile(window.innerWidth < 768);
@@ -716,7 +757,7 @@ export default function SolarSystem() {
             onPointerMissed={() => setFocus(null)}
             style={{ background: "#0A0806" }}
           >
-            <Scene focusIndex={focus} hover={hover} look={look} mobile={mobile} labelRef={labelRef} onSelect={setFocus} onHover={setHover} />
+            <Scene focusIndex={focus} hover={hover} look={look} mobile={mobile} labelRef={labelRef} tagRefs={tagRefs} onSelect={setFocus} onHover={setHover} />
           </Canvas>
         )}
       </div>
@@ -725,6 +766,39 @@ export default function SolarSystem() {
       <div ref={labelRef} className="pointer-events-none fixed left-0 top-0 z-30" style={{ opacity: 0, transition: "opacity 0.18s ease", willChange: "transform" }}>
         {hovered && <PlanetLabel data={hovered} />}
       </div>
+
+      {/* Dauerhafte Angebots-Tags unter den Planeten — vom TagProjector positioniert */}
+      {SYSTEM.map((p, i) => (
+        <div
+          key={`tag-${p.key}`}
+          ref={(el) => {
+            tagRefs.current[i] = el;
+          }}
+          className="pointer-events-none fixed left-0 top-0 z-20 flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-1.5"
+          style={{
+            opacity: 0,
+            transition: "opacity 0.25s ease",
+            willChange: "transform",
+            background: "rgba(10,8,6,0.55)",
+            border: `1px solid ${p.color}55`,
+            backdropFilter: "blur(6px)",
+          }}
+        >
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: p.color, boxShadow: `0 0 8px ${p.color}` }} />
+          <span
+            style={{
+              fontFamily: "ui-monospace, 'SF Mono', Menlo, monospace",
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#EDE8E0",
+              textShadow: "0 1px 10px rgba(0,0,0,0.9)",
+            }}
+          >
+            {p.tag}
+          </span>
+        </div>
+      ))}
 
       <div className="pointer-events-none absolute inset-0 z-10">
         <AnimatePresence mode="wait">
