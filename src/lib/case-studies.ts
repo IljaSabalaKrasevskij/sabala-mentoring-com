@@ -111,6 +111,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/dielommel.jpg",
   },
   {
+    id: "vegaleads",
+    category: "webseiten",
+    title: {
+      de: "Vega Leads: Lead-Radar für Vertriebsteams",
+      en: "Vega Leads: Lead Radar for Sales Teams",
+    },
+    industry: { de: "Lead-Generierung · B2B international", en: "Lead Generation · International B2B" },
+    challenge: {
+      de: "Vega Leads verkauft etwas Unsichtbares: tägliche Recherche statt Software. Die Seite muss in Sekunden klar machen, dass hier kein Tool-Abo und kein Datenbank-Export verkauft wird, sondern geprüfte Firmen mit Ansprechpartner und wählbarer Nummer. Zielgruppe sind Chatbot- und KI-Automation-Agenturen weltweit, also musste alles zweisprachig funktionieren.",
+      en: "Vega Leads sells something invisible: daily research instead of software. The site had to make clear in seconds that this is not a tool subscription or a database export, but verified companies with a named contact and a dialable number. The audience is chatbot and AI automation agencies worldwide, so everything had to work in two languages.",
+    },
+    claudeUsage: {
+      de: "Positionierung, Texte und Seite mit Claude Code in einem Fluss gebaut: der Hero als Erde aus dem Orbit, eine Scan-Animation, die das tägliche Suchen sichtbar macht, und die zentrale Gegenüberstellung von 400 Leads zum Wegscrollen gegen 40 Leads zum Anrufen. Sprachumschaltung Englisch und Deutsch, Anfrage-Formular direkt in die eigene Datenbank.",
+      en: "Positioning, copy and site built with Claude Code in one flow: a hero showing Earth from orbit, a scanning animation that makes the daily hunt visible, and the core contrast of 400 leads you scroll past versus 40 leads you call. Language switch between English and German, request form wired straight into the own database.",
+    },
+    result: {
+      de: "Live auf vegaleads.ai, zweisprachig, mit klarer Ansage im ersten Screen: dein Closer soll anrufen, nicht googeln. Anfragen von der Seite landen direkt im eigenen System, statt in einem Posteingang zu versanden.",
+      en: "Live on vegaleads.ai, bilingual, with a clear statement in the first screen: your closer should be calling, not googling. Requests from the site land directly in the own system instead of getting lost in an inbox.",
+    },
+    tags: ["Claude Code", "Zweisprachig", "Motion", "Vercel"],
+    url: "https://vegaleads.ai",
+    image: "/case-studies/vegaleads.jpg",
+  },
+  {
     id: "operations-dashboard",
     category: "agent-os",
     title: { de: "KI-Operations-Dashboard", en: "AI Operations Dashboard" },
@@ -293,7 +317,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Echte Webseiten.", "Echte Kunden.", "Echte Ergebnisse."],
     heroLead:
       "Ich führe ein kleines Studio, das Premium-Webseiten und KI-Systeme für Gründer und kleine Teams baut. Jedes Projekt auf dieser Seite wurde mit Claude und Claude Code entworfen und gebaut, der KI von Anthropic, von der ersten Architektur-Entscheidung bis zum finalen Deploy. Echte Kunden, echte Arbeit, alles live im Einsatz.",
-    heroMeta: "Acht Projekte · alle im Einsatz",
+    heroMeta: "Neun Projekte · alle im Einsatz",
     sectionEyebrow: "// ausgewählte arbeiten",
     sectionHeadline: "Von der Webseite bis zum Agenten, von Anfang bis Ende.",
     labelChallenge: "Herausforderung",
@@ -313,7 +337,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Real websites.", "Real clients.", "Real results."],
     heroLead:
       "I run a small studio that builds premium websites and AI systems for founders and small teams. Every project on this page was designed and built with Claude and Claude Code, Anthropic's AI, from the first architecture decision through to the final deploy. Real clients, real work, all live in production.",
-    heroMeta: "Eight projects · all in production",
+    heroMeta: "Nine projects · all in production",
     sectionEyebrow: "// selected work",
     sectionHeadline: "From websites to agents, start to finish.",
     labelChallenge: "Challenge",

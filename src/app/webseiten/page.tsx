@@ -132,9 +132,10 @@ const SIGNALS = [
 ];
 
 const ARBEIT = [
-  { img: "/case-studies/sabala-mentoring.jpg", label: "Sabala Studios", note: "KI-Studio & Akademie" },
+  { img: "/case-studies/vegaleads.jpg", label: "vegaleads.ai", note: "Lead-Radar, zweisprachig" },
   { img: "/case-studies/cyber-sales.jpg", label: "cyber-sales.de", note: "Vertriebssystem Cybersecurity" },
   { img: "/case-studies/dielommel.jpg", label: "dielommel.de", note: "Begleitung für Familienunternehmen" },
+  { img: "/case-studies/sabala-mentoring.jpg", label: "Sabala Studios", note: "KI-Studio & Akademie" },
 ];
 
 const PREISE = [
@@ -680,7 +681,7 @@ function EchteArbeit() {
           </Link>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {ARBEIT.map((a, i) => (
             <motion.div key={a.label} {...rise(i * 0.1)}>
               <Link href="/case-studies" className="group block overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(184,150,62,0.22)", boxShadow: "0 14px 34px rgba(80,60,20,0.10)" }}>
@@ -689,7 +690,7 @@ function EchteArbeit() {
                     src={a.img}
                     alt={a.label}
                     fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                   />
                 </div>
