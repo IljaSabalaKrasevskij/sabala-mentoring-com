@@ -180,6 +180,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/cyber-sales.jpg",
   },
   {
+    id: "vega-lead-gen-os",
+    category: "lead-gen",
+    title: {
+      de: "Vega Leads: Das Lead-Radar hinter der Seite",
+      en: "Vega Leads: The Lead Radar Behind the Site",
+    },
+    industry: { de: "Eigenes Produkt · Agenten-System", en: "Own Product · Agentic System" },
+    challenge: {
+      de: "Ein Verkäufer verbringt den halben Tag mit Recherche, bevor er telefoniert. Gekaufte Listen sind veraltet und sagen nichts darüber, ob eine Firma das Problem überhaupt hat. Gebraucht wird kein weiteres Tool-Abo, sondern jeden Morgen ein kleiner Stapel Firmen, bei denen sich der Anruf nachweislich lohnt.",
+      en: "A salesperson spends half the day researching before making a call. Bought lists are outdated and say nothing about whether a company even has the problem. What is needed is not another tool subscription, but a small stack of companies every morning where the call is demonstrably worth it.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code als Signal-Engine gebaut: Jede Nische bekommt eine Signatur, nach der gesucht wird, etwa Firmen ohne Live-Chat-Widget. Der Agent findet, prüft und bewertet täglich, normalisiert Telefonnummern und legt alles in ein Cockpit mit Chancen-Radar, Funnel und Freigabe-Workflow. Läuft lokal mit eigener Datenbank, jeder Kunde streng getrennt.",
+      en: "Built with Claude Code as a signal engine: every niche gets a signature to search for, such as companies without a live chat widget. The agent finds, verifies and scores daily, normalises phone numbers and puts everything into a cockpit with an opportunity radar, funnel and approval workflow. Runs locally with its own database, every client strictly separated.",
+    },
+    result: {
+      de: "Das System hinter vegaleads.ai. Der Verkäufer sieht morgens einen geprüften Stapel statt einer Namensliste, jeder Lead trägt seinen Score und die Begründung, und aus jedem Web-Audit wächst der Chancen-Radar mit. Die Daten bleiben auf dem eigenen Rechner.",
+      en: "The system behind vegaleads.ai. In the morning the salesperson sees a verified stack instead of a list of names, every lead carries its score and reasoning, and every web audit feeds the opportunity radar. The data stays on the own machine.",
+    },
+    tags: ["Claude Code", "Signal-Engine", "libSQL", "Firecrawl"],
+    isPrivate: true,
+    image: "/case-studies/vega-cockpit.jpg",
+  },
+  {
     id: "fleur-lead-agent",
     category: "lead-gen",
     title: {
@@ -317,7 +341,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Echte Webseiten.", "Echte Kunden.", "Echte Ergebnisse."],
     heroLead:
       "Ich führe ein kleines Studio, das Premium-Webseiten und KI-Systeme für Gründer und kleine Teams baut. Jedes Projekt auf dieser Seite wurde mit Claude und Claude Code entworfen und gebaut, der KI von Anthropic, von der ersten Architektur-Entscheidung bis zum finalen Deploy. Echte Kunden, echte Arbeit, alles live im Einsatz.",
-    heroMeta: "Neun Projekte · alle im Einsatz",
+    heroMeta: "Zehn Projekte · alle im Einsatz",
     sectionEyebrow: "// ausgewählte arbeiten",
     sectionHeadline: "Von der Webseite bis zum Agenten, von Anfang bis Ende.",
     labelChallenge: "Herausforderung",
@@ -337,7 +361,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Real websites.", "Real clients.", "Real results."],
     heroLead:
       "I run a small studio that builds premium websites and AI systems for founders and small teams. Every project on this page was designed and built with Claude and Claude Code, Anthropic's AI, from the first architecture decision through to the final deploy. Real clients, real work, all live in production.",
-    heroMeta: "Nine projects · all in production",
+    heroMeta: "Ten projects · all in production",
     sectionEyebrow: "// selected work",
     sectionHeadline: "From websites to agents, start to finish.",
     labelChallenge: "Challenge",
