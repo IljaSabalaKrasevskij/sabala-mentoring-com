@@ -19,7 +19,7 @@ export default async function UmfragePage({
   const gold = "#D4AE5A";
 
   return (
-    <main style={{ background: "#080604", minHeight: "100vh" }}>
+    <div style={{ background: "#080604", minHeight: "100vh" }}>
       {/* Intro */}
       <section style={{ position: "relative", overflow: "hidden", padding: "clamp(90px, 14vh, 150px) 24px clamp(40px, 6vh, 70px)" }}>
         <div aria-hidden style={{ position: "absolute", top: "-20%", left: "50%", transform: "translateX(-50%)", width: 700, height: 500, background: "radial-gradient(ellipse at center, rgba(212,174,90,0.10) 0%, rgba(212,174,90,0) 70%)", pointerEvents: "none" }} />
@@ -39,6 +39,6 @@ export default async function UmfragePage({
       </section>
 
       <UmfrageForm quelle={quelle} />
-    </main>
+    </div>
   );
 }
