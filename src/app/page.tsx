@@ -5,6 +5,7 @@ import ForWhom from "@/components/home/ForWhom";
 import SolarSystem from "@/components/home/SolarSystem";
 import ShopTeaser from "@/components/home/ShopTeaser";
 import DerMensch from "@/components/home/DerMensch";
+import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 import SmoothScroll from "@/components/SmoothScroll";
 
 export default function Home() {
@@ -29,6 +30,17 @@ export default function Home() {
       <MooniVoiceTeaser />
       <ShopTeaser />
       <DerMensch />
+      {/* Cream→Dunkel-Brücke, damit die dunkle Newsletter-Box (und die darauf
+          folgende Kontakt+Footer-Zone) sauber aus DerMensch (cream) herauswächst. */}
+      <div
+        aria-hidden
+        className="h-[24vh] w-full"
+        style={{
+          background:
+            "linear-gradient(to bottom, var(--cream) 0%, #ecdfc6 10%, #c6b69a 26%, #8a7762 44%, #4a3d31 62%, #28201a 80%, #080604 100%)",
+        }}
+      />
+      <AcademyNewsletter />
     </SmoothScroll>
   );
 }
