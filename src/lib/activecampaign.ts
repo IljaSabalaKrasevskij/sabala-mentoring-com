@@ -149,6 +149,45 @@ async function subscribeToList(
   }
 }
 
+/* Nur taggen: Kontakt syncen (idempotent) und einen Tag setzen — OHNE Listen-
+   Anmeldung. Fuer Signale wie "Umfrage ausgefuellt", die eine Automation
+   triggern koennen, ohne die Listen-Mitgliedschaft zu veraendern (wichtig fuer
+   Bestandskunden, die nicht in den Academy-Newsletter gehoeren). */
+export async function tagContact(
+  email: string,
+  firstName: string,
+  tagName: string
+): Promise<AcResult> {
+  const base = cfgBase();
+  if (!base) return "skipped";
+  const headers = { "Api-Token": base.key, "Content-Type": "application/json" };
+  try {
+    const syncRes = await fetch(`${base.url}/api/3/contact/sync`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ contact: { email, firstName } }),
+    });
+    if (!syncRes.ok) return "error";
+    const synced = (await syncRes.json()) as { contact?: { id?: string } };
+    const contactId = synced.contact?.id;
+    if (!contactId) return "error";
+
+    const tagId = await resolveTagId(base.url, base.key, tagName);
+    if (!tagId) return "error";
+
+    const tagRes = await fetch(`${base.url}/api/3/contactTags`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ contactTag: { contact: Number(contactId), tag: tagId } }),
+    });
+    if (!tagRes.ok && tagRes.status !== 422) return "error"; // 422 = Tag schon dran
+    return "ok";
+  } catch (err) {
+    console.error("[activecampaign] tagContact-Fehler:", err);
+    return "error";
+  }
+}
+
 /* Akademie-Newsletter → Akademie-Liste + Akademie-Tag (Welcome-Automation). */
 export async function subscribeToAcademy(email: string, firstName = ""): Promise<AcResult> {
   return subscribeToList(
