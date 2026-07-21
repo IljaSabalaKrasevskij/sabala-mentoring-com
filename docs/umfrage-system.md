@@ -49,7 +49,8 @@ auswerten und dir fertige Content-Ideen liefern.
 - `src/app/api/umfrage/route.ts` — nimmt an, schreibt Turso, taggt AC, pusht ntfy
 - `src/lib/survey.ts` — Turso-Schema `survey_responses`
 - `src/lib/activecampaign.ts` — neue Funktion `tagContact()` (taggt ohne Listen-Zwang)
-- `emails/umfrage-einladung.html` — die Einladungs-Mail (ASCII, fuer AC)
+- `emails/umfrage-einladung.html` — Einladungs-Mail (ASCII, fuer AC)
+- `emails/umfrage-erinnerung.html` — Reminder-Mail fuer Nicht-Antworter (ASCII)
 
 **Dashboard (`~/code/sabala-dashboard-v2`)**
 - `src/app/(universe)/umfrage/` — die Auswertungs-View (Aggregate + O-Toene + Content-Ideen)
@@ -85,7 +86,11 @@ auswerten und dir fertige Content-Ideen liefern.
 3. Aktion **"Wait"** -> 1 Tag (damit die Willkommensmail zuerst kommt).
 4. Aktion **"Send an email"** -> **"Start from scratch"** -> HTML-Block ->
    `emails/umfrage-einladung.html` einfuegen (Standard-Link `/umfrage`).
-5. **Active** schalten.
+5. Aktion **"Wait"** -> 3 Tage.
+6. Aktion **"If/Else"** -> Bedingung **"Tag `Umfrage ausgefuellt` ist NICHT gesetzt"**.
+   Im "Nein/Ja"-Zweig (noch nicht ausgefuellt): **"Send an email"** ->
+   `emails/umfrage-erinnerung.html`. Wer schon geantwortet hat, bekommt keinen Reminder.
+7. **Active** schalten.
 
 ### C) Optional: Danke sagen, wenn jemand geantwortet hat
 
