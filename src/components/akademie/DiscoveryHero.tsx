@@ -1,9 +1,12 @@
 "use client";
 
+import InkReveal from "@/components/ui/ink-reveal";
+
 /* ─────────────────────────────────────────────────────────────────────────
-   DiscoveryHero — dunkler Aurora-Hero (Unterwasser-/Auroralicht, reines SVG/CSS).
-   Botschaft sofort sichtbar: Durchbruch & Durchblick. Kein Workshop-Titel hier,
-   der kommt in der naechsten, voll sichtbaren Sektion (WorkshopHeader).
+   DiscoveryHero — der „Pattern-Break". Unter der Cream-Fläche bewegt sich ein
+   lebendiges Lichtspiel (Unterwasser-Caustics, reines SVG/CSS). Wer mit der Maus
+   wischt, entdeckt eine Botschaft: Durchbruch & Durchblick. Kein Workshop-Titel
+   hier — der kommt in der nächsten, voll sichtbaren Sektion.
    ───────────────────────────────────────────────────────────────────────── */
 
 export default function DiscoveryHero() {
@@ -45,10 +48,10 @@ export default function DiscoveryHero() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(125% 100% at 50% 38%, transparent 42%, rgba(4,9,8,0.66) 100%)" }} />
       </div>
 
-      {/* Botschaft — direkt sichtbar ueber dem Aurora-Hintergrund */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-8 text-center">
+      {/* Botschaft zum Entdecken (zwischen Hintergrund und Cream-Overlay) */}
+      <div className="absolute inset-0 z-0 flex flex-col items-center justify-center px-8 text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.4em]" style={{ color: "rgba(212,174,90,0.85)" }}>
-          dein KI-Durchbruch
+          du hast es entdeckt
         </p>
         <h1 className="mt-7 font-serif leading-[0.98] text-cream" style={{ fontSize: "clamp(2.8rem, 8vw, 6.5rem)" }}>
           Durchbruch.
@@ -62,6 +65,19 @@ export default function DiscoveryHero() {
           <span className="font-mono text-[10px] uppercase tracking-[0.3em]">weiter</span>
           <span className="block h-10 w-px" style={{ background: "linear-gradient(to bottom, rgba(212,174,90,0.7), transparent)", animation: "scroll-pulse 2.2s ease-in-out infinite" }} />
         </div>
+      </div>
+
+      {/* InkReveal: Cream-Overlay, das per Maus weggewischt wird */}
+      <InkReveal maskColor={[250, 248, 245]} brushSize={155} lifetime={2400} />
+
+      {/* Hinweis: immer sichtbar über dem Canvas */}
+      <div className="absolute bottom-8 right-8 z-10 flex items-center gap-2" style={{ pointerEvents: "none" }}>
+        <span className="font-mono text-xs uppercase tracking-widest" style={{ color: "rgba(184,150,62,0.7)" }}>
+          Mit der Maus entdecken
+        </span>
+        <svg width="20" height="12" viewBox="0 0 20 12" fill="none" style={{ opacity: 0.6 }}>
+          <path d="M0 6h18M13 1l5 5-5 5" stroke="#b8963e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
 
       <style>{`

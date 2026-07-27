@@ -21,9 +21,6 @@ export const metadata = {
 export default function AkademiePage() {
   return (
     <main className="flex-1">
-      <div className="hidden md:block">
-        <DiscoveryHero />
-      </div>
       <WorkshopHeader />
       <TrustBar />
       <MemoryDemo />
@@ -36,6 +33,10 @@ export default function AkademiePage() {
       <Termine />
       <PriceBlock />
       <Faq />
+      {/* Reveal-Abschluss vor dem Footer — Desktop-Wischeffekt "Durchbruch. Durchblick." */}
+      <div className="hidden md:block">
+        <DiscoveryHero />
+      </div>
     </main>
   );
 }
