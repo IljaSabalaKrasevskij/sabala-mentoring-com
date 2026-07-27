@@ -37,9 +37,9 @@ const NODES: Node[] = [
     key: "obsidian",
     name: "Obsidian",
     role: "Dein lokales Gehirn",
-    session: "Session 1 · 2h live",
+    session: "Session 1 · 2,5h live",
     boxTitle: "Deine Wissensdatenbank",
-    boxBody: "Obsidian als lokale Datenbank einrichten — die Basis, auf die Claude direkt zugreift. Plus Claude herunterladen, falls noch nicht da.",
+    boxBody: "Obsidian als lokale Datenbank einrichten, die Basis, auf die Claude direkt zugreift. Plus Claude herunterladen, falls noch nicht da.",
     color: "#876F9C",
     x: 17,
     y: 24,
@@ -53,9 +53,9 @@ const NODES: Node[] = [
     key: "notebooklm",
     name: "NotebookLM",
     role: "Deine Expertendatenbank",
-    session: "Session 1 · 2h live",
+    session: "Session 1 · 2,5h live",
     boxTitle: "Wissen auf Knopfdruck",
-    boxBody: "YouTube, PDFs, Webseiten — durchsuchbar gemacht und mit Obsidian verknüpft. Dein Expertenwissen, abrufbar für Claude.",
+    boxBody: "Comet Browser und Firecrawl sammeln die Quellen, NotebookLM macht sie durchsuchbar. YouTube, PDFs und Webseiten, verknüpft mit Obsidian und abrufbar für Claude.",
     color: "#5F8A86",
     x: 83,
     y: 24,
@@ -69,9 +69,9 @@ const NODES: Node[] = [
     key: "claude",
     name: "Claude Code",
     role: "Dein Gedächtnis",
-    session: "Session 2 · 2h live",
+    session: "Session 2 · 2,5h live",
     boxTitle: "Claude vergisst nie mehr",
-    boxBody: "Terminal, Claude Code, MCP-Verbindungen, Memory-System und kleine Skills. Claude greift auf alles zu und erinnert sich — über Tage.",
+    boxBody: "Terminal, Claude Code, deine CLAUDE.md, MCP-Verbindungen und Memory-System. Claude greift auf alles zu und erinnert sich, über Tage.",
     color: "#B8963E",
     x: 50,
     y: 74,
@@ -87,6 +87,13 @@ const EDGES: [number, number][] = [
   [0, 1],
   [1, 2],
   [2, 0],
+];
+
+// Setup als Grundlage: drei Ebenen, die aufeinander aufbauen (Recherche -> Wissen -> Claude).
+const LAYERS: { step: string; label: string; tools: string[]; note: string }[] = [
+  { step: "01", label: "Recherche", tools: ["Comet Browser", "3 Extensions", "Firecrawl API"], note: "Quellen finden und automatisch einsammeln." },
+  { step: "02", label: "Wissen", tools: ["NotebookLM", "Obsidian-Brain (PARA)"], note: "Alles durchsuchbar, an einem Ort." },
+  { step: "03", label: "Claude", tools: ["Terminal", "Claude Code", "CLAUDE.md", "MCP"], note: "Greift auf alles zu und erinnert sich, über Tage." },
 ];
 
 function InfoBox({ n }: { n: Node }) {
@@ -140,8 +147,29 @@ export default function SystemConstellation() {
           Drei Tools. Einmal richtig verbunden. <span style={{ color: "var(--gold)" }}>Ein System.</span>
         </motion.h2>
 
-        {/* Konstellations-Bühne */}
-        <div className="relative mx-auto mt-16 w-full max-w-4xl" style={{ height: "min(64vw, 600px)" }}>
+        {/* Mobil: gestapelte Karten statt Hover-Konstellation — alle Inhalte direkt sichtbar,
+            kein Touch-Hover nötig, kein Overflow. Desktop behält die interaktive Bühne. */}
+        <div className="mt-12 space-y-4 md:hidden">
+          {NODES.map((n) => (
+            <div
+              key={n.key}
+              className="relative flex items-start gap-4 rounded-2xl p-5 text-left"
+              style={{ background: "linear-gradient(160deg, #ffffff, #f4efe6)", border: `1.5px solid ${n.color}`, boxShadow: `0 12px 30px rgba(80,60,20,0.12)` }}
+            >
+              <Brackets color={n.color} inset={9} size={9} />
+              <img src={n.logo} alt={`${n.name} Logo`} width={44} height={44} draggable={false} className="mt-1 h-11 w-11 shrink-0 select-none" />
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: n.color }}>{n.session}</p>
+                <h3 className="mt-1 font-serif text-[1.4rem] leading-tight" style={{ color: n.color }}>{n.name}</h3>
+                <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-warm-mid">{n.role}</p>
+                <p className="mt-2.5 text-[0.9rem] leading-relaxed text-warm-mid">{n.boxBody}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Konstellations-Bühne — nur Desktop (Hover-Metapher, spatial) */}
+        <div className="relative mx-auto mt-16 hidden w-full max-w-4xl md:block" style={{ height: "min(64vw, 600px)" }}>
           {/* Synapsen */}
           <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             {EDGES.map(([a, b], i) => {
@@ -252,9 +280,66 @@ export default function SystemConstellation() {
           transition={{ duration: 0.5 }}
           className="mx-auto mt-12 max-w-2xl text-center text-[1.05rem] leading-relaxed text-warm-mid"
         >
-          Zwei Live-Sessions. Am Ende steht ein System, das die Basis für alles Weitere ist — bessere Kundenprojekte, bessere Webseiten, weniger verbrannte Token.
-          <span className="mt-2 block font-mono text-[11px] uppercase tracking-[0.22em] text-gold">Fahr über die Knoten</span>
+          Zwei Live-Sessions. Am Ende steht ein System, das aufeinander aufbaut, von der Recherche bis zu Claude, der sich an alles erinnert.
+          <span className="mt-2 hidden font-mono text-[11px] uppercase tracking-[0.22em] text-gold md:block">Fahr über die Knoten</span>
         </motion.p>
+
+        {/* Dein Setup als Grundlage — drei Ebenen, dann wofür sie die Basis sind */}
+        <div className="mx-auto mt-24 max-w-3xl">
+          <div className="text-center">
+            <Eyebrow>// dein setup als grundlage</Eyebrow>
+          </div>
+          <h3
+            className="mx-auto mt-4 mb-10 max-w-xl text-center font-serif text-deep"
+            style={{ fontSize: "clamp(1.6rem, 3.4vw, 2.4rem)", lineHeight: 1.1 }}
+          >
+            Drei Ebenen, die aufeinander aufbauen
+          </h3>
+
+          <div className="space-y-3">
+            {LAYERS.map((l, i) => (
+              <motion.div
+                key={l.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative flex flex-col gap-3 rounded-2xl px-6 py-5 sm:flex-row sm:items-center sm:gap-6"
+                style={{ background: "linear-gradient(160deg, #ffffff, #f4efe6)", border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 10px 26px rgba(80,60,20,0.10)" }}
+              >
+                <Brackets color="rgba(184,150,62,0.4)" inset={9} size={9} />
+                <div className="flex shrink-0 items-baseline gap-3 sm:w-40">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold">{l.step}</span>
+                  <span className="font-serif text-[1.4rem] text-deep">{l.label}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {l.tools.map((t) => (
+                    <span key={t} className="rounded-full px-3 py-1 font-mono text-[11px]" style={{ background: "rgba(184,150,62,0.12)", border: "1px solid rgba(184,150,62,0.3)", color: "#7a6326" }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[0.88rem] leading-snug text-warm-mid sm:ml-auto sm:max-w-[34%]">{l.note}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Pfeil + Grundlage */}
+          <div className="mt-5 flex flex-col items-center">
+            <span className="font-mono text-2xl leading-none text-gold">↓</span>
+            <div
+              className="mt-4 w-full rounded-2xl px-7 py-7 text-center"
+              style={{ background: "linear-gradient(135deg, #B8963E 0%, #d4ae5a 50%, #B8963E 100%)" }}
+            >
+              <p className="font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "rgba(10,8,6,0.7)" }}>
+                Deine Grundlage für
+              </p>
+              <p className="mx-auto mt-2.5 max-w-lg font-serif text-[1.3rem] leading-snug" style={{ color: "#0a0806" }}>
+                bessere Kundenprojekte · Webseiten, die verkaufen · dein Content-System · Automationen, die Arbeit abnehmen
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <style>{`

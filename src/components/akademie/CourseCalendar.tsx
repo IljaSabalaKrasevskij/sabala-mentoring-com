@@ -31,7 +31,7 @@ const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergis
 
 const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
-  { day: 23, month: 7, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "16-18 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
+  { day: 21, month: 8, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 21.8. · Session 2: 28.8. · 15-17:30 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
 ];
 
 // Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener.
@@ -39,11 +39,11 @@ const NEXT = EVENTS.find((e) => !e.done) ?? EVENTS[EVENTS.length - 1];
 
 const MONTHS = [
   { month: 6, year: 2026, name: "Juni 2026" },
-  { month: 7, year: 2026, name: "Juli 2026" },
+  { month: 8, year: 2026, name: "August 2026" },
 ];
 
 const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
-const monthName = (m: number) => (m === 6 ? "Juni" : "Juli");
+const monthName = (m: number) => (m === 6 ? "Juni" : m === 8 ? "August" : "Juli");
 
 function getDaysInMonth(month: number, year: number) {
   return new Date(year, month, 0).getDate();

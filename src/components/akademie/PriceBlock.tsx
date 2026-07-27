@@ -30,7 +30,7 @@ export default function PriceBlock() {
           className="mx-auto mt-5 max-w-lg font-serif text-cream"
           style={{ fontSize: "clamp(2rem, 4.8vw, 3.2rem)", lineHeight: 1.06 }}
         >
-          Das Pflicht-Setup. 2×2 Stunden live.
+          Das Pflicht-Setup. 2×2,5 Stunden live.
         </motion.h2>
 
         <motion.div
@@ -46,17 +46,17 @@ export default function PriceBlock() {
           {/* Preis */}
           <div className="flex items-end justify-center gap-3">
             <span className="font-serif" style={{ fontSize: "clamp(4rem, 12vw, 6rem)", lineHeight: 0.9, color: "var(--gold)" }}>
-              €197
+              €397
             </span>
             <span className="mb-3 font-mono text-[12px] uppercase tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
-              Launch-Preis
+              Kurs-Preis
             </span>
           </div>
           <p className="mt-2 font-mono text-[12px] tracking-wide" style={{ color: "rgba(250,248,245,0.6)" }}>
-            einmal €197 oder bequem 2× €103
+            einmal €397 oder bequem 2× €199
           </p>
           <p className="mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
-            Einführungspreis. Steigt auf €247, sobald die ersten Bewertungen da sind.
+            Jetzt umfangreicher: 2×2,5 Stunden, inklusive Perplexity.
           </p>
 
           {/* Termine */}
@@ -88,7 +88,7 @@ export default function PriceBlock() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold)")}
           >
-            Jetzt für €197 anmelden
+            Jetzt für €397 anmelden
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

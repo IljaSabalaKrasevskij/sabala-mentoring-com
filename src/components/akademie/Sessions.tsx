@@ -11,20 +11,22 @@ import { Brackets, Eyebrow } from "./shared";
 type Module = { name: string; body: string };
 
 const S1: Module[] = [
-  { name: "Was Obsidian ist — dein zweites Gehirn", body: "Eine lokale Datenbank für dein gesamtes Wissen. Alles als einfache Dateien auf deinem Rechner, verlinkt und durchsuchbar. Keine Cloud, keine Abhängigkeit. Wir richten die PARA-Struktur ein — danach übernimmt Claude die Einordnung für dich." },
-  { name: "NotebookLM — Schluss mit 20 Tabs", body: "Du musst keine Quellen mehr im Internet zusammensuchen. YouTube-Videos, PDFs und Webseiten werden zu einer durchsuchbaren Wissensdatenbank. Aus einem YouTube-Video machst du eine Präsentation oder einen Podcast. Dein Wissen, nicht Google." },
-  { name: "Die richtigen Extensions", body: "Welche Erweiterungen du wirklich brauchst und welche nicht. YouTube-Integration, Templates, automatische Verknüpfungen. Wir verbinden Obsidian und NotebookLM, sodass dein Wissen an einem Ort zusammenläuft." },
+  { name: "Comet Browser + 3 Recherche-Extensions", body: "Dein KI-Browser für Recherche. Wir installieren Comet und die drei Erweiterungen, mit denen aus stundenlangem Suchen ein paar Minuten werden. Quellen finden, lesen und direkt weiterverarbeiten, ohne 20 offene Tabs." },
+  { name: "Firecrawl API, ganze Webseiten als Wissen", body: "Statt mühsam Copy-Paste zieht Firecrawl komplette Webseiten sauber als Text. Einmal die API eingerichtet, und Claude holt sich Quellen selbst, direkt in dein NotebookLM und Obsidian." },
+  { name: "NotebookLM, Schluss mit 20 Tabs", body: "YouTube-Videos, PDFs und Webseiten werden zu einer durchsuchbaren Wissensdatenbank. Aus einem Video machst du eine Präsentation oder einen Podcast. Dein Wissen, nicht Google." },
+  { name: "Dein Obsidian-Brain mit PARA", body: "Eine lokale Datenbank für dein gesamtes Wissen, alles als einfache Dateien auf deinem Rechner, verlinkt und durchsuchbar. Wir richten die PARA-Struktur ein, danach übernimmt Claude die Einordnung für dich." },
 ];
 
-const S1_AFTER = ["Ein funktionierendes zweites Gehirn, das Claude versteht", "Eine Expertendatenbank aus allem, was du je gelernt hast", "Präsentationen und Zusammenfassungen aus YouTube und PDFs — auf Knopfdruck"];
+const S1_AFTER = ["Ein KI-Recherche-Setup, das aus Stunden Minuten macht", "Eine Expertendatenbank aus allem, was du je gelernt hast", "Ein lokales Obsidian-Brain, das Claude versteht"];
 
 const S2: Module[] = [
-  { name: "Terminal + Claude Code", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Du verlässt die Session mit einer funktionierenden Umgebung — auch wenn du das Terminal nie geöffnet hast." },
-  { name: "MCP-Verbindungen — Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und NotebookLM. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung — nicht nur Chat." },
-  { name: "Memory-System + meine Skills", body: "Closing Session (auto Daily Note), Memory (projektübergreifend) und Cybersecurity (Schutz vor gefährlichen Skripten). Meine eigenen Skills, die ich täglich nutze." },
+  { name: "Terminal + Claude Code", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Du verlässt die Session mit einer funktionierenden Umgebung, auch wenn du das Terminal nie geöffnet hast." },
+  { name: "Deine CLAUDE.md, Claude kennt dich", body: "Die eine Datei, die Claude sagt, wer du bist, wie du arbeitest und worauf er zugreifen darf. Einmal geschrieben, startet jede Session mit deinem Kontext statt bei null." },
+  { name: "MCP-Verbindungen, Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und NotebookLM. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung, nicht nur Chat." },
+  { name: "Memory-System + meine Skills", body: "Closing Session (automatische Daily Note), Memory (projektübergreifend) und Cybersecurity (Schutz vor gefährlichen Skripten). Meine eigenen Skills, die ich täglich nutze." },
 ];
 
-const S2_AFTER = ['Du sagst: "Woran haben wir gearbeitet?" — Claude weiß es. Exakt.', "Claude schreibt nach jeder Session automatisch eine Daily Note", "Das Basic-Setup, mit dem die großen Profis arbeiten"];
+const S2_AFTER = ['Du sagst: "Woran haben wir gearbeitet?" und Claude weiß es. Exakt.', "Claude schreibt nach jeder Session automatisch eine Daily Note", "Das Basic-Setup, mit dem die großen Profis arbeiten"];
 
 function SessionBlock({
   index,
@@ -136,9 +138,9 @@ export default function Sessions() {
 
         <SessionBlock
           index="01"
-          badge="Session 1 · 2 Stunden live"
-          title="Deine Wissensdatenbank"
-          sub="Obsidian + NotebookLM. Das Fundament, auf das Claude zugreift."
+          badge="Session 1 · 2,5 Stunden live"
+          title="Recherche und Wissen, an einem Ort"
+          sub="Comet Browser, NotebookLM und dein Obsidian-Brain. Die Basis, aus der Claude schöpft."
           modules={S1}
           after={S1_AFTER}
           featured
@@ -168,9 +170,9 @@ export default function Sessions() {
 
         <SessionBlock
           index="02"
-          badge="Session 2 · 2 Stunden live"
+          badge="Session 2 · 2,5 Stunden live"
           title="Dein Second Brain ×10"
-          sub="Claude Code, verbunden und mit Gedächtnis. Das Pflicht-Setup."
+          sub="Terminal, Claude Code und deine CLAUDE.md. Verbunden, mit Gedächtnis."
           modules={S2}
           after={S2_AFTER}
           flip

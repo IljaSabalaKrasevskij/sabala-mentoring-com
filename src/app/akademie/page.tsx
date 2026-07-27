@@ -15,7 +15,7 @@ import DiscoveryHero from "@/components/akademie/DiscoveryHero";
 export const metadata = {
   title: "Dein Second Brain · Sabala KI Academy",
   description:
-    "In 2×2 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Obsidian + NotebookLM + Claude Code, live aufgebaut. Launch-Preis €197.",
+    "In 2×2,5 Stunden richtest du ein KI-System ein, das sich an alles erinnert. Obsidian + NotebookLM + Claude Code, live aufgebaut. Preis €397.",
 };
 
 export default function AkademiePage() {

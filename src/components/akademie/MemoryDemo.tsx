@@ -203,7 +203,7 @@ export default function MemoryDemo() {
           transition={{ duration: 0.6 }}
           className="mt-7 text-center font-mono text-[12px] uppercase tracking-[0.22em] text-warm-mid"
         >
-          {mode === "without" ? "↑ So fühlt sich jede Session ohne Setup an." : "↑ Genau das richtest du in 2×2 Stunden ein."}
+          {mode === "without" ? "↑ So fühlt sich jede Session ohne Setup an." : "↑ Genau das richtest du in 2×2,5 Stunden ein."}
         </motion.p>
       </div>
 

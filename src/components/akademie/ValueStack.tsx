@@ -11,8 +11,8 @@ import { Brackets, Eyebrow } from "./shared";
    ───────────────────────────────────────────────────────────────────────── */
 
 const ITEMS: { label: string; value: number }[] = [
-  { label: "Session 1 live (2h): Obsidian + NotebookLM Setup", value: 249 },
-  { label: "Session 2 live (2h): Claude Code Pro + MCP-Verbindungen", value: 249 },
+  { label: "Session 1 live (2,5h): Obsidian + NotebookLM Setup", value: 249 },
+  { label: "Session 2 live (2,5h): Claude Code Pro + MCP-Verbindungen", value: 249 },
   { label: "Skill-Paket: Closing Session + Memory + Cybersecurity", value: 19 },
   { label: "Live-Umsetzung & Q&A an beiden Terminen", value: 49 },
 ];
@@ -61,7 +61,7 @@ export default function ValueStack() {
           className="mx-auto mt-5 max-w-xl text-center font-serif text-cream"
           style={{ fontSize: "clamp(2rem, 4.6vw, 3.2rem)", lineHeight: 1.06 }}
         >
-          Was du in diesen 4 Stunden bekommst
+          Was du in diesen 5 Stunden bekommst
         </motion.h2>
 
         <div
@@ -121,13 +121,13 @@ export default function ValueStack() {
           <Brackets color="rgba(10,8,6,0.25)" inset={14} size={12} />
 
           <p className="relative font-mono text-[11px] uppercase tracking-[0.34em]" style={{ color: "rgba(10,8,6,0.7)" }}>
-            Dein Launch-Preis
+            Dein Kurs-Preis
           </p>
           <p className="relative mt-3 font-serif" style={{ fontSize: "clamp(3.6rem, 10vw, 6rem)", lineHeight: 1, color: "#0a0806", textShadow: "0 2px 0 rgba(255,255,255,0.18)" }}>
-            €197
+            €397
           </p>
           <p className="relative mt-2 font-mono text-[12px] uppercase tracking-[0.2em]" style={{ color: "rgba(10,8,6,0.65)" }}>
-            oder bequem 2× €103
+            oder bequem 2× €199
           </p>
           <p className="relative mt-4 text-[0.95rem] font-medium" style={{ color: "rgba(10,8,6,0.78)" }}>
             Für ein System, das ich mir monatelang aufgebaut habe.

@@ -18,6 +18,9 @@ export default function WorkshopHeader() {
         <Image src="/hero/ilja-default.png" alt="Ilja Krasevskij" fill priority className="object-cover object-right" sizes="100vw" />
         {/* Gradient nur links für Textlesbarkeit, rechts bleibt hell und knallig */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(10,8,6,0.94) 0%, rgba(10,8,6,0.72) 30%, rgba(10,8,6,0.32) 50%, transparent 78%)" }} />
+        {/* Mobil: Text ist vollbreit, object-right zeigt die helle Bildseite → zusätzlicher
+            vertikaler Scrim nur < md, damit Headline, Gold-Subline und Termine lesbar bleiben */}
+        <div className="absolute inset-0 md:hidden" style={{ background: "linear-gradient(to bottom, rgba(10,8,6,0.62) 0%, rgba(10,8,6,0.52) 50%, rgba(10,8,6,0.78) 100%)" }} />
       </div>
 
       <div className="relative z-10 flex min-h-[84vh] flex-col justify-center px-[6vw] py-[12vh]">
@@ -52,7 +55,7 @@ export default function WorkshopHeader() {
           className="mt-6 max-w-xl text-base leading-relaxed md:text-lg"
           style={{ color: "rgba(250,248,245,0.78)" }}
         >
-          In 2×2 Stunden richtest du ein System ein, das sich an alles erinnert. Obsidian, NotebookLM und Claude Code, live aufgebaut. Das Basic-Setup, mit dem die Profis arbeiten.
+          In 2×2,5 Stunden richtest du ein System ein, das sich an alles erinnert. Obsidian, NotebookLM und Claude Code, live aufgebaut. Das Basic-Setup, mit dem die Profis arbeiten.
         </motion.p>
 
         {/* Termine */}
@@ -90,13 +93,13 @@ export default function WorkshopHeader() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b8963e")}
           >
-            Platz sichern — €197
+            Platz sichern — €397
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <span className="flex flex-col font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
-            <span>oder 2× €103</span>
+            <span>oder 2× €199</span>
             <span>beide Termine live</span>
           </span>
         </motion.div>

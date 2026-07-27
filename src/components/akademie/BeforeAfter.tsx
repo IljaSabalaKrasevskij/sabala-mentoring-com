@@ -19,7 +19,7 @@ const VISIONS: { eyebrow: string; head: string; body: string }[] = [
   {
     eyebrow: "Deine Projekte",
     head: "laufen anders.",
-    body: "Was du in vier Stunden lernst, sparst du bei jedem Kundenprojekt wieder rein — und lieferst Qualität, die vorher nicht möglich war. Webseiten, die wirklich verkaufen. Systeme, die wirklich Arbeit übernehmen.",
+    body: "Was du in fünf Stunden lernst, sparst du bei jedem Kundenprojekt wieder rein — und lieferst Qualität, die vorher nicht möglich war. Webseiten, die wirklich verkaufen. Systeme, die wirklich Arbeit übernehmen.",
   },
   {
     eyebrow: "Deine Rolle",
@@ -147,7 +147,7 @@ export default function BeforeAfter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mx-auto mt-6 max-w-2xl text-center text-[1.05rem] leading-relaxed text-warm-light/70"
           >
-            Diese vier Stunden wirken nicht für die nächste Session. Sie wirken für jedes Kundenprojekt, jeden Workshop, jedes neue System. Und so verändert sich, wofür du eigentlich gebucht wirst.
+            Diese fünf Stunden wirken nicht für die nächste Session. Sie wirken für jedes Kundenprojekt, jeden Workshop, jedes neue System. Und so verändert sich, wofür du eigentlich gebucht wirst.
           </motion.p>
 
           <div className="mt-14 grid gap-5 md:grid-cols-3 md:gap-6">
