@@ -762,8 +762,10 @@ export default function SolarSystem() {
         )}
       </div>
 
-      {/* Hover-Label als DOM-Overlay — vom ScreenProjector per Transform positioniert */}
-      <div ref={labelRef} className="pointer-events-none fixed left-0 top-0 z-30" style={{ opacity: 0, transition: "opacity 0.18s ease", willChange: "transform" }}>
+      {/* Hover-Label als DOM-Overlay — vom ScreenProjector per Transform positioniert.
+          absolute (nicht fixed): die Projektor-Koordinaten liegen im Canvas-/Section-Raum,
+          fixed wuerde sie an den Viewport kleben und beim Scrollen ueber andere Sektionen ziehen. */}
+      <div ref={labelRef} className="pointer-events-none absolute left-0 top-0 z-30" style={{ opacity: 0, transition: "opacity 0.18s ease", willChange: "transform" }}>
         {hovered && <PlanetLabel data={hovered} />}
       </div>
 
@@ -774,7 +776,7 @@ export default function SolarSystem() {
           ref={(el) => {
             tagRefs.current[i] = el;
           }}
-          className="pointer-events-none fixed left-0 top-0 z-20 flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-1.5"
+          className="pointer-events-none absolute left-0 top-0 z-20 flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-1.5"
           style={{
             opacity: 0,
             transition: "opacity 0.25s ease",
