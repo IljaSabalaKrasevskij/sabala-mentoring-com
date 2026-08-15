@@ -42,6 +42,7 @@ export default function Footer() {
           <Link href="/impressum" className="hover:text-warm-steel transition-colors">Impressum</Link>
           <Link href="/datenschutz" className="hover:text-warm-steel transition-colors">Datenschutz</Link>
           <Link href="/agb" className="hover:text-warm-steel transition-colors">AGB</Link>
+          <Link href="/agb#widerruf" className="hover:text-warm-steel transition-colors">Widerrufsbelehrung</Link>
           <button className="hover:text-warm-steel transition-colors">Cookie-Einstellungen</button>
         </div>
       </div>

@@ -19,33 +19,60 @@ const ITEMS: { label: string; value: number }[] = [
 
 const TOTAL = ITEMS.reduce((s, i) => s + i.value, 0); // 566
 
+/* Zaehlt den Gesamtwert hoch, sobald der Block ins Bild kommt.
+   Vorher lief das beim Mounten: die Animation war durch, waehrend der Besucher
+   noch ganz oben stand, und Crawler griffen im 700ms-Fenster eine 0 ab. Genau
+   an der Zahl, die den Preis ankert. Deshalb Start per IntersectionObserver
+   und Endwert als Ausgangszustand, damit ohne JS nie eine 0 stehenbleibt. */
 function useCountUp(target: number, duration = 1100) {
   const [val, setVal] = useState(target);
   const raf = useRef<number | null>(null);
+  const anker = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    setVal(0);
-    let start: number | null = null;
-    const tick = (ts: number) => {
-      if (start === null) start = ts;
-      const t = Math.min(1, (ts - start) / duration);
-      const ease = 1 - Math.pow(1 - t, 3);
-      setVal(Math.round(target * ease));
-      if (t < 1) raf.current = requestAnimationFrame(tick);
-    };
-    // Etwas Verzögerung, damit Items vorher reinrutschen können
-    const timer = setTimeout(() => {
+    const el = anker.current;
+    if (!el) return;
+
+    /* Reduzierte Bewegung: Endwert stehen lassen, nicht animieren. */
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVal(target);
+      return;
+    }
+
+    const starten = () => {
+      setVal(0);
+      let start: number | null = null;
+      const tick = (ts: number) => {
+        if (start === null) start = ts;
+        const t = Math.min(1, (ts - start) / duration);
+        setVal(Math.round(target * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) raf.current = requestAnimationFrame(tick);
+      };
       raf.current = requestAnimationFrame(tick);
-    }, 700);
+    };
+
+    const beobachter = new IntersectionObserver(
+      (eintraege) => {
+        if (eintraege[0]?.isIntersecting) {
+          beobachter.disconnect();
+          starten();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    beobachter.observe(el);
+
     return () => {
-      clearTimeout(timer);
+      beobachter.disconnect();
       if (raf.current) cancelAnimationFrame(raf.current);
     };
   }, [target, duration]);
-  return val;
+
+  return { val, anker };
 }
 
 export default function ValueStack() {
-  const total = useCountUp(TOTAL);
+  const { val: total, anker } = useCountUp(TOTAL);
 
   return (
     <section className="relative overflow-hidden px-6 py-[18vh]" style={{ background: "var(--tech-bg)" }}>
@@ -100,6 +127,7 @@ export default function ValueStack() {
 
           {/* Gesamtwert mit Count-Up + sanftem Gold-Pulse */}
           <div
+            ref={anker}
             className="vs-total vs-row-reveal relative flex items-center justify-between px-5 py-5"
             style={{ borderTop: "1px solid rgba(184,150,62,0.32)", "--d": `${0.35 + ITEMS.length * 0.14}s` } as React.CSSProperties}
           >
@@ -127,7 +155,10 @@ export default function ValueStack() {
             €397
           </p>
           <p className="relative mt-2 font-mono text-[12px] uppercase tracking-[0.2em]" style={{ color: "rgba(10,8,6,0.65)" }}>
-            oder bequem 2× €199
+            oder bequem 2× €203 · zzgl. MwSt.
+          </p>
+          <p className="relative mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(10,8,6,0.5)" }}>
+            Angebot für Unternehmen und Selbständige
           </p>
           <p className="relative mt-4 text-[0.95rem] font-medium" style={{ color: "rgba(10,8,6,0.78)" }}>
             Für ein System, das ich mir monatelang aufgebaut habe.

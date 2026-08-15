@@ -84,7 +84,7 @@ export default function MooniVoiceTeaser() {
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
             <Link
-              href="/open-source-projekte/mooni-voice"
+              href="/mooni-voice"
               className="inline-flex items-center gap-2 rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold"
             >
               Mooni Voice laden <span aria-hidden>→</span>

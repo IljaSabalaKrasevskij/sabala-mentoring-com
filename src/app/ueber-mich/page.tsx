@@ -4,11 +4,10 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 // ════════════════════════════
-// 1. DATA WITH 8 PHASES
+// 1. DIE PHASEN
 // ════════════════════════════
 const memoryData = [
   {
@@ -36,7 +35,7 @@ const memoryData = [
       "Betriebswirtschaftliches Fundament (BWL-Studium)",
       "Verantwortung für Umsatz, Personal und Qualität in großem Maßstab"
     ],
-    image: "/Sabalas Story/Hückelhoven 2007.jpg",
+    image: "/Sabalas Story/hueckelhoven-2007.jpg",
   },
   {
     id: "p3",
@@ -52,23 +51,10 @@ const memoryData = [
     image: "/images/sabala-portrait-hero.png", // Temp placeholder, da McDonalds Bilder hier nicht zum Text passen
   },
   {
-    id: "p-dina",
-    year: "Seit 2016",
-    title: "Das stärkste Fundament",
-    kicker: "Phase 4: Dina",
-    desc: "2016 bin ich mit Dina, meiner besseren Hälfte, zusammengekommen. Ohne sie wäre ich heute nicht an dem Punkt, an dem ich bin. Diese Phase lehrte mich etwas Essenzielles: Den Weg ins Unternehmertum kann man nicht alleine gehen. Es braucht ein Umfeld, das an einen glaubt und den Raum bedingungslos hält.",
-    skills: [
-      "Erkenntnis: Ein starkes, unterstützendes Umfeld ist der wichtigste Hebel",
-      "Gegenseitiges Wachstum und bedingungsloser Support",
-      "Stabilität als Basis für kreative Ausbrüche und Neuanfänge"
-    ],
-    image: "/Sabalas Story/München 2019- Meine bessere Hälfte.JPG",
-  },
-  {
     id: "p4",
     year: "2018–2020",
     title: "Content Creator & Akademie-Aufbau",
-    kicker: "Phase 5: dean&david",
+    kicker: "Phase 4: dean&david",
     desc: "Zurück in der Systemgastronomie in neuer Rolle: Aufbau der dean&david Online-Akademie aus dem Nichts. Erste Videokonzepte und Produktionen. Komplette kreative Freiheit, Raum für eigene Ideen. Erfolgreiche Projekte, die bis heute laufen.",
     skills: [
       "Content Creation: Videokonzeption, Produktion, Storytelling",
@@ -76,13 +62,13 @@ const memoryData = [
       "Autodidaktisches Arbeiten und kreative Freiheit",
       "Strategische Konzeptionierung von Schulungsinhalten"
     ],
-    image: "/Sabalas Story/München 2019 dean&david.jpg",
+    image: "/Sabalas Story/muenchen-2019-dean-david.jpg",
   },
   {
     id: "p5",
     year: "2020–2021",
     title: "Die innere Reise & Wendepunkt",
-    kicker: "Phase 6: Das Erwachen",
+    kicker: "Phase 5: Das Erwachen",
     desc: "2020 veränderte alles. Begegnung mit dem Lehrer Arawinda Himala. Meditation und tiefe innere Arbeit brachten ein fundiertes Verständnis für Psychologie und Marketing – nicht als Technik, sondern als echtes Verstehen von Menschen.",
     skills: [
       "Tiefes Verständnis für Psychologie und menschliche Motivation",
@@ -96,7 +82,7 @@ const memoryData = [
     id: "p6",
     year: "2021–2024",
     title: "Mentoring & Erste Selbstständigkeit",
-    kicker: "Phase 7: Sabala Coaching",
+    kicker: "Phase 6: Sabala Coaching",
     desc: "Gründung von Sabala Coaching. Erst Meditationsbegleitung, dann tiefgreifendes Business-Mentoring. Über 4 Jahre Einzelbegleitung von Menschen. Die Positionierung wurde kristallklar: Jemand, der sowohl die spirituelle Ebene als auch das fest verwurzelte Strukturierte meistert.",
     skills: [
       "Coaching und Mentoring auf absolut professionellem Niveau",
@@ -104,13 +90,13 @@ const memoryData = [
       "Tiefes Verständnis für die Reise von Solo-Unternehmern",
       "Kombination aus Konzern-Systematik und Herzausrichtung"
     ],
-    image: "/Sabalas Story/München 2021 - Gründung Sabala Coaching.jpg",
+    image: "/Sabalas Story/muenchen-2021-gruendung-sabala-coaching.jpg",
   },
   {
     id: "p7",
     year: "2024",
     title: "Herzkreative & Business-Netzwerk",
-    kicker: "Phase 8: Barcelona",
+    kicker: "Phase 7: Barcelona",
     desc: "Als Digital Nomad unterwegs. Die Vision entstand in einem Lieblingscafé in Barcelona: Connecting Herzkreative. Ein grenzenloses globales Business-Netzwerk für herzgetriebene Unternehmer. LLC gegründet, aus Deutschland abgemeldet.",
     skills: [
       "Aufbau und Führung eines internationalen Netzwerks",
@@ -121,20 +107,59 @@ const memoryData = [
     image: "/Sabalas Story/2024 Barcelona.jpg",
   },
   {
+    id: "p-tbilisi",
+    year: "April 2026",
+    title: "Ankommen in Tbilisi",
+    kicker: "Phase 8: Georgien",
+    desc: "Nach Jahren als Digital Nomad der Umzug nach Tbilisi. Andere Städte waren Stationen, hier bin ich angekommen und will bleiben. Kurz vorher habe ich in Georgien ein eigenes Unternehmen angemeldet. Zum ersten Mal seit langem ein fester Ort, ein Alltag mit Ruhe darin und der Kopf frei für die Arbeit, die zählt.",
+    skills: [
+      "Ein fester Ort als Basis nach Jahren des Umherziehens",
+      "Eigene Unternehmensgründung in Georgien",
+      "Ruhe im Alltag und dadurch mehr Tiefe in der Arbeit",
+      "Leben und Arbeiten an der Schnittstelle zwischen Europa und Asien"
+    ],
+    image: "/Sabalas Story/tbilisi-2026.jpg",
+  },
+  {
     id: "p-heute",
     year: "2026",
-    title: "Premium Erlebnis Webseiten",
-    kicker: "Phase 9: Heute",
-    desc: "Der Startschuss für Premium-Erlebnis-Webseiten für kreative Visionäre, Pioniere und Macher. Die Verschmelzung aus tiefer psychologischer Sichtbarkeit, emotionalem Brand Design und hochmoderner technischer Exzellenz.",
+    title: "Sabala Studios: KI ins Unternehmen",
+    kicker: "Phase 9: Der Pivot",
+    desc: "Aus dem Mentoring wird ein Studio. Premium-Webseiten bleiben, sind aber nur noch eines von mehreren Angeboten. Der Kern heute: Unternehmen mit fünf bis fünfzig Leuten bekommen KI wirklich in den Betrieb. Für dich gebaut, mit dir entwickelt, dir beigebracht.",
     skills: [
-      "Entwicklung immersiver, konvertierender Web-Erlebnisse",
-      "Zusammenführung von Architektur (Code) und Emotion (Design)",
-      "Vollkommener Fokus auf echte Premium-Positionierung"
+      "KI-Systeme und Agenten-Workflows, die im Alltag laufen",
+      "Premium-Webseiten mit Claude Code, Architektur und Design in einer Hand",
+      "KI-Akademie: Teams befähigen, statt sie abhängig zu machen",
+      "Drei Wege in ein Projekt: für dich, mit dir, oder du lernst es selbst"
     ],
     image: "/Sabalas Story/Stettin 2026 - Start Premium Erlebnis Webseiten.jpg",
+  },
+  {
+    id: "p-vegaleads",
+    year: "Seit Juli 2026",
+    title: "Gründung VegaLeads.ai",
+    kicker: "Phase 10: Heute",
+    desc: "Die eigene Gründung: ein Lead-Radar als Dienstleistung. Jeden Morgen prüft die Engine echte Firmen live, findet ein konkretes Kaufsignal und legt dem Vertrieb geprüfte Ansprechpartner mit Nummer auf den Tisch. Aus dem Beraten wurde Bauen. Ich betreibe das System selbst, von der Recherche-Pipeline bis zum Kunden-Cockpit.",
+    skills: [
+      "Aufbau und Betrieb eines eigenen KI-Produkts",
+      "Agentensysteme, die nachts ohne mich durchlaufen",
+      "Vom Dienstleister zum Betreiber: wiederkehrender Umsatz statt verkaufter Stunden",
+      "Technische Verantwortung für Server, Daten und DSGVO"
+    ],
+    image: "/Sabalas Story/vegaleads-2026.jpg",
   }
 ];
 
+
+// Was frueher auf drei Koepfe verteilt war und heute bei Ilja zusammenlaeuft.
+const DISZIPLINEN = [
+  { title: "Positionierung", desc: "Wofür du stehst, in Worten, die deine Kunden auch benutzen." },
+  { title: "Text & Stimme", desc: "Jede Zeile klingt nach dir, nicht nach Baukasten oder KI-Standard." },
+  { title: "Brand & Design", desc: "Farben, Typo und Bildsprache als ein System, das zusammenhält." },
+  { title: "Code & Architektur", desc: "Handgeschriebener Next.js-Code mit Claude Code, dir gehört alles davon." },
+  { title: "KI-Systeme", desc: "Agenten und Workflows, die im Alltag deines Teams tatsächlich laufen." },
+  { title: "Betrieb", desc: "Hosting, Updates, Monitoring. Läuft im Hintergrund, du merkst nichts davon." },
+];
 
 // ════════════════════════════
 // 2. COMPONENTS
@@ -239,9 +264,9 @@ function VerticalTimeline() {
   )
 }
 
-function TrioShowcase() {
+function HeuteShowcase() {
   const containerRef = useRef(null);
-  
+
   return (
     <section ref={containerRef} className="py-24 md:py-40 px-6 sm:px-12 md:px-24 bg-[#111] text-white overflow-hidden relative">
       {/* Subtle Texture */}
@@ -250,71 +275,50 @@ function TrioShowcase() {
       <div className="max-w-[1400px] mx-auto flex flex-col items-center relative z-10">
         
         <ScrollReveal>
-          <div className="text-center mb-24 max-w-3xl mx-auto">
+          <div className="text-center mb-20 max-w-3xl mx-auto">
             <span className="inline-block border border-night-gold/20 bg-night-gold/5 backdrop-blur-md px-6 py-2 rounded-full font-mono text-xs uppercase tracking-[0.2em] font-bold text-night-gold mb-6 shadow-[0_0_20px_rgba(201,168,76,0.1)]">
-              Das aktuelle Kapitel: Das Kollektiv
+              Das aktuelle Kapitel
             </span>
             <h2 className="font-instrument text-4xl md:text-6xl lg:text-[4.5rem] leading-[1.05] text-white mt-6 mb-6">
-              Vom Einzelweg zum Premium-Erlebnis.
+              Alles in einer Hand.
             </h2>
             <p className="text-night-secondary text-lg md:text-xl font-light leading-relaxed">
-              Der große Shift: Weg von reinen Einzelcoachings, hin zur vollendeten Premium-Dienstleistung. Wir übersetzen innere Klarheit in greifbare Marken. Drei Experten, eine klare Vision.
+              Jahrelang habe ich mit festen Partnern gearbeitet. Design hier, Technik dort. Das war damals richtig. Heute sitzt alles an einem Tisch: Strategie, Text, Design, Code, Betrieb. Möglich wurde das durch KI. Sie gibt mir die Hände für die Arbeit, für die ich früher ein Team gebraucht habe.
+            </p>
+            <p className="text-night-secondary/70 text-base md:text-lg font-light leading-relaxed mt-6">
+              Für dich heißt das: ein Ansprechpartner, eine Rechnung, keine Reibung zwischen Gewerken. Und wenn ein Projekt doch mehr Hände braucht, hole ich sie mir gezielt dazu.
             </p>
           </div>
         </ScrollReveal>
 
-        {/* The TRIO Cards */}
+        {/* Ilja + die Disziplinen, die bei ihm zusammenlaufen */}
         <div className="w-full flex flex-col gap-8 md:gap-12">
-          
-          {/* SABALA */}
+
           <ScrollReveal delay={0.1}>
              <div className="group relative w-full bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col md:flex-row-reverse items-center gap-10 hover:border-night-gold/30 transition-colors duration-500 overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-night-gold/5 rounded-full blur-[100px] group-hover:bg-night-gold/10 transition-colors duration-700 pointer-events-none"></div>
                 <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 rounded-full overflow-hidden border-4 border-[#222] shadow-2xl relative">
-                  <Image src="/images/sabala-portrait-hero.png" alt="Sabala" fill className="object-cover object-[center_15%]" />
+                  <Image src="/images/sabala-portrait-hero.png" alt="Ilja Sabala" fill className="object-cover object-[center_15%]" />
                 </div>
                 <div className="flex flex-col text-center md:text-left z-10 w-full">
                    <h3 className="font-instrument text-3xl md:text-4xl text-white mb-2">Ilja Sabala</h3>
-                   <span className="font-mono text-xs tracking-widest uppercase text-night-gold mb-6 inline-block">Gründer, Strategie & Code</span>
+                   <span className="font-mono text-xs tracking-widest uppercase text-night-gold mb-6 inline-block">KI-Dozent &amp; AI Developer</span>
                    <p className="text-night-secondary leading-relaxed font-light text-base md:text-lg max-w-2xl">
-                     Gründer von Sabala Mentoring und Architekt hinter dem Erlebnis. Ich habe ein exklusives Team aus professionellen Partnern formiert, das sich über Jahre eng bewährt hat. Während ich die tiefenpsychologische Positionierung, die Strategie und die technische Infrastruktur (Code & Architektur) verantworte, verschmelzen wir unsere Disziplinen zu einem durchschlagenden Premium-Auftritt.
+                     Gründer von Sabala Studios und von VegaLeads.ai. Ich komme aus der Konzernwelt, habe Systeme geführt, bevor ich sie gebaut habe, und bin über Meditation und Mentoring bei der Frage gelandet, was Menschen wirklich bewegt. Heute übersetze ich das in Software: in Webseiten, die verkaufen, und in KI-Systeme, die deinem Team Arbeit abnehmen.
                    </p>
                 </div>
              </div>
           </ScrollReveal>
 
-          {/* FLEUR */}
           <ScrollReveal delay={0.2}>
-             <div className="group relative w-full bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center gap-10 hover:border-night-gold/30 transition-colors duration-500 overflow-hidden">
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-night-gold/5 rounded-full blur-[100px] group-hover:bg-night-gold/10 transition-colors duration-700 pointer-events-none"></div>
-                <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 rounded-full overflow-hidden border-4 border-[#222] shadow-2xl relative">
-                  <Image src="/images/Das-Team-Fleur.png" alt="Fleur" fill className="object-cover" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {DISZIPLINEN.map((d) => (
+                <div key={d.title} className="group relative bg-[#1a1a1a] border border-white/5 rounded-2xl p-6 md:p-7 hover:border-night-gold/30 transition-colors duration-500">
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-night-gold">{d.title}</span>
+                  <p className="text-night-secondary leading-relaxed font-light text-sm md:text-base mt-2">{d.desc}</p>
                 </div>
-                <div className="flex flex-col text-center md:text-left z-10 w-full">
-                   <h3 className="font-instrument text-3xl md:text-4xl text-white mb-2">Fleur</h3>
-                   <span className="font-mono text-xs tracking-widest uppercase text-night-gold mb-6 inline-block">Brand Design</span>
-                   <p className="text-night-secondary leading-relaxed font-light text-base md:text-lg max-w-2xl">
-                     Sie hat das Auge fürs Unsichtbare. Fleur übersetzt das Wesen eines Menschen in ein maßgeschneidertes, psychologisch wirksames Farbkonzept, einen starken Brandguide und eine durchschlagende Designsprache.
-                   </p>
-                </div>
-             </div>
-          </ScrollReveal>
-
-          {/* CHRISTOPHER */}
-          <ScrollReveal delay={0.3}>
-             <div className="group relative w-full bg-[#1a1a1a] border border-white/5 rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col md:flex-row-reverse items-center gap-10 hover:border-night-gold/30 transition-colors duration-500 overflow-hidden">
-                <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-night-gold/5 rounded-full blur-[100px] group-hover:bg-night-gold/10 transition-colors duration-700 pointer-events-none"></div>
-                <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 rounded-full overflow-hidden border-4 border-[#222] shadow-2xl relative">
-                   <Image src="/images/Das-Team-Christopher.jpg" alt="Christopher" fill className="object-cover" />
-                </div>
-                <div className="flex flex-col text-center md:text-right z-10 w-full">
-                   <h3 className="font-instrument text-3xl md:text-4xl text-white mb-2">Christopher</h3>
-                   <span className="font-mono text-xs tracking-widest uppercase text-night-gold mb-6 inline-block">Technik & Hosting</span>
-                   <p className="text-night-secondary leading-relaxed font-light text-base md:text-lg max-w-2xl ml-auto">
-                     Das Rückgrat des Systems. Er sorgt für absolut kompromissloses Premium-Hosting auf Hochleistungsservern, kümmert sich im Hintergrund um sämtliche Pflege, Sicherheitsupdates und Systemwartungen.
-                   </p>
-                </div>
-             </div>
+              ))}
+            </div>
           </ScrollReveal>
 
         </div>
@@ -332,20 +336,23 @@ function VisionMessage() {
              <span className="font-instrument text-2xl text-refined-gold">V</span>
           </div>
           <h2 className="font-instrument text-[2rem] md:text-[3rem] leading-tight text-deep-charcoal mb-8">
-            Meine persönliche Vision
+            Meine Vision
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
           <div className="text-deep-charcoal/80 font-satoshi text-base md:text-lg leading-[1.8] space-y-6 font-light">
             <p>
-              Meine Vision ist es, tiefe Arbeit mit Menschen zu machen, die einen wahrhaft positiven Impact hinterlassen. Ich möchte ein globales Netzwerk aus wohlwollenden, respektvollen und wertschätzenden Menschen aufbauen, um unsere gebündelte Kraft zu vervielfachen.
+              Ich will, dass KI dort ankommt, wo keine eigene Tech-Abteilung sitzt. Bei Unternehmen mit fünf bis fünfzig Leuten, die etwas vorhaben und beim Thema KI trotzdem im Nebel stehen. Für die soll das Werkzeug so einfach werden, dass sie es am Ende selbst bedienen.
             </p>
             <p>
-              Es geht darum, sich weltweit zu vernetzen, aber vor allem: Im Herzen mit sich selbst immer ehrlich und im Reinen zu sein. Das ist das unerschütterliche Fundament wahrer Größe.
+              Deshalb erkläre ich alles kinderleicht. Wenn du nach einem Gespräch mit mir nicht weißt, was du am Montag konkret anders machst, habe ich meinen Job nicht gemacht. Fachbegriffe sind billig. Verständnis ist die Arbeit.
             </p>
             <p>
-              Wir dürfen Spaß haben. Wir dürfen Freude am Leben haben – und können dabei trotzdem unglaublich viel Gutes in der Welt bewirken. Wenn du mit genau dieser Vision resoniert, dann werden wir sehr wahrscheinlich exzellent zusammenpassen.
+              Und ich baue nur, was ich selbst benutze. VegaLeads läuft jeden Morgen für mein eigenes Geschäft, bevor ich es jemandem verkaufe. Diese Webseite steht auf demselben Setup, das du im Shop bekommst. Was bei dir landet, hat sich vorher bei mir bewährt.
+            </p>
+            <p>
+              Dazu gehört auch: Wir dürfen Freude an der Sache haben. Gute Arbeit und ein gutes Leben schließen sich nicht aus. Wenn dich das anspricht, passen wir wahrscheinlich gut zusammen.
             </p>
           </div>
         </ScrollReveal>
@@ -370,7 +377,7 @@ export default function UeberMichPage() {
         {/* Fullscreen Background Image */}
         <div className="absolute inset-0 z-0">
           <Image 
-            src="/Sabalas Story/Sabala Über-Mich Header Foto.jpg" 
+            src="/Sabalas Story/ueber-mich-header.jpg" 
             alt="Ilja Sabala in der Natur" 
             fill 
             className="object-cover object-[center_30%]"
@@ -405,15 +412,15 @@ export default function UeberMichPage() {
         </div>
       </section>
 
-      {/* 
-        NO THE EDITORIAL CONTINUOUS TIMELINE
+      {/*
+        DIE TIMELINE
       */}
       <VerticalTimeline />
 
-      {/* 
-        PHASE 8: TRIO SHOWCASE
+      {/*
+        HEUTE: ALLES IN EINER HAND
       */}
-      <TrioShowcase />
+      <HeuteShowcase />
 
 
       {/* 

@@ -14,8 +14,11 @@ export default function ImpressumPage() {
 
         <div className="space-y-12 text-deep-charcoal/80 leading-relaxed">
 
+          {/* Das TMG wurde am 14.5.2024 durch das Digitale-Dienste-Gesetz (DDG) abgeloest.
+              Impressumspflicht steht seitdem in § 5 DDG, die Haftungsregeln in §§ 7–10 DDG.
+              TODO Ilja: Wyoming Filing ID der LLC hier ergaenzen (Registerangabe, empfohlen). */}
           <section>
-            <h2 className="font-semibold text-deep-charcoal text-lg mb-4">Angaben gemäß § 5 TMG</h2>
+            <h2 className="font-semibold text-deep-charcoal text-lg mb-4">Angaben gemäß § 5 DDG</h2>
             <p>SABALA MENTORING LLC<br />
             30 N Gould St Ste N<br />
             82801 Sheridan, WY<br />
@@ -39,24 +42,30 @@ export default function ImpressumPage() {
           </section>
 
           <section>
+            <h2 className="font-semibold text-deep-charcoal text-lg mb-4">
+              Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
+            </h2>
+            <p>Ilja Krasevskij<br />
+            Kukuri Gogiashvili I Lane 8, Apt. 44, 3rd Floor<br />
+            Saburtalo District<br />
+            0171 Tbilisi, Georgia</p>
+          </section>
+
+          {/* Die EU-Plattform zur Online-Streitbeilegung (OS) wurde zum 20.7.2025 eingestellt.
+              Der Link darf nicht mehr stehen. Die Erklaerung nach § 36 VSBG bleibt Pflicht. */}
+          <section>
             <h2 className="font-semibold text-deep-charcoal text-lg mb-4">Streitschlichtung</h2>
             <p>
-              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-              <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" className="text-refined-gold hover:underline">
-                https://ec.europa.eu/consumers/odr/
-              </a>
-            </p>
-            <p className="mt-4">
               Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-              Verbraucherschlichtungsstelle teilzunehmen.
+              Verbraucherschlichtungsstelle teilzunehmen (§ 36 Abs. 1 Nr. 1 VSBG).
             </p>
           </section>
 
           <section>
             <h2 className="font-semibold text-deep-charcoal text-lg mb-4">Haftung für Inhalte</h2>
             <p>
-              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten
-              nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als
+              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten
+              nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als
               Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
               Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige
               Tätigkeit hinweisen.

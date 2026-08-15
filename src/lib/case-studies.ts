@@ -272,7 +272,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       en: "Available for free, runs 100 percent locally on Apple Silicon and is part of daily work here, from the LinkedIn inbox to the terminal.",
     },
     tags: ["Open Source", "Lokale KI", "Whisper", "Parakeet"],
-    url: "/open-source-projekte/mooni-voice",
+    url: "/mooni-voice",
     image: "/case-studies/mooni-voice.jpg",
   },
   {

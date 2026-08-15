@@ -55,6 +55,17 @@ const nextConfig: NextConfig = {
         destination: "/case-studies",
         permanent: true,
       },
+      {
+        // Open-Source-Hub abgeschafft, Mooni Voice liegt jetzt direkt unter /mooni-voice
+        source: "/open-source-projekte/mooni-voice",
+        destination: "/mooni-voice",
+        permanent: true,
+      },
+      {
+        source: "/open-source-projekte",
+        destination: "/shop",
+        permanent: true,
+      },
     ];
   },
 

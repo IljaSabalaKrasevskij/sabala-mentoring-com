@@ -722,17 +722,14 @@ export default function GPTTeamPage() {
                                  </div>
                               </div>
                               
-                              {/* Psychological eye-catching badge */}
-                              <div className="mb-4 w-full bg-refined-gold/10 border border-refined-gold/50 px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(184,150,62,0.15)] transform group-hover:scale-[1.02] transition-transform">
-                                <p className="text-base text-refined-gold font-bold tracking-wide flex items-center justify-center gap-2">
-                                  <span className="w-2 h-2 rounded-full bg-refined-gold animate-pulse"></span>
-                                  Nur für die ersten 50 Käufe
-                                </p>
-                              </div>
-
+                              {/* Streichpreis 147 € und "nur die ersten 50" raus (Ilja, 15.8.2026):
+                                  Preis ist jetzt fest 67 € netto, kein Aktionsrahmen mehr. */}
                               <div className="bg-black/40 border border-white/5 px-6 py-3 rounded-xl w-full mb-6 text-center">
                                 <p className="text-sm text-white/80">
-                                  Regulärer Preis: <span className="line-through text-white/40 ml-1">147,– €</span> netto
+                                  67,– € netto zzgl. MwSt.
+                                </p>
+                                <p className="text-xs text-white/40 mt-1">
+                                  Angebot für Unternehmen und Selbständige
                                 </p>
                               </div>
                            </div>

@@ -12,9 +12,8 @@ import { motion } from "motion/react";
 type Product = { title: string; line: string; price: string };
 
 const PRODUCTS: Product[] = [
-  { title: "Skill-Bibliothek", line: "Kuratierte Claude-Code-Skills mit geführtem Setup.", price: "19 €" },
+  { title: "Web Design OS", line: "Mein komplettes Webseiten-Setup mit Claude Code.", price: "29 €" },
   { title: "KI-Assistenzteam", line: "Sieben GPTs, die in deiner Stimme schreiben.", price: "67 €" },
-  { title: "Web Design OS", line: "Mein komplettes Webseiten-Setup mit Claude Code.", price: "147 €" },
   { title: "Mooni Voice", line: "Deine Stimme wird Text, lokal auf deinem Mac.", price: "gratis" },
 ];
 

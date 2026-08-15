@@ -53,7 +53,12 @@ export default function PriceBlock() {
             </span>
           </div>
           <p className="mt-2 font-mono text-[12px] tracking-wide" style={{ color: "rgba(250,248,245,0.6)" }}>
-            einmal €397 oder bequem 2× €199
+            einmal €397 oder bequem 2× €203 · zzgl. MwSt.
+          </p>
+          {/* B2B-Hinweis: Die Akademie richtet sich an Unternehmen, deshalb Nettopreise.
+              Ohne diesen Hinweis muesste gegenueber Verbrauchern brutto ausgezeichnet werden (§ 3 PAngV). */}
+          <p className="mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
+            Angebot für Unternehmen und Selbständige
           </p>
           <p className="mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
             Jetzt umfangreicher: 2×2,5 Stunden, inklusive Perplexity.

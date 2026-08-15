@@ -15,7 +15,6 @@ const MEHR = [
   { href: "/blog", label: "Blog" },
   { href: "/ueber-mich", label: "Über mich" },
   { href: "/case-studies", label: "Case Studies" },
-  { href: "/open-source-projekte", label: "Open Source" },
 ];
 
 export default function Navbar() {

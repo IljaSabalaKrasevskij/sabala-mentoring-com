@@ -29,7 +29,10 @@ import { cn } from "@/lib/utils";
 /* Config                                                              */
 /* ------------------------------------------------------------------ */
 const CHECKOUT_URL = "https://sabala-mentoring.thrivecart.com/sabalas-webdesign-os/";
-const PRICE = "147";
+// Nettopreis. Traegt nur, weil das Angebot als B2B ausgezeichnet ist (§ 3 PAngV),
+// siehe Hinweiszeile unter dem Preis. Die MwSt. rechnet ThriveCart im Checkout drauf
+// (tax_structure "exclusive").
+const PRICE = "29";
 type Icon = ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
 
 /* ------------------------------------------------------------------ */
@@ -684,7 +687,10 @@ export default function WebDesignOsView() {
                 Den Stack selbst zusammenzusuchen kostet dich Wochenenden. Das Setup kostet einmal:
               </p>
               <p className="mt-4 font-instrument text-[5.5rem] leading-none text-cream drop-shadow-[0_2px_20px_rgba(212,174,90,0.25)]">{PRICE}&nbsp;&euro;</p>
-              <p className="mt-3 font-satoshi text-sm text-gold-light/80">Einmalzahlung · alle Updates inklusive</p>
+              <p className="mt-3 font-satoshi text-sm text-gold-light/80">Einmalzahlung · netto zzgl. MwSt. · alle Updates inklusive</p>
+              <p className="mx-auto mt-2 max-w-sm font-satoshi text-[12px] leading-relaxed text-warm-light/45">
+                Angebot für Unternehmen und Selbständige. Die Mehrwertsteuer wird im Checkout ausgewiesen.
+              </p>
               <div className="mt-9">
                 <MagneticCTA href={CHECKOUT_URL} tone="gold" newTab>Jetzt holen</MagneticCTA>
               </div>

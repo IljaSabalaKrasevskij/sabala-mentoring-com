@@ -26,21 +26,23 @@ type Product = {
 };
 
 const PRODUCTS: Product[] = [
+  // Skill-Bibliothek raus, bis das Angebot steht (Ilja, 15.8.2026).
+  // Cover liegt weiter unter /shop/skill-bibliothek-cover.jpg, falls es zurueckkommt.
   {
-    kicker: "Claude Code",
-    title: "Skill-Bibliothek",
-    desc: "Meine kuratierte Sammlung an Claude-Code-Skills mit geführtem Setup. Einmal eingerichtet, sofort nutzbar. Das Paket wächst weiter, Updates sind dabei.",
+    kicker: "Bauen mit Claude Code",
+    title: "Web Design OS",
+    desc: "Das komplette Setup, mit dem ich Premium-Webseiten mit Claude Code baue. Alle Skills, Anleitungen und Inspiration in einem Paket.",
     points: [
-      "Kuratierte Skills statt stundenlangem Suchen",
-      "Geführtes Setup, in einer halben Stunde startklar",
-      "Wächst weiter, du bekommst die Updates",
+      "161 Farbpaletten, 57 Font-Paare",
+      "In einer Stunde eingerichtet",
+      "Auf deine Marke gedreht",
     ],
-    price: "19",
-    badge: "Start hier",
-    cover: "/shop/skill-bibliothek-cover.jpg",
-    href: "https://sabala-mentoring.thrivecart.com/sabalas-skill-bibliothek/",
-    cta: "Jetzt sichern",
-    available: false,
+    price: "29",
+    priceNote: "netto zzgl. MwSt.",
+    badge: "Beliebt",
+    cover: "/webdesign-os/cover-3d.png",
+    href: "/webdesign-os",
+    cta: "Ansehen",
   },
   {
     kicker: "Custom GPTs",
@@ -52,25 +54,10 @@ const PRODUCTS: Product[] = [
       "Sofort einsatzbereit, keine Technik nötig",
     ],
     price: "67",
-    priceNote: "statt 147 €, für die ersten 50",
+    priceNote: "netto zzgl. MwSt.",
     badge: "Launch",
     cover: "/shop/ki-assistenzteam-cover.jpg",
     href: "/gpt-team",
-    cta: "Ansehen",
-  },
-  {
-    kicker: "Bauen mit Claude Code",
-    title: "Web Design OS",
-    desc: "Das komplette Setup, mit dem ich Premium-Webseiten mit Claude Code baue. Alle Skills, Anleitungen und Inspiration in einem Paket.",
-    points: [
-      "161 Farbpaletten, 57 Font-Paare",
-      "In einer Stunde eingerichtet",
-      "Auf deine Marke gedreht",
-    ],
-    price: "147",
-    badge: "Beliebt",
-    cover: "/webdesign-os/cover-3d.png",
-    href: "/webdesign-os",
     cta: "Ansehen",
   },
   {
@@ -85,7 +72,7 @@ const PRODUCTS: Product[] = [
     price: "0",
     badge: "Gratis",
     cover: "/shop/mooni-voice-cover.png",
-    href: "/open-source-projekte/mooni-voice",
+    href: "/mooni-voice",
     cta: "Laden",
     available: true,
   },
@@ -157,6 +144,12 @@ export default function ShopView() {
         <div className="mx-auto max-w-6xl">
           <ScrollReveal>
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-gold">Produkte</p>
+            {/* Traegt die Nettopreise: ohne diesen Hinweis muesste gegenueber
+                Verbrauchern brutto ausgezeichnet werden (§ 3 PAngV). */}
+            <p className="mt-3 text-[0.95rem] leading-relaxed text-warm-light/55">
+              Alle Preise verstehen sich netto zuzüglich Mehrwertsteuer. Die Angebote richten sich an
+              Unternehmen und Selbständige. Die Mehrwertsteuer wird im Checkout ausgewiesen.
+            </p>
           </ScrollReveal>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
