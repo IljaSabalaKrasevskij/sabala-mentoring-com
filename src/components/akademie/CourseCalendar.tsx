@@ -6,7 +6,7 @@ import LevelBadge from "./LevelBadge";
 import type { Level } from "./levels";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   CourseCalendar — Monatssicht Juni + Juli 2026.
+   CourseCalendar — Monatssicht, Quelle ist die EVENTS/MONTHS-Liste unten.
    Hervorgehobener „Nächster Termin"-Banner + klickbare Kurs-Termine.
    Klick auf einen Termin → Sales-Page des aktiven Kurses (/akademie).
    ───────────────────────────────────────────────────────────────────────── */
@@ -32,6 +32,7 @@ const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergis
 const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
   { day: 21, month: 8, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 21.8. · Session 2: 28.8. · 15-17:30 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
+  { day: 25, month: 9, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 25.9. · Session 2: 2.10. · 15-17:30 Uhr", label: "Danach", href: "/akademie", spots: 10 },
 ];
 
 // Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener.
@@ -40,10 +41,13 @@ const NEXT = EVENTS.find((e) => !e.done) ?? EVENTS[EVENTS.length - 1];
 const MONTHS = [
   { month: 6, year: 2026, name: "Juni 2026" },
   { month: 8, year: 2026, name: "August 2026" },
+  { month: 9, year: 2026, name: "September 2026" },
 ];
 
 const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
-const monthName = (m: number) => (m === 6 ? "Juni" : m === 8 ? "August" : "Juli");
+const MONTH_NAMES = ["Januar", "Februar", "März", "April", "Mai", "Juni",
+  "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const monthName = (m: number) => MONTH_NAMES[m - 1];
 
 function getDaysInMonth(month: number, year: number) {
   return new Date(year, month, 0).getDate();
