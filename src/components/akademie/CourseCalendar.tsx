@@ -32,7 +32,7 @@ const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergis
 const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
   { day: 21, month: 8, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 21.8. · Session 2: 28.8. · 15-17:30 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 10 },
-  { day: 25, month: 9, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 25.9. · Session 2: 2.10. · 15-17:30 Uhr", label: "Danach", href: "/akademie", spots: 10 },
+  { day: 24, month: 9, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 24.9. · Session 2: 2.10. · 15-17:30 Uhr", label: "Danach", href: "/akademie", spots: 10 },
 ];
 
 // Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener.

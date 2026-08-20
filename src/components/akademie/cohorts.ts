@@ -27,10 +27,10 @@ export const COHORTS: Cohort[] = [
     status: "offen",
   },
   {
-    id: "second-brain-2026-09-25",
-    start: "2026-09-25",
+    id: "second-brain-2026-09-24",
+    start: "2026-09-24",
     sessions: [
-      { label: "Session 1", date: "Fr · 25. September 2026", time: "15-17:30 Uhr" },
+      { label: "Session 1", date: "Do · 24. September 2026", time: "15-17:30 Uhr" },
       { label: "Session 2", date: "Fr · 2. Oktober 2026", time: "15-17:30 Uhr" },
     ],
     capacity: 10,
