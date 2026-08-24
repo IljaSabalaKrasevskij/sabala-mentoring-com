@@ -17,8 +17,8 @@ import { Reveal, TiltCard, Brackets, Eyebrow, GoldCTA } from "./shared";
    [[03_Bereiche/Sabala_Mentoring/Beratungsstunde/Fragenkatalog]]
    ───────────────────────────────────────────────────────────────────────── */
 
-// ThriveCart-Produkt mit diesem Slug anlegen, dann funktioniert der Kauf direkt.
-const CHECKOUT = "https://sabala-mentoring.thrivecart.com/sabala-beratungsstunde/";
+// ThriveCart-Checkout, live seit 24.8.2026.
+const CHECKOUT = "https://sabala-mentoring.thrivecart.com/sabala-academy-beratungsstunde/";
 
 const PREIS = "97";
 const PREIS_REGULAER = "200";
