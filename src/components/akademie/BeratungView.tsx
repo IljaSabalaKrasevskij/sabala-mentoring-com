@@ -239,6 +239,16 @@ function ZaehlZahl({ ziel, dauer = 1100 }: { ziel: number; dauer?: number }) {
   return <span ref={ref}>{wert}</span>;
 }
 
+/* Trennlinie zwischen gleichfarbigen Sektionen. Gibt dem Scrollen Takt,
+   ohne eine harte Kante zu ziehen. */
+function Trenner() {
+  return (
+    <div aria-hidden className="mx-auto" style={{ maxWidth: 1080, padding: "0 6vw" }}>
+      <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.28), transparent)" }} />
+    </div>
+  );
+}
+
 /* EbenenKachel — Karte mit echter Z-Tiefe statt flachem Rechteck.
    Drei Ebenen: Ziffer weit hinten, Flaeche in der Mitte, Inhalt vorne.
    Nach UX-Skill: nur transform/opacity animiert (kein Layout-Shift),
@@ -518,7 +528,7 @@ export default function BeratungView() {
       />
 
       {/* ── DIE FRAGEN (nur Fragen, Antworten sind das Produkt) ──────────── */}
-      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
+      <section className="px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
         <div className="mx-auto max-w-6xl">
           <Reveal><Eyebrow>{anzahl} Fragen, die mir wirklich gestellt werden</Eyebrow></Reveal>
           <Reveal delay={0.06}>
@@ -542,18 +552,23 @@ export default function BeratungView() {
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {THEMEN.map((t, i) => (
-              <Reveal key={t.titel} delay={0.04 + (i % 3) * 0.06}>
-                <TiltCard max={5} lift={6} style={{ height: "100%", background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <div className="relative flex h-full flex-col p-7">
+              <Reveal key={t.titel} delay={0.04 + (i % 3) * 0.045}>
+                <TiltCard max={6} lift={8} glow="rgba(212,174,90,0.24)" style={{ height: "100%", background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 16px 36px -28px rgba(0,0,0,0.9)" }}>
+                  <div className="relative flex h-full flex-col overflow-hidden p-7">
                     <Brackets color="rgba(212,174,90,0.28)" inset={8} size={9} />
-                    <div className="flex items-center justify-between">
-                      <span>{t.icon}</span>
+                    {/* Anzahl als Relief in der Tiefe */}
+                    <span aria-hidden className="font-serif italic"
+                      style={{ position: "absolute", top: -22, right: -6, fontSize: "5.5rem", lineHeight: 1, color: goldLight, opacity: 0.06, transform: "translateZ(-30px)", pointerEvents: "none" }}>
+                      {String(t.fragen.length).padStart(2, "0")}
+                    </span>
+                    <div className="relative flex items-center justify-between" style={{ transform: "translateZ(26px)" }}>
+                      <span style={{ display: "inline-flex", padding: 9, background: "rgba(212,174,90,0.09)", border: "1px solid rgba(212,174,90,0.22)" }}>{t.icon}</span>
                       <span className="font-mono text-[11px]" style={{ color: "rgba(212,174,90,0.6)" }}>
                         {String(t.fragen.length).padStart(2, "0")}
                       </span>
                     </div>
-                    <h3 className="mt-4 font-serif text-[1.35rem] leading-tight text-cream">{t.titel}</h3>
-                    <ul className="mt-4 flex flex-col gap-2.5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    <h3 className="relative mt-4 font-serif text-[1.35rem] leading-tight text-cream" style={{ transform: "translateZ(20px)" }}>{t.titel}</h3>
+                    <ul className="relative mt-4 flex flex-col gap-2.5" style={{ listStyle: "none", padding: 0, margin: 0, transform: "translateZ(14px)" }}>
                       {t.fragen.map((f) => (
                         <li key={f} className="flex items-start gap-2.5">
                           <span className="mt-[7px] h-[3px] w-[3px] flex-shrink-0 rounded-full" style={{ background: goldLight, opacity: 0.75 }} />
@@ -575,8 +590,10 @@ export default function BeratungView() {
         </div>
       </section>
 
+      <Trenner />
+
       {/* ── SO LÄUFT ES AB ──────────────────────────────────────────────── */}
-      <section className="px-[6vw] py-[12vh]" style={{ background: "radial-gradient(120% 80% at 50% 100%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
+      <section className="px-[6vw] py-[10vh]" style={{ background: "radial-gradient(120% 80% at 50% 100%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
         <div className="mx-auto max-w-5xl">
           <Reveal><Eyebrow>So läuft es ab</Eyebrow></Reveal>
           <Reveal delay={0.08}>
@@ -600,20 +617,35 @@ export default function BeratungView() {
       </section>
 
       {/* ── VORHER / NACHHER ────────────────────────────────────────────── */}
-      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-          <Reveal>
-            <div className="relative h-full p-8" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,248,245,0.45)" }}>Heute</span>
+      <section className="px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
+        <div className="mx-auto grid max-w-4xl items-center gap-6 md:grid-cols-2">
+          {/* Links liegt zurueck: kleiner, entsaettigt, ohne Glanz */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 0.965 }}
+            viewport={{ once: true, margin: "-70px" }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            style={{ height: "100%" }}
+          >
+            <div className="relative h-full p-8" style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.06)", filter: "saturate(0.5)" }}>
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,248,245,0.38)" }}>Heute</span>
               <div className="mt-6 flex flex-col gap-4">
                 {VORHER.map((v) => (
-                  <p key={v} className="text-[1.02rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.55)" }}>{v}</p>
+                  <p key={v} className="text-[1.02rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.44)" }}>{v}</p>
                 ))}
               </div>
             </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="relative h-full p-8" style={{ background: "linear-gradient(140deg, rgba(184,150,62,0.13) 0%, rgba(20,15,9,0.9) 60%)", border: "1px solid rgba(184,150,62,0.4)" }}>
+          </motion.div>
+
+          {/* Rechts kommt nach vorne */}
+          <motion.div
+            initial={{ opacity: 0, y: 34, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-70px" }}
+            transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            style={{ height: "100%", zIndex: 2 }}
+          >
+            <div className="relative h-full p-8" style={{ background: "linear-gradient(140deg, rgba(184,150,62,0.16) 0%, rgba(20,15,9,0.92) 60%)", border: "1px solid rgba(184,150,62,0.45)", boxShadow: "0 40px 90px -50px rgba(212,174,90,0.6)" }}>
               <Brackets color="rgba(212,174,90,0.4)" inset={8} size={10} />
               <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: gold }}>Nach der Stunde</span>
               <div className="relative mt-5 overflow-hidden" style={{ height: 150 }}>
@@ -626,7 +658,7 @@ export default function BeratungView() {
                 ))}
               </div>
             </div>
-          </Reveal>
+          </motion.div>
         </div>
       </section>
 
@@ -672,8 +704,10 @@ export default function BeratungView() {
         </div>
       </section>
 
+      <Trenner />
+
       {/* ── EINWAENDE ───────────────────────────────────────────────────── */}
-      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
+      <section className="px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
         <div className="mx-auto max-w-3xl">
           <Reveal><Eyebrow>Bevor du buchst</Eyebrow></Reveal>
           <Reveal delay={0.06}>
