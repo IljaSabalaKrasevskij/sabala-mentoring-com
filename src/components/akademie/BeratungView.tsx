@@ -24,6 +24,8 @@ const PREIS = "97";
 const PREIS_REGULAER = "200";
 const GUTSCHEIN = "120";
 const KURS_PREIS = 397;
+// Naechster Second-Brain-Lauf, Quelle: cohorts.ts (second-brain-2026-09-24)
+const KURS_TERMIN = "24. September + 2. Oktober";
 
 const gold = "#b8963e";
 const goldLight = "#d4ae5a";
@@ -421,7 +423,7 @@ export default function BeratungView() {
             <p className="mx-auto mt-6 max-w-xl text-center text-[1.08rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.68)" }}>
               Direkt nach der Buchung bekommst du einen Rabattcode über {GUTSCHEIN} € für den
               nächsten Second-Brain-Kurs. Der Code ist mehr wert als die {PREIS} €, die du
-              für die Stunde bezahlst.
+              für die Stunde bezahlst. Der Termin steht schon: {KURS_TERMIN}.
             </p>
           </Reveal>
 
@@ -451,6 +453,9 @@ export default function BeratungView() {
                 <p className="mt-5 text-[1.05rem]" style={{ color: "rgba(250,248,245,0.78)" }}>
                   Rabatt auf deinen Platz im nächsten Durchlauf
                 </p>
+                <p className="mt-2 font-mono text-[12.5px] tracking-[0.06em]" style={{ color: goldLight }}>
+                  {KURS_TERMIN} &middot; jeweils 15&ndash;17:30 Uhr
+                </p>
 
                 <div className="mx-auto mt-8 flex max-w-sm items-center justify-center gap-4 pt-7" style={{ borderTop: "1px solid rgba(212,174,90,0.28)" }}>
                   <span className="font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.42)", textDecoration: "line-through" }}>{KURS_PREIS} €</span>
@@ -466,7 +471,7 @@ export default function BeratungView() {
             {[
               { n: "01", t: "Du buchst die Stunde", d: `${PREIS} € statt ${PREIS_REGULAER} €, netto.` },
               { n: "02", t: "Der Code kommt sofort", d: "Direkt nach dem Kauf, zusammen mit deinem Terminlink." },
-              { n: "03", t: "Du löst ihn beim Kurs ein", d: `Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
+              { n: "03", t: "Du löst ihn beim Kurs ein", d: `${KURS_TERMIN}. Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
             ].map((x, i) => (
               <Reveal key={x.n} delay={0.08 + i * 0.07}>
                 <div className="relative h-full p-6" style={{ background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
