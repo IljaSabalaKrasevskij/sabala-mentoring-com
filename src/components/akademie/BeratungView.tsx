@@ -249,92 +249,100 @@ function Trenner() {
   );
 }
 
-/* EbenenKachel — Karte mit echter Z-Tiefe statt flachem Rechteck.
-   Drei Ebenen: Ziffer weit hinten, Flaeche in der Mitte, Inhalt vorne.
-   Nach UX-Skill: nur transform/opacity animiert (kein Layout-Shift),
-   Dauer 150-300ms, ease-out beim Eintreten, reduced-motion respektiert. */
+/* EbenenKachel — Tiefe muss im RUHEZUSTAND sichtbar sein, nicht erst beim Hover.
+   Auf dem Handy gibt es keinen Hover, und im Standbild sieht man ihn auch nicht.
+   Deshalb: sichtbare Elevation, Lichtkante oben, Farbverlauf statt flacher Flaeche,
+   grosse Ziffer als Relief. Beim Scrollen versetzen sich die Kacheln leicht
+   gegeneinander, das erzeugt Tiefe ohne Zutun des Nutzers.
+   Hover legt nur noch etwas drauf. */
 function EbenenKachel({
   ziffer, titel, text, index = 0,
 }: { ziffer: string; titel: string; text: string; index?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const huelle = useRef<HTMLDivElement>(null);
   const reduziert = useReduzierteBewegung();
   const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, aktiv: false });
 
+  // Scroll-Versatz: jede Kachel bewegt sich minimal anders, das staffelt die Ebene
+  const { scrollYProgress } = useScroll({ target: huelle, offset: ["start end", "end start"] });
+  const tiefe = [26, 8, 20][index % 3];
+  const yRoh = useTransform(scrollYProgress, [0, 1], [tiefe, -tiefe]);
+  const y = reduziert ? 0 : yRoh;
+
   function bewegen(e: React.MouseEvent) {
     if (reduziert) return;
-    const el = ref.current;
+    const el = huelle.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
-    setT({ rx: (0.5 - py) * 9, ry: (px - 0.5) * 9, gx: px * 100, gy: py * 100, aktiv: true });
+    setT({ rx: (0.5 - py) * 8, ry: (px - 0.5) * 8, gx: px * 100, gy: py * 100, aktiv: true });
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 26 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.045, ease: [0.16, 1, 0.3, 1] }}
-      style={{ height: "100%", perspective: 1000 }}
-    >
-      <div
-        ref={ref}
-        onMouseMove={bewegen}
-        onMouseLeave={() => setT((v) => ({ ...v, rx: 0, ry: 0, aktiv: false }))}
-        className="relative h-full overflow-hidden"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.aktiv ? -6 : 0}px)`,
-          transition: t.aktiv ? "transform 0.1s linear" : "transform 0.45s cubic-bezier(0.16,1,0.3,1)",
-        }}
+    <motion.div ref={huelle} style={{ y, height: "100%", perspective: 1200 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+        style={{ height: "100%" }}
       >
-        {/* Ebene 1, hinten: die Ziffer als Relief */}
-        <span
-          aria-hidden
-          className="font-serif italic"
-          style={{
-            position: "absolute", top: -26, right: -8, lineHeight: 1, fontSize: "7.5rem",
-            color: goldLight, opacity: t.aktiv ? 0.15 : 0.07,
-            transform: "translateZ(-40px)", transition: "opacity 0.3s ease-out",
-            pointerEvents: "none",
-          }}
-        >
-          {ziffer}
-        </span>
-
-        {/* Ebene 2, Mitte: Flaeche mit Cursor-Glow */}
         <div
-          className="absolute inset-0"
+          onMouseMove={bewegen}
+          onMouseLeave={() => setT((v) => ({ ...v, rx: 0, ry: 0, aktiv: false }))}
+          className="relative h-full overflow-hidden"
           style={{
-            background: "rgba(255,250,242,0.035)",
-            border: `1px solid ${t.aktiv ? "rgba(212,174,90,0.45)" : "rgba(255,255,255,0.08)"}`,
+            transformStyle: "preserve-3d",
+            transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.aktiv ? -8 : 0}px)`,
+            transition: t.aktiv ? "transform 0.1s linear" : "transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease-out",
+            /* Ruhezustand traegt schon Tiefe: Verlauf, Lichtkante, echter Schlagschatten */
+            background: "linear-gradient(160deg, rgba(255,250,242,0.075) 0%, rgba(255,250,242,0.028) 34%, rgba(10,8,6,0.5) 100%)",
+            borderTop: "1px solid rgba(255,250,242,0.16)",
+            borderLeft: "1px solid rgba(255,250,242,0.07)",
+            borderRight: "1px solid rgba(0,0,0,0.5)",
+            borderBottom: "1px solid rgba(0,0,0,0.6)",
             boxShadow: t.aktiv
-              ? "0 30px 60px -30px rgba(212,174,90,0.45), inset 0 1px 0 rgba(255,255,255,0.06)"
-              : "0 14px 34px -26px rgba(0,0,0,0.9)",
-            transition: "border-color 0.25s ease-out, box-shadow 0.25s ease-out",
+              ? "0 42px 74px -34px rgba(0,0,0,0.95), 0 0 44px -10px rgba(212,174,90,0.42), inset 0 1px 0 rgba(255,255,255,0.12)"
+              : "0 26px 52px -26px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.07)",
           }}
         >
+          {/* Ziffer als Relief, im Ruhezustand deutlich sichtbar */}
           <span
             aria-hidden
+            className="font-serif italic"
             style={{
-              position: "absolute", inset: 0,
-              background: `radial-gradient(340px circle at ${t.gx}% ${t.gy}%, rgba(212,174,90,0.16), transparent 62%)`,
-              opacity: t.aktiv ? 1 : 0, transition: "opacity 0.3s ease-out",
+              position: "absolute", top: -30, right: -10, lineHeight: 1, fontSize: "8rem",
+              color: goldLight, opacity: t.aktiv ? 0.22 : 0.13,
+              transform: "translateZ(-50px)", transition: "opacity 0.3s ease-out",
+              pointerEvents: "none",
+              textShadow: "0 2px 24px rgba(0,0,0,0.6)",
             }}
-          />
-        </div>
-
-        {/* Ebene 3, vorne: Inhalt */}
-        <div className="relative flex h-full flex-col p-7" style={{ transform: "translateZ(34px)" }}>
-          <Brackets color={t.aktiv ? "rgba(212,174,90,0.55)" : "rgba(212,174,90,0.22)"} inset={8} size={9} />
-          <span className="font-mono text-[12px] tracking-[0.14em]" style={{ color: goldLight, opacity: 0.85 }}>
+          >
             {ziffer}
           </span>
-          <h3 className="mt-3 font-serif text-[1.28rem] leading-tight text-cream">{titel}</h3>
-          <p className="mt-3 text-[0.97rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.64)" }}>{text}</p>
+
+          {/* Gold-Schimmer unten, gibt der Flaeche Volumen */}
+          <span aria-hidden style={{
+            position: "absolute", left: 0, right: 0, bottom: 0, height: 90,
+            background: "linear-gradient(180deg, transparent, rgba(184,150,62,0.10))",
+            pointerEvents: "none",
+          }} />
+
+          {/* Cursor-Glow legt beim Hover nach */}
+          <span aria-hidden style={{
+            position: "absolute", inset: 0,
+            background: `radial-gradient(360px circle at ${t.gx}% ${t.gy}%, rgba(212,174,90,0.20), transparent 60%)`,
+            opacity: t.aktiv ? 1 : 0, transition: "opacity 0.3s ease-out", pointerEvents: "none",
+          }} />
+
+          <div className="relative flex h-full flex-col p-7" style={{ transform: "translateZ(40px)" }}>
+            <Brackets color={t.aktiv ? "rgba(212,174,90,0.6)" : "rgba(212,174,90,0.3)"} inset={8} size={10} />
+            <span className="font-mono text-[12px] tracking-[0.16em]" style={{ color: goldLight }}>{ziffer}</span>
+            <h3 className="mt-3 font-serif text-[1.3rem] leading-tight text-cream">{titel}</h3>
+            <p className="mt-3 text-[0.97rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.68)" }}>{text}</p>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -553,14 +561,23 @@ export default function BeratungView() {
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {THEMEN.map((t, i) => (
               <Reveal key={t.titel} delay={0.04 + (i % 3) * 0.045}>
-                <TiltCard max={6} lift={8} glow="rgba(212,174,90,0.24)" style={{ height: "100%", background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 16px 36px -28px rgba(0,0,0,0.9)" }}>
+                <TiltCard max={6} lift={8} glow="rgba(212,174,90,0.24)" style={{
+                  height: "100%",
+                  background: "linear-gradient(160deg, rgba(255,250,242,0.07) 0%, rgba(255,250,242,0.025) 34%, rgba(10,8,6,0.45) 100%)",
+                  borderTop: "1px solid rgba(255,250,242,0.15)",
+                  borderLeft: "1px solid rgba(255,250,242,0.06)",
+                  borderRight: "1px solid rgba(0,0,0,0.45)",
+                  borderBottom: "1px solid rgba(0,0,0,0.55)",
+                  boxShadow: "0 24px 46px -24px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.07)",
+                }}>
                   <div className="relative flex h-full flex-col overflow-hidden p-7">
                     <Brackets color="rgba(212,174,90,0.28)" inset={8} size={9} />
                     {/* Anzahl als Relief in der Tiefe */}
                     <span aria-hidden className="font-serif italic"
-                      style={{ position: "absolute", top: -22, right: -6, fontSize: "5.5rem", lineHeight: 1, color: goldLight, opacity: 0.06, transform: "translateZ(-30px)", pointerEvents: "none" }}>
+                      style={{ position: "absolute", top: -26, right: -8, fontSize: "6rem", lineHeight: 1, color: goldLight, opacity: 0.12, transform: "translateZ(-40px)", pointerEvents: "none", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
                       {String(t.fragen.length).padStart(2, "0")}
                     </span>
+                    <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 80, background: "linear-gradient(180deg, transparent, rgba(184,150,62,0.09))", pointerEvents: "none" }} />
                     <div className="relative flex items-center justify-between" style={{ transform: "translateZ(26px)" }}>
                       <span style={{ display: "inline-flex", padding: 9, background: "rgba(212,174,90,0.09)", border: "1px solid rgba(212,174,90,0.22)" }}>{t.icon}</span>
                       <span className="font-mono text-[11px]" style={{ color: "rgba(212,174,90,0.6)" }}>
@@ -627,7 +644,12 @@ export default function BeratungView() {
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             style={{ height: "100%" }}
           >
-            <div className="relative h-full p-8" style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.06)", filter: "saturate(0.5)" }}>
+            <div className="relative h-full p-8" style={{
+              background: "linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(10,8,6,0.6) 100%)",
+              border: "1px solid rgba(255,255,255,0.05)",
+              filter: "saturate(0.4)",
+              boxShadow: "inset 0 2px 22px rgba(0,0,0,0.6)",
+            }}>
               <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,248,245,0.38)" }}>Heute</span>
               <div className="mt-6 flex flex-col gap-4">
                 {VORHER.map((v) => (
