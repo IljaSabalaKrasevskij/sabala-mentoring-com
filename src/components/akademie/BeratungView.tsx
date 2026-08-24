@@ -27,6 +27,20 @@ const KURS_PREIS = 397;
 // Naechster Second-Brain-Lauf, Quelle: cohorts.ts (second-brain-2026-09-24)
 const KURS_TERMIN = "24. September + 2. Oktober";
 
+/* prefers-reduced-motion respektieren. Im UX-Skill Prioritaet 1 (kritisch):
+   Parallax und Auto-Rotation koennen bei empfindlichen Nutzern Schwindel ausloesen. */
+function useReduzierteBewegung() {
+  const [reduziert, setReduziert] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduziert(mq.matches);
+    const an = (e: MediaQueryListEvent) => setReduziert(e.matches);
+    mq.addEventListener("change", an);
+    return () => mq.removeEventListener("change", an);
+  }, []);
+  return reduziert;
+}
+
 const gold = "#b8963e";
 const goldLight = "#d4ae5a";
 
@@ -176,9 +190,12 @@ function ParallaxBild({
   src, alt, hoehe = "62vh", overlay = 0.55, kinder,
 }: { src: string; alt: string; hoehe?: string; overlay?: number; kinder?: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduziert = useReduzierteBewegung();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.08, 1.14]);
+  const yRoh = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+  const scaleRoh = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.08, 1.14]);
+  const y = reduziert ? "0%" : yRoh;
+  const scale = reduziert ? 1.1 : scaleRoh;
 
   return (
     <div ref={ref} className="relative w-full overflow-hidden" style={{ height: hoehe }}>
@@ -196,8 +213,10 @@ function ZaehlZahl({ ziel, dauer = 1100 }: { ziel: number; dauer?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [wert, setWert] = useState(0);
   const [gelaufen, setGelaufen] = useState(false);
+  const reduziert = useReduzierteBewegung();
 
   useEffect(() => {
+    if (reduziert) { setWert(ziel); return; }
     const el = ref.current;
     if (!el || gelaufen) return;
     const io = new IntersectionObserver(([e]) => {
@@ -215,9 +234,99 @@ function ZaehlZahl({ ziel, dauer = 1100 }: { ziel: number; dauer?: number }) {
     }, { threshold: 0.4 });
     io.observe(el);
     return () => io.disconnect();
-  }, [ziel, dauer, gelaufen]);
+  }, [ziel, dauer, gelaufen, reduziert]);
 
   return <span ref={ref}>{wert}</span>;
+}
+
+/* EbenenKachel — Karte mit echter Z-Tiefe statt flachem Rechteck.
+   Drei Ebenen: Ziffer weit hinten, Flaeche in der Mitte, Inhalt vorne.
+   Nach UX-Skill: nur transform/opacity animiert (kein Layout-Shift),
+   Dauer 150-300ms, ease-out beim Eintreten, reduced-motion respektiert. */
+function EbenenKachel({
+  ziffer, titel, text, index = 0,
+}: { ziffer: string; titel: string; text: string; index?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduziert = useReduzierteBewegung();
+  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, aktiv: false });
+
+  function bewegen(e: React.MouseEvent) {
+    if (reduziert) return;
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    setT({ rx: (0.5 - py) * 9, ry: (px - 0.5) * 9, gx: px * 100, gy: py * 100, aktiv: true });
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: index * 0.045, ease: [0.16, 1, 0.3, 1] }}
+      style={{ height: "100%", perspective: 1000 }}
+    >
+      <div
+        ref={ref}
+        onMouseMove={bewegen}
+        onMouseLeave={() => setT((v) => ({ ...v, rx: 0, ry: 0, aktiv: false }))}
+        className="relative h-full overflow-hidden"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.aktiv ? -6 : 0}px)`,
+          transition: t.aktiv ? "transform 0.1s linear" : "transform 0.45s cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        {/* Ebene 1, hinten: die Ziffer als Relief */}
+        <span
+          aria-hidden
+          className="font-serif italic"
+          style={{
+            position: "absolute", top: -26, right: -8, lineHeight: 1, fontSize: "7.5rem",
+            color: goldLight, opacity: t.aktiv ? 0.15 : 0.07,
+            transform: "translateZ(-40px)", transition: "opacity 0.3s ease-out",
+            pointerEvents: "none",
+          }}
+        >
+          {ziffer}
+        </span>
+
+        {/* Ebene 2, Mitte: Flaeche mit Cursor-Glow */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "rgba(255,250,242,0.035)",
+            border: `1px solid ${t.aktiv ? "rgba(212,174,90,0.45)" : "rgba(255,255,255,0.08)"}`,
+            boxShadow: t.aktiv
+              ? "0 30px 60px -30px rgba(212,174,90,0.45), inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "0 14px 34px -26px rgba(0,0,0,0.9)",
+            transition: "border-color 0.25s ease-out, box-shadow 0.25s ease-out",
+          }}
+        >
+          <span
+            aria-hidden
+            style={{
+              position: "absolute", inset: 0,
+              background: `radial-gradient(340px circle at ${t.gx}% ${t.gy}%, rgba(212,174,90,0.16), transparent 62%)`,
+              opacity: t.aktiv ? 1 : 0, transition: "opacity 0.3s ease-out",
+            }}
+          />
+        </div>
+
+        {/* Ebene 3, vorne: Inhalt */}
+        <div className="relative flex h-full flex-col p-7" style={{ transform: "translateZ(34px)" }}>
+          <Brackets color={t.aktiv ? "rgba(212,174,90,0.55)" : "rgba(212,174,90,0.22)"} inset={8} size={9} />
+          <span className="font-mono text-[12px] tracking-[0.14em]" style={{ color: goldLight, opacity: 0.85 }}>
+            {ziffer}
+          </span>
+          <h3 className="mt-3 font-serif text-[1.28rem] leading-tight text-cream">{titel}</h3>
+          <p className="mt-3 text-[0.97rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.64)" }}>{text}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 /* Duenner Gold-Balken oben, zeigt den Lesefortschritt. */
@@ -237,12 +346,13 @@ function LeseFortschritt() {
 function FragenSlideshow({ paare }: { paare: { frage: string; thema: string }[] }) {
   const [i, setI] = useState(0);
   const [pause, setPause] = useState(false);
+  const reduziert = useReduzierteBewegung();
 
   useEffect(() => {
-    if (pause) return;
+    if (pause || reduziert) return;
     const t = setInterval(() => setI((v) => (v + 1) % paare.length), 3400);
     return () => clearInterval(t);
-  }, [pause, paare.length]);
+  }, [pause, reduziert, paare.length]);
 
   const aktuell = paare[i];
 
@@ -482,15 +592,8 @@ export default function BeratungView() {
             </div>
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {ABLAUF.map((s, i) => (
-              <Reveal key={s.n} delay={0.06 + i * 0.08}>
-                <div className="relative h-full p-7" style={{ background: "rgba(255,250,242,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <Brackets color="rgba(212,174,90,0.25)" inset={8} size={9} />
-                  <span className="font-serif text-[2.2rem] italic leading-none" style={{ color: "rgba(212,174,90,0.5)" }}>{s.n}</span>
-                  <h3 className="mt-4 font-serif text-[1.3rem] leading-tight text-cream">{s.t}</h3>
-                  <p className="mt-3 text-[0.98rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.62)" }}>{s.d}</p>
-                </div>
-              </Reveal>
+            {ABLAUF.map((schritt, i) => (
+              <EbenenKachel key={schritt.n} ziffer={schritt.n} titel={schritt.t} text={schritt.d} index={i} />
             ))}
           </div>
         </div>
@@ -659,14 +762,7 @@ export default function BeratungView() {
               { n: "02", t: "Der Code kommt sofort", d: "Direkt nach dem Kauf, zusammen mit deinem Terminlink." },
               { n: "03", t: "Du löst ihn beim Kurs ein", d: `${KURS_TERMIN}. Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
             ].map((x, i) => (
-              <Reveal key={x.n} delay={0.08 + i * 0.07}>
-                <div className="relative h-full p-6" style={{ background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <Brackets color="rgba(212,174,90,0.22)" inset={7} size={8} />
-                  <span className="font-mono text-[12px]" style={{ color: "rgba(212,174,90,0.65)" }}>{x.n}</span>
-                  <h3 className="mt-3 font-serif text-[1.15rem] leading-tight text-cream">{x.t}</h3>
-                  <p className="mt-2 text-[0.94rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.58)" }}>{x.d}</p>
-                </div>
-              </Reveal>
+              <EbenenKachel key={x.n} ziffer={x.n} titel={x.t} text={x.d} index={i} />
             ))}
           </div>
 
