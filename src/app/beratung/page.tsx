@@ -9,8 +9,18 @@ import type { Metadata } from "next";
    Fragen kommen aus [[Beratungsstunde/Fragenkatalog]] im Vault, nicht erfunden.
    ───────────────────────────────────────────────────────────────────────── */
 
-// Vor dem Verkauf eintragen: ThriveCart-Produkt mit diesem Slug anlegen.
-const CHECKOUT = "https://sabala-mentoring.thrivecart.com/sabala-beratungsstunde/";
+// HIER den ThriveCart-Link eintragen, sobald das Produkt existiert.
+// Solange das Feld leer ist, fuehrt der Button zu einer Anfrage-Mail statt ins Leere.
+// Das ist Absicht: die Seite darf live sein, bevor der Checkout steht.
+const CHECKOUT_THRIVECART = "";
+
+const CHECKOUT =
+  CHECKOUT_THRIVECART ||
+  "mailto:sabala@sabala-mentoring.com" +
+    "?subject=Beratungsstunde%2097%20Euro" +
+    "&body=Hallo%20Sabala%2C%0A%0Aich%20moechte%20die%20Beratungsstunde%20buchen.%0A%0AMeine%20Fragen%3A%0A-%20%0A%0AViele%20Gruesse%0A";
+
+const CHECKOUT_BEREIT = Boolean(CHECKOUT_THRIVECART);
 
 const PREIS = "97";
 const PREIS_REGULAER = "200";
@@ -327,7 +337,7 @@ export default function BeratungPage() {
               fontWeight: 600, letterSpacing: "0.06em", padding: "19px 40px", fontSize: "1.02rem",
             }}
           >
-            Beratungsstunde sichern
+            {CHECKOUT_BEREIT ? "Beratungsstunde sichern" : "Beratungsstunde anfragen"}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" aria-hidden>
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -493,7 +503,7 @@ export default function BeratungPage() {
               fontWeight: 600, letterSpacing: "0.06em", padding: "20px 44px", fontSize: "1.05rem",
             }}
           >
-            Termin sichern
+            {CHECKOUT_BEREIT ? "Termin sichern" : "Stunde anfragen"}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" aria-hidden>
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
