@@ -484,8 +484,8 @@ export default function BeratungView() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.24 }} className="mt-9 flex flex-wrap items-center gap-5">
-            <GoldCTA href="#angebot">Was dich erwartet</GoldCTA>
-            <a href={CHECKOUT} className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] transition-colors"
+            <GoldCTA href="#fragen">Häufige Fragen ansehen</GoldCTA>
+            <a href={CHECKOUT} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] transition-colors"
                style={{ color: "rgba(250,248,245,0.6)", textDecoration: "none", borderBottom: "1px solid rgba(250,248,245,0.25)", paddingBottom: 3 }}>
               Direkt buchen
               <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
@@ -538,7 +538,7 @@ export default function BeratungView() {
       />
 
       {/* ── DIE FRAGEN (nur Fragen, Antworten sind das Produkt) ──────────── */}
-      <section className="px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
+      <section id="fragen" className="scroll-mt-16 px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
         <div className="mx-auto max-w-6xl">
           <Reveal><Eyebrow>{anzahl} Fragen, die mir wirklich gestellt werden</Eyebrow></Reveal>
           <Reveal delay={0.06}>
@@ -606,7 +606,7 @@ export default function BeratungView() {
               <p className="text-center text-[1.05rem]" style={{ color: "rgba(250,248,245,0.55)" }}>
                 Deine Frage nicht dabei? Schreib sie mir bei der Buchung dazu.
               </p>
-              <GoldCTA href={CHECKOUT}>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              <GoldCTA href={CHECKOUT} neuerTab>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
               <span className="font-mono text-[11.5px] uppercase tracking-[0.16em]" style={{ color: "rgba(250,248,245,0.42)" }}>
                 Termin suchst du dir direkt nach dem Kauf aus
               </span>
@@ -853,7 +853,7 @@ export default function BeratungView() {
 
           <Reveal delay={0.28}>
             <div className="mt-12 flex flex-col items-center gap-3">
-              <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              <GoldCTA href={CHECKOUT} large neuerTab>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
               <span className="font-mono text-[11.5px] uppercase tracking-[0.16em]" style={{ color: "rgba(250,248,245,0.45)" }}>
                 Kein Zwang: ohne Kurs behältst du trotzdem alles aus der Stunde
               </span>
@@ -912,7 +912,7 @@ export default function BeratungView() {
 
             <Reveal delay={0.2}>
               <div className="mt-10 flex flex-wrap items-center gap-5">
-                <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+                <GoldCTA href={CHECKOUT} large neuerTab>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
               </div>
             </Reveal>
           </div>

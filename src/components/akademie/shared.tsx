@@ -181,14 +181,18 @@ export function GoldCTA({
   href,
   children,
   large = false,
+  neuerTab = false,
 }: {
   href: string;
   children: React.ReactNode;
   large?: boolean;
+  /* Externe Ziele (Checkout) im neuen Tab, damit die Seite zum Nachlesen bleibt. */
+  neuerTab?: boolean;
 }) {
   return (
     <a
       href={href}
+      {...(neuerTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className="group relative inline-flex items-center gap-3 font-sans font-semibold transition-all"
       style={{
         background: "var(--gold)",
