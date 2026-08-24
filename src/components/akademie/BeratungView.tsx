@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, type ReactNode } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal, TiltCard, Brackets, Eyebrow, GoldCTA } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -144,6 +144,21 @@ const ABLAUF = [
   { n: "03", t: "Du bekommst alles schriftlich", d: "Danach schicke ich dir die Zusammenfassung mit Links, Tools und den nächsten Schritten." },
 ];
 
+const EINWAENDE: [string, string][] = [
+  ["Brauche ich Vorwissen?",
+   "Nein. Sag mir vorher, wo du stehst, dann setze ich dort an. In meinen Kursen saß bisher niemand, der programmieren kann."],
+  ["Was, wenn meine Frage gar nicht dabei ist?",
+   "Dann ist sie trotzdem willkommen. Die Liste zeigt, was oft gefragt wird, und ist keine Einschränkung."],
+  ["Ist das ein verkapptes Verkaufsgespräch?",
+   "Nein. Du bekommst eine Stunde Antworten und entscheidest danach frei. Willst du danach, dass ich etwas für dich baue, sprechen wir darüber. Wenn nicht, hast du trotzdem, wofür du bezahlt hast."],
+  ["Was, wenn wir die Stunde nicht voll brauchen?",
+   "Dann hören wir früher auf. Ich verlängere nichts künstlich. Umgekehrt werfe ich dich auch nicht auf die Minute raus, wenn wir mitten in etwas stecken."],
+  ["Wie komme ich an meinen Termin?",
+   "Direkt nach dem Kauf bekommst du den Link zur Terminwahl und suchst dir aus, was dir passt. Dazu deinen Gutscheincode."],
+  ["Und wenn ich danach doch den Kurs will?",
+   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Lauf ist am 24. September und 2. Oktober."],
+];
+
 const VORHER = [
   "Zwanzig offene Tabs, und die eigentliche Frage ist noch offen.",
   "Jedes Tutorial setzt an einer anderen Stelle an.",
@@ -154,6 +169,68 @@ const NACHHER = [
   "Die Werkzeuge, die du brauchst, und die, die du dir sparst.",
   "Eine schriftliche Zusammenfassung, mit der du morgen weiterarbeitest.",
 ];
+
+/* Parallax-Bild: bewegt sich beim Scrollen langsamer als die Seite.
+   Der Effekt ist bewusst subtil (12%), sonst wirkt es billig. */
+function ParallaxBild({
+  src, alt, hoehe = "62vh", overlay = 0.55, kinder,
+}: { src: string; alt: string; hoehe?: string; overlay?: number; kinder?: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.08, 1.14]);
+
+  return (
+    <div ref={ref} className="relative w-full overflow-hidden" style={{ height: hoehe }}>
+      <motion.div style={{ y, scale, position: "absolute", inset: "-18% -4%" }}>
+        <Image src={src} alt={alt} fill className="object-cover" sizes="100vw" />
+      </motion.div>
+      <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(10,8,6,${overlay + 0.2}) 0%, rgba(10,8,6,${overlay - 0.2}) 45%, rgba(10,8,6,0.94) 100%)` }} />
+      {kinder && <div className="relative z-10 flex h-full items-center justify-center px-[6vw]">{kinder}</div>}
+    </div>
+  );
+}
+
+/* Zahl, die beim Sichtbarwerden hochzaehlt. Fuer den Gutschein-Betrag. */
+function ZaehlZahl({ ziel, dauer = 1100 }: { ziel: number; dauer?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [wert, setWert] = useState(0);
+  const [gelaufen, setGelaufen] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || gelaufen) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      setGelaufen(true);
+      io.disconnect();
+      const start = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min(1, (t - start) / dauer);
+        // ease-out, damit die Zahl am Ende weich einrastet
+        setWert(Math.round(ziel * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ziel, dauer, gelaufen]);
+
+  return <span ref={ref}>{wert}</span>;
+}
+
+/* Duenner Gold-Balken oben, zeigt den Lesefortschritt. */
+function LeseFortschritt() {
+  const { scrollYProgress } = useScroll();
+  const breite = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
+  return (
+    <motion.div
+      aria-hidden
+      style={{ scaleX: breite, transformOrigin: "0%", position: "fixed", top: 0, left: 0, right: 0, height: 2, background: goldLight, zIndex: 60 }}
+    />
+  );
+}
 
 /* Rotierende Frage. Zeigt, was dem Besucher gerade selbst im Kopf herumgeht,
    bevor er die vollstaendige Liste sieht. Pausiert bei Hover. */
@@ -233,6 +310,8 @@ export default function BeratungView() {
 
   return (
     <div style={{ background: "#0a0806" }}>
+      <LeseFortschritt />
+
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: "#0a0806" }}>
         <div className="absolute inset-0 z-0">
@@ -305,6 +384,27 @@ export default function BeratungView() {
         </div>
       </section>
 
+      {/* Parallax-Auftakt zur Fragen-Sektion */}
+      <ParallaxBild
+        src="/beratung/fragen.jpg"
+        alt="Jemand sitzt spätabends am Schreibtisch, umgeben von offenen Fragen"
+        hoehe="58vh"
+        overlay={0.5}
+        kinder={
+          <motion.p
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-2xl text-center font-serif leading-[1.15] text-cream"
+            style={{ fontSize: "clamp(1.5rem, 3.4vw, 2.6rem)", textShadow: "0 2px 30px rgba(10,8,6,0.8)" }}
+          >
+            Die Antwort steht irgendwo im Netz.<br />
+            <span style={{ color: goldLight }}>Nur eben nicht in deinem Kontext.</span>
+          </motion.p>
+        }
+      />
+
       {/* ── DIE FRAGEN (nur Fragen, Antworten sind das Produkt) ──────────── */}
       <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
         <div className="mx-auto max-w-6xl">
@@ -367,6 +467,18 @@ export default function BeratungView() {
       <section className="px-[6vw] py-[12vh]" style={{ background: "radial-gradient(120% 80% at 50% 100%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
         <div className="mx-auto max-w-5xl">
           <Reveal><Eyebrow>So läuft es ab</Eyebrow></Reveal>
+          <Reveal delay={0.08}>
+            <div className="mx-auto mt-10 max-w-3xl overflow-hidden" style={{ border: "1px solid rgba(184,150,62,0.28)" }}>
+              <Image
+                src="/beratung/gespraech.jpg"
+                alt="Zwei Menschen im Videogespräch, Bildschirm geteilt"
+                width={1200}
+                height={675}
+                className="h-auto w-full"
+                style={{ display: "block" }}
+              />
+            </div>
+          </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {ABLAUF.map((s, i) => (
               <Reveal key={s.n} delay={0.06 + i * 0.08}>
@@ -399,6 +511,10 @@ export default function BeratungView() {
             <div className="relative h-full p-8" style={{ background: "linear-gradient(140deg, rgba(184,150,62,0.13) 0%, rgba(20,15,9,0.9) 60%)", border: "1px solid rgba(184,150,62,0.4)" }}>
               <Brackets color="rgba(212,174,90,0.4)" inset={8} size={10} />
               <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: gold }}>Nach der Stunde</span>
+              <div className="relative mt-5 overflow-hidden" style={{ height: 150 }}>
+                <Image src="/beratung/klarheit.jpg" alt="Aufgeräumter Schreibtisch im Morgenlicht" fill className="object-cover" sizes="(max-width: 768px) 100vw, 420px" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(20,15,9,0.15) 0%, rgba(20,15,9,0.8) 100%)" }} />
+              </div>
               <div className="mt-6 flex flex-col gap-4">
                 {NACHHER.map((v) => (
                   <p key={v} className="text-[1.02rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.85)" }}>{v}</p>
@@ -406,6 +522,74 @@ export default function BeratungView() {
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ── WER DIR GEGENUEBERSITZT (Authority) ─────────────────────────── */}
+      <section className="px-[6vw] py-[13vh]" style={{ background: "radial-gradient(120% 80% at 50% 0%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1fr] md:gap-14">
+          <Reveal>
+            <div className="relative overflow-hidden" style={{ border: "1px solid rgba(184,150,62,0.3)" }}>
+              <Image
+                src="/akademie/ilja-trainer.jpg"
+                alt="Ilja Krasevskij beim Training"
+                width={720}
+                height={900}
+                className="h-auto w-full"
+                style={{ display: "block" }}
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div>
+              <Eyebrow center={false}>Wer dir gegenübersitzt</Eyebrow>
+              <h2 className="mt-4 font-serif leading-[1.1] text-cream" style={{ fontSize: "clamp(1.8rem, 3.6vw, 2.7rem)" }}>
+                Ich baue das, worüber wir sprechen,<br />
+                <span style={{ color: gold }}>jeden Tag selbst.</span>
+              </h2>
+              <p className="mt-6 text-[1.05rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.72)" }}>
+                Meine eigene Webseite, meine Kundenprojekte, mein Second Brain mit über zweitausend
+                Dateien, meine Präsentationen und die Agenten, die mir Arbeit abnehmen: alles mit
+                Claude Code gebaut. Was ich dir zeige, habe ich vorher an meinem eigenen Geschäft
+                ausprobiert, inklusive der Umwege.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                {["Business-Trainer & Speaker", "e-Trainer-Zertifizierung", "KI-Dozent bei KIfiziert", "5 Jahre Avendoo"].map((f) => (
+                  <span key={f} className="relative px-4 py-2 font-mono text-[10.5px] uppercase tracking-[0.14em]"
+                    style={{ color: "rgba(250,248,245,0.7)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(184,150,62,0.28)" }}>
+                    <Brackets color="rgba(212,174,90,0.35)" inset={4} size={6} />
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── EINWAENDE ───────────────────────────────────────────────────── */}
+      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
+        <div className="mx-auto max-w-3xl">
+          <Reveal><Eyebrow>Bevor du buchst</Eyebrow></Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="mt-4 text-center font-serif text-cream" style={{ fontSize: "clamp(1.8rem, 3.6vw, 2.7rem)", lineHeight: 1.1 }}>
+              Was du vielleicht noch wissen willst
+            </h2>
+          </Reveal>
+          <div className="mt-12 flex flex-col gap-3">
+            {EINWAENDE.map(([q, a], i) => (
+              <Reveal key={q} delay={0.04 + i * 0.05}>
+                <div className="relative p-7" style={{ background: "rgba(255,250,242,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <Brackets color="rgba(212,174,90,0.2)" inset={7} size={8} />
+                  <p className="flex items-start gap-3 font-serif text-[1.25rem] leading-snug text-cream">
+                    <span style={{ color: gold }}>&#9657;</span>
+                    {q}
+                  </p>
+                  <p className="mt-3 pl-7 text-[1rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.62)" }}>{a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -447,7 +631,7 @@ export default function BeratungView() {
                 </p>
 
                 <p className="mt-5 font-serif italic leading-none" style={{ fontSize: "clamp(4rem, 13vw, 7rem)", color: goldLight, textShadow: "0 6px 40px rgba(212,174,90,0.35)" }}>
-                  {GUTSCHEIN} €
+                  <ZaehlZahl ziel={Number(GUTSCHEIN)} /> €
                 </p>
 
                 <p className="mt-5 text-[1.05rem]" style={{ color: "rgba(250,248,245,0.78)" }}>
