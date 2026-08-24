@@ -275,7 +275,7 @@ function EbenenKachel({
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
-    setT({ rx: (0.5 - py) * 8, ry: (px - 0.5) * 8, gx: px * 100, gy: py * 100, aktiv: true });
+    setT({ rx: (0.5 - py) * 13, ry: (px - 0.5) * 13, gx: px * 100, gy: py * 100, aktiv: true });
   }
 
   return (
@@ -293,17 +293,17 @@ function EbenenKachel({
           className="relative h-full overflow-hidden"
           style={{
             transformStyle: "preserve-3d",
-            transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.aktiv ? -8 : 0}px)`,
+            transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.aktiv ? -14 : 0}px) scale(${t.aktiv ? 1.025 : 1})`,
             transition: t.aktiv ? "transform 0.1s linear" : "transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease-out",
             /* Ruhezustand traegt schon Tiefe: Verlauf, Lichtkante, echter Schlagschatten */
-            background: "linear-gradient(160deg, rgba(255,250,242,0.075) 0%, rgba(255,250,242,0.028) 34%, rgba(10,8,6,0.5) 100%)",
-            borderTop: "1px solid rgba(255,250,242,0.16)",
-            borderLeft: "1px solid rgba(255,250,242,0.07)",
-            borderRight: "1px solid rgba(0,0,0,0.5)",
-            borderBottom: "1px solid rgba(0,0,0,0.6)",
+            background: "linear-gradient(158deg, rgba(255,247,232,0.155) 0%, rgba(255,247,232,0.075) 30%, rgba(40,30,16,0.55) 72%, rgba(24,18,10,0.72) 100%)",
+            borderTop: "1px solid rgba(255,244,220,0.42)",
+            borderLeft: "1px solid rgba(255,244,220,0.20)",
+            borderRight: "1px solid rgba(184,150,62,0.22)",
+            borderBottom: "1px solid rgba(184,150,62,0.16)",
             boxShadow: t.aktiv
-              ? "0 42px 74px -34px rgba(0,0,0,0.95), 0 0 44px -10px rgba(212,174,90,0.42), inset 0 1px 0 rgba(255,255,255,0.12)"
-              : "0 26px 52px -26px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.07)",
+              ? "0 30px 70px -20px rgba(212,174,90,0.42), 0 0 0 1px rgba(212,174,90,0.5), inset 0 1px 0 rgba(255,248,232,0.5), inset 0 -40px 60px -40px rgba(212,174,90,0.4)"
+              : "0 18px 44px -22px rgba(212,174,90,0.20), inset 0 1px 0 rgba(255,248,232,0.32)",
           }}
         >
           {/* Ziffer als Relief, im Ruhezustand deutlich sichtbar */}
@@ -312,7 +312,7 @@ function EbenenKachel({
             className="font-serif italic"
             style={{
               position: "absolute", top: -30, right: -10, lineHeight: 1, fontSize: "8rem",
-              color: goldLight, opacity: t.aktiv ? 0.22 : 0.13,
+              color: goldLight, opacity: t.aktiv ? 0.4 : 0.2,
               transform: "translateZ(-50px)", transition: "opacity 0.3s ease-out",
               pointerEvents: "none",
               textShadow: "0 2px 24px rgba(0,0,0,0.6)",
@@ -331,7 +331,7 @@ function EbenenKachel({
           {/* Cursor-Glow legt beim Hover nach */}
           <span aria-hidden style={{
             position: "absolute", inset: 0,
-            background: `radial-gradient(360px circle at ${t.gx}% ${t.gy}%, rgba(212,174,90,0.20), transparent 60%)`,
+            background: `radial-gradient(400px circle at ${t.gx}% ${t.gy}%, rgba(255,214,130,0.34), rgba(212,174,90,0.12) 42%, transparent 66%)`,
             opacity: t.aktiv ? 1 : 0, transition: "opacity 0.3s ease-out", pointerEvents: "none",
           }} />
 
@@ -565,18 +565,18 @@ export default function BeratungView() {
               <Reveal key={t.titel} delay={0.04 + (i % 3) * 0.045}>
                 <TiltCard max={6} lift={8} glow="rgba(212,174,90,0.24)" style={{
                   height: "100%",
-                  background: "linear-gradient(160deg, rgba(255,250,242,0.07) 0%, rgba(255,250,242,0.025) 34%, rgba(10,8,6,0.45) 100%)",
-                  borderTop: "1px solid rgba(255,250,242,0.15)",
-                  borderLeft: "1px solid rgba(255,250,242,0.06)",
-                  borderRight: "1px solid rgba(0,0,0,0.45)",
-                  borderBottom: "1px solid rgba(0,0,0,0.55)",
-                  boxShadow: "0 24px 46px -24px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.07)",
+                  background: "linear-gradient(158deg, rgba(255,247,232,0.14) 0%, rgba(255,247,232,0.065) 30%, rgba(40,30,16,0.5) 72%, rgba(24,18,10,0.7) 100%)",
+                  borderTop: "1px solid rgba(255,244,220,0.38)",
+                  borderLeft: "1px solid rgba(255,244,220,0.18)",
+                  borderRight: "1px solid rgba(184,150,62,0.20)",
+                  borderBottom: "1px solid rgba(184,150,62,0.15)",
+                  boxShadow: "0 18px 44px -22px rgba(212,174,90,0.18), inset 0 1px 0 rgba(255,248,232,0.30)",
                 }}>
                   <div className="relative flex h-full flex-col overflow-hidden p-7">
                     <Brackets color="rgba(212,174,90,0.28)" inset={8} size={9} />
                     {/* Anzahl als Relief in der Tiefe */}
                     <span aria-hidden className="font-serif italic"
-                      style={{ position: "absolute", top: -26, right: -8, fontSize: "6rem", lineHeight: 1, color: goldLight, opacity: 0.12, transform: "translateZ(-40px)", pointerEvents: "none", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
+                      style={{ position: "absolute", top: -26, right: -8, fontSize: "6rem", lineHeight: 1, color: goldLight, opacity: 0.2, transform: "translateZ(-40px)", pointerEvents: "none", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
                       {String(t.fragen.length).padStart(2, "0")}
                     </span>
                     <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 80, background: "linear-gradient(180deg, transparent, rgba(184,150,62,0.09))", pointerEvents: "none" }} />
@@ -752,12 +752,12 @@ export default function BeratungView() {
                 <div
                   className="relative h-full overflow-hidden p-7"
                   style={{
-                    background: "linear-gradient(160deg, rgba(255,250,242,0.062) 0%, rgba(255,250,242,0.022) 36%, rgba(10,8,6,0.45) 100%)",
-                    borderTop: "1px solid rgba(255,250,242,0.13)",
-                    borderLeft: "1px solid rgba(255,250,242,0.05)",
-                    borderRight: "1px solid rgba(0,0,0,0.45)",
-                    borderBottom: "1px solid rgba(0,0,0,0.55)",
-                    boxShadow: "0 22px 44px -24px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)",
+                    background: "linear-gradient(158deg, rgba(255,247,232,0.13) 0%, rgba(255,247,232,0.06) 30%, rgba(40,30,16,0.48) 72%, rgba(24,18,10,0.68) 100%)",
+                    borderTop: "1px solid rgba(255,244,220,0.36)",
+                    borderLeft: "1px solid rgba(255,244,220,0.16)",
+                    borderRight: "1px solid rgba(184,150,62,0.20)",
+                    borderBottom: "1px solid rgba(184,150,62,0.15)",
+                    boxShadow: "0 18px 42px -22px rgba(212,174,90,0.18), inset 0 1px 0 rgba(255,248,232,0.28)",
                   }}
                 >
                   <Brackets color="rgba(212,174,90,0.26)" inset={8} size={9} />
