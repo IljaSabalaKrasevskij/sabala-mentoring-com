@@ -14,6 +14,11 @@ export default function Kontakt({ pe }: { pe?: PE }) {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "mailto">("idle");
   const [form, setForm] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
 
+  /* Landingpages mit einem eigenen Ziel bekommen diesen Block nicht. Zwei
+     Formulare untereinander teilen die Aufmerksamkeit, und hier gewinnt sonst
+     das unwichtigere. Neue Landingpage = Pfad hier eintragen. */
+  if (["/webinar", "/beratung"].includes(pathname)) return null;
+
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
