@@ -315,8 +315,10 @@ export default function BeratungView() {
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ background: "#0a0806" }}>
         <div className="absolute inset-0 z-0">
-          <Image src="/hero/ilja-default.png" alt="Ilja Krasevskij" fill priority className="object-cover object-right" sizes="100vw" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(10,8,6,0.95) 0%, rgba(10,8,6,0.76) 34%, rgba(10,8,6,0.36) 54%, transparent 82%)" }} />
+          <Image src="/hero/ilja-default.png" alt="Ilja Krasevskij" fill priority className="object-cover object-[70%_center] md:object-right" sizes="100vw" />
+          {/* Mobil: Verlauf von unten, damit der Text auf dunklem Grund sitzt */}
+          <div className="absolute inset-0 md:hidden" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.80) 0%, rgba(10,8,6,0.86) 40%, rgba(10,8,6,0.93) 70%, rgba(10,8,6,0.98) 100%)" }} />
+          <div className="absolute inset-0 hidden md:block" style={{ background: "linear-gradient(to right, rgba(10,8,6,0.95) 0%, rgba(10,8,6,0.76) 34%, rgba(10,8,6,0.36) 54%, transparent 82%)" }} />
         </div>
 
         <div className="relative z-10 flex min-h-[88vh] flex-col justify-center px-[6vw] py-[12vh]">
