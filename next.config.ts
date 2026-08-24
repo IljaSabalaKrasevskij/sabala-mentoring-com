@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
   // ohne Redirect verlieren wir den ganzen Search-Equity.
   async redirects() {
     return [
+      // Claude Starter am 24.8.2026 eingestellt, war nie buchbar.
+      // Die Beratungsstunde hat seinen Platz uebernommen.
+      {
+        source: "/claude-starter",
+        destination: "/beratung",
+        permanent: true,
+      },
       {
         source: "/warum-business-mentoring-programme-scheitern",
         destination: "/blog/warum-business-mentoring-programme-scheitern",

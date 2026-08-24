@@ -63,13 +63,15 @@ const IconSpark = (
 const BOOKABLE: {
   href: string; icon: ReactNode; level: Level; title: string; sub: string;
   desc: string; metas: string[]; priceLabel: string; price: string;
+  badge?: string; cta?: string;
 }[] = [
   {
-    href: "/claude-starter", icon: IconSpark, level: 1, title: "Claude Starter",
-    sub: "Dein erster Abend mit Claude, von null auf läuft",
-    desc: "An einem Abend installierst du Claude, lernst die Oberfläche und vermeidest die typischen Anfängerfehler. Live, an deiner Seite.",
-    metas: ["Termin folgt", "2 Stunden live", "Kein Vorwissen nötig"],
-    priceLabel: "Ein Abend", price: "€99",
+    href: "/beratung", icon: IconSpark, level: 1, title: "Deine Beratungsstunde",
+    sub: "Eine Stunde, deine Fragen, klare Antworten",
+    desc: "Du fragst, ich zeige es dir live am Bildschirm. Zu Claude Code, Webseiten mit KI, Hosting, SEO oder Datenschutz. Der Betrag zählt für die Akademie.",
+    metas: ["Termin nach Buchung", "60 Minuten 1:1", "Kein Vorwissen nötig"],
+    priceLabel: "Statt €200", price: "€97",
+    badge: "Einzelgespräch", cta: "Zur Beratung",
   },
   {
     href: "/akademie", icon: IconBrain, level: 2, title: "Dein Second Brain",
@@ -225,9 +227,10 @@ export default function CourseGrid() {
   );
 }
 
-function BookableCard({ href, icon, level, title, sub, desc, metas, priceLabel, price }: {
+function BookableCard({ href, icon, level, title, sub, desc, metas, priceLabel, price, badge = "Live-Training", cta = "Zum Kurs" }: {
   href: string; icon: ReactNode; level: Level; title: string; sub: string;
   desc: string; metas: string[]; priceLabel: string; price: string;
+  badge?: string; cta?: string;
 }) {
   return (
     <a
@@ -263,7 +266,7 @@ function BookableCard({ href, icon, level, title, sub, desc, metas, priceLabel, 
           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 20 }}>
             <span style={{ color: gold }}>{icon}</span>
             <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, border: `1px solid rgba(212,174,90,0.4)`, padding: "5px 11px", borderRadius: 2 }}>
-              Live-Training
+              {badge}
             </span>
             <LevelBadge level={level} />
           </div>
@@ -293,7 +296,7 @@ function BookableCard({ href, icon, level, title, sub, desc, metas, priceLabel, 
             </span>
           </div>
           <span className="group-hover:gap-3" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: gold, color: "#0a0806", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em", padding: "16px 30px", borderRadius: 2, transition: "gap 0.25s" }}>
-            Zum Kurs
+            {cta}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
