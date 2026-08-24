@@ -885,14 +885,14 @@ export default function BeratungView() {
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.45)" }}>
+              <p className="mt-2 pb-8 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.45)" }}>
                 netto zzgl. MwSt. &middot; für Unternehmen und Selbständige
               </p>
             </Reveal>
 
             {/* Was drin ist, mit Haken statt Fliesstext */}
             <Reveal delay={0.14}>
-              <ul className="mt-8 flex flex-col gap-3.5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              <ul className="flex flex-col gap-3.5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
                 {[
                   "60 Minuten 1:1 per Video, Bildschirm geteilt",
                   "Deinen Termin suchst du dir direkt nach dem Kauf aus",
