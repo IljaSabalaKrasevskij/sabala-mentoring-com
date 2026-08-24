@@ -1,0 +1,525 @@
+"use client";
+
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
+import { Reveal, TiltCard, Brackets, Eyebrow, GoldCTA } from "./shared";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BeratungView — Sales-Page für die Beratungsstunde (Mini-Produkt).
+   Aufbau übernommen von der früheren ClaudeStarterView, die dieselbe
+   Rolle hatte: Hero mit Bild, ICP-Ansprache, Inhalte, Ablauf, Vorher/Nachher,
+   Preis, Abschluss.
+
+   Bewusst NUR Fragen, keine Antworten. Die Fragen wecken den Bedarf,
+   die Antworten sind das Produkt. Fragen stammen aus den Session-Analysen
+   der Akademie und aus einer Kunden-Feedbackliste, nicht erfunden:
+   [[03_Bereiche/Sabala_Mentoring/Beratungsstunde/Fragenkatalog]]
+   ───────────────────────────────────────────────────────────────────────── */
+
+// ThriveCart-Produkt mit diesem Slug anlegen, dann funktioniert der Kauf direkt.
+const CHECKOUT = "https://sabala-mentoring.thrivecart.com/sabala-beratungsstunde/";
+
+const PREIS = "97";
+const PREIS_REGULAER = "200";
+const GUTSCHEIN = "120";
+const KURS_PREIS = 397;
+
+const gold = "#b8963e";
+const goldLight = "#d4ae5a";
+
+const FUER_DICH = [
+  "Du willst deine Webseite mit Claude Code bauen, kommst aber an einer Stelle nicht weiter.",
+  "Du hast etwas Fertiges auf dem Rechner und weißt nicht, wie du es online bringst.",
+  "Du fragst dich, wo deine Daten landen, sobald du mit KI arbeitest.",
+  "Du willst dein Second Brain aufsetzen, aber der erste Schritt fehlt.",
+  "Du hast zwanzig Tabs offen und trotzdem keine Antwort auf deine eigentliche Frage.",
+];
+
+/* ── Icons: Linien-SVGs im Hausstil, keine Emojis ───────────────────────── */
+const st = { fill: "none", stroke: goldLight, strokeWidth: 1.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+const I = {
+  web: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 9h18M6.5 7.1h.01M9 7.1h.01" /></svg>),
+  terminal: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 9l3 3-3 3M13 15h4" /></svg>),
+  deploy: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><path d="M12 3c3 2.5 4.5 6 4.5 9L12 16l-4.5-4c0-3 1.5-6.5 4.5-9z" /><circle cx="12" cy="9.5" r="1.6" /><path d="M9 17l-2 4 5-2 5 2-2-4" /></svg>),
+  recht: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z" /><path d="M9 12l2 2 4-4" /></svg>),
+  brain: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="7" y="7" width="10" height="10" rx="2.2" /><path d="M9.5 4v3M14.5 4v3M9.5 17v3M14.5 17v3M4 9.5h3M4 14.5h3M17 9.5h3M17 14.5h3" /><circle cx="12" cy="12" r="1.6" /></svg>),
+  daten: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="4" y="10" width="16" height="10" rx="2" /><path d="M8 10V7a4 4 0 018 0v3" /><circle cx="12" cy="15" r="1.4" /></svg>),
+  deck: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="3" y="4" width="18" height="12" rx="1.6" /><path d="M12 16v4M8.5 20h7M7 8h6M7 11h9" /></svg>),
+  app: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><rect x="3.5" y="3.5" width="7" height="7" rx="1.4" /><rect x="13.5" y="3.5" width="7" height="7" rx="1.4" /><rect x="3.5" y="13.5" width="7" height="7" rx="1.4" /><path d="M17 13.5v7M13.5 17h7" /></svg>),
+  agent: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><circle cx="6" cy="6" r="2.3" /><circle cx="18" cy="12" r="2.3" /><circle cx="6" cy="18" r="2.3" /><path d="M8 7l8 4M8 17l8-4" /></svg>),
+  key: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><circle cx="8" cy="12" r="4" /><path d="M12 12h9M17 12v3.5M20 12v2.5" /></svg>),
+  suche: (<svg width="26" height="26" viewBox="0 0 24 24" {...st}><circle cx="10.5" cy="10.5" r="6" /><path d="M15 15l5 5" /></svg>),
+};
+
+/* ── Die Fragen. NUR Fragen, die Antworten sind das Produkt. ───────────── */
+const THEMEN: { icon: ReactNode; titel: string; fragen: string[] }[] = [
+  { icon: I.web, titel: "Webseiten mit Claude Code", fragen: [
+    "Wie baue ich eine Webseite mit KI, die nicht nach KI aussieht?",
+    "Woran erkennt man überhaupt, dass eine Seite von einer KI gebaut wurde?",
+    "Wie komme ich von der leeren Seite zu einer Struktur, die verkauft?",
+    "Wie schreibe ich Texte, die nach mir klingen und nicht nach Marketing?",
+    "Woher nehme ich Bilder, wenn ich keine Fotos habe?",
+    "Wordpress, Baukasten oder selbst gebaut, was passt zu mir?",
+  ]},
+  { icon: I.terminal, titel: "Claude Code und Terminal", fragen: [
+    "Was ist Claude Code, und wozu brauche ich das Terminal?",
+    "Ich habe noch nie ein Terminal benutzt, ist das ein Ausschlusskriterium?",
+    "Wann nutze ich den Chat und wann Claude Code?",
+    "Wo gehört die CLAUDE.md hin, und was schreibe ich da rein?",
+    "Reicht der kostenlose Account, und was kostet mich das im Monat?",
+    "Was sind Skills, und wer macht die eigentlich?",
+    "Kann ich per Sprache statt Tippen arbeiten?",
+  ]},
+  { icon: I.deploy, titel: "Online bringen und Deployment", fragen: [
+    "Wie bringe ich meine mit Claude gebaute Seite überhaupt online?",
+    "Was kostet Hosting, und was brauche ich davon wirklich?",
+    "Wie verbinde ich meine Domain damit?",
+    "Ich ersetze meine alte Seite, verliere ich meine Google-Rankings?",
+    "Was ist Git, und muss ich das verstehen?",
+    "Wie ändere ich später etwas, ohne die Seite kaputtzumachen?",
+  ]},
+  { icon: I.recht, titel: "Rechtssicher betreiben", fragen: [
+    "Brauche ich ein Cookie-Banner, und wenn ja, welches?",
+    "Wie bringe ich eine Webseite rechtssicher online?",
+    "Brauche ich einen Hinweis, dass die Seite mit KI gebaut wurde?",
+    "Wo muss ich hosten, damit die Daten in Europa bleiben?",
+    "Wie halte ich Passwörter und Schlüssel aus dem Code raus?",
+  ]},
+  { icon: I.brain, titel: "Second Brain Setup", fragen: [
+    "Warum vergisst Claude alles, sobald ich ein neues Fenster öffne?",
+    "Wie fange ich an, wenn ich Obsidian noch nie benutzt habe?",
+    "Ich habe Obsidian schon, fange ich trotzdem von vorne an?",
+    "Wie hole ich meine bestehenden Dokumente da rein?",
+    "Kann das auf meiner NAS oder in einer Cloud liegen?",
+    "Wie recherchiere ich ein Thema so, dass es danach nutzbar ist?",
+  ]},
+  { icon: I.daten, titel: "Daten und Datensicherheit", fragen: [
+    "Wo landen meine Daten, wenn ich mit Claude arbeite?",
+    "Darf ich Kundendaten oder Mandantendaten durch eine KI schicken?",
+    "Was bleibt lokal auf meinem Rechner, und was geht ins Netz?",
+    "Kann ich Modelle lokal laufen lassen, damit nichts rausgeht?",
+    "Können meine Mitarbeiter nur auf bestimmte Bereiche zugreifen?",
+  ]},
+  { icon: I.deck, titel: "HTML-Präsentationen", fragen: [
+    "Wie baue ich Präsentationen mit Claude Code statt mit PowerPoint?",
+    "Wie erreiche ich, dass jedes Deck gleich gut aussieht?",
+    "Wie wird aus einer Recherche automatisch eine fertige Präsentation?",
+    "Kann ich das als PDF weitergeben?",
+    "Warum wird bei mir immer etwas abgeschnitten?",
+  ]},
+  { icon: I.app, titel: "Apps und eigene Werkzeuge", fragen: [
+    "Kann ich mir mit Claude Code eine eigene kleine App bauen?",
+    "Wo hoste ich so eine App, ohne mir ein Sicherheitsproblem einzukaufen?",
+    "Wie schütze ich ein internes Dashboard vor fremdem Zugriff?",
+    "Wie verbinde ich meine App mit Daten, die ich schon habe?",
+  ]},
+  { icon: I.agent, titel: "Agenten und Automatisierung", fragen: [
+    "Wie baue ich einen Agenten, der eine Aufgabe wirklich übernimmt?",
+    "Was kann ich sinnvoll automatisieren, und wo lohnt es sich nicht?",
+    "Kann etwas jeden Tag laufen, ohne dass ich es starte?",
+    "Wie verbinde ich Claude mit Kalender oder E-Mail?",
+    "Wie lasse ich mehrere Agenten parallel arbeiten?",
+  ]},
+  { icon: I.key, titel: "Kontrolle und Zugänge", fragen: [
+    "Kann ich Texte, Bilder und Preise später selbst ändern?",
+    "Bekomme ich am Ende wirklich alle Zugänge?",
+    "Was passiert, wenn mein Dienstleister nicht mehr erreichbar ist?",
+    "Kann ich später zu jemand anderem wechseln?",
+  ]},
+  { icon: I.suche, titel: "Gefunden werden", fragen: [
+    "Warum findet mich bei Google niemand?",
+    "Welche Themen gehören auf welche Seite?",
+    "Wie werde ich in ChatGPT, Claude und Google AI Overviews zitiert?",
+    "Wie wichtig ist Local SEO für mich?",
+    "Wie messe ich, ob meine Seite etwas bringt?",
+  ]},
+];
+
+const ABLAUF = [
+  { n: "01", t: "Du buchst und schickst mir deine Fragen", d: "Nach der Buchung suchst du dir einen Termin und schreibst mir, was dich beschäftigt. Ich bereite mich darauf vor." },
+  { n: "02", t: "Wir sprechen eine Stunde", d: "Per Video, Bildschirm geteilt. Ich zeige dir die Dinge live an deinem Fall, statt sie zu beschreiben." },
+  { n: "03", t: "Du bekommst alles schriftlich", d: "Danach schicke ich dir die Zusammenfassung mit Links, Tools und den nächsten Schritten." },
+];
+
+const VORHER = [
+  "Zwanzig offene Tabs, und die eigentliche Frage ist noch offen.",
+  "Jedes Tutorial setzt an einer anderen Stelle an.",
+  "Angst, mit einem Klick etwas kaputtzumachen.",
+];
+const NACHHER = [
+  "Ein klarer nächster Schritt, den du heute noch gehen kannst.",
+  "Die Werkzeuge, die du brauchst, und die, die du dir sparst.",
+  "Eine schriftliche Zusammenfassung, mit der du morgen weiterarbeitest.",
+];
+
+/* Rotierende Frage. Zeigt, was dem Besucher gerade selbst im Kopf herumgeht,
+   bevor er die vollstaendige Liste sieht. Pausiert bei Hover. */
+function FragenSlideshow({ paare }: { paare: { frage: string; thema: string }[] }) {
+  const [i, setI] = useState(0);
+  const [pause, setPause] = useState(false);
+
+  useEffect(() => {
+    if (pause) return;
+    const t = setInterval(() => setI((v) => (v + 1) % paare.length), 3400);
+    return () => clearInterval(t);
+  }, [pause, paare.length]);
+
+  const aktuell = paare[i];
+
+  return (
+    <div
+      onMouseEnter={() => setPause(true)}
+      onMouseLeave={() => setPause(false)}
+      className="relative mx-auto max-w-4xl px-6 py-14 md:py-16"
+      style={{ background: "rgba(255,250,242,0.03)", border: "1px solid rgba(184,150,62,0.28)" }}
+    >
+      <Brackets color="rgba(212,174,90,0.45)" inset={10} size={12} />
+
+      <p className="text-center font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "rgba(250,248,245,0.42)" }}>
+        Geht dir das gerade auch durch den Kopf?
+      </p>
+
+      <div className="mt-7 flex min-h-[150px] items-center justify-center md:min-h-[130px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center"
+          >
+            <p className="font-serif leading-[1.2] text-cream" style={{ fontSize: "clamp(1.4rem, 3.2vw, 2.35rem)" }}>
+              {aktuell.frage}
+            </p>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: gold }}>
+              {aktuell.thema}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Fortschritt */}
+      <div className="mx-auto mt-8 flex max-w-md flex-wrap justify-center gap-1.5">
+        {paare.map((_, k) => (
+          <button
+            key={k}
+            type="button"
+            aria-label={`Frage ${k + 1}`}
+            onClick={() => setI(k)}
+            style={{
+              height: 2,
+              width: k === i ? 26 : 12,
+              background: k === i ? goldLight : "rgba(250,248,245,0.2)",
+              transition: "width 0.3s, background 0.3s",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function BeratungView() {
+  const anzahl = THEMEN.reduce((s, t) => s + t.fragen.length, 0);
+  // Je Thema die erste Frage, das ergibt eine Runde durch alle Themengebiete
+  const slideshow = THEMEN.map((t) => ({ frage: t.fragen[0], thema: t.titel }));
+
+  return (
+    <div style={{ background: "#0a0806" }}>
+      {/* ── HERO ─────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden" style={{ background: "#0a0806" }}>
+        <div className="absolute inset-0 z-0">
+          <Image src="/hero/ilja-default.png" alt="Ilja Krasevskij" fill priority className="object-cover object-right" sizes="100vw" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(10,8,6,0.95) 0%, rgba(10,8,6,0.76) 34%, rgba(10,8,6,0.36) 54%, transparent 82%)" }} />
+        </div>
+
+        <div className="relative z-10 flex min-h-[88vh] flex-col justify-center px-[6vw] py-[12vh]">
+          <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: gold }}>
+            Sabala Academy &middot; 1:1 &middot; Einführungsaktion
+          </motion.p>
+
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.05 }} className="mt-5 max-w-[760px] font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.5rem, 5vw, 3.9rem)", textShadow: "0 2px 30px rgba(10,8,6,0.7)" }}>
+            Eine Stunde.
+            <br />
+            Deine Fragen.
+            <br />
+            <span style={{ color: gold }}>Klare Antworten.</span>
+          </motion.h1>
+
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.12 }} className="mt-6 max-w-xl text-base leading-relaxed md:text-lg" style={{ color: "rgba(250,248,245,0.78)" }}>
+            Webseiten mit Claude Code, online bringen, dein Second Brain, HTML-Präsentationen,
+            eigene Agenten. Du fragst, ich zeige es dir live am Bildschirm.
+          </motion.p>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.18 }} className="mt-8 flex flex-wrap items-stretch gap-3">
+            <span className="relative flex flex-col px-5 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
+              <Brackets color="rgba(184,150,62,0.45)" inset={6} size={8} />
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: gold }}>Deine Stunde</span>
+              <span className="mt-1 font-serif text-[1.35rem] text-cream">
+                €{PREIS} <span className="font-mono text-[13px]" style={{ color: "rgba(250,248,245,0.45)", textDecoration: "line-through" }}>€{PREIS_REGULAER}</span>
+              </span>
+              <span className="font-mono text-[11px]" style={{ color: "rgba(250,248,245,0.5)" }}>60 Minuten &middot; 1:1 &middot; netto</span>
+            </span>
+            <span className="relative flex flex-col justify-center px-5 py-3" style={{ background: "rgba(184,150,62,0.10)", border: "1px dashed rgba(184,150,62,0.55)" }}>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: gold }}>Gutschein dazu</span>
+              <span className="mt-1 font-serif text-[1.35rem]" style={{ color: goldLight }}>€{GUTSCHEIN}</span>
+              <span className="font-mono text-[11px]" style={{ color: "rgba(250,248,245,0.5)" }}>für den Second-Brain-Kurs</span>
+            </span>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.24 }} className="mt-9 flex flex-wrap items-center gap-5">
+            <GoldCTA href={CHECKOUT}>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+            <span className="font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
+              Kein Vorwissen nötig
+            </span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── FÜR DICH ─────────────────────────────────────────────────────── */}
+      <section className="px-[6vw] py-[14vh]" style={{ background: "radial-gradient(120% 80% at 50% 0%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
+        <div className="mx-auto max-w-3xl">
+          <Reveal><Eyebrow center={false}>Das hier ist für dich, wenn</Eyebrow></Reveal>
+          <div className="mt-8 flex flex-col gap-4">
+            {FUER_DICH.map((line, i) => (
+              <Reveal key={line} delay={0.05 + i * 0.05}>
+                <div className="flex items-start gap-4">
+                  <span className="mt-2.5 h-2 w-2 flex-shrink-0 rounded-full" style={{ background: gold, boxShadow: `0 0 10px ${gold}` }} />
+                  <p className="text-[1.15rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.82)" }}>{line}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.35}>
+            <p className="mt-10 font-serif text-[1.6rem] leading-snug" style={{ color: gold }}>
+              Dann stell die Frage einfach jemandem, der sie schon beantwortet hat.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── DIE FRAGEN (nur Fragen, Antworten sind das Produkt) ──────────── */}
+      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
+        <div className="mx-auto max-w-6xl">
+          <Reveal><Eyebrow>{anzahl} Fragen, die mir wirklich gestellt werden</Eyebrow></Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="mt-4 text-center font-serif text-cream" style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)", lineHeight: 1.1 }}>
+              Such dir deine raus.<br />
+              <span style={{ color: gold }}>Die Antwort bekommst du in der Stunde.</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="mt-12">
+              <FragenSlideshow paare={slideshow} />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.14}>
+            <p className="mt-16 text-center font-mono text-[11px] uppercase tracking-[0.24em]" style={{ color: "rgba(250,248,245,0.4)" }}>
+              Alle Themengebiete im Überblick
+            </p>
+          </Reveal>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {THEMEN.map((t, i) => (
+              <Reveal key={t.titel} delay={0.04 + (i % 3) * 0.06}>
+                <TiltCard max={5} lift={6} style={{ height: "100%", background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div className="relative flex h-full flex-col p-7">
+                    <Brackets color="rgba(212,174,90,0.28)" inset={8} size={9} />
+                    <div className="flex items-center justify-between">
+                      <span>{t.icon}</span>
+                      <span className="font-mono text-[11px]" style={{ color: "rgba(212,174,90,0.6)" }}>
+                        {String(t.fragen.length).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-serif text-[1.35rem] leading-tight text-cream">{t.titel}</h3>
+                    <ul className="mt-4 flex flex-col gap-2.5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {t.fragen.map((f) => (
+                        <li key={f} className="flex items-start gap-2.5">
+                          <span className="mt-[7px] h-[3px] w-[3px] flex-shrink-0 rounded-full" style={{ background: goldLight, opacity: 0.75 }} />
+                          <span className="text-[0.94rem] leading-snug" style={{ color: "rgba(250,248,245,0.62)" }}>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </TiltCard>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.2}>
+            <p className="mt-12 text-center text-[1.05rem]" style={{ color: "rgba(250,248,245,0.55)" }}>
+              Deine Frage nicht dabei? Schreib sie mir bei der Buchung dazu.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── SO LÄUFT ES AB ──────────────────────────────────────────────── */}
+      <section className="px-[6vw] py-[12vh]" style={{ background: "radial-gradient(120% 80% at 50% 100%, #14100a 0%, #0c0a07 55%, #0a0806 100%)" }}>
+        <div className="mx-auto max-w-5xl">
+          <Reveal><Eyebrow>So läuft es ab</Eyebrow></Reveal>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {ABLAUF.map((s, i) => (
+              <Reveal key={s.n} delay={0.06 + i * 0.08}>
+                <div className="relative h-full p-7" style={{ background: "rgba(255,250,242,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <Brackets color="rgba(212,174,90,0.25)" inset={8} size={9} />
+                  <span className="font-serif text-[2.2rem] italic leading-none" style={{ color: "rgba(212,174,90,0.5)" }}>{s.n}</span>
+                  <h3 className="mt-4 font-serif text-[1.3rem] leading-tight text-cream">{s.t}</h3>
+                  <p className="mt-3 text-[0.98rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.62)" }}>{s.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── VORHER / NACHHER ────────────────────────────────────────────── */}
+      <section className="px-[6vw] py-[12vh]" style={{ background: "#0a0806" }}>
+        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+          <Reveal>
+            <div className="relative h-full p-8" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,248,245,0.45)" }}>Heute</span>
+              <div className="mt-6 flex flex-col gap-4">
+                {VORHER.map((v) => (
+                  <p key={v} className="text-[1.02rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.55)" }}>{v}</p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="relative h-full p-8" style={{ background: "linear-gradient(140deg, rgba(184,150,62,0.13) 0%, rgba(20,15,9,0.9) 60%)", border: "1px solid rgba(184,150,62,0.4)" }}>
+              <Brackets color="rgba(212,174,90,0.4)" inset={8} size={10} />
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: gold }}>Nach der Stunde</span>
+              <div className="mt-6 flex flex-col gap-4">
+                {NACHHER.map((v) => (
+                  <p key={v} className="text-[1.02rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.85)" }}>{v}</p>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── GESCHENK: der Gutschein als eigene Sektion ──────────────────── */}
+      <section className="px-[6vw] py-[14vh]" style={{ background: "radial-gradient(130% 90% at 50% 20%, #1c1408 0%, #100c07 50%, #0a0806 100%)" }}>
+        <div className="mx-auto max-w-5xl">
+          <Reveal><Eyebrow>Dein Geschenk obendrauf</Eyebrow></Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="mt-4 text-center font-serif text-cream" style={{ fontSize: "clamp(2rem, 4.4vw, 3.2rem)", lineHeight: 1.08 }}>
+              Du bekommst mehr zurück,<br />
+              <span style={{ color: gold }}>als die Stunde dich kostet.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mx-auto mt-6 max-w-xl text-center text-[1.08rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.68)" }}>
+              Direkt nach der Buchung bekommst du einen Rabattcode über {GUTSCHEIN} € für den
+              nächsten Second-Brain-Kurs. Der Code ist mehr wert als die {PREIS} €, die du
+              für die Stunde bezahlst.
+            </p>
+          </Reveal>
+
+          {/* Der Gutschein selbst, gross und als Ticket erkennbar */}
+          <Reveal delay={0.16}>
+            <div className="mx-auto mt-14 max-w-2xl">
+              <div
+                className="relative overflow-hidden px-8 py-12 text-center md:px-14 md:py-14"
+                style={{
+                  background: "linear-gradient(145deg, rgba(184,150,62,0.20) 0%, rgba(24,18,10,0.95) 62%)",
+                  border: `2px dashed rgba(212,174,90,0.65)`,
+                  boxShadow: "0 40px 110px -50px rgba(212,174,90,0.75)",
+                }}
+              >
+                {/* Ticket-Kerben links und rechts */}
+                <span aria-hidden style={{ position: "absolute", left: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#0f0b06" }} />
+                <span aria-hidden style={{ position: "absolute", right: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#0f0b06" }} />
+
+                <p className="font-mono text-[10.5px] uppercase tracking-[0.3em]" style={{ color: "rgba(250,248,245,0.5)" }}>
+                  Gutschein &middot; Second-Brain-Kurs
+                </p>
+
+                <p className="mt-5 font-serif italic leading-none" style={{ fontSize: "clamp(4rem, 13vw, 7rem)", color: goldLight, textShadow: "0 6px 40px rgba(212,174,90,0.35)" }}>
+                  {GUTSCHEIN} €
+                </p>
+
+                <p className="mt-5 text-[1.05rem]" style={{ color: "rgba(250,248,245,0.78)" }}>
+                  Rabatt auf deinen Platz im nächsten Durchlauf
+                </p>
+
+                <div className="mx-auto mt-8 flex max-w-sm items-center justify-center gap-4 pt-7" style={{ borderTop: "1px solid rgba(212,174,90,0.28)" }}>
+                  <span className="font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.42)", textDecoration: "line-through" }}>{KURS_PREIS} €</span>
+                  <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden><path d="M0 6h22M18 1l5 5-5 5" stroke={goldLight} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="font-serif text-[2rem] leading-none" style={{ color: goldLight }}>{KURS_PREIS - Number(GUTSCHEIN)} €</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Wie du drankommst */}
+          <div className="mx-auto mt-14 grid max-w-4xl gap-4 md:grid-cols-3">
+            {[
+              { n: "01", t: "Du buchst die Stunde", d: `${PREIS} € statt ${PREIS_REGULAER} €, netto.` },
+              { n: "02", t: "Der Code kommt sofort", d: "Direkt nach dem Kauf, zusammen mit deinem Terminlink." },
+              { n: "03", t: "Du löst ihn beim Kurs ein", d: `Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
+            ].map((x, i) => (
+              <Reveal key={x.n} delay={0.08 + i * 0.07}>
+                <div className="relative h-full p-6" style={{ background: "rgba(255,250,242,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <Brackets color="rgba(212,174,90,0.22)" inset={7} size={8} />
+                  <span className="font-mono text-[12px]" style={{ color: "rgba(212,174,90,0.65)" }}>{x.n}</span>
+                  <h3 className="mt-3 font-serif text-[1.15rem] leading-tight text-cream">{x.t}</h3>
+                  <p className="mt-2 text-[0.94rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.58)" }}>{x.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.3}>
+            <p className="mt-10 text-center text-[0.98rem]" style={{ color: "rgba(250,248,245,0.5)" }}>
+              Kein Zwang: entscheidest du dich gegen den Kurs, behältst du trotzdem alles aus der Stunde.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── PREIS + GUTSCHEIN ───────────────────────────────────────────── */}
+      <section className="px-[6vw] py-[14vh]" style={{ background: "radial-gradient(120% 80% at 50% 0%, #17110a 0%, #0b0805 55%, #080604 100%)" }}>
+        <div className="mx-auto max-w-3xl text-center">
+          <Reveal><Eyebrow>Einführungsaktion</Eyebrow></Reveal>
+          <Reveal delay={0.06}>
+            <div className="mt-6 flex items-end justify-center gap-4">
+              <span className="font-serif italic leading-none" style={{ fontSize: "clamp(3.4rem, 9vw, 5.5rem)", color: gold }}>€{PREIS}</span>
+              <span className="mb-3 font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.4)", textDecoration: "line-through" }}>€{PREIS_REGULAER}</span>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: "rgba(250,248,245,0.45)" }}>
+              netto zzgl. MwSt. &middot; Angebot für Unternehmen und Selbständige
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.16}>
+            <p className="mx-auto mt-8 max-w-md text-[1.05rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.7)" }}>
+              Inklusive Gutschein über <strong style={{ color: goldLight }}>{GUTSCHEIN} €</strong> für den
+              Second-Brain-Kurs, schriftlicher Zusammenfassung und deinem Termin nach Wahl.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.22}>
+            <div className="mt-11 flex flex-col items-center gap-4">
+              <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              <span className="font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.5)" }}>
+                Termin suchst du dir nach der Buchung aus
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </div>
+  );
+}
