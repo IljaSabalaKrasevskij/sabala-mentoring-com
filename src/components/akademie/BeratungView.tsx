@@ -484,10 +484,12 @@ export default function BeratungView() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.24 }} className="mt-9 flex flex-wrap items-center gap-5">
-            <GoldCTA href={CHECKOUT}>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
-            <span className="font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
-              Kein Vorwissen nötig
-            </span>
+            <GoldCTA href="#angebot">Was dich erwartet</GoldCTA>
+            <a href={CHECKOUT} className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] transition-colors"
+               style={{ color: "rgba(250,248,245,0.6)", textDecoration: "none", borderBottom: "1px solid rgba(250,248,245,0.25)", paddingBottom: 3 }}>
+              Direkt buchen
+              <span className="transition-transform group-hover:translate-x-0.5">&rarr;</span>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -600,9 +602,15 @@ export default function BeratungView() {
           </div>
 
           <Reveal delay={0.2}>
-            <p className="mt-12 text-center text-[1.05rem]" style={{ color: "rgba(250,248,245,0.55)" }}>
-              Deine Frage nicht dabei? Schreib sie mir bei der Buchung dazu.
-            </p>
+            <div className="mt-14 flex flex-col items-center gap-4">
+              <p className="text-center text-[1.05rem]" style={{ color: "rgba(250,248,245,0.55)" }}>
+                Deine Frage nicht dabei? Schreib sie mir bei der Buchung dazu.
+              </p>
+              <GoldCTA href={CHECKOUT}>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              <span className="font-mono text-[11.5px] uppercase tracking-[0.16em]" style={{ color: "rgba(250,248,245,0.42)" }}>
+                Termin suchst du dir direkt nach dem Kauf aus
+              </span>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -730,23 +738,43 @@ export default function BeratungView() {
 
       {/* ── EINWAENDE ───────────────────────────────────────────────────── */}
       <section className="px-[6vw] py-[10vh]" style={{ background: "#0a0806" }}>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-5xl">
           <Reveal><Eyebrow>Bevor du buchst</Eyebrow></Reveal>
           <Reveal delay={0.06}>
             <h2 className="mt-4 text-center font-serif text-cream" style={{ fontSize: "clamp(1.8rem, 3.6vw, 2.7rem)", lineHeight: 1.1 }}>
               Was du vielleicht noch wissen willst
             </h2>
           </Reveal>
-          <div className="mt-12 flex flex-col gap-3">
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
             {EINWAENDE.map(([q, a], i) => (
-              <Reveal key={q} delay={0.04 + i * 0.05}>
-                <div className="relative p-7" style={{ background: "rgba(255,250,242,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <Brackets color="rgba(212,174,90,0.2)" inset={7} size={8} />
-                  <p className="flex items-start gap-3 font-serif text-[1.25rem] leading-snug text-cream">
-                    <span style={{ color: gold }}>&#9657;</span>
-                    {q}
-                  </p>
-                  <p className="mt-3 pl-7 text-[1rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.62)" }}>{a}</p>
+              <Reveal key={q} delay={0.05 + (i % 2) * 0.05}>
+                <div
+                  className="relative h-full overflow-hidden p-7"
+                  style={{
+                    background: "linear-gradient(160deg, rgba(255,250,242,0.062) 0%, rgba(255,250,242,0.022) 36%, rgba(10,8,6,0.45) 100%)",
+                    borderTop: "1px solid rgba(255,250,242,0.13)",
+                    borderLeft: "1px solid rgba(255,250,242,0.05)",
+                    borderRight: "1px solid rgba(0,0,0,0.45)",
+                    borderBottom: "1px solid rgba(0,0,0,0.55)",
+                    boxShadow: "0 22px 44px -24px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)",
+                  }}
+                >
+                  <Brackets color="rgba(212,174,90,0.26)" inset={8} size={9} />
+                  <span aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 70, background: "linear-gradient(180deg, transparent, rgba(184,150,62,0.08))", pointerEvents: "none" }} />
+
+                  <div className="relative flex items-start gap-4">
+                    {/* Fragezeichen-Marke statt Aufzaehlungspunkt */}
+                    <span aria-hidden className="flex shrink-0 items-center justify-center"
+                      style={{ width: 34, height: 34, background: "rgba(212,174,90,0.10)", border: "1px solid rgba(212,174,90,0.3)" }}>
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={goldLight} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9.2 9.2a2.9 2.9 0 015.6 1c0 1.9-2.8 2.9-2.8 2.9" />
+                        <path d="M12 17.4h.01" />
+                      </svg>
+                    </span>
+                    <h3 className="font-serif text-[1.2rem] leading-snug text-cream">{q}</h3>
+                  </div>
+                  <p className="relative mt-4 pl-[50px] text-[0.99rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.66)" }}>{a}</p>
                 </div>
               </Reveal>
             ))}
@@ -754,8 +782,8 @@ export default function BeratungView() {
         </div>
       </section>
 
-      {/* ── GESCHENK: der Gutschein als eigene Sektion ──────────────────── */}
-      <section className="px-[6vw] py-[14vh]" style={{ background: "radial-gradient(130% 90% at 50% 20%, #1c1408 0%, #100c07 50%, #0a0806 100%)" }}>
+      {/* ── GESCHENK: der Gutschein ─────────────────────────────────────── */}
+      <section className="px-[6vw] py-[13vh]" style={{ background: "radial-gradient(130% 90% at 50% 20%, #1c1408 0%, #100c07 50%, #0a0806 100%)" }}>
         <div className="mx-auto max-w-5xl">
           <Reveal><Eyebrow>Dein Geschenk obendrauf</Eyebrow></Reveal>
           <Reveal delay={0.06}>
@@ -764,103 +792,130 @@ export default function BeratungView() {
               <span style={{ color: gold }}>als die Stunde dich kostet.</span>
             </h2>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mx-auto mt-6 max-w-xl text-center text-[1.08rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.68)" }}>
-              Direkt nach der Buchung bekommst du einen Rabattcode über {GUTSCHEIN} € für den
-              nächsten Second-Brain-Kurs. Der Code ist mehr wert als die {PREIS} €, die du
-              für die Stunde bezahlst. Der Termin steht schon: {KURS_TERMIN}.
-            </p>
-          </Reveal>
 
-          {/* Der Gutschein selbst, gross und als Ticket erkennbar */}
-          <Reveal delay={0.16}>
-            <div className="mx-auto mt-14 max-w-2xl">
+          {/* Ticket links, Kursbild rechts */}
+          <div className="mt-14 grid items-stretch gap-6 md:grid-cols-[1.05fr_1fr]">
+            <Reveal delay={0.12}>
               <div
-                className="relative overflow-hidden px-8 py-12 text-center md:px-14 md:py-14"
+                className="relative flex h-full flex-col justify-center overflow-hidden px-8 py-12 text-center"
                 style={{
-                  background: "linear-gradient(145deg, rgba(184,150,62,0.20) 0%, rgba(24,18,10,0.95) 62%)",
-                  border: `2px dashed rgba(212,174,90,0.65)`,
-                  boxShadow: "0 40px 110px -50px rgba(212,174,90,0.75)",
+                  background: "linear-gradient(150deg, rgba(184,150,62,0.22) 0%, rgba(24,18,10,0.95) 62%)",
+                  border: "2px dashed rgba(212,174,90,0.65)",
+                  boxShadow: "0 40px 100px -46px rgba(212,174,90,0.75)",
                 }}
               >
-                {/* Ticket-Kerben links und rechts */}
-                <span aria-hidden style={{ position: "absolute", left: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#0f0b06" }} />
-                <span aria-hidden style={{ position: "absolute", right: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#0f0b06" }} />
+                <span aria-hidden style={{ position: "absolute", left: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#120d07" }} />
+                <span aria-hidden style={{ position: "absolute", right: -18, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "#120d07" }} />
 
-                <p className="font-mono text-[10.5px] uppercase tracking-[0.3em]" style={{ color: "rgba(250,248,245,0.5)" }}>
-                  Gutschein &middot; Second-Brain-Kurs
+                <p className="font-mono text-[10.5px] uppercase tracking-[0.3em]" style={{ color: "rgba(250,248,245,0.55)" }}>
+                  Rabattcode &middot; Second-Brain-Kurs
                 </p>
-
-                <p className="mt-5 font-serif italic leading-none" style={{ fontSize: "clamp(4rem, 13vw, 7rem)", color: goldLight, textShadow: "0 6px 40px rgba(212,174,90,0.35)" }}>
+                <p className="mt-4 font-serif italic leading-none" style={{ fontSize: "clamp(4.5rem, 14vw, 7.5rem)", color: goldLight, textShadow: "0 6px 44px rgba(212,174,90,0.45)" }}>
                   <ZaehlZahl ziel={Number(GUTSCHEIN)} /> €
                 </p>
-
-                <p className="mt-5 text-[1.05rem]" style={{ color: "rgba(250,248,245,0.78)" }}>
-                  Rabatt auf deinen Platz im nächsten Durchlauf
-                </p>
-                <p className="mt-2 font-mono text-[12.5px] tracking-[0.06em]" style={{ color: goldLight }}>
-                  {KURS_TERMIN} &middot; jeweils 15&ndash;17:30 Uhr
-                </p>
-
-                <div className="mx-auto mt-8 flex max-w-sm items-center justify-center gap-4 pt-7" style={{ borderTop: "1px solid rgba(212,174,90,0.28)" }}>
+                <div className="mx-auto mt-7 flex max-w-xs items-center justify-center gap-4 pt-6" style={{ borderTop: "1px solid rgba(212,174,90,0.3)" }}>
                   <span className="font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.42)", textDecoration: "line-through" }}>{KURS_PREIS} €</span>
                   <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden><path d="M0 6h22M18 1l5 5-5 5" stroke={goldLight} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  <span className="font-serif text-[2rem] leading-none" style={{ color: goldLight }}>{KURS_PREIS - Number(GUTSCHEIN)} €</span>
+                  <span className="font-serif text-[2.1rem] leading-none" style={{ color: goldLight }}>{KURS_PREIS - Number(GUTSCHEIN)} €</span>
                 </div>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
 
-          {/* Wie du drankommst */}
-          <div className="mx-auto mt-14 grid max-w-4xl gap-4 md:grid-cols-3">
+            {/* Der Kurs, auf den der Gutschein zaehlt */}
+            <Reveal delay={0.18}>
+              <div className="relative h-full overflow-hidden" style={{ border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 26px 54px -30px rgba(0,0,0,0.9)" }}>
+                <Image src="/akademie/ki-library-bg.jpg" alt="Second-Brain-Kurs" fill className="object-cover" sizes="(max-width: 768px) 100vw, 480px" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0.90) 55%, rgba(10,8,6,0.97) 100%)" }} />
+                <div className="relative flex h-full flex-col justify-end p-8">
+                  <span className="font-mono text-[10.5px] uppercase tracking-[0.24em]" style={{ color: gold }}>Einlösbar für</span>
+                  <h3 className="mt-3 font-serif text-[1.7rem] leading-tight text-cream">Dein Second Brain</h3>
+                  <p className="mt-2 text-[1rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.72)" }}>
+                    Zwei Abende live, in denen wir Claude Code gemeinsam einrichten.
+                  </p>
+                  <p className="mt-4 font-mono text-[12.5px]" style={{ color: goldLight }}>
+                    {KURS_TERMIN} &middot; 15&ndash;17:30 Uhr
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Drei Schritte */}
+          <div className="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-3">
             {[
               { n: "01", t: "Du buchst die Stunde", d: `${PREIS} € statt ${PREIS_REGULAER} €, netto.` },
-              { n: "02", t: "Der Code kommt sofort", d: "Direkt nach dem Kauf, zusammen mit deinem Terminlink." },
-              { n: "03", t: "Du löst ihn beim Kurs ein", d: `${KURS_TERMIN}. Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
+              { n: "02", t: "Code und Termin kommen sofort", d: "Direkt nach dem Kauf, zusammen mit deinem Terminlink." },
+              { n: "03", t: "Du löst ihn beim Kurs ein", d: `Aus ${KURS_PREIS} € werden ${KURS_PREIS - Number(GUTSCHEIN)} €.` },
             ].map((x, i) => (
               <EbenenKachel key={x.n} ziffer={x.n} titel={x.t} text={x.d} index={i} />
             ))}
           </div>
 
-          <Reveal delay={0.3}>
-            <p className="mt-10 text-center text-[0.98rem]" style={{ color: "rgba(250,248,245,0.5)" }}>
-              Kein Zwang: entscheidest du dich gegen den Kurs, behältst du trotzdem alles aus der Stunde.
-            </p>
+          <Reveal delay={0.28}>
+            <div className="mt-12 flex flex-col items-center gap-3">
+              <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              <span className="font-mono text-[11.5px] uppercase tracking-[0.16em]" style={{ color: "rgba(250,248,245,0.45)" }}>
+                Kein Zwang: ohne Kurs behältst du trotzdem alles aus der Stunde
+              </span>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── PREIS + GUTSCHEIN ───────────────────────────────────────────── */}
-      <section className="px-[6vw] py-[14vh]" style={{ background: "radial-gradient(120% 80% at 50% 0%, #17110a 0%, #0b0805 55%, #080604 100%)" }}>
-        <div className="mx-auto max-w-3xl text-center">
-          <Reveal><Eyebrow>Einführungsaktion</Eyebrow></Reveal>
-          <Reveal delay={0.06}>
-            <div className="mt-6 flex items-end justify-center gap-4">
-              <span className="font-serif italic leading-none" style={{ fontSize: "clamp(3.4rem, 9vw, 5.5rem)", color: gold }}>€{PREIS}</span>
-              <span className="mb-3 font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.4)", textDecoration: "line-through" }}>€{PREIS_REGULAER}</span>
+      {/* ── ABSCHLUSS: Preis mit Gesicht ────────────────────────────────── */}
+      <section id="angebot" className="scroll-mt-16 px-[6vw] py-[13vh]" style={{ background: "radial-gradient(120% 80% at 50% 0%, #17110a 0%, #0b0805 55%, #080604 100%)" }}>
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.8fr_1fr] md:gap-14">
+          {/* Gesicht: man bucht bei einem Menschen, nicht bei einer Seite */}
+          <Reveal>
+            <div className="relative overflow-hidden" style={{ border: "1px solid rgba(184,150,62,0.32)", boxShadow: "0 30px 64px -34px rgba(0,0,0,0.9)" }}>
+              <Image src="/akademie/ilja-trainer.jpg" alt="Ilja Krasevskij" width={640} height={800} className="h-auto w-full" style={{ display: "block" }} />
+              <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, transparent, rgba(10,8,6,0.92))" }}>
+                <p className="font-mono text-[10.5px] uppercase tracking-[0.22em]" style={{ color: goldLight }}>Deine Stunde mit</p>
+                <p className="mt-1 font-serif text-[1.3rem] text-cream">Ilja Krasevskij</p>
+              </div>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: "rgba(250,248,245,0.45)" }}>
-              netto zzgl. MwSt. &middot; Angebot für Unternehmen und Selbständige
-            </p>
-          </Reveal>
 
-          <Reveal delay={0.16}>
-            <p className="mx-auto mt-8 max-w-md text-[1.05rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.7)" }}>
-              Inklusive Gutschein über <strong style={{ color: goldLight }}>{GUTSCHEIN} €</strong> für den
-              Second-Brain-Kurs, schriftlicher Zusammenfassung und deinem Termin nach Wahl.
-            </p>
-          </Reveal>
+          <div>
+            <Reveal><Eyebrow center={false}>Einführungsaktion</Eyebrow></Reveal>
+            <Reveal delay={0.06}>
+              <div className="mt-5 flex items-end gap-4">
+                <span className="font-serif italic leading-none" style={{ fontSize: "clamp(3.4rem, 8vw, 5rem)", color: gold }}>€{PREIS}</span>
+                <span className="mb-3 font-mono text-[1.05rem]" style={{ color: "rgba(250,248,245,0.4)", textDecoration: "line-through" }}>€{PREIS_REGULAER}</span>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.45)" }}>
+                netto zzgl. MwSt. &middot; für Unternehmen und Selbständige
+              </p>
+            </Reveal>
 
-          <Reveal delay={0.22}>
-            <div className="mt-11 flex flex-col items-center gap-4">
-              <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
-              <span className="font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.5)" }}>
-                Termin suchst du dir nach der Buchung aus
-              </span>
-            </div>
-          </Reveal>
+            {/* Was drin ist, mit Haken statt Fliesstext */}
+            <Reveal delay={0.14}>
+              <ul className="mt-8 flex flex-col gap-3.5" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {[
+                  "60 Minuten 1:1 per Video, Bildschirm geteilt",
+                  "Deinen Termin suchst du dir direkt nach dem Kauf aus",
+                  "Schriftliche Zusammenfassung mit Links und Schritten",
+                  `Gutschein über ${GUTSCHEIN} € für den Second-Brain-Kurs`,
+                ].map((z) => (
+                  <li key={z} className="flex items-start gap-3.5">
+                    <span aria-hidden className="mt-0.5 flex shrink-0 items-center justify-center"
+                      style={{ width: 22, height: 22, background: "rgba(212,174,90,0.12)", border: "1px solid rgba(212,174,90,0.35)" }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke={goldLight} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </span>
+                    <span className="text-[1.02rem] leading-snug" style={{ color: "rgba(250,248,245,0.8)" }}>{z}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="mt-10 flex flex-wrap items-center gap-5">
+                <GoldCTA href={CHECKOUT} large>Beratungsstunde buchen &mdash; €{PREIS}</GoldCTA>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>
