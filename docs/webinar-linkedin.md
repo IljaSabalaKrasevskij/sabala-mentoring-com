@@ -2,7 +2,7 @@
 
 Stand 6.8.2026 · Webinar am Fr, 18. September 2026, 15:00 Uhr
 Banner: `public/webinar/linkedin-event.png` (**1280x720, 16:9** — das aktuelle
-LinkedIn-Event-Format, geliefert in 2560x1440 fuer scharfe Darstellung) und
+LinkedIn-Event-Format, geliefert in 2560x1440 für scharfe Darstellung) und
 `linkedin-post.png` (1200x627, Feed-Post und OG-Image).
 
 Beide zeigen die Werkzeug-Leiste mit Obsidian, NotebookLM und Claude Code, damit
@@ -10,7 +10,7 @@ auf einen Blick klar ist, dass hier ein komplettes Setup aufgebaut wird.
 
 Alles unten ist fertig zum Kopieren. Reihenfolge beim Anlegen: Event erstellen,
 Cover hochladen, Titel und Beschreibung rein, als Externer Event-Link die
-Webinar-Seite eintragen (dann laeuft die Anmeldung ueber dein Formular und
+Webinar-Seite eintragen (dann läuft die Anmeldung über dein Formular und
 jeder Teilnehmer landet in ActiveCampaign, nicht bei LinkedIn).
 
 ---
@@ -55,7 +55,7 @@ Wenn du einen Prompt-Trick für heute Nachmittag suchst. Oder wenn du Entwickler
 
 Zum Zuschauen brauchst du nichts außer einer Stunde Zeit. Keine Vorkenntnisse, kein Setup, keine Zeile Code. Zum Nachbauen sage ich dir im Webinar ehrlich, was du wirklich brauchst.
 
-Ich baue im Webinar nichts von Grund auf, dafuer reicht eine Stunde nicht. Ich zeige dir das fertige System und wie ich damit arbeite. Am Ende stelle ich meinen Kurs vor, der am 24. September startet, maximal 10 Plaetze.
+Ich baue im Webinar nichts von Grund auf, dafür reicht eine Stunde nicht. Ich zeige dir das fertige System und wie ich damit arbeite. Am Ende stelle ich meinen Kurs vor, der am 24. September startet, maximal 10 Plätze.
 
 Die Teilnahme ist kostenlos. Die Aufzeichnung geht nur an Angemeldete.
 
@@ -81,13 +81,13 @@ Hier ist dein Platz: https://sabala-mentoring.com/webinar
 
 ## Event-Teilen-Post (Grundsetup, mit dem Event geteilt)
 
-Zeigt, was mit dem Setup moeglich wird. Die Zahlen sind aus Iljas echtem Rechner
-gezaehlt (Stand 6.8.2026): Skills in ~/.claude/skills, Notizen im Vault,
-LaunchAgents, ollama list. Bei spaeterer Verwendung neu zaehlen.
+Zeigt, was mit dem Setup möglich wird. Die Zahlen sind aus Iljas echtem Rechner
+gezählt (Stand 6.8.2026): Skills in ~/.claude/skills, Notizen im Vault,
+LaunchAgents, ollama list. Bei späterer Verwendung neu zählen.
 
 WICHTIG: Das Webinar ist eine PRAESENTATION, kein Live-Aufbau. Ilja zeigt sein
 bestehendes System. Der Aufbau mit eigenen Daten passiert im Kurs ab 21.8.
-Formulierungen wie "wir bauen live auf" gehoeren hier nicht rein.
+Formulierungen wie "wir bauen live auf" gehören hier nicht rein.
 
 ```
 Wer nur in der Claude-App arbeitet, bekommt vielleicht ein Prozent von dem mit, was gerade möglich ist.
@@ -129,12 +129,12 @@ https://sabala-mentoring.com/webinar
 ## Terminal-Post (kurz, Link in die Kommentare)
 
 Holt Claude-Nutzer ab, die das Terminal nie aufgemacht haben. Kein Argumentieren,
-sondern vier konkrete Bilder davon, was danach moeglich ist. Link bewusst in den
-ersten Kommentar, das haelt die Reichweite oben.
+sondern vier konkrete Bilder davon, was danach möglich ist. Link bewusst in den
+ersten Kommentar, das hält die Reichweite oben.
 
-Vorlaeufer war ein Post, der vier Glaubenssaetze widerlegt hat. Ilja fand ihn zu
+Vorläufer war ein Post, der vier Glaubenssätze widerlegt hat. Ilja fand ihn zu
 kopflastig und zu kompliziert: auf LinkedIn zieht Vorstellungskraft besser als
-Beweisfuehrung.
+Beweisführung.
 
 ```
 Du arbeitest jeden Tag mit Claude, aber das Terminal hast du noch nie aufgemacht.
@@ -170,7 +170,7 @@ https://sabala-mentoring.com/webinar
 
 Die Aufzeichnung geht nur an Angemeldete raus.
 
-Und wenn du danach mit deinen eigenen Daten aufbauen willst: mein Live-Training startet am 24. September, maximal 10 Plaetze, dritter Durchlauf.
+Und wenn du danach mit deinen eigenen Daten aufbauen willst: mein Live-Training startet am 24. September, maximal 10 Plätze, dritter Durchlauf.
 ```
 
 
@@ -188,11 +188,11 @@ https://sabala-mentoring.com/webinar
 
 ---
 
-## Stil-Check (gegen Brand-Regeln geprueft)
+## Stil-Check (gegen Brand-Regeln geprüft)
 
 - Du-Anrede durchgehend, kein Marketing-Sprech
-- Keine Em-dashes, keine Tabu-Woerter (Game-Changer, Transformation etc.)
+- Keine Em-dashes, keine Tabu-Wörter (Game-Changer, Transformation etc.)
 - Alle Aussagen durch die Seite gedeckt: Aufzeichnung nur an Angemeldete stimmt,
   kostenlos stimmt, Live-Aufbau stimmt
 - Terminwechsel: Datum steht hier 4x im Klartext, bei neuem Termin diese Datei
-  mit anpassen (sie haengt NICHT an config.ts)
+  mit anpassen (sie hängt NICHT an config.ts)

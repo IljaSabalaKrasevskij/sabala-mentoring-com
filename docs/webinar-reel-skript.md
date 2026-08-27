@@ -1,9 +1,9 @@
 # Instagram Reel: Webinar-Werbung
 
-Stand 6.8.2026 · Ziel: Anmeldungen fuer das Webinar am Fr 18.9., 15:00
-Laenge: 50 bis 60 Sekunden · Hochformat 9:16
+Stand 6.8.2026 · Ziel: Anmeldungen für das Webinar am Fr 18.9., 15:00
+Länge: 50 bis 60 Sekunden · Hochformat 9:16
 
-Zwei Regeln, die ueber die Reichweite entscheiden:
+Zwei Regeln, die über die Reichweite entscheiden:
 Der Hook muss in den ersten 1,5 Sekunden sitzen, sonst wird weitergewischt.
 Und Untertitel einbrennen, die meisten schauen ohne Ton.
 
@@ -41,21 +41,21 @@ Wer danach mit seinen eigenen Daten aufbauen will: mein Kurs startet am 24. Sept
 
 Link in der Bio.
 
-#claudecode #secondbrain #obsidian #notebooklm #ki #selbststaendig #automatisierung
+#claudecode #secondbrain #obsidian #notebooklm #ki #selbstständig #automatisierung
 ```
 
 ---
 
-## Hinweise fuer den Dreh
+## Hinweise für den Dreh
 
 Bildschirmaufnahmen vorher machen und getrennt schneiden, nicht live abfilmen.
-Der Vault-Scroll und die JARVIS-Ansicht sind die zwei Momente, die haengen bleiben.
+Der Vault-Scroll und die JARVIS-Ansicht sind die zwei Momente, die hängen bleiben.
 
 Beim Vault-Scroll darauf achten, dass keine Kundennamen oder Preise lesbar sind.
 Im Zweifel vorher einen Ordner zuklappen oder unscharf ziehen.
 
-Der Satz "und ich bin kein Entwickler" traegt den ganzen Reel. Er nimmt genau
-die Huerde weg, an der die Zielgruppe haengt.
+Der Satz "und ich bin kein Entwickler" trägt den ganzen Reel. Er nimmt genau
+die Hürde weg, an der die Zielgruppe hängt.
 
 Bei Terminwechsel: Zeiten in Zeile 50-56 und in der Caption von Hand anpassen,
-dieses Dokument haengt nicht an config.ts.
+dieses Dokument hängt nicht an config.ts.
