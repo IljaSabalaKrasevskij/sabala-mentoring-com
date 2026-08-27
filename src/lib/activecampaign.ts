@@ -198,6 +198,19 @@ export async function subscribeToAcademy(email: string, firstName = ""): Promise
   );
 }
 
+/* Webinar "Second Brain" → Akademie-Liste + eigener Webinar-Tag.
+   ponytail: laeuft bewusst auf der bestehenden Akademie-Liste (gleiche Zielgruppe,
+   ein Versand-Container). Der eigene Tag trennt die Automation: Erinnerungsmails
+   vor dem Termin, Aufzeichnung danach. Per Env auf eine eigene Liste umstellbar. */
+export async function subscribeWebinar(email: string, firstName = ""): Promise<AcResult> {
+  return subscribeToList(
+    email,
+    firstName,
+    process.env.AC_WEBINAR_LIST_ID || process.env.AC_AKADEMIE_LIST_ID,
+    process.env.AC_WEBINAR_TAG || "Webinar Second Brain"
+  );
+}
+
 /* Mooni-Voice-Funnel → Mooni-Liste + Mooni-Tag.
    ponytail: feste Default-Liste 28 / Tag "Mooni Voice Beta" — bekannte stabile
    IDs aus dem Standalone-Funnel (gleicher AC-Account). Per Env ueberschreibbar. */
