@@ -99,7 +99,7 @@ export default function WorkshopHeader() {
             </svg>
           </a>
           <span className="flex flex-col font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
-            <span>oder 2× €199</span>
+            <span>oder 2× €203</span>
             <span>beide Termine live</span>
           </span>
         </motion.div>

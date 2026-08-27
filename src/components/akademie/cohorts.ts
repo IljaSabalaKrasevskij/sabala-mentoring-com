@@ -15,17 +15,8 @@ export type Cohort = {
 };
 
 export const COHORTS: Cohort[] = [
-  {
-    id: "second-brain-2026-08-21",
-    start: "2026-08-21",
-    sessions: [
-      { label: "Session 1", date: "Fr · 21. August 2026", time: "15-17:30 Uhr" },
-      { label: "Session 2", date: "Fr · 28. August 2026", time: "15-17:30 Uhr" },
-    ],
-    capacity: 10,
-    checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-aug-26/",
-    status: "offen",
-  },
+  // Lauf Aug 2026 (21.8. + 28.8.) am 27.8.2026 entfernt: laeuft bereits, nicht mehr buchbar.
+  // Historie steht im Vault, nicht hier. Diese Liste zeigt ausschliesslich buchbare Laeufe.
   {
     id: "second-brain-2026-09-24",
     start: "2026-09-24",
