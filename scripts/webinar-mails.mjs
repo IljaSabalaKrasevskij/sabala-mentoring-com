@@ -155,7 +155,7 @@ const terminBox = () => `
               </div>
               <div style="height:8px;line-height:8px;">&nbsp;</div>
               <div style="font-family:'Satoshi',-apple-system,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.6;color:rgba(250,248,245,0.66);">
-                ${T("Zoom &middot; 60 Minuten &middot; danach offene Fragerunde")}
+                ${T(`Zoom &middot; ${pick("duration")} &middot; Zeit f&uuml;r deine Fragen`)}
               </div>
             </td>
           </tr>
