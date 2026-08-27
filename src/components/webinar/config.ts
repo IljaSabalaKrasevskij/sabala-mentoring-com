@@ -21,6 +21,13 @@ export const WEBINAR = {
   // Leer = der Button wird gar nicht erst gerendert.
   linkedInEventUrl: "",
 
+  // Aufzeichnung: erst NACH dem Webinar eintragen, oeffentlicher Share-Link
+  // (in Fathom: Share -> "Anyone with the link"), nicht die interne Call-URL.
+  // Leer lassen bis die Aufzeichnung existiert. Solange leer, baut
+  // scripts/webinar-mails.mjs die Mails 6 und 7 gar nicht erst, damit niemand
+  // aus Versehen die Aufzeichnung des VORIGEN Laufs verschickt.
+  aufzeichnungUrl: "",
+
   // Platzzahl des Zoom-Raums. null = wird nicht erwaehnt.
   // Nur eintragen, wenn es stimmt: eine erfundene Knappheit faellt auf,
   // spaetestens wenn jemand zwei Minuten vor Beginn noch reinkommt.
