@@ -87,6 +87,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/sabala-mentoring.jpg",
   },
   {
+    id: "yuna-sports-nutrition",
+    category: "webseiten",
+    title: {
+      de: "YUNA Sports & Nutrition: Stärker. Definierter. Messbar.",
+      en: "YUNA Sports & Nutrition: Stronger. More Defined. Measurable.",
+    },
+    industry: { de: "Personal Training · München", en: "Personal Training · Munich" },
+    challenge: {
+      de: "Ein Premium-Studio mit vollen Slots, aber ohne Bühne: die Kanäle erzählten vier verschiedene Zielgruppen-Geschichten, der Auftritt lief auf WordPress und niemand konnte messen, was Sichtbarkeit tatsächlich bringt.",
+      en: "A premium studio with full slots but no stage: the channels told four different audience stories, the site ran on WordPress and nobody could measure what visibility actually delivered.",
+    },
+    claudeUsage: {
+      de: "Brand Book und Instagram zu einem Web-Brandguide zusammengeführt, die Zielgruppe auf Berufstätige mit vollem Terminkalender geschärft, dann One-Pager und Blog mit Claude Code in eigenem Code gebaut: dunkler Premium-Look, Search Console, Bing, IndexNow und selbst gehostetes Umami ab Tag eins, dazu eine QR-Linkseite für die Visitenkarten mit zählbaren Scans.",
+      en: "Merged the brand book and Instagram into one web brand guide, sharpened the audience to busy professionals, then built the one-pager and blog with Claude Code in custom code: dark premium look, Search Console, Bing, IndexNow and self-hosted Umami from day one, plus a QR link page for the business cards with countable scans.",
+    },
+    result: {
+      de: "Live seit August 2026: ein Auftritt, der das Studio-Niveau endlich zeigt, eine Botschaft statt vier, und Messung von Anfang an, von der Suchanfrage bis zum gescannten Karten-QR.",
+      en: "Live since August 2026: a presence that finally matches the studio, one message instead of four, and measurement from day one, from search query to scanned card QR.",
+    },
+    tags: ["Webdesign", "Brand-System", "SEO + GEO", "Umami"],
+    url: "https://yuna-sports-nutrition.com",
+    image: "/case-studies/yuna.jpg",
+  },
+  {
     id: "dielommel",
     category: "webseiten",
     title: {
