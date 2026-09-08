@@ -111,6 +111,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/yuna.jpg",
   },
   {
+    id: "stefan-pons",
+    category: "webseiten",
+    title: {
+      de: "Stefan Pons: Klangmassage am Bodensee",
+      en: "Stefan Pons: Sound Massage at Lake Constance",
+    },
+    industry: { de: "Klangmassage & Resilienz · Bodensee", en: "Sound Massage & Resilience · Lake Constance" },
+    challenge: {
+      de: "Zwei Marken auf einer alten Seite: Klangmassage hier, Resilienz-Webshop da, und keine davon sagte in einem Satz, für wen das ist. Stefan wollte einen Auftritt, der so ruhig ist wie sein Raum und Erwachsenen, Gruppen und Unternehmen je einen klaren Weg zeigt.",
+      en: "Two brands on one old site: sound massage here, a resilience web shop there, and neither said in one sentence who it was for. Stefan wanted a presence as calm as his room, with one clear path each for adults, groups and companies.",
+    },
+    claudeUsage: {
+      de: "Im Strategie-Call wurde aus zwei Marken eine: Klangraum Bodensee. Mit Claude Code ging es vom Gesprächs-Transkript zur Positionierung, dann zu allen Texten in Stefans eigener Sprache und zu einem klickbaren Prototyp mit zehn Seiten. Die Über-mich-Videos wurden vor Ort gedreht und geschnitten. Konzept, Texte, Prototyp und Videos aus dem Studio, der Brand Guide mit Logo-Set von Fleur-Elaine Struik, die Umsetzung in WordPress und Elementor von Christopher Buschor.",
+      en: "The strategy call merged two brands into one: Klangraum Bodensee. With Claude Code the work went from the call transcript to positioning, then to every text in Stefan's own voice and a clickable ten page prototype. The about-me videos were shot and edited on location. Concept, copy, prototype and videos from the studio, the brand guide with logo set by Fleur-Elaine Struik, the WordPress and Elementor build by Christopher Buschor.",
+    },
+    result: {
+      de: "Live auf stefanpons.de seit September 2026: eine Marke statt zwei, drei klare Wege (1:1, Workshops, Unternehmen), Stefans Geschichte in zwei Videos statt in Fließtext, Termin-Anfrage von jeder Seite aus.",
+      en: "Live on stefanpons.de since September 2026: one brand instead of two, three clear paths (1:1, workshops, companies), Stefan's story in two videos instead of body copy, appointment request from every page.",
+    },
+    tags: ["Claude Code", "Konzept + Texte", "Video", "WordPress"],
+    url: "https://stefanpons.de",
+    image: "/case-studies/stefan-pons.jpg",
+  },
+  {
     id: "dielommel",
     category: "webseiten",
     title: {
@@ -365,7 +389,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Echte Webseiten.", "Echte Kunden.", "Echte Ergebnisse."],
     heroLead:
       "Ich führe ein kleines Studio, das Premium-Webseiten und KI-Systeme für Gründer und kleine Teams baut. Jedes Projekt auf dieser Seite wurde mit Claude und Claude Code entworfen und gebaut, der KI von Anthropic, von der ersten Architektur-Entscheidung bis zum finalen Deploy. Echte Kunden, echte Arbeit, alles live im Einsatz.",
-    heroMeta: "Zehn Projekte · alle im Einsatz",
+    heroMeta: `${CASE_STUDIES.length} Projekte · alle im Einsatz`,
     sectionEyebrow: "// ausgewählte arbeiten",
     sectionHeadline: "Von der Webseite bis zum Agenten, von Anfang bis Ende.",
     labelChallenge: "Herausforderung",
@@ -385,7 +409,7 @@ export const STRINGS: Record<Locale, {
     heroHeadline: ["Real websites.", "Real clients.", "Real results."],
     heroLead:
       "I run a small studio that builds premium websites and AI systems for founders and small teams. Every project on this page was designed and built with Claude and Claude Code, Anthropic's AI, from the first architecture decision through to the final deploy. Real clients, real work, all live in production.",
-    heroMeta: "Ten projects · all in production",
+    heroMeta: `${CASE_STUDIES.length} projects · all in production`,
     sectionEyebrow: "// selected work",
     sectionHeadline: "From websites to agents, start to finish.",
     labelChallenge: "Challenge",
