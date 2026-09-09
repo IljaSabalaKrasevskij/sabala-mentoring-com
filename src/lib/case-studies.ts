@@ -135,6 +135,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/stefan-pons.jpg",
   },
   {
+    id: "rfqtopo",
+    category: "webseiten",
+    title: {
+      de: "RFQ to PO: Industrielles Sourcing für EPC-Projekte",
+      en: "RFQ to PO: Industrial Sourcing for EPC Projects",
+    },
+    industry: { de: "Industrie-Einkauf · B2B international", en: "Industrial Procurement · International B2B" },
+    challenge: {
+      de: "Claudia Abou Ibrahim bringt Anfragen (RFQ) für EPC-Projekte in Afrika und Nahost bis zur Bestellung (PO). Ein Geschäft, das von Vertrauen und Tempo lebt, hatte keine Bühne: keinen Auftritt, der in Sekunden erklärt, was sie tut, und keine Adresse, an die ein Einkäufer seine Anfrage schickt.",
+      en: "Claudia Abou Ibrahim takes requests for quotation (RFQ) for EPC projects in Africa and the Middle East all the way to the purchase order (PO). A business that lives on trust and speed had no stage: no presence that explains in seconds what she does, and no address where a buyer sends his request.",
+    },
+    claudeUsage: {
+      de: "Das ganze Projekt aus einer Hand, mit Claude Code gebaut: Positionierung und Texte (ein Versprechen: ein fester Termin für das Angebot innerhalb von 24 Stunden), ein dreistufiger Hero, der beim Scrollen von der Anfrage über die Prüfung zur Lieferung geht, Bildwelten aus Nano Banana und Kling als gescrubbte Sequenzen, Formular über Resend, Bewegung, die der Systemeinstellung folgt. Dazu der Launch: Domain, DNS, Hosting bei Vercel und Repo in Claudias eigenem Besitz.",
+      en: "The whole project from one hand, built with Claude Code: positioning and copy (one promise: a firm date for the quote within 24 hours), a three stage hero that scrolls from request to verification to delivery, image worlds from Nano Banana and Kling as scrubbed sequences, form via Resend, motion that follows the system setting. Plus the launch: domain, DNS, hosting on Vercel and the repo owned by Claudia herself.",
+    },
+    result: {
+      de: "Live auf rfqtopo.com seit September 2026, auf Englisch, für Einkäufer weltweit. Die Kundin besitzt Domain, Hosting und Code selbst, Anfragen landen per Formular direkt bei ihr, und der erste Screen sagt, was sie liefert: Your RFQ. Verified. Delivered.",
+      en: "Live on rfqtopo.com since September 2026, in English, for buyers worldwide. The client owns domain, hosting and code herself, requests reach her directly through the form, and the first screen says what she delivers: Your RFQ. Verified. Delivered.",
+    },
+    tags: ["Claude Code", "Next.js 16", "Launch + Hosting", "Motion"],
+    url: "https://rfqtopo.com",
+    image: "/case-studies/rfqtopo.jpg",
+  },
+  {
     id: "dielommel",
     category: "webseiten",
     title: {
