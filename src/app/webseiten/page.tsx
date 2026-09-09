@@ -90,13 +90,15 @@ const ANGEBOT_STACK = [
 ];
 
 const ARBEIT_FEATURED = {
-  img: "/case-studies/yuna.jpg",
-  label: "yuna-sports-nutrition.com",
-  note: "Personal Training München · Brand-System, One-Pager, Blog, SEO + Messung",
-  badge: "Neu · live seit August 2026",
+  img: "/case-studies/rfqtopo.jpg",
+  label: "rfqtopo.com",
+  note: "Industrielles Sourcing für EPC-Projekte · Konzept, Design, Creatives, Technik und Launch aus einer Hand",
+  badge: "Neu · live seit September 2026",
 };
 
 const ARBEIT = [
+  { img: "/case-studies/yuna.jpg", label: "yuna-sports-nutrition.com", note: "Personal Training München · Brand-System, Blog, SEO" },
+  { img: "/case-studies/stefan-pons.jpg", label: "stefanpons.de", note: "Klangmassage am Bodensee · Konzept, Texte, Videos" },
   { img: "/case-studies/vegaleads.jpg", label: "vegaleads.ai", note: "Lead-Radar, zweisprachig" },
   { img: "/case-studies/dielommel.jpg", label: "dielommel.de", note: "Begleitung für Familienunternehmen" },
   { img: "/case-studies/cyber-sales.jpg", label: "cyber-sales.de", note: "Vertriebssystem Cybersecurity" },
