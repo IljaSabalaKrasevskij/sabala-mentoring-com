@@ -34,6 +34,14 @@ const nextConfig: NextConfig = {
   // ohne Redirect verlieren wir den ganzen Search-Equity.
   async redirects() {
     return [
+      // www lieferte jede Seite ein zweites Mal aus (GSC fuehrte /shop doppelt).
+      // Eine Adresse fuer Google: alles auf die Domain ohne www.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.sabala-mentoring.com" }],
+        destination: "https://sabala-mentoring.com/:path*",
+        permanent: true,
+      },
       // Claude Starter am 24.8.2026 eingestellt, war nie buchbar.
       // Die Beratungsstunde hat seinen Platz uebernommen.
       {
