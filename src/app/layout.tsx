@@ -43,13 +43,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Ilja Krasevskij", url: `${siteUrl}/ueber-mich` }],
   creator: "Ilja Krasevskij",
   publisher: siteName,
+  // "./" loest Next.js pro Seite auf den eigenen Pfad auf. Vorher stand hier siteUrl:
+  // jede Unterseite ohne eigene Angabe erklaerte damit die Startseite zum Original.
   alternates: {
-    canonical: siteUrl,
+    canonical: "./",
   },
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteUrl,
+    url: "./",
     siteName,
     title: siteTitle,
     description: siteDescription,
@@ -141,15 +143,15 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>
-        <Script id="schema-organization" type="application/ld+json" strategy="beforeInteractive">
-          {JSON.stringify(organizationSchema)}
-        </Script>
-        <Script id="schema-website" type="application/ld+json" strategy="beforeInteractive">
-          {JSON.stringify(websiteSchema)}
-        </Script>
-        <Script id="schema-person" type="application/ld+json" strategy="beforeInteractive">
-          {JSON.stringify(personSchema)}
-        </Script>
+        {/* JSON-LD als echtes <script> im HTML. Ueber next/script stand es nur in einem
+            JavaScript-Aufruf (self.__next_s), Crawler ohne JavaScript sahen es nicht. */}
+        {[organizationSchema, websiteSchema, personSchema].map((schema) => (
+          <script
+            key={schema["@id"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
+          />
+        ))}
         <Script
           id="umami-analytics"
           src="https://analytics.sabala-mentoring.com/script.js"

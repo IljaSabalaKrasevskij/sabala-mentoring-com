@@ -1,6 +1,15 @@
+import fs from "fs";
+import path from "path";
 import type { MetadataRoute } from "next";
 
 const baseUrl = "https://sabala-mentoring.com";
+
+// Blogartikel kommen direkt aus den Ordnern unter src/app/blog. Die frueher gepflegte
+// Liste hatte 4 von 13 Artikeln: jeder neue Artikel fehlte, bis jemand daran dachte.
+const blogSlugs = fs
+  .readdirSync(path.join(process.cwd(), "src/app/blog"), { withFileTypes: true })
+  .filter((d) => d.isDirectory())
+  .map((d) => d.name);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -17,21 +26,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/mitentwickelt", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
     { path: "/case-studies", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/akademie-hub", priority: 0.8, changeFrequency: "monthly" },
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
+    { path: "/shop", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/webdesign-os", priority: 0.7, changeFrequency: "monthly" },
     { path: "/gpt-team", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/mooni-voice", priority: 0.6, changeFrequency: "monthly" },
     { path: "/brandguide", priority: 0.6, changeFrequency: "monthly" },
     { path: "/meditation", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/podcast", priority: 0.5, changeFrequency: "monthly" },
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },
     { path: "/agb", priority: 0.3, changeFrequency: "yearly" },
-  ];
-
-  const blogPosts: Array<{ slug: string; priority: number; isPillar?: boolean }> = [
-    { slug: "seo-und-geo-fuer-personal-brands-2026", priority: 0.9, isPillar: true },
-    { slug: "chatgpt-custom-gpts-richtig-nutzen", priority: 0.7 },
-    { slug: "technik-setup-online-coach", priority: 0.7 },
-    { slug: "warum-business-mentoring-programme-scheitern", priority: 0.7 },
   ];
 
   return [
@@ -41,11 +48,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: r.changeFrequency,
       priority: r.priority,
     })),
-    ...blogPosts.map((p) => ({
-      url: `${baseUrl}/blog/${p.slug}`,
+    ...blogSlugs.map((slug) => ({
+      url: `${baseUrl}/blog/${slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
-      priority: p.priority,
+      priority: slug === "seo-und-geo-fuer-personal-brands-2026" ? 0.9 : 0.7,
     })),
   ];
 }
