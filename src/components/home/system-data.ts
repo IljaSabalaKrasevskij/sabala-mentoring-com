@@ -34,7 +34,7 @@ export const SYSTEM: PlanetData[] = [
     subtitle: "du sagst was, ich baue es",
     tag: "Webseiten",
     pitch:
-      "Du führst ein wachsendes Unternehmen und brauchst einen Auftritt oder ein KI-System, das einfach läuft. Du sagst, was du brauchst — ich baue es fertig und übergebe es dir.",
+      "Du führst ein wachsendes Unternehmen und brauchst einen Auftritt, der einfach läuft und verkauft. Du sagst, was du brauchst, ich baue es fertig und übergebe es dir.",
     href: "/webseiten",
     cta: "Zu den Webseiten",
     // Champagner-Gold — hell, fein, präzise
@@ -49,7 +49,6 @@ export const SYSTEM: PlanetData[] = [
     labelDy: 0.0,
     moons: [
       { name: "Webseiten", href: "/webseiten", desc: "Premium-Auftritt, der verkauft" },
-      { name: "Custom GPTs", href: "/gpt-team", desc: "Dein Wissen als KI-Assistent" },
     ],
   },
   {
