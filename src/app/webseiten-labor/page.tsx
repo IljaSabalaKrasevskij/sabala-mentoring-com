@@ -53,8 +53,6 @@ const MARQUEE = [
   "Pflege-Service",
 ];
 
-const BAUCHLADEN = ["12 Angebote", "Popup beim Start", "Stock-Fotos", "Slider", "Für alle etwas", "Zuletzt 2019 gepflegt", "8 Sekunden Ladezeit"];
-
 const HEBEL = [
   { icon: Search, term: "Gefunden werden", line: "bei Google und in KI-Suchen" },
   { icon: ShieldCheck, term: "Vertrauen", line: "im ersten Augenblick" },
@@ -233,6 +231,7 @@ export default function WebseitenLaborPage() {
   return (
     <main className="flex-1" style={{ background: "var(--cream)" }}>
       {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA).replace(/</g, "\\u003c") }} />
       <ScrollRail />
       <Hero />
       <Marquee />
