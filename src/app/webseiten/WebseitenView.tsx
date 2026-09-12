@@ -385,7 +385,8 @@ function Marquee() {
 /* ── 3 · Schaufenster (Metapher + Pain) ────────────────────────────────── */
 function Schaufenster() {
   // Zusammenhängender 3D-Rundgang: Schaufenster, Empfang, ausgewählte Arbeiten.
-  return <StudioJourney />;
+  const { lang } = useT();
+  return <StudioJourney lang={lang} />;
 }
 
 /* ── 4 · Werthebel (ROI-Kette) ─────────────────────────────────────────── */

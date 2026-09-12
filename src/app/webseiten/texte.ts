@@ -232,10 +232,10 @@ const en: typeof de = {
   meta: {
     title: "High-End Web Design and Development",
     description:
-      "Premium websites in custom code: distinctive in design, loaded in under two seconds, visible on Google and in AI answers. Free potential analysis with a website check, competitor research and a call.",
+      "Premium websites in custom code: distinctive design, under two seconds to load, visible on Google and in AI answers. Free potential analysis: website check, competitor research and a call.",
     ogTitle: "High-End Web Design and Development · Sabala Studios",
     ogDescription:
-      "Your website, built to beat the best in your niche. Custom code, under two seconds to load, SEO and GEO, one person to talk to.",
+      "A website built to beat the best in your niche. Custom code, under two seconds, SEO and GEO, one person to talk to.",
   },
   rail: ["Shop window", "Leverage", "Who for", "Work", "Process", "Foundation", "Analysis", "Care", "FAQ"],
   marquee: [
@@ -245,8 +245,8 @@ const en: typeof de = {
   hero: {
     eyebrow: "// high-end web development",
     zeile1: "Design that sells.",
-    zeile2: "And stays with people.",
-    sub: "High-end websites for premium service providers.",
+    zeile2: "And sticks.",
+    sub: "High-end websites for people who charge premium prices.",
     cta: "Step closer",
     siegelLabel: "To the free potential analysis",
   },
@@ -261,28 +261,28 @@ const en: typeof de = {
       { term: "Quality", line: "felt in every detail" },
     ],
     ergebnisLabel: "The result",
-    ergebnis: "People who show up like this can charge more. And they earn back what the site cost them faster.",
+    ergebnis: "Show up like this and you can charge more. And the site pays for itself sooner.",
   },
   fuerWen: {
     geist: "Who for",
     eyebrow: "// who this is built for",
-    headline: "For premium service providers whose website lags behind their work.",
-    lead: "The first impression decides whether your price reads as a given or as an opening bid. That is why I build websites that make premium visible from the first second.",
-    tafel: "You are in the right place if.",
+    headline: "For experts whose website undersells them.",
+    lead: "The first impression decides whether your price reads as a given or as an opening bid. I build websites that settle that question in the first two seconds.",
+    tafel: "This is for you if.",
     fuerDich: [
       "Consultants, law firms, studios and practices with high-priced services",
-      "Your offer is premium, your website looks like a template",
+      "Your work is premium, your website looks rented",
       "Clients compare you to the best in your niche before the first call",
-      "You want a presence that explains your price before you name it",
+      "You want a site that justifies your price before you name it",
     ],
-    absage: "Not built for price fighters who win by being cheapest, and not for projects where a website builder genuinely does the job.",
+    absage: "Not for people who win on being cheapest, and not for projects where a website builder honestly does the job.",
     zitat: "»A good website is a well arranged shop window with one clear offer that moves the right people to step inside.«",
     zitatName: "Ilja Sabala",
     bildAlt: "The Sabala eagle at the desk, facing forward",
   },
   galerie: {
     eyebrow: "// real work",
-    headline: "No mockups. All live.",
+    headline: "No mockups. Every one is live.",
     alleCases: "All case studies",
     liveAnsehen: "View live",
     caseStudy: "Case study",
@@ -300,7 +300,7 @@ const en: typeof de = {
   },
   prozess: {
     eyebrow: "// the path",
-    headline: "Three steps, no agency fog.",
+    headline: "Three steps. No agency fog.",
     schritte: [
       { term: "Analysis & call", tag: "free", line: "Website check, competitor research, a 30 minute call. After that you know where you stand." },
       { term: "Offer, concept, build", tag: null, line: "A clear scope with a price, then audience, story, design and custom code. You see the work in progress." },
@@ -316,12 +316,12 @@ const en: typeof de = {
       { stat: "100 %", term: "yours to own", line: "Custom code in your own repository, in your name. If you ever leave, you take everything with you." },
       { stat: "1", term: "person to talk to", line: "Strategy, design, code, operations: one hand, one responsibility, no friction between trades." },
     ],
-    fussnote: "This very page runs on exactly the setup you get. What I sell, I use myself, every day.",
+    fussnote: "This page runs on the exact setup you get. I sell what I use, every day.",
   },
   analyse: {
     eyebrow: "// your first step · free",
-    headline: "Let me analyse your potential.",
-    lead: "Before we talk about a project, you get clarity. Four parts, one call, no risk:",
+    headline: "See what your site is leaving on the table.",
+    lead: "Before we talk about a project, you get clarity. Four parts, one call, nothing at stake:",
     stack: [
       { term: "Website check across five layers", line: "SEO, GEO, content, design and speed: where your site carries you and where it holds you back." },
       { term: "Deep competitor research", line: "What your clients search for, who leads your niche, with what, and where the gaps are." },
@@ -350,7 +350,7 @@ const en: typeof de = {
   pflege: {
     eyebrow: "// after the launch",
     headline: "The launch is where it starts.",
-    lead: "A website is not the end of a project. As your technical partner I take over operations and growth, in three clear tiers.",
+    lead: "A launch is not an ending. As your technical partner I run it and grow it, in three clear tiers.",
     meistGewaehlt: "Most chosen",
     imMonat: "per month",
     aufAnfrage: "On request",

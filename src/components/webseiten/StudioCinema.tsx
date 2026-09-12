@@ -5,9 +5,10 @@ import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
 import { clamp, windowView, EXHIBITS, type HoverAnchor, type Room } from "./studio-journey";
 import { cinemaShot, filmAt, LONDON_ASSETS, LONDON_FILMS, stillShot, WINDOW_OBJECTS } from "./studio-cinema";
 import styles from "./StudioCinema.module.css";
-import { DISPLAY_DETAILS } from "./studio-concierge";
+import { STUDIO_TEXTE, type Lang } from "./studio-texte";
 
 type Props = {
+  lang?: Lang;
   progress: RefObject<number>; distance: RefObject<number>; exploring: boolean; room: Room; flat: boolean; reduced: boolean;
   selected: number | null; interactive: boolean;
   onSelect: (index: number) => void;
@@ -17,7 +18,8 @@ type Props = {
   project: { image: string; title: string; url: string };
 };
 
-export default function StudioCinema({ progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onDoor, onReady, onFailure, onInvalidate, project }: Props) {
+export default function StudioCinema({ lang = "de", progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onDoor, onReady, onFailure, onInvalidate, project }: Props) {
+  const S = STUDIO_TEXTE[lang];
   const root = useRef<HTMLDivElement>(null);
   const plates = useRef<(HTMLDivElement | null)[]>([]);
   const door = useRef<HTMLSpanElement>(null);
@@ -90,14 +92,14 @@ export default function StudioCinema({ progress, distance, exploring, room, flat
   }} onPointerLeave={() => { targetPointer.current = 0; refresh.current?.(); }}>
     <div className={styles.plane}>
       {(["window", "reception", "gallery"] as const).map((key, i) => <div key={key} ref={node => { plates.current[i] = node; }} className={styles.plate} style={{ opacity: key === room ? 1 : 0 }}>
-        <Image src={LONDON_ASSETS[key]} alt={key === "window" ? "Sabala Studios: ein Londoner Laden mit schwarzer Fassade, Messing und sechs Exponaten" : key === "reception" ? "Der Sabala-Adler hinter dem Empfangstresen aus Walnuss und schwarzem Marmor" : "Der Sabala-Adler präsentiert ausgewählte Arbeiten im Londoner Atelier"} fill sizes="(max-width: 650px) 160vw, 100vw" unoptimized onLoad={key === "window" ? onReady : undefined} onError={onFailure} loading={key === "window" ? "eager" : "lazy"} className={styles.photograph} />
+        <Image src={LONDON_ASSETS[key]} alt={key === "window" ? S.bildAlt.window : key === "reception" ? S.bildAlt.reception : S.bildAlt.gallery} fill sizes="(max-width: 650px) 160vw, 100vw" unoptimized onLoad={key === "window" ? onReady : undefined} onError={onFailure} loading={key === "window" ? "eager" : "lazy"} className={styles.photograph} />
         {key === "window" && <>
           <span ref={aperture} className={styles.aperture} aria-hidden="true"><span className={styles.inside} /><span ref={door} className={styles.doorLeaf} /></span>
-          {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.object} style={{ left: `${object.x}%`, top: `${object.y}%`, width: `${object.w}%`, height: `${object.h}%`, "--object-shape": object.shape, "--crop-size": `${10000 / object.w}% ${10000 / object.h}%`, "--crop-position": `${object.x / (100 - object.w) * 100}% ${object.y / (100 - object.h) * 100}%` } as CSSProperties} type="button" aria-label={`${EXHIBITS[index].object}: ${EXHIBITS[index].label}`} aria-pressed={selected === index} tabIndex={-1} disabled={room !== "window" || !interactive} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span aria-hidden="true" /></button>)}
+          {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.object} style={{ left: `${object.x}%`, top: `${object.y}%`, width: `${object.w}%`, height: `${object.h}%`, "--object-shape": object.shape, "--crop-size": `${10000 / object.w}% ${10000 / object.h}%`, "--crop-position": `${object.x / (100 - object.w) * 100}% ${object.y / (100 - object.h) * 100}%` } as CSSProperties} type="button" aria-label={`${S.exponate[index].object}: ${S.exponate[index].label}`} aria-pressed={selected === index} tabIndex={-1} disabled={room !== "window" || !interactive} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span aria-hidden="true" /></button>)}
           <div ref={labels} className={styles.labels}>
-            {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.priceTag} type="button" style={{ left: `${object.x + object.w / 2}%`, top: `${[65.8, 61.8, 67.8, 61.8, 65.8, 66.8][index]}%` }} aria-label={`${EXHIBITS[index].label}: ${DISPLAY_DETAILS[index].price}`} aria-pressed={selected === index} disabled={!interactive || room !== "window"} tabIndex={interactive && room === "window" ? 0 : -1} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span>{EXHIBITS[index].label}</span><strong>{DISPLAY_DETAILS[index].price}</strong></button>)}
+            {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.priceTag} type="button" style={{ left: `${object.x + object.w / 2}%`, top: `${[65.8, 61.8, 67.8, 61.8, 65.8, 66.8][index]}%` }} aria-label={`${S.exponate[index].label}: ${S.schilder[index].tag}`} aria-pressed={selected === index} disabled={!interactive || room !== "window"} tabIndex={interactive && room === "window" ? 0 : -1} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span>{S.exponate[index].label}</span><strong>{S.schilder[index].tag}</strong></button>)}
           </div>
-          <button className={styles.doorTarget} aria-label="Die Ladentür öffnen und eintreten" type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
+          <button className={styles.doorTarget} aria-label={S.tuerLabel} type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
         </>}
         {key === "gallery" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
       </div>)}

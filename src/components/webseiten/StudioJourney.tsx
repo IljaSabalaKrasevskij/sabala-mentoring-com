@@ -10,9 +10,10 @@ import styles from "./StudioJourney.module.css";
 
 import StudioCinema from "./StudioCinema";
 import { LONDON_ASSETS } from "./studio-cinema";
-import { CONCIERGE_QUESTIONS, DISPLAY_DETAILS } from "./studio-concierge";
+import { STUDIO_TEXTE, type Lang } from "./studio-texte";
 const CASES = GALLERY_IDS.flatMap(id => { const c = CASE_STUDIES.find(item => item.id === id); return c?.image ? [c] : []; });
-const ROOMS: { id: Room; label: string }[] = [{ id: "window", label: "Schaufenster" }, { id: "reception", label: "Empfang" }, { id: "gallery", label: "Die Arbeiten" }];
+/* Nur die Kennungen, die Beschriftung kommt beim Rendern aus der Sprachdatei. */
+const ROOM_IDS: Room[] = ["window", "reception", "gallery"];
 const subscribeMotion = (callback: () => void) => {
   const m = window.matchMedia("(prefers-reduced-motion: reduce)"); m.addEventListener("change", callback);
   return () => m.removeEventListener("change", callback);
@@ -22,7 +23,8 @@ function ScrollCue() {
   return <span className={styles.scrollCue} aria-hidden="true"><span className={styles.scrollMouse}><span /></span><ArrowDown size={12} /></span>;
 }
 
-export default function StudioJourney() {
+export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
+  const S = STUDIO_TEXTE[lang];
   const section = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const distance = useRef(0);
@@ -48,10 +50,10 @@ export default function StudioJourney() {
   const reduced = useSyncExternalStore(subscribeMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => false);
   const flat = unavailable || quiet;
   const selected = pinned ?? hovered;
-  const exhibit = selected === null ? null : EXHIBITS[selected];
+  const exhibit = selected === null ? null : { ...EXHIBITS[selected], ...S.exponate[selected] };
   const project = CASES[caseIndex];
   const stepCase = (delta: number) => setCaseIndex(i => (i + delta + CASES.length) % CASES.length);
-  const display = selected === null ? null : DISPLAY_DETAILS[selected];
+  const display = selected === null ? null : S.schilder[selected];
   const exploring = flat || close;
 
   const update = useCallback(() => {
@@ -158,36 +160,36 @@ export default function StudioJourney() {
     });
   };
 
-  return <section id="schaufenster" ref={section} className={`${styles.journey} ${flat ? styles.flat : ""}`} style={{ height: flat ? "auto" : `${(APPROACH_SCREENS + (expanded ? 6.1 : 3.4)) * 100}vh` }} aria-label="Ein Rundgang durch Sabala Studios" data-room={room} data-ready={ready} data-active={active} data-visual="london-photographic" data-window-phase={exploring ? "explore" : "approach"} data-gallery-open={expanded}>
+  return <section id="schaufenster" ref={section} className={`${styles.journey} ${flat ? styles.flat : ""}`} style={{ height: flat ? "auto" : `${(APPROACH_SCREENS + (expanded ? 6.1 : 3.4)) * 100}vh` }} aria-label={S.bereich} data-room={room} data-ready={ready} data-active={active} data-visual="london-photographic" data-window-phase={exploring ? "explore" : "approach"} data-gallery-open={expanded}>
     <div className={styles.stage}>
       <header className={styles.topbar}>
-        <button type="button" className={styles.wordmark} onClick={() => go("window")} aria-label="Zurück zum Schaufenster">Sabala Studios</button>
-        <nav className={styles.roomnav} aria-label="Räume im Studio">{ROOMS.map((r, i) => <button key={r.id} type="button" onClick={() => go(r.id)} aria-current={room === r.id ? "step" : undefined}><span>{String(i + 1).padStart(2, "0")}</span>{r.label}</button>)}</nav>
-        <a className={styles.skip} href="#hebel">Rundgang überspringen <MoveUpRight size={14} /></a>
+        <button type="button" className={styles.wordmark} onClick={() => go("window")} aria-label={S.zurueck}>{S.marke}</button>
+        <nav className={styles.roomnav} aria-label={S.raeume}>{ROOM_IDS.map((id, i) => <button key={id} type="button" onClick={() => go(id)} aria-current={room === id ? "step" : undefined}><span>{String(i + 1).padStart(2, "0")}</span>{S.raum[id]}</button>)}</nav>
+        <a className={styles.skip} href="#hebel">{S.ueberspringen}<MoveUpRight size={14} /></a>
       </header>
 
       <div className={styles.scene} style={{ cursor: hovered !== null ? "pointer" : "auto" }}>
-        {unavailable || !near ? <div className={styles.poster}><Image src={unavailable ? "/webseiten/schaufenster/master.jpg" : LONDON_ASSETS.window} alt="Das Schaufenster von Sabala Studios" fill sizes="100vw" /></div> : <StudioCinema progress={progress} distance={distance} exploring={exploring} room={room} flat={flat} reduced={reduced} selected={selected} interactive={(!travelling || flat) && (room !== "window" || exploring)} onSelect={onSelect} onHover={onHover} onDoor={onDoor} onReady={onReady} onFailure={onFailure} onInvalidate={onInvalidate} project={{ image: project.image!, title: project.title.de, url: project.url ?? "/case-studies" }} />}
+        {unavailable || !near ? <div className={styles.poster}><Image src={unavailable ? "/webseiten/schaufenster/master.jpg" : LONDON_ASSETS.window} alt={S.bildAlt.poster} fill sizes="100vw" /></div> : <StudioCinema lang={lang} progress={progress} distance={distance} exploring={exploring} room={room} flat={flat} reduced={reduced} selected={selected} interactive={(!travelling || flat) && (room !== "window" || exploring)} onSelect={onSelect} onHover={onHover} onDoor={onDoor} onReady={onReady} onFailure={onFailure} onInvalidate={onInvalidate} project={{ image: project.image!, title: project.title.de, url: project.url ?? "/case-studies" }} />}
         <div className={styles.vignette} aria-hidden="true" />
       </div>
 
-      {!ready && !flat && <div className={styles.loading} role="status"><span />Der Laden öffnet sich …<button type="button" onClick={() => setQuiet(true)}>Als Übersicht ansehen</button></div>}
+      {!ready && !flat && <div className={styles.loading} role="status"><span />{S.laedt}<button type="button" onClick={() => setQuiet(true)}>{S.alsUebersicht}</button></div>}
 
       {room === "window" && !exploring && <div className={styles.invitation}>
-        <h2>Komm näher.</h2><ScrollCue /><span className={styles.srOnly}>Scrollen, um näher zu kommen.</span>
+        <h2>{S.naeher}</h2><ScrollCue /><span className={styles.srOnly}>{S.naeherHinweis}</span>
       </div>}
       {room === "window" && exploring && <h2 className={styles.srOnly}>Das Schaufenster von Sabala Studios</h2>}
-      {travelling && !flat && <div className={styles.travelHint} aria-live="polite">{room === "window" ? "Willkommen." : "Die Arbeiten."}</div>}
+      {travelling && !flat && <div className={styles.travelHint} aria-live="polite">{room === "window" ? S.willkommen : S.arbeitenTitel}</div>}
 
       {room === "window" && !travelling && exploring && <>
-        <button type="button" className={styles.entryCue} onClick={onDoor}>{flat ? <ArrowRight size={18} aria-hidden="true" /> : <ScrollCue />}<span>Tritt ein.</span></button>
+        <button type="button" className={styles.entryCue} onClick={onDoor}>{flat ? <ArrowRight size={18} aria-hidden="true" /> : <ScrollCue />}<span>{S.eintreten}</span></button>
         {exhibit && display && <article key={exhibit.id} className={`${styles.digitalPanel} ${pinned !== null ? styles.panelPinned : ""}`} aria-live="polite" style={{
           left: `clamp(18px, calc(${anchor.x}% + ${anchor.x > 56 ? "-310px" : "28px"}), calc(100% - 328px))`,
           top: `clamp(110px, calc(${anchor.y}% - 240px), calc(100% - 390px))`,
           pointerEvents: pinned !== null ? "auto" : "none",
           transformOrigin: anchor.x > 56 ? "right bottom" : "left bottom",
         }}>
-          <div className={styles.digitalTop}><span>High-End Web Development</span>{pinned !== null && <button type="button" onClick={() => { setPinned(null); setHovered(null); }} aria-label="Erklärung schließen"><X size={14} /></button>}</div>
+          <div className={styles.digitalTop}><span>{S.kicker}</span>{pinned !== null && <button type="button" onClick={() => { setPinned(null); setHovered(null); }} aria-label={S.erklaerungSchliessen}><X size={14} /></button>}</div>
           <h3>{exhibit.label}</h3><p className={styles.digitalBenefit}>{display.title}</p>
           <ul>{display.features.map((feature, i) => <li key={feature} style={{ animationDelay: `${i * 55 + 80}ms` }}>{feature}</li>)}</ul>
           <p className={styles.digitalResult}>{display.benefit}</p>
@@ -195,9 +197,9 @@ export default function StudioJourney() {
         </article>}
         <div className={styles.windowBottom}>
           <details className={styles.exhibitMenu}>
-            <summary>Exponate entdecken <span aria-hidden="true">+</span></summary>
-            <div className={styles.exhibitNav} aria-label="Die Dinge im Schaufenster">
-              {EXHIBITS.map((e, i) => <button key={e.id} type="button" aria-pressed={selected === i} onMouseEnter={() => onHover(i)} onMouseLeave={() => onHover(null)} onFocus={() => onHover(i)} onBlur={() => onHover(null)} onClick={(event) => { onSelect(i); const menu = event.currentTarget.closest("details"); menu?.removeAttribute("open"); menu?.querySelector("summary")?.focus({ preventScroll: true }); }}>{e.label}</button>)}
+            <summary>{S.exponateEntdecken}<span aria-hidden="true">+</span></summary>
+            <div className={styles.exhibitNav} aria-label={S.dingeImFenster}>
+              {S.exponate.map((e, i) => <button key={e.label} type="button" aria-pressed={selected === i} onMouseEnter={() => onHover(i)} onMouseLeave={() => onHover(null)} onFocus={() => onHover(i)} onBlur={() => onHover(null)} onClick={(event) => { onSelect(i); const menu = event.currentTarget.closest("details"); menu?.removeAttribute("open"); menu?.querySelector("summary")?.focus({ preventScroll: true }); }}>{e.label}</button>)}
             </div>
           </details>
         </div>
@@ -205,33 +207,33 @@ export default function StudioJourney() {
 
       {room === "reception" && !travelling && <div className={styles.concierge}>
         <article id="studio-answer" className={styles.speech} role="status" aria-live="polite" aria-atomic="true" key={service ?? "greeting"}>
-          {service === null ? <h2>Wie kann ich dir helfen?</h2> : <>
-            <p>{CONCIERGE_QUESTIONS[service].answer}</p>
-            {service === 2 && (flat ? <button type="button" onClick={() => go("gallery")}>Arbeiten ansehen <ArrowRight size={14} /></button> : <span className={styles.scrollInvitation}>Weiter scrollen <ArrowDown size={14} /></span>)}
+          {service === null ? <h2>{S.wieHelfen}</h2> : <>
+            <p>{S.fragen[service].answer}</p>
+            {service === 2 && (flat ? <button type="button" onClick={() => go("gallery")}>{S.arbeitenAnsehen}<ArrowRight size={14} /></button> : <span className={styles.scrollInvitation}>{S.weiterScrollen}<ArrowDown size={14} /></span>)}
           </>}
         </article>
-        <div className={styles.questionRow} aria-label="Fragen an den Gastgeber">{CONCIERGE_QUESTIONS.map((q, i) => <button key={q.question} type="button" aria-pressed={service === i} aria-controls="studio-answer" onClick={() => chooseQuestion(i)}><span>{q.question}</span><MoveUpRight size={16} aria-hidden="true" /></button>)}</div>
+        <div className={styles.questionRow} aria-label={S.fragenAnGastgeber}>{S.fragen.map((q, i) => <button key={q.question} type="button" aria-pressed={service === i} aria-controls="studio-answer" onClick={() => chooseQuestion(i)}><span>{q.question}</span><MoveUpRight size={16} aria-hidden="true" /></button>)}</div>
       </div>}
 
       {room === "gallery" && !travelling && <div className={styles.gallery}>
-        <div className={styles.galleryHeading}><h2>Ausgewählte Arbeiten.</h2></div>
+        <div className={styles.galleryHeading}><h2>{S.ausgewaehlteArbeiten}</h2></div>
         <article className={styles.casePanel} key={project.id}>
           <p className={styles.caseIndustry}>{project.industry.de}</p><h3>{project.title.de.split(":")[0]}</h3>
-          <a href={project.url ?? "/case-studies"} target="_blank" rel="noopener noreferrer">{project.url ? "Live-Webseite ansehen" : "Case Study ansehen"}<MoveUpRight size={16} /></a>
+          <a href={project.url ?? "/case-studies"} target="_blank" rel="noopener noreferrer">{project.url ? S.liveAnsehen : S.caseStudy}<MoveUpRight size={16} /></a>
         </article>
-        <div className={styles.caseRail} aria-label="Arbeiten auswählen">
-          <button type="button" className={styles.railStep} aria-label="Vorherige Arbeit" onClick={() => stepCase(-1)}><ChevronLeft size={17} aria-hidden="true" /></button>
+        <div className={styles.caseRail} aria-label={S.arbeitWaehlen}>
+          <button type="button" className={styles.railStep} aria-label={S.vorherige} onClick={() => stepCase(-1)}><ChevronLeft size={17} aria-hidden="true" /></button>
           <div className={styles.railTrack}>{CASES.map((c, i) => {
             const slot = caseSlot(i, caseIndex, CASES.length);
             const off = Math.abs(slot) > 1;
             return <button type="button" key={c.id} data-slot={off ? "far" : slot} aria-pressed={caseIndex === i} aria-hidden={off} tabIndex={off ? -1 : 0} onClick={() => setCaseIndex(i)}><Image src={c.image!} alt="" width={336} height={189} sizes="(max-width: 1200px) 140px, 180px" /><span>{c.title.de.split(":")[0]}</span></button>;
           })}</div>
-          <button type="button" className={styles.railStep} aria-label="Nächste Arbeit" onClick={() => stepCase(1)}><ChevronRight size={17} aria-hidden="true" /></button>
+          <button type="button" className={styles.railStep} aria-label={S.naechste} onClick={() => stepCase(1)}><ChevronRight size={17} aria-hidden="true" /></button>
         </div>
-        <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} /> Empfang</button><a href="#analyse">Mein Projekt besprechen <ArrowRight size={16} /></a></div>
+        <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} />{S.raum.reception}</button><a href="#analyse">{S.projektBesprechen}<ArrowRight size={16} /></a></div>
       </div>}
 
-      <footer className={styles.bottomBar}><span>{unavailable ? "Auf diesem Gerät als Übersicht." : flat ? "Raum für Raum." : room === "window" ? exploring ? "Die Dinge im Fenster entdecken." : "Ein erster Eindruck. Ein Blick hinter die Fassade." : room === "reception" && service !== 2 ? "Was möchtest du wissen?" : "Scrollen, um weiterzugehen."}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? "Mit Bildfahrt" : "Ohne Bildfahrt"}</button>}</footer>
+      <footer className={styles.bottomBar}><span>{unavailable ? S.hinweis.unavailable : flat ? S.hinweis.flat : room === "window" ? exploring ? S.hinweis.entdecken : S.hinweis.ersterEindruck : room === "reception" && service !== 2 ? S.hinweis.wasWissen : S.hinweis.weitergehen}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}</footer>
     </div>
   </section>;
 }
