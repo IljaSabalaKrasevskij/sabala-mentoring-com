@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { useLenis } from "lenis/react";
-import { ArrowDown, ArrowLeft, ArrowRight, MoveUpRight, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MoveUpRight, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { CASE_STUDIES } from "@/lib/case-studies";
-import { APPROACH_SCREENS, ease, EXHIBITS, GALLERY_IDS, journeyProgress, ROOM_PROGRESS, roomAt, type HoverAnchor, type Room } from "./studio-journey";
+import { APPROACH_SCREENS, caseSlot, ease, EXHIBITS, GALLERY_IDS, journeyProgress, ROOM_PROGRESS, roomAt, type HoverAnchor, type Room } from "./studio-journey";
 import styles from "./StudioJourney.module.css";
 
 import StudioCinema from "./StudioCinema";
@@ -50,6 +50,7 @@ export default function StudioJourney() {
   const selected = pinned ?? hovered;
   const exhibit = selected === null ? null : EXHIBITS[selected];
   const project = CASES[caseIndex];
+  const stepCase = (delta: number) => setCaseIndex(i => (i + delta + CASES.length) % CASES.length);
   const display = selected === null ? null : DISPLAY_DETAILS[selected];
   const exploring = flat || close;
 
@@ -218,7 +219,15 @@ export default function StudioJourney() {
           <p className={styles.caseIndustry}>{project.industry.de}</p><h3>{project.title.de.split(":")[0]}</h3>
           <a href={project.url ?? "/case-studies"} target="_blank" rel="noopener noreferrer">{project.url ? "Live-Webseite ansehen" : "Case Study ansehen"}<MoveUpRight size={16} /></a>
         </article>
-        <div className={styles.caseRail} aria-label="Arbeiten auswählen">{CASES.map((c, i) => <button type="button" key={c.id} aria-pressed={caseIndex === i} onClick={() => setCaseIndex(i)}><Image src={c.image!} alt="" width={104} height={59} sizes="104px" /><span>{c.title.de.split(":")[0]}</span></button>)}</div>
+        <div className={styles.caseRail} aria-label="Arbeiten auswählen">
+          <button type="button" className={styles.railStep} aria-label="Vorherige Arbeit" onClick={() => stepCase(-1)}><ChevronLeft size={17} aria-hidden="true" /></button>
+          <div className={styles.railTrack}>{CASES.map((c, i) => {
+            const slot = caseSlot(i, caseIndex, CASES.length);
+            const off = Math.abs(slot) > 1;
+            return <button type="button" key={c.id} data-slot={off ? "far" : slot} aria-pressed={caseIndex === i} aria-hidden={off} tabIndex={off ? -1 : 0} onClick={() => setCaseIndex(i)}><Image src={c.image!} alt="" width={336} height={189} sizes="(max-width: 1200px) 140px, 180px" /><span>{c.title.de.split(":")[0]}</span></button>;
+          })}</div>
+          <button type="button" className={styles.railStep} aria-label="Nächste Arbeit" onClick={() => stepCase(1)}><ChevronRight size={17} aria-hidden="true" /></button>
+        </div>
         <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} /> Empfang</button><a href="#analyse">Mein Projekt besprechen <ArrowRight size={16} /></a></div>
       </div>}
 

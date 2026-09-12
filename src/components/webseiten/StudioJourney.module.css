@@ -64,12 +64,25 @@
 .caseIndustry { font-size: 10px; line-height: 1.5; color: #bdc5b3; margin: 0 0 7px; }
 .casePanel h3 { font: 400 23px/1.1 var(--font-instrument), Georgia, serif; margin: 0 0 18px; }
 .casePanel > a { display: flex; gap: 12px; align-items: center; font-size: 11px; color: #e1c99f; }
-.caseRail { position: absolute; bottom: 46px; left: 0; right: 0; display: flex; gap: 16px; pointer-events: auto; overflow-x: auto; scrollbar-width: thin; padding: 8px 1px; }
-.caseRail button { flex: 0 0 100px; display: flex; flex-direction: column; gap: 8px; padding: 0; background: transparent; border: 0; color: #c9cebf; text-align: left; cursor: pointer; }
-.caseRail img { width: 100px; height: 56px; object-fit: cover; opacity: .65; border-bottom: 1px solid transparent; padding-bottom: 2px; }
-.caseRail button[aria-pressed=true] img { opacity: 1; border-bottom-color: var(--brass); }
-.caseRail button:hover img { opacity: 1; }
-.caseRail span { font-size: 10px; line-height: 1.4; }
+/* Karussell: die gewaehlte Arbeit mittig und gross, je eine angeschnitten daneben,
+   der Rest liegt unsichtbar dahinter. --card ist die Breite der Mitte,
+   --push der Abstand der Nachbarn von der Mitte. */
+.caseRail { position: absolute; bottom: 78px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px; pointer-events: auto; }
+.railStep { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid #cdb78e3d; border-radius: 50%; background: #16241eb0; backdrop-filter: blur(12px); color: #cbb794; cursor: pointer; transition: border-color .25s, color .25s, background .25s; }
+.railStep:hover { border-color: #d5bc87; color: #f2dfb8; background: #1d2c24d9; }
+.railStep:focus-visible { outline: 1px solid #f9dd9f; outline-offset: 3px; }
+.railTrack { --card: 180px; --push: 160px; position: relative; width: calc(var(--card) + 2 * var(--push)); height: 130px; }
+.railTrack button { position: absolute; left: 50%; top: 0; width: var(--card); margin-left: calc(var(--card) / -2); display: flex; flex-direction: column; gap: 9px; padding: 0; background: transparent; border: 0; color: #d2d7c8; text-align: center; cursor: pointer; transition: transform .55s cubic-bezier(.16,1,.3,1), opacity .45s ease; }
+.railTrack button[data-slot="0"] { transform: none; opacity: 1; z-index: 3; }
+.railTrack button[data-slot="-1"] { transform: translateX(calc(var(--push) * -1)) scale(.62); opacity: .5; z-index: 2; }
+.railTrack button[data-slot="1"] { transform: translateX(var(--push)) scale(.62); opacity: .5; z-index: 2; }
+.railTrack button[data-slot="far"] { transform: scale(.5); opacity: 0; pointer-events: none; z-index: 1; }
+.railTrack button[data-slot="-1"]:hover, .railTrack button[data-slot="1"]:hover { opacity: .72; }
+.railTrack img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid #cdb78e26; }
+.railTrack button[data-slot="0"] img { border-color: var(--brass); box-shadow: 0 10px 26px #0009; }
+.railTrack span { font-size: 11px; line-height: 1.4; transition: opacity .35s ease; }
+.railTrack button:not([data-slot="0"]) span { opacity: 0; }
+.railTrack button:focus-visible img { outline: 1px solid #f9dd9f; outline-offset: 4px; }
 .galleryFooter { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; gap: 20px; pointer-events: auto; }
 .galleryFooter button, .galleryFooter a { display: flex; gap: 10px; align-items: center; color: #d4d1bc; font-size: 11px; border: 0; background: none; cursor: pointer; }
 .bottomBar { position: absolute; bottom: 0; left: 0; right: 0; height: 42px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 36px; color: #b1baaa; font-size: 9px; z-index: 4; }
@@ -110,10 +123,10 @@
   .galleryHeading h2 { font-size: 11px; }
   .casePanel { bottom: 156px; width: 220px; padding: 16px 18px; }
   .casePanel h3 { font-size: 22px; margin-bottom: 13px; }
-  .caseRail { bottom: 50px; gap: 13px; }
-  .caseRail button { flex-basis: 82px; }
-  .caseRail img { width: 82px; height: 47px; }
-  .caseRail span { font-size: 9px; }
+  .caseRail { bottom: 74px; gap: 12px; }
+  .railStep { width: 30px; height: 30px; }
+  .railTrack { --card: 132px; --push: 116px; height: 100px; }
+  .railTrack span { font-size: 9px; }
   .galleryFooter button, .galleryFooter a { font-size: 10px; gap: 8px; }
   .bottomBar { padding: 0 20px; font-size: 8px; gap: 10px; }
   .bottomBar > span { max-width: 210px; }

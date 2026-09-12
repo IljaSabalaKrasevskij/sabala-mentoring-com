@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { APPROACH_SCREENS, journeyProgress, windowView, cinemaShot, filmAt, stillShot, cameraShot, doorAngle, eaglePosition, ROOM_PROGRESS, roomAt } from './studio-journey.ts';
+import { APPROACH_SCREENS, caseSlot, journeyProgress, windowView, cinemaShot, filmAt, stillShot, cameraShot, doorAngle, eaglePosition, ROOM_PROGRESS, roomAt } from './studio-journey.ts';
 
 const samples = Array.from({ length: 1001 }, (_, i) => i / 1000);
 test('the camera enters through both door openings, never through a wall', () => {
@@ -103,5 +103,19 @@ test('mouse look pans toward either side and settles into the existing film fram
   for (const distance of [0, .5, 1, 2]) {
     const reduced = windowView(distance, 0, 1, true);
     assert.equal(reduced.scale, 1); assert.equal(reduced.x, 0); assert.equal(reduced.y, 0);
+  }
+});
+
+test('the gallery carousel always shows exactly one neighbour on each side', () => {
+  for (const n of [3, 5, 6, 7]) {
+    for (let active = 0; active < n; active++) {
+      const slots = Array.from({ length: n }, (_, i) => caseSlot(i, active, n));
+      assert.equal(slots[active], 0, `n=${n}, active=${active}: the selected work must sit in the middle`);
+      assert.equal(slots.filter(s => s === -1).length, 1, `n=${n}, active=${active}: exactly one work on the left`);
+      assert.equal(slots.filter(s => s === 1).length, 1, `n=${n}, active=${active}: exactly one work on the right`);
+      // It wraps: from the last work the arrow leads back to the first one.
+      assert.equal(caseSlot((active + 1) % n, active, n), 1);
+      assert.equal(caseSlot((active - 1 + n) % n, active, n), -1);
+    }
   }
 });

@@ -19,6 +19,12 @@ export const SERVICES = [
 ] as const;
 
 export const GALLERY_IDS = ["rfqtopo", "yuna-sports-nutrition", "dielommel", "vegaleads", "stefan-pons", "cyber-sales"];
+/** Abstand von i zur Mitte im Ring, kuerzester Weg. Beispiel n=6, mitte=0: i=5 gibt -1. */
+export function caseSlot(i: number, active: number, n: number) {
+  const d = ((i - active) % n + n) % n;
+  return d > n / 2 ? d - n : d;
+}
+
 export const ROOM_PROGRESS: Record<Room, number> = { window: 0, reception: 0.47, gallery: 0.94 };
 export const APPROACH_SCREENS = .95;
 export const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
