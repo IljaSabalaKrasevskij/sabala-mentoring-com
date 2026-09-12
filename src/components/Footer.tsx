@@ -45,19 +45,19 @@ export default function Footer() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
 
       {/* Wandernde Messinglinien, sehr zurueckhaltend. */}
-      <FloatingPaths className="hidden text-gold opacity-[0.22] md:block" anzahl={14} />
+      <FloatingPaths className="hidden text-gold-light opacity-[0.5] md:block" anzahl={16} />
 
       {/* Der Adler als schwaches Wasserzeichen, nach innen blickend. Die Maske
           laesst ihn nach aussen ausfransen, damit keine Kante entsteht. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-10 bottom-0 hidden h-[26rem] w-[26rem] md:block"
-        style={{ opacity: 0.07 }}
+        className="pointer-events-none absolute -right-16 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-[58%] md:block"
+        style={{ opacity: 0.075 }}
       >
         <Image src="/webseiten/adler-stills/profil-links-kopf.webp" alt="" fill sizes="26rem" className="object-contain" />
         {/* Verlauf in der Hintergrundfarbe statt maskImage: sieht gleich aus und
             braucht keine eigene Ebene. Siehe Memory zum Safari-Compositing. */}
-        <span className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 60% 45%, transparent 25%, var(--tech-bg) 74%)" }} />
+        <span className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 56% 44%, transparent 18%, var(--tech-bg) 68%)" }} />
       </div>
 
       <div className="relative mx-auto max-w-6xl">

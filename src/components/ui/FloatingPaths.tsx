@@ -22,7 +22,7 @@ function Schar({ position, anzahl }: { position: number; anzahl: number }) {
   const pfade = Array.from({ length: anzahl }, (_, i) => ({
     id: i,
     d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    width: 0.5 + i * 0.05,
+    width: 0.7 + i * 0.09,
   }));
 
   return (
@@ -33,7 +33,7 @@ function Schar({ position, anzahl }: { position: number; anzahl: number }) {
           d={p.d}
           stroke="currentColor"
           strokeWidth={p.width}
-          strokeOpacity={0.06 + p.id * 0.02}
+          strokeOpacity={0.14 + p.id * 0.035}
           initial={{ pathLength: 0.3, opacity: 0.6 }}
           animate={ruhig ? { pathLength: 1, opacity: 0.4 } : { pathLength: 1, opacity: [0.25, 0.55, 0.25], pathOffset: [0, 1, 0] }}
           transition={ruhig ? { duration: 0 } : { duration: 30 + p.id * 1.4, repeat: Infinity, ease: "linear" }}

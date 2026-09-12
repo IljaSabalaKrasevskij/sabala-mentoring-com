@@ -1113,26 +1113,26 @@ function Pflege() {
 
 /* ── 11 · FAQ ──────────────────────────────────────────────────────────── */
 function Faq() {
-  const [open, setOpen] = useState<number | null>(0);
+  // Nichts steht beim Laden offen, der Besucher klickt selbst auf das Plus.
+  const [open, setOpen] = useState<number | null>(null);
   return (
     <section id="faq" className="relative scroll-mt-20 overflow-hidden px-6 py-[16vh]" style={{ background: "var(--tech-bg)" }}>
-      {/* Der Empfang als Grund, damit die Fragen im Laden stattfinden und nicht
-          auf einem weissen Blatt. Nach rechts loest er sich in die Wand auf. */}
-      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden w-[42%] lg:block">
-        <Image src="/webseiten/sektionen/faq-tresen.webp" alt="" fill sizes="42vw" className="object-cover object-[60%_center]" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,7,5,0.5) 0%, rgba(8,7,5,0.2) 34%, rgba(8,7,5,0.9) 78%, var(--tech-bg) 100%)" }} />
-      </div>
       <Deckenlicht hoehe="60vh" />
 
-      <div className="relative mx-auto max-w-6xl lg:pl-[44%]">
-        {/* Auf dem Handy gibt es keine Spalte fuer den Tresen, deshalb steht er
-            dort als gerahmtes Band ueber den Fragen. */}
-        <motion.div {...rise()} className="mb-10 lg:hidden" style={{ padding: "5px", background: MESSING, boxShadow: "0 24px 60px rgba(0,0,0,0.6)" }}>
-          <div className="relative aspect-[4/3]" style={{ background: "#0B0906" }}>
-            <Image src="/webseiten/sektionen/faq-tresen.webp" alt="Der Sabala-Adler am Empfangstresen" fill sizes="92vw" className="object-cover object-[58%_38%]" />
+      {/* Zwei echte Spalten statt Vollflaechen-Hintergrund plus Einrueckung:
+          vorher klebte der Tresen am linken Fensterrand und die Tafel am
+          rechten, dazwischen stand eine leere schwarze Flaeche. */}
+      <div className="relative mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-[0.82fr_1fr] lg:gap-14">
+        <motion.figure {...rise()} className="relative lg:sticky lg:top-24" style={{ padding: "clamp(4px, 0.5vw, 7px)", background: MESSING, boxShadow: "0 26px 60px rgba(0,0,0,0.6)" }}>
+          <div className="relative aspect-[4/3] lg:aspect-[3/4]" style={{ background: "#0B0906" }}>
+            <Image src="/webseiten/sektionen/faq-tresen.webp" alt="Der Sabala-Adler am Empfangstresen" fill sizes="(min-width: 1024px) 38vw, 92vw" className="object-cover object-[58%_40%]" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.94), transparent)" }}>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-light">Frag einfach</p>
+            </figcaption>
           </div>
-        </motion.div>
+        </motion.figure>
 
+        <div>
         <motion.div {...rise()}>
           <span className="inline-flex items-center gap-2.5 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-light" style={{ border: "1px solid rgba(184,150,62,0.5)" }}>
             <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gold-light)" }} />
@@ -1187,6 +1187,7 @@ function Faq() {
         <motion.p {...rise(0.2)} className="mt-8 font-serif text-[1.05rem] italic leading-snug text-warm-light/55">
           Was hier nicht steht, beantworte ich dir im Gespräch.
         </motion.p>
+        </div>
       </div>
     </section>
   );
