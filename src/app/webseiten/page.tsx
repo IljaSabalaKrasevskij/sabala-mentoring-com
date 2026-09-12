@@ -212,6 +212,7 @@ const PFLEGE = [
     alt: "Die Fassade des Studios bei Nacht",
     kurz: "Betrieb",
     punkte: ["Updates und Sicherheit", "Backups und Monitoring", "Verfügbarkeit im Blick, rund um die Uhr"],
+    cta: "Analyse starten",
     line: "Deine Seite läuft, du merkst nichts davon.",
   },
   {
@@ -227,6 +228,7 @@ const PFLEGE = [
       "Monatsbericht in Klartext: Besucher, Rankings, KI-Sichtbarkeit",
       "Antwort innerhalb eines Werktags",
     ],
+    cta: "Analyse starten",
     line: "Deine Seite bleibt aktuell, ohne dass du dich kümmerst.",
     highlight: true,
   },
@@ -243,6 +245,7 @@ const PFLEGE = [
       "Dein stärkster Wettbewerber im Blick",
       "Strategie jedes Quartal",
     ],
+    cta: "Partnerschaft besprechen",
     line: "Wir entwickeln deinen Auftritt gemeinsam weiter.",
   },
 ];
@@ -523,7 +526,7 @@ function Werthebel() {
         </div>
 
         {/* Die eine Aussage der Sektion, als gerahmte Messingtafel */}
-        <motion.div {...rise(0.25)} className="relative mt-12" style={{ padding: "clamp(6px, 0.7vw, 10px)", background: MESSING, boxShadow: "0 34px 90px rgba(0,0,0,0.6)" }}>
+        <motion.div {...rise(0.25)} className="relative mt-12" style={{ padding: "clamp(6px, 0.7vw, 10px)", background: MESSING, boxShadow: "0 34px 60px rgba(0,0,0,0.6)" }}>
           <div className="px-8 py-12 text-center md:px-14 md:py-16" style={{ background: "linear-gradient(158deg, rgba(30,24,16,0.97), rgba(12,10,7,0.99))", boxShadow: "inset 0 0 40px rgba(0,0,0,0.6)" }}>
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold-light">Das Ergebnis</p>
             <Messinglinie breite="3.5rem" className="mx-auto mt-6" />
@@ -564,7 +567,7 @@ function FuerWen() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: EASE }}
           className="relative h-full min-h-[30rem] overflow-hidden"
-          style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 90px rgba(80,60,20,0.3)", background: "#0B0906" }}
+          style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 60px rgba(80,60,20,0.3)", background: "#0B0906" }}
         >
           <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt="Der Sabala-Adler am Schreibtisch, Blick nach vorn" fill sizes="(min-width: 1024px) 42vw, 92vw" className="object-cover object-top" />
           <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.92), transparent)" }}>
@@ -589,7 +592,7 @@ function FuerWen() {
 
           {/* Eine Tafel statt zweier konkurrierender Kacheln. Die Absage steht
               als ruhige Zeile darunter, nicht als gleichwertiger Kasten. */}
-          <motion.div {...rise(0.08)} className="relative mt-12" style={{ padding: "clamp(5px, 0.6vw, 9px)", background: MESSING, boxShadow: "0 30px 76px rgba(80,60,20,0.28)" }}>
+          <motion.div {...rise(0.08)} className="relative mt-12" style={{ padding: "clamp(5px, 0.6vw, 9px)", background: MESSING, boxShadow: "0 30px 60px rgba(80,60,20,0.28)" }}>
             <div className="px-7 py-9 md:px-11 md:py-11" style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)" }}>
               <p className="font-serif leading-[1.12]" style={{ fontSize: "clamp(1.5rem, 3.1vw, 2.2rem)", color: "#2A2520" }}>
                 Wenn du hier richtig bist.
@@ -621,7 +624,7 @@ function FuerWen() {
 const RAHMEN = {
   padding: "clamp(7px, 0.9vw, 13px)",
   background: "linear-gradient(147deg, #c8ab73 0%, #7d6235 22%, #f0dcae 48%, #8a6f3c 64%, #d8bd84 86%, #6f5730 100%)",
-  boxShadow: "0 34px 80px rgba(0,0,0,0.62), 0 2px 0 rgba(255,240,205,0.28) inset, 0 -2px 0 rgba(60,44,18,0.55) inset",
+  boxShadow: "0 34px 60px rgba(0,0,0,0.62), 0 2px 0 rgba(255,240,205,0.28) inset, 0 -2px 0 rgba(60,44,18,0.55) inset",
 };
 
 function ArbeitRahmen({ img, label, aktiv }: { img: string; label: string; aktiv: boolean }) {
@@ -779,7 +782,7 @@ function Analyse() {
         <motion.div
           {...rise()}
           className="relative overflow-hidden px-7 py-12 md:px-14 md:py-16"
-          style={{ background: "var(--tech-bg)", border: "1px solid rgba(212,174,90,0.5)", boxShadow: "0 50px 130px rgba(80,60,20,0.35)" }}
+          style={{ background: "var(--tech-bg)", border: "1px solid rgba(212,174,90,0.5)", boxShadow: "0 50px 60px rgba(80,60,20,0.35)" }}
         >
           <div aria-hidden className="pointer-events-none absolute -top-16 left-1/2 h-[120%] w-[70%] -translate-x-1/2" style={{ background: "conic-gradient(from 180deg at 50% 0%, transparent 42%, rgba(212,174,90,0.13) 50%, transparent 58%)" }} />
           <div aria-hidden className="wd-grain pointer-events-none absolute inset-0 opacity-15" />
@@ -890,12 +893,14 @@ function Prozess() {
           </h2>
         </motion.div>
 
-        {/* Fahrplan: die Messingschiene zeichnet sich von links nach rechts,
-            danach setzen sich die Stationen der Reihe nach darauf. */}
-        <div className="relative mt-20">
+        {/* Fahrplan. Auf dem Handy laeuft die Schiene senkrecht neben den
+            Stationen, ab md waagerecht darueber. Beide zeichnen sich beim
+            Hereinscrollen von vorn nach hinten. */}
+        <div className="relative mt-16 md:mt-20">
+          {/* waagerecht, ab md */}
           <motion.div
             aria-hidden
-            className="absolute left-0 right-0 origin-left"
+            className="absolute left-0 right-0 hidden origin-left md:block"
             style={{ top: 27, height: 2, background: MESSING, boxShadow: "0 1px 3px rgba(110,82,24,0.35)" }}
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -904,7 +909,7 @@ function Prozess() {
           />
           <motion.span
             aria-hidden
-            className="absolute right-0"
+            className="absolute right-0 hidden md:block"
             style={{ top: 20, color: "var(--gold)" }}
             initial={{ opacity: 0, x: -14 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -914,27 +919,38 @@ function Prozess() {
             <ArrowRight size={17} strokeWidth={2} />
           </motion.span>
 
+          {/* senkrecht, bis md */}
+          <motion.div
+            aria-hidden
+            className="absolute bottom-10 top-7 origin-top md:hidden"
+            style={{ left: 27, width: 2, background: MESSING, boxShadow: "0 0 3px rgba(110,82,24,0.35)" }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 1.6, ease: EASE }}
+          />
+
           <div className="grid gap-10 md:grid-cols-3 md:gap-8">
             {PROZESS.map((p, i) => (
-              <div key={p.n} className="relative">
+              <div key={p.n} className="relative flex gap-6 md:block">
                 <motion.div
-                  className="relative z-10 grid h-14 w-14 place-items-center rounded-full"
+                  className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full"
                   style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: "1px solid rgba(184,150,62,0.5)", boxShadow: "0 10px 26px rgba(110,82,24,0.2)" }}
                   initial={{ scale: 0.3, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: "-90px" }}
-                  transition={{ duration: 0.55, delay: 0.45 + i * 0.38, ease: EASE }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.55, delay: 0.2 + i * 0.2, ease: EASE }}
                 >
                   <p.icon size={21} className="text-gold" strokeWidth={1.6} aria-hidden />
                 </motion.div>
 
                 <motion.div
-                  className="mt-8 p-7"
+                  className="flex-1 p-7 md:mt-8"
                   style={PAPIER}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-90px" }}
-                  transition={{ duration: 0.6, delay: 0.62 + i * 0.38, ease: EASE }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.6, delay: 0.34 + i * 0.2, ease: EASE }}
                 >
                   <div className="flex items-baseline gap-3">
                     <span className="font-serif text-[2.2rem] leading-none text-gold">{p.n}</span>
@@ -993,7 +1009,7 @@ function Pflege() {
           Zurueckhaltend gehalten, damit die Karten vorne bleiben. */}
       <SonarGrid
         aria-hidden
-        className="pointer-events-auto absolute inset-0"
+        className="pointer-events-auto absolute inset-0 hidden md:block"
         color="var(--gold)"
         spacing={30}
         dotRadius={1.3}
@@ -1023,7 +1039,7 @@ function Pflege() {
               key={p.term}
               {...rise(i * 0.1)}
               className={`group relative ${p.highlight ? "md:-translate-y-4" : ""}`}
-              style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: p.highlight ? "0 34px 84px rgba(80,60,20,0.34)" : "0 22px 54px rgba(80,60,20,0.2)" }}
+              style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: p.highlight ? "0 34px 60px rgba(80,60,20,0.34)" : "0 22px 54px rgba(80,60,20,0.2)" }}
             >
               {p.highlight && (
                 <span className="absolute -top-3.5 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ background: MESSING, color: "#2A2117" }}>
@@ -1066,7 +1082,7 @@ function Pflege() {
                         )}
                       </div>
                       <a href="#analyse" className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-transform duration-300 group-hover:translate-x-0.5" style={{ background: "var(--gold-light)", color: "var(--tech-bg)" }}>
-                        {p.price ? "Dazubuchen" : "Besprechen"} <ArrowRight size={13} aria-hidden />
+                        {p.cta} <ArrowRight size={13} aria-hidden />
                       </a>
                     </div>
                   </div>
@@ -1104,6 +1120,14 @@ function Faq() {
       <Deckenlicht hoehe="60vh" />
 
       <div className="relative mx-auto max-w-6xl lg:pl-[44%]">
+        {/* Auf dem Handy gibt es keine Spalte fuer den Tresen, deshalb steht er
+            dort als gerahmtes Band ueber den Fragen. */}
+        <motion.div {...rise()} className="mb-10 lg:hidden" style={{ padding: "5px", background: MESSING, boxShadow: "0 24px 60px rgba(0,0,0,0.6)" }}>
+          <div className="relative aspect-[4/3]" style={{ background: "#0B0906" }}>
+            <Image src="/webseiten/sektionen/faq-tresen.webp" alt="Der Sabala-Adler am Empfangstresen" fill sizes="92vw" className="object-cover object-[58%_38%]" />
+          </div>
+        </motion.div>
+
         <motion.div {...rise()}>
           <span className="inline-flex items-center gap-2.5 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-light" style={{ border: "1px solid rgba(184,150,62,0.5)" }}>
             <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gold-light)" }} />
@@ -1119,7 +1143,7 @@ function Faq() {
 
         {/* Eine Tafel im Messingrahmen, die Fragen als Zeilen darin.
             Die offene Zeile liegt im Ladengruen (#17261f aus dem Rundgang). */}
-        <motion.div {...rise(0.1)} className="mt-12" style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: "0 34px 88px rgba(0,0,0,0.6)" }}>
+        <motion.div {...rise(0.1)} className="mt-12" style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: "0 34px 60px rgba(0,0,0,0.6)" }}>
           <div style={{ background: "linear-gradient(158deg, rgba(26,21,14,0.98), rgba(11,9,7,0.99))" }}>
             {FAQ.map((f, i) => {
               const isOpen = open === i;

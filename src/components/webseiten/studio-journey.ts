@@ -84,11 +84,16 @@ export function cinemaShot(value: number, reduced = false) {
   const firstBlend = ease((p - .27) / .135);
   const exit = ease((p - .535) / .25);
   const secondBlend = ease((p - .70) / .18);
+  // Bei Reduce Motion stand die Fahrt bis 12.9.2026 komplett still, die Sektion
+  // wirkte dadurch kaputt. Jetzt bleiben 12 Prozent der Bewegung stehen: genug,
+  // damit Scrollen sichtbar etwas tut, zu wenig fuer den Zoom, vor dem die
+  // Einstellung schuetzen soll. Der Raumwechsel laeuft ohnehin ueber Deckkraft.
+  const k = reduced ? .12 : 1;
   return {
-    window: { opacity: 1 - firstBlend, scale: reduced ? 1 : 1 + entry * 1.8, x: reduced ? 0 : -entry * 67 },
-    reception: { opacity: firstBlend * (1 - secondBlend), scale: reduced ? 1 : 1.12 - firstBlend * .12 + exit * 1.7, x: reduced ? 0 : -exit * 88 },
-    gallery: { opacity: secondBlend, scale: reduced ? 1 : 1.12 - secondBlend * .12, x: 0 },
-    door: reduced ? 0 : ease((p - .14) / .11),
+    window: { opacity: 1 - firstBlend, scale: 1 + entry * 1.8 * k, x: -entry * 67 * k },
+    reception: { opacity: firstBlend * (1 - secondBlend), scale: 1 + (.12 - firstBlend * .12 + exit * 1.7) * k, x: -exit * 88 * k },
+    gallery: { opacity: secondBlend, scale: 1 + (.12 - secondBlend * .12) * k, x: 0 },
+    door: ease((p - .14) / .11) * (reduced ? .5 : 1),
   };
 }
 

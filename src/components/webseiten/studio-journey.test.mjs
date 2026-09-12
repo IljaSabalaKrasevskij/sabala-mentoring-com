@@ -70,15 +70,27 @@ test('film scrubbing follows scroll in either direction without running during r
   }
 });
 
-test('reduced motion removes all camera translation, scale and door rotation', () => {
+test('reduced motion damps the camera hard but never freezes it', () => {
+  // Bis 12.9.2026 war hier alles auf null gesetzt. Die Sektion sah dadurch auf
+  // Geraeten mit "Bewegung reduzieren" kaputt aus: scrollen, nichts passiert.
+  // Jetzt bleibt ein Rest, der unter der Schwelle liegt, vor der die
+  // Einstellung schuetzen soll (grossflaechiger Zoom, weite Schwenks).
+  let bewegt = false;
   for (const p of samples) {
     const shot = cinemaShot(p, true);
-    assert.equal(shot.door, 0);
+    assert.ok(shot.door <= 0.5 + 1e-9, `Tuer zu weit: ${shot.door}`);
     for (const key of ['window', 'reception', 'gallery']) {
-      assert.equal(shot[key].scale, 1); assert.equal(shot[key].x, 0);
+      assert.ok(shot[key].scale >= 1 && shot[key].scale <= 1.25, `${key} zoomt zu weit: ${shot[key].scale}`);
+      assert.ok(Math.abs(shot[key].x) <= 12, `${key} schwenkt zu weit: ${shot[key].x}`);
       assert.ok(shot[key].opacity >= 0 && shot[key].opacity <= 1);
+      if (shot[key].scale > 1.02 || Math.abs(shot[key].x) > 1) bewegt = true;
     }
   }
+  assert.ok(bewegt, 'Bei Reduce Motion bewegt sich gar nichts, die Sektion wirkt kaputt');
+
+  // Ohne die Einstellung faehrt die Kamera weiterhin voll aus.
+  const voll = samples.map((p) => cinemaShot(p).window.scale);
+  assert.ok(Math.max(...voll) > 2.5, 'Ohne Reduce Motion muss die volle Fahrt bleiben');
 });
 
 
