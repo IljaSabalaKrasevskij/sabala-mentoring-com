@@ -247,11 +247,10 @@ const PFLEGE = [
   },
 ];
 
+/* Fuenf Fragen, in der Reihenfolge, in der sie im Kopf auftauchen: erst der
+   Preis, dann die Zeit, dann der erste Schritt, dann der Einwand, zuletzt die
+   Frage, die bei einem Einzelnen niemand ausspricht. */
 const FAQ = [
-  {
-    q: "Wie läuft die kostenlose Potenzial-Analyse ab?",
-    a: "Du schickst mir deine Webseite. Ich prüfe SEO, GEO, Content, Design und Tempo und schaue mir deine Wettbewerber an. Danach gehen wir die Ergebnisse in einem Gespräch durch, 30 Minuten, beidseitig unverbindlich. Die Analyse gehört dir, ganz gleich, wie du dich entscheidest.",
-  },
   {
     q: "Was kostet eine Webseite bei dir?",
     a: "Das Projekt bekommt einen individuellen Rahmen, weil es kein Produkt von der Stange ist: ein OnePager liegt woanders als eine komplette Markenwelt. Nach der Analyse steht dein Angebot mit Umfang, Zeitplan und Preis. Die laufende Pflege ist transparent: Basis 70 und Wachstum 249 Euro im Monat netto, die Partnerschaft nach Umfang auf Anfrage.",
@@ -261,8 +260,16 @@ const FAQ = [
     a: "Ein OnePager meist zwei bis drei Wochen ab vollständigen Inhalten, größere Markenwelten mehrere Wochen. Du bekommst vor dem Start einen ehrlichen Zeitplan, keine Wunschtermine.",
   },
   {
+    q: "Wie läuft die kostenlose Potenzial-Analyse ab?",
+    a: "Du schickst mir deine Webseite. Ich prüfe SEO, GEO, Content, Design und Tempo und schaue mir deine Wettbewerber an. Danach gehen wir die Ergebnisse in einem Gespräch durch, 30 Minuten, beidseitig unverbindlich. Die Analyse gehört dir, ganz gleich, wie du dich entscheidest.",
+  },
+  {
     q: "Warum kein Baukasten?",
     a: "Einen Baukasten mietest du, eigenen Code besitzt du. Dazu kommen Tempo (unter zwei Sekunden Ladezeit), volle Gestaltungsfreiheit und sauberes SEO ohne Plugin-Schichten. Wenn du irgendwann gehen willst, nimmst du alles mit.",
+  },
+  {
+    q: "Du arbeitest allein. Was, wenn du ausfällst?",
+    a: "Deshalb liegt alles auf deinen Namen: die Domain, das Hosting und der Code in deinem eigenen GitHub-Repo. Es ist gängiger Code, kein Geheimsystem. Jeder Entwickler kann dort weitermachen, wo ich aufhöre. Du bist an mich gebunden, solange die Arbeit stimmt, und keinen Tag länger.",
   },
 ];
 
@@ -1084,95 +1091,73 @@ function Pflege() {
 }
 
 /* ── 11 · FAQ ──────────────────────────────────────────────────────────── */
-/** Ueberschrift wortweise: die erste Haelfte tritt zurueck, die zweite traegt.
-    Idee aus dem Hirael-FAQ, hier ohne dessen Abhaengigkeiten nachgebaut. */
-function GeteilteUeberschrift({ text, className, style }: { text: string; className?: string; style?: CSSProperties }) {
-  const woerter = text.split(" ");
-  const haelfte = Math.floor(woerter.length / 2);
-  return (
-    <h2 className={className} style={style}>
-      {woerter.map((w, i) => (
-        <motion.span
-          key={`${w}-${i}`}
-          className="me-[0.25em] inline-block"
-          style={{ color: i < haelfte ? "#9A8F7E" : "#2A2520" }}
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, delay: i * 0.07, ease: EASE }}
-        >
-          {w}
-        </motion.span>
-      ))}
-    </h2>
-  );
-}
-
 function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="scroll-mt-20 px-6 py-[14vh]" style={{ background: "#F3EFE7" }}>
-      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.78fr_1fr] lg:items-start lg:gap-16">
-        {/* Der Adler am Tresen: das Bild beantwortet die Frage, wer hier antwortet. */}
-        <motion.figure
-          {...rise()}
-          className="relative hidden overflow-hidden lg:block"
-          style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: "0 30px 76px rgba(80,60,20,0.26)" }}
-        >
-          <div className="relative aspect-[3/4]" style={{ background: "#0B0906" }}>
-            <Image src="/webseiten/sektionen/faq-tresen.webp" alt="Der Sabala-Adler am Empfangstresen, zugewandt" fill sizes="(min-width: 1024px) 38vw, 92vw" className="object-cover" />
-            <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.94), transparent)" }}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-light">Frag einfach</p>
-              <p className="mt-2 font-serif text-[1.05rem] italic leading-snug text-cream">
-                Was hier nicht steht, beantworte ich dir im Gespräch.
-              </p>
-            </figcaption>
-          </div>
-        </motion.figure>
+    <section id="faq" className="relative scroll-mt-20 overflow-hidden px-6 py-[16vh]" style={{ background: "var(--tech-bg)" }}>
+      {/* Der Empfang als Grund, damit die Fragen im Laden stattfinden und nicht
+          auf einem weissen Blatt. Nach rechts loest er sich in die Wand auf. */}
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden w-[42%] lg:block">
+        <Image src="/webseiten/sektionen/faq-tresen.webp" alt="" fill sizes="42vw" className="object-cover object-[60%_center]" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,7,5,0.5) 0%, rgba(8,7,5,0.2) 34%, rgba(8,7,5,0.9) 78%, var(--tech-bg) 100%)" }} />
+      </div>
+      <Deckenlicht hoehe="60vh" />
 
-        <div>
-          <motion.div {...rise()}>
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ border: "1px solid rgba(184,150,62,0.45)", color: "#8A6D2A" }}>
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gold)" }} />
-              FAQ
-            </span>
-          </motion.div>
-          <GeteilteUeberschrift
-            text="Ehrliche Antworten, bevor du fragst."
-            className="mt-6 font-serif leading-[1.08]"
-            style={{ fontSize: "clamp(2rem, 4.4vw, 3.3rem)" }}
-          />
-          <Messinglinie className="mt-7" />
+      <div className="relative mx-auto max-w-6xl lg:pl-[44%]">
+        <motion.div {...rise()}>
+          <span className="inline-flex items-center gap-2.5 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-light" style={{ border: "1px solid rgba(184,150,62,0.5)" }}>
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gold-light)" }} />
+            Fragen an den Tresen
+          </span>
+          <h2 className="mt-7 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.1rem, 4.6vw, 3.5rem)" }}>
+            Ehrliche Antworten,
+            <br />
+            <span className="text-gold-light">bevor du fragst.</span>
+          </h2>
+          <Messinglinie breite="4rem" className="mt-8" />
+        </motion.div>
 
-          <div className="mt-10 space-y-3">
+        {/* Eine Tafel im Messingrahmen, die Fragen als Zeilen darin.
+            Die offene Zeile liegt im Ladengruen (#17261f aus dem Rundgang). */}
+        <motion.div {...rise(0.1)} className="mt-12" style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: "0 34px 88px rgba(0,0,0,0.6)" }}>
+          <div style={{ background: "linear-gradient(158deg, rgba(26,21,14,0.98), rgba(11,9,7,0.99))" }}>
             {FAQ.map((f, i) => {
               const isOpen = open === i;
               return (
-                <motion.div
-                  key={f.q}
-                  className="overflow-hidden"
-                  style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: `1px solid rgba(184,150,62,${isOpen ? "0.45" : "0.2"})`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 32px rgba(72,54,20,0.06)" }}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-70px" }}
-                  transition={{ duration: 0.45, delay: i * 0.09, ease: EASE }}
-                >
-                  <button type="button" onClick={() => setOpen(isOpen ? null : i)} className="flex w-full items-center justify-between gap-6 px-7 py-5 text-left" aria-expanded={isOpen}>
-                    <span className="font-serif text-[1.15rem]" style={{ color: "#2A2520" }}>{f.q}</span>
-                    <span aria-hidden className="shrink-0 font-serif text-[1.4rem] leading-none transition-transform duration-300" style={{ color: "var(--gold)", transform: isOpen ? "rotate(45deg)" : "none" }}>
+                <div key={f.q} style={{ borderTop: i === 0 ? "none" : "1px solid rgba(184,150,62,0.22)" }}>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="group relative flex w-full items-center gap-5 px-6 py-6 text-left transition-colors md:px-8"
+                    style={{ background: isOpen ? "#17261f" : "transparent" }}
+                  >
+                    {/* Messingkante links, faehrt beim Oeffnen auf volle Hoehe */}
+                    <span aria-hidden className="absolute left-0 top-1/2 w-[3px] -translate-y-1/2 transition-all duration-500" style={{ height: isOpen ? "100%" : "0%", background: MESSING }} />
+                    <span className="shrink-0 font-mono text-[11px] tracking-[0.2em]" style={{ color: isOpen ? "var(--gold-light)" : "rgba(184,150,62,0.5)" }}>
+                      0{i + 1}
+                    </span>
+                    <span className="flex-1 font-serif text-[1.15rem] leading-snug transition-colors md:text-[1.3rem]" style={{ color: isOpen ? "var(--cream)" : "rgba(240,232,216,0.78)" }}>
+                      {f.q}
+                    </span>
+                    <span aria-hidden className="shrink-0 font-serif text-[1.5rem] leading-none transition-transform duration-300" style={{ color: "var(--gold-light)", transform: isOpen ? "rotate(45deg)" : "none" }}>
                       +
                     </span>
                   </button>
-                  <div className="grid transition-[grid-template-rows] duration-300 ease-out" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
+                  <div className="grid transition-[grid-template-rows] duration-400 ease-out" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", background: isOpen ? "#17261f" : "transparent" }}>
                     <div className="overflow-hidden">
-                      <p className="px-7 pb-6 text-[0.97rem] leading-relaxed" style={{ color: "#46403A" }}>{f.a}</p>
+                      <p className="px-6 pb-7 pl-[3.4rem] text-[0.99rem] leading-relaxed text-warm-light/75 md:px-8 md:pl-[4.4rem]">{f.a}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
+
+        <motion.p {...rise(0.2)} className="mt-8 font-serif text-[1.05rem] italic leading-snug text-warm-light/55">
+          Was hier nicht steht, beantworte ich dir im Gespräch.
+        </motion.p>
       </div>
     </section>
   );

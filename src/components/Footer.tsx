@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { FloatingPaths } from "@/components/ui/FloatingPaths";
 
 /* Globaler Footer — dunkel, gross, Apple-Stil. Auf jeder Seite gleich. */
 const COLS: { title: string; links: { label: string; href: string; ext?: boolean }[] }[] = [
@@ -41,6 +43,23 @@ export default function Footer() {
     <footer className="relative overflow-hidden px-6 pt-[16vh] pb-12" style={{ background: "var(--tech-bg)" }}>
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[70vw] -translate-x-1/2" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.4), transparent)" }} />
       <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
+
+      {/* Wandernde Messinglinien, sehr zurueckhaltend. */}
+      <FloatingPaths className="text-gold opacity-[0.22]" anzahl={14} />
+
+      {/* Der Adler als schwaches Wasserzeichen, nach innen blickend. Die Maske
+          laesst ihn nach aussen ausfransen, damit keine Kante entsteht. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-10 bottom-0 hidden h-[26rem] w-[26rem] md:block"
+        style={{
+          opacity: 0.07,
+          maskImage: "radial-gradient(ellipse at 60% 45%, #000 25%, transparent 72%)",
+          WebkitMaskImage: "radial-gradient(ellipse at 60% 45%, #000 25%, transparent 72%)",
+        }}
+      >
+        <Image src="/webseiten/adler-stills/profil-links-kopf.webp" alt="" fill sizes="26rem" className="object-contain" />
+      </div>
 
       <div className="relative mx-auto max-w-6xl">
         {/* Marken-Statement, gross */}
