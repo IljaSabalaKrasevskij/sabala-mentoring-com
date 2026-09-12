@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dein KI-Team aus fünf Custom GPTs",
     description:
-      "Fünf spezialisierte Custom GPTs, die Recherche, Texte, Struktur und Recht übernehmen. Kein Spielzeug, sondern Werkzeuge für den Arbeitsalltag.",
+      "Fünf spezialisierte Custom GPTs, die Recherche, Texte, Struktur und Recht übernehmen, gebaut für den täglichen Einsatz im Unternehmen.",
     url: "/gpt-team",
     type: "website",
   },
