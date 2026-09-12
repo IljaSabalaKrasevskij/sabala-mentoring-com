@@ -6,9 +6,11 @@ import { motion, useScroll, useSpring } from "motion/react";
 import { useState, type FormEvent } from "react";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
+import { caseSlot } from "@/components/webseiten/studio-journey";
 import {
   Search, ShieldCheck, Crosshair, Scan, Gem,
   FileSearch, Radar, MessagesSquare, ListChecks, ArrowRight, ArrowDown,
+  ChevronLeft, ChevronRight, MoveUpRight,
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -84,20 +86,15 @@ const ANGEBOT_STACK = [
   },
 ];
 
-const ARBEIT_FEATURED = {
-  img: "/case-studies/rfqtopo.jpg",
-  label: "rfqtopo.com",
-  note: "Industrielles Sourcing für EPC-Projekte · Konzept, Design, Creatives, Technik und Launch aus einer Hand",
-  badge: "Neu · live seit September 2026",
-};
-
+/* Eine Liste, Reihenfolge ist die Reihenfolge im Karussell. rfqtopo steht vorn. */
 const ARBEIT = [
-  { img: "/case-studies/yuna.jpg", label: "yuna-sports-nutrition.com", note: "Personal Training München · Brand-System, Blog, SEO" },
-  { img: "/case-studies/stefan-pons.jpg", label: "stefanpons.de", note: "Klangmassage am Bodensee · Konzept, Texte, Videos" },
-  { img: "/case-studies/vegaleads.jpg", label: "vegaleads.ai", note: "Lead-Radar, zweisprachig" },
-  { img: "/case-studies/dielommel.jpg", label: "dielommel.de", note: "Begleitung für Familienunternehmen" },
-  { img: "/case-studies/cyber-sales.jpg", label: "cyber-sales.de", note: "Vertriebssystem Cybersecurity" },
-  { img: "/case-studies/sabala-mentoring.jpg", label: "Sabala Studios", note: "KI-Studio & Akademie" },
+  { img: "/case-studies/rfqtopo.jpg", label: "rfqtopo.com", url: "https://rfqtopo.com", note: "Industrielles Sourcing für EPC-Projekte", rolle: "Konzept, Design, Creatives, Technik und Launch aus einer Hand", badge: "Neu · live seit September 2026" },
+  { img: "/case-studies/yuna.jpg", label: "yuna-sports-nutrition.com", url: "https://yuna-sports-nutrition.com", note: "Personal Training München", rolle: "Brand-System, Blog, SEO und Messung ab Tag eins" },
+  { img: "/case-studies/stefan-pons.jpg", label: "stefanpons.de", url: "https://stefanpons.de", note: "Klangmassage am Bodensee", rolle: "Konzept, Texte, Prototyp und Videos" },
+  { img: "/case-studies/vegaleads.jpg", label: "vegaleads.ai", url: "https://vegaleads.ai", note: "Lead-Radar für Vertriebsteams", rolle: "Produkt, Plattform und zwei Sprachen" },
+  { img: "/case-studies/dielommel.jpg", label: "dielommel.de", url: "https://dielommel.de", note: "Begleitung für Familienunternehmen", rolle: "Positionierung, Design und Bau" },
+  { img: "/case-studies/cyber-sales.jpg", label: "cyber-sales.de", url: "https://cyber-sales.de", note: "Vertriebssystem für Cybersecurity", rolle: "Fünf-Schritte-Vertrieb, Seite und Creatives" },
+  { img: "/case-studies/sabala-mentoring.jpg", label: "sabala-mentoring.com", url: "https://sabala-mentoring.com", note: "Sabala Studios, das eigene Haus", rolle: "Alles selbst gebaut, alles selbst im Einsatz" },
 ];
 
 const PROZESS = [
@@ -243,9 +240,11 @@ export default function WebseitenLaborPage() {
       <Werthebel />
       <FuerWen />
       <Galerie />
-      <Analyse />
+      {/* Prozess und Fundament stehen seit 12.9.2026 VOR der Analyse: erst zeigen,
+          wie gearbeitet wird und worauf es steht, dann nach der Anfrage fragen. */}
       <Prozess />
       <Fundament />
+      <Analyse />
       <Pflege />
       <Faq />
       <Finale />
@@ -253,6 +252,7 @@ export default function WebseitenLaborPage() {
         @keyframes ws-spin { to { transform: rotate(360deg); } }
         .ws-spin { animation: ws-spin 22s linear infinite; }
         @keyframes ws-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
+        @keyframes ws-plate { from { opacity: 0; transform: translateY(9px) } to { opacity: 1; transform: none } }
         .ws-ghost {
           -webkit-text-stroke: 1px rgba(184,150,62,0.28);
           color: transparent;
@@ -260,6 +260,7 @@ export default function WebseitenLaborPage() {
         }
         @media (prefers-reduced-motion: reduce) {
           .ws-spin { animation: none; }
+          [style*="ws-plate"] { animation: none !important; }
         }
       `}</style>
     </main>
@@ -272,9 +273,9 @@ const RAIL = [
   { id: "hebel", label: "Werthebel" },
   { id: "methode", label: "Für wen" },
   { id: "arbeiten", label: "Arbeiten" },
-  { id: "analyse", label: "Analyse" },
   { id: "prozess", label: "Prozess" },
   { id: "fundament", label: "Fundament" },
+  { id: "analyse", label: "Analyse" },
   { id: "pflege", label: "Pflege" },
   { id: "faq", label: "FAQ" },
 ];
@@ -513,41 +514,37 @@ function FuerWen() {
 }
 
 /* ── 6 · Galerie (Proof, 3D-Tilt + Overlay) ────────────────────────────── */
-function GalerieCard({ img, label, note, badge, featured = false, delay = 0 }: {
-  img: string; label: string; note: string; badge?: string; featured?: boolean; delay?: number;
-}) {
+/* Goldrahmen wie im Saal: gebuersteter Messingverlauf, innen eine dunkle Kante,
+   darin das Bild. Kein Kachel-Look, sondern ein gerahmtes Bild an der Wand. */
+const RAHMEN = {
+  padding: "clamp(7px, 0.9vw, 13px)",
+  background: "linear-gradient(147deg, #c8ab73 0%, #7d6235 22%, #f0dcae 48%, #8a6f3c 64%, #d8bd84 86%, #6f5730 100%)",
+  boxShadow: "0 34px 80px rgba(0,0,0,0.62), 0 2px 0 rgba(255,240,205,0.28) inset, 0 -2px 0 rgba(60,44,18,0.55) inset",
+};
+
+function ArbeitRahmen({ img, label, aktiv }: { img: string; label: string; aktiv: boolean }) {
   return (
-    <motion.div {...rise(delay)} style={{ perspective: 1100 }} className={featured ? "sm:col-span-2" : ""}>
-      <motion.div whileHover={{ rotateX: 2.5, rotateY: -3, scale: 1.015 }} transition={{ type: "spring", stiffness: 120, damping: 18 }} style={{ transformStyle: "preserve-3d" }}>
-        <Link href="/case-studies" className="group relative block overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(184,150,62,0.28)", boxShadow: "0 24px 60px rgba(0,0,0,0.45)" }}>
-          <div className={`relative overflow-hidden ${featured ? "aspect-[16/9]" : "aspect-[16/10]"}`} style={{ background: "#0A0806" }}>
-            <Image src={img} alt={label} fill sizes={featured ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"} className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]" />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "linear-gradient(to top, rgba(10,8,6,0.92), rgba(10,8,6,0.25) 55%, transparent)" }}>
-              <p className="text-[0.95rem] leading-snug text-warm-light/85">{note}</p>
-              <span className="mt-3 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-gold-light">
-                Case ansehen <ArrowRight size={13} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
-            </div>
-            {badge && (
-              <span className="absolute left-4 top-4 rounded-full px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]" style={{ background: "rgba(10,8,6,0.85)", color: "var(--gold-light)", border: "1px solid rgba(184,150,62,0.45)" }}>
-                {badge}
-              </span>
-            )}
-          </div>
-          <div className="flex items-baseline justify-between gap-4 px-5 py-4" style={{ background: "rgba(255,255,255,0.035)", borderTop: "1px solid rgba(184,150,62,0.18)" }}>
-            <span className="font-serif text-[1.1rem] text-cream">{label}</span>
-            <span className="hidden truncate font-mono text-[10px] uppercase tracking-[0.14em] text-warm-light/45 sm:block">{note.split(" · ")[0]}</span>
-          </div>
-        </Link>
-      </motion.div>
-    </motion.div>
+    <div style={RAHMEN}>
+      <div className="relative aspect-[16/9] overflow-hidden" style={{ background: "#0A0806", boxShadow: "0 0 0 1px rgba(30,22,10,0.85), inset 0 0 26px rgba(0,0,0,0.75)" }}>
+        <Image src={img} alt={label} fill sizes="(min-width: 1024px) 60vw, 92vw" className="object-cover object-top" priority={aktiv} />
+        <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(142deg, rgba(255,229,179,0.07), transparent 42%, rgba(0,0,0,0.1))" }} />
+      </div>
+    </div>
   );
 }
 
 function Galerie() {
+  const [aktiv, setAktiv] = useState(0);
+  const anzahl = ARBEIT.length;
+  const weiter = (d: number) => setAktiv((v) => (v + d + anzahl) % anzahl);
+  const a = ARBEIT[aktiv];
+
   return (
-    <section id="arbeiten" className="scroll-mt-20 px-6 py-[13vh]" style={{ background: "var(--tech-bg)" }}>
-      <div className="mx-auto max-w-6xl">
+    <section id="arbeiten" className="relative scroll-mt-20 overflow-hidden px-6 py-[13vh]" style={{ background: "var(--tech-bg)" }}>
+      {/* warmes Licht von oben, wie die Bildleuchte ueber dem Rahmen */}
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[55vh] w-[92vw] max-w-5xl -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.16), transparent 68%)" }} />
+
+      <div className="relative mx-auto max-w-6xl">
         <motion.div {...rise()} className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// echte arbeit</p>
@@ -561,11 +558,71 @@ function Galerie() {
           </Link>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          <GalerieCard {...ARBEIT_FEATURED} featured />
-          {ARBEIT.map((a, i) => (
-            <GalerieCard key={a.label} {...a} delay={(i % 2) * 0.08} />
-          ))}
+        {/* Buehne: die gewaehlte Arbeit gross, je eine angeschnitten daneben */}
+        <motion.div {...rise(0.06)} className="relative mt-14 flex items-center gap-4 sm:gap-7">
+          <button type="button" onClick={() => weiter(-1)} aria-label="Vorherige Arbeit" className="z-20 grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors" style={{ border: "1px solid rgba(184,150,62,0.4)", background: "rgba(10,8,6,0.72)", color: "var(--gold-light)" }}>
+            <ChevronLeft size={19} aria-hidden />
+          </button>
+
+          <div className="relative flex-1" style={{ height: "clamp(200px, 36vw, 460px)" }}>
+            {ARBEIT.map((w, i) => {
+              const slot = caseSlot(i, aktiv, anzahl);
+              const weg = Math.abs(slot) > 1;
+              return (
+                <div key={w.label} aria-hidden={slot !== 0} className="absolute left-1/2 top-1/2 w-[76%] sm:w-[68%]"
+                  style={{
+                    transform: `translate(-50%,-50%) translateX(${slot * 62}%) scale(${slot === 0 ? 1 : 0.72})`,
+                    opacity: weg ? 0 : slot === 0 ? 1 : 0.4,
+                    zIndex: slot === 0 ? 10 : 5,
+                    filter: slot === 0 ? "none" : "saturate(0.65)",
+                    pointerEvents: weg ? "none" : "auto",
+                    transition: "transform .62s cubic-bezier(0.16,1,0.3,1), opacity .5s ease, filter .5s ease",
+                  }}>
+                  {slot === 0 ? (
+                    <a href={w.url} target="_blank" rel="noopener noreferrer" className="block" aria-label={`${w.label} live ansehen`}>
+                      <ArbeitRahmen img={w.img} label={w.label} aktiv />
+                    </a>
+                  ) : (
+                    <button type="button" tabIndex={-1} onClick={() => setAktiv(i)} className="block w-full cursor-pointer" aria-label={`${w.label} auswählen`}>
+                      <ArbeitRahmen img={w.img} label={w.label} aktiv={false} />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <button type="button" onClick={() => weiter(1)} aria-label="Nächste Arbeit" className="z-20 grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors" style={{ border: "1px solid rgba(184,150,62,0.4)", background: "rgba(10,8,6,0.72)", color: "var(--gold-light)" }}>
+            <ChevronRight size={19} aria-hidden />
+          </button>
+        </motion.div>
+
+        {/* Messingschild unter dem Bild, wie im Museum */}
+        <div className="relative mx-auto mt-10 max-w-2xl text-center" key={a.label} style={{ animation: "ws-plate .45s cubic-bezier(0.16,1,0.3,1) both" }}>
+          <div aria-hidden className="mx-auto h-px w-24" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.65), transparent)" }} />
+          {a.badge && (
+            <span className="mt-6 inline-block px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]" style={{ color: "var(--gold-light)", border: "1px solid rgba(184,150,62,0.4)" }}>{a.badge}</span>
+          )}
+          <p className="mt-5 font-serif text-cream" style={{ fontSize: "clamp(1.5rem, 3vw, 2.3rem)" }}>{a.label}</p>
+          <p className="mt-3 text-[1.05rem] leading-relaxed text-warm-light/80">{a.note}</p>
+          <p className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-warm-light/45">{a.rolle}</p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            <a href={a.url} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-gold-light transition-colors hover:text-cream">
+              Live ansehen <MoveUpRight size={14} aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+            </a>
+            <Link href="/case-studies" className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-warm-light/55 transition-colors hover:text-cream">
+              Case Study <ArrowRight size={13} aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+
+          {/* Position im Rundgang */}
+          <div className="mt-9 flex items-center justify-center gap-2.5" role="tablist" aria-label="Arbeiten">
+            {ARBEIT.map((w, i) => (
+              <button key={w.label} type="button" role="tab" aria-selected={i === aktiv} aria-label={w.label} onClick={() => setAktiv(i)}
+                className="h-1.5 transition-all duration-500"
+                style={{ width: i === aktiv ? 26 : 6, background: i === aktiv ? "var(--gold-light)" : "rgba(184,150,62,0.3)" }} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
