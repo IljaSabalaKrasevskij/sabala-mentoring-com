@@ -28,6 +28,9 @@ export default function StudioCinema({ progress, distance, exploring, room, flat
   const pointer = useRef(0);
   const targetPointer = useRef(0);
   const animation = useRef<number | null>(null);
+  // Einmal bereit, immer bereit: readyState faellt beim Spulen kurz unter 2,
+  // und ein Film, der dabei ausgeblendet wird, flackert gegen das Standbild.
+  const readyFilms = useRef<Set<number>>(new Set());
   const labels = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const paint = () => {
@@ -54,7 +57,8 @@ export default function StudioCinema({ progress, distance, exploring, room, flat
         if (!video) return;
         const visible = !flat && !reduced && moment.active && moment.index === index && !failedFilms.current.has(index);
         video.style.transform = index === 0 ? `translate3d(${view.x}%,${view.y}%,0) scale(${view.scale})` : "none";
-        video.style.opacity = visible && video.readyState >= 2 ? String(moment.opacity) : "0";
+        if (video.readyState >= 2) readyFilms.current.add(index);
+        video.style.opacity = visible && readyFilms.current.has(index) ? String(moment.opacity) : "0";
         if (!visible || !Number.isFinite(video.duration)) return;
         const time = Math.min(video.duration - .04, moment.time * video.duration);
         // Only one seek in flight; seeked catches up even after scrolling stops.
@@ -95,9 +99,9 @@ export default function StudioCinema({ progress, distance, exploring, room, flat
           </div>
           <button className={styles.doorTarget} aria-label="Die Ladentür öffnen und eintreten" type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
         </>}
-        {key === "gallery" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} /></a>}
+        {key === "gallery" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
       </div>)}
-      {!flat && !reduced && LONDON_FILMS.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadedData={() => refresh.current?.()} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
+      {!flat && !reduced && LONDON_FILMS.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
     </div>
   </div>;
 }

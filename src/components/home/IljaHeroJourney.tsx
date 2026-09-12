@@ -225,14 +225,14 @@ export default function IljaHeroJourney() {
                 className="mt-7 font-serif text-cream"
                 style={{ fontSize: "clamp(2.4rem, 7vw, 6.5rem)", lineHeight: 0.98, letterSpacing: "-0.015em" }}
               >
-                Ich bringe
+                High-End
                 <br />
-                <span className="text-gold-light">KI</span> in dein
+                <span className="text-gold-light">Creative</span>
                 <br />
-                Unternehmen.
+                Web Development.
               </h1>
               <p className="mt-8 max-w-lg text-warm-light/90" style={{ fontSize: "clamp(1.25rem, 2.1vw, 1.7rem)", lineHeight: 1.4 }}>
-                Für dich gebaut. Mit dir entwickelt. Dir beigebracht.
+                Für Unternehmen, deren Substanz größer ist als ihr Auftritt.
               </p>
             </div>
           </div>

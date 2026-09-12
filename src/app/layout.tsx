@@ -28,9 +28,9 @@ const pressStart = Press_Start_2P({
 
 const siteUrl = "https://sabala-mentoring.com";
 const siteName = "Sabala Studios";
-const siteTitle = "Sabala Studios · Ich bringe KI in dein Unternehmen";
+const siteTitle = "Sabala Studios · High-End Creative Web Development";
 const siteDescription =
-  "KI-Lösungen, Premium-Webseiten und eine Akademie für Unternehmen, die KI wirklich nutzen wollen. Für dich gebaut, mit dir entwickelt, dir beigebracht. Von Ilja Krasevskij.";
+  "Premium-Webauftritte aus eigenem Code: eigenständig im Design, schnell in der Technik, sichtbar bei Google und in KI-Antworten. Dazu KI-Trainings für Teams. Von Ilja Krasevskij.";
 const ogImage = `${siteUrl}/og-image.jpg`;
 
 export const metadata: Metadata = {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Sabala Studios. Ich bringe KI in dein Unternehmen.",
+        alt: "Sabala Studios. High-End Creative Web Development.",
       },
     ],
   },

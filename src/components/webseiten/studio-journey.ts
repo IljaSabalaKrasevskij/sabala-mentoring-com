@@ -18,7 +18,7 @@ export const SERVICES = [
   { title: "Systeme dahinter", text: "Den nächsten Schritt gleich mitdenken.", detail: "Wir verbinden den Auftritt mit den Abläufen, die aus Interesse eine bearbeitete Anfrage machen.", exhibit: 4 },
 ] as const;
 
-export const GALLERY_IDS = ["rfqtopo", "yuna-sports-nutrition", "dielommel", "vegaleads", "stefan-pons"];
+export const GALLERY_IDS = ["rfqtopo", "yuna-sports-nutrition", "dielommel", "vegaleads", "stefan-pons", "cyber-sales"];
 export const ROOM_PROGRESS: Record<Room, number> = { window: 0, reception: 0.47, gallery: 0.94 };
 export const APPROACH_SCREENS = .95;
 export const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));

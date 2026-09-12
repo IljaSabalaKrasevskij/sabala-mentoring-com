@@ -47,7 +47,7 @@ export default function Footer() {
         <div className="max-w-3xl">
           <p className="font-mono text-[12px] uppercase tracking-[0.35em] text-gold">Sabala Studios</p>
           <p className="mt-6 font-serif leading-[1.05] text-cream" style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.01em" }}>
-            Ich bringe <span className="text-gold-light">KI</span> in dein Unternehmen.
+            High-End <span className="text-gold-light">Creative</span> Web Development.
           </p>
         </div>
 
