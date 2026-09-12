@@ -7,7 +7,10 @@ export const metadata: Metadata = {
   title: "High-End Webdesign und Webentwicklung",
   description:
     "Premium-Webauftritte aus eigenem Code: eigenständig im Design, in unter zwei Sekunden geladen, sichtbar bei Google und in KI-Antworten. Kostenlose Potenzial-Analyse mit Website-Check, Wettbewerbsanalyse und Gespräch.",
-  alternates: { canonical: "/webseiten" },
+  alternates: {
+    canonical: "/webseiten",
+    languages: { "de-DE": "/webseiten", "en": "/en/websites", "x-default": "/webseiten" },
+  },
   openGraph: {
     title: "High-End Webdesign und Webentwicklung · Sabala Studios",
     description:
