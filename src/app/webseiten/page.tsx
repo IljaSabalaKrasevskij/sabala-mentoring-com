@@ -863,15 +863,22 @@ function Analyse() {
                 )}
               </motion.div>
 
-              {/* Vertrauens-Anker: echte Person */}
-              <motion.div {...rise(0.2)} className="mt-6 flex items-center gap-4 p-4" style={{ border: "1px solid rgba(184,150,62,0.2)", background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))" }}>
-                <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-full" style={{ border: "1.5px solid rgba(212,174,90,0.6)" }}>
-                  <Image src="/webseiten/adler-stills/frontal-kopf.webp" alt="Der Sabala-Adler" fill sizes="56px" className="object-cover" />
-                </span>
-                <p className="text-[0.92rem] leading-snug text-warm-light/70">
-                  Du sprichst direkt mit mir, nicht mit einem Vertrieb. Analyse und Gespräch
-                  mache ich persönlich.
-                </p>
+              {/* Vertrauens-Anker: echte Person. Vorher ein 56-px-Adlerkopf neben
+                  dem Satz "Du sprichst direkt mit mir". Jetzt ein Portraet im
+                  Messingrahmen, im Studio aufgenommen statt am Schreibtisch. */}
+              <motion.div {...rise(0.2)} className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
+                <div className="shrink-0" style={{ padding: "4px", background: MESSING, boxShadow: "0 18px 44px rgba(0,0,0,0.5)" }}>
+                  <div className="relative h-[11rem] w-[8.8rem] overflow-hidden sm:h-[13rem] sm:w-[10.4rem]" style={{ background: "#0B0906" }}>
+                    <Image src="/webseiten/sektionen/ilja-im-studio.webp" alt="Ilja Krasevskij im Studio" fill sizes="(min-width: 640px) 167px, 141px" className="object-cover object-top" />
+                  </div>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-light">Ilja Krasevskij</p>
+                  <p className="mt-3 text-[1rem] leading-relaxed text-warm-light/80">
+                    Du sprichst direkt mit mir, nicht mit einem Vertrieb. Analyse und Gespräch
+                    mache ich persönlich.
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>
