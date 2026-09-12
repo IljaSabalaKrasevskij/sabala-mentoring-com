@@ -204,25 +204,36 @@ const FUNDAMENT = [
   },
 ];
 
+/* Drei Stufen, drei Raeume aus dem Rundgang als Bild. Basis ist Betrieb,
+   Wachstum enthaelt Iljas Zeit, Partner ist die Zusammenarbeit auf Anfrage. */
 const PFLEGE = [
   {
     term: "Basis",
     price: "70",
-    punkte: ["Updates und Sicherheit", "Backups und Monitoring", "Kleine Änderungen und neue Inhalte"],
+    bild: "/webseiten/studio-london-v1/exterior.webp",
+    alt: "Die Fassade des Ladens bei Nacht",
+    kurz: "Betrieb",
+    punkte: ["Updates und Sicherheit", "Backups und Monitoring", "Verfügbarkeit im Blick, rund um die Uhr"],
     line: "Deine Seite läuft, du merkst nichts davon.",
   },
   {
     term: "Wachstum",
     price: "99",
-    punkte: ["Alles aus Basis", "SEO- und GEO-Pflege, laufend", "Monatsbericht mit deinen Kennzahlen"],
-    line: "Deine Seite wird jeden Monat besser gefunden.",
+    bild: "/webseiten/studio-london-v1/reception.webp",
+    alt: "Der Empfang im Studio",
+    kurz: "Betrieb und Pflege",
+    punkte: ["Alles aus Basis", "Zwei kleine Änderungen im Monat", "Monatsbericht in Klartext"],
+    line: "Deine Seite bleibt aktuell, ohne dass du dich kümmerst.",
     highlight: true,
   },
   {
     term: "Partner",
-    price: "149",
-    punkte: ["Alles aus Wachstum", "Priorität bei Änderungen und Anfragen", "Strategie-Sparring für die nächsten Schritte"],
-    line: "Du hast einen technischen Partner an deiner Seite.",
+    price: null,
+    bild: "/webseiten/studio-london-v1/gallery.webp",
+    alt: "Der Ausstellungssaal im Studio",
+    kurz: "Zusammenarbeit",
+    punkte: ["Alles aus Wachstum", "SEO und GEO laufend, mit meinen Agenten", "Neue Seiten und Ausbau, von mir gebaut", "Strategie jedes Quartal"],
+    line: "Wir entwickeln deinen Auftritt gemeinsam weiter.",
   },
 ];
 
@@ -233,7 +244,7 @@ const FAQ = [
   },
   {
     q: "Was kostet eine Webseite bei dir?",
-    a: "Das Projekt bekommt einen individuellen Rahmen, weil es kein Produkt von der Stange ist: ein OnePager liegt woanders als eine komplette Markenwelt. Nach der Analyse steht dein Angebot mit Umfang, Zeitplan und Preis. Die laufende Pflege ist transparent: 70, 99 oder 149 Euro im Monat, netto.",
+    a: "Das Projekt bekommt einen individuellen Rahmen, weil es kein Produkt von der Stange ist: ein OnePager liegt woanders als eine komplette Markenwelt. Nach der Analyse steht dein Angebot mit Umfang, Zeitplan und Preis. Die laufende Pflege ist transparent: Basis 70 und Wachstum 99 Euro im Monat netto, die Partnerschaft nach Umfang auf Anfrage.",
   },
   {
     q: "Wie lange dauert ein Projekt?",
@@ -275,20 +286,20 @@ const SCHEMA = {
           {
             "@type": "Offer",
             name: "Pflege Basis",
-            description: "Updates, Sicherheit, Backups, kleine Änderungen. 70 Euro im Monat netto.",
+            description: "Updates, Sicherheit, Backups und Monitoring. 70 Euro im Monat netto.",
             priceSpecification: { "@type": "UnitPriceSpecification", price: 70, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
           },
           {
             "@type": "Offer",
             name: "Pflege Wachstum",
-            description: "Dazu laufende SEO- und GEO-Pflege und Monatsbericht. 99 Euro im Monat netto.",
+            description: "Dazu zwei kleine Änderungen im Monat und ein Monatsbericht in Klartext. 99 Euro im Monat netto.",
             priceSpecification: { "@type": "UnitPriceSpecification", price: 99, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
           },
           {
             "@type": "Offer",
             name: "Pflege Partner",
-            description: "Dazu Priorität und Strategie-Sparring. 149 Euro im Monat netto.",
-            priceSpecification: { "@type": "UnitPriceSpecification", price: 149, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
+            // Kein fester Preis mehr: Umfang haengt am Projekt, deshalb auf Anfrage.
+            description: "Dazu laufende SEO- und GEO-Arbeit, neue Seiten und Ausbau sowie Strategie jedes Quartal. Preis auf Anfrage, abhängig vom Umfang.",
           },
         ],
       },
@@ -974,38 +985,60 @@ function Pflege() {
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {PFLEGE.map((p, i) => (
-            <motion.div
+            <motion.article
               key={p.term}
               {...rise(i * 0.1)}
-              className={`relative flex flex-col p-8 ${p.highlight ? "md:-translate-y-3" : ""}`}
-              style={
-                p.highlight
-                  ? PAPIER_BETONT
-                  : PAPIER
-              }
+              className={`group relative ${p.highlight ? "md:-translate-y-4" : ""}`}
+              style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: p.highlight ? "0 34px 84px rgba(80,60,20,0.34)" : "0 22px 54px rgba(80,60,20,0.2)" }}
             >
               {p.highlight && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gold-light px-4 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-tech-bg">
+                <span className="absolute -top-3.5 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ background: MESSING, color: "#2A2117" }}>
                   Meist gewählt
                 </span>
               )}
-              <h3 className="font-serif text-[1.7rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
-              <div className="mt-2 flex items-baseline gap-2">
-                <span className="font-serif text-[2.3rem] leading-none" style={{ color: "#2A2520" }}>{p.price} €</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em]" style={{ color: "#9A8F7E" }}>im Monat</span>
+
+              {/* Raum aus dem Rundgang als Grund. Der Preis steht IMMER im Fluss,
+                  nie hinter einem Hover: eine Preiskarte, die ihren Preis erst beim
+                  Zeigen verraet, verliert jeden Handy-Besucher. Die Bewegung liegt
+                  stattdessen im Bild und in der Messingfuge ueber dem Preis. */}
+              <div className="relative flex h-[32rem] flex-col overflow-hidden">
+                <Image src={p.bild} alt={p.alt} fill sizes="(min-width: 768px) 33vw, 92vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]" />
+                <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,7,5,0.97) 30%, rgba(8,7,5,0.74) 58%, rgba(8,7,5,0.3))" }} />
+
+                <div className="relative flex h-full flex-col justify-end p-7">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold-light/80">{p.kurz}</p>
+                  <h3 className="mt-3 font-serif text-[2rem] leading-none text-cream">{p.term}</h3>
+                  <Messinglinie breite="2.5rem" className="mt-5" />
+                  <ul className="mt-5 space-y-2.5">
+                    {p.punkte.map((t) => (
+                      <li key={t} className="flex items-start gap-3 text-[0.92rem] leading-snug text-warm-light/80">
+                        <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full" style={{ background: "var(--gold-light)" }} />{t}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 font-serif text-[0.98rem] italic leading-snug text-warm-light/60">{p.line}</p>
+
+                  <div className="relative mt-7 pt-6">
+                    <span aria-hidden className="absolute left-0 top-0 h-px w-10 transition-all duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" style={{ background: MESSING }} />
+                    <div className="flex flex-wrap items-end justify-between gap-4">
+                      <div>
+                        {p.price ? (
+                          <>
+                            <span className="font-serif text-[2.4rem] leading-none text-cream">{p.price} €</span>
+                            <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.14em] text-warm-light/55">im Monat</span>
+                          </>
+                        ) : (
+                          <span className="font-serif text-[1.9rem] leading-none text-cream">Auf Anfrage</span>
+                        )}
+                      </div>
+                      <a href="#analyse" className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-transform duration-300 group-hover:translate-x-0.5" style={{ background: "var(--gold-light)", color: "var(--tech-bg)" }}>
+                        {p.price ? "Dazubuchen" : "Besprechen"} <ArrowRight size={13} aria-hidden />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <ul className="mt-6 flex-1 space-y-2.5">
-                {p.punkte.map((pt) => (
-                  <li key={pt} className="flex items-start gap-3 text-[0.94rem] leading-relaxed" style={{ color: "#46403A" }}>
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--gold)" }} />
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 border-t pt-4 text-[0.92rem] italic leading-relaxed" style={{ borderColor: "rgba(184,150,62,0.18)", color: "#7A7268" }}>
-                {p.line}
-              </p>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
