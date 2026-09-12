@@ -1,0 +1,37 @@
+.cinema { user-select: none; position: absolute; inset: 0; overflow: hidden; background: #0b0c0d; }
+.plane { position: absolute; left: 50%; top: 50%; width: max(100%, 177.78svh); aspect-ratio: 1672 / 941; transform: translate(-50%, -50%); }
+.plate { position: absolute; inset: 0; transform-origin: 50% 50%; will-change: transform, opacity; }
+.photograph { object-fit: fill; user-select: none; pointer-events: none; }
+.film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; opacity: 0; pointer-events: none; }
+.labels { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.priceTag { position: absolute; width: 3.3%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 2px; align-items: center; padding: 4px 2px 3px; background: linear-gradient(155deg,#28261ff5,#141612f7); border: .5px solid #a38c5d99; border-radius: .6px; color: #d5c49f; box-shadow: 0 2px 3px #0009, inset 0 .5px #e7d4a42b; cursor: pointer; pointer-events: auto; transition: border-color .3s, color .3s, translate .3s; }
+.priceTag::before { content: ''; position: absolute; left: 22%; right: 22%; top: 100%; height: 1px; background: linear-gradient(90deg,transparent,#a99260aa,transparent); }
+.priceTag span { font: 400 5.2px/1.3 var(--font-satoshi), sans-serif; letter-spacing: .015em; white-space: nowrap; color: #bfb49a; }
+.priceTag strong { font: 400 8px/1.1 var(--font-instrument), Georgia, serif; white-space: nowrap; }
+.priceTag:hover, .priceTag[aria-pressed=true] { color: #f2dfb8; border-color: #d5bc87; translate: 0 -1px; }
+.priceTag:disabled { pointer-events: none; }
+.priceTag:focus-visible { outline: 1px solid #f9dd9f; outline-offset: 4px; }
+.object { position: absolute; background: none; padding: 0; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.object:disabled, .doorTarget:disabled { pointer-events: none; }
+.object > span { position: absolute; inset: 0; opacity: 0; background-image: url('/webseiten/studio-london-v1/exterior.webp'); background-size: var(--crop-size); background-position: var(--crop-position); clip-path: var(--object-shape); transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s, filter .4s; }
+.object:hover > span, .object[aria-pressed=true] > span, .object:focus-visible > span { opacity: 1; transform: translateY(-3px) scale(1.035); filter: brightness(1.16) drop-shadow(0 8px 10px #0008); }
+.object:focus-visible, .doorTarget:focus-visible, .work:focus-visible { outline: 1px solid #dfc493; outline-offset: 6px; }
+.doorTarget { position: absolute; left: 69%; top: 25%; width: 13.5%; height: 55%; border: 0; background: transparent; cursor: pointer; }
+.aperture { position: absolute; left: 69.15%; top: 26.7%; width: 12.65%; height: 53.4%; opacity: 0; background: #100c08; pointer-events: none; }
+.inside { position: absolute; inset: 0; background: linear-gradient(#0006,#0006),url('/webseiten/studio-london-v1/reception.webp') 58% 45% / auto 125%; }
+.doorLeaf { position: absolute; inset: 0; transform-origin: right center; background: url('/webseiten/studio-london-v1/exterior.webp'); background-size: 790.5138% 187.2659%; background-position: 79.1643% 57.2961%; backface-visibility: hidden; box-shadow: -8px 0 20px #0006; }
+.work { position: absolute; left: 38.05%; top: 14.8%; width: 35.5%; height: 32.5%; overflow: hidden; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 82%, 3% 81%, 6% 79%, 11% 75%, 12% 73%, 10% 71%, 7% 72%, 5% 69%, 3% 71%, 0 72%); background: #101111; box-shadow: inset 0 0 10px #000b; }
+.work::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(140deg,#ffe5b30a,transparent 40%,#0001); box-shadow: inset 0 0 12px #0008; }
+.workImage { object-fit: contain; animation: reveal .4s ease both; }
+@keyframes reveal { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 650px) {
+  .plane { width: 160%; top: 39%; }
+  .cinema::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(#0b0c0d 10%, transparent 25%, transparent 46%, #0b0c0d 67%); }
+  .cinema[data-room=window]::after { background: linear-gradient(#0b0c0d 10%, transparent 25%, transparent 48%, #0b0c0d 69%); }
+  .object::after { content: ""; position: absolute; inset: -7px; }
+  .priceTag { width: 4.7%; padding: 3px 1px; gap: 1.5px; }
+  .priceTag::after { content: ''; position: absolute; inset: -8px -3px; }
+  .priceTag span { font-size: 4.1px; }
+  .priceTag strong { font-size: 6.6px; }
+}
+@media (prefers-reduced-motion: reduce) { .object > span, .workImage { transition: none; animation: none; } }

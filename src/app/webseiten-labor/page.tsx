@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useSpring } from "motion/react";
 import { useState, type FormEvent } from "react";
+import AdlerHero from "@/components/webseiten/AdlerHero";
+import StudioJourney from "@/components/webseiten/StudioJourney";
 import {
-  Search, ShieldCheck, Crosshair, Scan, Gem, Layers, Code2, Sparkles,
+  Search, ShieldCheck, Crosshair, Scan, Gem,
   FileSearch, Radar, MessagesSquare, ListChecks, ArrowRight, ArrowDown,
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   /webseiten — Sales-Page v5 (1.9.2026, Design-first-Umbau nach Iljas Review)
+   /webseiten-labor — ARBEITSKOPIE von /webseiten (v5-Stand) (1.9.2026, Design-first-Umbau nach Iljas Review)
 
    Ein Funnel, ein CTA: die kostenlose Potenzial-Analyse (Website-Check +
    Wettbewerbsanalyse + Beratungsgespraech) als einziges Einstiegs-Angebot.
@@ -37,6 +39,8 @@ const rise = (delay = 0) => ({
 /* ── Daten ─────────────────────────────────────────────────────────────── */
 
 const MARQUEE = [
+  "Future built here",
+  "Luxury-Level ROI",
   "Verkaufsoptimiert",
   "Eigener Code",
   "Ladezeit unter 2 s",
@@ -55,15 +59,6 @@ const HEBEL = [
   { icon: Crosshair, term: "Klare Zielgruppe", line: "eine Botschaft, nicht vier" },
   { icon: Scan, term: "Keine Ablenkung", line: "ein Weg, ein nächster Schritt" },
   { icon: Gem, term: "Hochwertigkeit", line: "in jedem Detail spürbar" },
-];
-
-const METHODE = [
-  { icon: Crosshair, term: "Zielgruppe geschärft", line: "Wen deine Seite anspricht, und wen bewusst nicht." },
-  { icon: Layers, term: "Angebot sortiert", line: "Einstieg, Kern, nächster Schritt: Kaufen wird leicht." },
-  { icon: Sparkles, term: "Verkaufspsychologie", line: "Jede Section hat einen Job: Vertrauen, Beweis, Handlung." },
-  { icon: Code2, term: "Eigener Code", line: "Kein Theme, kein Plugin-Stapel, unter zwei Sekunden." },
-  { icon: Search, term: "Sichtbar ab Tag eins", line: "SEO und GEO stecken im Fundament, nicht im Nachtrag." },
-  { icon: ShieldCheck, term: "KI als Werkzeug", line: "Claude Code übernimmt Fleißarbeit, ich entscheide." },
 ];
 
 const ANGEBOT_STACK = [
@@ -106,36 +101,9 @@ const ARBEIT = [
 ];
 
 const PROZESS = [
-  {
-    n: "01",
-    term: "Potenzial-Analyse & Gespräch",
-    tag: "kostenlos",
-    line: "Du schickst mir deine Seite, ich analysiere sie und deine Wettbewerber. Danach gehen wir die Ergebnisse zusammen durch. Ab hier weißt du, wo du stehst.",
-  },
-  {
-    n: "02",
-    term: "Dein Angebot",
-    tag: null,
-    line: "Du bekommst ein klares Angebot: Umfang, Zeitplan, Preis. Keine versteckten Posten, und die Entscheidung liegt bei dir.",
-  },
-  {
-    n: "03",
-    term: "Konzept & Build",
-    tag: null,
-    line: "Zielgruppe geschärft, Story und Struktur festgelegt, dann Design, eigener Code und Motion. Du siehst Zwischenstände statt Überraschungen.",
-  },
-  {
-    n: "04",
-    term: "Launch",
-    tag: null,
-    line: "Technik, Umzug, Redirects, Indexierung. Sauber live gestellt und sauber übergeben.",
-  },
-  {
-    n: "05",
-    term: "Pflege & Wachstum",
-    tag: null,
-    line: "Aus einem Guss weiter betreut: Updates, SEO- und GEO-Pflege, Monatsbericht. Du hast mit Technik nichts mehr zu tun.",
-  },
+  { n: "01", term: "Analyse & Gespräch", tag: "kostenlos", line: "Website-Check, Wettbewerbsanalyse, 30 Minuten Gespräch. Danach weißt du, wo du stehst." },
+  { n: "02", term: "Angebot, Konzept, Build", tag: null, line: "Klarer Rahmen mit Preis, dann Zielgruppe, Story, Design und eigener Code. Du siehst Zwischenstände." },
+  { n: "03", term: "Launch & Pflege", tag: null, line: "Sauber live, sauber übergeben, und danach als Partner betreut. Technik ist ab hier mein Thema." },
 ];
 
 const FUNDAMENT = [
@@ -195,18 +163,6 @@ const FAQ = [
   {
     q: "Wie lange dauert ein Projekt?",
     a: "Ein OnePager meist zwei bis drei Wochen ab vollständigen Inhalten, größere Markenwelten mehrere Wochen. Du bekommst vor dem Start einen ehrlichen Zeitplan, keine Wunschtermine.",
-  },
-  {
-    q: "Wie genau hilft dir KI dabei?",
-    a: "Ich baue mit Claude Code. Die KI übernimmt Fleißarbeit und liefert Iterationen in hohem Tempo, ich treffe die Entscheidungen: Strategie, Geschmack, Qualität und Verantwortung bleiben menschlich. Du bekommst dadurch mehr Tiefe und mehr Entwürfe für dein Budget.",
-  },
-  {
-    q: "Was ist GEO?",
-    a: "GEO heißt: Sichtbarkeit in KI-Suchen. ChatGPT und Perplexity zitieren Seiten mit sauberer Struktur, Schema-Markup und klaren Antworten. Deine Seite wird von Anfang an so gebaut, dass KI sie versteht und empfehlen kann.",
-  },
-  {
-    q: "Kann ich die Seite später selbst pflegen?",
-    a: "Der Code gehört dir, im eigenen GitHub-Repo. Änderungen übernehme ich im Pflege-Service, oder dein Team lernt in der KI-Akademie, selbst damit zu arbeiten. Beides ist ein sauberer Weg, du bist nie eingesperrt.",
   },
   {
     q: "Warum kein Baukasten?",
@@ -276,17 +232,16 @@ const SCHEMA = {
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
-export default function WebseitenPage() {
+export default function WebseitenLaborPage() {
   return (
     <main className="flex-1" style={{ background: "var(--cream)" }}>
       {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA).replace(/</g, "\\u003c") }} />
       <ScrollRail />
       <Hero />
       <Marquee />
       <Schaufenster />
       <Werthebel />
-      <Methode />
+      <FuerWen />
       <Galerie />
       <Analyse />
       <Prozess />
@@ -315,7 +270,7 @@ export default function WebseitenPage() {
 const RAIL = [
   { id: "schaufenster", label: "Schaufenster" },
   { id: "hebel", label: "Werthebel" },
-  { id: "methode", label: "Methode" },
+  { id: "methode", label: "Für wen" },
   { id: "arbeiten", label: "Arbeiten" },
   { id: "analyse", label: "Analyse" },
   { id: "prozess", label: "Prozess" },
@@ -328,7 +283,7 @@ function ScrollRail() {
   const { scrollYProgress } = useScroll();
   const scaleY = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
   return (
-    <div className="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block" aria-hidden>
+    <div data-page-rail className="pointer-events-none fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block" aria-hidden>
       <div className="relative flex flex-col items-center gap-4 py-3">
         <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2" style={{ background: "rgba(184,150,62,0.18)" }} />
         <motion.span
@@ -367,55 +322,39 @@ function SpinBadge({ className = "" }: { className?: string }) {
   );
 }
 
-/* ── 1 · Hero ──────────────────────────────────────────────────────────── */
+/* ── 1 · Hero: Adler-Buehne, Blick folgt der Maus ─────────────────────── */
 function Hero() {
   return (
-    <section className="relative flex min-h-[94vh] items-center justify-center overflow-hidden px-6" style={{ background: "var(--tech-bg)" }}>
-      <video autoPlay muted loop playsInline preload="auto" poster="/brand/liquid-gold-poster.jpg" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-45" style={{ mixBlendMode: "screen" }}>
-        <source src="/brand/liquid-gold.mp4" type="video/mp4" />
-      </video>
-      <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 35%, rgba(184,150,62,0.10), transparent 65%)" }} />
-      <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(10,8,6,0.55), transparent 30%, rgba(10,8,6,0.88))" }} />
+    <AdlerHero>
+      <HeroText />
+    </AdlerHero>
+  );
+}
 
-      <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="relative mx-auto max-w-5xl pb-10 text-center">
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
-          {["Webdesign", "Verkaufsoptimiert", "SEO + GEO"].map((c) => (
-            <span key={c} className="rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-gold-light" style={{ border: "1px solid rgba(184,150,62,0.4)", background: "rgba(184,150,62,0.08)" }}>
-              {c}
-            </span>
-          ))}
-        </div>
-        <h1 className="mx-auto mt-9 font-serif text-cream" style={{ fontSize: "clamp(2.7rem, 7vw, 6.4rem)", lineHeight: 1.03, letterSpacing: "-0.015em" }}>
-          Deine Webseite. Gebaut, um{" "}
-          <br className="hidden md:block" />
-          den Besten deiner Nische{" "}
-          <br className="hidden md:block" />
-          <em className="not-italic" style={{ color: "var(--gold-light)" }}>zu schlagen.</em>
-        </h1>
-        <p className="mx-auto mt-8 max-w-2xl text-[1.22rem] leading-relaxed text-warm-light/85">
-          Du bekommst ein aufgeräumtes Schaufenster für dein Angebot: Premium-Design aus
-          eigenem Code, verkaufspsychologisch aufgebaut, in unter zwei Sekunden geladen und
-          sichtbar bei Google wie in KI-Suchen. Damit die richtigen Kunden stehen bleiben und
-          eintreten.
-        </p>
+/* Weniger ist mehr: Kicker, Headline, ein Satz, ein Button. Sonst nichts.
+   Der Text traegt einen eigenen Schatten, damit das Bild ohne Overlay auskommt. */
+const SCHATTEN = "0 2px 24px rgba(11,9,6,0.85), 0 1px 4px rgba(11,9,6,0.7)";
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a href="#analyse" className="inline-flex items-center gap-2.5 rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold">
-            Kostenlose Potenzial-Analyse <ArrowRight size={16} aria-hidden />
-          </a>
-          <a href="#arbeiten" className="inline-flex items-center gap-2 rounded-full px-8 py-4 font-mono text-sm uppercase tracking-[0.12em] text-warm-light/75 transition-colors hover:text-cream" style={{ border: "1px solid rgba(250,248,245,0.22)" }}>
-            Arbeiten ansehen
+function HeroText() {
+  return (
+    <div className="flex min-h-[94vh] w-full flex-col justify-end pb-14 md:pb-20">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="mx-auto w-full max-w-6xl">
+        <div className="max-w-md" style={{ textShadow: SCHATTEN }}>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">// high-end web development</p>
+          <h1 className="mt-3.5 font-serif text-cream" style={{ fontSize: "clamp(1.7rem, 2.9vw, 2.7rem)", lineHeight: 1.08, letterSpacing: "-0.01em" }}>
+            Design, das verkauft.
+            <br />
+            <em className="not-italic" style={{ color: "var(--gold-light)" }}>Und im Kopf bleibt.</em>
+          </h1>
+          <p className="mt-4 max-w-sm text-[0.92rem] leading-relaxed text-warm-light/80">
+            High-End Webseiten für Premium-Dienstleister.
+          </p>
+          <a href="#analyse" className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-gold-light px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold" style={{ textShadow: "none" }}>
+            Kostenlose Potenzial-Analyse <ArrowRight size={14} aria-hidden />
           </a>
         </div>
-        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-warm-light/40">
-          Website-Check + Wettbewerbsanalyse + Beratungsgespräch
-        </p>
       </motion.div>
-
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.8 }} className="absolute bottom-10 right-10 hidden lg:block">
-        <SpinBadge />
-      </motion.div>
-    </section>
+    </div>
   );
 }
 
@@ -442,74 +381,8 @@ function Marquee() {
 
 /* ── 3 · Schaufenster (Metapher + Pain) ────────────────────────────────── */
 function Schaufenster() {
-  return (
-    <section id="schaufenster" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]">
-      <span aria-hidden className="ws-ghost pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap font-serif uppercase" style={{ fontSize: "clamp(5rem, 16vw, 15rem)", lineHeight: 1, opacity: 0.5 }}>
-        Schaufenster
-      </span>
-
-      <div className="relative mx-auto max-w-6xl">
-        <motion.div {...rise()} className="mx-auto max-w-3xl pt-[8vh] text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// der erste eindruck</p>
-          <h2 className="mt-5 font-serif leading-[1.06]" style={{ fontSize: "clamp(2.3rem, 5.4vw, 4.2rem)", color: "#2A2520" }}>
-            Der erste Eindruck entscheidet, ob jemand eintritt.
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-[1.12rem] leading-relaxed" style={{ color: "#46403A" }}>
-            Eine gute Webseite ist ein aufgeräumtes Schaufenster mit einem klaren Angebot, das
-            die richtigen Menschen bewegt, hineinzugehen. Die meisten Seiten sind das
-            Gegenteil: ein Bauchladen, an dem man vorbeiläuft.
-          </p>
-        </motion.div>
-
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {/* Bauchladen */}
-          <motion.div {...rise(0.05)} className="relative overflow-hidden rounded-[1.8rem] p-8 md:p-10" style={{ background: "#E7E1D6", border: "1px solid rgba(46,43,38,0.12)" }}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em]" style={{ color: "#8A8178" }}>So sehen die meisten aus</p>
-            <h3 className="mt-3 font-serif text-[1.9rem]" style={{ color: "#4A443C" }}>Der Bauchladen</h3>
-            <div className="relative mt-8 flex min-h-[220px] flex-wrap content-start items-start gap-3 opacity-90">
-              {BAUCHLADEN.map((b, i) => (
-                <span
-                  key={b}
-                  className="rounded-lg px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em]"
-                  style={{
-                    background: "#F2EDE4",
-                    color: "#7A7268",
-                    border: "1px dashed rgba(122,114,104,0.4)",
-                    transform: `rotate(${[-3, 2, -1.5, 3, -2, 1.5, -2.5][i % 7]}deg)`,
-                  }}
-                >
-                  {b}
-                </span>
-              ))}
-            </div>
-            <p className="mt-6 border-t pt-5 text-[1rem] italic" style={{ borderColor: "rgba(46,43,38,0.12)", color: "#7A7268" }}>
-              Viel drin, nichts klar. Man geht vorbei.
-            </p>
-          </motion.div>
-
-          {/* Schaufenster */}
-          <motion.div {...rise(0.14)} className="relative overflow-hidden rounded-[1.8rem] p-8 md:p-10" style={{ background: "var(--tech-bg)", border: "1px solid rgba(184,150,62,0.45)", boxShadow: "0 34px 90px rgba(80,60,20,0.28)" }}>
-            {/* Spotlight-Kegel */}
-            <div aria-hidden className="pointer-events-none absolute -top-10 left-1/2 h-[130%] w-[85%] -translate-x-1/2" style={{ background: "conic-gradient(from 180deg at 50% 0%, transparent 40%, rgba(212,174,90,0.16) 50%, transparent 60%)" }} />
-            <p className="relative font-mono text-[11px] uppercase tracking-[0.24em] text-gold-light">So baue ich für dich</p>
-            <h3 className="relative mt-3 font-serif text-[1.9rem] text-cream">Dein Schaufenster</h3>
-            <div className="relative mt-8 flex min-h-[220px] items-center justify-center">
-              <div className="w-full max-w-xs rounded-2xl p-6 text-center" style={{ background: "linear-gradient(160deg, rgba(184,150,62,0.18), rgba(184,150,62,0.05))", border: "1px solid rgba(212,174,90,0.55)", boxShadow: "0 24px 60px rgba(184,150,62,0.25)", animation: "ws-float 6s ease-in-out infinite" }}>
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold-light">Ein Angebot</p>
-                <p className="mt-3 font-serif text-[1.5rem] leading-tight text-cream">Für die Richtigen. Glasklar.</p>
-                <span className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-gold-light">
-                  Eintreten <ArrowRight size={13} aria-hidden />
-                </span>
-              </div>
-            </div>
-            <p className="relative mt-6 border-t pt-5 text-[1rem] italic text-warm-light/70" style={{ borderColor: "rgba(184,150,62,0.25)" }}>
-              Ein Blick, ein Angebot, ein Weg hinein. Man bleibt stehen.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
+  // Zusammenhängender 3D-Rundgang: Schaufenster, Empfang, ausgewählte Arbeiten.
+  return <StudioJourney />;
 }
 
 /* ── 4 · Werthebel (ROI-Kette) ─────────────────────────────────────────── */
@@ -518,7 +391,7 @@ function Werthebel() {
     <section id="hebel" className="scroll-mt-20 px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="mx-auto max-w-6xl">
         <motion.div {...rise()} className="max-w-3xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// warum sich premium rechnet</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// luxury-level roi · warum sich premium rechnet</p>
           <h2 className="mt-5 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.4rem, 5.6vw, 4.3rem)", letterSpacing: "-0.01em" }}>
             Hochwertigkeit ist kein Schmuck. Sie ist ein Werthebel.
           </h2>
@@ -562,86 +435,76 @@ function Werthebel() {
   );
 }
 
-/* ── 5 · Methode (Business Developer, Foto + Zitat) ────────────────────── */
-function Methode() {
+/* ── 5 · Für wen (ICP + Angebot, auf dem Adler) ───────────────────────── */
+const FUER_WEN = [
+  "Berater, Kanzleien, Studios und Praxen mit hochpreisigen Leistungen",
+  "Dein Angebot ist Premium, deine Webseite sieht nach Baukasten aus",
+  "Kunden vergleichen dich vor dem ersten Gespräch mit den Besten deiner Nische",
+  "Du willst einen Auftritt, der deinen Preis erklärt, bevor du ihn nennst",
+];
+const NICHT_FUER = [
+  "Preiskämpfer, die über den günstigsten Anbieter gewinnen wollen",
+  "Projekte, bei denen der Baukasten wirklich reicht",
+];
+
+function FuerWen() {
   return (
     <section id="methode" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]">
       <span aria-hidden className="ws-ghost pointer-events-none absolute right-0 top-10 hidden whitespace-nowrap font-serif uppercase lg:block" style={{ fontSize: "clamp(5rem, 11vw, 10rem)", lineHeight: 1, opacity: 0.4 }}>
-        Methode
+        Für wen
       </span>
 
-      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
-        {/* Foto-Spalte */}
-        <div className="relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30, rotate: -2 }}
-            whileInView={{ opacity: 1, y: 0, rotate: -1.2 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: EASE }}
-            className="relative overflow-hidden rounded-[1.6rem]"
-            style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 90px rgba(80,60,20,0.3)" }}
-          >
-            <Image src="/webseiten/ilja-mikrofon.jpg" alt="Ilja Sabala im Gespräch am Mikrofon" width={1600} height={1066} className="w-full object-cover" />
-            <div aria-hidden className="wd-grain pointer-events-none absolute inset-0 opacity-25" />
-            <span className="absolute bottom-4 left-4 rounded-full px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]" style={{ background: "rgba(10,8,6,0.85)", color: "var(--gold-light)", border: "1px solid rgba(184,150,62,0.4)" }}>
-              Ilja Sabala · Business Developer & Web-Architekt
-            </span>
-          </motion.div>
+      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <motion.figure
+          initial={{ opacity: 0, y: 30, rotate: -2 }}
+          whileInView={{ opacity: 1, y: 0, rotate: -1.2 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="relative overflow-hidden rounded-[1.6rem]"
+          style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 90px rgba(80,60,20,0.3)", background: "#0B0906" }}
+        >
+          <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt="Der Sabala-Adler am Schreibtisch, Blick nach vorn" width={800} height={1000} className="w-full object-cover" />
+          <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.92), transparent)" }}>
+            <p className="font-serif text-[1.15rem] italic leading-snug text-cream">
+              »Eine gute Webseite ist ein aufgeräumtes Schaufenster mit einem klaren Angebot, das die richtigen Menschen bewegt, einzutreten.«
+            </p>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-light">Ilja Sabala</p>
+          </figcaption>
+        </motion.figure>
 
-          <motion.figure
-            initial={{ opacity: 0, y: 30, rotate: 3 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 2 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
-            className="absolute -bottom-10 -right-2 hidden w-52 overflow-hidden rounded-xl bg-white p-2 pb-3 shadow-[0_20px_50px_rgba(80,60,20,0.3)] md:block"
-            style={{ border: "1px solid rgba(46,43,38,0.1)" }}
-          >
-            <Image src="/webseiten/ilja-stehpult.jpg" alt="Ilja Sabala beim Bauen einer Seite, live am Stehpult" width={600} height={400} className="w-full rounded-lg object-cover" />
-            <figcaption className="mt-2 px-1 font-mono text-[9px] uppercase tracking-[0.14em]" style={{ color: "#7A7268" }}>
-              Live-Session · Juni 2025
-            </figcaption>
-          </motion.figure>
-        </div>
-
-        {/* Text-Spalte */}
         <div>
           <motion.div {...rise()}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// mehr als webdesign</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// für wen das gebaut ist</p>
             <h2 className="mt-5 font-serif leading-[1.07]" style={{ fontSize: "clamp(2.2rem, 5vw, 3.7rem)", color: "#2A2520" }}>
-              Du bekommst einen Business Developer, der Webseiten baut.
+              Für Premium-Dienstleister, deren Auftritt dem Angebot hinterherhinkt.
             </h2>
             <p className="mt-6 max-w-xl text-[1.06rem] leading-relaxed" style={{ color: "#46403A" }}>
-              Ich habe Teams geführt und einen Betrieb mit 5,5 Millionen Euro Jahresumsatz
-              verantwortet, bevor ich die erste Seite gebaut habe. Deshalb beginnt deine
-              Webseite bei mir bei deinem Geschäft: Zielgruppe, Angebot, Markt. Das Design
-              kommt danach, und es trifft härter, weil es weiß, worauf es zielt.
+              Der erste Eindruck entscheidet, ob dein Preis als selbstverständlich gilt oder als
+              Verhandlungsbasis. Deshalb baue ich Webseiten, die Premium sofort sichtbar machen.
             </p>
           </motion.div>
 
-          <motion.blockquote
-            {...rise(0.1)}
-            className="mt-8 rounded-2xl p-7"
-            style={{ background: "var(--tech-bg)", border: "1px solid rgba(184,150,62,0.4)" }}
-          >
-            <p className="font-serif text-[1.35rem] italic leading-snug text-cream">
-              »Eine gute Webseite ist ein aufgeräumtes Schaufenster mit einem klaren Angebot,
-              das die richtigen Menschen bewegt, einzutreten.«
-            </p>
-            <footer className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-gold-light">Ilja Sabala</footer>
-          </motion.blockquote>
-
-          <div className="mt-9 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-            {METHODE.map((m, i) => (
-              <motion.div key={m.term} {...rise(0.05 + (i % 2) * 0.06)} className="group flex items-start gap-3.5">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 group-hover:bg-[rgba(184,150,62,0.16)]" style={{ background: "rgba(184,150,62,0.09)", border: "1px solid rgba(184,150,62,0.3)" }}>
-                  <m.icon size={17} strokeWidth={1.9} className="text-gold" aria-hidden />
-                </span>
-                <div>
-                  <h3 className="font-serif text-[1.12rem] leading-tight" style={{ color: "#2A2520" }}>{m.term}</h3>
-                  <p className="mt-1 text-[0.9rem] leading-snug" style={{ color: "#5C554C" }}>{m.line}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="mt-9 grid gap-6 sm:grid-cols-[1.2fr_1fr]">
+            <motion.div {...rise(0.05)} className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid rgba(184,150,62,0.24)", boxShadow: "0 14px 34px rgba(80,60,20,0.08)" }}>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">Für dich, wenn</p>
+              <ul className="mt-4 space-y-3">
+                {FUER_WEN.map((t) => (
+                  <li key={t} className="flex items-start gap-3 text-[0.95rem] leading-snug" style={{ color: "#2A2520" }}>
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--gold)" }} />{t}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            <motion.div {...rise(0.12)} className="rounded-2xl p-6" style={{ background: "#F3EFE7", border: "1px solid rgba(46,43,38,0.1)" }}>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "#8A8178" }}>Nicht für</p>
+              <ul className="mt-4 space-y-3">
+                {NICHT_FUER.map((t) => (
+                  <li key={t} className="flex items-start gap-3 text-[0.95rem] leading-snug" style={{ color: "#5C554C" }}>
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "#A89F93" }} />{t}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -841,7 +704,7 @@ function Analyse() {
               {/* Vertrauens-Anker: echte Person */}
               <motion.div {...rise(0.2)} className="mt-6 flex items-center gap-4 rounded-2xl p-4" style={{ border: "1px solid rgba(184,150,62,0.2)", background: "rgba(255,255,255,0.02)" }}>
                 <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-full" style={{ border: "1.5px solid rgba(212,174,90,0.6)" }}>
-                  <Image src="/webseiten/ilja-tbilisi.jpg" alt="Ilja Sabala" fill sizes="56px" className="object-cover object-top" />
+                  <Image src="/webseiten/adler-stills/frontal-kopf.webp" alt="Der Sabala-Adler" fill sizes="56px" className="object-cover" />
                 </span>
                 <p className="text-[0.92rem] leading-snug text-warm-light/70">
                   Du sprichst direkt mit mir, nicht mit einem Vertrieb. Analyse und Gespräch
@@ -856,55 +719,28 @@ function Analyse() {
   );
 }
 
-/* ── 8 · Prozess (Editorial-Timeline, 5 Schritte) ──────────────────────── */
+/* ── 8 · Prozess (drei Schritte, eine Reihe) ───────────────────────────── */
 function Prozess() {
   return (
-    <section id="prozess" className="relative scroll-mt-20 overflow-hidden px-6 py-[13vh]">
-      <div className="mx-auto max-w-5xl">
+    <section id="prozess" className="scroll-mt-20 px-6 py-[12vh]">
+      <div className="mx-auto max-w-6xl">
         <motion.div {...rise()} className="max-w-2xl">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// der weg</p>
-          <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", color: "#2A2520" }}>
-            Fünf Schritte, kein Agentur-Nebel.
+          <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2rem, 4.4vw, 3.4rem)", color: "#2A2520" }}>
+            Drei Schritte, kein Agentur-Nebel.
           </h2>
-          <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed" style={{ color: "#46403A" }}>
-            Die Analyse ist der Anfang des Gesprächs, kein Verkaufstrick danach. Du weißt an
-            jedem Punkt, wo dein Projekt steht.
-          </p>
         </motion.div>
-
-        <div className="relative mt-16">
-          {/* Verbindungslinie */}
-          <motion.span
-            aria-hidden
-            className="absolute bottom-6 left-[34px] top-2 hidden w-px origin-top md:block"
-            style={{ background: "linear-gradient(to bottom, var(--gold-light), rgba(184,150,62,0.12))" }}
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.4, ease: EASE }}
-          />
-          <div className="space-y-8 md:space-y-0">
-            {PROZESS.map((p, i) => (
-              <motion.div key={p.n} {...rise(i * 0.08)} className="group relative grid gap-4 md:grid-cols-[70px_1fr] md:gap-10 md:py-9" style={i > 0 ? { borderTop: "1px solid rgba(184,150,62,0.0)" } : undefined}>
-                <div className="relative hidden md:block">
-                  <span className="ws-ghost absolute -top-5 left-0 font-serif" style={{ fontSize: "5.2rem", lineHeight: 1, opacity: 0.7 }}>{p.n}</span>
-                  <span className="absolute left-[30px] top-2 z-10 block h-2.5 w-2.5 rounded-full transition-transform duration-300 group-hover:scale-150" style={{ background: "var(--gold)", boxShadow: "0 0 0 5px var(--cream)" }} />
-                </div>
-                <div className="rounded-2xl p-6 transition-all duration-300 group-hover:-translate-y-1 md:p-7" style={{ background: "#ffffff", border: "1px solid rgba(184,150,62,0.22)", boxShadow: "0 14px 34px rgba(80,60,20,0.08)" }}>
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1.5">
-                    <span className="font-mono text-[11px] tracking-[0.3em] text-gold md:hidden">{p.n}</span>
-                    <h3 className="font-serif text-[1.55rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
-                    {p.tag && (
-                      <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>
-                        {p.tag}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2.5 max-w-2xl text-[1rem] leading-relaxed" style={{ color: "#46403A" }}>{p.line}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {PROZESS.map((p, i) => (
+            <motion.div key={p.n} {...rise(i * 0.08)} className="rounded-2xl p-7" style={{ background: "#ffffff", border: "1px solid rgba(184,150,62,0.22)", boxShadow: "0 14px 34px rgba(80,60,20,0.08)" }}>
+              <div className="flex items-baseline gap-3">
+                <span className="font-serif text-[2.2rem] leading-none text-gold">{p.n}</span>
+                {p.tag && <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>{p.tag}</span>}
+              </div>
+              <h3 className="mt-3 font-serif text-[1.35rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
+              <p className="mt-2 text-[0.95rem] leading-relaxed" style={{ color: "#46403A" }}>{p.line}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -1069,6 +905,8 @@ function Faq() {
 function Finale() {
   return (
     <section id="finale" className="relative overflow-hidden px-6 py-[15vh]" style={{ background: "var(--tech-bg)" }}>
+      <Image src="/webseiten/adler-stills/frontal-banner-21zu9.webp" alt="" aria-hidden fill sizes="100vw" className="object-cover object-top opacity-35" />
+      <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.55), rgba(10,8,6,0.85) 60%, rgba(10,8,6,0.97))" }} />
       <div aria-hidden className="wd-aurora-a pointer-events-none absolute -left-1/4 top-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.14), transparent 65%)" }} />
       <div aria-hidden className="wd-aurora-b pointer-events-none absolute -right-1/4 bottom-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.10), transparent 65%)" }} />
 
