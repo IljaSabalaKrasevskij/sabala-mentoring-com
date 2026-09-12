@@ -83,10 +83,10 @@ const organizationSchema = {
   description: siteDescription,
   founder: { "@id": `${siteUrl}/#ilja` },
   sameAs: [
-    // TODO: tatsächliche Social-Profile-URLs einsetzen
-    // "https://www.linkedin.com/in/ilja-krasevskij/",
-    // "https://www.instagram.com/sabala.mentoring/",
-    // "https://www.youtube.com/@sabalamentoring",
+    "https://www.linkedin.com/in/iljakrasevskij/",
+    "https://www.instagram.com/sabala.mentoring/",
+    "https://www.youtube.com/@sabalamentoring",
+    "https://github.com/IljaSabalaKrasevskij",
   ],
 };
 
@@ -109,13 +109,19 @@ const personSchema = {
   url: `${siteUrl}/ueber-mich`,
   jobTitle: "Founder, Sabala Studios",
   worksFor: { "@id": `${siteUrl}/#organization` },
+  sameAs: [
+    "https://www.linkedin.com/in/iljakrasevskij/",
+    "https://github.com/IljaSabalaKrasevskij",
+  ],
   email: "mailto:ilja.krasevskij@gmail.com",
   knowsAbout: [
+    "High-End Webdesign und Webentwicklung",
+    "Premium-Webseiten mit eigenem Code",
+    "SEO und GEO für KI-Suchen",
+    "Next.js und Performance-Optimierung",
     "KI-Integration für Unternehmen",
     "Custom GPTs",
     "KI-Agenten und Agent OS",
-    "Premium-Webseiten mit eigenem Code",
-    "SEO und GEO für KI-Suchen",
     "KI-Akademie und Workshops",
     "Co-Development",
   ],

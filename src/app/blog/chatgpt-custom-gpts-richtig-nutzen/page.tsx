@@ -24,7 +24,7 @@ const articleSchemaJson = JSON.stringify({
   "headline": "99% aller Selbstständigen nutzen ChatGPT falsch · Wie Custom GPTs alles ändern",
   "description": "Fehlender Kontext, unstimmige Sprache, manipulative Antworten. Wie ein Custom-GPT-System mit 7 Rollen den Solopreneur-Alltag verändert.",
   "image": "https://sabala-mentoring.com/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
-  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Mentor für Personal Brands", "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" } },
+  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
   "publisher": { "@type": "Organization", "name": "Sabala Mentoring", "logo": { "@type": "ImageObject", "url": "https://sabala-mentoring.com/sabala-logo.svg" } },
   "datePublished": "2026-04-15",
   "dateModified": "2026-05-19",
@@ -36,8 +36,8 @@ const personSchemaJson = JSON.stringify({
   "name": "Ilja Krasevskij", "alternateName": "Sabala",
   "url": "https://sabala-mentoring.com/ueber-mich",
   "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"],
-  "jobTitle": "Mentor für Personal Brands",
-  "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" },
+  "jobTitle": "Founder, Sabala Studios",
+  "worksFor": { "@type": "Organization", "name": "Sabala Studios" },
   "knowsAbout": ["Custom GPTs", "ChatGPT", "Personal Brand", "KI-Team", "Premium-Webseiten"]
 });
 

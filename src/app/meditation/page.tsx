@@ -4,7 +4,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Führung von Innen | Sabala Mentoring",
+  title: "Führung von Innen",
   description: "Ein erdender Raum für Mystik, Tiefe und die Amartya Tradition.",
 };
 

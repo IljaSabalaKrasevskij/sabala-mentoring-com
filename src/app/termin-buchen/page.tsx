@@ -4,7 +4,7 @@ import { ArrowRight, Lock, Sparkles, UserCheck } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 
 export const metadata = {
-  title: "Termin buchen | Sabala Coaching",
+  title: "Termin buchen",
   description: "Wähle den passenden Raum für unsere Zusammenarbeit. Nur für Klienten und High-Ticket Mentoring Anfragen.",
 };
 
