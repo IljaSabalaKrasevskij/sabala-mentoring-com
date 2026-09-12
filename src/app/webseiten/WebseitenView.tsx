@@ -108,7 +108,6 @@ function Zahl({ wert }: { wert: string }) {
 
 /** Kleine Kapitaelchen-Zeile ueber jeder Ueberschrift. */
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  const { T } = useT();
   return <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{children}</p>;
 }
 
