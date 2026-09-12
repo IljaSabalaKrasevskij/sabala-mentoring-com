@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useSpring } from "motion/react";
-import { useState, type FormEvent } from "react";
+import { useState, type CSSProperties, type FormEvent } from "react";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
 import { caseSlot } from "@/components/webseiten/studio-journey";
@@ -30,6 +30,44 @@ import {
    ───────────────────────────────────────────────────────────────────────── */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* ── Londoner Material ──────────────────────────────────────────────────
+   Eine Quelle fuer die ganze Seite, damit Schaufenster und Sektionen
+   dieselbe Sprache sprechen: gebuerstetes Messing, lackiertes dunkles Holz,
+   Haarlinien statt Raender, kaum Rundungen. Ein Rahmen ist eckig. */
+
+const MESSING = "linear-gradient(147deg, #c8ab73 0%, #7d6235 22%, #f0dcae 48%, #8a6f3c 64%, #d8bd84 86%, #6f5730 100%)";
+
+/** Dunkles Paneel mit Messingkante. Ersetzt die weisslichen Kacheln. */
+const PANEEL_BG = "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))";
+/** Helles Gegenstueck: warmes Papier mit Messingkante statt weisser Kasten. */
+const PAPIER: CSSProperties = {
+  background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)",
+  border: "1px solid rgba(184,150,62,0.34)",
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 16px 38px rgba(72,54,20,0.07)",
+};
+
+/** Dasselbe Papier, hervorgehoben fuer die eine gewaehlte Karte. */
+const PAPIER_BETONT: CSSProperties = {
+  background: "linear-gradient(158deg, #FFFCF6 0%, #F4EDDD 100%)",
+  border: "1px solid rgba(184,150,62,0.34)",
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.95), 0 26px 60px rgba(110,82,24,0.16)",
+};
+
+/** Warmes Licht von oben, wie die Bildleuchte ueber dem Rahmen im Saal. */
+function Deckenlicht({ hoehe = "52vh" }: { hoehe?: string }) {
+  return <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 w-[92vw] max-w-5xl -translate-x-1/2" style={{ height: hoehe, background: "radial-gradient(ellipse at top, rgba(184,150,62,0.15), transparent 68%)" }} />;
+}
+
+/** Messing-Haarlinie als Trenner. */
+function Messinglinie({ breite = "6rem", className = "" }: { breite?: string; className?: string }) {
+  return <div aria-hidden className={`h-px ${className}`} style={{ width: breite, background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.7), transparent)" }} />;
+}
+
+/** Kleine Kapitaelchen-Zeile ueber jeder Ueberschrift. */
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{children}</p>;
+}
 
 const rise = (delay = 0) => ({
   initial: { opacity: 0, y: 22 },
@@ -337,21 +375,25 @@ const SCHATTEN = "0 2px 24px rgba(11,9,6,0.85), 0 1px 4px rgba(11,9,6,0.7)";
 
 function HeroText() {
   return (
-    <div className="flex min-h-[94vh] w-full flex-col justify-end pb-14 md:pb-20">
+    <div className="flex min-h-[94vh] w-full flex-col justify-center">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="mx-auto w-full max-w-6xl">
-        <div className="max-w-md" style={{ textShadow: SCHATTEN }}>
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">// high-end web development</p>
-          <h1 className="mt-3.5 font-serif text-cream" style={{ fontSize: "clamp(1.7rem, 2.9vw, 2.7rem)", lineHeight: 1.08, letterSpacing: "-0.01em" }}>
+        <div className="max-w-xl" style={{ textShadow: SCHATTEN }}>
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// high-end web development</p>
+          <h1 className="mt-5 font-serif text-cream" style={{ fontSize: "clamp(2.4rem, 5vw, 4.4rem)", lineHeight: 1.04, letterSpacing: "-0.015em" }}>
             Design, das verkauft.
             <br />
             <em className="not-italic" style={{ color: "var(--gold-light)" }}>Und im Kopf bleibt.</em>
           </h1>
-          <p className="mt-4 max-w-sm text-[0.92rem] leading-relaxed text-warm-light/80">
+          <p className="mt-6 max-w-md text-[1.05rem] leading-relaxed text-warm-light/85">
             High-End Webseiten für Premium-Dienstleister.
           </p>
-          <a href="#analyse" className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-gold-light px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold" style={{ textShadow: "none" }}>
-            Kostenlose Potenzial-Analyse <ArrowRight size={14} aria-hidden />
+          {/* Fuehrt ins Schaufenster, nicht in die Analyse: erst schauen, dann anfragen. */}
+          <a href="#schaufenster" className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-gold-light px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.14em] text-tech-bg transition-colors hover:bg-gold" style={{ textShadow: "none" }}>
+            Tritt näher <ArrowRight size={14} aria-hidden />
           </a>
+          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-warm-light/45">
+            Ein Blick ins Schaufenster, ganz ohne Anfrage
+          </p>
         </div>
       </motion.div>
     </div>
@@ -388,47 +430,40 @@ function Schaufenster() {
 /* ── 4 · Werthebel (ROI-Kette) ─────────────────────────────────────────── */
 function Werthebel() {
   return (
-    <section id="hebel" className="scroll-mt-20 px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
-      <div className="mx-auto max-w-6xl">
+    <section id="hebel" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
+      <Deckenlicht />
+      <div className="relative mx-auto max-w-6xl">
         <motion.div {...rise()} className="max-w-3xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// luxury-level roi · warum sich premium rechnet</p>
+          <Eyebrow>// luxury-level roi · warum sich premium rechnet</Eyebrow>
           <h2 className="mt-5 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.4rem, 5.6vw, 4.3rem)", letterSpacing: "-0.01em" }}>
             Hochwertigkeit ist kein Schmuck. Sie ist ein Werthebel.
           </h2>
+          <Messinglinie className="mt-8" />
         </motion.div>
 
-        <div className="mt-14 flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-0">
+        {/* Eine Reihe Paneele mit Messingfuge dazwischen, keine schwebenden Kacheln */}
+        <div className="mt-14 grid gap-px sm:grid-cols-2 lg:grid-cols-5" style={{ background: "rgba(184,150,62,0.22)", border: "1px solid rgba(184,150,62,0.22)" }}>
           {HEBEL.map((h, i) => (
-            <div key={h.term} className="flex flex-1 items-center gap-3 lg:gap-0">
-              <motion.div
-                {...rise(i * 0.1)}
-                whileHover={{ y: -6 }}
-                className="w-full rounded-2xl p-6"
-                style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.014))", border: "1px solid rgba(184,150,62,0.22)" }}
-              >
-                <h.icon size={22} className="text-gold-light" strokeWidth={1.8} aria-hidden />
-                <h3 className="mt-4 font-serif text-[1.25rem] leading-tight text-cream">{h.term}</h3>
-                <p className="mt-1.5 text-[0.88rem] leading-snug text-warm-light/60">{h.line}</p>
-              </motion.div>
-              {i < HEBEL.length - 1 && (
-                <motion.span {...rise(i * 0.1 + 0.05)} aria-hidden className="hidden shrink-0 px-2 font-serif text-[1.4rem] text-gold lg:block">
-                  <ArrowRight size={18} strokeWidth={2} />
-                </motion.span>
-              )}
-            </div>
+            <motion.div key={h.term} {...rise(i * 0.07)} className="group relative p-7" style={{ background: PANEEL_BG }}>
+              <span aria-hidden className="absolute left-0 top-0 h-px w-0 transition-all duration-700 group-hover:w-full" style={{ background: MESSING }} />
+              <span className="font-mono text-[10px] tracking-[0.2em] text-gold/55">0{i + 1}</span>
+              <h.icon size={21} className="mt-5 text-gold-light" strokeWidth={1.6} aria-hidden />
+              <h3 className="mt-5 font-serif text-[1.3rem] leading-tight text-cream">{h.term}</h3>
+              <p className="mt-2 text-[0.88rem] leading-snug text-warm-light/60">{h.line}</p>
+            </motion.div>
           ))}
         </div>
 
-        <motion.div
-          {...rise(0.25)}
-          className="relative mt-10 overflow-hidden rounded-[1.8rem] p-9 text-center md:p-12"
-          style={{ background: "linear-gradient(160deg, rgba(184,150,62,0.16), rgba(184,150,62,0.04))", border: "1px solid rgba(212,174,90,0.5)", boxShadow: "0 30px 80px rgba(184,150,62,0.15)" }}
-        >
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold-light">Das Ergebnis</p>
-          <p className="mx-auto mt-4 max-w-3xl font-serif leading-[1.15] text-cream" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
-            Wer so auftritt, kann höhere Preise verlangen. Und holt die Investition in die
-            eigene Seite schneller wieder rein.
-          </p>
+        {/* Die eine Aussage der Sektion, als gerahmte Messingtafel */}
+        <motion.div {...rise(0.25)} className="relative mt-12" style={{ padding: "clamp(6px, 0.7vw, 10px)", background: MESSING, boxShadow: "0 34px 90px rgba(0,0,0,0.6)" }}>
+          <div className="px-8 py-12 text-center md:px-14 md:py-16" style={{ background: "linear-gradient(158deg, rgba(30,24,16,0.97), rgba(12,10,7,0.99))", boxShadow: "inset 0 0 40px rgba(0,0,0,0.6)" }}>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold-light">Das Ergebnis</p>
+            <Messinglinie breite="3.5rem" className="mx-auto mt-6" />
+            <p className="mx-auto mt-7 max-w-3xl font-serif leading-[1.15] text-cream" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
+              Wer so auftritt, kann höhere Preise verlangen. Und holt die Investition in die
+              eigene Seite schneller wieder rein.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -460,7 +495,7 @@ function FuerWen() {
           whileInView={{ opacity: 1, y: 0, rotate: -1.2 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="relative overflow-hidden rounded-[1.6rem]"
+          className="relative overflow-hidden "
           style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 90px rgba(80,60,20,0.3)", background: "#0B0906" }}
         >
           <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt="Der Sabala-Adler am Schreibtisch, Blick nach vorn" width={800} height={1000} className="w-full object-cover" />
@@ -485,7 +520,7 @@ function FuerWen() {
           </motion.div>
 
           <div className="mt-9 grid gap-6 sm:grid-cols-[1.2fr_1fr]">
-            <motion.div {...rise(0.05)} className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid rgba(184,150,62,0.24)", boxShadow: "0 14px 34px rgba(80,60,20,0.08)" }}>
+            <motion.div {...rise(0.05)} className="p-6" style={PAPIER}>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">Für dich, wenn</p>
               <ul className="mt-4 space-y-3">
                 {FUER_WEN.map((t) => (
@@ -495,7 +530,7 @@ function FuerWen() {
                 ))}
               </ul>
             </motion.div>
-            <motion.div {...rise(0.12)} className="rounded-2xl p-6" style={{ background: "#F3EFE7", border: "1px solid rgba(46,43,38,0.1)" }}>
+            <motion.div {...rise(0.12)} className="p-6" style={{ background: "#F3EFE7", border: "1px solid rgba(46,43,38,0.1)" }}>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "#8A8178" }}>Nicht für</p>
               <ul className="mt-4 space-y-3">
                 {NICHT_FUER.map((t) => (
@@ -675,7 +710,7 @@ function Analyse() {
         {/* Dunkle Buehne mit Gold-Rahmen: der eine Conversion-Moment der Seite */}
         <motion.div
           {...rise()}
-          className="relative overflow-hidden rounded-[2.2rem] px-7 py-12 md:px-14 md:py-16"
+          className="relative overflow-hidden px-7 py-12 md:px-14 md:py-16"
           style={{ background: "var(--tech-bg)", border: "1px solid rgba(212,174,90,0.5)", boxShadow: "0 50px 130px rgba(80,60,20,0.35)" }}
         >
           <div aria-hidden className="pointer-events-none absolute -top-16 left-1/2 h-[120%] w-[70%] -translate-x-1/2" style={{ background: "conic-gradient(from 180deg at 50% 0%, transparent 42%, rgba(212,174,90,0.13) 50%, transparent 58%)" }} />
@@ -695,8 +730,8 @@ function Analyse() {
 
               <div className="mt-9 space-y-4">
                 {ANGEBOT_STACK.map((a, i) => (
-                  <motion.div key={a.term} {...rise(0.05 + i * 0.07)} className="flex items-start gap-4 rounded-2xl p-5" style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015))", border: "1px solid rgba(184,150,62,0.25)" }}>
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ background: "rgba(184,150,62,0.14)", border: "1px solid rgba(184,150,62,0.4)" }}>
+                  <motion.div key={a.term} {...rise(0.05 + i * 0.07)} className="flex items-start gap-4 p-5" style={{ background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))", border: "1px solid rgba(184,150,62,0.25)" }}>
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center" style={{ background: "rgba(184,150,62,0.14)", border: "1px solid rgba(184,150,62,0.4)" }}>
                       <a.icon size={19} strokeWidth={1.9} className="text-gold-light" aria-hidden />
                     </span>
                     <div>
@@ -715,7 +750,7 @@ function Analyse() {
 
             {/* Formular */}
             <div className="lg:pt-2">
-              <motion.div {...rise(0.12)} className="rounded-[1.8rem] p-7 md:p-9" style={{ background: "rgba(250,248,245,0.035)", border: "1px solid rgba(184,150,62,0.35)" }}>
+              <motion.div {...rise(0.12)} className="p-7 md:p-9" style={{ background: "rgba(250,248,245,0.035)", border: "1px solid rgba(184,150,62,0.35)" }}>
                 {state === "success" ? (
                   <div className="py-8 text-center">
                     <p className="font-serif text-[1.8rem] text-cream">Angekommen. Danke dir.</p>
@@ -730,11 +765,11 @@ function Analyse() {
                     <div className="mt-6 space-y-4">
                       <label className="block">
                         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-warm-light/60">Deine Webseite</span>
-                        <input type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="deine-seite.de" className="mt-2 w-full rounded-xl px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
+                        <input type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="deine-seite.de" className="mt-2 w-full px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
                       </label>
                       <label className="block">
                         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-warm-light/60">Deine E-Mail</span>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="du@firma.de" className="mt-2 w-full rounded-xl px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="du@firma.de" className="mt-2 w-full px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
                       </label>
                     </div>
 
@@ -758,7 +793,7 @@ function Analyse() {
               </motion.div>
 
               {/* Vertrauens-Anker: echte Person */}
-              <motion.div {...rise(0.2)} className="mt-6 flex items-center gap-4 rounded-2xl p-4" style={{ border: "1px solid rgba(184,150,62,0.2)", background: "rgba(255,255,255,0.02)" }}>
+              <motion.div {...rise(0.2)} className="mt-6 flex items-center gap-4 p-4" style={{ border: "1px solid rgba(184,150,62,0.2)", background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))" }}>
                 <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-full" style={{ border: "1.5px solid rgba(212,174,90,0.6)" }}>
                   <Image src="/webseiten/adler-stills/frontal-kopf.webp" alt="Der Sabala-Adler" fill sizes="56px" className="object-cover" />
                 </span>
@@ -788,7 +823,7 @@ function Prozess() {
         </motion.div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {PROZESS.map((p, i) => (
-            <motion.div key={p.n} {...rise(i * 0.08)} className="rounded-2xl p-7" style={{ background: "#ffffff", border: "1px solid rgba(184,150,62,0.22)", boxShadow: "0 14px 34px rgba(80,60,20,0.08)" }}>
+            <motion.div key={p.n} {...rise(i * 0.08)} className="p-7" style={PAPIER}>
               <div className="flex items-baseline gap-3">
                 <span className="font-serif text-[2.2rem] leading-none text-gold">{p.n}</span>
                 {p.tag && <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>{p.tag}</span>}
@@ -817,7 +852,7 @@ function Fundament() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FUNDAMENT.map((f, i) => (
-            <motion.div key={f.term} {...rise(i * 0.08)} className="rounded-2xl p-7" style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012))", border: "1px solid rgba(184,150,62,0.18)" }}>
+            <motion.div key={f.term} {...rise(i * 0.08)} className="p-7" style={{ background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))", border: "1px solid rgba(184,150,62,0.18)" }}>
               <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(2.2rem, 4vw, 3rem)" }}>{f.stat}</p>
               <h3 className="mt-3 font-mono text-[12px] uppercase tracking-[0.2em] text-cream/90">{f.term}</h3>
               <p className="mt-3 text-[0.94rem] leading-relaxed text-warm-light/70">{f.line}</p>
@@ -855,11 +890,11 @@ function Pflege() {
             <motion.div
               key={p.term}
               {...rise(i * 0.1)}
-              className={`relative flex flex-col rounded-2xl p-8 ${p.highlight ? "md:-translate-y-3" : ""}`}
+              className={`relative flex flex-col p-8 ${p.highlight ? "md:-translate-y-3" : ""}`}
               style={
                 p.highlight
-                  ? { background: "#ffffff", border: "2px solid rgba(184,150,62,0.5)", boxShadow: "0 30px 70px rgba(184,150,62,0.22)" }
-                  : { background: "#ffffff", border: "1px solid rgba(184,150,62,0.22)", boxShadow: "0 14px 34px rgba(80,60,20,0.10)" }
+                  ? PAPIER_BETONT
+                  : PAPIER
               }
             >
               {p.highlight && (
@@ -892,7 +927,7 @@ function Pflege() {
         </motion.p>
 
         {/* Cockpit: Iljas Werkzeug, dein Ueberblick */}
-        <motion.div {...rise(0.15)} className="mt-14 overflow-hidden rounded-[2rem]" style={{ background: "var(--tech-bg)", border: "1px solid rgba(91,214,208,0.3)", boxShadow: "0 40px 100px rgba(0,0,0,0.35)" }}>
+        <motion.div {...rise(0.15)} className="mt-14 overflow-hidden " style={{ background: "var(--tech-bg)", border: "1px solid rgba(91,214,208,0.3)", boxShadow: "0 40px 100px rgba(0,0,0,0.35)" }}>
           <div className="grid items-center gap-8 p-8 md:grid-cols-[0.95fr_1.05fr] md:p-12">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.3em]" style={{ color: "#5BD6D0" }}>// mein cockpit · dein überblick</p>
@@ -906,8 +941,8 @@ function Pflege() {
                 das meint Partner an deiner Seite.
               </p>
             </div>
-            <motion.div whileHover={{ rotateX: 3, rotateY: -4, scale: 1.015 }} transition={{ type: "spring", stiffness: 110, damping: 18 }} style={{ perspective: 1100, transformStyle: "preserve-3d" }} className="relative overflow-hidden rounded-xl" >
-              <Image src="/case-studies/webseiten-analytics.jpg" alt="Sabala Cockpit: SEO, GEO und Besucher aller betreuten Seiten in einer Sicht" width={1600} height={900} className="w-full rounded-xl" style={{ border: "1px solid rgba(91,214,208,0.3)" }} />
+            <motion.div whileHover={{ rotateX: 3, rotateY: -4, scale: 1.015 }} transition={{ type: "spring", stiffness: 110, damping: 18 }} style={{ perspective: 1100, transformStyle: "preserve-3d" }} className="relative overflow-hidden" >
+              <Image src="/case-studies/webseiten-analytics.jpg" alt="Sabala Cockpit: SEO, GEO und Besucher aller betreuten Seiten in einer Sicht" width={1600} height={900} className="w-full" style={{ border: "1px solid rgba(91,214,208,0.3)" }} />
               <span className="absolute right-4 top-4 rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ background: "rgba(10,8,6,0.85)", color: "#5BD6D0", border: "1px solid rgba(91,214,208,0.35)" }}>
                 Täglich im Einsatz
               </span>
@@ -936,7 +971,7 @@ function Faq() {
           {FAQ.map((f, i) => {
             const isOpen = open === i;
             return (
-              <motion.div key={f.q} {...rise(i * 0.04)} className="overflow-hidden rounded-2xl" style={{ background: "#ffffff", border: `1px solid rgba(184,150,62,${isOpen ? "0.45" : "0.2"})`, boxShadow: "0 10px 26px rgba(80,60,20,0.07)" }}>
+              <motion.div key={f.q} {...rise(i * 0.04)} className="overflow-hidden" style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: `1px solid rgba(184,150,62,${isOpen ? "0.45" : "0.2"})`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 32px rgba(72,54,20,0.06)" }}>
                 <button type="button" onClick={() => setOpen(isOpen ? null : i)} className="flex w-full items-center justify-between gap-6 px-7 py-5 text-left" aria-expanded={isOpen}>
                   <span className="font-serif text-[1.15rem]" style={{ color: "#2A2520" }}>{f.q}</span>
                   <span className="shrink-0 font-serif text-[1.4rem] leading-none transition-transform duration-300" style={{ color: "var(--gold)", transform: isOpen ? "rotate(45deg)" : "none" }} aria-hidden>
