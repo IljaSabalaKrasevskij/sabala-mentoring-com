@@ -80,9 +80,10 @@ export function SonarGrid({
   const refreshRef = React.useRef<() => void>(() => {});
 
   // Die Zeichenschleife liest die Werte ueber diese Referenz, damit Aenderungen
-  // sofort wirken, ohne dass die Schleife neu startet.
+  // sofort wirken, ohne dass die Schleife neu startet. Geschrieben wird NACH dem
+  // Rendern, nicht waehrend: eine Referenz im Renderdurchlauf zu beschreiben
+  // bricht Reacts Regeln und kann im Strict Mode doppelt laufen.
   const opts = React.useRef({ spacing, dotRadius, baseOpacity, pingEvery, speed, ringWidth, amplitude, interactive, maxRings, seedPing, pingArea });
-  opts.current = { spacing, dotRadius, baseOpacity, pingEvery, speed, ringWidth, amplitude, interactive, maxRings, seedPing, pingArea };
 
   const setHost = React.useCallback(
     (node: HTMLDivElement | null) => {
@@ -275,10 +276,12 @@ export function SonarGrid({
     };
   }, []);
 
-  // Aenderungen an den Werten zeichnen sofort neu, auch wenn die Schleife schlaeft.
+  // Aenderungen an den Werten uebernehmen und sofort neu zeichnen, auch wenn
+  // die Schleife gerade schlaeft.
   React.useEffect(() => {
+    opts.current = { spacing, dotRadius, baseOpacity, pingEvery, speed, ringWidth, amplitude, interactive, maxRings, seedPing, pingArea };
     refreshRef.current();
-  }, [spacing, dotRadius, baseOpacity, color, pingEvery, speed, ringWidth, amplitude, interactive, maxRings, pingArea]);
+  });
 
   return (
     <div ref={setHost} data-slot="sonar-grid" className={cn("relative isolate overflow-hidden", className)} {...rest}>

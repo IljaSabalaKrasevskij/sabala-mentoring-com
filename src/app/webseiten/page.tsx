@@ -53,13 +53,6 @@ const PAPIER: CSSProperties = {
   boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 16px 38px rgba(72,54,20,0.07)",
 };
 
-/** Dasselbe Papier, hervorgehoben fuer die eine gewaehlte Karte. */
-const PAPIER_BETONT: CSSProperties = {
-  background: "linear-gradient(158deg, #FFFCF6 0%, #F4EDDD 100%)",
-  border: "1px solid rgba(184,150,62,0.34)",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.95), 0 26px 60px rgba(110,82,24,0.16)",
-};
-
 /** Foto-Kulisse hinter einer Sektion. Dunkel gehalten und mit Schleier, damit
     heller Text darauf lesbar bleibt (Bilder aus KIE, 12.9.2026). */
 function Kulisse({ bild, position = "center", staerke = 0.44 }: { bild: string; position?: string; staerke?: number }) {
@@ -1091,37 +1084,94 @@ function Pflege() {
 }
 
 /* ── 11 · FAQ ──────────────────────────────────────────────────────────── */
+/** Ueberschrift wortweise: die erste Haelfte tritt zurueck, die zweite traegt.
+    Idee aus dem Hirael-FAQ, hier ohne dessen Abhaengigkeiten nachgebaut. */
+function GeteilteUeberschrift({ text, className, style }: { text: string; className?: string; style?: CSSProperties }) {
+  const woerter = text.split(" ");
+  const haelfte = Math.floor(woerter.length / 2);
+  return (
+    <h2 className={className} style={style}>
+      {woerter.map((w, i) => (
+        <motion.span
+          key={`${w}-${i}`}
+          className="me-[0.25em] inline-block"
+          style={{ color: i < haelfte ? "#9A8F7E" : "#2A2520" }}
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5, delay: i * 0.07, ease: EASE }}
+        >
+          {w}
+        </motion.span>
+      ))}
+    </h2>
+  );
+}
+
 function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="scroll-mt-20 px-6 py-[13vh]" style={{ background: "#F3EFE7" }}>
-      <div className="mx-auto max-w-3xl">
-        <motion.div {...rise()} className="text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// fragen</p>
-          <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)", color: "#2A2520" }}>
-            Ehrliche Antworten, bevor du fragst.
-          </h2>
-        </motion.div>
+    <section id="faq" className="scroll-mt-20 px-6 py-[14vh]" style={{ background: "#F3EFE7" }}>
+      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.78fr_1fr] lg:items-start lg:gap-16">
+        {/* Der Adler am Tresen: das Bild beantwortet die Frage, wer hier antwortet. */}
+        <motion.figure
+          {...rise()}
+          className="relative hidden overflow-hidden lg:block"
+          style={{ padding: "clamp(5px, 0.55vw, 8px)", background: MESSING, boxShadow: "0 30px 76px rgba(80,60,20,0.26)" }}
+        >
+          <div className="relative aspect-[3/4]" style={{ background: "#0B0906" }}>
+            <Image src="/webseiten/sektionen/faq-tresen.webp" alt="Der Sabala-Adler am Empfangstresen, zugewandt" fill sizes="(min-width: 1024px) 38vw, 92vw" className="object-cover" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.94), transparent)" }}>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-light">Frag einfach</p>
+              <p className="mt-2 font-serif text-[1.05rem] italic leading-snug text-cream">
+                Was hier nicht steht, beantworte ich dir im Gespräch.
+              </p>
+            </figcaption>
+          </div>
+        </motion.figure>
 
-        <div className="mt-12 space-y-3">
-          {FAQ.map((f, i) => {
-            const isOpen = open === i;
-            return (
-              <motion.div key={f.q} {...rise(i * 0.04)} className="overflow-hidden" style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: `1px solid rgba(184,150,62,${isOpen ? "0.45" : "0.2"})`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 32px rgba(72,54,20,0.06)" }}>
-                <button type="button" onClick={() => setOpen(isOpen ? null : i)} className="flex w-full items-center justify-between gap-6 px-7 py-5 text-left" aria-expanded={isOpen}>
-                  <span className="font-serif text-[1.15rem]" style={{ color: "#2A2520" }}>{f.q}</span>
-                  <span className="shrink-0 font-serif text-[1.4rem] leading-none transition-transform duration-300" style={{ color: "var(--gold)", transform: isOpen ? "rotate(45deg)" : "none" }} aria-hidden>
-                    +
-                  </span>
-                </button>
-                <div className="grid transition-[grid-template-rows] duration-300 ease-out" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
-                  <div className="overflow-hidden">
-                    <p className="px-7 pb-6 text-[0.97rem] leading-relaxed" style={{ color: "#46403A" }}>{f.a}</p>
+        <div>
+          <motion.div {...rise()}>
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ border: "1px solid rgba(184,150,62,0.45)", color: "#8A6D2A" }}>
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--gold)" }} />
+              FAQ
+            </span>
+          </motion.div>
+          <GeteilteUeberschrift
+            text="Ehrliche Antworten, bevor du fragst."
+            className="mt-6 font-serif leading-[1.08]"
+            style={{ fontSize: "clamp(2rem, 4.4vw, 3.3rem)" }}
+          />
+          <Messinglinie className="mt-7" />
+
+          <div className="mt-10 space-y-3">
+            {FAQ.map((f, i) => {
+              const isOpen = open === i;
+              return (
+                <motion.div
+                  key={f.q}
+                  className="overflow-hidden"
+                  style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: `1px solid rgba(184,150,62,${isOpen ? "0.45" : "0.2"})`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 32px rgba(72,54,20,0.06)" }}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-70px" }}
+                  transition={{ duration: 0.45, delay: i * 0.09, ease: EASE }}
+                >
+                  <button type="button" onClick={() => setOpen(isOpen ? null : i)} className="flex w-full items-center justify-between gap-6 px-7 py-5 text-left" aria-expanded={isOpen}>
+                    <span className="font-serif text-[1.15rem]" style={{ color: "#2A2520" }}>{f.q}</span>
+                    <span aria-hidden className="shrink-0 font-serif text-[1.4rem] leading-none transition-transform duration-300" style={{ color: "var(--gold)", transform: isOpen ? "rotate(45deg)" : "none" }}>
+                      +
+                    </span>
+                  </button>
+                  <div className="grid transition-[grid-template-rows] duration-300 ease-out" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
+                    <div className="overflow-hidden">
+                      <p className="px-7 pb-6 text-[0.97rem] leading-relaxed" style={{ color: "#46403A" }}>{f.a}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
