@@ -17,7 +17,12 @@ export function CountUp({ to, decimals = 0, suffix = "", className = "" }: Props
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, { stiffness: 60, damping: 22 });
   const rounded = useTransform(spring, (v) => v.toFixed(decimals).replace(".", ","));
-  const [display, setDisplay] = useState(decimals === 0 ? "0" : "0,0");
+  // Endwert im Server-HTML fuer Crawler ohne JavaScript, im Browser nach dem Laden auf 0.
+  const [display, setDisplay] = useState(to.toFixed(decimals).replace(".", ","));
+  // Gewollt: Server und Browser rendern hier absichtlich verschieden. Die Spring startet immer bei 0,
+  // ein Reset nur ohne Reduce Motion wuerde dort vom Endwert auf 0 flackern.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setDisplay(decimals === 0 ? "0" : "0,0"); }, [decimals]);
 
   useEffect(() => {
     if (isInView) motionValue.set(to);

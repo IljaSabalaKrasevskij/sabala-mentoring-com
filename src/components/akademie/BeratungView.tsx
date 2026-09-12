@@ -211,7 +211,13 @@ function ParallaxBild({
 /* Zahl, die beim Sichtbarwerden hochzaehlt. Fuer den Gutschein-Betrag. */
 function ZaehlZahl({ ziel, dauer = 1100 }: { ziel: number; dauer?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [wert, setWert] = useState(0);
+  // Endwert im Server-HTML fuer Crawler ohne JavaScript, im Browser nach dem Laden auf 0.
+  // Gewollt: Server und Browser rendern hier absichtlich verschieden.
+  const [wert, setWert] = useState(ziel);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setWert(0);
+  }, []);
   const [gelaufen, setGelaufen] = useState(false);
   const reduziert = useReduzierteBewegung();
 
