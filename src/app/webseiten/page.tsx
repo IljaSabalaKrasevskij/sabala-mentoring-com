@@ -896,24 +896,24 @@ function Prozess() {
         {/* Fahrplan. Auf dem Handy laeuft die Schiene senkrecht neben den
             Stationen, ab md waagerecht darueber. Beide zeichnen sich beim
             Hereinscrollen von vorn nach hinten. */}
-        <div className="relative mt-16 md:mt-20">
+        {/* Der Auslöser sitzt am Container, nicht an den Linien. Eine Linie, die
+            bei scaleY 0 startet, hat null Fläche, und whileInView haengt an einem
+            IntersectionObserver auf dem Element selbst: was keine Flaeche hat,
+            kommt nie ins Bild und bliebe fuer immer auf null. */}
+        <motion.div className="relative mt-16 md:mt-20" initial="ruhe" whileInView="da" viewport={{ once: true, margin: "-60px" }}>
           {/* waagerecht, ab md */}
           <motion.div
             aria-hidden
             className="absolute left-0 right-0 hidden origin-left md:block"
             style={{ top: 27, height: 2, background: MESSING, boxShadow: "0 1px 3px rgba(110,82,24,0.35)" }}
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-90px" }}
+            variants={{ ruhe: { scaleX: 0 }, da: { scaleX: 1 } }}
             transition={{ duration: 1.5, ease: EASE }}
           />
           <motion.span
             aria-hidden
             className="absolute right-0 hidden md:block"
             style={{ top: 20, color: "var(--gold)" }}
-            initial={{ opacity: 0, x: -14 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-90px" }}
+            variants={{ ruhe: { opacity: 0, x: -14 }, da: { opacity: 1, x: 0 } }}
             transition={{ duration: 0.5, delay: 1.35, ease: EASE }}
           >
             <ArrowRight size={17} strokeWidth={2} />
@@ -924,9 +924,7 @@ function Prozess() {
             aria-hidden
             className="absolute bottom-10 top-7 origin-top md:hidden"
             style={{ left: 27, width: 2, background: MESSING, boxShadow: "0 0 3px rgba(110,82,24,0.35)" }}
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
+            variants={{ ruhe: { scaleY: 0 }, da: { scaleY: 1 } }}
             transition={{ duration: 1.6, ease: EASE }}
           />
 
@@ -962,7 +960,7 @@ function Prozess() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
