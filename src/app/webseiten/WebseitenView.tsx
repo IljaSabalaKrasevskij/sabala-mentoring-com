@@ -87,7 +87,12 @@ function Zahl({ wert }: { wert: string }) {
   const sichtbar = useInView(anker, { once: true, margin: "-80px" });
   const teile = wert.match(/^(\D*)(\d+)(.*)$/);
   const ziel = teile ? Number(teile[2]) : 0;
-  const [stand, setStand] = useState(0);
+  // Endwert im Server-HTML: KI-Crawler fuehren kein JavaScript aus und lasen hier bis 12.9.2026
+  // "0 % dein Eigentum". Im Browser geht es nach dem Laden auf 0, das Hochzaehlen bleibt wie vorher.
+  const [stand, setStand] = useState(ziel);
+  useEffect(() => {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setStand(0);
+  }, []);
 
   useEffect(() => {
     if (!sichtbar || ziel === 0) return;
