@@ -25,7 +25,7 @@ const articleSchemaJson = JSON.stringify({
   "headline": "Warum viele Business-Mentoring-Programme kläglich scheitern (und wie du Mentoren richtig wählst)",
   "description": "Der Markt ist geflutet von lauten Versprechen und Schablonen. Wenn du relational und feinsinnig arbeitest, greifen diese Massen-Systeme zu kurz.",
   "image": "https://sabala-mentoring.com/blog/warum-business-mentoring-programme-scheitern/cover.jpg",
-  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Mentor für Personal Brands", "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" } },
+  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
   "publisher": { "@type": "Organization", "name": "Sabala Mentoring", "logo": { "@type": "ImageObject", "url": "https://sabala-mentoring.com/sabala-logo.svg" } },
   "datePublished": "2025-01-15",
   "dateModified": "2026-05-19",
@@ -37,8 +37,8 @@ const personSchemaJson = JSON.stringify({
   "name": "Ilja Krasevskij", "alternateName": "Sabala",
   "url": "https://sabala-mentoring.com/ueber-mich",
   "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"],
-  "jobTitle": "Mentor für Personal Brands",
-  "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" },
+  "jobTitle": "Founder, Sabala Studios",
+  "worksFor": { "@type": "Organization", "name": "Sabala Studios" },
   "knowsAbout": ["Business Mentoring", "Personal Brand", "Premium-Webseiten", "Begleiter-Haltung", "Substanz statt Show"]
 });
 

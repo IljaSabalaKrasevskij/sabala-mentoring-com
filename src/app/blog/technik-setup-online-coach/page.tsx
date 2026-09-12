@@ -25,7 +25,7 @@ const articleSchemaJson = JSON.stringify({
   "headline": "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt",
   "description": "Mobiles Premium-Studio für ortsunabhängige Coaches. Hardware, Software, Mindset.",
   "image": "https://sabala-mentoring.com/blog/technik-setup-online-coach/cover.jpg",
-  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Mentor für Personal Brands", "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" } },
+  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
   "publisher": { "@type": "Organization", "name": "Sabala Mentoring", "logo": { "@type": "ImageObject", "url": "https://sabala-mentoring.com/sabala-logo.svg" } },
   "datePublished": "2026-01-15",
   "dateModified": "2026-05-19",
@@ -37,8 +37,8 @@ const personSchemaJson = JSON.stringify({
   "name": "Ilja Krasevskij", "alternateName": "Sabala",
   "url": "https://sabala-mentoring.com/ueber-mich",
   "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"],
-  "jobTitle": "Mentor für Personal Brands",
-  "worksFor": { "@type": "Organization", "name": "Sabala Mentoring" },
+  "jobTitle": "Founder, Sabala Studios",
+  "worksFor": { "@type": "Organization", "name": "Sabala Studios" },
   "knowsAbout": ["Online Coaching Setup", "Premium-Auftritt", "Ortsunabhängiges Arbeiten", "Personal Brand", "E-E-A-T"]
 });
 
