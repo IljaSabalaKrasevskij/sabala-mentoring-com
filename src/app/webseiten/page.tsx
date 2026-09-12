@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
 import { caseSlot } from "@/components/webseiten/studio-journey";
+import { SonarGrid } from "@/components/ui/SonarGrid";
 import {
   Search, ShieldCheck, Crosshair, Scan, Gem,
   FileSearch, Radar, MessagesSquare, ListChecks, ArrowRight, ArrowDown,
@@ -986,8 +987,25 @@ function Fundament() {
 /* ── 10 · Pflege (drei Stufen, MIT Preisen) + Cockpit ──────────────────── */
 function Pflege() {
   return (
-    <section id="pflege" className="scroll-mt-20 px-6 py-[13vh]">
-      <div className="mx-auto max-w-6xl">
+    <section id="pflege" className="relative scroll-mt-20 overflow-hidden px-6 py-[13vh]">
+      {/* Radar hinter der Wartungssektion: das Punktfeld antwortet auf jeden
+          Klick mit einem Ring. Passt zur Sache, Pflege heisst hinschauen.
+          Zurueckhaltend gehalten, damit die Karten vorne bleiben. */}
+      <SonarGrid
+        aria-hidden
+        className="pointer-events-auto absolute inset-0"
+        color="var(--gold)"
+        spacing={30}
+        dotRadius={1.3}
+        baseOpacity={0.14}
+        pingEvery={3.6}
+        speed={210}
+        ringWidth={120}
+        amplitude={2.6}
+        maxRings={4}
+        pingArea={[0.1, 0.15, 0.9, 0.85]}
+      />
+      <div className="relative mx-auto max-w-6xl">
         <motion.div {...rise()} className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// nach dem launch</p>
           <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", color: "#2A2520" }}>
