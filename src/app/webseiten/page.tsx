@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "motion/react";
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { motion, useInView, useScroll, useSpring } from "motion/react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
 import { caseSlot } from "@/components/webseiten/studio-journey";
@@ -80,6 +80,32 @@ function Messinglinie({ breite = "6rem", className = "" }: { breite?: string; cl
   return <div aria-hidden className={`h-px ${className}`} style={{ width: breite, background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.7), transparent)" }} />;
 }
 
+/** Zaehlt beim ersten Sichtbarwerden hoch. Vorsatz und Einheit bleiben stehen,
+    aus "< 2 s" wird also "< 0 s" bis "< 2 s". Bei Reduce Motion steht die Zahl sofort. */
+function Zahl({ wert }: { wert: string }) {
+  const anker = useRef<HTMLSpanElement>(null);
+  const sichtbar = useInView(anker, { once: true, margin: "-80px" });
+  const teile = wert.match(/^(\D*)(\d+)(.*)$/);
+  const ziel = teile ? Number(teile[2]) : 0;
+  const [stand, setStand] = useState(0);
+
+  useEffect(() => {
+    if (!sichtbar || ziel === 0) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setStand(ziel); return; }
+    const dauer = 950, start = performance.now();
+    let id = requestAnimationFrame(function tick(t: number) {
+      const p = Math.min(1, (t - start) / dauer);
+      setStand(Math.round(ziel * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) id = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [sichtbar, ziel]);
+
+  if (!teile) return <span ref={anker}>{wert}</span>;
+  // tabular-nums verhindert, dass die Zeile beim Zaehlen springt
+  return <span ref={anker} style={{ fontVariantNumeric: "tabular-nums" }}>{teile[1]}{stand}{teile[3]}</span>;
+}
+
 /** Kleine Kapitaelchen-Zeile ueber jeder Ueberschrift. */
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{children}</p>;
@@ -150,9 +176,9 @@ const ARBEIT = [
 ];
 
 const PROZESS = [
-  { n: "01", term: "Analyse & Gespräch", tag: "kostenlos", line: "Website-Check, Wettbewerbsanalyse, 30 Minuten Gespräch. Danach weißt du, wo du stehst." },
-  { n: "02", term: "Angebot, Konzept, Build", tag: null, line: "Klarer Rahmen mit Preis, dann Zielgruppe, Story, Design und eigener Code. Du siehst Zwischenstände." },
-  { n: "03", term: "Launch & Pflege", tag: null, line: "Sauber live, sauber übergeben, und danach als Partner betreut. Technik ist ab hier mein Thema." },
+  { n: "01", icon: FileSearch, term: "Analyse & Gespräch", tag: "kostenlos", line: "Website-Check, Wettbewerbsanalyse, 30 Minuten Gespräch. Danach weißt du, wo du stehst." },
+  { n: "02", icon: Scan, term: "Angebot, Konzept, Build", tag: null, line: "Klarer Rahmen mit Preis, dann Zielgruppe, Story, Design und eigener Code. Du siehst Zwischenstände." },
+  { n: "03", icon: ShieldCheck, term: "Launch & Pflege", tag: null, line: "Sauber live, sauber übergeben, und danach als Partner betreut. Technik ist ab hier mein Thema." },
 ];
 
 const FUNDAMENT = [
@@ -392,8 +418,8 @@ const SCHATTEN = "0 2px 24px rgba(11,9,6,0.85), 0 1px 4px rgba(11,9,6,0.7)";
 function HeroText() {
   return (
     <div className="flex min-h-[94vh] w-full flex-col justify-center">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="mx-auto w-full max-w-6xl">
-        <div className="max-w-xl" style={{ textShadow: SCHATTEN }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="mx-auto w-full max-w-7xl">
+        <div className="max-w-lg" style={{ textShadow: SCHATTEN }}>
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// high-end web development</p>
           <h1 className="mt-5 font-serif text-cream" style={{ fontSize: "clamp(2.4rem, 5vw, 4.4rem)", lineHeight: 1.04, letterSpacing: "-0.015em" }}>
             Design, das verkauft.
@@ -407,9 +433,6 @@ function HeroText() {
           <a href="#schaufenster" className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-gold-light px-7 py-3.5 font-mono text-[12px] uppercase tracking-[0.14em] text-tech-bg transition-colors hover:bg-gold" style={{ textShadow: "none" }}>
             Tritt näher <ArrowRight size={14} aria-hidden />
           </a>
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-warm-light/45">
-            Ein Blick ins Schaufenster, ganz ohne Anfrage
-          </p>
         </div>
       </motion.div>
     </div>
@@ -512,10 +535,10 @@ function FuerWen() {
           whileInView={{ opacity: 1, y: 0, rotate: -1.2 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="relative overflow-hidden "
+          className="relative h-full min-h-[30rem] overflow-hidden"
           style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 90px rgba(80,60,20,0.3)", background: "#0B0906" }}
         >
-          <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt="Der Sabala-Adler am Schreibtisch, Blick nach vorn" width={800} height={1000} className="w-full object-cover" />
+          <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt="Der Sabala-Adler am Schreibtisch, Blick nach vorn" fill sizes="(min-width: 1024px) 42vw, 92vw" className="object-cover object-top" />
           <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.92), transparent)" }}>
             <p className="font-serif text-[1.15rem] italic leading-snug text-cream">
               »Eine gute Webseite ist ein aufgeräumtes Schaufenster mit einem klaren Angebot, das die richtigen Menschen bewegt, einzutreten.«
@@ -536,28 +559,28 @@ function FuerWen() {
             </p>
           </motion.div>
 
-          <div className="mt-9 grid gap-6 sm:grid-cols-[1.2fr_1fr]">
-            <motion.div {...rise(0.05)} className="p-6" style={PAPIER}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">Für dich, wenn</p>
-              <ul className="mt-4 space-y-3">
-                {FUER_WEN.map((t) => (
-                  <li key={t} className="flex items-start gap-3 text-[0.95rem] leading-snug" style={{ color: "#2A2520" }}>
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--gold)" }} />{t}
+          {/* Eine Tafel statt zweier konkurrierender Kacheln. Die Absage steht
+              als ruhige Zeile darunter, nicht als gleichwertiger Kasten. */}
+          <motion.div {...rise(0.08)} className="relative mt-12" style={{ padding: "clamp(5px, 0.6vw, 9px)", background: MESSING, boxShadow: "0 30px 76px rgba(80,60,20,0.28)" }}>
+            <div className="px-7 py-9 md:px-11 md:py-11" style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)" }}>
+              <p className="font-serif leading-[1.12]" style={{ fontSize: "clamp(1.5rem, 3.1vw, 2.2rem)", color: "#2A2520" }}>
+                Wenn du hier richtig bist.
+              </p>
+              <Messinglinie breite="3rem" className="mt-6" />
+              <ul className="mt-8 space-y-0">
+                {FUER_WEN.map((t, i) => (
+                  <li key={t} className="flex items-baseline gap-5 py-5" style={{ borderTop: i === 0 ? "none" : "1px solid rgba(184,150,62,0.28)" }}>
+                    <span className="shrink-0 font-serif text-[1.35rem] leading-none" style={{ color: "var(--gold)" }}>0{i + 1}</span>
+                    <span className="text-[1.06rem] leading-snug" style={{ color: "#2A2520" }}>{t}</span>
                   </li>
                 ))}
               </ul>
-            </motion.div>
-            <motion.div {...rise(0.12)} className="p-6" style={{ background: "#F3EFE7", border: "1px solid rgba(46,43,38,0.1)" }}>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "#8A8178" }}>Nicht für</p>
-              <ul className="mt-4 space-y-3">
-                {NICHT_FUER.map((t) => (
-                  <li key={t} className="flex items-start gap-3 text-[0.95rem] leading-snug" style={{ color: "#5C554C" }}>
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "#A89F93" }} />{t}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+
+          <motion.p {...rise(0.16)} className="mt-7 text-[0.92rem] leading-relaxed" style={{ color: "#7A7268" }}>
+            Nicht gebaut für {NICHT_FUER[0].charAt(0).toLowerCase() + NICHT_FUER[0].slice(1)}, und nicht für {NICHT_FUER[1].charAt(0).toLowerCase() + NICHT_FUER[1].slice(1)}.
+          </motion.p>
         </div>
       </div>
     </section>
@@ -576,8 +599,8 @@ const RAHMEN = {
 function ArbeitRahmen({ img, label, aktiv }: { img: string; label: string; aktiv: boolean }) {
   return (
     <div style={RAHMEN}>
-      <div className="relative aspect-[16/9] overflow-hidden" style={{ background: "#0A0806", boxShadow: "0 0 0 1px rgba(30,22,10,0.85), inset 0 0 26px rgba(0,0,0,0.75)" }}>
-        <Image src={img} alt={label} fill sizes="(min-width: 1024px) 60vw, 92vw" className="object-cover object-top" priority={aktiv} />
+      <div className="relative aspect-[16/9] overflow-hidden" style={{ background: "linear-gradient(158deg, #221a12, #0d0b08)", boxShadow: "0 0 0 1px rgba(30,22,10,0.85), inset 0 0 26px rgba(0,0,0,0.75)" }}>
+        <Image src={img} alt={label} fill sizes="(min-width: 1024px) 60vw, 92vw" className="object-cover object-top" loading="eager" priority={aktiv} />
         <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(142deg, rgba(255,229,179,0.07), transparent 42%, rgba(0,0,0,0.1))" }} />
       </div>
     </div>
@@ -591,7 +614,7 @@ function Galerie() {
   const a = ARBEIT[aktiv];
 
   return (
-    <section id="arbeiten" className="relative scroll-mt-20 overflow-hidden px-6 py-[13vh]" style={{ background: "var(--tech-bg)" }}>
+    <section id="arbeiten" className="relative scroll-mt-20 overflow-hidden px-6 py-[18vh]" style={{ background: "var(--tech-bg)" }}>
       {/* warmes Licht von oben, wie die Bildleuchte ueber dem Rahmen */}
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[55vh] w-[92vw] max-w-5xl -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.16), transparent 68%)" }} />
 
@@ -610,12 +633,12 @@ function Galerie() {
         </motion.div>
 
         {/* Buehne: die gewaehlte Arbeit gross, je eine angeschnitten daneben */}
-        <motion.div {...rise(0.06)} className="relative mt-14 flex items-center gap-4 sm:gap-7">
+        <motion.div {...rise(0.06)} className="relative mt-20 flex items-center gap-5 sm:gap-9">
           <button type="button" onClick={() => weiter(-1)} aria-label="Vorherige Arbeit" className="z-20 grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors" style={{ border: "1px solid rgba(184,150,62,0.4)", background: "rgba(10,8,6,0.72)", color: "var(--gold-light)" }}>
             <ChevronLeft size={19} aria-hidden />
           </button>
 
-          <div className="relative flex-1" style={{ height: "clamp(200px, 36vw, 460px)" }}>
+          <div className="relative flex-1" style={{ height: "clamp(210px, 40vw, 520px)" }}>
             {ARBEIT.map((w, i) => {
               const slot = caseSlot(i, aktiv, anzahl);
               const weg = Math.abs(slot) > 1;
@@ -649,7 +672,7 @@ function Galerie() {
         </motion.div>
 
         {/* Messingschild unter dem Bild, wie im Museum */}
-        <div className="relative mx-auto mt-10 max-w-2xl text-center" key={a.label} style={{ animation: "ws-plate .45s cubic-bezier(0.16,1,0.3,1) both" }}>
+        <div className="relative mx-auto mt-14 max-w-2xl text-center" key={a.label} style={{ animation: "ws-plate .45s cubic-bezier(0.16,1,0.3,1) both" }}>
           <div aria-hidden className="mx-auto h-px w-24" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.65), transparent)" }} />
           {a.badge && (
             <span className="mt-6 inline-block px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]" style={{ color: "var(--gold-light)", border: "1px solid rgba(184,150,62,0.4)" }}>{a.badge}</span>
@@ -830,25 +853,71 @@ function Analyse() {
 /* ── 8 · Prozess (drei Schritte, eine Reihe) ───────────────────────────── */
 function Prozess() {
   return (
-    <section id="prozess" className="scroll-mt-20 px-6 py-[12vh]">
+    <section id="prozess" className="scroll-mt-20 px-6 py-[15vh]">
       <div className="mx-auto max-w-6xl">
         <motion.div {...rise()} className="max-w-2xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// der weg</p>
+          <Eyebrow>// der weg</Eyebrow>
           <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2rem, 4.4vw, 3.4rem)", color: "#2A2520" }}>
             Drei Schritte, kein Agentur-Nebel.
           </h2>
         </motion.div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {PROZESS.map((p, i) => (
-            <motion.div key={p.n} {...rise(i * 0.08)} className="p-7" style={PAPIER}>
-              <div className="flex items-baseline gap-3">
-                <span className="font-serif text-[2.2rem] leading-none text-gold">{p.n}</span>
-                {p.tag && <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>{p.tag}</span>}
+
+        {/* Fahrplan: die Messingschiene zeichnet sich von links nach rechts,
+            danach setzen sich die Stationen der Reihe nach darauf. */}
+        <div className="relative mt-20">
+          <motion.div
+            aria-hidden
+            className="absolute left-0 right-0 origin-left"
+            style={{ top: 27, height: 2, background: MESSING, boxShadow: "0 1px 3px rgba(110,82,24,0.35)" }}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-90px" }}
+            transition={{ duration: 1.5, ease: EASE }}
+          />
+          <motion.span
+            aria-hidden
+            className="absolute right-0"
+            style={{ top: 20, color: "var(--gold)" }}
+            initial={{ opacity: 0, x: -14 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-90px" }}
+            transition={{ duration: 0.5, delay: 1.35, ease: EASE }}
+          >
+            <ArrowRight size={17} strokeWidth={2} />
+          </motion.span>
+
+          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+            {PROZESS.map((p, i) => (
+              <div key={p.n} className="relative">
+                <motion.div
+                  className="relative z-10 grid h-14 w-14 place-items-center rounded-full"
+                  style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: "1px solid rgba(184,150,62,0.5)", boxShadow: "0 10px 26px rgba(110,82,24,0.2)" }}
+                  initial={{ scale: 0.3, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: "-90px" }}
+                  transition={{ duration: 0.55, delay: 0.45 + i * 0.38, ease: EASE }}
+                >
+                  <p.icon size={21} className="text-gold" strokeWidth={1.6} aria-hidden />
+                </motion.div>
+
+                <motion.div
+                  className="mt-8 p-7"
+                  style={PAPIER}
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-90px" }}
+                  transition={{ duration: 0.6, delay: 0.62 + i * 0.38, ease: EASE }}
+                >
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-serif text-[2.2rem] leading-none text-gold">{p.n}</span>
+                    {p.tag && <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>{p.tag}</span>}
+                  </div>
+                  <h3 className="mt-3 font-serif text-[1.35rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
+                  <p className="mt-2 text-[0.95rem] leading-relaxed" style={{ color: "#46403A" }}>{p.line}</p>
+                </motion.div>
               </div>
-              <h3 className="mt-3 font-serif text-[1.35rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
-              <p className="mt-2 text-[0.95rem] leading-relaxed" style={{ color: "#46403A" }}>{p.line}</p>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -871,7 +940,7 @@ function Fundament() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FUNDAMENT.map((f, i) => (
             <motion.div key={f.term} {...rise(i * 0.08)} className="p-7" style={{ background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))", border: "1px solid rgba(184,150,62,0.18)" }}>
-              <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(2.2rem, 4vw, 3rem)" }}>{f.stat}</p>
+              <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(2.2rem, 4vw, 3rem)" }}><Zahl wert={f.stat} /></p>
               <h3 className="mt-3 font-mono text-[12px] uppercase tracking-[0.2em] text-cream/90">{f.term}</h3>
               <p className="mt-3 text-[0.94rem] leading-relaxed text-warm-light/70">{f.line}</p>
             </motion.div>
@@ -944,29 +1013,6 @@ function Pflege() {
           Preise netto zzgl. MwSt. · Angebote für Unternehmen und Selbständige · monatlich, kein Jahresvertrag
         </motion.p>
 
-        {/* Cockpit: Iljas Werkzeug, dein Ueberblick */}
-        <motion.div {...rise(0.15)} className="mt-14 overflow-hidden " style={{ background: "var(--tech-bg)", border: "1px solid rgba(91,214,208,0.3)", boxShadow: "0 40px 100px rgba(0,0,0,0.35)" }}>
-          <div className="grid items-center gap-8 p-8 md:grid-cols-[0.95fr_1.05fr] md:p-12">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em]" style={{ color: "#5BD6D0" }}>// mein cockpit · dein überblick</p>
-              <h3 className="mt-4 font-serif leading-[1.1] text-cream" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)" }}>
-                Ich habe deine Seite im Blick.
-              </h3>
-              <p className="mt-5 max-w-lg text-[1.02rem] leading-relaxed text-warm-light/75">
-                In Wachstum und Partner läuft deine Seite in meinem selbst gebauten Cockpit:
-                Besucher, Google-Rankings, KI-Sichtbarkeit, Blog-Performance. Du bekommst
-                jeden Monat einen Bericht in Klartext, ohne selbst in Tools zu wühlen. Genau
-                das meint Partner an deiner Seite.
-              </p>
-            </div>
-            <motion.div whileHover={{ rotateX: 3, rotateY: -4, scale: 1.015 }} transition={{ type: "spring", stiffness: 110, damping: 18 }} style={{ perspective: 1100, transformStyle: "preserve-3d" }} className="relative overflow-hidden" >
-              <Image src="/case-studies/webseiten-analytics.jpg" alt="Sabala Cockpit: SEO, GEO und Besucher aller betreuten Seiten in einer Sicht" width={1600} height={900} className="w-full" style={{ border: "1px solid rgba(91,214,208,0.3)" }} />
-              <span className="absolute right-4 top-4 rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ background: "rgba(10,8,6,0.85)", color: "#5BD6D0", border: "1px solid rgba(91,214,208,0.35)" }}>
-                Täglich im Einsatz
-              </span>
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
