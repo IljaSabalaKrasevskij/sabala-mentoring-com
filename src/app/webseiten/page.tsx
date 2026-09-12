@@ -26,7 +26,7 @@ import {
 
    Design: Londoner Material aus einer Quelle (MESSING, PANEEL_BG, PAPIER),
    eckige Rahmen statt abgerundeter Kacheln, Kulissen aus KIE hinter
-   Werthebel, Fundament und Finale. Pflege MIT Preisen (70/99/149 netto,
+   Werthebel, Fundament und Finale. Pflege MIT Preisen (70 / 249 / auf Anfrage, netto,
    B2B-Hinweis), Dashboard als Iljas Cockpit erzaehlt, nicht als Upsell.
 
    Kleines du, keine Em-Dashes, keine Ausrufezeichen, nur echte Zahlen.
@@ -206,23 +206,33 @@ const FUNDAMENT = [
 
 /* Drei Stufen, drei Raeume aus dem Rundgang als Bild. Basis ist Betrieb,
    Wachstum enthaelt Iljas Zeit, Partner ist die Zusammenarbeit auf Anfrage. */
+/* Drei Stufen, drei Raeume aus dem Rundgang als Bild.
+   Regel fuer Wachstum: alles darin laeuft entweder automatisch oder ist hart
+   gedeckelt. Die Beispiele in Klammern SIND der Vertrag, sie halten das Wort
+   "klein" fest. Alles, was Bauzeit kostet, gehoert in Partner. */
 const PFLEGE = [
   {
     term: "Basis",
     price: "70",
     bild: "/webseiten/studio-london-v1/exterior.webp",
-    alt: "Die Fassade des Ladens bei Nacht",
+    alt: "Die Fassade des Studios bei Nacht",
     kurz: "Betrieb",
     punkte: ["Updates und Sicherheit", "Backups und Monitoring", "Verfügbarkeit im Blick, rund um die Uhr"],
     line: "Deine Seite läuft, du merkst nichts davon.",
   },
   {
     term: "Wachstum",
-    price: "99",
+    price: "249",
     bild: "/webseiten/studio-london-v1/reception.webp",
     alt: "Der Empfang im Studio",
     kurz: "Betrieb und Pflege",
-    punkte: ["Alles aus Basis", "Zwei kleine Änderungen im Monat", "Monatsbericht in Klartext"],
+    punkte: [
+      "Alles aus Basis",
+      "Zwei kleine Änderungen im Monat, je bis 30 Minuten",
+      "Texte, Bilder, Preise, ein Blogbeitrag eingepflegt",
+      "Monatsbericht in Klartext: Besucher, Rankings, KI-Sichtbarkeit",
+      "Antwort innerhalb eines Werktags",
+    ],
     line: "Deine Seite bleibt aktuell, ohne dass du dich kümmerst.",
     highlight: true,
   },
@@ -232,7 +242,13 @@ const PFLEGE = [
     bild: "/webseiten/studio-london-v1/gallery.webp",
     alt: "Der Ausstellungssaal im Studio",
     kurz: "Zusammenarbeit",
-    punkte: ["Alles aus Wachstum", "SEO und GEO laufend, mit meinen Agenten", "Neue Seiten und Ausbau, von mir gebaut", "Strategie jedes Quartal"],
+    punkte: [
+      "Alles aus Wachstum",
+      "SEO und GEO laufend, mit meinen Agenten",
+      "Neue Seiten und Landingpages, von mir gebaut",
+      "Dein stärkster Wettbewerber im Blick",
+      "Strategie jedes Quartal",
+    ],
     line: "Wir entwickeln deinen Auftritt gemeinsam weiter.",
   },
 ];
@@ -244,7 +260,7 @@ const FAQ = [
   },
   {
     q: "Was kostet eine Webseite bei dir?",
-    a: "Das Projekt bekommt einen individuellen Rahmen, weil es kein Produkt von der Stange ist: ein OnePager liegt woanders als eine komplette Markenwelt. Nach der Analyse steht dein Angebot mit Umfang, Zeitplan und Preis. Die laufende Pflege ist transparent: Basis 70 und Wachstum 99 Euro im Monat netto, die Partnerschaft nach Umfang auf Anfrage.",
+    a: "Das Projekt bekommt einen individuellen Rahmen, weil es kein Produkt von der Stange ist: ein OnePager liegt woanders als eine komplette Markenwelt. Nach der Analyse steht dein Angebot mit Umfang, Zeitplan und Preis. Die laufende Pflege ist transparent: Basis 70 und Wachstum 249 Euro im Monat netto, die Partnerschaft nach Umfang auf Anfrage.",
   },
   {
     q: "Wie lange dauert ein Projekt?",
@@ -292,8 +308,8 @@ const SCHEMA = {
           {
             "@type": "Offer",
             name: "Pflege Wachstum",
-            description: "Dazu zwei kleine Änderungen im Monat und ein Monatsbericht in Klartext. 99 Euro im Monat netto.",
-            priceSpecification: { "@type": "UnitPriceSpecification", price: 99, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
+            description: "Dazu zwei kleine Änderungen im Monat, je bis 30 Minuten, und ein Monatsbericht in Klartext. 249 Euro im Monat netto.",
+            priceSpecification: { "@type": "UnitPriceSpecification", price: 249, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
           },
           {
             "@type": "Offer",
@@ -1041,6 +1057,11 @@ function Pflege() {
             </motion.article>
           ))}
         </div>
+
+        <motion.p {...rise(0.18)} className="mx-auto mt-10 max-w-2xl text-center text-[0.95rem] leading-relaxed" style={{ color: "#6E665C" }}>
+          Nicht in Basis und Wachstum enthalten: neue Seiten und Landingpages, Umbauten
+          an Struktur oder Design und laufende SEO- und GEO-Arbeit. Das ist Partner.
+        </motion.p>
 
         <motion.p {...rise(0.2)} className="mx-auto mt-8 max-w-xl text-center font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em]" style={{ color: "#9A8F7E" }}>
           Preise netto zzgl. MwSt. · Angebote für Unternehmen und Selbständige · monatlich, kein Jahresvertrag
