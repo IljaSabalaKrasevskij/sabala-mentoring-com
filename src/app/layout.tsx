@@ -4,9 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/Footer";
-import Kontakt from "@/components/home/Kontakt";
 import { CustomCursor } from "@/components/ui/CustomCursor";
-import { getProvenExpertSummary, PROVEN_EXPERT_PROFILE_URL } from "@/lib/provenExpert";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument",
@@ -123,19 +121,11 @@ const personSchema = {
   ],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const peData = await getProvenExpertSummary();
-  const pe = {
-    score: peData.ratingValue.toFixed(2).replace(".", ","),
-    reviews: peData.reviewCount.toLocaleString("de-DE"),
-    rate: peData.recommendationRate,
-    url: PROVEN_EXPERT_PROFILE_URL,
-  };
-
   return (
     <html
       lang="de"
@@ -161,7 +151,6 @@ export default async function RootLayout({
         <CustomCursor />
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Kontakt pe={pe} />
         <Footer />
       </body>
     </html>

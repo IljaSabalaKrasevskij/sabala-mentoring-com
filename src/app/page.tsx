@@ -6,9 +6,22 @@ import SolarSystem from "@/components/home/SolarSystem";
 import ShopTeaser from "@/components/home/ShopTeaser";
 import DerMensch from "@/components/home/DerMensch";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
+import Kontakt from "@/components/home/Kontakt";
+import { getProvenExpertSummary, PROVEN_EXPERT_PROFILE_URL } from "@/lib/provenExpert";
 import SmoothScroll from "@/components/SmoothScroll";
 
-export default function Home() {
+export default async function Home() {
+  // Die Kontakt-Sektion lag bis 12.9.2026 im Layout und stand damit unter jeder
+  // Seite. Auf /webseiten konkurrierte sie mit der Potenzial-Analyse, deshalb
+  // steht sie jetzt nur noch hier.
+  const peData = await getProvenExpertSummary();
+  const pe = {
+    score: peData.ratingValue.toFixed(2).replace(".", ","),
+    reviews: peData.reviewCount.toLocaleString("de-DE"),
+    rate: peData.recommendationRate,
+    url: PROVEN_EXPERT_PROFILE_URL,
+  };
+
   return (
     <SmoothScroll>
       {/* Reihenfolge folgt der Verkaufslogik: erst die drei Angebote (ForWhom +
@@ -41,6 +54,7 @@ export default function Home() {
         }}
       />
       <AcademyNewsletter />
+      <Kontakt pe={pe} />
     </SmoothScroll>
   );
 }
