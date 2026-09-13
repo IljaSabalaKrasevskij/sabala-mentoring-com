@@ -166,62 +166,68 @@ const PFLEGE_MEDIEN = [
 /* ── Schema.org (GEO): Service + Pflege-Preise + FAQ ───────────────────── */
 const SITE = "https://sabala-mentoring.com";
 
-const schemaFuer = (T: typeof TEXTE.de) => ({
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Service",
-      "@id": `${SITE}/webseiten#service`,
-      name: "Premium-Webdesign mit KI",
-      serviceType: "Webdesign & Webentwicklung",
-      url: `${SITE}/webseiten`,
-      provider: { "@id": `${SITE}/#organization` },
-      description:
-        "Premium-Webauftritte, gebaut gegen die Spitze der eigenen Nische. Einstieg über die kostenlose Potenzial-Analyse: Website-Check über SEO, GEO, Content, Design und Tempo plus tiefe Wettbewerbsanalyse und Beratungsgespräch. Danach Konzept, eigener Code, Ladezeit unter zwei Sekunden, DSGVO-konform, laufende Pflege in drei Stufen.",
-      availableLanguage: "de",
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "Angebote",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            name: "Kostenlose Potenzial-Analyse",
-            price: 0,
-            priceCurrency: "EUR",
-            description: "Website-Check über fünf Ebenen, Wettbewerbsanalyse und Beratungsgespräch, unverbindlich.",
-          },
-          {
-            "@type": "Offer",
-            name: "Pflege Basis",
-            description: "Updates, Sicherheit, Backups und Monitoring. 70 Euro im Monat netto.",
-            priceSpecification: { "@type": "UnitPriceSpecification", price: 70, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
-          },
-          {
-            "@type": "Offer",
-            name: "Pflege Wachstum",
-            description: "Dazu zwei kleine Änderungen im Monat, je bis 30 Minuten, und ein Monatsbericht in Klartext. 249 Euro im Monat netto.",
-            priceSpecification: { "@type": "UnitPriceSpecification", price: 249, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: "Monat" },
-          },
-          {
-            "@type": "Offer",
-            name: "Pflege Partner",
-            // Kein fester Preis mehr: Umfang haengt am Projekt, deshalb auf Anfrage.
-            description: "Dazu laufende SEO- und GEO-Arbeit, neue Seiten und Ausbau sowie Strategie jedes Quartal. Preis auf Anfrage, abhängig vom Umfang.",
-          },
-        ],
+// Jede Sprachfassung beschreibt sich selbst: eigene URL und @id, Texte aus texte.ts.
+// Bis 13.9.2026 lieferte /en/websites hier den deutschen Service-Block mit der deutschen URL.
+const schemaFuer = (lang: Lang) => {
+  const T = TEXTE[lang];
+  const S = T.schema;
+  const url = `${SITE}${lang === "de" ? "/webseiten" : "/en/websites"}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": `${url}#service`,
+        name: S.serviceName,
+        serviceType: S.serviceType,
+        url,
+        provider: { "@id": `${SITE}/#organization` },
+        description: S.serviceDescription,
+        availableLanguage: lang,
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: S.katalogName,
+          itemListElement: [
+            {
+              "@type": "Offer",
+              name: S.analyseName,
+              price: 0,
+              priceCurrency: "EUR",
+              description: S.analyseBeschreibung,
+            },
+            {
+              "@type": "Offer",
+              name: S.basisName,
+              description: S.basisBeschreibung,
+              priceSpecification: { "@type": "UnitPriceSpecification", price: 70, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: S.einheit },
+            },
+            {
+              "@type": "Offer",
+              name: S.wachstumName,
+              description: S.wachstumBeschreibung,
+              priceSpecification: { "@type": "UnitPriceSpecification", price: 249, priceCurrency: "EUR", valueAddedTaxIncluded: false, unitText: S.einheit },
+            },
+            {
+              "@type": "Offer",
+              name: S.partnerName,
+              // Kein fester Preis mehr: Umfang haengt am Projekt, deshalb auf Anfrage.
+              description: S.partnerBeschreibung,
+            },
+          ],
+        },
       },
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${SITE}/webseiten#faq`,
-      mainEntity: T.faq.fragen.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-    },
-  ],
-});
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: T.faq.fragen.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
+};
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
@@ -231,7 +237,7 @@ export default function WebseitenView({ lang }: { lang: Lang }) {
     <Sprachschalter />
     <main className="flex-1" style={{ background: "var(--cream)" }}>
       {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFuer(TEXTE[lang])).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFuer(lang)).replace(/</g, "\\u003c") }} />
       <ScrollRail />
       <Hero />
       <Marquee />

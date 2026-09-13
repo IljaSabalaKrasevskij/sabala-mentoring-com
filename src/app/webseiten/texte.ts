@@ -213,6 +213,8 @@ const de = {
     siegel: ["Kein Risiko", "Klare Expertise", "Klare Potenziale"],
   },
   schema: {
+    katalogName: "Angebote",
+    einheit: "Monat",
     serviceName: "Premium-Webdesign mit KI",
     serviceType: "Webdesign & Webentwicklung",
     serviceDescription:
@@ -426,6 +428,8 @@ const en: typeof de = {
     siegel: ["No risk", "Clear expertise", "Clear potential"],
   },
   schema: {
+    katalogName: "Services",
+    einheit: "month",
     serviceName: "Premium web design with AI",
     serviceType: "Web design & web development",
     serviceDescription:
