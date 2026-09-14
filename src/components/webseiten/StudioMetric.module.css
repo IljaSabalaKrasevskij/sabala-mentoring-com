@@ -1,0 +1,11 @@
+.metric { display: inline-block; font-variant-numeric: tabular-nums; }
+.display { display: inline-flex; align-items: baseline; white-space: nowrap; line-height: 1.08; }
+.window { display: inline-block; height: 1.08em; overflow: hidden; }
+.strip { display: flex; flex-direction: column; transform: translateY(-90%); }
+.strip > span { display: block; height: 1.08em; text-align: center; }
+.symbol { font-size: .6em; letter-spacing: -.04em; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .metric[data-visible="true"] .strip { animation: roll 1400ms cubic-bezier(.18,.75,.2,1) var(--reel-delay) backwards; }
+}
+@keyframes roll { from { transform: translateY(0); } to { transform: translateY(-90%); } }

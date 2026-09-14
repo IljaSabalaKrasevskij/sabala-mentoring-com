@@ -1,0 +1,30 @@
+.footer { position: relative; isolation: isolate; overflow: hidden; padding: 76px 32px 36px; background: #100e0b; }
+.footer::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 65% 10%, #67532c44, transparent 65%); }
+.paths { color: #cbb080; opacity: .95; }
+.veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, transparent 15%, #100e0b35 42%, #100e0bd9 68%, #100e0bf2); }
+.inner { position: relative; max-width: 1240px; margin-inline: auto; }
+.brandRow { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .75fr); align-items: center; gap: 64px; min-height: 320px; }
+.brandName { margin: 0; color: #d8ba7e; font-size: 13px; letter-spacing: .12em; }
+.statement { margin-top: 24px; max-width: 690px; color: #f6f0e5; font-family: var(--font-instrument), Georgia, serif; font-size: clamp(38px, 4.8vw, 68px); line-height: 1.06; text-wrap: balance; }
+.statement span { color: #d8ba7e; }
+.eagle { position: relative; width: 100%; aspect-ratio: 1; max-width: 360px; justify-self: end; opacity: .88; mask-image: radial-gradient(ellipse at 52% 48%, #000 38%, #000a 61%, transparent 74%); }
+.columns { margin-top: 48px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
+.columns h2 { margin: 0; color: #c8b997; font-size: 13px; font-weight: 500; }
+.columns ul { margin-top: 23px; padding: 0; list-style: none; display: grid; gap: 14px; }
+.columns a { color: #e0d8c9; font-size: 16px; line-height: 1.6; text-decoration: none; overflow-wrap: anywhere; transition: color 180ms ease; }
+.columns a:hover { color: #f6d28b; }
+.columns a:focus-visible, .bottom a:focus-visible { outline: 2px solid #d8ba7e; outline-offset: 5px; }
+.bottom { margin-top: 64px; padding-top: 26px; border-top: 1px solid #bba16d40; display: flex; align-items: center; justify-content: space-between; gap: 24px; color: #ac9f86; font-size: 12px; line-height: 1.65; }
+.bottom a { white-space: nowrap; padding-block: 8px; }
+@media (max-width: 800px) { .brandRow { gap: 24px; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); } .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px; } }
+@media (max-width: 540px) {
+  .footer { padding: 64px 24px 28px; }
+  .brandRow { grid-template-columns: 1fr; gap: 12px; }
+  .statement { font-size: 42px; max-width: 340px; }
+  .eagle { width: 220px; margin-top: -12px; justify-self: end; }
+  .columns { margin-top: 14px; gap: 34px 22px; }
+  .columns a { font-size: 14px; }
+  .columns ul { gap: 12px; margin-top: 18px; }
+  .bottom { margin-top: 46px; flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .columns a { transition: none; } }

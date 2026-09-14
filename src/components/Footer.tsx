@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./Footer.module.css";
 import { FloatingPaths } from "@/components/ui/FloatingPaths";
 
 /* Globaler Footer — dunkel, gross, Apple-Stil. Auf jeder Seite gleich. */
@@ -40,60 +41,30 @@ const COLS: { title: string; links: { label: string; href: string; ext?: boolean
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden px-6 pt-[16vh] pb-12" style={{ background: "var(--tech-bg)" }}>
-      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[70vw] -translate-x-1/2" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.4), transparent)" }} />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
-
-      {/* Wandernde Messinglinien, sehr zurueckhaltend. */}
-      <FloatingPaths className="hidden text-gold-light opacity-[0.5] md:block" anzahl={16} />
-
-      {/* Der Adler als schwaches Wasserzeichen, nach innen blickend. Die Maske
-          laesst ihn nach aussen ausfransen, damit keine Kante entsteht. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-16 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-[58%] md:block"
-        style={{ opacity: 0.075 }}
-      >
-        <Image src="/webseiten/adler-stills/profil-links-kopf.webp" alt="" fill sizes="26rem" className="object-contain" />
-        {/* Verlauf in der Hintergrundfarbe statt maskImage: sieht gleich aus und
-            braucht keine eigene Ebene. Siehe Memory zum Safari-Compositing. */}
-        <span className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 56% 44%, transparent 18%, var(--tech-bg) 68%)" }} />
-      </div>
-
-      <div className="relative mx-auto max-w-6xl">
-        {/* Marken-Statement, gross */}
-        <div className="max-w-3xl">
-          <p className="font-mono text-[12px] uppercase tracking-[0.35em] text-gold">Sabala Studios</p>
-          <p className="mt-6 font-serif leading-[1.05] text-cream" style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.01em" }}>
-            High-End <span className="text-gold-light">Creative</span> Web Development.
-          </p>
+    <footer className={styles.footer}>
+      <FloatingPaths className={styles.paths} anzahl={10} />
+      <div className={styles.veil} aria-hidden="true" />
+      <div className={styles.inner}>
+        <div className={styles.brandRow}>
+          <div>
+            <p className={styles.brandName}>Sabala Studios</p>
+            <p className={styles.statement}>High-End <span>Creative</span> Web Development.</p>
+          </div>
+          <div className={styles.eagle} aria-hidden="true">
+            <Image src="/webseiten/adler-stills/profil-links-kopf.webp" alt="" fill sizes="(min-width: 800px) 360px, (min-width: 541px) 35vw, 220px" className="object-contain" />
+          </div>
         </div>
-
-        {/* Spalten */}
-        <div className="mt-20 grid gap-12 sm:grid-cols-2 md:grid-cols-4">
-          {COLS.map((col) => (
-            <div key={col.title}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-warm-mid">{col.title}</p>
-              <ul className="mt-5 space-y-3.5">
-                {col.links.map((l) =>
-                  l.ext ? (
-                    <li key={l.label}>
-                      <a href={l.href} className="text-[1.05rem] text-warm-light/75 transition-colors hover:text-gold">{l.label}</a>
-                    </li>
-                  ) : (
-                    <li key={l.label}>
-                      <Link href={l.href} className="text-[1.05rem] text-warm-light/75 transition-colors hover:text-gold">{l.label}</Link>
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-          ))}
+        <div className={styles.columns}>
+          {COLS.map((col) => <div key={col.title}>
+            <h2>{col.title}</h2>
+            <ul>{col.links.map((link) => <li key={link.label}>
+              {link.ext ? <a href={link.href}>{link.label}</a> : <Link href={link.href}>{link.label}</Link>}
+            </li>)}</ul>
+          </div>)}
         </div>
-
-        <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="font-mono text-[12px] tracking-[0.05em] text-warm-mid">© 2026 Sabala Studios · Sabala Mentoring LLC</p>
-          <a href="#top" className="font-mono text-[12px] uppercase tracking-[0.2em] text-warm-mid transition-colors hover:text-gold">↑ nach oben</a>
+        <div className={styles.bottom}>
+          <p>© 2026 Sabala Studios · Sabala Mentoring LLC</p>
+          <a href="#top">↑ nach oben</a>
         </div>
       </div>
     </footer>

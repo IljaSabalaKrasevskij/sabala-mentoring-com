@@ -1,54 +1,50 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 
-/* ─────────────────────────────────────────────────────────────────────────
-   FloatingPaths — wandernde Linienschar als Hintergrund.
-   Herkunft: 21st.dev (background-paths), uebernommen am 12.9.2026.
-   Drei Aenderungen fuer dieses Projekt:
-
-   1. `motion/react` statt `framer-motion`. Dasselbe Paket unter neuem Namen,
-      Version 12 liegt schon im Projekt. Keine neue Abhaengigkeit.
-   2. NUR die Linien. Der Hero mit Ueberschrift und Knopf aus der Vorlage
-      haette den shadcn-Button und zwei weitere Pakete gebraucht.
-   3. **Weniger Linien.** Das Original zeichnet 36 je Richtung, also 72 Pfade
-      mit endlosen Animationen. Die laufen auf dem Hauptstrang und der Footer
-      steht unter JEDER Seite. 14 je Richtung reichen fuer denselben Eindruck
-      und kosten ein Fuenftel. Bei Reduce Motion stehen sie still.
-   ───────────────────────────────────────────────────────────────────────── */
-
-function Schar({ position, anzahl }: { position: number; anzahl: number }) {
+/** Brass curves with travelling highlights. Based on the original 21st.dev
+ * background-paths treatment, with curves framed for this footer's proportions.
+ * The base strokes remain visible throughout the loop. */
+function Schar({ position, anzahl, active }: { position: number; anzahl: number; active: boolean }) {
   const ruhig = useReducedMotion();
   const pfade = Array.from({ length: anzahl }, (_, i) => ({
     id: i,
-    d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${152 - i * 5 * position} ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    width: 0.7 + i * 0.09,
+    d: position === 1
+      ? `M -120 ${90 + i * 13} C 140 ${-80 + i * 16}, 340 ${420 + i * 10}, 1120 ${80 + i * 16}`
+      : `M -100 ${500 - i * 11} C 140 ${640 - i * 15}, 540 ${-100 + i * 12}, 1120 ${100 + i * 11}`,
   }));
 
   return (
-    <svg className="absolute inset-0 h-full w-full" viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 600" fill="none" preserveAspectRatio="none" aria-hidden="true">
       {pfade.map((p) => (
-        <motion.path
-          key={p.id}
-          d={p.d}
-          stroke="currentColor"
-          strokeWidth={p.width}
-          strokeOpacity={0.14 + p.id * 0.035}
-          initial={{ pathLength: 0.3, opacity: 0.6 }}
-          animate={ruhig ? { pathLength: 1, opacity: 0.4 } : { pathLength: 1, opacity: [0.25, 0.55, 0.25], pathOffset: [0, 1, 0] }}
-          transition={ruhig ? { duration: 0 } : { duration: 30 + p.id * 1.4, repeat: Infinity, ease: "linear" }}
-        />
+        <g key={p.id}>
+          <path d={p.d} stroke="currentColor" strokeWidth={0.7} strokeOpacity={0.18 + p.id * 0.012} />
+          <motion.path
+            d={p.d}
+            stroke="currentColor"
+            strokeWidth={1.15}
+            strokeLinecap="round"
+            initial={false}
+            animate={ruhig || !active
+              ? { pathLength: 1, opacity: 0.12, pathOffset: 0, pathSpacing: 1 }
+              : { pathLength: 0.24, pathSpacing: 0.85, opacity: [0.3, 0.85, 0.3], pathOffset: position === 1 ? [0, 1] : [1, 0] }}
+            transition={ruhig || !active ? { duration: 0 } : { duration: 18 + p.id * 1.2, repeat: Infinity, ease: "linear" }}
+          />
+        </g>
       ))}
     </svg>
   );
 }
 
-/** Zwei gegenlaeufige Scharen. `anzahl` gilt je Richtung. */
-export function FloatingPaths({ anzahl = 14, className }: { anzahl?: number; className?: string }) {
+/** Two opposing families. Offscreen animation pauses; reduced motion is static. */
+export function FloatingPaths({ anzahl = 10, className }: { anzahl?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const active = useInView(ref, { margin: "100px" });
   return (
-    <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${className ?? ""}`}>
-      <Schar position={1} anzahl={anzahl} />
-      <Schar position={-1} anzahl={anzahl} />
+    <div ref={ref} aria-hidden="true" className={`pointer-events-none absolute inset-0 ${className ?? ""}`}>
+      <Schar position={1} anzahl={anzahl} active={active} />
+      <Schar position={-1} anzahl={anzahl} active={active} />
     </div>
   );
 }

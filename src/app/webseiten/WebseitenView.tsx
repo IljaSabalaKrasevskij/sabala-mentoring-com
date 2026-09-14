@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "motion/react";
-import { createContext, useContext, useState } from "react";
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { createContext, useContext, useRef, useState } from "react";
+import StudioMetric from "@/components/webseiten/StudioMetric";
 import BenefitGallery from "@/components/webseiten/BenefitGallery";
 import styles from "./WebseitenView.module.css";
 import AdlerHero from "@/components/webseiten/AdlerHero";
@@ -14,7 +15,7 @@ import { caseSlot } from "@/components/webseiten/studio-journey";
 import { SonarGrid } from "@/components/ui/SonarGrid";
 import { TEXTE, ANDERE_SPRACHE, type Lang } from "./texte";
 import {
-  ShieldCheck, Scan,
+  ShieldCheck, Scan, KeyRound, UserRound, Layers, Zap,
   FileSearch, Radar, MessagesSquare, ListChecks, ArrowRight, ArrowDown,
   ChevronLeft, ChevronRight, MoveUpRight,
 } from "lucide-react";
@@ -103,6 +104,7 @@ const ARBEIT_MEDIEN = [
 ];
 
 const PROZESS_ICONS = [FileSearch, Scan, ShieldCheck];
+const FOUNDATION_ICONS = [KeyRound, UserRound, Layers, Zap];
 
 
 /* Drei Stufen, drei Raeume aus dem Rundgang als Bild. Basis ist Betrieb,
@@ -391,6 +393,12 @@ function Werthebel() {
 
 /* ── 5 · Für wen (ICP + Angebot, auf dem Adler) ───────────────────────── */
 
+function Emphasis({ text, phrase, className }: { text: string; phrase: string; className?: string }) {
+  const at = text.indexOf(phrase);
+  if (at < 0) return <>{text}</>;
+  return <>{text.slice(0, at)}<strong className={className}>{phrase}</strong>{text.slice(at + phrase.length)}</>;
+}
+
 function FuerWen() {
   const { T } = useT();
   return (
@@ -407,11 +415,11 @@ function FuerWen() {
         </figure>
         <div className={styles.audienceCopy}>
           <p className={styles.eyebrow}>{T.fuerWen.eyebrow}</p>
-          <h2 className={styles.heading}>{T.fuerWen.headline}</h2>
-          <p className={styles.audienceLead}>{T.fuerWen.lead}</p>
+          <h2 className={styles.heading}><Emphasis text={T.fuerWen.headline} phrase={T.fuerWen.headlineFocus} className={styles.headlineEmphasis} /></h2>
+          <p className={styles.audienceLead}><Emphasis text={T.fuerWen.lead} phrase={T.fuerWen.leadFocus} /></p>
           <div className={styles.criteria}>
             <h3>{T.fuerWen.tafel}</h3>
-            <ul>{T.fuerWen.fuerDich.map((text) => <li key={text}>{text}</li>)}</ul>
+            <ul>{T.fuerWen.fuerDich.map((item) => <li key={item.text}><span><Emphasis text={item.text} phrase={item.focus} /></span></li>)}</ul>
           </div>
           <p className={styles.audienceNote}>{T.fuerWen.absage}</p>
         </div>
@@ -542,7 +550,7 @@ function Analyse() {
         {/* Dunkle Buehne mit Gold-Rahmen: der eine Conversion-Moment der Seite */}
         <motion.div
           {...rise()}
-          className="relative overflow-hidden px-7 py-12 md:px-14 md:py-16"
+          className="relative overflow-hidden px-4 py-12 sm:px-7 md:px-14 md:py-16"
           style={{ background: "var(--tech-bg)", border: "1px solid rgba(212,174,90,0.5)", boxShadow: "0 50px 60px rgba(80,60,20,0.35)" }}
         >
           <div aria-hidden className="pointer-events-none absolute -top-16 left-1/2 h-[120%] w-[70%] -translate-x-1/2" style={{ background: "conic-gradient(from 180deg at 50% 0%, transparent 42%, rgba(212,174,90,0.13) 50%, transparent 58%)" }} />
@@ -575,7 +583,7 @@ function Analyse() {
 
             {/* Formular */}
             <div className="lg:pt-2">
-              <motion.div {...rise(0.12)} className="p-5 sm:p-7 md:p-9" style={{ background: "rgba(250,248,245,0.035)", border: "1px solid rgba(184,150,62,0.35)" }}>
+              <motion.div {...rise(0.12)} className={styles.analysisFormPanel}>
                 <AnalysisForm lang={lang} />
               </motion.div>
 
@@ -601,34 +609,46 @@ function Analyse() {
   );
 }
 
-/* ── 8 · Prozess (drei Schritte, eine Reihe) ───────────────────────────── */
+/* ── 8 · Prozess (drei Stationen entlang einer Linie) ───────────────────────────── */
 function Prozess() {
   const { T } = useT();
+  const timeline = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: timeline, offset: ["start 75%", "end 70%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 28 });
   return (
     <section id="prozess" className={`${styles.section} ${styles.process}`}>
       <div className={styles.inner}>
         <p className={styles.eyebrow}>{T.prozess.eyebrow}</p>
         <h2 className={styles.heading}>{T.prozess.headline}</h2>
-        <ol className={styles.steps}>
-          {T.prozess.schritte.map((step, index) => {
-            const Icon = PROZESS_ICONS[index];
-            return (
-              <li className={styles.step} key={step.term}>
-                <span className={styles.stepIcon}><Icon size={22} strokeWidth={1.5} aria-hidden="true" /></span>
-                <div className={styles.stepCopy}>
-                  <div className={styles.stepMeta}>
-                    <span className={styles.stepNumber} aria-hidden="true">0{index + 1}</span>
-                    {step.tag && <span className={styles.stepTag}>{step.tag}</span>}
-                  </div>
-                  <h3>{step.term}</h3>
-                  <p>{step.line}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        <div className={styles.timeline} ref={timeline}>
+          <div className={styles.stepTrack} aria-hidden="true" />
+          <motion.div className={styles.stepProgress} style={{ scaleY: reduced ? 1 : progress }} aria-hidden="true" />
+          <ol className={styles.steps}>
+            {T.prozess.schritte.map((step, index) => <ProcessStep key={step.term} step={step} index={index} />)}
+          </ol>
+        </div>
       </div>
     </section>
+  );
+}
+
+function ProcessStep({ step, index }: { step: typeof TEXTE.de.prozess.schritte[number]; index: number }) {
+  const ref = useRef<HTMLLIElement>(null);
+  const visible = useInView(ref, { once: true, amount: .35 });
+  const Icon = PROZESS_ICONS[index];
+  return (
+    <li ref={ref} className={styles.step} data-visible={visible}>
+      <span className={styles.stepNode} aria-hidden="true">0{index + 1}</span>
+      <div className={styles.stepCard}>
+        <span className={styles.stepIcon}><Icon size={28} strokeWidth={1.4} aria-hidden="true" /></span>
+        <div className={styles.stepCopy}>
+          {step.tag && <span className={styles.stepTag}>{step.tag}</span>}
+          <h3>{step.term}</h3>
+          <p>{step.line}</p>
+        </div>
+      </div>
+    </li>
   );
 }
 
@@ -642,15 +662,17 @@ function Fundament() {
         <p className={styles.eyebrow}>{T.fundament.eyebrow}</p>
         <h2 className={styles.heading}>{T.fundament.headline}</h2>
         <div className={styles.facts}>
-          {T.fundament.punkte.map((fact) => (
-            <article className={styles.fact} key={fact.term}>
-              <p className={styles.stat}>{fact.stat}</p>
-              <div>
+          {T.fundament.punkte.map((fact, index) => {
+            const Icon = FOUNDATION_ICONS[index];
+            return (
+              <article className={styles.fact} key={fact.term}>
+                <div className={styles.factTop}><Icon size={23} strokeWidth={1.4} aria-hidden="true" /><span>{fact.label}</span></div>
+                <p className={styles.stat}><StudioMetric value={fact.stat} /></p>
                 <h3>{fact.term}</h3>
                 <p className={styles.factDescription}>{fact.line}</p>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
         <p className={styles.foundationNote}>{T.fundament.fussnote}</p>
       </div>
@@ -836,10 +858,10 @@ function Finale() {
   return (
     <section id="finale" className="relative overflow-hidden px-6 py-[15vh]" style={{ background: "var(--tech-bg)" }}>
       <Kulisse bild="finale" position="center 60%" staerke={0.5} />
-      <Image src="/webseiten/adler-stills/frontal-banner-21zu9.webp" alt="" aria-hidden fill sizes="100vw" className="object-cover object-top opacity-35" />
-      <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.55), rgba(10,8,6,0.85) 60%, rgba(10,8,6,0.97))" }} />
-      <div aria-hidden className="wd-aurora-a pointer-events-none absolute -left-1/4 top-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.14), transparent 65%)" }} />
-      <div aria-hidden className="wd-aurora-b pointer-events-none absolute -right-1/4 bottom-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.10), transparent 65%)" }} />
+      <Image src="/webseiten/adler-stills/frontal-banner-21zu9.webp" alt="" aria-hidden fill sizes="100vw" className="object-cover object-top opacity-60" />
+      <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.3), rgba(10,8,6,0.65) 60%, rgba(10,8,6,0.94))" }} />
+      <div aria-hidden className="wd-aurora-a pointer-events-none absolute -left-1/4 top-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.24), transparent 65%)" }} />
+      <div aria-hidden className="wd-aurora-b pointer-events-none absolute -right-1/4 bottom-0 h-[60vh] w-[60vw] rounded-full" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.20), transparent 65%)" }} />
 
       <motion.div {...rise()} className="relative mx-auto max-w-3xl text-center">
         <div className="mx-auto mb-8 flex justify-center">
