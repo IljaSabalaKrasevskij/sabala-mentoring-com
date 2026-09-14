@@ -65,11 +65,6 @@ const de = {
     { object: "Das Planetarium", label: "Systeme", title: "Hinter dem Auftritt geht es weiter.", text: "Anfragen erfassen, Informationen ordnen, nächste Schritte vorbereiten. Wir entwickeln die Abläufe, die dein Geschäft hinter der Webseite braucht.", proof: "Vega Leads und Fleurs Lead-Agent." },
     { object: "Der Schlüssel", label: "Eigentum", title: "Dein Unternehmen. Dein Eigentum.", text: "Domain, Hosting und Code in deinem Besitz. Du bekommst einen Auftritt, über den du selbst bestimmen kannst.", proof: "Bei RFQ to PO liegen Domain, Hosting und Repo bei der Kundin." },
   ],
-  leistungen: [
-    { title: "Positionierung & Geschichte", text: "Klar sagen, warum du die richtige Wahl bist.", detail: "Wir schärfen dein Angebot, deine Zielgruppe und die Geschichte, die beides verbindet." },
-    { title: "Webseite & Design", text: "Die Qualität deiner Arbeit sichtbar machen.", detail: "Wir übersetzen deine Substanz in Bildwelt, Design und eine Webseite in eigenem Code." },
-    { title: "Systeme dahinter", text: "Den nächsten Schritt gleich mitdenken.", detail: "Wir verbinden den Auftritt mit den Abläufen, die aus Interesse eine bearbeitete Anfrage machen." },
-  ],
   schilder: [
     { tag: "inklusive", title: "Die richtigen Kunden erkennen sich.", features: ["Zielgruppe und Angebot", "Wettbewerb und Unterschied", "Ein klarer nächster Schritt"], benefit: "Damit Besucher sofort verstehen, warum gerade du die richtige Wahl bist." },
     { tag: "inklusive", title: "Eine Geschichte, die weiterführt.", features: ["Botschaft und roter Faden", "Texte in der Sprache deiner Kunden", "Eine Seitenstruktur, die trägt"], benefit: "Damit aus Aufmerksamkeit Interesse wird und aus Interesse ein Gespräch." },
@@ -138,11 +133,6 @@ const en: typeof de = {
     { object: "The laptop", label: "Website", title: "The impression survives the first click.", text: "Your presence in custom code. Built for small screens and large ones, structured for search engines, with contact paths you can measure.", proof: "Custom code, search console and analytics at YUNA." },
     { object: "The orrery", label: "Systems", title: "Behind the website, the work goes on.", text: "Capture enquiries, order the information, prepare the next step. We build the flow your business needs behind the site.", proof: "Vega Leads and a lead agent for Fleur." },
     { object: "The key", label: "Ownership", title: "Your business. Yours to own.", text: "Domain, hosting and code in your name. You get a presence you decide over, not one you rent.", proof: "At RFQ to PO the domain, hosting and repository sit with the client." },
-  ],
-  leistungen: [
-    { title: "Positioning & story", text: "Say clearly why you are the right choice.", detail: "We sharpen your offer, your audience, and the story that ties the two together." },
-    { title: "Website & design", text: "Make the quality of your work visible.", detail: "We turn your substance into imagery, design and a website in custom code." },
-    { title: "The systems behind it", text: "Build the next step in from the start.", detail: "We connect the site to the flow that turns interest into an enquiry you can work with." },
   ],
   schilder: [
     { tag: "included", title: "The right clients recognise themselves.", features: ["Audience and offer", "Competition and difference", "One clear next step"], benefit: "So visitors understand straight away why you are the right choice." },

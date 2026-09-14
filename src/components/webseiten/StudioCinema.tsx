@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { clamp, windowView, EXHIBITS, type HoverAnchor, type Room } from "./studio-journey";
 import { cinemaShot, filmAt, LONDON_ASSETS, LONDON_FILMS, stillShot, WINDOW_OBJECTS } from "./studio-cinema";
 import styles from "./StudioCinema.module.css";
@@ -25,6 +25,10 @@ export default function StudioCinema({ lang = "de", progress, distance, explorin
   const door = useRef<HTMLSpanElement>(null);
   const aperture = useRef<HTMLSpanElement>(null);
   const films = useRef<(HTMLVideoElement | null)[]>([]);
+  // Handy: dieselben Filme mit gleichem Bildaufbau, aber CRF 26 statt 20, rund halb so gross.
+  // Einmal beim Einbau gelesen, Drehen wechselt die Datei nicht. Die Komponente laeuft nur im
+  // Browser (StudioJourney baut sie erst bei Annaeherung ein), window ist hier sicher da.
+  const [handy] = useState(() => window.matchMedia("(max-width: 650px)").matches);
   const refresh = useRef<(() => void) | null>(null);
   const failedFilms = useRef(new Set<number>());
   const pointer = useRef(0);
@@ -103,7 +107,7 @@ export default function StudioCinema({ lang = "de", progress, distance, explorin
         </>}
         {key === "gallery" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
       </div>)}
-      {!flat && !reduced && LONDON_FILMS.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
+      {!flat && !reduced && LONDON_FILMS.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={handy ? src.replace(".mp4", "-mobil.mp4") : src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
     </div>
   </div>;
 }

@@ -19,10 +19,10 @@ const de = {
   meta: {
     title: "High-End Webdesign und Webentwicklung",
     description:
-      "Premium-Webauftritte aus eigenem Code: eigenständig im Design, in unter zwei Sekunden geladen, sichtbar bei Google und in KI-Antworten. Kostenlose Potenzial-Analyse mit Website-Check, Wettbewerbsanalyse und Gespräch.",
+      "Premium-Webseiten aus eigenem Code: unter zwei Sekunden geladen, sichtbar bei Google und in KI-Antworten. Kostenlose Potenzial-Analyse.",
     ogTitle: "High-End Webdesign und Webentwicklung · Sabala Studios",
     ogDescription:
-      "Deine Webseite, gebaut um den Besten deiner Nische zu schlagen. Eigener Code, Ladezeit unter zwei Sekunden, SEO und GEO, ein Ansprechpartner.",
+      "Deine Webseite. Gebaut, um den Besten deiner Nische zu schlagen. Eigener Code, Ladezeit unter zwei Sekunden, SEO und GEO, ein Ansprechpartner.",
   },
   rail: ["Schaufenster", "Werthebel", "Für wen", "Arbeiten", "Prozess", "Fundament", "Analyse", "Pflege", "FAQ"],
   marquee: [
@@ -64,7 +64,7 @@ const de = {
     ],
     absage: "Nicht gebaut für Preiskämpfer, die über den günstigsten Anbieter gewinnen wollen, und nicht für Projekte, bei denen der Baukasten wirklich reicht.",
     zitat: "»Eine gute Webseite ist ein aufgeräumtes Schaufenster mit einem klaren Angebot, das die richtigen Menschen bewegt, einzutreten.«",
-    zitatName: "Ilja Sabala",
+    zitatName: "Ilja Krasevskij",
     bildAlt: "Der Sabala-Adler am Schreibtisch, Blick nach vorn",
   },
   galerie: {
@@ -215,7 +215,7 @@ const de = {
   schema: {
     katalogName: "Angebote",
     einheit: "Monat",
-    serviceName: "Premium-Webdesign mit KI",
+    serviceName: "High-End Webdesign und Webentwicklung",
     serviceType: "Webdesign & Webentwicklung",
     serviceDescription:
       "Premium-Webauftritte, gebaut gegen die Spitze der eigenen Nische. Einstieg über die kostenlose Potenzial-Analyse: Website-Check über SEO, GEO, Content, Design und Tempo plus tiefe Wettbewerbsanalyse und Beratungsgespräch. Danach Konzept, eigener Code, Ladezeit unter zwei Sekunden, DSGVO-konform, laufende Pflege in drei Stufen.",
@@ -234,7 +234,7 @@ const en: typeof de = {
   meta: {
     title: "High-End Web Design and Development",
     description:
-      "Premium websites in custom code: distinctive design, under two seconds to load, visible on Google and in AI answers. Free potential analysis: website check, competitor research and a call.",
+      "Premium websites in custom code: under two seconds to load, visible on Google and in AI answers. Start with a free potential analysis.",
     ogTitle: "High-End Web Design and Development · Sabala Studios",
     ogDescription:
       "A website built to beat the best in your niche. Custom code, under two seconds, SEO and GEO, one person to talk to.",
@@ -279,7 +279,7 @@ const en: typeof de = {
     ],
     absage: "Not for people who win on being cheapest, and not for projects where a website builder honestly does the job.",
     zitat: "»A good website is a well arranged shop window with one clear offer that moves the right people to step inside.«",
-    zitatName: "Ilja Sabala",
+    zitatName: "Ilja Krasevskij",
     bildAlt: "The Sabala eagle at the desk, facing forward",
   },
   galerie: {
@@ -430,7 +430,7 @@ const en: typeof de = {
   schema: {
     katalogName: "Services",
     einheit: "month",
-    serviceName: "Premium web design with AI",
+    serviceName: "High-End Web Design and Development",
     serviceType: "Web design & web development",
     serviceDescription:
       "Premium websites built against the leaders of your own niche. The way in is the free potential analysis: a website check across SEO, GEO, content, design and speed plus deep competitor research and a consulting call. After that concept, custom code, under two seconds to load, GDPR compliant, ongoing care in three tiers.",

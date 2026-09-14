@@ -3,19 +3,9 @@ export type Point3 = [number, number, number];
 export type HoverAnchor = { x: number; y: number };
 export type Room = "window" | "reception" | "gallery";
 
+/** Nur die Schluessel. Texte der Exponate stehen je Sprache in studio-texte.ts. */
 export const EXHIBITS = [
-  { id: "position", object: "Das Dossier", title: "Die richtigen Menschen erkennen sich.", label: "Positionierung", text: "Für wen du da bist. Was du veränderst. Warum gerade du. Wir bringen dein Angebot auf einen klaren Punkt.", proof: "Positionierung für RFQ to PO und Stefanie Lommel.", model: "dossier" },
-  { id: "story", object: "Das Manuskript", title: "Eine Geschichte, die weiterführt.", label: "Storytelling", text: "Deine Sprache, ein roter Faden und ein verständlicher nächster Schritt. Aus einzelnen Leistungen wird eine Geschichte, der man folgen kann.", proof: "RFQ to PO: Your RFQ. Verified. Delivered.", model: "pen" },
-  { id: "design", object: "Das Maßjackett", title: "Dein Auftritt so gut wie deine Arbeit.", label: "Design", text: "Eine eigene Bildwelt, bewusste Typografie und Gestaltung bis ins Detail. Damit man die Qualität deiner Arbeit schon vor dem Gespräch erkennt.", proof: "Eigene Markenwelten für YUNA und RFQ to PO.", model: "jacket" },
-  { id: "technology", object: "Das Notebook", title: "Der Eindruck hält auch dem Klick stand.", label: "Webseite", text: "Dein Auftritt in eigenem Code. Für kleine und große Bildschirme gebaut, für Suchmaschinen strukturiert und mit messbaren Kontaktwegen.", proof: "Eigener Code, Suchmaschinen-Anbindung und Analytics bei YUNA.", model: "laptop" },
-  { id: "systems", object: "Das Planetarium", title: "Hinter dem Auftritt geht es weiter.", label: "Systeme", text: "Anfragen erfassen, Informationen ordnen, nächste Schritte vorbereiten. Wir entwickeln die Abläufe, die dein Geschäft hinter der Webseite braucht.", proof: "Vega Leads und Fleurs Lead-Agent.", model: "orrery" },
-  { id: "ownership", object: "Der Schlüssel", title: "Dein Unternehmen. Dein Eigentum.", label: "Eigentum", text: "Domain, Hosting und Code in deinem Besitz. Du bekommst einen Auftritt, über den du selbst bestimmen kannst.", proof: "Bei RFQ to PO liegen Domain, Hosting und Repo bei der Kundin.", model: "key" },
-] as const;
-
-export const SERVICES = [
-  { title: "Positionierung & Geschichte", text: "Klar sagen, warum du die richtige Wahl bist.", detail: "Wir schärfen dein Angebot, deine Zielgruppe und die Geschichte, die beides verbindet.", exhibit: 0 },
-  { title: "Webseite & Design", text: "Die Qualität deiner Arbeit sichtbar machen.", detail: "Wir übersetzen deine Substanz in Bildwelt, Design und eine Webseite in eigenem Code.", exhibit: 2 },
-  { title: "Systeme dahinter", text: "Den nächsten Schritt gleich mitdenken.", detail: "Wir verbinden den Auftritt mit den Abläufen, die aus Interesse eine bearbeitete Anfrage machen.", exhibit: 4 },
+  { id: "position" }, { id: "story" }, { id: "design" }, { id: "technology" }, { id: "systems" }, { id: "ownership" },
 ] as const;
 
 export const GALLERY_IDS = ["rfqtopo", "yuna-sports-nutrition", "dielommel", "vegaleads", "stefan-pons", "cyber-sales"];
