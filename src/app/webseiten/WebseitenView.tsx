@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView, useScroll, useSpring } from "motion/react";
-import { createContext, useContext, useEffect, useRef, useState, type CSSProperties } from "react";
+import { motion, useScroll, useSpring } from "motion/react";
+import { createContext, useContext, useState } from "react";
+import BenefitGallery from "@/components/webseiten/BenefitGallery";
+import styles from "./WebseitenView.module.css";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
 import AnalysisForm from "@/components/webseiten/AnalysisForm";
@@ -12,7 +14,7 @@ import { caseSlot } from "@/components/webseiten/studio-journey";
 import { SonarGrid } from "@/components/ui/SonarGrid";
 import { TEXTE, ANDERE_SPRACHE, type Lang } from "./texte";
 import {
-  Search, ShieldCheck, Crosshair, Scan, Gem,
+  ShieldCheck, Scan,
   FileSearch, Radar, MessagesSquare, ListChecks, ArrowRight, ArrowDown,
   ChevronLeft, ChevronRight, MoveUpRight,
 } from "lucide-react";
@@ -28,8 +30,8 @@ import {
    die Arbeiten als gerahmtes Karussell, Prozess und Fundament, danach erst
    die kostenlose Potenzial-Analyse, dann Pflege, FAQ und Finale.
 
-   Design: Londoner Material aus einer Quelle (MESSING, PANEEL_BG, PAPIER),
-   eckige Rahmen statt abgerundeter Kacheln, Kulissen aus KIE hinter
+   Design: Londoner Material aus einer Quelle, schwebende Messingtafeln fuer
+   die Werthebel und offene Kompositionen danach. Kulissen aus KIE hinter
    Werthebel, Fundament und Finale. Pflege MIT Preisen (70 / 249 / auf Anfrage, netto,
    B2B-Hinweis), Dashboard als Iljas Cockpit erzaehlt, nicht als Upsell.
 
@@ -52,15 +54,6 @@ const useT = () => useContext(SpracheContext);
 
 const MESSING = "linear-gradient(147deg, #c8ab73 0%, #7d6235 22%, #f0dcae 48%, #8a6f3c 64%, #d8bd84 86%, #6f5730 100%)";
 
-/** Dunkles Paneel mit Messingkante. Ersetzt die weisslichen Kacheln. */
-const PANEEL_BG = "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))";
-/** Helles Gegenstueck: warmes Papier mit Messingkante statt weisser Kasten. */
-const PAPIER: CSSProperties = {
-  background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)",
-  border: "1px solid rgba(184,150,62,0.34)",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), 0 16px 38px rgba(72,54,20,0.07)",
-};
-
 /** Foto-Kulisse hinter einer Sektion. Dunkel gehalten und mit Schleier, damit
     heller Text darauf lesbar bleibt (Bilder aus KIE, 12.9.2026). */
 function Kulisse({ bild, position = "center", staerke = 0.44 }: { bild: string; position?: string; staerke?: number }) {
@@ -82,42 +75,6 @@ function Messinglinie({ breite = "6rem", className = "" }: { breite?: string; cl
   return <div aria-hidden className={`h-px ${className}`} style={{ width: breite, background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.7), transparent)" }} />;
 }
 
-/** Zaehlt beim ersten Sichtbarwerden hoch. Vorsatz und Einheit bleiben stehen,
-    aus "< 2 s" wird also "< 0 s" bis "< 2 s". Bei Reduce Motion steht die Zahl sofort. */
-function Zahl({ wert }: { wert: string }) {
-  const anker = useRef<HTMLSpanElement>(null);
-  const sichtbar = useInView(anker, { once: true, margin: "-80px" });
-  const teile = wert.match(/^(\D*)(\d+)(.*)$/);
-  const ziel = teile ? Number(teile[2]) : 0;
-  // Endwert im Server-HTML: KI-Crawler fuehren kein JavaScript aus und lasen hier bis 12.9.2026
-  // "0 % dein Eigentum". Im Browser geht es nach dem Laden auf 0, das Hochzaehlen bleibt wie vorher.
-  const [stand, setStand] = useState(ziel);
-  useEffect(() => {
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setStand(0);
-  }, []);
-
-  useEffect(() => {
-    if (!sichtbar || ziel === 0) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setStand(ziel); return; }
-    const dauer = 950, start = performance.now();
-    let id = requestAnimationFrame(function tick(t: number) {
-      const p = Math.min(1, (t - start) / dauer);
-      setStand(Math.round(ziel * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) id = requestAnimationFrame(tick);
-    });
-    return () => cancelAnimationFrame(id);
-  }, [sichtbar, ziel]);
-
-  if (!teile) return <span ref={anker}>{wert}</span>;
-  // tabular-nums verhindert, dass die Zeile beim Zaehlen springt
-  return <span ref={anker} style={{ fontVariantNumeric: "tabular-nums" }}>{teile[1]}{stand}{teile[3]}</span>;
-}
-
-/** Kleine Kapitaelchen-Zeile ueber jeder Ueberschrift. */
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{children}</p>;
-}
-
 const rise = (delay = 0) => ({
   initial: { opacity: 0, y: 22 },
   whileInView: { opacity: 1, y: 0 },
@@ -129,7 +86,6 @@ const rise = (delay = 0) => ({
 
 
 /* Nur die Symbole bleiben hier, die Worte stehen in texte.ts. */
-const HEBEL_ICONS = [Search, ShieldCheck, Crosshair, Scan, Gem];
 
 const STACK_ICONS = [FileSearch, Radar, MessagesSquare, ListChecks];
 
@@ -286,10 +242,13 @@ function Sprachschalter({ isLab }: { isLab: boolean }) {
     <Link
       href={isLab ? `/webseiten-labor?lang=${andere.lang}` : andere.pfad}
       hrefLang={andere.lang}
-      className="fixed right-6 top-24 z-40 hidden items-center gap-2 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors md:inline-flex"
+      lang={andere.lang}
+      aria-label={andere.lang === "en" ? "Switch to English" : "Auf Deutsch wechseln"}
+      className="fixed right-20 top-4 z-40 inline-flex h-12 min-w-12 items-center justify-center rounded-full px-3 py-2 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold-light)] sm:right-6 sm:top-24 sm:h-auto sm:min-w-0 sm:rounded-none sm:px-4"
       style={{ border: "1px solid rgba(184,150,62,0.45)", background: "rgba(10,8,6,0.72)", color: "var(--gold-light)", backdropFilter: "blur(10px)" }}
     >
-      {andere.label}
+      <span className="sm:hidden" aria-hidden="true">{andere.lang.toUpperCase()}</span>
+      <span className="hidden sm:inline" aria-hidden="true">{andere.label}</span>
     </Link>
   );
 }
@@ -408,40 +367,23 @@ function Schaufenster({ galleryVariant }: { galleryVariant: "classic" | "salon" 
 function Werthebel() {
   const { T } = useT();
   return (
-    <section id="hebel" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
-      <Kulisse bild="werthebel" position="center 42%" />
+    <section id="hebel" aria-labelledby="benefits-heading" className={`${styles.section} ${styles.benefits}`}>
+      <Kulisse bild="werthebel" position="center 42%" staerke={0.58} />
       <Deckenlicht />
-      <div className="relative mx-auto max-w-6xl">
-        <motion.div {...rise()} className="max-w-3xl">
-          <Eyebrow>{T.werthebel.eyebrow}</Eyebrow>
-          <h2 className="mt-5 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.4rem, 5.6vw, 4.3rem)", letterSpacing: "-0.01em" }}>{T.werthebel.headline}</h2>
-          <Messinglinie className="mt-8" />
-        </motion.div>
-
-        {/* Eine Reihe Paneele mit Messingfuge dazwischen, keine schwebenden Kacheln */}
-        <div className="mt-14 grid gap-px sm:grid-cols-2 lg:grid-cols-5" style={{ background: "rgba(184,150,62,0.22)", border: "1px solid rgba(184,150,62,0.22)" }}>
-          {T.werthebel.hebel.map((h, i) => {
-            const Icon = HEBEL_ICONS[i];
-            return (
-              <motion.div key={h.term} {...rise(i * 0.07)} className="group relative p-7" style={{ background: PANEEL_BG }}>
-                <span aria-hidden className="absolute left-0 top-0 h-px w-0 transition-all duration-700 group-hover:w-full" style={{ background: MESSING }} />
-                <span className="font-mono text-[10px] tracking-[0.2em] text-gold/55">0{i + 1}</span>
-                <Icon size={21} className="mt-5 text-gold-light" strokeWidth={1.6} aria-hidden />
-                <h3 className="mt-5 font-serif text-[1.3rem] leading-tight text-cream">{h.term}</h3>
-                <p className="mt-2 text-[0.88rem] leading-snug text-warm-light/60">{h.line}</p>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Die eine Aussage der Sektion, als gerahmte Messingtafel */}
-        <motion.div {...rise(0.25)} className="relative mt-12" style={{ padding: "clamp(6px, 0.7vw, 10px)", background: MESSING, boxShadow: "0 34px 60px rgba(0,0,0,0.6)" }}>
-          <div className="px-8 py-12 text-center md:px-14 md:py-16" style={{ background: "linear-gradient(158deg, rgba(30,24,16,0.97), rgba(12,10,7,0.99))", boxShadow: "inset 0 0 40px rgba(0,0,0,0.6)" }}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold-light">{T.werthebel.ergebnisLabel}</p>
-            <Messinglinie breite="3.5rem" className="mx-auto mt-6" />
-            <p className="mx-auto mt-7 max-w-3xl font-serif leading-[1.15] text-cream" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>{T.werthebel.ergebnis}</p>
+      <div className={styles.inner}>
+        <div className={styles.benefitHeader}>
+          <div>
+            <p className={styles.eyebrow}>{T.werthebel.eyebrow}</p>
+            <h2 id="benefits-heading" className={styles.heading}>{T.werthebel.headline}</h2>
           </div>
-        </motion.div>
+          <p className={styles.intro}>{T.werthebel.intro}</p>
+        </div>
+        <BenefitGallery benefits={T.werthebel.hebel} />
+        <div className={styles.result}>
+          <p>{T.werthebel.ergebnisLabel}</p>
+          <p className={styles.resultStatement}>{T.werthebel.ergebnis}</p>
+          <p className={styles.resultNote}>{T.werthebel.ergebnisText}</p>
+        </div>
       </div>
     </section>
   );
@@ -452,52 +394,26 @@ function Werthebel() {
 function FuerWen() {
   const { T } = useT();
   return (
-    <section id="methode" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]">
-      <span aria-hidden className="ws-ghost pointer-events-none absolute right-0 top-10 hidden whitespace-nowrap font-serif uppercase lg:block" style={{ fontSize: "clamp(5rem, 11vw, 10rem)", lineHeight: 1, opacity: 0.4 }}>{T.rail[2]}</span>
-
-      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-        <motion.figure
-          initial={{ opacity: 0, y: 30, rotate: -2 }}
-          whileInView={{ opacity: 1, y: 0, rotate: -1.2 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="relative h-full min-h-[30rem] overflow-hidden"
-          style={{ border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 34px 60px rgba(80,60,20,0.3)", background: "#0B0906" }}
-        >
-          <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt={T.fuerWen.bildAlt} fill sizes="(min-width: 1024px) 42vw, 92vw" className="object-cover object-top" />
-          <figcaption className="absolute inset-x-0 bottom-0 p-6" style={{ background: "linear-gradient(to top, rgba(11,9,6,0.92), transparent)" }}>
-            <p className="font-serif text-[1.15rem] italic leading-snug text-cream">{T.fuerWen.zitat}</p>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-light">{T.fuerWen.zitatName}</p>
+    <section id="methode" className={`${styles.section} ${styles.audience}`}>
+      <div className={`${styles.inner} ${styles.audienceGrid}`}>
+        <figure className={styles.portrait}>
+          <div className={styles.portraitImage}>
+            <Image src="/webseiten/adler-stills/frontal-portraet-4zu5.webp" alt={T.fuerWen.bildAlt} fill sizes="(min-width: 1024px) 42vw, (min-width: 640px) 580px, 92vw" className="object-cover object-top" />
+          </div>
+          <figcaption>
+            <blockquote>{T.fuerWen.zitat}</blockquote>
+            <p>{T.fuerWen.zitatName}</p>
           </figcaption>
-        </motion.figure>
-
-        <div>
-          <motion.div {...rise()}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{T.fuerWen.eyebrow}</p>
-            <h2 className="mt-5 font-serif leading-[1.07]" style={{ fontSize: "clamp(2.2rem, 5vw, 3.7rem)", color: "#2A2520" }}>{T.fuerWen.headline}</h2>
-            <p className="mt-6 max-w-xl text-[1.06rem] leading-relaxed" style={{ color: "#46403A" }}>{T.fuerWen.lead}</p>
-          </motion.div>
-
-          {/* Eine Tafel statt zweier konkurrierender Kacheln. Die Absage steht
-              als ruhige Zeile darunter, nicht als gleichwertiger Kasten. */}
-          <motion.div {...rise(0.08)} className="relative mt-12" style={{ padding: "clamp(5px, 0.6vw, 9px)", background: MESSING, boxShadow: "0 30px 60px rgba(80,60,20,0.28)" }}>
-            <div className="px-7 py-9 md:px-11 md:py-11" style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)" }}>
-              <p className="font-serif leading-[1.12]" style={{ fontSize: "clamp(1.5rem, 3.1vw, 2.2rem)", color: "#2A2520" }}>{T.fuerWen.tafel}</p>
-              <Messinglinie breite="3rem" className="mt-6" />
-              <ul className="mt-8 space-y-0">
-                {T.fuerWen.fuerDich.map((t, i) => (
-                  <li key={t} className="flex items-baseline gap-5 py-5" style={{ borderTop: i === 0 ? "none" : "1px solid rgba(184,150,62,0.28)" }}>
-                    <span className="shrink-0 font-serif text-[1.35rem] leading-none" style={{ color: "var(--gold)" }}>0{i + 1}</span>
-                    <span className="text-[1.06rem] leading-snug" style={{ color: "#2A2520" }}>{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.p {...rise(0.16)} className="mt-7 text-[0.92rem] leading-relaxed" style={{ color: "#7A7268" }}>
-            {T.fuerWen.absage}
-          </motion.p>
+        </figure>
+        <div className={styles.audienceCopy}>
+          <p className={styles.eyebrow}>{T.fuerWen.eyebrow}</p>
+          <h2 className={styles.heading}>{T.fuerWen.headline}</h2>
+          <p className={styles.audienceLead}>{T.fuerWen.lead}</p>
+          <div className={styles.criteria}>
+            <h3>{T.fuerWen.tafel}</h3>
+            <ul>{T.fuerWen.fuerDich.map((text) => <li key={text}>{text}</li>)}</ul>
+          </div>
+          <p className={styles.audienceNote}>{T.fuerWen.absage}</p>
         </div>
       </div>
     </section>
@@ -689,81 +605,28 @@ function Analyse() {
 function Prozess() {
   const { T } = useT();
   return (
-    <section id="prozess" className="scroll-mt-20 px-6 py-[15vh]">
-      <div className="mx-auto max-w-6xl">
-        <motion.div {...rise()} className="max-w-2xl">
-          <Eyebrow>{T.prozess.eyebrow}</Eyebrow>
-          <h2 className="mt-5 font-serif leading-[1.08]" style={{ fontSize: "clamp(2rem, 4.4vw, 3.4rem)", color: "#2A2520" }}>{T.prozess.headline}</h2>
-        </motion.div>
-
-        {/* Fahrplan. Auf dem Handy laeuft die Schiene senkrecht neben den
-            Stationen, ab md waagerecht darueber. Beide zeichnen sich beim
-            Hereinscrollen von vorn nach hinten. */}
-        {/* Der Auslöser sitzt am Container, nicht an den Linien. Eine Linie, die
-            bei scaleY 0 startet, hat null Fläche, und whileInView haengt an einem
-            IntersectionObserver auf dem Element selbst: was keine Flaeche hat,
-            kommt nie ins Bild und bliebe fuer immer auf null. */}
-        <motion.div className="relative mt-16 md:mt-20" initial="ruhe" whileInView="da" viewport={{ once: true, margin: "-60px" }}>
-          {/* waagerecht, ab md */}
-          <motion.div
-            aria-hidden
-            className="absolute left-0 right-0 hidden origin-left md:block"
-            style={{ top: 27, height: 2, background: MESSING, boxShadow: "0 1px 3px rgba(110,82,24,0.35)" }}
-            variants={{ ruhe: { scaleX: 0 }, da: { scaleX: 1 } }}
-            transition={{ duration: 1.5, ease: EASE }}
-          />
-          <motion.span
-            aria-hidden
-            className="absolute right-0 hidden md:block"
-            style={{ top: 20, color: "var(--gold)" }}
-            variants={{ ruhe: { opacity: 0, x: -14 }, da: { opacity: 1, x: 0 } }}
-            transition={{ duration: 0.5, delay: 1.35, ease: EASE }}
-          >
-            <ArrowRight size={17} strokeWidth={2} />
-          </motion.span>
-
-          {/* senkrecht, bis md */}
-          <motion.div
-            aria-hidden
-            className="absolute bottom-10 top-7 origin-top md:hidden"
-            style={{ left: 27, width: 2, background: MESSING, boxShadow: "0 0 3px rgba(110,82,24,0.35)" }}
-            variants={{ ruhe: { scaleY: 0 }, da: { scaleY: 1 } }}
-            transition={{ duration: 1.6, ease: EASE }}
-          />
-
-          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
-            {T.prozess.schritte.map((p, i) => { const Icon = PROZESS_ICONS[i]; const n = `0${i + 1}`; return (
-              <div key={p.term} className="relative flex gap-6 md:block">
-                <motion.div
-                  className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full"
-                  style={{ background: "linear-gradient(158deg, #FBF7EF 0%, #F2EBDD 100%)", border: "1px solid rgba(184,150,62,0.5)", boxShadow: "0 10px 26px rgba(110,82,24,0.2)" }}
-                  initial={{ scale: 0.3, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.55, delay: 0.2 + i * 0.2, ease: EASE }}
-                >
-                  <Icon size={21} className="text-gold" strokeWidth={1.6} aria-hidden />
-                </motion.div>
-
-                <motion.div
-                  className="flex-1 p-7 md:mt-8"
-                  style={PAPIER}
-                  initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.6, delay: 0.34 + i * 0.2, ease: EASE }}
-                >
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-serif text-[2.2rem] leading-none text-gold">{n}</span>
-                    {p.tag && <span className="rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.16em]" style={{ background: "rgba(184,150,62,0.14)", color: "#8A6D2A", border: "1px solid rgba(184,150,62,0.4)" }}>{p.tag}</span>}
+    <section id="prozess" className={`${styles.section} ${styles.process}`}>
+      <div className={styles.inner}>
+        <p className={styles.eyebrow}>{T.prozess.eyebrow}</p>
+        <h2 className={styles.heading}>{T.prozess.headline}</h2>
+        <ol className={styles.steps}>
+          {T.prozess.schritte.map((step, index) => {
+            const Icon = PROZESS_ICONS[index];
+            return (
+              <li className={styles.step} key={step.term}>
+                <span className={styles.stepIcon}><Icon size={22} strokeWidth={1.5} aria-hidden="true" /></span>
+                <div className={styles.stepCopy}>
+                  <div className={styles.stepMeta}>
+                    <span className={styles.stepNumber} aria-hidden="true">0{index + 1}</span>
+                    {step.tag && <span className={styles.stepTag}>{step.tag}</span>}
                   </div>
-                  <h3 className="mt-3 font-serif text-[1.35rem]" style={{ color: "#2A2520" }}>{p.term}</h3>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed" style={{ color: "#46403A" }}>{p.line}</p>
-                </motion.div>
-              </div>
-            ); })}
-          </div>
-        </motion.div>
+                  <h3>{step.term}</h3>
+                  <p>{step.line}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
@@ -773,25 +636,23 @@ function Prozess() {
 function Fundament() {
   const { T } = useT();
   return (
-    <section id="fundament" className="relative scroll-mt-20 overflow-hidden px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
+    <section id="fundament" className={`${styles.section} ${styles.foundation}`}>
       <Kulisse bild="fundament" position="center 55%" staerke={0.38} />
-      <div className="relative mx-auto max-w-6xl">
-        <motion.div {...rise()} className="max-w-2xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{T.fundament.eyebrow}</p>
-          <h2 className="mt-5 font-serif leading-[1.06] text-cream" style={{ fontSize: "clamp(2.4rem, 5.6vw, 4.3rem)", letterSpacing: "-0.01em" }}>{T.fundament.headline}</h2>
-        </motion.div>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {T.fundament.punkte.map((f, i) => (
-            <motion.div key={f.term} {...rise(i * 0.08)} className="p-7" style={{ background: "linear-gradient(158deg, rgba(41,33,22,0.9), rgba(15,12,9,0.96))", border: "1px solid rgba(184,150,62,0.18)" }}>
-              <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(2.2rem, 4vw, 3rem)" }}><Zahl wert={f.stat} /></p>
-              <h3 className="mt-3 font-mono text-[12px] uppercase tracking-[0.2em] text-cream/90">{f.term}</h3>
-              <p className="mt-3 text-[0.94rem] leading-relaxed text-warm-light/70">{f.line}</p>
-            </motion.div>
+      <div className={styles.inner}>
+        <p className={styles.eyebrow}>{T.fundament.eyebrow}</p>
+        <h2 className={styles.heading}>{T.fundament.headline}</h2>
+        <div className={styles.facts}>
+          {T.fundament.punkte.map((fact) => (
+            <article className={styles.fact} key={fact.term}>
+              <p className={styles.stat}>{fact.stat}</p>
+              <div>
+                <h3>{fact.term}</h3>
+                <p className={styles.factDescription}>{fact.line}</p>
+              </div>
+            </article>
           ))}
         </div>
-
-        <motion.p {...rise(0.15)} className="mx-auto mt-12 max-w-2xl text-center font-serif text-[1.25rem] italic leading-relaxed text-warm-light/70">{T.fundament.fussnote}</motion.p>
+        <p className={styles.foundationNote}>{T.fundament.fussnote}</p>
       </div>
     </section>
   );
@@ -842,7 +703,7 @@ function Pflege() {
                   nie hinter einem Hover: eine Preiskarte, die ihren Preis erst beim
                   Zeigen verraet, verliert jeden Handy-Besucher. Die Bewegung liegt
                   stattdessen im Bild und in der Messingfuge ueber dem Preis. */}
-              <div className="relative flex h-[32rem] flex-col overflow-hidden">
+              <div className="relative flex h-full min-h-[34rem] flex-col overflow-hidden">
                 <Image src={p.bild} alt={p.alt} fill sizes="(min-width: 768px) 33vw, 92vw" className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]" />
                 <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,7,5,0.97) 30%, rgba(8,7,5,0.74) 58%, rgba(8,7,5,0.3))" }} />
 
