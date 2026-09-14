@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { clamp, windowView, EXHIBITS, type HoverAnchor, type Room } from "./studio-journey";
-import { cinemaShot, filmAt, LONDON_ASSETS, LONDON_FILMS, stillShot, WINDOW_OBJECTS } from "./studio-cinema";
+import { cinemaShot, filmAt, LONDON_ASSETS, LONDON_FILMS, SALON_FILMS, stillShot, WINDOW_OBJECTS } from "./studio-cinema";
 import styles from "./StudioCinema.module.css";
+import { SALON } from "./studio-gallery";
 import { STUDIO_TEXTE, type Lang } from "./studio-texte";
 
 type Props = {
   lang?: Lang;
+  galleryVariant?: "classic" | "salon";
   progress: RefObject<number>; distance: RefObject<number>; exploring: boolean; room: Room; flat: boolean; reduced: boolean;
   selected: number | null; interactive: boolean;
   onSelect: (index: number) => void;
@@ -18,8 +20,9 @@ type Props = {
   project: { image: string; title: string; url: string };
 };
 
-export default function StudioCinema({ lang = "de", progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onDoor, onReady, onFailure, onInvalidate, project }: Props) {
+export default function StudioCinema({ lang = "de", galleryVariant = "classic", progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onDoor, onReady, onFailure, onInvalidate, project }: Props) {
   const S = STUDIO_TEXTE[lang];
+  const filmSources = galleryVariant === "salon" ? SALON_FILMS : LONDON_FILMS;
   const root = useRef<HTMLDivElement>(null);
   const plates = useRef<(HTMLDivElement | null)[]>([]);
   const door = useRef<HTMLSpanElement>(null);
@@ -96,7 +99,7 @@ export default function StudioCinema({ lang = "de", progress, distance, explorin
   }} onPointerLeave={() => { targetPointer.current = 0; refresh.current?.(); }}>
     <div className={styles.plane}>
       {(["window", "reception", "gallery"] as const).map((key, i) => <div key={key} ref={node => { plates.current[i] = node; }} className={styles.plate} style={{ opacity: key === room ? 1 : 0 }}>
-        <Image src={LONDON_ASSETS[key]} alt={key === "window" ? S.bildAlt.window : key === "reception" ? S.bildAlt.reception : S.bildAlt.gallery} fill sizes="(max-width: 650px) 160vw, 100vw" unoptimized onLoad={key === "window" ? onReady : undefined} onError={onFailure} loading={key === "window" ? "eager" : "lazy"} className={styles.photograph} />
+        <Image src={key === "gallery" && galleryVariant === "salon" ? SALON.image : LONDON_ASSETS[key]} alt={key === "window" ? S.bildAlt.window : key === "reception" ? S.bildAlt.reception : S.bildAlt.gallery} fill sizes="(max-width: 650px) 160vw, 100vw" unoptimized onLoad={key === "window" ? onReady : undefined} onError={onFailure} loading={key === "window" ? "eager" : "lazy"} className={styles.photograph} />
         {key === "window" && <>
           <span ref={aperture} className={styles.aperture} aria-hidden="true"><span className={styles.inside} /><span ref={door} className={styles.doorLeaf} /></span>
           {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.object} style={{ left: `${object.x}%`, top: `${object.y}%`, width: `${object.w}%`, height: `${object.h}%`, "--object-shape": object.shape, "--crop-size": `${10000 / object.w}% ${10000 / object.h}%`, "--crop-position": `${object.x / (100 - object.w) * 100}% ${object.y / (100 - object.h) * 100}%` } as CSSProperties} type="button" aria-label={`${S.exponate[index].object}: ${S.exponate[index].label}`} aria-pressed={selected === index} tabIndex={-1} disabled={room !== "window" || !interactive} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span aria-hidden="true" /></button>)}
@@ -105,9 +108,9 @@ export default function StudioCinema({ lang = "de", progress, distance, explorin
           </div>
           <button className={styles.doorTarget} aria-label={S.tuerLabel} type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
         </>}
-        {key === "gallery" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
+        {key === "gallery" && galleryVariant === "classic" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
       </div>)}
-      {!flat && !reduced && LONDON_FILMS.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={handy ? src.replace(".mp4", "-mobil.mp4") : src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
+      {!flat && !reduced && filmSources.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={handy ? src.replace(".mp4", "-mobil.mp4") : src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadStart={() => { readyFilms.current.delete(i); failedFilms.current.delete(i); }} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}
     </div>
   </div>;
 }

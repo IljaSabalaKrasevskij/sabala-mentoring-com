@@ -1,31 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { auditNotionChildren, parseAuditRequest, type AuditRequest } from "@/lib/audit-request";
 
 export const runtime = "nodejs";
-
-type AuditRequest = {
-  url: string;
-  email: string;
-  consent: boolean;
-};
-
-function validateUrl(raw: unknown): string | null {
-  if (typeof raw !== "string") return null;
-  try {
-    const normalized = raw.startsWith("http") ? raw : `https://${raw}`;
-    const parsed = new URL(normalized);
-    return parsed.toString();
-  } catch {
-    return null;
-  }
-}
-
-function validateEmail(raw: unknown): string | null {
-  if (typeof raw !== "string") return null;
-  const trimmed = raw.trim();
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) ? trimmed : null;
-}
 
 const isLocalDev = process.env.NODE_ENV !== "production" && !process.env.VERCEL;
 
@@ -35,7 +13,7 @@ async function saveToFile(payload: AuditRequest): Promise<string | null> {
     const dir = process.env.AUDIT_REQUESTS_DIR ||
       path.join(process.env.HOME || "", "Documents", "_Obsidian_Vault", "04_Ressourcen", "Audit-Requests");
     await fs.mkdir(dir, { recursive: true });
-    const filename = `${new Date().toISOString().replace(/[:.]/g, "-")}_${payload.email.replace(/[^a-z0-9]/gi, "-")}.json`;
+    const filename = `${new Date().toISOString().replace(/[:.]/g, "-")}_${payload.email.replace(/[^a-z0-9]/gi, "-").slice(0, 100)}.json`;
     const filepath = path.join(dir, filename);
     await fs.writeFile(filepath, JSON.stringify({ ...payload, receivedAt: new Date().toISOString() }, null, 2), "utf-8");
     return filepath;
@@ -55,6 +33,7 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pa
   try {
     const res = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",
+      signal: AbortSignal.timeout(10000),
       headers: {
         "Authorization": `Bearer ${NOTION_TOKEN}`,
         "Content-Type": "application/json",
@@ -63,11 +42,12 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pa
       body: JSON.stringify({
         parent: { database_id: NOTION_DB_ID },
         properties: {
-          "URL": { url: payload.url },
+          "URL": { url: payload.url || null },
           "Email": { email: payload.email },
           "Status": { select: { name: "Neu" } },
           "Eingegangen": { date: { start: new Date().toISOString() } },
         },
+        ...(payload.qualification ? { children: auditNotionChildren(payload) } : {}),
       }),
     });
     if (!res.ok) {
@@ -81,7 +61,12 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pa
   }
 }
 
-async function pushNtfy(payload: AuditRequest): Promise<{ sent: boolean; reason?: string; channel?: string }> {
+async function pushNtfy(payload: AuditRequest, pageId?: string): Promise<{ sent: boolean; reason?: string; channel?: string }> {
+  const q = payload.qualification;
+  const summary = q
+    ? `${q.company} · ${q.industry}\n${q.name} · ${q.role}\n${payload.email}\n${payload.url || "Noch keine Webseite"}\n\n${q.goal.slice(0, 300)}`
+    : `URL: ${payload.url}\nEmail: ${payload.email}`;
+  const notionLink = pageId ? `https://www.notion.so/${pageId.replaceAll("-", "")}` : "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12";
   // Primary: ntfy.sh (Open-Source, Self-hosted-ready, robust)
   const NTFY_TOPIC = process.env.NTFY_TOPIC;
   const NTFY_SERVER = process.env.NTFY_SERVER || "https://ntfy.sh";
@@ -91,15 +76,16 @@ async function pushNtfy(payload: AuditRequest): Promise<{ sent: boolean; reason?
     const ntfyPayload = {
       topic: NTFY_TOPIC,
       title: "Neue Audit-Anfrage",
-      message: `URL: ${payload.url}\nEmail: ${payload.email}\n\nTap zum Öffnen in Notion (Status = Neu).`,
+      message: `${summary}\n\nAlle Angaben in Notion ansehen.`,
       tags: ["dart", "email"],
       priority: 4,
-      click: "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12",
+      click: notionLink,
     };
 
     try {
       const res = await fetch(NTFY_SERVER, {
         method: "POST",
+        signal: AbortSignal.timeout(8000),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(ntfyPayload),
       });
@@ -117,14 +103,10 @@ async function pushNtfy(payload: AuditRequest): Promise<{ sent: boolean; reason?
   const PHONE = process.env.CALLMEBOT_PHONE;
   const KEY = process.env.CALLMEBOT_API_KEY;
   if (PHONE && KEY) {
-    const message =
-      `🎯 Neue Audit-Anfrage\n\n` +
-      `🌐 ${payload.url}\n` +
-      `📧 ${payload.email}\n\n` +
-      `Notion: https://www.notion.so/sabala (Status = Neu)`;
+    const message = `Neue Analyse-Anfrage\n\n${summary}\n\n${notionLink}`;
     try {
       const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(PHONE)}&text=${encodeURIComponent(message)}&apikey=${encodeURIComponent(KEY)}`;
-      const res = await fetch(url, { method: "GET" });
+      const res = await fetch(url, { method: "GET", signal: AbortSignal.timeout(8000) });
       if (!res.ok) {
         const errText = await res.text();
         return { sent: false, reason: `CallMeBot ${res.status}: ${errText.slice(0, 200)}`, channel: "callmebot" };
@@ -146,45 +128,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Ungültiger Request-Body." }, { status: 400 });
   }
 
-  const data = body as Partial<AuditRequest>;
-  const url = validateUrl(data.url);
-  const email = validateEmail(data.email);
+  const parsed = parseAuditRequest(body);
+  if (!parsed.data) return NextResponse.json({ error: Object.values(parsed.errors)[0], errors: parsed.errors }, { status: 400 });
+  const payload = parsed.data;
 
-  if (!url) return NextResponse.json({ error: "Bitte gib eine gültige Webseiten-URL ein." }, { status: 400 });
-  if (!email) return NextResponse.json({ error: "Bitte gib eine gültige Email-Adresse ein." }, { status: 400 });
-  if (!data.consent) return NextResponse.json({ error: "Datenschutz-Einwilligung fehlt." }, { status: 400 });
-
-  const payload: AuditRequest = { url, email, consent: true };
-
-  const [fileResult, notionResult, pushResult] = await Promise.all([
-    saveToFile(payload),
-    saveToNotion(payload),
-    pushNtfy(payload),
-  ]);
-
+  const [fileResult, notionResult] = await Promise.all([saveToFile(payload), saveToNotion(payload)]);
   if (!notionResult.saved) console.warn("[audit-request] Notion:", notionResult.reason);
-  if (!pushResult.sent) console.warn(`[audit-request] Push (${pushResult.channel || "none"}):`, pushResult.reason);
-
-  const anyPersistence = notionResult.saved || !!fileResult;
-  if (!anyPersistence) {
-    console.error("[audit-request] Kein Save-Backend erreichbar. Payload verloren:", payload);
-    return NextResponse.json(
-      { error: "Speichern fehlgeschlagen. Versuch es bitte später." },
-      { status: 500 }
-    );
+  if (!notionResult.saved && !fileResult) {
+    console.error("[audit-request] Kein Save-Backend erreichbar. Anfrage nicht gespeichert.");
+    return NextResponse.json({ error: "Speichern fehlgeschlagen. Versuch es bitte später." }, { status: 500 });
   }
 
-  return NextResponse.json({
-    success: true,
-    message: "Audit-Anfrage empfangen. Wir melden uns innerhalb von 48 Stunden.",
-    storage: {
-      file: !!fileResult,
-      notion: notionResult.saved,
-      push: pushResult.sent,
-      pushChannel: pushResult.channel,
-      // Debug-Info nur in Entwicklungsphase — entfernen sobald stabil
-      pushReason: pushResult.sent ? undefined : pushResult.reason,
-      notionReason: notionResult.saved ? undefined : notionResult.reason,
-    },
-  });
+  // Notify only after durable storage; a failed notification must not lose a saved lead.
+  const pushResult = await pushNtfy(payload, notionResult.pageId);
+  if (!pushResult.sent) console.warn(`[audit-request] Push (${pushResult.channel || "none"}):`, pushResult.reason);
+  return NextResponse.json({ success: true, message: payload.lang === "en" ? "Your enquiry has been received. Ilja will contact you personally by email." : "Deine Anfrage ist angekommen. Ilja meldet sich persönlich per E-Mail." });
 }

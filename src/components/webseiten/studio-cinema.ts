@@ -12,6 +12,13 @@ export const LONDON_FILMS: readonly string[] = [
   "/webseiten/studio-london-v1/gallery-walk.mp4",
 ];
 
+// One continuous take through the reception doorway, ending at the first salon frame.
+// A distinct filename prevents cached playback of the rejected wipe montage.
+export const SALON_FILMS: readonly string[] = [
+  LONDON_FILMS[0],
+  "/webseiten/studio-salon-v2/gallery-doorway-v3.mp4",
+];
+
 // Coordinates are percentages of the approved, uncropped 1672 × 941 plate.
 // Image, hit areas and gallery inserts share one plane, including on mobile.
 export const WINDOW_OBJECTS = [

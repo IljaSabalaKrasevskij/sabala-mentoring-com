@@ -9,6 +9,8 @@ import { APPROACH_SCREENS, caseSlot, ease, EXHIBITS, GALLERY_IDS, journeyProgres
 import styles from "./StudioJourney.module.css";
 
 import StudioCinema from "./StudioCinema";
+import StudioGallery from "./StudioGallery";
+import StudioConsultation from "./StudioConsultation";
 import { LONDON_ASSETS } from "./studio-cinema";
 import { STUDIO_TEXTE, type Lang } from "./studio-texte";
 const CASES = GALLERY_IDS.flatMap(id => { const c = CASE_STUDIES.find(item => item.id === id); return c?.image ? [c] : []; });
@@ -23,7 +25,7 @@ function ScrollCue() {
   return <span className={styles.scrollCue} aria-hidden="true"><span className={styles.scrollMouse}><span /></span><ArrowDown size={12} /></span>;
 }
 
-export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
+export default function StudioJourney({ lang = "de", galleryVariant = "classic" }: { lang?: Lang; galleryVariant?: "classic" | "salon" }) {
   const S = STUDIO_TEXTE[lang];
   const section = useRef<HTMLElement>(null);
   const progress = useRef(0);
@@ -47,6 +49,9 @@ export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
   const [pinned, setPinned] = useState<number | null>(null);
   const [service, setService] = useState<number | null>(null);
   const [caseIndex, setCaseIndex] = useState(0);
+  const [consultation, setConsultation] = useState(false);
+  const openConsultation = useCallback(() => setConsultation(true), []);
+  const closeConsultation = useCallback(() => setConsultation(false), []);
   const reduced = useSyncExternalStore(subscribeMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => false);
   const flat = unavailable || quiet;
   const selected = pinned ?? hovered;
@@ -136,6 +141,17 @@ export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
     }
     setExpanded(true);
   };
+  const browseOn = useCallback(() => {
+    setConsultation(false);
+    requestAnimationFrame(() => {
+      const target = document.getElementById("hebel");
+      if (!target) return;
+      if (lenis) { lenis.start(); lenis.scrollTo(target, { immediate: true, force: true }); }
+      else target.scrollIntoView({ behavior: "instant", block: "start" });
+      const heading = target.querySelector("h2");
+      if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+    });
+  }, [lenis]);
   const onDoor = useCallback(() => go("reception"), [go]);
   const onInvalidate = useCallback((callback: (() => void) | null) => { invalidate.current = callback; }, []);
   const onReady = useCallback(() => { setReady(true); invalidate.current?.(); }, []);
@@ -169,7 +185,7 @@ export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
       </header>
 
       <div className={styles.scene} style={{ cursor: hovered !== null ? "pointer" : "auto" }}>
-        {unavailable || !near ? <div className={styles.poster}><Image src={unavailable ? "/webseiten/schaufenster/master.jpg" : LONDON_ASSETS.window} alt={S.bildAlt.poster} fill sizes="100vw" /></div> : <StudioCinema lang={lang} progress={progress} distance={distance} exploring={exploring} room={room} flat={flat} reduced={reduced} selected={selected} interactive={(!travelling || flat) && (room !== "window" || exploring)} onSelect={onSelect} onHover={onHover} onDoor={onDoor} onReady={onReady} onFailure={onFailure} onInvalidate={onInvalidate} project={{ image: project.image!, title: project.title.de, url: project.url ?? "/case-studies" }} />}
+        {unavailable || !near ? <div className={styles.poster}><Image src={unavailable ? "/webseiten/schaufenster/master.jpg" : LONDON_ASSETS.window} alt={S.bildAlt.poster} fill sizes="100vw" /></div> : <StudioCinema galleryVariant={galleryVariant} lang={lang} progress={progress} distance={distance} exploring={exploring} room={room} flat={flat} reduced={reduced} selected={selected} interactive={(!travelling || flat) && (room !== "window" || exploring)} onSelect={onSelect} onHover={onHover} onDoor={onDoor} onReady={onReady} onFailure={onFailure} onInvalidate={onInvalidate} project={{ image: project.image!, title: project.title.de, url: project.url ?? "/case-studies" }} />}
         <div className={styles.vignette} aria-hidden="true" />
       </div>
 
@@ -215,7 +231,7 @@ export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
         <div className={styles.questionRow} aria-label={S.fragenAnGastgeber}>{S.fragen.map((q, i) => <button key={q.question} type="button" aria-pressed={service === i} aria-controls="studio-answer" onClick={() => chooseQuestion(i)}><span>{q.question}</span><MoveUpRight size={16} aria-hidden="true" /></button>)}</div>
       </div>}
 
-      {room === "gallery" && !travelling && <div className={styles.gallery}>
+      {room === "gallery" && !travelling && (galleryVariant === "salon" ? <StudioGallery lang={lang} reduced={reduced || flat} onBack={() => go("reception")} onConsult={openConsultation} paused={consultation} /> : <div className={styles.gallery}>
         <div className={styles.galleryHeading}><h2>{S.ausgewaehlteArbeiten}</h2></div>
         <article className={styles.casePanel} key={project.id}>
           <p className={styles.caseIndustry}>{project.industry.de}</p><h3>{project.title.de.split(":")[0]}</h3>
@@ -231,9 +247,10 @@ export default function StudioJourney({ lang = "de" }: { lang?: Lang }) {
           <button type="button" className={styles.railStep} aria-label={S.naechste} onClick={() => stepCase(1)}><ChevronRight size={17} aria-hidden="true" /></button>
         </div>
         <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} />{S.raum.reception}</button><a href="#analyse">{S.projektBesprechen}<ArrowRight size={16} /></a></div>
-      </div>}
+      </div>)}
 
-      <footer className={styles.bottomBar}><span>{unavailable ? S.hinweis.unavailable : flat ? S.hinweis.flat : room === "window" ? exploring ? S.hinweis.entdecken : S.hinweis.ersterEindruck : room === "reception" && service !== 2 ? S.hinweis.wasWissen : S.hinweis.weitergehen}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}</footer>
+      <footer className={styles.bottomBar}><span>{unavailable ? S.hinweis.unavailable : flat ? S.hinweis.flat : room === "window" ? exploring ? S.hinweis.entdecken : S.hinweis.ersterEindruck : room === "reception" && service !== 2 ? S.hinweis.wasWissen : galleryVariant === "salon" && room === "gallery" ? "" : S.hinweis.weitergehen}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}</footer>
     </div>
+    {consultation && <StudioConsultation lang={lang} onClose={closeConsultation} onBrowse={browseOn} />}
   </section>;
 }

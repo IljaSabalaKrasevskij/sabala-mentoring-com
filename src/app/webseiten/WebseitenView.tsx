@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, useScroll, useSpring } from "motion/react";
-import { createContext, useContext, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type CSSProperties } from "react";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
+import AnalysisForm from "@/components/webseiten/AnalysisForm";
+import { AnalysisSessionProvider } from "@/components/webseiten/AnalysisSession";
 import { caseSlot } from "@/components/webseiten/studio-journey";
 import { SonarGrid } from "@/components/ui/SonarGrid";
 import { TEXTE, ANDERE_SPRACHE, type Lang } from "./texte";
@@ -18,8 +20,8 @@ import {
 /* ─────────────────────────────────────────────────────────────────────────
    /webseiten — Sales-Page v6 (12.9.2026)
 
-   Loest v5 ab. Die Fassung entstand als Arbeitskopie unter /webseiten-labor
-   und wurde nach Iljas Freigabe hierher uebernommen, der Laborordner ist weg.
+   Galerie und Beratungsraum am 14.9.2026 nach Freigabe aus dem Labor uebernommen.
+   Das Labor bleibt mit noindex als eigene Vorschau verfuegbar.
 
    Aufbau: Adler-Hero fuehrt ins Schaufenster, nicht in die Analyse. Dann der
    begehbare Rundgang (Schaufenster, Empfang, Galerie), Werthebel, Fuer wen,
@@ -231,17 +233,18 @@ const schemaFuer = (lang: Lang) => {
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
-export default function WebseitenView({ lang }: { lang: Lang }) {
+export default function WebseitenView({ lang, galleryVariant = "salon", isLab = false }: { lang: Lang; galleryVariant?: "classic" | "salon"; isLab?: boolean }) {
   return (
     <SpracheContext.Provider value={{ T: TEXTE[lang], lang }}>
-    <Sprachschalter />
+    <AnalysisSessionProvider>
+    <Sprachschalter isLab={isLab} />
     <main className="flex-1" style={{ background: "var(--cream)" }}>
       {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFuer(lang)).replace(/</g, "\\u003c") }} />
       <ScrollRail />
       <Hero />
       <Marquee />
-      <Schaufenster />
+      <Schaufenster galleryVariant={galleryVariant} />
       <Werthebel />
       <FuerWen />
       <Galerie />
@@ -269,18 +272,19 @@ export default function WebseitenView({ lang }: { lang: Lang }) {
         }
       `}</style>
     </main>
+    </AnalysisSessionProvider>
     </SpracheContext.Provider>
   );
 }
 
 /** Wechsel in die andere Sprache. Ein echter Link auf die andere Route, kein
     Umschalten im Zustand: nur so kann Google beide Fassungen sehen. */
-function Sprachschalter() {
+function Sprachschalter({ isLab }: { isLab: boolean }) {
   const { lang } = useT();
   const andere = ANDERE_SPRACHE[lang];
   return (
     <Link
-      href={andere.pfad}
+      href={isLab ? `/webseiten-labor?lang=${andere.lang}` : andere.pfad}
       hrefLang={andere.lang}
       className="fixed right-6 top-24 z-40 hidden items-center gap-2 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors md:inline-flex"
       style={{ border: "1px solid rgba(184,150,62,0.45)", background: "rgba(10,8,6,0.72)", color: "var(--gold-light)", backdropFilter: "blur(10px)" }}
@@ -394,10 +398,10 @@ function Marquee() {
 }
 
 /* ── 3 · Schaufenster (Metapher + Pain) ────────────────────────────────── */
-function Schaufenster() {
+function Schaufenster({ galleryVariant }: { galleryVariant: "classic" | "salon" }) {
   // Zusammenhängender 3D-Rundgang: Schaufenster, Empfang, ausgewählte Arbeiten.
   const { lang } = useT();
-  return <StudioJourney lang={lang} />;
+  return <StudioJourney lang={lang} galleryVariant={galleryVariant} />;
 }
 
 /* ── 4 · Werthebel (ROI-Kette) ─────────────────────────────────────────── */
@@ -614,45 +618,7 @@ function Galerie() {
 
 /* ── 7 · Analyse (das eine Angebot + Formular) ─────────────────────────── */
 function Analyse() {
-  const { T } = useT();
-  const [url, setUrl] = useState("");
-  const [email, setEmail] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [error, setError] = useState("");
-
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
-    let normalized: string;
-    try {
-      normalized = new URL(url.startsWith("http") ? url : `https://${url.trim()}`).toString();
-    } catch {
-      setError("Bitte gib eine gültige Webseiten-Adresse ein.");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError("Bitte gib eine gültige E-Mail-Adresse ein.");
-      return;
-    }
-    if (!consent) {
-      setError("Bitte bestätige die Datenschutzhinweise.");
-      return;
-    }
-    setState("loading");
-    try {
-      const res = await fetch("/api/audit-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: normalized, email: email.trim(), consent: true }),
-      });
-      if (!res.ok) throw new Error();
-      setState("success");
-    } catch {
-      setState("error");
-      setError("Das hat gerade nicht geklappt. Schreib mir alternativ direkt an sabala@sabala-mentoring.com");
-    }
-  };
+  const { T, lang } = useT();
 
   return (
     <section id="analyse" className="scroll-mt-20 px-6 py-[13vh]">
@@ -693,43 +659,8 @@ function Analyse() {
 
             {/* Formular */}
             <div className="lg:pt-2">
-              <motion.div {...rise(0.12)} className="p-7 md:p-9" style={{ background: "rgba(250,248,245,0.035)", border: "1px solid rgba(184,150,62,0.35)" }}>
-                {state === "success" ? (
-                  <div className="py-8 text-center">
-                    <p className="font-serif text-[1.8rem] text-cream">{T.analyse.dankeTitel}</p>
-                    <p className="mx-auto mt-4 max-w-md text-[1rem] leading-relaxed text-warm-light/75">{T.analyse.dankeText}</p>
-                  </div>
-                ) : (
-                  <form onSubmit={submit} noValidate>
-                    <p className="font-serif text-[1.5rem] text-cream">{T.analyse.formTitel}</p>
-                    <div className="mt-6 space-y-4">
-                      <label className="block">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-warm-light/60">{T.analyse.feldWebseite}</span>
-                        <input type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder={T.analyse.platzhalterWebseite} className="mt-2 w-full px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
-                      </label>
-                      <label className="block">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-warm-light/60">{T.analyse.feldMail}</span>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={T.analyse.platzhalterMail} className="mt-2 w-full px-4 py-3.5 text-[1rem] text-cream placeholder:text-warm-light/30 focus:outline-none" style={{ background: "rgba(10,8,6,0.6)", border: "1px solid rgba(184,150,62,0.3)" }} />
-                      </label>
-                    </div>
-
-                    <label className="mt-5 flex cursor-pointer items-start gap-3">
-                      <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 accent-[var(--gold)]" />
-                      <span className="text-[0.85rem] leading-relaxed text-warm-light/60">
-                        Ich bin einverstanden, dass meine Angaben zur Erstellung und Zusendung der
-                        Analyse verarbeitet werden. Details in der{" "}
-                        <Link href="/datenschutz" className="underline decoration-warm-light/30 underline-offset-2 hover:text-warm-light/90">{T.analyse.datenschutz}</Link>.
-                      </span>
-                    </label>
-
-                    {error && <p className="mt-4 text-[0.9rem] text-[#E8A9A0]">{error}</p>}
-
-                    <button type="submit" disabled={state === "loading"} className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gold-light px-9 py-4 font-mono text-sm uppercase tracking-[0.12em] text-tech-bg transition-colors hover:bg-gold disabled:opacity-60">
-                      {state === "loading" ? "Wird gesendet ..." : "Potenzial-Analyse anfordern"}
-                      {state !== "loading" && <ArrowRight size={16} aria-hidden />}
-                    </button>
-                  </form>
-                )}
+              <motion.div {...rise(0.12)} className="p-5 sm:p-7 md:p-9" style={{ background: "rgba(250,248,245,0.035)", border: "1px solid rgba(184,150,62,0.35)" }}>
+                <AnalysisForm lang={lang} />
               </motion.div>
 
               {/* Vertrauens-Anker: echte Person. Vorher ein 56-px-Adlerkopf neben
