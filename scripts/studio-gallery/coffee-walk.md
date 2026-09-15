@@ -1,6 +1,6 @@
 # From the gallery to the coffee table
 
-The gallery CTA opens a personal invitation with black coffee, coffee with sugar, or no coffee. The eagle replies in the speech bubble. The visitor chooses when to follow him. The existing analysis form starts in the seated scene. Coffee preferences stay in component state and are never submitted as lead data.
+The gallery CTA opens a personal invitation with black coffee, coffee with sugar, or no coffee. Choosing a drink immediately starts the walk; there is no separate confirmation screen or second button. The existing analysis form starts in the seated scene. Coffee preferences stay in component state and are never submitted as lead data.
 
 ## Media
 
@@ -22,6 +22,6 @@ ffmpeg -i original.mp4 -an -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -m
 ffmpeg -i original.mp4 -an -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart coffee-walk-v1-mobil.mp4
 ```
 
-The film starts after an explicit click. Reduced motion and the visitor's “Without camera moves” setting preserve the dialogue and go directly to the table. A skip button remains available during playback. Loading errors, rejected playback and an eight-second stall fall back to the existing seated photograph. Escape restores focus to the invitation button at the same gallery work. Background scrolling is stopped while the dialog is open.
+The film starts with the coffee choice. The gallery stays visible until a decoded video frame is available, and the last frame stays underneath until the destination photograph has loaded. Only interface elements fade in; the whole room never fades through black. Reduced motion and the visitor's “Without camera moves” setting preserve the dialogue and go directly to the table. A skip button remains available during playback. Loading errors, rejected playback and an eight-second stall fall back to the existing seated photograph. Escape restores focus to the invitation button at the same gallery work. Background scrolling is stopped while the dialog is open.
 
 Generation requests, source footage and frame inspections: workspace `work/coffee-walk-20260915/`.

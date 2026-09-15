@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useLenis } from "lenis/react";
-import { ArrowLeft, ArrowRight, Check, Coffee } from "lucide-react";
+import { ArrowLeft, ArrowRight, Coffee } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import AnalysisForm from "./AnalysisForm";
@@ -41,6 +41,7 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
   const [phase, setPhase] = useState<CoffeePhase>("invitation");
   const [coffee, setCoffee] = useState<CoffeeChoice | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [tableReady, setTableReady] = useState(false);
   const [mobileFilm] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 699px)").matches);
   const [filmFailed, setFilmFailed] = useState(false);
   const [galleryFailed, setGalleryFailed] = useState(false);
@@ -89,6 +90,17 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     }
     lastPlayback.current = performance.now();
     let cancelled = false;
+    let decodedFrame: number | undefined;
+    let paintFrame = 0;
+    const revealFilm = () => { if (!cancelled) setPlaying(true); };
+    // Keep the gallery underneath until the browser has an actual video frame.
+    const revealFallback = () => {
+      if (node.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        paintFrame = requestAnimationFrame(() => { paintFrame = requestAnimationFrame(revealFilm); });
+      }
+    };
+    if (typeof node.requestVideoFrameCallback === "function") decodedFrame = node.requestVideoFrameCallback(revealFilm);
+    else node.addEventListener("playing", revealFallback);
     node.play().catch(() => { if (!cancelled) setPhase("seated"); });
     // A stalled connection must never strand the visitor between the two rooms.
     const watchdog = window.setInterval(() => {
@@ -100,14 +112,26 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
       else node.play().catch(() => { if (!cancelled) setPhase("seated"); });
     };
     document.addEventListener("visibilitychange", visibility);
-    return () => { cancelled = true; node.pause(); clearInterval(watchdog); document.removeEventListener("visibilitychange", visibility); };
+    return () => {
+      cancelled = true;
+      node.pause();
+      if (decodedFrame !== undefined) node.cancelVideoFrameCallback(decodedFrame);
+      cancelAnimationFrame(paintFrame);
+      node.removeEventListener("playing", revealFallback);
+      clearInterval(watchdog);
+      document.removeEventListener("visibilitychange", visibility);
+    };
   }, [phase, reduced, filmFailed]);
 
   useEffect(() => {
     if (seated) heading.current?.focus({ preventScroll: true });
   }, [seated]);
 
-  const takeWalk = () => setPhase(reduced || filmFailed ? "seated" : "walking");
+  const takeWalk = (choice: CoffeeChoice) => {
+    setCoffee(choice);
+    setPhase(reduced || filmFailed ? "seated" : "walking");
+    heading.current?.focus({ preventScroll: true });
+  };
   const browse = () => { restoreFocusRef.current = false; onBrowse(); };
 
   const start = () => {
@@ -119,19 +143,19 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     });
   };
 
-  return createPortal(<dialog ref={dialog} className={styles.room} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); onClose(); }} data-lenis-prevent data-phase={phase} data-quiet={reduced} data-consultation-state={seated ? started ? state === "success" ? "success" : "questions" : "welcome" : phase}>
+  return createPortal(<dialog ref={dialog} className={styles.room} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); onClose(); }} data-lenis-prevent data-phase={phase} data-table-ready={tableReady} data-quiet={reduced} data-consultation-state={seated ? started ? state === "success" ? "success" : "questions" : "welcome" : phase}>
     <div className={styles.interior}>
       <div className={styles.photograph}>
-        <Image src={imageFailed ? "/webseiten/adler-stills/frontal.webp" : COFFEE_ASSETS.table} alt={T.alt} fill sizes="100vw" priority unoptimized onError={() => setImageFailed(true)} />
+        <Image src={imageFailed ? "/webseiten/adler-stills/frontal.webp" : COFFEE_ASSETS.table} alt={T.alt} fill sizes="100vw" priority unoptimized onLoad={() => setTableReady(true)} onError={() => setImageFailed(true)} />
       </div>
-      {!seated && <div className={styles.coffeeScene}>
+      <div className={styles.coffeeScene} data-retired={seated && tableReady} aria-hidden={seated}>
         <Image src={galleryFailed ? "/webseiten/studio-salon-v2/salon.webp" : COFFEE_ASSETS.gallery} alt={C.alt} fill sizes="100vw" priority unoptimized onError={() => setGalleryFailed(true)} />
-        {!reduced && !filmFailed && <video ref={video} src={mobileFilm ? COFFEE_ASSETS.mobileFilm : COFFEE_ASSETS.film} className={styles.walkFilm} data-playing={playing} muted playsInline preload={coffee ? "auto" : "metadata"} aria-hidden="true" onPlaying={() => setPlaying(true)} onEnded={() => setPhase("seated")} onError={() => setFilmFailed(true)} onTimeUpdate={event => {
+        {!reduced && !filmFailed && <video ref={video} src={mobileFilm ? COFFEE_ASSETS.mobileFilm : COFFEE_ASSETS.film} className={styles.walkFilm} data-playing={playing} muted playsInline preload="auto" poster={COFFEE_ASSETS.gallery} aria-hidden="true" onEnded={() => setPhase("seated")} onError={() => setFilmFailed(true)} onTimeUpdate={event => {
           const node = event.currentTarget;
           lastPlayback.current = performance.now();
           if (filmProgress.current && node.duration) filmProgress.current.style.transform = `scaleX(${Math.min(1, node.currentTime / node.duration)})`;
         }} />}
-      </div>}
+      </div>
       <div className={styles.shade} aria-hidden />
       <header className={styles.header}>
         <div><span>Sabala Studios</span><h2 ref={heading} tabIndex={-1} id={titleId}>{seated ? T.room : C.room}</h2></div>
@@ -140,18 +164,15 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
       {phase === "invitation" && <div className={styles.coffeeInvitation}>
         <div className={styles.hostSpeech}>
           <span className={styles.hostEyebrow}>{C.host}</span>
-          <h3>{coffee ? C.answerTitle : C.title}</h3>
-          <p aria-live="polite" aria-atomic="true">{coffee ? C.replies[coffee] : C.invitation}</p>
+          <h3>{C.title}</h3>
+          <p>{C.invitation}</p>
         </div>
         <div className={styles.coffeeControls}>
           <div className={styles.coffeeChoices} role="group" aria-label={C.title}>
-            {C.choices.map(option => <button type="button" key={option.id} aria-pressed={coffee === option.id} onClick={() => setCoffee(option.id)}>
-              <span className={styles.cupIcon}>{coffee === option.id ? <Check size={21} aria-hidden /> : <Coffee size={21} aria-hidden />}</span>
+            {C.choices.map(option => <button type="button" key={option.id} onClick={() => takeWalk(option.id)}>
+              <span className={styles.cupIcon}><Coffee size={21} aria-hidden /></span>
               <span><strong>{option.label}</strong><small>{option.detail}</small></span>
             </button>)}
-          </div>
-          <div className={styles.coffeeReply}>
-            {coffee && <><button type="button" className={styles.walkButton} onClick={takeWalk}>{C.walk}<ArrowRight size={17} aria-hidden /></button></>}
           </div>
         </div>
       </div>}

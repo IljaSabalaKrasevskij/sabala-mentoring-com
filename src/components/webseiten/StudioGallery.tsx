@@ -43,7 +43,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
   useEffect(()=>{
     const node=world.current, stage=root.current;
     if(!node || !stage || !size.width) return;
-    const target=galleryCamera(departure === "overview" ? null : index,size.width,size.height);
+    const target=galleryCamera(departure === "overview" || paused ? null : index,size.width,size.height);
     // Continue from the film's wide view straight to RFQ to PO on arrival.
     const from=current.current ?? galleryCamera(null,size.width,size.height);
     const duration=reduced || paused ? 0 : departure === "overview" ? 850 : 1300;
@@ -87,17 +87,18 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
 
   return <div ref={root} className={styles.gallery} data-gallery-version="salon" data-departure={departure ?? "none"} inert={paused} data-work={project?.id ?? "overview"} data-side={index===null?"left":GALLERY_STATIONS[index].wall}>
     <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/consultation.webp" />
+    <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/gallery-coffee.webp" />
     <div className={styles.backdrop} aria-hidden="true" />
     <div className={styles.viewport}>
       <div ref={world} className={styles.world}>
         <Image src="/webseiten/studio-salon-v2/salon-clean.webp" alt={lang==="de"?"Londoner Galeriesaal mit sechs beleuchteten Werken.":"London gallery with six illuminated works."} fill sizes="100vw" unoptimized priority />
-        <Image src={SALON.image} alt="" fill sizes="100vw" unoptimized className={styles.hostPlate} style={{ opacity: index === null || departure ? 1 : 0 }} />
+        <Image src={SALON.image} alt="" fill sizes="100vw" unoptimized className={styles.hostPlate} style={{ opacity: index === null || departure || paused ? 1 : 0 }} />
         {GALLERY_STATIONS.map((station,i)=><button type="button" key={station.id} className={styles.artwork} style={{width:ART_SIZE[0],height:ART_SIZE[1],transform:cssMatrix(artworkMatrix(station.corners))}} aria-label={`${WORKS[i].title[lang].split(":")[0]}: ${T.details}`} aria-pressed={index===i} tabIndex={-1} onClick={()=>setIndex(i)}>
           <Image src={WORKS[i].image!} alt="" fill sizes="(max-width: 700px) 90vw, 700px" loading="eager" className={styles.artImage} />
           <span className={styles.glazing} aria-hidden="true" />
         </button>)}
         {/* The photograph supplies the foreground silhouette so his hand stays in front of the work. */}
-        <div className={styles.host} style={{ opacity: index === null || departure ? 1 : 0 }} aria-hidden="true" />
+        <div className={styles.host} style={{ opacity: index === null || departure || paused ? 1 : 0 }} aria-hidden="true" />
       </div>
     </div>
     <div className={styles.shade} aria-hidden="true" />
