@@ -72,11 +72,10 @@
 .hostSpeech h3 { font:400 clamp(31px,3.3vw,44px)/1.08 var(--font-instrument),Georgia,serif; max-width:410px; margin:15px auto 16px; text-wrap:balance; }
 .hostSpeech p { max-width:370px; margin:0 auto; font-size:12px; color:#d2c5ad; line-height:1.8; text-wrap:pretty; }
 .coffeeControls { pointer-events:auto; }
-.coffeeChoices { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.coffeeChoices { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; width:min(560px,100%); margin:0 auto; }
 .coffeeChoices button { display:flex; gap:13px; align-items:center; justify-content:center; text-align:left; min-height:88px; padding:18px 16px; background:linear-gradient(135deg,#282219f2,#15110df5); border:1px solid #c9ac7666; color:#efe2c8; box-shadow:0 12px 35px #0004; cursor:pointer; opacity:0; translate:0 10px; transition:opacity .3s ease,translate .4s cubic-bezier(.22,.61,.36,1),transform .2s,border-color .2s,background .2s; }
 .coffeeInvitation[data-visible=true] .coffeeChoices button { opacity:1; translate:0 0; }
 .coffeeInvitation[data-visible=true] .coffeeChoices button:nth-child(2) { transition-delay:50ms,50ms,0s,0s,0s; }
-.coffeeInvitation[data-visible=true] .coffeeChoices button:nth-child(3) { transition-delay:100ms,100ms,0s,0s,0s; }
 .coffeeInvitation[data-visible=false] { pointer-events:none; }
 .coffeeInvitation[data-visible=false] .coffeeControls { pointer-events:none; }
 .room[data-phase=walking] .hostSpeech,.room[data-phase=walking] .coffeeChoices button { transition-duration:.18s; }

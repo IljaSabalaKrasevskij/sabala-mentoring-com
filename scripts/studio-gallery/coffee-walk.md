@@ -1,6 +1,6 @@
 # From the gallery to the coffee table
 
-The gallery CTA returns to the wide view and opens a personal invitation with black coffee, coffee with sugar, or no coffee. The invitation mounts on the completed camera frame and leaves the actual gallery visible underneath; it never replaces the room with a different photograph. A centered speech bubble and a transparent porcelain cup sit above the three choices. Choosing a drink immediately starts the walk; there is no separate confirmation screen or second button. The existing analysis form starts in the seated scene. Coffee preferences stay in component state and are never submitted as lead data.
+The gallery CTA returns to the wide view and opens a personal invitation with coffee without sugar or with sugar. The invitation mounts on the completed camera frame and leaves the actual gallery visible underneath; it never replaces the room with a different photograph. A centered speech bubble and a transparent porcelain cup sit above the two centered choices. Choosing a drink immediately starts the walk; there is no separate confirmation screen or second button. The existing analysis form starts in the seated scene. Coffee preferences stay in component state and are never submitted as lead data.
 
 ## Media
 
