@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MoveUpRight, Scan } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Coffee, MoveUpRight, Scan } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CASE_STUDIES } from "@/lib/case-studies";
 import { type Lang } from "./studio-texte";
-import { ART_SIZE, artworkMatrix, cssMatrix, consultationCamera, galleryCamera, GALLERY_COPY, GALLERY_STATIONS, nextStation, SALON } from "./studio-gallery";
+import { ART_SIZE, artworkMatrix, cssMatrix, galleryCamera, GALLERY_COPY, GALLERY_STATIONS, nextStation, SALON } from "./studio-gallery";
 import styles from "./StudioGallery.module.css";
 
 const WORKS=GALLERY_STATIONS.map(station=>CASE_STUDIES.find(project=>project.id===station.id)!);
@@ -18,7 +18,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
   const current=useRef<number[] | null>(null);
   const [size,setSize]=useState({width:0,height:0});
   const [index,setIndex]=useState<number | null>(0);
-  const [departure,setDeparture]=useState<"overview" | "door" | null>(null);
+  const [departure,setDeparture]=useState<"overview" | null>(null);
   const project=index===null?null:WORKS[index];
   const step=useCallback((delta:number)=>setIndex(value=>nextStation(value,delta)),[]);
 
@@ -43,10 +43,10 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
   useEffect(()=>{
     const node=world.current, stage=root.current;
     if(!node || !stage || !size.width) return;
-    const target=departure === "door" ? consultationCamera(size.width,size.height) : galleryCamera(departure === "overview" ? null : index,size.width,size.height);
+    const target=galleryCamera(departure === "overview" ? null : index,size.width,size.height);
     // Continue from the film's wide view straight to RFQ to PO on arrival.
     const from=current.current ?? galleryCamera(null,size.width,size.height);
-    const duration=reduced || paused ? 0 : departure === "overview" ? 650 : departure === "door" ? 1000 : 1300;
+    const duration=reduced || paused ? 0 : departure === "overview" ? 850 : 1300;
     const started=performance.now();
     let frame=0;
     const paint=(now:number)=>{
@@ -66,9 +66,8 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
   useEffect(() => {
     if (!departure) return;
     const timer = window.setTimeout(() => {
-      if (departure === "overview") setDeparture("door");
-      else { onConsult(); setDeparture(null); }
-    }, reduced ? 0 : departure === "overview" ? 650 : 1000);
+      onConsult(); setDeparture(null);
+    }, reduced ? 0 : 850);
     return () => window.clearTimeout(timer);
   }, [departure, onConsult, reduced]);
 
@@ -92,13 +91,13 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
     <div className={styles.viewport}>
       <div ref={world} className={styles.world}>
         <Image src="/webseiten/studio-salon-v2/salon-clean.webp" alt={lang==="de"?"Londoner Galeriesaal mit sechs beleuchteten Werken.":"London gallery with six illuminated works."} fill sizes="100vw" unoptimized priority />
-        <Image src={SALON.image} alt="" fill sizes="100vw" unoptimized className={styles.hostPlate} style={{ opacity: index === null ? 1 : 0 }} />
+        <Image src={SALON.image} alt="" fill sizes="100vw" unoptimized className={styles.hostPlate} style={{ opacity: index === null || departure ? 1 : 0 }} />
         {GALLERY_STATIONS.map((station,i)=><button type="button" key={station.id} className={styles.artwork} style={{width:ART_SIZE[0],height:ART_SIZE[1],transform:cssMatrix(artworkMatrix(station.corners))}} aria-label={`${WORKS[i].title[lang].split(":")[0]}: ${T.details}`} aria-pressed={index===i} tabIndex={-1} onClick={()=>setIndex(i)}>
           <Image src={WORKS[i].image!} alt="" fill sizes="(max-width: 700px) 90vw, 700px" loading="eager" className={styles.artImage} />
           <span className={styles.glazing} aria-hidden="true" />
         </button>)}
         {/* The photograph supplies the foreground silhouette so his hand stays in front of the work. */}
-        <div className={styles.host} style={{ opacity: index === null ? 1 : 0 }} aria-hidden="true" />
+        <div className={styles.host} style={{ opacity: index === null || departure ? 1 : 0 }} aria-hidden="true" />
       </div>
     </div>
     <div className={styles.shade} aria-hidden="true" />
@@ -116,7 +115,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
       <button className={styles.step} type="button" aria-label={T.next} onClick={()=>step(1)}><ChevronRight size={20} /></button>
     </nav>
     <p className={styles.keyHint}>{T.hint}</p>
-    <div className={styles.footer}><a href="#hebel">{lang === "de" ? "Weiterstöbern" : "Keep exploring"}<ArrowRight size={14} /></a><button type="button" className={styles.consult} data-open-consultation disabled={!!departure} onClick={() => reduced ? onConsult() : setDeparture("overview")}>{lang === "de" ? "Gespräch anfragen" : "Request a conversation"}<ArrowRight size={14} /></button></div>
-    {departure && <p className={styles.departureHint} role="status">{lang === "de" ? "Nimm nebenan Platz." : "Take a seat next door."}</p>}
+    <div className={styles.footer}><a href="#hebel">{lang === "de" ? "Weiterstöbern" : "Keep exploring"}<ArrowRight size={14} /></a><button type="button" className={styles.consult} data-open-consultation aria-haspopup="dialog" disabled={!!departure} onClick={() => reduced ? onConsult() : setDeparture("overview")}><Coffee size={18} aria-hidden /><span>{lang === "de" ? "Auf einen Kaffee?" : "Join me for a coffee?"}<small>{lang === "de" ? "Lass uns über dein Projekt sprechen." : "Let’s talk about your project."}</small></span><ArrowRight size={17} aria-hidden /></button></div>
+    {departure && <p className={styles.departureHint} role="status">{lang === "de" ? "Darf ich dich auf einen Kaffee einladen?" : "May I invite you for a coffee?"}</p>}
   </div>;
 }

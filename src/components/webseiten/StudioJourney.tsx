@@ -251,6 +251,6 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
 
       <footer className={styles.bottomBar}><span>{unavailable ? S.hinweis.unavailable : flat ? S.hinweis.flat : room === "window" ? exploring ? S.hinweis.entdecken : S.hinweis.ersterEindruck : room === "reception" && service !== 2 ? S.hinweis.wasWissen : galleryVariant === "salon" && room === "gallery" ? "" : S.hinweis.weitergehen}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}</footer>
     </div>
-    {consultation && <StudioConsultation lang={lang} onClose={closeConsultation} onBrowse={browseOn} />}
+    {consultation && <StudioConsultation lang={lang} reduced={reduced || flat} onClose={closeConsultation} onBrowse={browseOn} />}
   </section>;
 }
