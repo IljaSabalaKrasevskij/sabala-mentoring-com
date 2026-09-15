@@ -9,6 +9,7 @@ import BenefitGallery from "@/components/webseiten/BenefitGallery";
 import styles from "./WebseitenView.module.css";
 import AdlerHero from "@/components/webseiten/AdlerHero";
 import StudioJourney from "@/components/webseiten/StudioJourney";
+import { StudioSoundProvider, StudioSoundControl } from "@/components/webseiten/StudioSound";
 import AnalysisForm from "@/components/webseiten/AnalysisForm";
 import { AnalysisSessionProvider } from "@/components/webseiten/AnalysisSession";
 import { caseSlot } from "@/components/webseiten/studio-journey";
@@ -194,8 +195,10 @@ const schemaFuer = (lang: Lang) => {
 export default function WebseitenView({ lang, galleryVariant = "salon", isLab = false }: { lang: Lang; galleryVariant?: "classic" | "salon"; isLab?: boolean }) {
   return (
     <SpracheContext.Provider value={{ T: TEXTE[lang], lang }}>
+    <StudioSoundProvider>
     <AnalysisSessionProvider>
     <Sprachschalter isLab={isLab} />
+    <StudioSoundControl lang={lang} />
     <main className="flex-1" style={{ background: "var(--cream)" }}>
       {/* statisches Objekt, kein User-Input; < wird nach Next-Doku escaped */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFuer(lang)).replace(/</g, "\\u003c") }} />
@@ -231,6 +234,7 @@ export default function WebseitenView({ lang, galleryVariant = "salon", isLab = 
       `}</style>
     </main>
     </AnalysisSessionProvider>
+    </StudioSoundProvider>
     </SpracheContext.Provider>
   );
 }

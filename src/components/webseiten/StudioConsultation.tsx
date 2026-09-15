@@ -11,6 +11,7 @@ import type { Lang } from "./studio-texte";
 import { COFFEE_ASSETS, COFFEE_COPY, type CoffeeChoice, type CoffeePhase } from "./studio-coffee";
 import styles from "./StudioConsultation.module.css";
 import { cssMatrix, galleryCamera } from "./studio-gallery";
+import { StudioSoundControl, useStudioSound } from "./StudioSound";
 
 const COPY = {
   de: {
@@ -51,6 +52,11 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
   const filmProgress = useRef<HTMLSpanElement>(null);
   const lastPlayback = useRef(0);
   const seated = phase === "seated";
+  const setQuiet = useStudioSound()?.setQuiet;
+  useEffect(() => {
+    setQuiet?.(seated);
+    return () => setQuiet?.(false);
+  }, [seated, setQuiet]);
   const { draft, step, state } = useAnalysisSession();
   const [started, setStarted] = useState(state === "success");
   const [imageFailed, setImageFailed] = useState(false);
@@ -186,6 +192,7 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
         <div><span>Sabala Studios</span><h2 ref={heading} tabIndex={-1} id={titleId}>{seated ? T.room : C.room}</h2></div>
         <button type="button" onClick={onClose}><ArrowLeft size={15} aria-hidden />{T.back}</button>
       </header>
+      <StudioSoundControl lang={lang} inRoom />
       {!seated && <div className={styles.coffeeInvitation} data-visible={arrived && phase === "invitation"} inert={phase !== "invitation"} aria-hidden={phase !== "invitation"}>
         <div className={styles.hostSpeech}>
           <Image className={styles.coffeeCup} src={COFFEE_ASSETS.cup} alt="" width={145} height={121} unoptimized priority aria-hidden="true" />
