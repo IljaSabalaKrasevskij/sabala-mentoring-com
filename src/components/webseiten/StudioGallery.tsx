@@ -46,7 +46,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
     const target=galleryCamera(departure === "overview" || paused ? null : index,size.width,size.height);
     // Continue from the film's wide view straight to RFQ to PO on arrival.
     const from=current.current ?? galleryCamera(null,size.width,size.height);
-    const duration=reduced || paused ? 0 : departure === "overview" ? 850 : 1300;
+    const duration=reduced || paused ? 0 : departure === "overview" ? 1150 : 1300;
     const started=performance.now();
     let frame=0;
     const paint=(now:number)=>{
@@ -58,18 +58,15 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
       node.style.visibility="visible";
       stage.dataset.moving=String(t<1);
       if(t<1) frame=requestAnimationFrame(paint);
+      else if (departure && !paused) {
+        // Open over the exact final camera frame, never on an independent timer.
+        onConsult();
+        setDeparture(null);
+      }
     };
     frame=requestAnimationFrame(paint);
     return ()=>cancelAnimationFrame(frame);
-  },[index,size,reduced,departure,paused]);
-
-  useEffect(() => {
-    if (!departure) return;
-    const timer = window.setTimeout(() => {
-      onConsult(); setDeparture(null);
-    }, reduced ? 0 : 850);
-    return () => window.clearTimeout(timer);
-  }, [departure, onConsult, reduced]);
+  },[index,size,reduced,departure,paused,onConsult]);
 
   useEffect(()=>{
     const keydown=(event:KeyboardEvent)=>{
@@ -85,7 +82,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
     return ()=>window.removeEventListener("keydown",keydown);
   },[step,paused,departure]);
 
-  return <div ref={root} className={styles.gallery} data-gallery-version="salon" data-departure={departure ?? "none"} inert={paused} data-work={project?.id ?? "overview"} data-side={index===null?"left":GALLERY_STATIONS[index].wall}>
+  return <div ref={root} className={styles.gallery} data-gallery-version="salon" data-departure={departure ?? "none"} data-consulting={paused} inert={paused} data-work={project?.id ?? "overview"} data-side={index===null?"left":GALLERY_STATIONS[index].wall}>
     <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/consultation.webp" />
     <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/gallery-coffee.webp" />
     <div className={styles.backdrop} aria-hidden="true" />
@@ -117,6 +114,5 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
     </nav>
     <p className={styles.keyHint}>{T.hint}</p>
     <div className={styles.footer}><a href="#hebel">{lang === "de" ? "Weiterstöbern" : "Keep exploring"}<ArrowRight size={14} /></a><button type="button" className={styles.consult} data-open-consultation aria-haspopup="dialog" disabled={!!departure} onClick={() => reduced ? onConsult() : setDeparture("overview")}><Coffee size={18} aria-hidden /><span>{lang === "de" ? "Auf einen Kaffee?" : "Join me for a coffee?"}<small>{lang === "de" ? "Lass uns über dein Projekt sprechen." : "Let’s talk about your project."}</small></span><ArrowRight size={17} aria-hidden /></button></div>
-    {departure && <p className={styles.departureHint} role="status">{lang === "de" ? "Darf ich dich auf einen Kaffee einladen?" : "May I invite you for a coffee?"}</p>}
   </div>;
 }

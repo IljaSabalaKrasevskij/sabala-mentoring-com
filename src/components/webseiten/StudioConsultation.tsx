@@ -10,6 +10,7 @@ import { useAnalysisSession } from "./AnalysisSession";
 import type { Lang } from "./studio-texte";
 import { COFFEE_ASSETS, COFFEE_COPY, type CoffeeChoice, type CoffeePhase } from "./studio-coffee";
 import styles from "./StudioConsultation.module.css";
+import { cssMatrix, galleryCamera } from "./studio-gallery";
 
 const COPY = {
   de: {
@@ -44,7 +45,8 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
   const [tableReady, setTableReady] = useState(false);
   const [mobileFilm] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 699px)").matches);
   const [filmFailed, setFilmFailed] = useState(false);
-  const [galleryFailed, setGalleryFailed] = useState(false);
+  const [arrived, setArrived] = useState(false);
+  const coffeeStage = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const filmProgress = useRef<HTMLSpanElement>(null);
   const lastPlayback = useRef(0);
@@ -70,7 +72,11 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     document.documentElement.style.overflow = "hidden";
     node.showModal();
     heading.current?.focus({ preventScroll: true });
+    let arrivalFrame = requestAnimationFrame(() => {
+      arrivalFrame = requestAnimationFrame(() => setArrived(true));
+    });
     return () => {
+      cancelAnimationFrame(arrivalFrame);
       node.close();
       document.documentElement.style.overflow = previousOverflow;
       if (!wasStopped) lenis?.start();
@@ -80,6 +86,24 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
       });
     };
   }, [lenis]);
+
+  useEffect(() => {
+    const gallery = document.querySelector<HTMLElement>('[data-gallery-version="salon"]');
+    const stage = coffeeStage.current;
+    if (!stage) return;
+    const align = () => {
+      const bounds = gallery?.getBoundingClientRect();
+      const matrix = galleryCamera(null, bounds?.width ?? window.innerWidth, bounds?.height ?? window.innerHeight);
+      matrix[2] += bounds?.left ?? 0;
+      matrix[5] += bounds?.top ?? 0;
+      stage.style.transform = cssMatrix(matrix);
+    };
+    align();
+    const observer = new ResizeObserver(align);
+    if (gallery) observer.observe(gallery);
+    window.addEventListener("resize", align);
+    return () => { observer.disconnect(); window.removeEventListener("resize", align); };
+  }, []);
 
   useEffect(() => {
     if (phase !== "walking") return;
@@ -143,26 +167,28 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     });
   };
 
-  return createPortal(<dialog ref={dialog} className={styles.room} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); onClose(); }} data-lenis-prevent data-phase={phase} data-table-ready={tableReady} data-quiet={reduced} data-consultation-state={seated ? started ? state === "success" ? "success" : "questions" : "welcome" : phase}>
+  return createPortal(<dialog ref={dialog} className={styles.room} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); onClose(); }} data-lenis-prevent data-phase={phase} data-arrived={arrived} data-film-visible={playing} data-table-ready={tableReady} data-quiet={reduced} data-consultation-state={seated ? started ? state === "success" ? "success" : "questions" : "welcome" : phase}>
     <div className={styles.interior}>
       <div className={styles.photograph}>
         <Image src={imageFailed ? "/webseiten/adler-stills/frontal.webp" : COFFEE_ASSETS.table} alt={T.alt} fill sizes="100vw" priority unoptimized onLoad={() => setTableReady(true)} onError={() => setImageFailed(true)} />
       </div>
-      <div className={styles.coffeeScene} data-retired={seated && tableReady} aria-hidden={seated}>
-        <Image src={galleryFailed ? "/webseiten/studio-salon-v2/salon.webp" : COFFEE_ASSETS.gallery} alt={C.alt} fill sizes="100vw" priority unoptimized onError={() => setGalleryFailed(true)} />
+      <div className={styles.coffeeScene} data-visible={playing && !(seated && tableReady)} aria-hidden="true">
+        <div ref={coffeeStage} className={styles.coffeeStage}>
         {!reduced && !filmFailed && <video ref={video} src={mobileFilm ? COFFEE_ASSETS.mobileFilm : COFFEE_ASSETS.film} className={styles.walkFilm} data-playing={playing} muted playsInline preload="auto" poster={COFFEE_ASSETS.gallery} aria-hidden="true" onEnded={() => setPhase("seated")} onError={() => setFilmFailed(true)} onTimeUpdate={event => {
           const node = event.currentTarget;
           lastPlayback.current = performance.now();
           if (filmProgress.current && node.duration) filmProgress.current.style.transform = `scaleX(${Math.min(1, node.currentTime / node.duration)})`;
         }} />}
+        </div>
       </div>
       <div className={styles.shade} aria-hidden />
       <header className={styles.header}>
         <div><span>Sabala Studios</span><h2 ref={heading} tabIndex={-1} id={titleId}>{seated ? T.room : C.room}</h2></div>
         <button type="button" onClick={onClose}><ArrowLeft size={15} aria-hidden />{T.back}</button>
       </header>
-      {phase === "invitation" && <div className={styles.coffeeInvitation}>
+      {!seated && <div className={styles.coffeeInvitation} data-visible={arrived && phase === "invitation"} inert={phase !== "invitation"} aria-hidden={phase !== "invitation"}>
         <div className={styles.hostSpeech}>
+          <Image className={styles.coffeeCup} src={COFFEE_ASSETS.cup} alt="" width={145} height={121} unoptimized priority aria-hidden="true" />
           <span className={styles.hostEyebrow}>{C.host}</span>
           <h3>{C.title}</h3>
           <p>{C.invitation}</p>

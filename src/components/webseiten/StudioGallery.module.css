@@ -78,9 +78,11 @@
 .footer .consult { min-height:40px; margin-block:-12px; padding:10px 15px; border:1px solid #c9ac765c; background:#1f1b12cf; color:#efdab2; }
 
 .gallery button:focus-visible,.gallery a:focus-visible { outline:2px solid #dfc487; outline-offset:4px; }
-.gallery[data-departure=overview] .label,.gallery[data-departure=door] .label,.gallery[data-departure=overview] .selection,.gallery[data-departure=door] .selection,.gallery[data-departure=overview] .footer,.gallery[data-departure=door] .footer,.gallery[data-departure=overview] .heading,.gallery[data-departure=door] .heading,.gallery[data-departure=overview] .welcome,.gallery[data-departure=door] .welcome,.gallery[data-departure=overview] .keyHint,.gallery[data-departure=door] .keyHint { opacity:0; pointer-events:none; }
-.gallery[data-departure=overview] .artwork,.gallery[data-departure=door] .artwork { pointer-events:none; }
-.departureHint { position:absolute; bottom:15%; width:100%; text-align:center; color:#e9d8b8; font:400 26px/1.3 var(--font-instrument),Georgia,serif; animation:reveal .4s both; }
+/* Keep the same gallery and host under the invitation dialog. Only navigation leaves. */
+.heading,.selection,.footer,.welcome,.keyHint { transition:opacity .28s ease,translate .28s ease; }
+.gallery:is([data-departure=overview],[data-consulting=true]) :is(.label,.selection,.footer,.heading,.welcome,.keyHint) { opacity:0; pointer-events:none; }
+.gallery:is([data-departure=overview],[data-consulting=true]) .artwork { pointer-events:none; }
+.gallery:is([data-departure=overview],[data-consulting=true]) .artImage { filter:brightness(.87) saturate(.85); }
 @media(max-width:699px) { .footer .consult { font-size:10px; padding-inline:10px; } .heading { gap:11px; } .heading button:first-child { min-width:36px; min-height:36px; padding:7px; } }
 
 .footer .consult { min-height:56px; margin-block:-15px; gap:15px; padding:12px 19px; background:linear-gradient(120deg,#b79759,#e0c38a); border-color:#ead4a6; color:#211a0f; box-shadow:0 8px 32px #0005; transition:transform .2s,box-shadow .2s; }
@@ -89,4 +91,4 @@
 .footer .consult:active { transform:scale(.98); }
 @media(hover:hover) and (pointer:fine) { .footer .consult:hover { background:linear-gradient(120deg,#c2a266,#ecd19a); border-color:#f4dfb8; transform:translateY(-2px); box-shadow:0 12px 36px #0006; } }
 @media(max-width:699px) { .footer .consult { padding:10px 12px; gap:10px; min-height:51px; } .footer .consult > span { font-size:18px; } .footer .consult small { display:none; } }
-@media(prefers-reduced-motion:reduce) { .footer .consult { transition:none; transform:none; } }
+@media(prefers-reduced-motion:reduce) { .gallery,.gallery * { animation:none; transition:none; } .footer .consult { transform:none; } }

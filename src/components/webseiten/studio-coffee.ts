@@ -2,6 +2,7 @@ export type CoffeeChoice = "black" | "sugar" | "none";
 export type CoffeePhase = "invitation" | "walking" | "seated";
 
 export const COFFEE_ASSETS = {
+  cup: "/webseiten/studio-consultation-v1/coffee-cup-v1.webp",
   gallery: "/webseiten/studio-consultation-v1/gallery-coffee.webp",
   film: "/webseiten/studio-consultation-v1/coffee-walk-v1.mp4",
   mobileFilm: "/webseiten/studio-consultation-v1/coffee-walk-v1-mobil.mp4",

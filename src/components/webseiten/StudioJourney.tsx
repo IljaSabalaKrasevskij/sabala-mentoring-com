@@ -176,7 +176,7 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
     });
   };
 
-  return <section id="schaufenster" ref={section} className={`${styles.journey} ${flat ? styles.flat : ""}`} style={{ height: flat ? "auto" : `${(APPROACH_SCREENS + (expanded ? 6.1 : 3.4)) * 100}vh` }} aria-label={S.bereich} data-room={room} data-ready={ready} data-active={active} data-visual="london-photographic" data-window-phase={exploring ? "explore" : "approach"} data-gallery-open={expanded}>
+  return <section id="schaufenster" ref={section} className={`${styles.journey} ${flat ? styles.flat : ""}`} style={{ height: flat ? "auto" : `${(APPROACH_SCREENS + (expanded ? 6.1 : 3.4)) * 100}vh` }} aria-label={S.bereich} data-room={room} data-ready={ready} data-active={active} data-visual="london-photographic" data-window-phase={exploring ? "explore" : "approach"} data-gallery-open={expanded} data-consulting={consultation}>
     <div className={styles.stage}>
       <header className={styles.topbar}>
         <button type="button" className={styles.wordmark} onClick={() => go("window")} aria-label={S.zurueck}>{S.marke}</button>

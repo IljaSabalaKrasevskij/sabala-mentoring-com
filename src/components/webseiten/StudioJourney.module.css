@@ -194,3 +194,6 @@
   .questionRow button > span { font-size: 16px; }
   .questionRow button:hover, .questionRow button[aria-pressed=true] { transform: translateY(-2px); }
 }
+
+/* The invitation shares the gallery backdrop; its own dialog supplies the navigation. */
+.journey[data-consulting=true] .topbar,.journey[data-consulting=true] .bottomBar { visibility:hidden; }
