@@ -13,13 +13,13 @@
 .priceTag:focus-visible { outline: 1px solid #f9dd9f; outline-offset: 4px; }
 .object { position: absolute; background: none; padding: 0; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .object:disabled, .doorTarget:disabled { pointer-events: none; }
-.object > span { position: absolute; inset: 0; opacity: 0; background-image: url('/webseiten/studio-london-v1/exterior.webp'); background-size: var(--crop-size); background-position: var(--crop-position); clip-path: var(--object-shape); transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s, filter .4s; }
+.object > span { position: absolute; inset: 0; opacity: 0; background-image: url('/webseiten/studio-london-v1/exterior-globe-v2.webp'); background-size: var(--crop-size); background-position: var(--crop-position); clip-path: var(--object-shape); transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s, filter .4s; }
 .object:hover > span, .object[aria-pressed=true] > span, .object:focus-visible > span { opacity: 1; transform: translateY(-3px) scale(1.035); filter: brightness(1.16) drop-shadow(0 8px 10px #0008); }
 .object:focus-visible, .doorTarget:focus-visible, .work:focus-visible { outline: 1px solid #dfc493; outline-offset: 6px; }
 .doorTarget { position: absolute; left: 69%; top: 25%; width: 13.5%; height: 55%; border: 0; background: transparent; cursor: pointer; }
 .aperture { position: absolute; left: 69.15%; top: 26.7%; width: 12.65%; height: 53.4%; opacity: 0; background: #100c08; pointer-events: none; }
 .inside { position: absolute; inset: 0; background: linear-gradient(#0006,#0006),url('/webseiten/studio-london-v1/reception.webp') 58% 45% / auto 125%; }
-.doorLeaf { position: absolute; inset: 0; transform-origin: right center; background: url('/webseiten/studio-london-v1/exterior.webp'); background-size: 790.5138% 187.2659%; background-position: 79.1643% 57.2961%; backface-visibility: hidden; box-shadow: -8px 0 20px #0006; }
+.doorLeaf { position: absolute; inset: 0; transform-origin: right center; background: url('/webseiten/studio-london-v1/exterior-globe-v2.webp'); background-size: 790.5138% 187.2659%; background-position: 79.1643% 57.2961%; backface-visibility: hidden; box-shadow: -8px 0 20px #0006; }
 .work { position: absolute; left: 38.05%; top: 14.8%; width: 35.5%; height: 32.5%; overflow: hidden; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 82%, 3% 81%, 6% 79%, 11% 75%, 12% 73%, 10% 71%, 7% 72%, 5% 69%, 3% 71%, 0 72%); background: #101111; box-shadow: inset 0 0 10px #000b; }
 .work::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(140deg,#ffe5b30a,transparent 40%,#0001); box-shadow: inset 0 0 12px #0008; }
 .workImage { object-fit: cover; object-position: center top; }

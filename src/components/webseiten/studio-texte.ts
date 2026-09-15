@@ -58,7 +58,7 @@ const de = {
     gallery: "Der Sabala-Adler präsentiert ausgewählte Arbeiten im Londoner Atelier",
   },
   exponate: [
-    { object: "Das Dossier", label: "Positionierung", title: "Die richtigen Menschen erkennen sich.", text: "Für wen du da bist. Was du veränderst. Warum gerade du. Wir bringen dein Angebot auf einen klaren Punkt.", proof: "Positionierung für RFQ to PO und Stefanie Lommel." },
+    { object: "Der Globus", label: "Positionierung", title: "Die richtigen Menschen erkennen sich.", text: "Für wen du da bist. Was du veränderst. Warum gerade du. Wir bringen dein Angebot auf einen klaren Punkt.", proof: "Positionierung für RFQ to PO und Stefanie Lommel." },
     { object: "Das Manuskript", label: "Storytelling", title: "Eine Geschichte, die weiterführt.", text: "Deine Sprache, ein roter Faden und ein verständlicher nächster Schritt. Aus einzelnen Leistungen wird eine Geschichte, der man folgen kann.", proof: "RFQ to PO: Your RFQ. Verified. Delivered." },
     { object: "Das Maßjackett", label: "Design", title: "Dein Auftritt so gut wie deine Arbeit.", text: "Eine eigene Bildwelt, bewusste Typografie und Gestaltung bis ins Detail. Damit man die Qualität deiner Arbeit schon vor dem Gespräch erkennt.", proof: "Eigene Markenwelten für YUNA und RFQ to PO." },
     { object: "Das Notebook", label: "Webseite", title: "Der Eindruck hält auch dem Klick stand.", text: "Dein Auftritt in eigenem Code. Für kleine und große Bildschirme gebaut, für Suchmaschinen strukturiert und mit messbaren Kontaktwegen.", proof: "Eigener Code, Suchmaschinen-Anbindung und Analytics bei YUNA." },
@@ -127,7 +127,7 @@ const en: typeof de = {
     gallery: "The Sabala eagle presenting selected work in the London atelier",
   },
   exponate: [
-    { object: "The dossier", label: "Positioning", title: "The right people recognise themselves.", text: "Who you are for. What you change. Why you. We bring your offer down to one clear point.", proof: "Positioning for RFQ to PO and Stefanie Lommel." },
+    { object: "The globe", label: "Positioning", title: "The right people recognise themselves.", text: "Who you are for. What you change. Why you. We bring your offer down to one clear point.", proof: "Positioning for RFQ to PO and Stefanie Lommel." },
     { object: "The manuscript", label: "Storytelling", title: "A story that leads somewhere.", text: "Your words, one thread, and a next step anyone can follow. Separate services become a story people stay with.", proof: "RFQ to PO: Your RFQ. Verified. Delivered." },
     { object: "The tailored jacket", label: "Design", title: "A presence as good as your work.", text: "Your own imagery, deliberate typography, craft down to the detail. So people see the quality of your work before they ever speak to you.", proof: "Custom brand worlds for YUNA and RFQ to PO." },
     { object: "The laptop", label: "Website", title: "The impression survives the first click.", text: "Your presence in custom code. Built for small screens and large ones, structured for search engines, with contact paths you can measure.", proof: "Custom code, search console and analytics at YUNA." },
