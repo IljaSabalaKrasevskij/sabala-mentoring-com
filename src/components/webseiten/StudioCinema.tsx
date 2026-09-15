@@ -5,8 +5,12 @@ import { useEffect, useRef, useState, type CSSProperties, type RefObject } from 
 import { clamp, windowView, EXHIBITS, type HoverAnchor, type Room } from "./studio-journey";
 import { cinemaShot, filmAt, LONDON_ASSETS, LONDON_FILMS, SALON_FILMS, stillShot, WINDOW_OBJECTS } from "./studio-cinema";
 import styles from "./StudioCinema.module.css";
-import { SALON } from "./studio-gallery";
+import { ART_SIZE, artworkMatrix, cssMatrix, GALLERY_STATIONS, SALON } from "./studio-gallery";
+import { CASE_STUDIES } from "@/lib/case-studies";
+import galleryStyles from "./StudioGallery.module.css";
 import { STUDIO_TEXTE, type Lang } from "./studio-texte";
+
+const SALON_WORKS = GALLERY_STATIONS.map(station => CASE_STUDIES.find(work => work.id === station.id)!);
 
 type Props = {
   lang?: Lang;
@@ -25,6 +29,7 @@ export default function StudioCinema({ lang = "de", galleryVariant = "classic", 
   const filmSources = galleryVariant === "salon" ? SALON_FILMS : LONDON_FILMS;
   const root = useRef<HTMLDivElement>(null);
   const plates = useRef<(HTMLDivElement | null)[]>([]);
+  const salonWorld = useRef<HTMLDivElement>(null);
   const door = useRef<HTMLSpanElement>(null);
   const aperture = useRef<HTMLSpanElement>(null);
   const films = useRef<(HTMLVideoElement | null)[]>([]);
@@ -61,6 +66,10 @@ export default function StudioCinema({ lang = "de", galleryVariant = "classic", 
       if (door.current) door.current.style.transform = `perspective(900px) rotateY(${-shot.door * 82}deg)`;
       if (aperture.current) aperture.current.style.opacity = flat ? "0" : String(Math.min(1, shot.door * 12));
       if (labels.current) labels.current.style.opacity = exploring && room === "window" ? String(view.strength) : "0";
+      if (salonWorld.current && plates.current[2]) {
+        salonWorld.current.style.transform = `scale(${plates.current[2].clientWidth / SALON.width})`;
+        salonWorld.current.style.visibility = "visible";
+      }
       const moment = filmAt(progress.current);
       films.current.forEach((video, index) => {
         if (!video) return;
@@ -108,6 +117,13 @@ export default function StudioCinema({ lang = "de", galleryVariant = "classic", 
           </div>
           <button className={styles.doorTarget} aria-label={S.tuerLabel} type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
         </>}
+        {key === "gallery" && galleryVariant === "salon" && <div ref={salonWorld} className={styles.salonWorld} aria-hidden="true" data-salon-hung="true">
+          {GALLERY_STATIONS.map((station, index) => <div key={station.id} className={galleryStyles.artwork} style={{ width: ART_SIZE[0], height: ART_SIZE[1], transform: cssMatrix(artworkMatrix(station.corners)) }}>
+            <Image src={SALON_WORKS[index].image!} alt="" fill sizes="700px" loading="eager" className={galleryStyles.artImage} />
+            <span className={galleryStyles.glazing} />
+          </div>)}
+          <div className={galleryStyles.host} />
+        </div>}
         {key === "gallery" && galleryVariant === "classic" && <a className={styles.work} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${project.title}: Arbeit ansehen`} tabIndex={room === "gallery" && interactive ? 0 : -1} style={{ pointerEvents: room === "gallery" && interactive ? "auto" : "none" }}><Image key={project.image} src={project.image} alt={project.title} fill sizes="(max-width: 650px) 60vw, 40vw" className={styles.workImage} loading="eager" /></a>}
       </div>)}
       {!flat && !reduced && filmSources.map((src, i) => <video key={src} ref={node => { films.current[i] = node; }} className={styles.film} src={handy ? src.replace(".mp4", "-mobil.mp4") : src} muted playsInline preload="auto" disablePictureInPicture aria-hidden="true" tabIndex={-1} onLoadStart={() => { readyFilms.current.delete(i); failedFilms.current.delete(i); }} onLoadedData={() => { readyFilms.current.add(i); refresh.current?.(); }} onSeeked={() => refresh.current?.()} onError={() => { failedFilms.current.add(i); refresh.current?.(); }} />)}

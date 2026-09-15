@@ -34,3 +34,6 @@
   .priceTag strong { font-size: 6.6px; }
 }
 @media (prefers-reduced-motion: reduce) { .object > span, .workImage { transition: none; animation: none; } }
+
+/* The fallback photograph carries the same six works as the arrival film. */
+.salonWorld { position:absolute; left:0; top:0; width:1672px; height:941px; transform-origin:0 0; visibility:hidden; pointer-events:none; }
