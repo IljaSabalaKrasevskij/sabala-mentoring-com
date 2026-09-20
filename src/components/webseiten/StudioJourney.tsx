@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { useLenis } from "lenis/react";
 import { ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, MoveUpRight, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+import { StudioSoundControl } from "./StudioSound";
 import { CASE_STUDIES } from "@/lib/case-studies";
-import { APPROACH_SCREENS, caseSlot, ease, EXHIBITS, GALLERY_IDS, journeyProgress, ROOM_PROGRESS, roomAt, type HoverAnchor, type Room } from "./studio-journey";
+import { caseSlot, ease, EXHIBITS, GALLERY_IDS, ROOM_PROGRESS, roomAt, type HoverAnchor, type Room } from "./studio-journey";
 import styles from "./StudioJourney.module.css";
 
 import StudioCinema from "./StudioCinema";
@@ -33,14 +35,21 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
   const invalidate = useRef<(() => void) | null>(null);
   const frame = useRef<number | null>(null);
   const navigationFrame = useRef<number | null>(null);
-  const pendingDestination = useRef<Room | null>(null);
-  const lastRoom = useRef<Room>("window");
+  const dialog = useRef<HTMLDialogElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const enteredRef = useRef(false);
+  const historySession = useRef("");
+  const historyDepth = useRef(0);
+  const exitTarget = useRef<"window" | "page">("window");
+  const pendingExit = useRef<"window" | "page" | null>(null);
+  const [entered, setEntered] = useState(false);
+  const [returned, setReturned] = useState(false);
   const [near, setNear] = useState(false);
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [quiet, setQuiet] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [room, setRoom] = useState<Room>("window");
   const [travelling, setTravelling] = useState(false);
   const [close, setClose] = useState(false);
@@ -49,9 +58,8 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
   const [pinned, setPinned] = useState<number | null>(null);
   const [service, setService] = useState<number | null>(null);
   const [caseIndex, setCaseIndex] = useState(0);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(0);
   const [consultation, setConsultation] = useState(false);
-  const openConsultation = useCallback(() => setConsultation(true), []);
-  const closeConsultation = useCallback(() => setConsultation(false), []);
   const reduced = useSyncExternalStore(subscribeMotion, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => false);
   const flat = unavailable || quiet;
   const selected = pinned ?? hovered;
@@ -59,28 +67,24 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
   const project = CASES[caseIndex];
   const stepCase = (delta: number) => setCaseIndex(i => (i + delta + CASES.length) % CASES.length);
   const display = selected === null ? null : S.schilder[selected];
-  const exploring = flat || close;
+  const exploring = entered || returned || flat || close;
 
+  // Page scrolling only approaches the window. Entering a room is always deliberate.
   const update = useCallback(() => {
-    if (!section.current || flat) return;
-    const rect = section.current.getBoundingClientRect();
-    const screens = Math.max(0, -rect.top / window.innerHeight);
-    distance.current = screens;
-    const p = journeyProgress(screens, expanded);
-    setClose(screens >= .72);
-    section.current.style.setProperty("--invitation-opacity", String(1 - ease(screens / .6)));
-    progress.current = p;
-    const next = roomAt(p);
-    if (next !== lastRoom.current) { lastRoom.current = next; setRoom(next); setHovered(null); setPinned(null); }
-    setTravelling((p > 0.105 && p < 0.405) || (p > 0.535 && p < 0.88));
+    if (!section.current || enteredRef.current) return;
+    const screens = Math.max(0, -section.current.getBoundingClientRect().top / window.innerHeight);
+    distance.current = returned || flat ? 1 : Math.min(1, screens);
+    progress.current = 0;
+    setClose(distance.current >= .72);
+    section.current.style.setProperty("--invitation-opacity", String(1 - ease(distance.current / .6)));
     invalidate.current?.();
-  }, [expanded, flat]);
+  }, [returned, flat]);
   const lenis = useLenis(update);
   useEffect(() => {
     const s = section.current;
     if (!s) return;
     const lazy = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setNear(true); }, { rootMargin: "600px" });
-    const visible = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { threshold: 0 });
+    const visible = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting));
     lazy.observe(s); visible.observe(s);
     return () => { lazy.disconnect(); visible.disconnect(); };
   }, []);
@@ -92,67 +96,132 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
     schedule();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    return () => { window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); if (frame.current !== null) cancelAnimationFrame(frame.current); frame.current = null; };
+    return () => {
+      window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule);
+      if (frame.current !== null) cancelAnimationFrame(frame.current);
+      frame.current = null;
+    };
   }, [update]);
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => { if (e.key === "Escape") { setPinned(null); setHovered(null); } };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+
+  const focusRoom = useCallback(() => {
+    const heading = stage.current?.querySelector<HTMLElement>("[data-room-heading]") ?? stage.current?.querySelector<HTMLElement>("h2");
+    if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
   }, []);
-  useEffect(() => () => { if (navigationFrame.current !== null) cancelAnimationFrame(navigationFrame.current); }, []);
-
-  const scrollToRoom = useCallback((destination: Room) => {
-    const s = section.current;
-    if (!s) return;
-    const top = s.getBoundingClientRect().top + window.scrollY + (destination === "window" ? 0 : APPROACH_SCREENS + ROOM_PROGRESS[destination] * 5) * window.innerHeight;
-    if (lenis) { lenis.resize(); lenis.scrollTo(top, { duration: reduced ? 0 : destination === "window" ? 2.4 : destination === "reception" ? 4.8 : 7, immediate: reduced }); }
-    else window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
-  }, [lenis, reduced]);
-
-  // Expansion is committed before measuring the new scroll destination.
-  useEffect(() => {
-    if (!expanded || !pendingDestination.current) return;
-    const destination = pendingDestination.current; pendingDestination.current = null;
-    navigationFrame.current = requestAnimationFrame(() => { scrollToRoom(destination); navigationFrame.current = null; });
-  }, [expanded, scrollToRoom]);
-  const go = useCallback((destination: Room) => {
+  const moveTo = useCallback((destination: Room, instant = false) => {
+    if (navigationFrame.current !== null) cancelAnimationFrame(navigationFrame.current);
     setPinned(null); setHovered(null); setService(null);
-    if (flat) {
-      setTravelling(false); setRoom(destination); lastRoom.current = destination;
-      if (section.current) {
-        if (lenis) lenis.scrollTo(section.current, { immediate: true, force: true });
-        else section.current.scrollIntoView({ behavior: "instant", block: "start" });
-      }
-      return;
-    }
-    if (destination === "gallery" && !expanded) { pendingDestination.current = destination; setExpanded(true); return; }
-    scrollToRoom(destination);
-  }, [expanded, flat, lenis, scrollToRoom]);
-  const chooseQuestion = (index: number) => {
-    setService(index);
-    if (index !== 2 || expanded) return;
-    // Discard scroll accumulated beyond the closed reception before unlocking the next room.
-    // The counter stays in view; only a subsequent scroll starts the gallery journey.
-    if (!flat && section.current) {
-      const top = section.current.getBoundingClientRect().top + window.scrollY
-        + (APPROACH_SCREENS + ROOM_PROGRESS.reception * 5) * window.innerHeight;
-      if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
-      else window.scrollTo({ top, behavior: "instant" });
-    }
-    setExpanded(true);
-  };
-  const browseOn = useCallback(() => {
-    setConsultation(false);
+    const from = progress.current;
+    const to = ROOM_PROGRESS[destination];
+    // Reverse trips are immediate; the introduction only plays on the way in.
+    const duration = instant || flat || reduced || to <= from ? 0 : destination === "gallery" ? 1600 : 1800;
+    distance.current = 1;
+    const finish = () => {
+      progress.current = to; setRoom(destination); setTravelling(false);
+      invalidate.current?.();
+      navigationFrame.current = requestAnimationFrame(() => { focusRoom(); navigationFrame.current = null; });
+    };
+    if (!duration) { finish(); return; }
+    setTravelling(true);
+    const started = performance.now();
+    const paint = (now: number) => {
+      const t = Math.min(1, (now - started) / duration);
+      progress.current = from + (to - from) * ease(t);
+      setRoom(roomAt(progress.current));
+      invalidate.current?.();
+      if (t < 1) navigationFrame.current = requestAnimationFrame(paint);
+      else finish();
+    };
+    navigationFrame.current = requestAnimationFrame(paint);
+  }, [flat, reduced, focusRoom]);
+
+  const closeTour = useCallback(() => {
+    if (navigationFrame.current !== null) cancelAnimationFrame(navigationFrame.current);
+    navigationFrame.current = null;
+    enteredRef.current = false;
+    setConsultation(false); setEntered(false); setReturned(true); setRoom("window"); setTravelling(false);
+    setPinned(null); setHovered(null);
+    progress.current = 0; distance.current = 1;
     requestAnimationFrame(() => {
-      const target = document.getElementById("hebel");
+      const target = exitTarget.current === "page" ? document.getElementById("hebel") : section.current;
       if (!target) return;
-      if (lenis) { lenis.start(); lenis.scrollTo(target, { immediate: true, force: true }); }
+      if (lenis) { lenis.resize(); lenis.scrollTo(target, { immediate: true, force: true }); }
       else target.scrollIntoView({ behavior: "instant", block: "start" });
-      const heading = target.querySelector("h2");
-      if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+      const focus = exitTarget.current === "page" ? target.querySelector<HTMLElement>("h2") : target.querySelector<HTMLElement>("[data-enter-studio]");
+      if (focus) { focus.tabIndex = focus.tagName === "H2" ? -1 : 0; focus.focus({ preventScroll: true }); }
     });
   }, [lenis]);
+
+  // Keep the router's own state. Back traverses rooms; Forward restores them.
+  const record = useCallback((destination: "reception" | "gallery" | "coffee") => {
+    const previous = window.history.state?.sabalaStudio;
+    if (previous?.session === historySession.current && previous.room === destination) return;
+    historyDepth.current += 1;
+    window.history.pushState({ ...window.history.state, sabalaStudio: {
+      session: historySession.current, depth: historyDepth.current, room: destination,
+    } }, "");
+  }, []);
+  const exit = useCallback((target: "window" | "page") => {
+    if (pendingExit.current) return;
+    exitTarget.current = target;
+    const depth = historyDepth.current;
+    if (depth > 0) { pendingExit.current = target; window.history.go(-depth); }
+    else closeTour();
+  }, [closeTour]);
+  const go = useCallback((destination: Room, instant = false) => {
+    if (destination === "window") { exit("window"); return; }
+    if (!enteredRef.current) {
+      historySession.current = crypto.randomUUID(); historyDepth.current = 0;
+      enteredRef.current = true; setEntered(true); setNear(true);
+    }
+    record(destination);
+    setConsultation(false);
+    moveTo(destination, instant);
+  }, [exit, record, moveTo]);
+  const openConsultation = useCallback(() => { record("coffee"); setConsultation(true); }, [record]);
+  const closeConsultation = useCallback(() => window.history.back(), []);
+  const browseOn = useCallback(() => exit("page"), [exit]);
   const onDoor = useCallback(() => go("reception"), [go]);
+  const chooseQuestion = (index: number, instant = false) => {
+    if (index === 2) go("gallery", instant);
+    else setService(index);
+  };
+
+  useEffect(() => {
+    const pop = () => {
+      const entry = window.history.state?.sabalaStudio;
+      if (pendingExit.current) {
+        exitTarget.current = pendingExit.current; pendingExit.current = null;
+        historyDepth.current = 0; closeTour(); return;
+      }
+      if (entry?.session === historySession.current && ["reception", "gallery", "coffee"].includes(entry.room)) {
+        historyDepth.current = entry.depth;
+        enteredRef.current = true; setEntered(true); setNear(true);
+        moveTo(entry.room === "coffee" ? "gallery" : entry.room, true);
+        setConsultation(entry.room === "coffee");
+      } else if (enteredRef.current) {
+        historyDepth.current = 0; exitTarget.current = "window"; closeTour();
+      }
+    };
+    window.addEventListener("popstate", pop);
+    return () => window.removeEventListener("popstate", pop);
+  }, [moveTo, closeTour]);
+
+  useLayoutEffect(() => {
+    if (!entered || !dialog.current) return;
+    const node = dialog.current;
+    const previousOverflow = document.documentElement.style.overflow;
+    const wasStopped = lenis?.isStopped;
+    const previousRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    lenis?.stop(); document.documentElement.style.overflow = "hidden";
+    node.showModal();
+    return () => {
+      node.close(); document.documentElement.style.overflow = previousOverflow;
+      window.history.scrollRestoration = previousRestoration;
+      if (!wasStopped) lenis?.start();
+    };
+  }, [entered, lenis]);
+  useEffect(() => () => { if (navigationFrame.current !== null) cancelAnimationFrame(navigationFrame.current); }, []);
   const onInvalidate = useCallback((callback: (() => void) | null) => { invalidate.current = callback; }, []);
   const onReady = useCallback(() => { setReady(true); invalidate.current?.(); }, []);
   const onFailure = useCallback(() => { setUnavailable(true); setReady(false); setTravelling(false); }, []);
@@ -161,29 +230,15 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
     setHovered(i);
     if (i !== null && pinned === null) setAnchor(point ?? { x: 26 + i * 8, y: 53 });
   }, [pinned]);
-  const switchMode = () => {
-    const s = section.current;
-    if (!s) return;
-    // Keep the chosen room and the section in view when its height changes.
-    const targetRoom = room;
-    if (quiet && targetRoom === "gallery") setExpanded(true);
-    setTravelling(false); setQuiet(!quiet);
-    navigationFrame.current = requestAnimationFrame(() => {
-      if (quiet) scrollToRoom(targetRoom);
-      else if (lenis) { lenis.resize(); lenis.scrollTo(s, { immediate: true, force: true }); }
-      else s.scrollIntoView({ behavior: "instant", block: "start" });
-      navigationFrame.current = null;
-    });
-  };
+  const switchMode = () => { setQuiet(!quiet); if (entered) moveTo(room, true); };
 
-  return <section id="schaufenster" ref={section} className={`${styles.journey} ${flat ? styles.flat : ""}`} style={{ height: flat ? "auto" : `${(APPROACH_SCREENS + (expanded ? 6.1 : 3.4)) * 100}vh` }} aria-label={S.bereich} data-room={room} data-ready={ready} data-active={active} data-visual="london-photographic" data-window-phase={exploring ? "explore" : "approach"} data-gallery-open={expanded} data-consulting={consultation}>
-    <div className={styles.stage}>
+  const content = <div ref={stage} className={styles.stage} data-entered={entered} data-consulting={consultation}>
       <header className={styles.topbar}>
-        <button type="button" className={styles.wordmark} onClick={() => go("window")} aria-label={S.zurueck}>{S.marke}</button>
-        <nav className={styles.roomnav} aria-label={S.raeume}>{ROOM_IDS.map((id, i) => <button key={id} type="button" onClick={() => go(id)} aria-current={room === id ? "step" : undefined}><span>{String(i + 1).padStart(2, "0")}</span>{S.raum[id]}</button>)}</nav>
-        <a className={styles.skip} href="#hebel">{S.ueberspringen}<MoveUpRight size={14} /></a>
+        {entered ? <button type="button" className={styles.back} onClick={() => exit("window")}><ArrowLeft size={16} aria-hidden />{S.zurueck}</button> : <span className={styles.wordmark}>{S.marke}</span>}
+        <nav className={styles.roomnav} aria-label={S.raeume}>{ROOM_IDS.map((id, i) => <button key={id} type="button" onClick={event => go(id, event.detail === 0)} aria-current={room === id ? "step" : undefined}><span>{String(i + 1).padStart(2, "0")}</span>{S.raum[id]}</button>)}</nav>
+        {entered && <StudioSoundControl lang={lang} inline />}
       </header>
-
+      <h2 id={titleId} className={styles.srOnly}>{S.bereich}</h2>
       <div className={styles.scene} style={{ cursor: hovered !== null ? "pointer" : "auto" }}>
         {unavailable || !near ? <div className={styles.poster}><Image src={unavailable ? "/webseiten/schaufenster/master.jpg" : LONDON_ASSETS.window} alt={S.bildAlt.poster} fill sizes="100vw" /></div> : <StudioCinema galleryVariant={galleryVariant} lang={lang} progress={progress} distance={distance} exploring={exploring} room={room} flat={flat} reduced={reduced} selected={selected} interactive={(!travelling || flat) && (room !== "window" || exploring)} onSelect={onSelect} onHover={onHover} onDoor={onDoor} onReady={onReady} onFailure={onFailure} onInvalidate={onInvalidate} project={{ image: project.image!, title: project.title.de, url: project.url ?? "/case-studies" }} />}
         <div className={styles.vignette} aria-hidden="true" />
@@ -197,8 +252,8 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
       {room === "window" && exploring && <h2 className={styles.srOnly}>Das Schaufenster von Sabala Studios</h2>}
       {travelling && !flat && <div className={styles.travelHint} aria-live="polite">{room === "window" ? S.willkommen : S.arbeitenTitel}</div>}
 
+      {room === "window" && !travelling && <button type="button" data-enter-studio className={styles.entryCue} onClick={event => go("reception", event.detail === 0)}><span>{S.eintreten}</span><ArrowRight size={18} aria-hidden="true" /></button>}
       {room === "window" && !travelling && exploring && <>
-        <button type="button" className={styles.entryCue} onClick={onDoor}>{flat ? <ArrowRight size={18} aria-hidden="true" /> : <ScrollCue />}<span>{S.eintreten}</span></button>
         {exhibit && display && <article key={exhibit.id} className={`${styles.digitalPanel} ${pinned !== null ? styles.panelPinned : ""}`} aria-live="polite" style={{
           left: `clamp(18px, calc(${anchor.x}% + ${anchor.x > 56 ? "-310px" : "28px"}), calc(100% - 328px))`,
           top: `clamp(110px, calc(${anchor.y}% - 240px), calc(100% - 390px))`,
@@ -223,15 +278,14 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
 
       {room === "reception" && !travelling && <div className={styles.concierge}>
         <article id="studio-answer" className={styles.speech} role="status" aria-live="polite" aria-atomic="true" key={service ?? "greeting"}>
-          {service === null ? <h2>{S.wieHelfen}</h2> : <>
+          {service === null ? <h2 data-room-heading>{S.wieHelfen}</h2> : <>
             <p>{S.fragen[service].answer}</p>
-            {service === 2 && (flat ? <button type="button" onClick={() => go("gallery")}>{S.arbeitenAnsehen}<ArrowRight size={14} /></button> : <span className={styles.scrollInvitation}>{S.weiterScrollen}<ArrowDown size={14} /></span>)}
           </>}
         </article>
-        <div className={styles.questionRow} aria-label={S.fragenAnGastgeber}>{S.fragen.map((q, i) => <button key={q.question} type="button" aria-pressed={service === i} aria-controls="studio-answer" onClick={() => chooseQuestion(i)}><span>{q.question}</span><MoveUpRight size={16} aria-hidden="true" /></button>)}</div>
+        <div className={styles.questionRow} aria-label={S.fragenAnGastgeber}>{S.fragen.map((q, i) => <button key={q.question} type="button" aria-pressed={service === i} aria-controls="studio-answer" onClick={event => chooseQuestion(i, event.detail === 0)}><span>{q.question}</span><MoveUpRight size={16} aria-hidden="true" /></button>)}</div>
       </div>}
 
-      {room === "gallery" && !travelling && (galleryVariant === "salon" ? <StudioGallery lang={lang} reduced={reduced || flat} onBack={() => go("reception")} onConsult={openConsultation} paused={consultation} /> : <div className={styles.gallery}>
+      {room === "gallery" && !travelling && (galleryVariant === "salon" ? <StudioGallery lang={lang} reduced={reduced || flat} index={galleryIndex} onSelect={setGalleryIndex} onBack={() => go("reception", true)} onConsult={openConsultation} paused={consultation} /> : <div className={styles.gallery}>
         <div className={styles.galleryHeading}><h2>{S.ausgewaehlteArbeiten}</h2></div>
         <article className={styles.casePanel} key={project.id}>
           <p className={styles.caseIndustry}>{project.industry.de}</p><h3>{project.title.de.split(":")[0]}</h3>
@@ -246,11 +300,25 @@ export default function StudioJourney({ lang = "de", galleryVariant = "classic" 
           })}</div>
           <button type="button" className={styles.railStep} aria-label={S.naechste} onClick={() => stepCase(1)}><ChevronRight size={17} aria-hidden="true" /></button>
         </div>
-        <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} />{S.raum.reception}</button><a href="#analyse">{S.projektBesprechen}<ArrowRight size={16} /></a></div>
+        <div className={styles.galleryFooter}><button type="button" onClick={() => go("reception")}><ArrowLeft size={15} />{S.raum.reception}</button><button type="button" onClick={openConsultation}>{S.projektBesprechen}<ArrowRight size={16} /></button></div>
       </div>)}
 
-      <footer className={styles.bottomBar}><span>{unavailable ? S.hinweis.unavailable : flat ? S.hinweis.flat : room === "window" ? exploring ? S.hinweis.entdecken : S.hinweis.ersterEindruck : room === "reception" && service !== 2 ? S.hinweis.wasWissen : galleryVariant === "salon" && room === "gallery" ? "" : S.hinweis.weitergehen}</span>{!unavailable && <button type="button" onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}</footer>
-    </div>
-    {consultation && <StudioConsultation lang={lang} reduced={reduced || flat} onClose={closeConsultation} onBrowse={browseOn} />}
-  </section>;
+      <footer className={styles.bottomBar}>
+        <span>{entered ? S.navigationHinweis : S.hinweis.entdecken}</span>
+        {!unavailable && <button type="button" className={styles.motionToggle} onClick={switchMode}>{quiet ? S.mitFahrt : S.ohneFahrt}</button>}
+        <button type="button" className={styles.exit} onClick={browseOn}>{S.weiterlesen}<ArrowRight size={16} aria-hidden /></button>
+      </footer>
+    </div>;
+
+  return <>
+    <section id="schaufenster" ref={section} className={styles.journey} style={{ height: returned || flat ? "100svh" : "200svh" }} aria-label={S.bereich} data-room={room} data-ready={ready} data-active={active} data-window-phase={exploring ? "explore" : "approach"}>
+      {!entered && content}
+    </section>
+    {entered && createPortal(<dialog ref={dialog} className={`${styles.journey} ${styles.dialog}`} aria-labelledby={titleId} data-studio-tour data-room={room} data-travelling={travelling} data-lenis-prevent onCancel={event => {
+      event.preventDefault();
+      if (pinned !== null) { setPinned(null); setHovered(null); }
+      else exit("window");
+    }}>{content}</dialog>, document.body)}
+    {consultation && <StudioConsultation lang={lang} reduced={reduced || flat} scrollLocked onClose={closeConsultation} onBrowse={browseOn} />}
+  </>;
 }

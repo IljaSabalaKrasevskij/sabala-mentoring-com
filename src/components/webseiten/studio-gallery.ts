@@ -51,13 +51,15 @@ export function galleryCamera(index: number | null, width: number, height: numbe
   const mobile=width<700;
   if(index===null) {
     const scale=mobile ? width/SALON.width : Math.max(width/SALON.width,height/SALON.height);
-    return [scale,0,(width-SALON.width*scale)/2,0,scale,mobile?126:(height-SALON.height*scale)/2,0,0,1];
+    return [scale,0,(width-SALON.width*scale)/2,0,scale,mobile?156:(height-SALON.height*scale)/2,0,0,1];
   }
   const station=GALLERY_STATIONS[index];
-  const w=mobile ? width-40 : Math.min(width*.51,height*.94);
+  // Keep the work clear of the room header and thumbnail rail on short screens.
+  const availableHeight=height <= 650 ? height-296 : height-392;
+  const w=mobile ? width-40 : Math.min(width*.51,Math.max(90,availableHeight)*16/9);
   const h=w*9/16;
   const x=mobile?20:station.wall==="left"?width*.065:width-width*.065-w;
-  const y=mobile?142:Math.max(112,(height-190-h)/2);
+  const y=mobile?165:Math.max(112,(height-190-h)/2);
   return homography(station.corners,[[x,y],[x+w,y],[x+w,y+h],[x,y+h]]);
 }
 /** Move into the central passage before the adjoining consultation room appears. */
@@ -71,10 +73,10 @@ export function nextStation(index: number | null, delta: number, count=GALLERY_S
 
 export const GALLERY_COPY = {
   de: {
-    title: "Die Galerie.", overview: "Den Saal ansehen", hint: "Mit ← und → von Werk zu Werk.",
+    title: "Die Galerie.", overview: "Galerieübersicht", hint: "Mit ← und → von Werk zu Werk.",
     welcome: "Hier beginnt die Sammlung.", invitation: "RFQ to PO ist das erste Werk. Schau dich um, ich bin gleich hier.",
     previous: "Vorheriges Werk", next: "Nächstes Werk", live: "Webseite besuchen", caseStudy: "Projekt ansehen",
-    back: "Empfang", contact: "Mein Projekt besprechen", select: "Werke in der Galerie", details: "Zum Werk",
+    back: "Zum Empfang", contact: "Mein Projekt besprechen", select: "Werke in der Galerie", details: "Zum Werk",
     notes: [
       "Eine Geschichte von der Anfrage bis zur Lieferung. Positionierung, Texte, Bildwelt, Web Development und Launch für internationales industrielles Sourcing.",
       "Ein Auftritt auf dem Niveau des Studios. Geschärfte Positionierung, eine eigene Markenwelt und eine Webseite mit Blog und messbaren Kontaktwegen.",
@@ -85,10 +87,10 @@ export const GALLERY_COPY = {
     ],
   },
   en: {
-    title: "The gallery.", overview: "View the room", hint: "Use ← and → to explore the work.",
+    title: "The gallery.", overview: "Gallery overview", hint: "Use ← and → to explore the work.",
     welcome: "The collection starts here.", invitation: "RFQ to PO is the first piece. Take a look around. I am right here.",
     previous: "Previous piece", next: "Next piece", live: "Visit the website", caseStudy: "View the project",
-    back: "Reception", contact: "Talk about my project", select: "Work in the gallery", details: "About the work",
+    back: "To reception", contact: "Talk about my project", select: "Work in the gallery", details: "About the work",
     notes: [
       "A story from enquiry to delivery. Positioning, copy, imagery, custom web development and launch for an international industrial sourcing business.",
       "A presence that matches the studio. Sharper positioning, its own brand world and a website with a blog and measurable contact paths.",

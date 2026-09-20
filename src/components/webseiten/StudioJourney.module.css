@@ -197,3 +197,58 @@
 
 /* The invitation shares the gallery backdrop; its own dialog supplies the navigation. */
 .journey[data-consulting=true] .topbar,.journey[data-consulting=true] .bottomBar { visibility:hidden; }
+
+/* The tour has one visible exit and occupies the actual viewport, even on short screens. */
+.stage { min-height:0; }
+.dialog { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; padding:0; border:0; overflow:hidden; overscroll-behavior:none; }
+.dialog::backdrop { background:#0b0c0d; }
+.dialog .stage { position:relative; height:100dvh; }
+.topbar { padding:16px 28px; min-height:76px; gap:24px; align-items:center; }
+.stage:not([data-entered=true]) .topbar { padding-right:205px; }
+.back { display:inline-flex; align-items:center; gap:10px; min-height:44px; border:0; padding:8px 0; background:none; color:var(--ivory); font-size:12px; cursor:pointer; }
+.roomnav button { min-height:44px; padding:10px 4px; font-size:12px; }
+.roomnav button[aria-current] { text-decoration:underline; text-underline-offset:8px; text-decoration-color:var(--brass); }
+.entryCue { top:auto; bottom:120px; min-height:48px; padding:14px 22px; border:1px solid #d5bd8770; background:#161b14ee; }
+.entryCue > span { font:400 21px/1.2 var(--font-instrument),Georgia,serif; }
+.bottomBar { height:auto; min-height:64px; padding:8px 28px max(8px,env(safe-area-inset-bottom)); gap:20px; background:linear-gradient(transparent,#0b0c0df5 24%); }
+.bottomBar .motionToggle { margin-left:auto; min-height:44px; font-size:10px; padding:8px; }
+.bottomBar .exit { min-height:44px; display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 14px; border:1px solid #cdb78e60; border-radius:3px; background:#161b14ef; color:#f3eddf; font-size:12px; line-height:1.4; text-align:left; }
+.windowBottom { bottom:76px; }
+.stage[data-consulting=true] .topbar,.stage[data-consulting=true] .bottomBar { visibility:hidden; }
+.back:active,.exit:active,.entryCue:active,.roomnav button:active { transform:scale(.98); }
+.stage h2:focus { outline:none; }
+.speech { max-height:calc(100% - 260px); overflow-y:auto; overscroll-behavior:contain; }
+.digitalPanel { max-height:calc(100% - 210px); overflow-y:auto; overscroll-behavior:contain; }
+@media(max-width:1000px) {
+  .topbar { gap:12px; }
+  .roomnav { gap:12px; }
+  .stage:not([data-entered=true]) .topbar { flex-wrap:wrap; }
+  .bottomBar > span { display:none; }
+}
+@media(max-width:699px) {
+  .topbar,.stage:not([data-entered=true]) .topbar { padding:12px 20px 0; gap:3px 12px; flex-wrap:wrap; }
+  .back { flex:1; font-size:12px; }
+  .roomnav { width:100%; order:3; justify-content:space-between; gap:10px; }
+  .roomnav button { font-size:11px; }
+  .stage:not([data-entered=true]) .wordmark { min-height:44px; display:flex; align-items:center; }
+  .bottomBar { padding-inline:16px; gap:6px; }
+  .bottomBar .motionToggle { margin:0; padding:8px 4px; font-size:9px; white-space:normal; text-align:left; max-width:85px; }
+  .bottomBar .exit { margin-left:auto; font-size:11px; padding:9px 10px; gap:8px; }
+  .entryCue { top:auto; bottom:128px; right:20px; padding:12px 20px; }
+  .entryCue > span { font-size:20px; }
+  .speech { max-height:calc(100% - 375px); }
+}
+@media(max-height:650px) and (min-width:700px) {
+  .topbar { padding-block:8px; min-height:60px; }
+  .speech { top:145px; max-height:calc(100% - 310px); padding:14px 18px; }
+  .speech h2 { font-size:21px; }
+  .questionRow { bottom:78px; }
+  .questionRow button { min-height:60px; padding:14px 16px; }
+  .digitalPanel { top:90px !important; max-height:calc(100% - 200px); }
+}
+@media(max-height:540px) and (max-width:699px) {
+  .concierge { top:108px; bottom:65px; overflow-y:auto; overscroll-behavior:contain; padding:12px 20px; pointer-events:auto; }
+  .speech { position:relative; inset:auto; max-height:none; margin:0 0 12px; }
+  .questionRow { position:relative; inset:auto; width:100%; transform:none; }
+  .questionRow button { min-height:44px; }
+}

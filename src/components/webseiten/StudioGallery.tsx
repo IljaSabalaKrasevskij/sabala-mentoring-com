@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Coffee, MoveUpRight, Scan } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import { CASE_STUDIES } from "@/lib/case-studies";
 import { type Lang } from "./studio-texte";
 import { ART_SIZE, artworkMatrix, cssMatrix, galleryCamera, GALLERY_COPY, GALLERY_STATIONS, nextStation, SALON } from "./studio-gallery";
@@ -10,17 +10,17 @@ import styles from "./StudioGallery.module.css";
 
 const WORKS=GALLERY_STATIONS.map(station=>CASE_STUDIES.find(project=>project.id===station.id)!);
 
-export default function StudioGallery({ lang, reduced, onBack, onConsult, paused = false }: { lang: Lang; reduced: boolean; onBack: () => void; onConsult: () => void; paused?: boolean }) {
+export default function StudioGallery({ lang, reduced, onBack, onConsult, index, onSelect: setIndex, paused = false }: { lang: Lang; reduced: boolean; index: number | null; onSelect: Dispatch<SetStateAction<number | null>>; onBack: () => void; onConsult: () => void; paused?: boolean }) {
   const T=GALLERY_COPY[lang];
   const root=useRef<HTMLDivElement>(null);
   const world=useRef<HTMLDivElement>(null);
   const thumbnails=useRef<HTMLDivElement>(null);
   const current=useRef<number[] | null>(null);
+  const instant=useRef(false);
   const [size,setSize]=useState({width:0,height:0});
-  const [index,setIndex]=useState<number | null>(0);
   const [departure,setDeparture]=useState<"overview" | null>(null);
   const project=index===null?null:WORKS[index];
-  const step=useCallback((delta:number)=>setIndex(value=>nextStation(value,delta)),[]);
+  const step=useCallback((delta:number)=>setIndex(value=>nextStation(value,delta)),[setIndex]);
 
   useEffect(()=>{
     const strip=thumbnails.current;
@@ -46,7 +46,8 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
     const target=galleryCamera(departure === "overview" || paused ? null : index,size.width,size.height);
     // Continue from the film's wide view straight to RFQ to PO on arrival.
     const from=current.current ?? galleryCamera(null,size.width,size.height);
-    const duration=reduced || paused ? 0 : departure === "overview" ? 1150 : 1300;
+    const duration=reduced || paused || instant.current ? 0 : departure === "overview" ? 1150 : 1300;
+    instant.current=false;
     const started=performance.now();
     let frame=0;
     const paint=(now:number)=>{
@@ -76,13 +77,13 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
       if(!rect || rect.top>=window.innerHeight || rect.bottom<=0) return;
       if(departure) { if(event.key==="Escape") { event.preventDefault(); setDeparture(null); } return; }
       if(event.key==="ArrowLeft" || event.key==="ArrowRight") { event.preventDefault(); step(event.key==="ArrowRight"?1:-1); }
-      if(event.key==="Escape") { event.preventDefault(); setIndex(null); }
+      if(event.key==="Escape" && index !== null) { event.preventDefault(); setIndex(null); }
     };
     window.addEventListener("keydown",keydown);
     return ()=>window.removeEventListener("keydown",keydown);
-  },[step,paused,departure]);
+  },[step,paused,departure,index,setIndex]);
 
-  return <div ref={root} className={styles.gallery} data-gallery-version="salon" data-departure={departure ?? "none"} data-consulting={paused} inert={paused} data-work={project?.id ?? "overview"} data-side={index===null?"left":GALLERY_STATIONS[index].wall}>
+  return <div ref={root} onKeyDownCapture={() => { instant.current=true; }} onClickCapture={event => { instant.current=event.detail === 0; }} className={styles.gallery} data-gallery-version="salon" data-departure={departure ?? "none"} data-consulting={paused} inert={paused} data-work={project?.id ?? "overview"} data-side={index===null?"left":GALLERY_STATIONS[index].wall}>
     <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/consultation.webp" />
     <link rel="preload" as="image" href="/webseiten/studio-consultation-v1/gallery-coffee.webp" />
     <div className={styles.backdrop} aria-hidden="true" />
@@ -99,7 +100,7 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
       </div>
     </div>
     <div className={styles.shade} aria-hidden="true" />
-    <div className={styles.heading}><button type="button" aria-label={T.back} onClick={onBack} disabled={!!departure}><ArrowLeft size={15} /></button><h2>{T.title}</h2><button type="button" onClick={()=>setIndex(null)} aria-pressed={index===null}><Scan size={14} />{T.overview}</button></div>
+    <div className={styles.heading}><button type="button" aria-label={T.back} onClick={onBack} disabled={!!departure}><ArrowLeft size={15} /><span>{T.back}</span></button><h2 data-room-heading>{T.title}</h2><button type="button" onClick={()=>setIndex(null)} aria-pressed={index===null}><Scan size={14} />{T.overview}</button></div>
     {index===null ? <div className={styles.welcome}><p>{T.welcome}</p><span>{T.invitation}</span></div> : <article className={styles.label} aria-live="polite" aria-atomic="true" data-lenis-prevent tabIndex={0}>
       <span className={styles.number}>{String(index+1).padStart(2,"0")} / {String(WORKS.length).padStart(2,"0")}</span>
       <p className={styles.industry}>{project!.industry[lang]}</p>
@@ -113,6 +114,6 @@ export default function StudioGallery({ lang, reduced, onBack, onConsult, paused
       <button className={styles.step} type="button" aria-label={T.next} onClick={()=>step(1)}><ChevronRight size={20} /></button>
     </nav>
     <p className={styles.keyHint}>{T.hint}</p>
-    <div className={styles.footer}><a href="#hebel">{lang === "de" ? "Weiterstöbern" : "Keep exploring"}<ArrowRight size={14} /></a><button type="button" className={styles.consult} data-open-consultation aria-haspopup="dialog" disabled={!!departure} onClick={() => reduced ? onConsult() : setDeparture("overview")}><Coffee size={18} aria-hidden /><span>{lang === "de" ? "Auf einen Kaffee?" : "Join me for a coffee?"}<small>{lang === "de" ? "Lass uns über dein Projekt sprechen." : "Let’s talk about your project."}</small></span><ArrowRight size={17} aria-hidden /></button></div>
+    <div className={styles.footer}><button type="button" className={styles.consult} data-open-consultation aria-haspopup="dialog" disabled={!!departure} onClick={() => reduced ? onConsult() : setDeparture("overview")}><Coffee size={18} aria-hidden /><span>{lang === "de" ? "Auf einen Kaffee?" : "Join me for a coffee?"}<small>{lang === "de" ? "Lass uns über dein Projekt sprechen." : "Let’s talk about your project."}</small></span><ArrowRight size={17} aria-hidden /></button></div>
   </div>;
 }

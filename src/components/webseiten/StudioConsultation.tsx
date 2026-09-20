@@ -18,7 +18,7 @@ const COPY = {
     room: "Das Beratungsgespräch", back: "Zur Galerie", title: "Nimm Platz.",
     welcome: "Was hast du vor? Lass uns den ersten Schritt zu deiner Webseite gemeinsam vorbereiten.",
     detail: "Mit ein paar Angaben kann Ilja deine Potenzial-Analyse vorbereiten. Er meldet sich persönlich bei dir und stimmt einen Gesprächstermin mit dir ab.",
-    start: "Gespräch anfragen", resume: "Anfrage fortsetzen", browse: "Auf der Webseite weiterstöbern",
+    start: "Gespräch anfragen", resume: "Anfrage fortsetzen", browse: "Auf der Webseite weiterlesen",
     note: "Kostenlose Analyse und ein unverbindliches Gespräch mit Ilja.",
     captions: ["Erzähl mir von deinem Unternehmen.", "Was wünschst du dir für deinen Auftritt?", "Ilja meldet sich persönlich bei dir."],
     saved: "Deine Anfrage ist bei uns angekommen.",
@@ -28,7 +28,7 @@ const COPY = {
     room: "The conversation", back: "Back to the gallery", title: "Take a seat.",
     welcome: "What do you have in mind? Let us prepare the first step towards your website together.",
     detail: "A few details will help Ilja prepare your potential analysis. He will contact you personally to arrange a time to talk.",
-    start: "Request a conversation", resume: "Continue your enquiry", browse: "Keep exploring the website",
+    start: "Request a conversation", resume: "Continue your enquiry", browse: "Continue on the website",
     note: "A free analysis and a conversation with Ilja, without obligation.",
     captions: ["Tell me about your company.", "What would you like your website to do?", "Ilja will be in touch personally."],
     saved: "Your enquiry has arrived.",
@@ -37,7 +37,7 @@ const COPY = {
 };
 
 /** Mounted only after a visitor chooses the room. The native dialog isolates keyboard focus. */
-export default function StudioConsultation({ lang, reduced = false, onClose, onBrowse }: { lang: Lang; reduced?: boolean; onClose: () => void; onBrowse: () => void }) {
+export default function StudioConsultation({ lang, reduced = false, scrollLocked = false, onClose, onBrowse }: { lang: Lang; reduced?: boolean; scrollLocked?: boolean; onClose: () => void; onBrowse: () => void }) {
   const T = COPY[lang];
   const C = COFFEE_COPY[lang];
   const [phase, setPhase] = useState<CoffeePhase>("invitation");
@@ -74,8 +74,7 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     const previousFocus = document.querySelector<HTMLElement>("[data-open-consultation]") ?? document.activeElement;
     const previousOverflow = document.documentElement.style.overflow;
     const wasStopped = lenis?.isStopped;
-    lenis?.stop();
-    document.documentElement.style.overflow = "hidden";
+    if (!scrollLocked) { lenis?.stop(); document.documentElement.style.overflow = "hidden"; }
     node.showModal();
     heading.current?.focus({ preventScroll: true });
     let arrivalFrame = requestAnimationFrame(() => {
@@ -84,14 +83,13 @@ export default function StudioConsultation({ lang, reduced = false, onClose, onB
     return () => {
       cancelAnimationFrame(arrivalFrame);
       node.close();
-      document.documentElement.style.overflow = previousOverflow;
-      if (!wasStopped) lenis?.start();
+      if (!scrollLocked) { document.documentElement.style.overflow = previousOverflow; if (!wasStopped) lenis?.start(); }
       // React removes the gallery's inert attribute in the same commit. Restore focus after it.
       requestAnimationFrame(() => {
         if (restoreFocusRef.current && previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
       });
     };
-  }, [lenis]);
+  }, [lenis, scrollLocked]);
 
   useEffect(() => {
     const gallery = document.querySelector<HTMLElement>('[data-gallery-version="salon"]');

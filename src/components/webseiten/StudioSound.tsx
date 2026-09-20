@@ -120,13 +120,13 @@ export function StudioSoundProvider({ children }: { children: ReactNode }) {
 
 export function useStudioSound() { return useContext(SoundContext); }
 
-export function StudioSoundControl({ lang, inRoom = false }: { lang: Lang; inRoom?: boolean }) {
+export function StudioSoundControl({ lang, inRoom = false, inline = false }: { lang: Lang; inRoom?: boolean; inline?: boolean }) {
   const sound = useStudioSound();
   if (!sound) return null;
   const english = lang === "en";
   const label = sound.enabled ? (english ? "Turn music off" : "Musik ausschalten") : (english ? "Turn music on" : "Musik einschalten");
   const text = sound.status === "loading" ? (english ? "Loading…" : "Lädt…") : sound.enabled ? (english ? "Music on" : "Musik an") : (english ? "Music" : "Musik");
-  return <div className={`${styles.control} ${inRoom ? styles.inRoom : styles.floating}`} data-studio-sound={inRoom ? "room" : "page"}>
+  return <div className={`${styles.control} ${inline ? styles.inline : inRoom ? styles.inRoom : styles.floating}`} data-studio-sound={inline || inRoom ? "room" : "page"}>
     <button type="button" className={styles.button} onClick={sound.toggle} aria-label={label} aria-pressed={sound.enabled} title={label} data-playing={sound.status === "playing"}>
       {sound.enabled ? <Volume2 size={16} aria-hidden /> : <Music2 size={16} aria-hidden />}
       <span className={styles.label}>{text}</span>

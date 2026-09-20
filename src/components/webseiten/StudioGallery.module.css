@@ -92,3 +92,49 @@
 @media(hover:hover) and (pointer:fine) { .footer .consult:hover { background:linear-gradient(120deg,#c2a266,#ecd19a); border-color:#f4dfb8; transform:translateY(-2px); box-shadow:0 12px 36px #0006; } }
 @media(max-width:699px) { .footer .consult { padding:10px 12px; gap:10px; min-height:51px; } .footer .consult > span { font-size:18px; } .footer .consult small { display:none; } }
 @media(prefers-reduced-motion:reduce) { .gallery,.gallery * { animation:none; transition:none; } .footer .consult { transform:none; } }
+
+/* Studio-wide exit lives in the persistent footer, outside the project controls. */
+.heading button { min-height:44px; font-size:11px; }
+.heading h2 { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.footer { bottom:86px; justify-content:flex-end; pointer-events:none; }
+.footer .consult { pointer-events:auto; margin:0; min-height:48px; }
+.selection { bottom:166px; }
+.keyHint { bottom:147px; }
+.label { max-height:calc(73% - 265px); overflow-y:auto; overscroll-behavior:contain; }
+.welcome { top:45%; }
+@media(max-width:699px) {
+  .heading { top:108px; gap:10px; }
+  .heading button,.heading button:first-child { min-height:44px; padding:8px 10px; font-size:10px; }
+  .selection { bottom:151px; }
+  .keyHint { display:none; }
+  .footer { bottom:78px; }
+  .footer .consult { min-height:48px; padding:10px 14px; }
+  .label,.gallery[data-side=right] .label { top:calc(188px + (100vw - 40px) * .5625); max-height:max(68px,calc(100dvh - 433px - (100vw - 40px) * .5625)); padding:12px 16px; }
+  .welcome { top:auto; bottom:255px; max-height:calc(100dvh - 430px); overflow-y:auto; }
+}
+@media(min-width:700px) and (max-height:650px) {
+  .heading { top:66px; }
+  .label,.gallery[data-side=right] .label { top:124px; max-height:calc(100dvh - 324px); padding:12px 16px; }
+  .label h3 { font-size:24px; margin-bottom:8px; }
+  .number { margin-bottom:8px; }
+  .note { font-size:11px; }
+  .selection { left:28px; right:310px; bottom:83px; max-width:none; transform:none; gap:8px; }
+  .works button { flex-basis:68px; width:68px; }
+  .works img { width:68px; height:38px; }
+  .footer { right:28px; bottom:80px; }
+  .footer .consult > span { font-size:17px; }
+  .footer .consult small,.keyHint { display:none; }
+  .welcome { top:150px; max-height:calc(100dvh - 330px); overflow-y:auto; }
+}
+@media(max-width:699px) and (max-height:700px) {
+  .number,.note { display:none; }
+  .label,.gallery[data-side=right] .label { top:auto; bottom:233px; max-height:100px; padding:9px 14px; }
+  .label h3 { font-size:21px; margin-bottom:4px; }
+  .label a { margin-top:5px; min-height:32px; }
+  .welcome { bottom:239px; max-height:115px; }
+  .welcome p { font-size:20px; }
+}
+@media(max-height:450px) {
+  .label,.gallery[data-side=right] .label { top:120px; bottom:auto; max-height:105px; }
+  .note,.number { display:none; }
+}

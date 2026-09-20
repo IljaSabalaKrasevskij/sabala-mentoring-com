@@ -23,3 +23,7 @@
   .label,.bars { display:none; }
 }
 @media(prefers-reduced-motion:reduce) { .button { transition:none; } .button[data-playing=true] .bars i { animation:none; transform:scaleY(.6); } }
+
+.inline { position:relative; inset:auto; flex-shrink:0; }
+.inline .button { width:44px; height:44px; min-height:44px; padding:10px; border-radius:50%; }
+.inline .label,.inline .bars { display:none; }

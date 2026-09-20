@@ -14,7 +14,7 @@ test('every artwork registers at all four corners of its own wall frame',()=>{
 });
 
 test('each camera stop faces its artwork and keeps the complete image in the viewport',()=>{
-  for(const [w,h] of [[1280,720],[1920,1080],[390,844],[360,640]]) {
+  for(const [w,h] of [[1280,720],[1920,1080],[807,467],[390,844],[360,640]]) {
     for(let i=0;i<GALLERY_STATIONS.length;i++) {
       const camera=galleryCamera(i,w,h);
       const corners=GALLERY_STATIONS[i].corners.map(p=>project(camera,p));
@@ -48,5 +48,15 @@ test('the consultation approach stays inside the photograph and centers the pass
     assert.ok(topLeft[0]<=0 && topLeft[1]<=0);
     assert.ok(bottomRight[0]>=w && bottomRight[1]>=h);
     assert.ok(camera.every(Number.isFinite));
+  }
+});
+
+test('mobile artwork clears the two navigation rows and short desktop artwork clears the thumbnails',()=>{
+  for(let i=0;i<GALLERY_STATIONS.length;i++) {
+    const mobile=GALLERY_STATIONS[i].corners.map(p=>project(galleryCamera(i,390,844),p));
+    assert.ok(Math.min(...mobile.map(p=>p[1]))>=164.9);
+    const landscape=GALLERY_STATIONS[i].corners.map(p=>project(galleryCamera(i,807,467),p));
+    assert.ok(Math.min(...landscape.map(p=>p[1]))>=111.9);
+    assert.ok(Math.max(...landscape.map(p=>p[1]))<300);
   }
 });
