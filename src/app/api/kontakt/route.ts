@@ -8,15 +8,16 @@ export const runtime = "nodejs";
    Kontakt-Endpoint
    - Validiert die Eingabe (zod), Honeypot gegen Bots, einfaches Rate-Limit.
    - Schreibt die Anfrage in den Lead-Speicher (Turso/libSQL) -> Dashboard-Pipeline.
-   - Benachrichtigt per WhatsApp (CallMeBot), best-effort.
+   - Pusht eine ntfy-Notification, damit Ilja neue Anfragen sofort mitbekommt.
+     Gleicher Kanal wie /api/audit-request und /api/umfrage.
    - Wenn Turso nicht konfiguriert ist, antwortet die Route mit 503; das
      Frontend faellt dann sichtbar auf mailto zurueck (kein stiller Verlust).
 
    Benoetigte Env-Variablen (Vercel, Production):
      TURSO_DATABASE_URL   libsql://<db>-<org>.turso.io
      TURSO_AUTH_TOKEN     Turso-Datenbank-Token
-     CALLMEBOT_PHONE      z.B. +995591443665   (optional, fuer WhatsApp-Push)
-     CALLMEBOT_APIKEY     CallMeBot-API-Key     (optional)
+     NTFY_TOPIC           ntfy-Topic fuer den Push aufs Handy
+     NTFY_SERVER          optional, Default https://ntfy.sh
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
@@ -47,17 +48,38 @@ function rateLimited(ip: string, now: number): boolean {
   return arr.length > LIMIT;
 }
 
-async function notifyWhatsApp(data: z.infer<typeof Schema>): Promise<void> {
-  const phone = process.env.CALLMEBOT_PHONE;
-  const apikey = process.env.CALLMEBOT_APIKEY;
-  if (!phone || !apikey) return;
+async function notify(data: z.infer<typeof Schema>): Promise<void> {
+  const topic = process.env.NTFY_TOPIC;
+  if (!topic) {
+    // Laut, nicht still: ein fehlender Kanal hat hier schon einmal monatelang
+    // dafuer gesorgt, dass Anfragen unbemerkt liegen blieben.
+    console.error("[kontakt] NTFY_TOPIC fehlt - Anfrage gespeichert, aber keine Benachrichtigung verschickt");
+    return;
+  }
+  const server = process.env.NTFY_SERVER || "https://ntfy.sh";
 
-  const text = `Neue Website-Anfrage\nVon: ${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\nMail: ${data.email}${data.webseite ? `\nWeb: ${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen}`;
-  const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(text)}`;
+  const message = `${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\n${data.email}${data.webseite ? `\n${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen.slice(0, 500)}`;
+
   try {
-    await fetch(url, { method: "GET" });
-  } catch {
-    // Benachrichtigung ist best-effort; die Anfrage liegt sicher in Notion.
+    // JSON-Mode wie in /api/audit-request: umgeht Header-Encoding-Probleme mit Umlauten.
+    const res = await fetch(server, {
+      method: "POST",
+      signal: AbortSignal.timeout(8000),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        topic,
+        title: "Neue Website-Anfrage",
+        message,
+        tags: ["envelope"],
+        priority: 4,
+      }),
+    });
+    if (!res.ok) {
+      console.error("[kontakt] ntfy-Fehler:", res.status, (await res.text()).slice(0, 200));
+    }
+  } catch (err) {
+    // Benachrichtigung ist best-effort; die Anfrage liegt sicher in der Datenbank.
+    console.error("[kontakt] ntfy nicht erreichbar:", err);
   }
 }
 
@@ -101,7 +123,7 @@ export async function POST(req: Request) {
       // Backend noch nicht konfiguriert → Frontend nutzt mailto-Fallback
       return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
     }
-    await notifyWhatsApp(data);
+    await notify(data);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[kontakt] Lead-Speicher-Fehler:", err);

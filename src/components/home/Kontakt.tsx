@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 type PE = { score: string; reviews: string; rate: number; url: string };
 
 /* Kontakt-Block — global im Layout, erscheint unten auf jeder Seite.
-   Schickt an /api/kontakt (Notion + WhatsApp). Faellt sichtbar auf mailto
+   Schickt an /api/kontakt (Turso + ntfy-Push). Faellt sichtbar auf mailto
    zurueck, falls das Backend (noch) nicht konfiguriert ist. */
 export default function Kontakt({ pe }: { pe?: PE }) {
   const pathname = usePathname();
