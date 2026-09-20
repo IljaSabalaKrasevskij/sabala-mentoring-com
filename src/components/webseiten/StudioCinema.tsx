@@ -19,12 +19,12 @@ type Props = {
   selected: number | null; interactive: boolean;
   onSelect: (index: number) => void;
   onHover: (index: number | null, anchor?: HoverAnchor) => void;
-  onDoor: () => void; onReady: () => void; onFailure: () => void;
+  onReady: () => void; onFailure: () => void;
   onInvalidate: (callback: (() => void) | null) => void;
   project: { image: string; title: string; url: string };
 };
 
-export default function StudioCinema({ lang = "de", galleryVariant = "classic", progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onDoor, onReady, onFailure, onInvalidate, project }: Props) {
+export default function StudioCinema({ lang = "de", galleryVariant = "classic", progress, distance, exploring, room, flat, reduced, selected, interactive, onSelect, onHover, onReady, onFailure, onInvalidate, project }: Props) {
   const S = STUDIO_TEXTE[lang];
   const filmSources = galleryVariant === "salon" ? SALON_FILMS : LONDON_FILMS;
   const root = useRef<HTMLDivElement>(null);
@@ -115,7 +115,6 @@ export default function StudioCinema({ lang = "de", galleryVariant = "classic", 
           <div ref={labels} className={styles.labels}>
             {WINDOW_OBJECTS.map((object, index) => <button key={EXHIBITS[index].id} className={styles.priceTag} type="button" style={{ left: `${object.x + object.w / 2}%`, top: `${[65.8, 61.8, 67.8, 61.8, 65.8, 66.8][index]}%` }} aria-label={`${S.exponate[index].label}: ${S.schilder[index].tag}`} aria-pressed={selected === index} disabled={!interactive || room !== "window"} tabIndex={interactive && room === "window" ? 0 : -1} onPointerEnter={event => focusObject(index, event.currentTarget)} onPointerLeave={() => onHover(null)} onFocus={event => focusObject(index, event.currentTarget)} onBlur={() => onHover(null)} onClick={event => { focusObject(index, event.currentTarget); onSelect(index); }}><span>{S.exponate[index].label}</span><strong>{S.schilder[index].tag}</strong></button>)}
           </div>
-          <button className={styles.doorTarget} aria-label={S.tuerLabel} type="button" onClick={onDoor} tabIndex={room === "window" && interactive ? 0 : -1} disabled={room !== "window" || !interactive} />
         </>}
         {key === "gallery" && galleryVariant === "salon" && <div ref={salonWorld} className={styles.salonWorld} aria-hidden="true" data-salon-hung="true">
           {GALLERY_STATIONS.map((station, index) => <div key={station.id} className={galleryStyles.artwork} style={{ width: ART_SIZE[0], height: ART_SIZE[1], transform: cssMatrix(artworkMatrix(station.corners)) }}>

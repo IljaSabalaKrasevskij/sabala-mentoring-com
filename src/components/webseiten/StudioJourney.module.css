@@ -11,10 +11,10 @@
   gap: 24px; padding: 26px 36px; background: linear-gradient(#08090bc9, transparent);
 }
 .wordmark { color: var(--ivory); font: 400 17px/1 var(--font-instrument), Georgia, serif; border: 0; background: none; cursor: pointer; white-space: nowrap; }
-.roomnav { display: flex; gap: 24px; }
-.roomnav button { display: flex; align-items: center; gap: 7px; color: #b6bdae; background: none; border: 0; padding: 9px 0; font-size: 11px; cursor: pointer; white-space: nowrap; }
-.roomnav button span { color: #a79a80; font-size: 9px; }
-.roomnav button[aria-current] { color: #f5e6c9; }
+.roomnav { display: flex; gap: 24px; list-style: none; padding: 0; margin: 0; }
+.roomnav li { display: flex; align-items: center; gap: 7px; color: #b6bdae; background: none; border: 0; padding: 9px 0; font-size: 11px; white-space: nowrap; }
+.roomnav li span { color: #a79a80; font-size: 9px; }
+.roomnav li[aria-current] { color: #f5e6c9; }
 .skip { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #c9cdbf; padding-right: 36px; }
 .scene { position: absolute; inset: 0; }
 .scene > div:not(.vignette):not(.poster) { width: 100%; height: 100%; }
@@ -104,8 +104,8 @@
   .topbar { padding: 23px 20px 12px; flex-wrap: wrap; gap: 22px; }
   .wordmark { font-size: 18px; }
   .roomnav { width: 100%; justify-content: space-between; }
-  .roomnav button { font-size: 10px; padding: 7px 0; }
-  .roomnav button span { font-size: 8px; }
+  .roomnav li { font-size: 10px; padding: 7px 0; }
+  .roomnav li span { font-size: 8px; }
   .windowBottom { bottom: 72px; left: 20px; right: 20px; }
   .exhibitMenu summary { font-size: 10px; gap: 10px; }
   .exhibitNav { width: 252px; }
@@ -143,7 +143,7 @@
 .scrollCue > svg { animation: scrollArrow 2s ease infinite; }
 .entryCue { position: absolute; z-index: 3; right: 36px; top: 110px; display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #e8dcc3; border: 0; background: linear-gradient(100deg,#0c100de0,#0c100d55); border-radius: 3px; text-shadow: 0 2px 12px #000; cursor: pointer; animation: arrive .5s both; }
 .entryCue > span:last-child { font: 400 19px/1.2 var(--font-instrument), Georgia, serif; }
-.entryCue:hover { color: #fff0d0; }
+
 .entryCue .scrollMouse { width: 17px; height: 26px; }
 .entryCue .scrollCue { gap: 4px; }
 @keyframes scrollWheel { 0%, 15% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 75%, 100% { opacity: 0; transform: translateY(9px); } }
@@ -206,16 +206,16 @@
 .topbar { padding:16px 28px; min-height:76px; gap:24px; align-items:center; }
 .stage:not([data-entered=true]) .topbar { padding-right:205px; }
 .back { display:inline-flex; align-items:center; gap:10px; min-height:44px; border:0; padding:8px 0; background:none; color:var(--ivory); font-size:12px; cursor:pointer; }
-.roomnav button { min-height:44px; padding:10px 4px; font-size:12px; }
-.roomnav button[aria-current] { text-decoration:underline; text-underline-offset:8px; text-decoration-color:var(--brass); }
-.entryCue { top:auto; bottom:120px; min-height:48px; padding:14px 22px; border:1px solid #d5bd8770; background:#161b14ee; }
-.entryCue > span { font:400 21px/1.2 var(--font-instrument),Georgia,serif; }
+.roomnav li { min-height:44px; padding:10px 4px; font-size:12px; }
+.roomnav li[aria-current] { text-decoration:underline; text-underline-offset:8px; text-decoration-color:var(--brass); }
+.entryCue { top:110px; bottom:auto; min-height:48px; padding:12px 15px; border:0; background:linear-gradient(100deg,#0c100dc0,#0c100d22); pointer-events:none; cursor:default; }
+.entryCue > span:last-child { font:400 19px/1.2 var(--font-instrument),Georgia,serif; }
 .bottomBar { height:auto; min-height:64px; padding:8px 28px max(8px,env(safe-area-inset-bottom)); gap:20px; background:linear-gradient(transparent,#0b0c0df5 24%); }
 .bottomBar .motionToggle { margin-left:auto; min-height:44px; font-size:10px; padding:8px; }
 .bottomBar .exit { min-height:44px; display:flex; align-items:center; justify-content:center; gap:10px; padding:10px 14px; border:1px solid #cdb78e60; border-radius:3px; background:#161b14ef; color:#f3eddf; font-size:12px; line-height:1.4; text-align:left; }
 .windowBottom { bottom:76px; }
 .stage[data-consulting=true] .topbar,.stage[data-consulting=true] .bottomBar { visibility:hidden; }
-.back:active,.exit:active,.entryCue:active,.roomnav button:active { transform:scale(.98); }
+.back:active,.exit:active { transform:scale(.98); }
 .stage h2:focus { outline:none; }
 .speech { max-height:calc(100% - 260px); overflow-y:auto; overscroll-behavior:contain; }
 .digitalPanel { max-height:calc(100% - 210px); overflow-y:auto; overscroll-behavior:contain; }
@@ -229,13 +229,13 @@
   .topbar,.stage:not([data-entered=true]) .topbar { padding:12px 20px 0; gap:3px 12px; flex-wrap:wrap; }
   .back { flex:1; font-size:12px; }
   .roomnav { width:100%; order:3; justify-content:space-between; gap:10px; }
-  .roomnav button { font-size:11px; }
+  .roomnav li { font-size:11px; }
   .stage:not([data-entered=true]) .wordmark { min-height:44px; display:flex; align-items:center; }
   .bottomBar { padding-inline:16px; gap:6px; }
   .bottomBar .motionToggle { margin:0; padding:8px 4px; font-size:9px; white-space:normal; text-align:left; max-width:85px; }
   .bottomBar .exit { margin-left:auto; font-size:11px; padding:9px 10px; gap:8px; }
-  .entryCue { top:auto; bottom:128px; right:20px; padding:12px 20px; }
-  .entryCue > span { font-size:20px; }
+  .entryCue { top:125px; bottom:auto; right:20px; padding:9px 12px; }
+  .entryCue > span:last-child { font-size:17px; }
   .speech { max-height:calc(100% - 375px); }
 }
 @media(max-height:650px) and (min-width:700px) {
