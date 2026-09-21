@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { APPROACH_SCREENS, caseSlot, journeyProgress, windowView, cinemaShot, filmAt, stillShot, cameraShot, doorAngle, eaglePosition, ROOM_PROGRESS, roomAt } from './studio-journey.ts';
+import { APPROACH_SCREENS, RECEPTION_SCREENS, GALLERY_READING_SCREENS, GALLERY_WALK_SCREENS, GALLERY_ARRIVAL_SCREENS, caseSlot, journeyProgress, windowView, cinemaShot, filmAt, stillShot, cameraShot, doorAngle, eaglePosition, ROOM_PROGRESS, roomAt } from './studio-journey.ts';
 
 const samples = Array.from({ length: 1001 }, (_, i) => i / 1000);
 test('the camera enters through both door openings, never through a wall', () => {
@@ -105,7 +105,29 @@ test('arrival reserves space to inspect the close window before any entrance fil
   assert.equal(windowView(1, 0).scale, windowView(2, 0).scale);
   assert.ok(windowView(1, 0).scale > 1.5);
   assert.equal(journeyProgress(20, false), .48);
-  assert.equal(journeyProgress(20, true), 1);
+  assert.equal(journeyProgress(20, true), ROOM_PROGRESS.gallery);
+});
+
+test('choosing the gallery leaves time to read before any scroll-controlled departure', () => {
+  for (const extra of [0, .1, GALLERY_READING_SCREENS]) {
+    const progress = journeyProgress(RECEPTION_SCREENS + extra, true);
+    assert.equal(progress, ROOM_PROGRESS.reception);
+    assert.equal(filmAt(progress).active, false);
+  }
+  assert.equal(journeyProgress(GALLERY_ARRIVAL_SCREENS, true), ROOM_PROGRESS.gallery);
+  assert.equal(journeyProgress(GALLERY_ARRIVAL_SCREENS, false), .48);
+});
+
+test('the walk to the gallery pauses and reverses with the visitor’s scroll', () => {
+  const start = RECEPTION_SCREENS + GALLERY_READING_SCREENS;
+  const half = start + GALLERY_WALK_SCREENS / 2;
+  const paused = journeyProgress(half, true);
+  assert.equal(filmAt(paused).index, 1);
+  assert.equal(filmAt(paused).active, true);
+  assert.equal(journeyProgress(half, true), paused);
+  assert.ok(journeyProgress(half - .2, true) < paused);
+  assert.ok(journeyProgress(half + .2, true) > paused);
+  assert.equal(journeyProgress(RECEPTION_SCREENS, true), ROOM_PROGRESS.reception);
 });
 
 test('mouse look pans toward either side and settles into the existing film framing', () => {

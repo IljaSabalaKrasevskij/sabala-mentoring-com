@@ -17,6 +17,10 @@ export function caseSlot(i: number, active: number, n: number) {
 
 export const ROOM_PROGRESS: Record<Room, number> = { window: 0, reception: 0.47, gallery: 0.94 };
 export const APPROACH_SCREENS = .95;
+export const RECEPTION_SCREENS = APPROACH_SCREENS + ROOM_PROGRESS.reception * 5;
+export const GALLERY_READING_SCREENS = .45;
+export const GALLERY_WALK_SCREENS = 3.2;
+export const GALLERY_ARRIVAL_SCREENS = RECEPTION_SCREENS + GALLERY_READING_SCREENS + GALLERY_WALK_SCREENS;
 export const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 export const ease = (x: number) => { const t = clamp(x); return t * t * (3 - 2 * t); };
 export const mix = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -92,7 +96,10 @@ export function stillShot(room: Room) {
 }
 
 export function journeyProgress(screens: number, galleryOpen: boolean) {
-  return clamp((screens - APPROACH_SCREENS) / 5, 0, galleryOpen ? 1 : .48);
+  if (!galleryOpen || screens < RECEPTION_SCREENS) return clamp((screens - APPROACH_SCREENS) / 5, 0, .48);
+  // The invitation stays readable before the next scroll-controlled walk begins.
+  const walk = clamp((screens - RECEPTION_SCREENS - GALLERY_READING_SCREENS) / GALLERY_WALK_SCREENS);
+  return mix(ROOM_PROGRESS.reception, ROOM_PROGRESS.gallery, walk);
 }
 
 /** Close view holds for inspection, then blends into the existing entry film. */
