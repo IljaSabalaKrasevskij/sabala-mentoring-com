@@ -42,6 +42,22 @@ const nextConfig: NextConfig = {
         destination: "https://sabala-mentoring.com/:path*",
         permanent: true,
       },
+      // "Fuehrung von Innen" am 22.9.2026 abgeschaltet: altes Angebot aus der
+      // Zeit vor der Positionierung auf High-End Web Development. 52 Impressionen
+      // in 90 Tagen, kein einziger Klick. 301 auf die Startseite.
+      {
+        source: "/meditation",
+        destination: "/",
+        permanent: true,
+      },
+      // Podcast am 22.9.2026 eingestellt, die Seite ist entfernt. Sie erbte ihre
+      // Metadaten vom Root-Layout, lief deshalb mit dem Titel der Startseite und
+      // tauchte trotzdem als Sitelink auf. 301 auf die Startseite haelt den Search-Equity.
+      {
+        source: "/podcast",
+        destination: "/",
+        permanent: true,
+      },
       // Claude Starter am 24.8.2026 eingestellt, war nie buchbar.
       // Die Beratungsstunde hat seinen Platz uebernommen.
       {

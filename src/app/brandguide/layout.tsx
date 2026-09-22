@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Brand Guidelines",
   description:
     "Farben, Typografie, Bildsprache und Interface-Regeln von Sabala Studios. Die Design-Grundlage hinter jedem Projekt.",
+  // 22.9.2026 auf noindex: interne Design-Grundlage, kein Angebot. Sie rankte
+  // ohnehin fuer nichts (0 Impressionen/90T) und soll nicht als Sitelink konkurrieren.
+  robots: { index: false, follow: false },
   alternates: { canonical: "/brandguide" },
   openGraph: {
     title: "Brand Guidelines · Sabala Studios",
