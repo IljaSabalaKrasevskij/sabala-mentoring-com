@@ -24,7 +24,7 @@ export const COHORTS: Cohort[] = [
       { label: "Session 1", date: "Do · 1. Oktober 2026", time: "16-18:30 Uhr" },
       { label: "Session 2", date: "Do · 8. Oktober 2026", time: "16-18:30 Uhr" },
     ],
-    capacity: 10,
+    capacity: 6,
     // ponytail: Slug bleibt "sep-26", der Lauf wurde am 26.9. nur verschoben. Neues ThriveCart-Produkt erst beim naechsten Lauf.
     checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-sep-26/",
     status: "offen",

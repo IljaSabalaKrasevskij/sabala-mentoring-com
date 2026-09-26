@@ -105,7 +105,7 @@ export default function PriceBlock() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ background: "var(--gold)" }} />
               <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--gold)" }} />
             </span>
-            Nur 10 Plätze
+            Nur {COHORTS[0].capacity} Plätze
           </div>
         </motion.div>
 
@@ -116,7 +116,7 @@ export default function PriceBlock() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mx-auto mt-7 max-w-md text-[0.9rem] leading-relaxed text-warm-mid"
         >
-          Keine langen Wartelisten. Sind die 10 Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.
+          Keine langen Wartelisten. Sind die {COHORTS[0].capacity} Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.
         </motion.p>
       </div>
     </section>
