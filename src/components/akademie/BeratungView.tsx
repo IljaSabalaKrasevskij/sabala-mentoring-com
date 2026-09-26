@@ -24,8 +24,8 @@ const PREIS = "97";
 const PREIS_REGULAER = "200";
 const GUTSCHEIN = "120";
 const KURS_PREIS = 397;
-// Naechster Second-Brain-Lauf, Quelle: cohorts.ts (second-brain-2026-09-24)
-const KURS_TERMIN = "24. September + 2. Oktober";
+// Naechster Second-Brain-Lauf, Quelle: cohorts.ts (second-brain-2026-10-01)
+const KURS_TERMIN = "1. + 8. Oktober";
 
 /* prefers-reduced-motion respektieren. Im UX-Skill Prioritaet 1 (kritisch):
    Parallax und Auto-Rotation koennen bei empfindlichen Nutzern Schwindel ausloesen. */
@@ -170,7 +170,7 @@ const EINWAENDE: [string, string][] = [
   ["Wie komme ich an meinen Termin?",
    "Direkt nach dem Kauf bekommst du den Link zur Terminwahl und suchst dir aus, was dir passt. Dazu deinen Gutscheincode."],
   ["Und wenn ich danach doch den Kurs will?",
-   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Lauf ist am 24. September und 2. Oktober."],
+   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Lauf ist am 1. und 8. Oktober."],
 ];
 
 const VORHER = [
@@ -839,7 +839,7 @@ export default function BeratungView() {
                     Zwei Abende live, in denen wir Claude Code gemeinsam einrichten.
                   </p>
                   <p className="mt-4 font-mono text-[12.5px]" style={{ color: goldLight }}>
-                    {KURS_TERMIN} &middot; 15&ndash;17:30 Uhr
+                    {KURS_TERMIN} &middot; 16&ndash;18:30 Uhr
                   </p>
                 </div>
               </div>
