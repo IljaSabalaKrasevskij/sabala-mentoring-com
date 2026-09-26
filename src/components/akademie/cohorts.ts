@@ -18,13 +18,14 @@ export const COHORTS: Cohort[] = [
   // Lauf Aug 2026 (21.8. + 28.8.) am 27.8.2026 entfernt: laeuft bereits, nicht mehr buchbar.
   // Historie steht im Vault, nicht hier. Diese Liste zeigt ausschliesslich buchbare Laeufe.
   {
-    id: "second-brain-2026-09-24",
-    start: "2026-09-24",
+    id: "second-brain-2026-10-01",
+    start: "2026-10-01",
     sessions: [
-      { label: "Session 1", date: "Do · 24. September 2026", time: "15-17:30 Uhr" },
-      { label: "Session 2", date: "Fr · 2. Oktober 2026", time: "15-17:30 Uhr" },
+      { label: "Session 1", date: "Do · 1. Oktober 2026", time: "16-18:30 Uhr" },
+      { label: "Session 2", date: "Do · 8. Oktober 2026", time: "16-18:30 Uhr" },
     ],
     capacity: 10,
+    // ponytail: Slug bleibt "sep-26", der Lauf wurde am 26.9. nur verschoben. Neues ThriveCart-Produkt erst beim naechsten Lauf.
     checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-sep-26/",
     status: "offen",
   },
