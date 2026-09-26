@@ -125,7 +125,7 @@ export const FAQ = [
   },
   {
     q: "Ist das eine verkappte Verkaufsveranstaltung?",
-    a: "Nein, aber ich mache auch kein Geheimnis daraus: am Ende stelle ich meinen Kurs vor, der am 1. Oktober startet, mit maximal 6 Plätzen. Das sage ich dir lieber vorher als hinterher. Die 60 Minuten davor funktionieren komplett für sich, auch wenn du danach nie wieder von mir hörst.",
+    a: "Nein, aber ich mache auch kein Geheimnis daraus: am Ende stelle ich meinen Kurs vor, der am 24. September startet, mit maximal 10 Plätzen. Das sage ich dir lieber vorher als hinterher. Die 60 Minuten davor funktionieren komplett für sich, auch wenn du danach nie wieder von mir hörst.",
   },
   {
     q: "Für wen ist das nichts?",
