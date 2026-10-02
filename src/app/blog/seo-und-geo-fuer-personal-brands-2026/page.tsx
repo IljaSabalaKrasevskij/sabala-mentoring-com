@@ -32,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
   "publisher": { "@type": "Organization", "name": "Sabala Mentoring", "logo": { "@type": "ImageObject", "url": "https://sabala-mentoring.com/sabala-logo.svg" } },
   "datePublished": "2026-05-19",
-  "dateModified": "2026-05-19",
+  "dateModified": "2026-10-02",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://sabala-mentoring.com/blog/seo-und-geo-fuer-personal-brands-2026" }
 });
 
@@ -53,7 +53,7 @@ const faqSchemaJson = JSON.stringify({
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Was bedeutet Generative Engine Optimization (GEO)?", "acceptedAnswer": { "@type": "Answer", "text": "GEO ist die Optimierung deiner Inhalte für KI-Suchsysteme wie ChatGPT, Perplexity, Claude und Google Gemini. Statt für klassische Suchergebnisse zu ranken, geht es darum, dass diese KIs deine Marke als verlässliche Quelle zitieren, wenn jemand eine Frage stellt. GEO ergänzt SEO, ersetzt es nicht." } },
-    { "@type": "Question", "name": "Wie verbessere ich meine ChatGPT-Sichtbarkeit?", "acceptedAnswer": { "@type": "Answer", "text": "Drei Hebel: Schema-Markup einbauen (FAQPage, Person, Article), Erwähnungen auf Wikipedia oder Reddit aufbauen (gemeinsam 59 Prozent aller ChatGPT-Citations), klares Frage-Antwort-Format mit konkreten Zahlen." } },
+    { "@type": "Question", "name": "Wie verbessere ich meine ChatGPT-Sichtbarkeit?", "acceptedAnswer": { "@type": "Answer", "text": "Drei Hebel: Schema-Markup einbauen (FAQPage, Person, Article), Erwähnungen auf Wikipedia oder Reddit aufbauen (die beiden wichtigsten Quellen von ChatGPT), klares Frage-Antwort-Format mit konkreten Zahlen." } },
     { "@type": "Question", "name": "Welche kostenlosen Tools brauche ich für GEO und SEO?", "acceptedAnswer": { "@type": "Answer", "text": "Für SEO: Google Search Console, Google Suggest, AnswerThePublic, AlsoAsked, findquestions.com, Pinterest-Suchleiste. Für GEO: ChatGPT-Direktbefragung, Perplexity-Quellen-Analyse, Bing Webmaster Tools, Schema.org-Markup-Tester." } },
     { "@type": "Question", "name": "Wie lange dauert es bis SEO und GEO Erfolge sehen?", "acceptedAnswer": { "@type": "Answer", "text": "Bei GEO: erste Citations in 4 bis 8 Wochen, konsistente Präsenz in 3 bis 6 Monaten, dominante Position in 6 bis 12 Monaten. Bei SEO: erste Bewegungen in 8 bis 12 Wochen, spürbare Klicks in 4 bis 6 Monaten." } },
     { "@type": "Question", "name": "Brauche ich einen Blog, um in ChatGPT gefunden zu werden?", "acceptedAnswer": { "@type": "Answer", "text": "Ein Blog ist der effizienteste Hebel, aber kein Muss. Pflicht ist eine Webseite mit substanziellen Inhalten, FAQ-Sektion mit Schema-Markup, klare Autoren-Bio." } },
@@ -65,11 +65,11 @@ const faqSchemaJson = JSON.stringify({
 });
 
 const stats = [
-  { value: 89, suffix: "%", label: "der ChatGPT-Zitationen", sub: "stammen von Seiten außerhalb der Google Top 10" },
-  { value: 47.9, decimals: 1, suffix: "%", label: "Wikipedia-Anteil", sub: "an allen ChatGPT-Citations" },
-  { value: 11.3, decimals: 1, suffix: "%", label: "Reddit-Anteil", sub: "an allen ChatGPT-Citations" },
-  { value: 115, suffix: "%", label: "Sichtbarkeits-Boost", sub: "durch gezielte GEO-Maßnahmen (Aggarwal 2023)" },
-  { value: 11, suffix: "×", label: "höhere Conversion-Rate", sub: "von AI-Search-Visitors vs. organischer Traffic" },
+  { value: 90, suffix: "%", label: "der ChatGPT-Zitationen", sub: "stammen von Seiten außerhalb der Google Top 10 (Ahrefs, Semrush 2025)" },
+  { value: 47.9, decimals: 1, suffix: "%", label: "Wikipedia-Anteil", sub: "unter den Top-10-Quellen von ChatGPT (Profound)" },
+  { value: 11.3, decimals: 1, suffix: "%", label: "Reddit-Anteil", sub: "unter den Top-10-Quellen von ChatGPT (Profound)" },
+  { value: 115, suffix: "%", label: "Sichtbarkeits-Boost", sub: "für Seiten auf Google-Platz 5, mit Quellenangaben (Aggarwal 2023)" },
+  { value: 4.4, decimals: 1, suffix: "×", label: "höhere Conversion-Rate", sub: "von AI-Search-Visitors vs. organischer Traffic (Semrush 2025)" },
 ];
 
 const seoTools = [
@@ -113,7 +113,7 @@ const fehlerSummary = [
 
 const faq = [
   { q: "Was bedeutet Generative Engine Optimization (GEO)?", a: "GEO ist die Optimierung deiner Inhalte für KI-Suchsysteme wie ChatGPT, Perplexity, Claude und Google Gemini. Statt für klassische Suchergebnisse zu ranken, geht es darum, dass diese KIs deine Marke als verlässliche Quelle zitieren, wenn jemand eine Frage stellt. GEO ergänzt SEO, ersetzt es nicht. Sauberes SEO ist die Grundlage, GEO setzt darauf auf." },
-  { q: "Wie verbessere ich meine ChatGPT-Sichtbarkeit?", a: "Drei Hebel: Schema-Markup einbauen (FAQPage, Person, Article), Erwähnungen auf Wikipedia oder Reddit aufbauen (gemeinsam 59 Prozent aller ChatGPT-Citations), klares Frage-Antwort-Format. Bing Webmaster Tools einrichten ist 2026 Pflicht." },
+  { q: "Wie verbessere ich meine ChatGPT-Sichtbarkeit?", a: "Drei Hebel: Schema-Markup einbauen (FAQPage, Person, Article), Erwähnungen auf Wikipedia oder Reddit aufbauen (die beiden wichtigsten Quellen von ChatGPT), klares Frage-Antwort-Format. Bing Webmaster Tools einrichten ist 2026 Pflicht." },
   { q: "Welche kostenlosen Tools brauche ich für GEO und SEO?", a: "Für SEO: Google Search Console, Google Suggest, AnswerThePublic, AlsoAsked, findquestions.com, Pinterest-Suchleiste. Für GEO: ChatGPT-Direktbefragung, Perplexity-Quellen-Analyse, Bing Webmaster Tools, Schema.org-Markup-Tester. Insgesamt zehn Werkzeuge, alle kostenlos." },
   { q: "Wie lange dauert es bis SEO und GEO Erfolge sehen?", a: "Bei GEO: erste Citations in 4 bis 8 Wochen, konsistente Präsenz in 3 bis 6 Monaten, dominante Position in 6 bis 12 Monaten. Bei SEO: erste Bewegungen in 8 bis 12 Wochen, spürbare Klicks in 4 bis 6 Monaten. Beide arbeiten kumulativ." },
   { q: "Brauche ich einen Blog, um in ChatGPT gefunden zu werden?", a: "Ein Blog ist der effizienteste Hebel, aber kein Muss. Pflicht ist eine Webseite mit substanziellen Inhalten, FAQ-Sektion mit Schema-Markup, klare Autoren-Bio. Service-Webseiten ohne Blog können GEO-sichtbar werden, wenn Pyramidenstruktur und E-E-A-T-Signale sauber sind." },
@@ -231,7 +231,7 @@ export default function SeoGeoPersonalBrandsPage() {
               Stell dir vor, eine 38-jährige Gründerin sucht jemanden, der ihre Vision schärft. Vor zwei Jahren hat sie Google geöffnet, drei Begriffe getippt und zehn blaue Links bekommen. <strong>Heute? Sie öffnet ChatGPT, fragt in einem Satz und bekommt drei Namen. Mit Begründung. Ohne Klick.</strong>
             </p>
             <p>Wenn dein Name dort nicht fällt, hast du diese Person verloren, bevor sie überhaupt deine Webseite gesehen hat.</p>
-            <p>2026 ist Sichtbarkeit kein Google-Spiel mehr. Sie ist ein Dreiklang aus SEO, GEO und AEO. Wer nur einen davon beherrscht, verschenkt einen großen Teil der Erstkontakte. ChatGPT hat im Frühjahr 2026 über 700 Millionen wöchentliche Nutzer. 81 Prozent Marktanteil bei KI-Chatbots. 5 Milliarden Anfragen pro Monat.</p>
+            <p>2026 ist Sichtbarkeit kein Google-Spiel mehr. Sie ist ein Dreiklang aus SEO, GEO und AEO. Wer nur einen davon beherrscht, verschenkt einen großen Teil der Erstkontakte. ChatGPT hatte Anfang 2026 über 900 Millionen wöchentliche Nutzer und fast 80 Prozent Marktanteil bei KI-Chatbots (OpenAI, Statcounter).</p>
             <p>Und im DACH-Premium-Segment für Personal Brands hat fast niemand systematisch GEO im Blick. Wer jetzt anfängt, übernimmt die Position, bevor sie umkämpft wird.</p>
             <p><strong>Dieser Artikel zeigt dir:</strong></p>
             <ul>
@@ -285,11 +285,11 @@ export default function SeoGeoPersonalBrandsPage() {
         <ScrollReveal>
           <div className={proseBlock}>
             <h2>Warum 2026 anders ist als 2024</h2>
-            <p className={dropCapClass}><strong>Die Zahlen verschieben sich gerade. Nicht über Jahre. Über Quartale.</strong> ChatGPT hat im Frühjahr 2026 über 700 Millionen wöchentliche Nutzer gemeldet. Perplexity wächst zweistellig pro Quartal. Google Gemini ist in fast jeder Android-Suche integriert. Für Premium-Recherchen, also genau das, was deine Wunschklienten machen bevor sie buchen, verschiebt sich der Einstieg in Echtzeit.</p>
+            <p className={dropCapClass}><strong>Die Zahlen verschieben sich gerade. Nicht über Jahre. Über Quartale.</strong> OpenAI meldete Anfang 2026 über 900 Millionen wöchentliche Nutzer für ChatGPT. Perplexity wächst zweistellig pro Quartal. Google Gemini ist in fast jeder Android-Suche integriert. Für Premium-Recherchen, also genau das, was deine Wunschklienten machen bevor sie buchen, verschiebt sich der Einstieg in Echtzeit.</p>
             <p><strong>Drei Zahlen erzählen die ganze Geschichte:</strong></p>
-            <p><strong>89 Prozent der ChatGPT-Zitationen</strong> stammen von Seiten außerhalb der Google Top 10. Wer also nur auf Google Position 1 optimiert, baut die falsche Strategie. KI-Suchsysteme greifen tiefer in den Long-Tail als der klassische Google-Algorithmus.</p>
-            <p><strong>Wikipedia stellt 47,9 Prozent aller ChatGPT-Zitationen</strong>, Reddit weitere 11,3 Prozent. Persönliche Webseiten werden zitiert, wenn sie eindeutige Marken-Entitäten transportieren. Ohne klare Author-Identität und Schema-Markup wirst du übersprungen.</p>
-            <p>Gezielte GEO-Maßnahmen steigern die Sichtbarkeit in KI-Suchsystemen um <strong>bis zu 115 Prozent</strong>, das hat Aggarwal et al. 2023 in einer akademischen Studie gezeigt. Diese Zahl wirkt klein, ist aber riesig. 115 Prozent mehr Citations bedeutet doppelte Reichweite ohne einen einzigen zusätzlichen Klick.</p>
+            <p><strong>Rund 90 Prozent der ChatGPT-Zitationen</strong> stammen von Seiten außerhalb der Google Top 10, das zeigen Auswertungen von Ahrefs und Semrush aus 2025. Wer also nur auf Google Position 1 optimiert, baut die falsche Strategie. KI-Suchsysteme greifen tiefer in den Long-Tail als der klassische Google-Algorithmus.</p>
+            <p><strong>Unter den zehn meistzitierten Quellen von ChatGPT entfallen 47,9 Prozent auf Wikipedia</strong>, weitere 11,3 Prozent auf Reddit. Das hat Profound in 680 Millionen KI-Zitationen ausgewertet. Persönliche Webseiten werden zitiert, wenn sie eindeutige Marken-Entitäten transportieren. Ohne klare Author-Identität und Schema-Markup wirst du übersprungen.</p>
+            <p>Gezielte GEO-Maßnahmen steigern die Sichtbarkeit in KI-Antworten um <strong>bis zu 40 Prozent</strong>, das hat Aggarwal et al. 2023 in einer akademischen Studie gezeigt. Noch spannender für Personal Brands: Seiten, die bei Google erst auf Platz 5 standen, legten mit Quellenangaben sogar um <strong>115 Prozent</strong> zu. Kleine Marken können also aufholen, was ihnen an Reichweite fehlt.</p>
             <h3>Was bedeutet das konkret für deine Personal Brand?</h3>
             <p>Eine 38-jährige Gründerin sucht eine Mentorin für Personal Branding. Vor zwei Jahren tippte sie Mentor Personal Branding DACH bei Google ein, schaute sich zehn Webseiten an und buchte beim Stimmigsten. Heute öffnet sie ChatGPT und stellt eine viel präzisere Frage: deutschsprachige Mentoren für Personal Branding, die mit Visionären arbeiten und nicht den klassischen Coaching-Pathos verwenden. Drei Namen, mit Begründung, in zwei Sekunden.</p>
             <p>Wenn du in Schritt eins, also ChatGPT, nicht auftauchst, kommst du in Schritt zwei, dem Google-Check, gar nicht mehr vor. Die Reihenfolge hat sich umgedreht. KI-Suche filtert vor, Google wird zum Verifizier-Schritt.</p>
@@ -339,13 +339,13 @@ export default function SeoGeoPersonalBrandsPage() {
             <p><strong>Google Suggest</strong> ist die kostenlose Live-Demo deines Marktes. Öffne ein Inkognito-Fenster, tippe dein Hauptthema ein und schaue, was Google dir vorschlägt. Diese Vorschläge sind keine Zufallswürfe. Es sind die Phrasen, die echte Menschen in den letzten Tagen gesucht haben. Acht Suggestions pro Thema reichen für eine Stunde gute Recherche.</p>
             <p><strong>AnswerThePublic.com</strong> macht das systematischer. Du gibst dein Hauptthema ein und bekommst eine visuelle Karte aller Fragen, die Menschen dazu stellen. Sortiert nach Fragewort (Was, Wie, Warum, Wann, Wo). Fünf kostenlose Suchen pro Tag sind in der Regel genug für einen ganzen Themen-Cluster.</p>
             <p><strong>AlsoAsked.com</strong> zieht die People-Also-Ask-Cluster von Google heraus. Wenn du eine Hauptfrage eingibst, zeigt das Tool, welche fünf, zehn oder fünfzehn Folgefragen Menschen typischerweise stellen. Das ist dein FAQ-Block fertig serviert. Ab 2026 leider mit Login-Pflicht.</p>
-            <p><strong>findquestions.com</strong> ist mein Reddit-Scan-Favorit. Es scannt Reddit nach den echten Fragen, die Menschen in deiner Branche stellen, und liefert 40 Blog-Topic-Ideen plus die relevanten Subreddits. Reddit ist 2026 die zweitgrößte ChatGPT-Citation-Quelle (11,3 Prozent), das macht findquestions zum heimlichen GEO-Spezialhebel. Wer die Reddit-Fragen kennt, schreibt Content, den die KI bevorzugt zitiert.</p>
+            <p><strong>findquestions.com</strong> ist mein Reddit-Scan-Favorit. Es scannt Reddit nach den echten Fragen, die Menschen in deiner Branche stellen, und liefert 40 Blog-Topic-Ideen plus die relevanten Subreddits. Reddit ist 2026 die zweitgrößte ChatGPT-Citation-Quelle (11,3 Prozent unter den Top-10-Quellen), das macht findquestions zum heimlichen GEO-Spezialhebel. Wer die Reddit-Fragen kennt, schreibt Content, den die KI bevorzugt zitiert.</p>
             <p><strong>Pinterest Trends und Pinterest-Suchleiste</strong> sind das unterschätzte Werkzeug für Personal Brands. Pinterest ist eine Suchmaschine, nicht ein Social Network. 80 Prozent der Nutzer recherchieren aktiv vor einer Kaufentscheidung. Die Suchleiste verrät dir, was wirklich gesucht wird, oft präziser als Google für visuell-emotionale Themen wie Coaching, Branding und Lebensstilthemen.</p>
             <h3>Vier Methoden für GEO</h3>
             <p>Hier ist 2026 noch wenig etabliert. Genau das ist die Chance. Vier Methoden, die jede Personal Brand ohne Tool-Abo umsetzen kann.</p>
             <p><strong>Methode eins: ChatGPT direkt befragen.</strong> Frage ChatGPT, Claude und Perplexity nach den Top-Anbietern in deinem Bereich. Schreibe deine Klienten-Anfrage exakt so, wie ein Klient sie formulieren würde. Wenn du nicht auftauchst, weißt du, wo du stehst. Wenn deine direkten Konkurrenten auftauchen, schau dir deren Webseiten an. Was haben sie strukturell, das du nicht hast?</p>
             <p><strong>Methode zwei: Perplexity-Quellen analysieren.</strong> Perplexity nennt die Webseiten, aus denen es zitiert. Stelle deine Klienten-Fragen und schau die Quellen-Liste an. Welche Webseiten werden zitiert? Welche Inhalte werden bevorzugt (Blogs, FAQ-Seiten, Studien)? Das ist deine GEO-Konkurrenzanalyse in drei Minuten.</p>
-            <p><strong>Methode drei: Bing Webmaster Tools.</strong> Microsoft Bing liefert große Teile der Trainingsdaten für ChatGPT. Wenn deine Seite in Bing sauber indexiert ist und mit Bing Webmaster Tools überwacht wird, hast du einen direkten Hebel auf KI-Sichtbarkeit. Bing Webmaster ist kostenlos und in zehn Minuten eingerichtet. Wer 2026 noch nicht in Bing indexiert ist, verschenkt den effizientesten GEO-Hebel.</p>
+            <p><strong>Methode drei: Bing Webmaster Tools.</strong> Microsoft Copilot sucht über den Index von Bing, und auch ChatGPT nutzt für seine Websuche Suchpartner, darunter Bing. Wenn deine Seite in Bing sauber indexiert ist und mit Bing Webmaster Tools überwacht wird, hast du einen direkten Hebel auf KI-Sichtbarkeit. Bing Webmaster ist kostenlos und in zehn Minuten eingerichtet. Wer 2026 noch nicht in Bing indexiert ist, verschenkt den effizientesten GEO-Hebel.</p>
             <p><strong>Methode vier: Schema.org Markup-Tester.</strong> Strukturierte Daten sind die Sprache, in der dein Inhalt mit KIs spricht. Der Schema.org-Validator zeigt dir, ob deine FAQ-, Person- oder Article-Markups korrekt sind. Ohne sauberes Schema-Markup bleibst du für AI-Citations weitgehend unsichtbar.</p>
             <p>Halte deine Recherche schriftlich fest. Eine einfache Tabelle reicht: Frage, Suchvolumen-Einschätzung (hoch, mittel, niedrig), wo schon Inhalte existieren, wo Lücke ist. Drei bis vier Stunden ehrliche Recherche ersetzen sechs Monate Bauch-Content.</p>
           </div>
