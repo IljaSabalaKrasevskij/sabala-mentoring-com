@@ -83,7 +83,7 @@ const organizationSchema = {
   description: siteDescription,
   founder: { "@id": `${siteUrl}/#ilja` },
   sameAs: [
-    "https://www.linkedin.com/in/iljakrasevskij/",
+    "https://www.linkedin.com/in/sabala-mentoring/",
     "https://www.instagram.com/sabala.mentoring/",
     "https://www.youtube.com/@sabalamentoring",
     "https://github.com/IljaSabalaKrasevskij",
@@ -110,7 +110,7 @@ const personSchema = {
   jobTitle: "Founder, Sabala Studios",
   worksFor: { "@id": `${siteUrl}/#organization` },
   sameAs: [
-    "https://www.linkedin.com/in/iljakrasevskij/",
+    "https://www.linkedin.com/in/sabala-mentoring/",
     "https://github.com/IljaSabalaKrasevskij",
   ],
   email: "mailto:ilja.krasevskij@gmail.com",

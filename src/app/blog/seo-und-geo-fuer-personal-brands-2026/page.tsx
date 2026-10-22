@@ -29,7 +29,7 @@ const articleSchemaJson = JSON.stringify({
   "headline": "SEO und Generative Engine Optimization (GEO): Wie deine Personal Brand 2026 in Google und ChatGPT gefunden wird",
   "description": "Generative Engine Optimization (GEO) macht deine Personal Brand 2026 in ChatGPT, Perplexity und Google AI Overviews sichtbar.",
   "image": "https://sabala-mentoring.com/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg",
-  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
+  "author": { "@type": "Person", "name": "Ilja Krasevskij", "alternateName": "Sabala", "url": "https://sabala-mentoring.com/ueber-mich", "sameAs": ["https://www.linkedin.com/in/sabala-mentoring/", "https://sabala-mentoring.com"], "jobTitle": "Founder, Sabala Studios", "worksFor": { "@type": "Organization", "name": "Sabala Studios" } },
   "publisher": { "@type": "Organization", "name": "Sabala Mentoring", "logo": { "@type": "ImageObject", "url": "https://sabala-mentoring.com/sabala-logo.svg" } },
   "datePublished": "2026-05-19",
   "dateModified": "2026-10-02",
@@ -42,7 +42,7 @@ const personSchemaJson = JSON.stringify({
   "name": "Ilja Krasevskij",
   "alternateName": "Sabala",
   "url": "https://sabala-mentoring.com/ueber-mich",
-  "sameAs": ["https://www.linkedin.com/in/iljakrasevskij/", "https://sabala-mentoring.com"],
+  "sameAs": ["https://www.linkedin.com/in/sabala-mentoring/", "https://sabala-mentoring.com"],
   "jobTitle": "Founder, Sabala Studios",
   "worksFor": { "@type": "Organization", "name": "Sabala Studios" },
   "knowsAbout": ["Personal Brand", "SEO", "Generative Engine Optimization", "Premium-Webseiten", "Business Mentoring"]
