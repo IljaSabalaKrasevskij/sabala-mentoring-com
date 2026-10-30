@@ -17,6 +17,10 @@ export const WEBINAR = {
   duration: "60 Minuten",
   ort: "Live via Zoom, Aufzeichnung bekommst du danach",
 
+  // true = kein kommender Termin: Die Seite zeigt die Warteliste statt Datum, Anmeldung
+  // und Strukturdaten. Neuer Termin = Datumsfelder aendern und hier false setzen.
+  warteliste: true as boolean,
+
   // LinkedIn-Event: URL eintragen, sobald das Event angelegt ist.
   // Leer = der Button wird gar nicht erst gerendert.
   linkedInEventUrl: "",
@@ -33,6 +37,11 @@ export const WEBINAR = {
   // spaetestens wenn jemand zwei Minuten vor Beginn noch reinkommt.
   plaetze: null as number | null,
 } as const;
+
+export const WEBINAR_KNOPF = WEBINAR.warteliste ? "Auf die Warteliste" : "Platz sichern";
+export const WEBINAR_TERMIN = WEBINAR.warteliste
+  ? "Nächster Termin folgt"
+  : `${WEBINAR.weekday}, ${WEBINAR.date} · ${WEBINAR.time}`;
 
 /* Ablauf im Webinar. Kurz halten, das ist kein Curriculum. */
 export const AGENDA = [
@@ -125,7 +134,7 @@ export const FAQ = [
   },
   {
     q: "Ist das eine verkappte Verkaufsveranstaltung?",
-    a: "Nein, aber ich mache auch kein Geheimnis daraus: am Ende stelle ich meinen Kurs vor, der am 24. September startet, mit maximal 10 Plätzen. Das sage ich dir lieber vorher als hinterher. Die 60 Minuten davor funktionieren komplett für sich, auch wenn du danach nie wieder von mir hörst.",
+    a: "Nein, aber ich mache auch kein Geheimnis daraus: am Ende stelle ich meinen Kurs vor, mit maximal 6 Plätzen. Das sage ich dir lieber vorher als hinterher. Die 60 Minuten davor funktionieren komplett für sich, auch wenn du danach nie wieder von mir hörst.",
   },
   {
     q: "Für wen ist das nichts?",

@@ -69,7 +69,7 @@ function Countdown() {
   if (rest === "vorbei") {
     return (
       <p style={{ fontFamily: serif, fontSize: 28, color: cream }}>
-        Dieser Termin ist gelaufen. Trag dich trotzdem ein, dann bist du beim nächsten dabei.
+        Der letzte Termin ist gelaufen. Trag dich ein, dann bist du beim nächsten dabei.
       </p>
     );
   }
@@ -100,7 +100,12 @@ export default function Dringlichkeit() {
       t: "Deine Frage kannst du nur live stellen",
       b: "Ich arbeite an meinem echten System und gehe auf das ein, was im Chat kommt. Das ist der Teil, den eine Aufzeichnung nicht nachliefert.",
     },
-    WEBINAR.plaetze
+    WEBINAR.warteliste
+      ? {
+          t: "Du musst nicht nachschauen",
+          b: "Sobald der neue Termin steht, bekommst du ihn per Mail.",
+        }
+      : WEBINAR.plaetze
       ? {
           t: `Der Raum fasst ${WEBINAR.plaetze} Leute`,
           b: "Danach ist zu. Wer sich früh einträgt, hat den Platz sicher.",
@@ -177,7 +182,7 @@ export default function Dringlichkeit() {
                 className="font-mono"
                 style={{ fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", color: gold, marginBottom: 18 }}
               >
-                Noch
+                {WEBINAR.warteliste ? "Warteliste" : "Noch"}
               </p>
               <Countdown />
             </div>

@@ -17,14 +17,17 @@ import { WEBINAR } from "@/components/webinar/config";
 
 export const metadata = {
   title: "Second Brain für Claude · Kostenloses Live-Webinar",
-  description: `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}: Warum dein Wissen auf deine Festplatte gehört und nicht in einen Chatverlauf. Obsidian, NotebookLM und Claude Code live aufgebaut. Kostenlos, ohne eine Zeile Code.`,
+  description: `${WEBINAR.warteliste ? "Warteliste fürs nächste Live-Webinar" : `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}`}: Warum dein Wissen auf deine Festplatte gehört und nicht in einen Chatverlauf. Obsidian, NotebookLM und Claude Code live aufgebaut. Kostenlos, ohne eine Zeile Code.`,
   alternates: { canonical: "/webinar" },
   openGraph: {
     title: "Second Brain für Claude · Kostenloses Live-Webinar",
-    description: `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}. Live, kostenlos, ohne eine Zeile Code.`,
+    description: `${WEBINAR.warteliste ? "Der nächste Termin wird gerade geplant" : `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}`}. Live, kostenlos, ohne eine Zeile Code.`,
     url: "/webinar",
     type: "website",
-    images: [{ url: "/webinar/linkedin-post.png", width: 1200, height: 627 }],
+    // Das LinkedIn-Bild traegt das Datum fest im Motiv, ohne Termin also das Standardbild.
+    images: WEBINAR.warteliste
+      ? [{ url: "/og-image.jpg", width: 1200, height: 630 }]
+      : [{ url: "/webinar/linkedin-post.png", width: 1200, height: 627 }],
   },
 };
 
@@ -61,10 +64,12 @@ const eventJsonLd = {
 export default function WebinarPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
-      />
+      {!WEBINAR.warteliste && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+        />
+      )}
       <WebinarHero />
       <FormatStrip />
       <MemoryDemo />

@@ -24,8 +24,8 @@ const PREIS = "97";
 const PREIS_REGULAER = "200";
 const GUTSCHEIN = "120";
 const KURS_PREIS = 397;
-// Naechster Second-Brain-Lauf, Quelle: cohorts.ts (second-brain-2026-10-01)
-const KURS_TERMIN = "8. + 15. Oktober";
+// Kein Lauf in cohorts.ts, also Warteliste. Neuer Lauf: hier das Datum, FAQ-Satz und Karte nachziehen.
+const KURS_TERMIN = "Nächster Termin folgt";
 
 /* prefers-reduced-motion respektieren. Im UX-Skill Prioritaet 1 (kritisch):
    Parallax und Auto-Rotation koennen bei empfindlichen Nutzern Schwindel ausloesen. */
@@ -170,7 +170,7 @@ const EINWAENDE: [string, string][] = [
   ["Wie komme ich an meinen Termin?",
    "Direkt nach dem Kauf bekommst du den Link zur Terminwahl und suchst dir aus, was dir passt. Dazu deinen Gutscheincode."],
   ["Und wenn ich danach doch den Kurs will?",
-   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Lauf ist am 8. und 15. Oktober."],
+   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Termin steht noch nicht fest. Auf der Akademie-Seite kannst du dich auf die Warteliste setzen."],
 ];
 
 const VORHER = [
@@ -839,8 +839,11 @@ export default function BeratungView() {
                     Zwei Abende live, in denen wir Claude Code gemeinsam einrichten.
                   </p>
                   <p className="mt-4 font-mono text-[12.5px]" style={{ color: goldLight }}>
-                    {KURS_TERMIN} &middot; 15&ndash;17:30 Uhr
+                    {KURS_TERMIN}
                   </p>
+                  <a href="/akademie#termine" className="mt-2 self-start font-mono text-[12.5px] underline underline-offset-4" style={{ color: "rgba(250,248,245,0.72)" }}>
+                    Auf die Warteliste
+                  </a>
                 </div>
               </div>
             </Reveal>

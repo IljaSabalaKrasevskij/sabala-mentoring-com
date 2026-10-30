@@ -15,19 +15,16 @@ export type Cohort = {
 };
 
 export const COHORTS: Cohort[] = [
-  // Lauf Aug 2026 (21.8. + 28.8.) am 27.8.2026 entfernt: laeuft bereits, nicht mehr buchbar.
+  // Lauf Okt 2026 (8.10. + 15.10.) am 30.10.2026 entfernt: ist gelaufen, der naechste steht noch nicht fest.
   // Historie steht im Vault, nicht hier. Diese Liste zeigt ausschliesslich buchbare Laeufe.
-  {
-    id: "second-brain-2026-10-08",
-    start: "2026-10-08",
-    sessions: [
-      { label: "Session 1", date: "Do · 8. Oktober 2026", time: "15-17:30 Uhr" },
-      { label: "Session 2", date: "Do · 15. Oktober 2026", time: "15-17:30 Uhr" },
-    ],
-    capacity: 6,
-    checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-okt-26/",
-    status: "offen",
-  },
+  // Leere Liste = Warteliste: /akademie zeigt dann statt Kauf-Knoepfen das Anmeldeformular.
+];
+
+export const BUCHBAR = COHORTS.length > 0;
+
+/* Termin-Chips im Kopf und im Preisblock. */
+export const TERMIN_CHIPS = COHORTS[0]?.sessions ?? [
+  { label: "Nächster Lauf", date: "Termin folgt", time: "Warteliste offen" },
 ];
 
 export const STATUS_LABEL: Record<CohortStatus, string> = {

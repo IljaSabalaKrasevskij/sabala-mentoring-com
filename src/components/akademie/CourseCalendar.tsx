@@ -32,11 +32,11 @@ const SECOND_BRAIN_SUB = "Deine lokale Datenbasis, mit der Claude niemals vergis
 const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
   { day: 21, month: 8, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 21.8. · Session 2: 28.8. · 15-17:30 Uhr", label: "Vorheriger Lauf", href: "/akademie", done: true },
-  { day: 8, month: 10, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 8.10. · Session 2: 15.10. · 15-17:30 Uhr", label: "Nächster Lauf", href: "/akademie", spots: 6 },
+  { day: 8, month: 10, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 8.10. · Session 2: 15.10. · 15-17:30 Uhr", label: "Letzter Lauf", href: "/akademie", done: true },
 ];
 
-// Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener.
-const NEXT = EVENTS.find((e) => !e.done) ?? EVENTS[EVENTS.length - 1];
+// Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener. Gibt es keinen, führt er zur Warteliste.
+const NEXT = EVENTS.find((e) => !e.done);
 
 const MONTHS = [
   { month: 6, year: 2026, name: "Juni 2026" },
@@ -94,14 +94,16 @@ export default function CourseCalendar() {
         </Reveal>
         <Reveal delay={0.1}>
           <p style={{ fontSize: 15, color: "rgba(250,248,245,0.5)", marginBottom: 44, maxWidth: 480, lineHeight: 1.6 }}>
-            Klick auf einen Termin für Details und Buchung. Jeder Termin ist einzeln und live buchbar, mit eigenem Level.
+            {NEXT
+              ? "Klick auf einen Termin für Details und Buchung. Jeder Termin ist einzeln und live buchbar, mit eigenem Level."
+              : "Hier siehst du die bisherigen Läufe. Der nächste Termin wird gerade geplant, auf der Warteliste bekommst du ihn per Mail."}
           </p>
         </Reveal>
 
         {/* Nächster-Termin-Banner */}
         <Reveal delay={0.08}>
           <a
-            href={NEXT.href}
+            href={NEXT?.href ?? "/akademie#termine"}
             className="group"
             style={{
               display: "flex",
@@ -132,24 +134,26 @@ export default function CourseCalendar() {
             <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
               {/* Datums-Chip */}
               <div style={{ textAlign: "center", lineHeight: 1, flexShrink: 0 }}>
-                <div style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 44, color: gold }}>{NEXT.day}</div>
-                <div className="font-mono" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.6)", marginTop: 4 }}>
-                  {monthName(NEXT.month)}
-                </div>
+                <div style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 44, color: gold }}>{NEXT ? NEXT.day : "Bald"}</div>
+                {NEXT && (
+                  <div className="font-mono" style={{ fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(250,248,245,0.6)", marginTop: 4 }}>
+                    {monthName(NEXT.month)}
+                  </div>
+                )}
               </div>
               <div style={{ width: 1, height: 46, background: "rgba(212,174,90,0.3)" }} />
               <div>
                 <p className="font-mono" style={{ fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: gold, marginBottom: 7 }}>
-                  Nächster Termin · {NEXT.label}
+                  Nächster Termin · {NEXT?.label ?? "Wird gerade geplant"}
                 </p>
                 <p style={{ fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: 24, color: "#FAF8F5", lineHeight: 1.15 }}>
-                  {NEXT.title}
+                  {NEXT?.title ?? "Dein Second Brain"}
                 </p>
-                {NEXT.sub && <p style={{ fontSize: 13.5, color: "rgba(250,248,245,0.62)", lineHeight: 1.5, marginTop: 5, maxWidth: 360 }}>{NEXT.sub}</p>}
-                <div style={{ marginTop: 9 }}><LevelBadge level={NEXT.level} /></div>
+                <p style={{ fontSize: 13.5, color: "rgba(250,248,245,0.62)", lineHeight: 1.5, marginTop: 5, maxWidth: 360 }}>{NEXT?.sub ?? SECOND_BRAIN_SUB}</p>
+                <div style={{ marginTop: 9 }}><LevelBadge level={NEXT?.level ?? 2} /></div>
                 <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.6)", marginTop: 9 }}>
-                  {NEXT.time}
-                  {NEXT.spots !== undefined && <span style={{ color: "#E8A87C", marginLeft: 14 }}>· {NEXT.spots} Plätze frei</span>}
+                  {NEXT?.time ?? "Trag dich ein, dann bekommst du den Termin per Mail."}
+                  {NEXT?.spots !== undefined && <span style={{ color: "#E8A87C", marginLeft: 14 }}>· {NEXT.spots} Plätze frei</span>}
                 </p>
               </div>
             </div>
@@ -167,7 +171,7 @@ export default function CourseCalendar() {
                 borderRadius: 2,
               }}
             >
-              Platz sichern
+              {NEXT ? "Platz sichern" : "Auf die Warteliste"}
               <svg width="16" height="11" viewBox="0 0 20 12" fill="none">
                 <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

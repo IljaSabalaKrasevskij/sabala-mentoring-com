@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { insertLead } from "@/lib/leads";
 import { subscribeWebinar } from "@/lib/activecampaign";
+import { WEBINAR } from "@/components/webinar/config";
 
 export const runtime = "nodejs";
 
@@ -39,6 +40,11 @@ function rateLimited(ip: string, now: number): boolean {
 }
 
 export async function POST(req: Request) {
+  // Ohne Termin wuerde der Tag die Mail-Strecke zum alten Datum starten.
+  if (WEBINAR.warteliste) {
+    return NextResponse.json({ ok: false, reason: "warteliste" }, { status: 410 });
+  }
+
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (rateLimited(ip, Date.now())) {
     return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
