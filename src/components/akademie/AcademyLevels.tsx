@@ -88,13 +88,13 @@ export default function AcademyLevels() {
                     textAlign: "left",
                     cursor: "pointer",
                     display: "flex",
-                    gap: 22,
+                    gap: "clamp(12px, 3.5vw, 22px)",
                     alignItems: "flex-start",
                     background: isActive ? `rgba(212,174,90,${(m.intensity * 0.12).toFixed(2)})` : "rgba(255,250,242,0.025)",
                     border: `1px solid ${isActive ? levelGold(s.level, 0.9) : "rgba(255,255,255,0.08)"}`,
                     borderLeft: `3px solid ${levelGold(s.level, isActive ? 1 : 0.85)}`,
                     borderRadius: 4,
-                    padding: "22px 26px",
+                    padding: "22px clamp(14px, 4vw, 26px)",
                     transition: "all 0.25s",
                   }}
                 >
@@ -118,7 +118,7 @@ export default function AcademyLevels() {
                           </p>
                           <a
                             href={s.cta.href}
-                            style={{ display: "inline-flex", alignItems: "center", gap: 9, background: GOLD, color: "#0a0806", fontSize: 13, fontWeight: 600, letterSpacing: "0.03em", padding: "13px 24px", borderRadius: 2, textDecoration: "none", flexShrink: 0 }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: 9, background: GOLD, color: "#0a0806", fontSize: 13, fontWeight: 600, letterSpacing: "0.03em", padding: "13px clamp(14px, 5vw, 24px)", borderRadius: 2, textDecoration: "none" }}
                           >
                             {s.cta.label}
                             <svg width="16" height="11" viewBox="0 0 20 12" fill="none"><path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
