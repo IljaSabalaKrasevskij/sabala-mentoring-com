@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Brackets } from "./shared";
-import { COHORTS } from "./cohorts";
+import { BUCHBAR, TERMIN_CHIPS } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WorkshopHeader — der eigentliche, IMMER sichtbare Workshop-Kopf. Titel, Termine,
@@ -65,7 +65,7 @@ export default function WorkshopHeader() {
           transition={{ duration: 0.6, delay: 0.18 }}
           className="mt-9 flex flex-wrap gap-3"
         >
-          {COHORTS[0].sessions.map((d) => (
+          {TERMIN_CHIPS.map((d) => (
             <span key={d.label} className="relative flex flex-col px-5 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
               <Brackets color="rgba(184,150,62,0.45)" inset={6} size={8} />
               <span className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: "#b8963e" }}>
@@ -93,14 +93,14 @@ export default function WorkshopHeader() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b8963e")}
           >
-            Platz sichern — €397
+            {BUCHBAR ? "Platz sichern — €397" : "Auf die Warteliste"}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <span className="flex flex-col font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
-            <span>oder 2× €203</span>
-            <span>beide Termine live</span>
+            <span>{BUCHBAR ? "oder 2× €203" : "€397 oder 2× €203"}</span>
+            <span>{BUCHBAR ? "beide Termine live" : "maximal 6 Plätze je Lauf"}</span>
           </span>
         </motion.div>
       </div>

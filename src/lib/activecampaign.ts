@@ -211,6 +211,13 @@ export async function subscribeWebinar(email: string, firstName = ""): Promise<A
   );
 }
 
+/* Warteliste → Akademie-Liste + eigener Tag. An den Warteliste-Tags haengt keine
+   Automation, es geht also keine Mail raus, bis Ilja den neuen Termin verschickt.
+   Mit einer Automation auf dem Tag wird daraus jederzeit eine Bestaetigungsmail. */
+export async function subscribeWarteliste(email: string, firstName: string, tagName: string): Promise<AcResult> {
+  return subscribeToList(email, firstName, process.env.AC_AKADEMIE_LIST_ID, tagName);
+}
+
 /* Mooni-Voice-Funnel → Mooni-Liste + Mooni-Tag.
    ponytail: feste Default-Liste 28 / Tag "Mooni Voice Beta" — bekannte stabile
    IDs aus dem Standalone-Funnel (gleicher AC-Account). Per Env ueberschreibbar. */

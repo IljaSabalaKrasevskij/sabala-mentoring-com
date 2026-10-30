@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Brackets, Eyebrow } from "./shared";
-import { COHORTS } from "./cohorts";
+import { BUCHBAR, COHORTS, TERMIN_CHIPS } from "./cohorts";
 
 /* Preis + Dringlichkeit + CTA. Gold-Glow-Rahmen, klar, ohne Druck-Pathos. */
 
@@ -66,7 +66,7 @@ export default function PriceBlock() {
 
           {/* Termine */}
           <div className="mx-auto mt-8 flex max-w-sm flex-wrap justify-center gap-3">
-            {COHORTS[0].sessions.map((s) => (
+            {TERMIN_CHIPS.map((s) => (
               <span key={s.label} className="flex flex-col px-4 py-2.5 text-left" style={{ background: "rgba(184,150,62,0.08)", border: "1px solid rgba(184,150,62,0.25)" }}>
                 <span className="font-mono text-[9px] uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>{s.label}</span>
                 <span className="mt-0.5 font-serif text-[1rem] text-cream">{s.date}</span>
@@ -93,7 +93,7 @@ export default function PriceBlock() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold)")}
           >
-            Jetzt für €397 anmelden
+            {BUCHBAR ? "Jetzt für €397 anmelden" : "Auf die Warteliste"}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -105,7 +105,7 @@ export default function PriceBlock() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ background: "var(--gold)" }} />
               <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--gold)" }} />
             </span>
-            Nur {COHORTS[0].capacity} Plätze
+            {BUCHBAR ? `Nur ${COHORTS[0].capacity} Plätze` : "Maximal 6 Plätze je Lauf"}
           </div>
         </motion.div>
 
@@ -116,7 +116,9 @@ export default function PriceBlock() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mx-auto mt-7 max-w-md text-[0.9rem] leading-relaxed text-warm-mid"
         >
-          Keine langen Wartelisten. Sind die {COHORTS[0].capacity} Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.
+          {BUCHBAR
+            ? `Keine langen Wartelisten. Sind die ${COHORTS[0].capacity} Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.`
+            : "Der nächste Lauf steht noch nicht fest. Trag dich auf die Warteliste ein, dann bekommst du den Termin per Mail. Bitte buche danach nur, wenn du an beiden Terminen live dabei sein kannst."}
         </motion.p>
       </div>
     </section>

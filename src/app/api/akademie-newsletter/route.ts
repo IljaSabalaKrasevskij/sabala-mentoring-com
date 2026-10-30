@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { insertLead } from "@/lib/leads";
-import { subscribeToAcademy } from "@/lib/activecampaign";
+import { subscribeToAcademy, subscribeWarteliste } from "@/lib/activecampaign";
 
 export const runtime = "nodejs";
 
@@ -13,10 +13,26 @@ export const runtime = "nodejs";
    - Spiegelt die Anmeldung zusätzlich in die Turso-DB (quelle "Akademie-Newsletter"),
      damit das Dashboard sie sieht und nichts verloren geht.
    - Erfolgreich, sobald MINDESTENS einer der beiden Speicher greift.
+   - Mit "warteliste" gleiche Liste, aber eigener Tag und eigene Quelle: So laesst
+     sich die Warteliste getrennt anschreiben, und die Welcome-Mail bleibt aus.
    - Honeypot "fax", einfaches In-Memory-Rate-Limit.
    ────────────────────────────────────────────────────────────────────────── */
 
+const WARTELISTE = {
+  kurs: {
+    tag: "Warteliste Second Brain Kurs",
+    quelle: "Warteliste Kurs",
+    anliegen: "Warteliste: möchte den nächsten Termin des Second-Brain-Kurses erfahren.",
+  },
+  webinar: {
+    tag: "Warteliste Webinar",
+    quelle: "Warteliste Webinar",
+    anliegen: "Warteliste: möchte den nächsten Webinar-Termin erfahren.",
+  },
+} as const;
+
 const Schema = z.object({
+  warteliste: z.enum(["kurs", "webinar"]).optional(),
   vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
   email: z
     .string()
@@ -54,6 +70,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, reason: "validation" }, { status: 422 });
   }
   const data = parsed.data;
+  const liste = data.warteliste ? WARTELISTE[data.warteliste] : null;
 
   // Honeypot: stilles OK
   if (data.fax) return NextResponse.json({ ok: true });
@@ -61,7 +78,9 @@ export async function POST(req: Request) {
   // 1) ActiveCampaign (Newsletter + Welcome-Mail) — best effort
   let acState: "ok" | "skipped" | "error" = "skipped";
   try {
-    acState = await subscribeToAcademy(data.email, data.vorname || "");
+    acState = liste
+      ? await subscribeWarteliste(data.email, data.vorname || "", liste.tag)
+      : await subscribeToAcademy(data.email, data.vorname || "");
   } catch (err) {
     console.error("[akademie-newsletter] AC-Fehler:", err);
     acState = "error";
@@ -72,12 +91,12 @@ export async function POST(req: Request) {
   try {
     stored = await insertLead({
       vorname: data.vorname || "Newsletter",
-      nachname: "Abo",
+      nachname: liste ? "Warteliste" : "Abo",
       email: data.email,
       unternehmen: "",
       webseite: "",
-      anliegen: "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.",
-      quelle: "Akademie-Newsletter",
+      anliegen: liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.",
+      quelle: liste?.quelle ?? "Akademie-Newsletter",
     });
   } catch (err) {
     console.error("[akademie-newsletter] Turso-Fehler:", err);

@@ -74,11 +74,11 @@ const BOOKABLE: {
     badge: "Einzelgespräch", cta: "Zur Beratung",
   },
   {
-    href: "/akademie", icon: IconBrain, level: 2, title: "Dein Second Brain",
+    href: "/akademie#termine", icon: IconBrain, level: 2, title: "Dein Second Brain",
     sub: "Deine lokale Datenbasis, mit der Claude niemals vergisst",
     desc: "In 2 Sessions à 2,5h richtest du dein lokales KI-Gehirn ein, das sich an alles erinnert. Live mit dir aufgebaut, am Ende einsatzbereit.",
-    metas: ["8.+15. Oktober", "15-17:30 Uhr · 2× 2,5h", "Einsteiger willkommen"],
-    priceLabel: "Beide Sessions", price: "€397",
+    metas: ["Warteliste offen", "2× 2,5h live", "Einsteiger willkommen"],
+    priceLabel: "Beide Sessions", price: "€397", cta: "Auf die Warteliste",
   },
 ];
 
@@ -151,7 +151,7 @@ export default function CourseGrid() {
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: gold, boxShadow: `0 0 12px ${gold}` }} />
             <span className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: gold }}>
-              Jetzt buchbar
+              Buchbar und Warteliste
             </span>
           </div>
         </Reveal>

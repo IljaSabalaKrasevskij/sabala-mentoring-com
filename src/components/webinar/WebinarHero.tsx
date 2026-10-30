@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Brackets } from "@/components/akademie/shared";
 import { LiveDot } from "./WebinarFormat";
-import { WEBINAR } from "./config";
+import { WEBINAR, WEBINAR_KNOPF } from "./config";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WebinarHero — dunkler Kopf im Akademie-Look: Portrait rechts, Scrim links,
@@ -122,13 +122,17 @@ export default function WebinarHero() {
           >
             <Brackets color="rgba(184,150,62,0.45)" inset={6} size={8} />
             <span className="font-mono text-[11.5px] uppercase tracking-[0.18em]" style={{ color: gold }}>
-              Termin
+              {WEBINAR.warteliste ? "Nächster Termin" : "Termin"}
             </span>
-            <time dateTime={WEBINAR.iso} className="mt-1 font-serif text-[1.15rem] text-cream">
-              {WEBINAR.weekday} · {WEBINAR.date}
-            </time>
+            {WEBINAR.warteliste ? (
+              <span className="mt-1 font-serif text-[1.15rem] text-cream">Wird gerade geplant</span>
+            ) : (
+              <time dateTime={WEBINAR.iso} className="mt-1 font-serif text-[1.15rem] text-cream">
+                {WEBINAR.weekday} · {WEBINAR.date}
+              </time>
+            )}
             <span className="font-mono text-[11px]" style={{ color: "rgba(250,248,245,0.76)" }}>
-              {WEBINAR.time} · {WEBINAR.duration}
+              {WEBINAR.warteliste ? `${WEBINAR.duration} live` : `${WEBINAR.time} · ${WEBINAR.duration}`}
             </span>
           </span>
           <span
@@ -165,7 +169,7 @@ export default function WebinarHero() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = gold)}
           >
-            Platz sichern
+            {WEBINAR_KNOPF}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

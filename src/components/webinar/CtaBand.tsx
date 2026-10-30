@@ -2,7 +2,7 @@
 
 import { Reveal } from "@/components/akademie/shared";
 import { LiveDot } from "./WebinarFormat";
-import { WEBINAR } from "./config";
+import { WEBINAR_KNOPF, WEBINAR_TERMIN } from "./config";
 
 /* ─────────────────────────────────────────────────────────────────────────
    CtaBand — schmales Anmelde-Band zwischen den Sektionen.
@@ -21,7 +21,7 @@ const goldLight = "#d4ae5a";
 
 export default function CtaBand({
   text,
-  knopf = "Platz sichern",
+  knopf = WEBINAR_KNOPF,
   hell = false,
 }: {
   text: string;
@@ -63,7 +63,7 @@ export default function CtaBand({
             }}
           >
             <LiveDot size={7} />
-            {WEBINAR.weekday}, {WEBINAR.date} · {WEBINAR.time}
+            {WEBINAR_TERMIN}
           </p>
           <p
             style={{

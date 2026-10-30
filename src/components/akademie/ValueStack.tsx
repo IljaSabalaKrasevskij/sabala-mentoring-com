@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Brackets, Eyebrow } from "./shared";
+import { BUCHBAR } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    ValueStack — Hormozi-Anchor. Items glide einzeln rein (CSS-Stagger),
@@ -171,7 +172,7 @@ export default function ValueStack() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#1a1612")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#0a0806")}
             >
-              <span className="relative z-10">Platz sichern, bevor der Preis steigt</span>
+              <span className="relative z-10">{BUCHBAR ? "Platz sichern, bevor der Preis steigt" : "Auf die Warteliste"}</span>
               <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="relative z-10 transition-transform group-hover:translate-x-1">
                 <path d="M0 6h18M13 1l5 5-5 5" stroke="var(--gold-light)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

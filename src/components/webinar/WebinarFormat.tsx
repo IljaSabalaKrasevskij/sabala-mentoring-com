@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { WEBINAR } from "./config";
+import { WEBINAR, WEBINAR_TERMIN } from "./config";
 
 /* ─────────────────────────────────────────────────────────────────────────
    FormatStrip + StickyCta — beide beantworten dieselbe Frage: "Was ist das
@@ -15,8 +15,8 @@ const goldLight = "#d4ae5a";
 
 const FAKTEN = [
   { k: "Format", v: "Live-Webinar" },
-  { k: "Wann", v: `${WEBINAR.weekday}, ${WEBINAR.date}` },
-  { k: "Uhrzeit", v: `${WEBINAR.time}, 60 Min.` },
+  { k: "Wann", v: WEBINAR.warteliste ? "Termin folgt" : `${WEBINAR.weekday}, ${WEBINAR.date}` },
+  WEBINAR.warteliste ? { k: "Dauer", v: "60 Min." } : { k: "Uhrzeit", v: `${WEBINAR.time}, 60 Min.` },
   { k: "Wo", v: "Zoom, Link per Mail" },
   { k: "Preis", v: "Kostenlos" },
 ];
@@ -103,7 +103,7 @@ export function StickyCta() {
             <strong style={{ fontWeight: 600 }}>Live-Webinar</strong>
             <span style={{ color: "rgba(250,248,245,0.72)" }}>
               {" · "}
-              {WEBINAR.weekday}, {WEBINAR.date}, {WEBINAR.time}
+              {WEBINAR_TERMIN}
             </span>
           </span>
         </div>
@@ -122,7 +122,7 @@ export function StickyCta() {
             textDecoration: "none",
           }}
         >
-          Kostenlos anmelden
+          {WEBINAR.warteliste ? "Auf die Warteliste" : "Kostenlos anmelden"}
         </a>
       </div>
     </div>
