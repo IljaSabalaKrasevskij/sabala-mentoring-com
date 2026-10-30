@@ -4,12 +4,12 @@ export const metadata = {
   title: "Mooni Voice · Lokale Sprache-zu-Text für den Mac (gratis & open source)",
   description:
     "Mooni Voice macht aus deiner Stimme Text, in jeder App auf dem Mac, auch in Claude Code, Terminal & Co. Lokal, privat, mehrsprachig. Gratis & Open Source (ein Fork von Handy).",
-  alternates: { canonical: "/open-source-projekte/mooni-voice" },
+  alternates: { canonical: "/mooni-voice" },
   openGraph: {
     title: "Mooni Voice · Sprich. Es steht da. Überall.",
     description:
       "Lokale Sprache-zu-Text für den Mac, in jeder App, auch Claude Code & Terminal. Gratis & Open Source.",
-    url: "/open-source-projekte/mooni-voice",
+    url: "/mooni-voice",
     locale: "de_DE",
     images: [
       {

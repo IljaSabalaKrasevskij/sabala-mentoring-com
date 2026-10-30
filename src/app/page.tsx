@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import IljaHeroJourney from "@/components/home/IljaHeroJourney";
 import ValuesManifesto from "@/components/home/ValuesManifesto";
 import MooniVoiceTeaser from "@/components/home/MooniVoiceTeaser";
@@ -9,6 +10,14 @@ import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 import Kontakt from "@/components/home/Kontakt";
 import { getProvenExpertSummary, PROVEN_EXPERT_PROFILE_URL } from "@/lib/provenExpert";
 import SmoothScroll from "@/components/SmoothScroll";
+import { metadata as layoutMetadata } from "./layout";
+
+// "./" aus dem Layout loest Next.js an der Wurzel zu /index auf. Der openGraph-Block
+// einer Seite ersetzt den des Layouts komplett, deshalb wird er hier uebernommen.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { ...layoutMetadata.openGraph, url: "/" },
+};
 
 export default async function Home() {
   // Die Kontakt-Sektion lag bis 12.9.2026 im Layout und stand damit unter jeder
