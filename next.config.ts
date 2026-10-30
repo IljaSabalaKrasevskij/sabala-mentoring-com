@@ -42,6 +42,12 @@ const nextConfig: NextConfig = {
         destination: "https://sabala-mentoring.com/:path*",
         permanent: true,
       },
+      // Next.js liefert die Startseite auch unter /index aus, GSC fuehrte sie als Duplikat.
+      {
+        source: "/index",
+        destination: "/",
+        permanent: true,
+      },
       // "Fuehrung von Innen" am 22.9.2026 abgeschaltet: altes Angebot aus der
       // Zeit vor der Positionierung auf High-End Web Development. 52 Impressionen
       // in 90 Tagen, kein einziger Klick. 301 auf die Startseite.
@@ -103,6 +109,15 @@ const nextConfig: NextConfig = {
   // Static Asset Caching — Browser cached 1 Jahr (immutable per Next.js Hash)
   async headers() {
     return [
+      // ponytail: kein CSP, der braucht einen eigenen Testlauf mit Filmen und Inline-Skripten.
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
       {
         source: '/:all*(woff2|woff|ttf|otf)',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
