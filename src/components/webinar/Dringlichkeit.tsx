@@ -68,7 +68,7 @@ function Countdown() {
   }
   if (rest === "vorbei") {
     return (
-      <p style={{ fontFamily: serif, fontSize: 28, color: cream }}>
+      <p style={{ fontFamily: serif, fontSize: 28, lineHeight: 1.25, color: cream, maxWidth: 340 }}>
         Der letzte Termin ist gelaufen. Trag dich ein, dann bist du beim nächsten dabei.
       </p>
     );
