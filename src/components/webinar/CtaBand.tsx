@@ -72,6 +72,7 @@ export default function CtaBand({
               lineHeight: 1.24,
               color: hell ? "#2e2b26" : "#faf8f5",
               maxWidth: 620,
+              textWrap: "balance",
             }}
           >
             {text}
