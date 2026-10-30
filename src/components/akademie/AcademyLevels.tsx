@@ -20,26 +20,26 @@ type Step = {
 const STEPS: Step[] = [
   {
     level: 1,
-    here: "Du hast von KI gehoert, ChatGPT mal probiert, nutzt es aber nicht im Alltag.",
-    next: "Hol dir den guenstigen Einstieg im Shop und mach den ersten echten Schritt.",
+    here: "Du hast von KI gehört, ChatGPT mal probiert, nutzt es aber nicht im Alltag.",
+    next: "Hol dir den günstigen Einstieg im Shop und mach den ersten echten Schritt.",
     cta: { label: "Zum Shop", href: "/shop" },
   },
   {
     level: 2,
-    here: "Du nutzt KI schon, aber planlos. Du spuerst das Potenzial, kommst aber nicht ins System.",
+    here: "Du nutzt KI schon, aber planlos. Du spürst das Potenzial, kommst aber nicht ins System.",
     next: "Bau dein Fundament live mit mir: Claude Code, Obsidian, NotebookLM.",
     cta: { label: "Auf die Warteliste", href: "/akademie#termine" },
   },
   {
     level: 3,
-    here: "Claude Code laeuft, du baust erste Workflows und Skills, automatisierst Routine.",
-    next: "Geh in die Tiefe: Automationen und erste eigene Agenten in den naechsten Sessions.",
+    here: "Claude Code läuft, du baust erste Workflows und Skills, automatisierst Routine.",
+    next: "Geh in die Tiefe: Automationen und erste eigene Agenten in den nächsten Sessions.",
     cta: { label: "Kurse ansehen", href: "#kurse" },
   },
   {
     level: 4,
     here: "Du baust eigene Agenten und Systeme und orchestrierst KI im Hintergrund.",
-    next: "Dann bist du eher Fall fuer eine direkte Zusammenarbeit als fuer einen Kurs.",
+    next: "Dann bist du eher ein Fall für eine direkte Zusammenarbeit als für einen Kurs.",
     cta: { label: "Gemeinsam bauen", href: "/mitentwickelt" },
   },
 ];
@@ -70,7 +70,7 @@ export default function AcademyLevels() {
         </Reveal>
         <Reveal delay={0.1}>
           <p style={{ fontSize: 15.5, color: "rgba(250,248,245,0.55)", marginBottom: 52, maxWidth: 520, lineHeight: 1.65 }}>
-            Vier Level, von neugierig bis Builder. Du steigst dort ein, wo du stehst. Waehl dein Level und sieh deine naechste Station.
+            Vier Level, von neugierig bis Builder. Du steigst dort ein, wo du stehst. Wähl dein Level und sieh deine nächste Station.
           </p>
         </Reveal>
 
@@ -113,7 +113,7 @@ export default function AcademyLevels() {
                       <div style={{ overflow: "hidden" }}>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "14px 24px", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(212,174,90,0.2)", paddingTop: 16 }}>
                           <p style={{ fontSize: 14.5, color: "rgba(250,248,245,0.65)", lineHeight: 1.55, maxWidth: 420 }}>
-                            <span className="font-mono" style={{ fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: GOLD, display: "block", marginBottom: 6 }}>Deine naechste Station</span>
+                            <span className="font-mono" style={{ fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: GOLD, display: "block", marginBottom: 6 }}>Deine nächste Station</span>
                             {s.next}
                           </p>
                           <a

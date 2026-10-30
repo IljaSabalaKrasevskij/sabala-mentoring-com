@@ -17,7 +17,7 @@ import { WEBINAR } from "@/components/webinar/config";
 
 export const metadata = {
   title: "Second Brain für Claude · Kostenloses Live-Webinar",
-  description: `${WEBINAR.warteliste ? "Warteliste fürs nächste Live-Webinar" : `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}`}: Warum dein Wissen auf deine Festplatte gehört und nicht in einen Chatverlauf. Obsidian, NotebookLM und Claude Code live aufgebaut. Kostenlos, ohne eine Zeile Code.`,
+  description: `${WEBINAR.warteliste ? "Warteliste fürs nächste Live-Webinar" : `${WEBINAR.weekday}, ${WEBINAR.date}, ${WEBINAR.time}`}: Warum dein Wissen auf deine Festplatte gehört und nicht in einen Chatverlauf. Obsidian, NotebookLM und Claude Code im echten Einsatz. Kostenlos, ohne eine Zeile Code.`,
   alternates: { canonical: "/webinar" },
   openGraph: {
     title: "Second Brain für Claude · Kostenloses Live-Webinar",
@@ -74,7 +74,7 @@ export default function WebinarPage() {
       <FormatStrip />
       <MemoryDemo />
       <BrainViz />
-      <CtaBand text="Genau dieses System bauen wir live auf. In 60 Minuten, kostenlos." />
+      <CtaBand text="Genau dieses System zeige ich dir im echten Einsatz. In 60 Minuten, kostenlos." />
       <Mythen />
       <Werkzeuge />
       <BauenMitSetup />
