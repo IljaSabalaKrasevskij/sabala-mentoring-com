@@ -91,11 +91,6 @@ export function HeroSpline() {
               <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </Link>
           </div>
-
-          {/* Trust dezent als Unterzeile */}
-          <p className="mt-10 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.18em] text-[var(--color-warm-steel)]">
-            <span className="text-[var(--color-refined-gold)]">★ 4,96</span> · 154 ProvenExpert-Bewertungen · 100% Empfehlung
-          </p>
         </div>
 
         {/* Portrait-Block (Desktop only, Sphäre liegt dahinter als Heiligenschein) */}
