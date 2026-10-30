@@ -4,12 +4,10 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 
-type PE = { score: string; reviews: string; rate: number; url: string };
-
 /* Kontakt-Block — global im Layout, erscheint unten auf jeder Seite.
    Schickt an /api/kontakt (Turso + ntfy-Push). Faellt sichtbar auf mailto
    zurueck, falls das Backend (noch) nicht konfiguriert ist. */
-export default function Kontakt({ pe }: { pe?: PE }) {
+export default function Kontakt() {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "mailto">("idle");
   const [form, setForm] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
@@ -67,16 +65,6 @@ export default function Kontakt({ pe }: { pe?: PE }) {
             Erzähl mir, woran du gerade arbeitest oder wo du feststeckst, und ich melde mich mit einem Terminvorschlag.
           </p>
         </motion.div>
-
-        {pe && (
-          <div className="mt-10 flex justify-center">
-            <a href={pe.url} target="_blank" rel="noopener noreferrer" className="group inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-full px-5 py-2.5" style={{ border: "1px solid rgba(184,150,62,0.3)", background: "rgba(255,255,255,0.03)" }}>
-              <span className="text-gold-light tracking-[0.1em]" aria-hidden>★★★★★</span>
-              <span className="font-serif text-[1.05rem] text-cream">{pe.score} <span className="text-warm-light/50">/ 5,00</span></span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-warm-light/55 transition-colors group-hover:text-gold-light">· {pe.reviews} Bewertungen · ProvenExpert</span>
-            </a>
-          </div>
-        )}
 
         {done ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-12 rounded-2xl p-8 text-center" style={{ border: "1px solid rgba(184,150,62,0.3)", background: "rgba(255,255,255,0.03)" }}>

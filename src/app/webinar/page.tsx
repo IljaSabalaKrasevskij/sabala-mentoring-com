@@ -14,7 +14,6 @@ import {
   Werkzeuge,
 } from "@/components/webinar/WebinarSections";
 import { WEBINAR } from "@/components/webinar/config";
-import { ProvenExpertCard } from "@/components/ui/ProvenExpertCard";
 
 export const metadata = {
   title: "Second Brain für Claude · Kostenloses Live-Webinar",
@@ -77,48 +76,42 @@ export default function WebinarPage() {
       <Ablauf />
       <CtaBand text="Du weißt jetzt, was drinsteckt. Der Platz kostet dich nichts außer einer Stunde." knopf="Jetzt eintragen" />
       <Gastgeber />
-      {/* Social Proof: echte ProvenExpert-Zahlen (live API, 6h-Cache), direkt
-          unter dem Gastgeber in der hellen Insel. Server-Komponente, deshalb
-          hier in der Page statt in den Client-Sektionen. */}
+      {/* Stimmen direkt unter dem Gastgeber in der hellen Insel. */}
       <section style={{ background: "#faf8f5", padding: "0 0 clamp(60px, 8vw, 100px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
-          <div className="wb-proof" style={{ display: "grid", gap: "clamp(24px, 3.5vw, 44px)", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", alignItems: "start" }}>
-            <ProvenExpertCard />
-
-            {/* Woertliche Zitate aus der Abschlussrunde der Juni-Kohorte
-                (Fathom-Mitschnitt 26.6.2026, Session 1). Nicht umformuliert. */}
-            <div style={{ display: "grid", gap: 18 }}>
-              <p className="font-mono" style={{ fontSize: 11.5, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8a6f2c" }}>
-                Stimmen aus der ersten Kohorte
-              </p>
-              {[
-                {
-                  zitat: "Ich finde es immer gut, wenn das Lerntempo so hoch ist, dass ich kaum hinterherkomme. Dann gucke ich es mir nochmal an, dann arbeite ich mit, dann ist viel drin.",
-                  name: "François Zietlow",
-                  rolle: "Teilnehmer, Live-Session Juni 2026",
-                },
-                {
-                  /* Woertlich aus der oeffentlichen ProvenExpert-Bewertung vom
-                     9.7.2026, nur der Einstieg mit Tippfehler ("Zabala") ist
-                     weggelassen. Oeffentlich publiziert, daher zitierbar. */
-                  zitat: "... große Expertise, Geduld und Feinfühligkeit. Eine Freude mit ihm zu arbeiten!",
-                  name: "Chris L.",
-                  rolle: "ProvenExpert-Bewertung, Juli 2026",
-                },
-              ].map((z) => (
-                <figure
-                  key={z.name}
-                  style={{ margin: 0, background: "#fff", border: "1px solid rgba(46,43,38,0.11)", borderLeft: "3px solid #b8963e", borderRadius: 4, padding: "22px 24px" }}
-                >
-                  <blockquote style={{ margin: 0, fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: "clamp(17px, 1.6vw, 20px)", lineHeight: 1.5, color: "#2e2b26" }}>
-                    {"\u201E"}{z.zitat}{"\u201C"}
-                  </blockquote>
-                  <figcaption style={{ marginTop: 12, fontSize: 13.5, color: "#6a635a" }}>
-                    <strong style={{ color: "#2e2b26", fontWeight: 600 }}>{z.name}</strong> · {z.rolle}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+          {/* Woertliche Zitate aus der Abschlussrunde der Juni-Kohorte
+              (Fathom-Mitschnitt 26.6.2026, Session 1). Nicht umformuliert. */}
+          <p className="font-mono" style={{ margin: "0 0 18px", fontSize: 11.5, letterSpacing: "0.22em", textTransform: "uppercase", color: "#8a6f2c" }}>
+            Stimmen aus der ersten Kohorte
+          </p>
+          <div style={{ display: "grid", gap: 18, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))" }}>
+            {[
+              {
+                zitat: "Ich finde es immer gut, wenn das Lerntempo so hoch ist, dass ich kaum hinterherkomme. Dann gucke ich es mir nochmal an, dann arbeite ich mit, dann ist viel drin.",
+                name: "François Zietlow",
+                rolle: "Teilnehmer, Live-Session Juni 2026",
+              },
+              {
+                /* Woertlich aus der oeffentlichen ProvenExpert-Bewertung vom
+                   9.7.2026, nur der Einstieg mit Tippfehler ("Zabala") ist
+                   weggelassen. Oeffentlich publiziert, daher zitierbar. */
+                zitat: "... große Expertise, Geduld und Feinfühligkeit. Eine Freude mit ihm zu arbeiten!",
+                name: "Chris L.",
+                rolle: "ProvenExpert-Bewertung, Juli 2026",
+              },
+            ].map((z) => (
+              <figure
+                key={z.name}
+                style={{ margin: 0, background: "#fff", border: "1px solid rgba(46,43,38,0.11)", borderLeft: "3px solid #b8963e", borderRadius: 4, padding: "22px 24px" }}
+              >
+                <blockquote style={{ margin: 0, fontFamily: "var(--font-instrument-serif), Georgia, serif", fontSize: "clamp(17px, 1.6vw, 20px)", lineHeight: 1.5, color: "#2e2b26" }}>
+                  {"\u201E"}{z.zitat}{"\u201C"}
+                </blockquote>
+                <figcaption style={{ marginTop: 12, fontSize: 13.5, color: "#6a635a" }}>
+                  <strong style={{ color: "#2e2b26", fontWeight: 600 }}>{z.name}</strong> · {z.rolle}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>

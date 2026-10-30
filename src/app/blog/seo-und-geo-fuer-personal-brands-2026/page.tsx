@@ -444,7 +444,6 @@ export default function SeoGeoPersonalBrandsPage() {
                 <>
                   <p>E-E-A-T steht für Experience, Expertise, Authoritativeness und Trustworthiness. Google hat das Konzept geprägt, und KI-Modelle haben es vollständig übernommen, weil sie nicht halluzinieren wollen. Sie wollen sich auf glaubwürdige Quellen stützen können.</p>
                   <p>Konkret heißt das: Eine echte Autoren-Bio auf jeder Seite. Mit Foto, Lebenslauf-Highlights und einem Link zu deinen relevanten Vorträgen, Podcasts oder Publikationen. Verifizierte Bewertungen (zum Beispiel über ProvenExpert) inklusive der Bewertungs-Zahl und des Durchschnitts. Konkrete Kunden-Cases mit Namen, wenn der Klient zustimmt. Ein klares Impressum mit Anschrift, das auch echte Erreichbarkeit signalisiert.</p>
-                  <p>Bei mir steht zum Beispiel auf jeder Seite: 4,96 von 5 bei 154 verifizierten ProvenExpert-Bewertungen. Das ist eine konkrete Zahl, kein Marketing-Sprech. Genau das, was KIs für eine Citation brauchen.</p>
                 </>
               ),
             },
