@@ -37,6 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/mooni-voice", priority: 0.6, changeFrequency: "monthly" },
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },
+    { path: "/daten-loeschen", priority: 0.3, changeFrequency: "yearly" },
     { path: "/agb", priority: 0.3, changeFrequency: "yearly" },
   ];
 

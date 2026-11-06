@@ -9,6 +9,7 @@ export const metadata = {
  * Im Einsatz und hier beschrieben: Vercel (Hosting), Umami (selbst gehostet,
  * cookiefrei), ActiveCampaign (Newsletter), ThriveCart (Checkout), TidyCal
  * (Termine), Zoom (Calls), WhatsApp, Notion (Audit-Anfragen), eigene Datenbank.
+ * Seit November 2026: Sabala Social (Instagram-Stichworte, Abschnitt 11, Loeschweg /daten-loeschen).
  * Schriften kommen ueber next/font/google und werden beim Build heruntergeladen,
  * zur Laufzeit also von unserer eigenen Domain ausgeliefert. Keine Verbindung
  * zu Google beim Seitenaufruf.
@@ -27,8 +28,8 @@ export default function DatenschutzPage() {
       <div className="max-w-[760px] mx-auto">
 
         <p className="text-xs font-mono uppercase tracking-[0.2em] text-refined-gold mb-4">Rechtliches</p>
-        <h1 className="font-instrument text-5xl text-deep-charcoal mb-4 leading-tight">Datenschutzerklärung</h1>
-        <p className="text-deep-charcoal/50 text-sm mb-16">SABALA MENTORING LLC · Stand: August 2026</p>
+        <h1 className="font-instrument text-4xl sm:text-5xl text-deep-charcoal mb-4 leading-tight">Datenschutzerklärung</h1>
+        <p className="text-deep-charcoal/50 text-sm mb-16">SABALA MENTORING LLC · Stand: November&nbsp;2026</p>
 
         <div className="space-y-12 text-deep-charcoal/80 leading-relaxed">
 
@@ -321,6 +322,49 @@ export default function DatenschutzPage() {
               <a href="mailto:sabala@sabala-mentoring.com" className="text-refined-gold hover:underline">
                 sabala@sabala-mentoring.com
               </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold text-deep-charcoal text-lg mb-4">11. Instagram: automatische Antworten auf Kommentare</h2>
+            <p>
+              Auf unseren Instagram-Konten @vega_leads, @sabala_mentoring und @luxus_websites können
+              Sie ein Stichwort kommentieren, um zum Beispiel ein Skript oder einen Link zu erhalten.
+              Dafür nutzen wir eine eigene Software (Sabala Social) über die offizielle Schnittstelle
+              von Meta.
+            </p>
+            <p className="mt-4">Verantwortlich ist je nach Konto:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-2">
+              <li><strong>@sabala_mentoring:</strong> SABALA MENTORING LLC (Angaben in Abschnitt&nbsp;1).</li>
+              <li>
+                <strong>@vega_leads und @luxus_websites:</strong> Ilja Krasevskij, Einzelunternehmer
+                (Individual Entrepreneur) in Georgien, Identifikations- und Steuernummer 305845128.
+                E-Mail für @vega_leads:{" "}
+                <a href="mailto:kontakt@vegaleads.ai" className="text-refined-gold hover:underline whitespace-nowrap">kontakt@vegaleads.ai</a>,
+                für @luxus_websites:{" "}
+                <a href="mailto:kontakt@luxus-websites.com" className="text-refined-gold hover:underline whitespace-nowrap">kontakt@luxus-websites.com</a>.
+              </li>
+            </ul>
+            <p className="mt-4">
+              Wir verarbeiten dabei Ihren Instagram-Nutzernamen, die von Instagram vergebene Kennung,
+              den Text Ihres Kommentars, die Nachrichten in diesem Ablauf und ob Sie unserem Konto
+              folgen. Ob Sie folgen, fragen wir nur in dem Moment ab, in dem Sie auf den Knopf tippen
+              oder uns antworten.
+            </p>
+            <p className="mt-4">
+              Zweck ist, Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO,
+              hilfsweise unser berechtigtes Interesse, Anfragen schnell zu beantworten (Art. 6 Abs. 1
+              lit. f DSGVO). Die erste Nachricht ist als automatische Nachricht gekennzeichnet.
+            </p>
+            <p className="mt-4">
+              Die Daten liegen auf unserem eigenen Rechner in Tiflis (Georgien), nicht bei einem
+              Cloud-Anbieter. Nach 90 Tagen löschen wir sie automatisch. Georgien ist aus Sicht der EU
+              ein Drittland, für das es keinen Angemessenheitsbeschluss der EU-Kommission gibt. Für die
+              Nutzung von Instagram selbst gilt die Datenschutzrichtlinie von Meta.
+            </p>
+            <p className="mt-4">
+              Wie Sie eine frühere Löschung verlangen, steht unter{" "}
+              <Link href="/daten-loeschen" className="text-refined-gold hover:underline">„Daten löschen“</Link>.
             </p>
           </section>
 
