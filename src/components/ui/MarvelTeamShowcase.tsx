@@ -295,7 +295,7 @@ export default function MarvelTeamShowcase() {
                   {member.id === 'aurel' && (
                     <div className="absolute inset-0 z-0">
                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#3b0764_0%,_#000_100%)] opacity-80" />
-                       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-40 mix-blend-screen animate-[pulse_8s_infinite]" />
+                       <div className="absolute inset-0 bg-[url('/images/stardust.png')] opacity-40 mix-blend-screen animate-[pulse_8s_infinite]" />
                        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-refined-gold/20 to-transparent mix-blend-overlay" />
                     </div>
                   )}

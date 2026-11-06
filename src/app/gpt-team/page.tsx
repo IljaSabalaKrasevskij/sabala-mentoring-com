@@ -127,8 +127,8 @@ export default function GPTTeamPage() {
       <div className="fixed inset-0 z-0 pointer-events-none">
         {/* Core Cosmos Color */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(184,150,62,0.15)_0%,_#0A0806_60%)] opacity-80" />
-        {/* Stars / Dust */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-40 mix-blend-screen" />
+        {/* Stars / Dust: "Stardust" by Atle Mo (Subtle Patterns, CC BY-SA 3.0), served from our own domain */}
+        <div className="absolute inset-0 bg-[url('/images/stardust.png')] opacity-40 mix-blend-screen" />
         {/* Tech Grid */}
         <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] mix-blend-overlay" />
       </div>

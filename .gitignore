@@ -76,3 +76,7 @@ CLAUDE.md
 premium-onepager-paket.md
 business-setup-briefing.md
 .tmp_ffmpeg/
+
+# Satoshi: Lizenz erlaubt selbst hosten, aber nicht im oeffentlichen Repo.
+# scripts/satoshi-holen.mjs holt die Datei vor jedem Bau bei Fontshare.
+/src/app/fonts/

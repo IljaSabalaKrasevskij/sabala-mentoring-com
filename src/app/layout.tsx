@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif, Press_Start_2P } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -22,6 +23,15 @@ const pressStart = Press_Start_2P({
   subsets: ["latin"],
   weight: "400",
   display: "swap",
+});
+
+// Satoshi (Fontshare, ITF Free Font License): selbst hosten ist erlaubt, die Datei
+// darf aber nicht ins oeffentliche Repo. scripts/satoshi-holen.mjs holt sie vor dem Bau.
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  weight: "300 900",
+  fallback: ["sans-serif"],
 });
 
 const siteUrl = "https://sabala-mentoring.com";
@@ -135,7 +145,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${instrumentSerif.variable} ${geistMono.variable} ${pressStart.variable} h-full antialiased scroll-smooth`}
+      className={`${instrumentSerif.variable} ${satoshi.variable} ${geistMono.variable} ${pressStart.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>

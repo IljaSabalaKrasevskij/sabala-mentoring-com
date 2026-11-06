@@ -23,14 +23,14 @@
   --color-deep: #2E2B26;
   --color-warm-mid: #7A7268;
   --font-serif: var(--font-instrument);
-  --font-sans: "Satoshi", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-satoshi), system-ui, -apple-system, sans-serif;
 
   --color-whisper-border: rgba(181, 176, 168, 0.3);
   --color-warm-shadow: rgba(46, 43, 38, 0.06);
   --color-gold-glow: rgba(184, 150, 62, 0.08);
 
   --font-instrument: var(--font-instrument);
-  --font-satoshi: "Satoshi", sans-serif;
+  --font-satoshi: var(--font-satoshi);
   --font-mono: var(--font-geist-mono);
 
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
@@ -55,8 +55,6 @@
 }
 
 @layer base {
-  @import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap");
-  
   :root {
     --background: var(--color-warm-canvas);
     --foreground: var(--color-deep-charcoal);
