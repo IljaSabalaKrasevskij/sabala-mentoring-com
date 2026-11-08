@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Brackets, Eyebrow } from "./shared";
-import { BUCHBAR } from "./cohorts";
+import { BUCHBAR, COURSE_CHECKOUT_URL } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    ValueStack — Hormozi-Anchor. Items glide einzeln rein (CSS-Stagger),
@@ -15,7 +15,7 @@ const ITEMS: { label: string; value: number }[] = [
   { label: "Session 1 live (2,5h): Obsidian + NotebookLM Setup", value: 249 },
   { label: "Session 2 live (2,5h): Claude Code Pro + MCP-Verbindungen", value: 249 },
   { label: "Skill-Paket: Closing Session + Memory + Cybersecurity", value: 19 },
-  { label: "Live-Umsetzung & Q&A an beiden Terminen", value: 49 },
+  { label: "Live-Umsetzung & Fragen in beiden Workshops", value: 49 },
 ];
 
 const TOTAL = ITEMS.reduce((s, i) => s + i.value, 0); // 566
@@ -89,7 +89,7 @@ export default function ValueStack() {
           className="mx-auto mt-5 max-w-xl text-center font-serif text-cream"
           style={{ fontSize: "clamp(2rem, 4.6vw, 3.2rem)", lineHeight: 1.06 }}
         >
-          Was du in diesen 5 Stunden bekommst
+          5 Stunden Workshops. Dazu 1 Stunde Q&amp;A.
         </motion.h2>
 
         <div
@@ -125,6 +125,9 @@ export default function ValueStack() {
               </li>
             ))}
           </ul>
+          <p className="px-5 py-4 text-[0.96rem] text-gold">
+            Zusätzlich inklusive: eine Q&amp;A-Session für deine Fragen aus der Praxis.
+          </p>
 
           {/* Gesamtwert mit Count-Up + sanftem Gold-Pulse */}
           <div
@@ -166,13 +169,15 @@ export default function ValueStack() {
           </p>
           <div className="relative mt-8 flex justify-center">
             <a
-              href="#termine"
+              href={COURSE_CHECKOUT_URL}
+              target={BUCHBAR ? "_blank" : undefined}
+              rel={BUCHBAR ? "noopener noreferrer" : undefined}
               className="group relative inline-flex items-center gap-3 overflow-hidden font-sans font-semibold transition-all"
               style={{ background: "#0a0806", color: "var(--gold-light)", letterSpacing: "0.08em", padding: "18px 40px", fontSize: "1rem", boxShadow: "0 12px 28px rgba(10,8,6,0.35)" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#1a1612")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#0a0806")}
             >
-              <span className="relative z-10">{BUCHBAR ? "Platz sichern, bevor der Preis steigt" : "Auf die Warteliste"}</span>
+              <span className="relative z-10">{BUCHBAR ? "Jetzt Kurs buchen" : "Auf die Warteliste"}</span>
               <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="relative z-10 transition-transform group-hover:translate-x-1">
                 <path d="M0 6h18M13 1l5 5-5 5" stroke="var(--gold-light)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

@@ -2,15 +2,16 @@
 
 import { motion } from "framer-motion";
 import { Brackets, Eyebrow } from "./shared";
-import { BUCHBAR, COHORTS, TERMIN_CHIPS } from "./cohorts";
+import { BUCHBAR, COHORTS, COURSE_CHECKOUT_URL, TERMIN_CHIPS } from "./cohorts";
 
 /* Preis + Dringlichkeit + CTA. Gold-Glow-Rahmen, klar, ohne Druck-Pathos. */
 
 const INCLUDES = [
   "Session 1: Obsidian + NotebookLM",
   "Session 2: Claude Code Pro + Memory-System",
+  "Zusätzliche Q&A-Session: 1 Stunde für deine Fragen",
   "3 Skills: Closing Session, Memory, Cybersecurity",
-  "Live-Umsetzung an beiden Terminen",
+  "Live-Umsetzung in beiden Workshops",
   "PARA-Vorlage für Obsidian",
 ];
 
@@ -30,7 +31,7 @@ export default function PriceBlock() {
           className="mx-auto mt-5 max-w-lg font-serif text-cream"
           style={{ fontSize: "clamp(2rem, 4.8vw, 3.2rem)", lineHeight: 1.06 }}
         >
-          Das Pflicht-Setup. 2×2,5 Stunden live.
+          Dein Setup. Zwei Workshops plus Q&amp;A.
         </motion.h2>
 
         <motion.div
@@ -61,7 +62,7 @@ export default function PriceBlock() {
             Angebot für Unternehmen und Selbständige
           </p>
           <p className="mt-1 font-mono text-[11px] tracking-wide" style={{ color: "rgba(250,248,245,0.4)" }}>
-            Jetzt umfangreicher: 2×2,5 Stunden, inklusive Perplexity.
+            2×2,5 Stunden Workshop + 1 Stunde Q&amp;A. Alles inklusive.
           </p>
 
           {/* Termine */}
@@ -87,7 +88,9 @@ export default function PriceBlock() {
 
           {/* CTA */}
           <a
-            href="#termine"
+            href={COURSE_CHECKOUT_URL}
+            target={BUCHBAR ? "_blank" : undefined}
+            rel={BUCHBAR ? "noopener noreferrer" : undefined}
             className="group mt-9 inline-flex w-full items-center justify-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "var(--gold)", color: "#0a0806", letterSpacing: "0.08em", padding: "20px 32px", fontSize: "1.05rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)")}
@@ -105,7 +108,7 @@ export default function PriceBlock() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" style={{ background: "var(--gold)" }} />
               <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--gold)" }} />
             </span>
-            {BUCHBAR ? `Nur ${COHORTS[0].capacity} Plätze` : "Maximal 6 Plätze je Lauf"}
+            {BUCHBAR ? `Maximal ${COHORTS[0].capacity} Plätze` : "Maximal 6 Plätze je Lauf"}
           </div>
         </motion.div>
 
@@ -117,7 +120,7 @@ export default function PriceBlock() {
           className="mx-auto mt-7 max-w-md text-[0.9rem] leading-relaxed text-warm-mid"
         >
           {BUCHBAR
-            ? `Keine langen Wartelisten. Sind die ${COHORTS[0].capacity} Plätze weg, sind sie weg. Bitte buche nur, wenn du an beiden Terminen live dabei sein kannst.`
+            ? `Wir arbeiten mit maximal ${COHORTS[0].capacity} Teilnehmern. Bitte plane beide Workshops live ein und bring deine offenen Fragen zur zusätzlichen Q&A-Session mit.`
             : "Der nächste Lauf steht noch nicht fest. Trag dich auf die Warteliste ein, dann bekommst du den Termin per Mail. Bitte buche danach nur, wenn du an beiden Terminen live dabei sein kannst."}
         </motion.p>
       </div>

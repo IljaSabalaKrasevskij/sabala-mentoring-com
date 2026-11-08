@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Brackets } from "./shared";
-import { BUCHBAR, TERMIN_CHIPS } from "./cohorts";
+import { BUCHBAR, CURRENT_COHORT, COURSE_CHECKOUT_URL, TERMIN_CHIPS } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WorkshopHeader — der eigentliche, IMMER sichtbare Workshop-Kopf. Titel, Termine,
@@ -55,7 +55,7 @@ export default function WorkshopHeader() {
           className="mt-6 max-w-xl text-base leading-relaxed md:text-lg"
           style={{ color: "rgba(250,248,245,0.78)" }}
         >
-          In 2×2,5 Stunden richtest du ein System ein, das sich an alles erinnert. Obsidian, NotebookLM und Claude Code, live aufgebaut. Das Basic-Setup, mit dem die Profis arbeiten.
+          In zwei Workshops à 2,5 Stunden richtest du dein Second Brain ein: Obsidian, NotebookLM und Claude Code, live aufgebaut. Danach klären wir deine offenen Fragen in einer zusätzlichen Stunde Q&amp;A.
         </motion.p>
 
         {/* Termine */}
@@ -87,20 +87,23 @@ export default function WorkshopHeader() {
           className="mt-9 flex flex-wrap items-center gap-5"
         >
           <a
-            href="#termine"
+            href={COURSE_CHECKOUT_URL}
+            target={BUCHBAR ? "_blank" : undefined}
+            rel={BUCHBAR ? "noopener noreferrer" : undefined}
             className="group inline-flex items-center gap-3 font-sans font-semibold transition-all"
             style={{ background: "#b8963e", color: "#0a0806", letterSpacing: "0.08em", padding: "17px 38px", fontSize: "1rem" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#d4ae5a")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#b8963e")}
           >
-            {BUCHBAR ? "Platz sichern — €397" : "Auf die Warteliste"}
+            {BUCHBAR ? "Platz sichern · €397" : "Auf die Warteliste"}
             <svg width="18" height="12" viewBox="0 0 20 12" fill="none" className="transition-transform group-hover:translate-x-1">
               <path d="M0 6h18M13 1l5 5-5 5" stroke="#0a0806" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <span className="flex flex-col font-mono text-[12px] uppercase tracking-[0.18em]" style={{ color: "rgba(250,248,245,0.55)" }}>
             <span>{BUCHBAR ? "oder 2× €203" : "€397 oder 2× €203"}</span>
-            <span>{BUCHBAR ? "beide Termine live" : "maximal 6 Plätze je Lauf"}</span>
+            <span>maximal {CURRENT_COHORT?.capacity ?? 6} Plätze</span>
+            <span>netto zzgl. MwSt.</span>
           </span>
         </motion.div>
       </div>

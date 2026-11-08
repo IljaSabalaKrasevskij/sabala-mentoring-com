@@ -8,7 +8,7 @@ import { Brackets, Eyebrow } from "./shared";
 
 const FOR = [
   "Du bereits mit Kunden oder an eigenen Projekten arbeitest",
-  "Du an beiden Live-Terminen dabei sein kannst",
+  "Du beide Workshops live einplanst und deine Fragen zur Q&A mitbringst",
   "Du bereit bist, dich für zwei Wochen wirklich zu committen",
   "Du Token sparen und spürbar effektiver arbeiten möchtest",
   "Du die Qualität deiner Arbeit steigern möchtest",
@@ -19,7 +19,7 @@ const FOR = [
 const NOT_FOR = [
   "Du für Session 2 nicht bereit bist, Claude Code Pro zu holen",
   "Du nur die Aufzeichnung anschauen möchtest",
-  "Du einen der beiden Live-Termine nicht einplanen kannst",
+  "Du einen der beiden Workshops nicht einplanen kannst",
   "Du an deinem Setup grundsätzlich nichts ändern möchtest",
   "Du komplett am Anfang stehst, ohne Kunden- oder Projektbezug",
 ];

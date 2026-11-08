@@ -19,7 +19,7 @@ const VISIONS: { eyebrow: string; head: string; body: string }[] = [
   {
     eyebrow: "Deine Projekte",
     head: "laufen anders.",
-    body: "Was du in fünf Stunden lernst, sparst du bei jedem Kundenprojekt wieder rein — und lieferst Qualität, die vorher nicht möglich war. Webseiten, die wirklich verkaufen. Systeme, die wirklich Arbeit übernehmen.",
+    body: "Was du im Kurs lernst, nutzt du bei jedem Kundenprojekt wieder. Webseiten, die wirklich verkaufen. Systeme, die wirklich Arbeit übernehmen.",
   },
   {
     eyebrow: "Deine Rolle",
@@ -147,7 +147,7 @@ export default function BeforeAfter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mx-auto mt-6 max-w-2xl text-center text-[1.05rem] leading-relaxed text-warm-light/70"
           >
-            Diese fünf Stunden wirken nicht für die nächste Session. Sie wirken für jedes Kundenprojekt, jeden Workshop, jedes neue System. Und so verändert sich, wofür du eigentlich gebucht wirst.
+            Dein Setup begleitet dich bei jedem Kundenprojekt, jedem Workshop und jedem neuen System. Die zusätzliche Q&amp;A-Session hilft dir, offene Fragen aus der Umsetzung zu klären.
           </motion.p>
 
           <div className="mt-14 grid gap-5 md:grid-cols-3 md:gap-6">

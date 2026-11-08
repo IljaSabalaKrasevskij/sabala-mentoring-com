@@ -28,7 +28,7 @@ const STEPS: Step[] = [
     level: 2,
     here: "Du nutzt KI schon, aber planlos. Du spürst das Potenzial, kommst aber nicht ins System.",
     next: "Bau dein Fundament live mit mir: Claude Code, Obsidian, NotebookLM.",
-    cta: { label: "Auf die Warteliste", href: "/akademie#termine" },
+    cta: { label: "Termine & Buchung", href: "/akademie#termine" },
   },
   {
     level: 3,

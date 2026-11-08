@@ -280,7 +280,7 @@ export default function SystemConstellation() {
           transition={{ duration: 0.5 }}
           className="mx-auto mt-12 max-w-2xl text-center text-[1.05rem] leading-relaxed text-warm-mid"
         >
-          Zwei Live-Sessions. Am Ende steht ein System, das aufeinander aufbaut, von der Recherche bis zu Claude, der sich an alles erinnert.
+          Zwei Workshops für dein Setup: von der Recherche bis zu Claude, der sich an alles erinnert. In einer zusätzlichen Stunde Q&amp;A klären wir danach deine Fragen aus der Praxis.
           <span className="mt-2 hidden font-mono text-[11px] uppercase tracking-[0.22em] text-gold md:block">Fahr über die Knoten</span>
         </motion.p>
 

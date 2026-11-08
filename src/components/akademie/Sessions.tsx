@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brackets, Eyebrow } from "./shared";
+import { Brackets, Eyebrow, Reveal } from "./shared";
+import { CURRENT_COHORT, formatSessionDate } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    Sessions — zwei große, alternierende Detail-Blöcke + Video in der Mitte.
@@ -119,6 +120,7 @@ function SessionBlock({
 }
 
 export default function Sessions() {
+  const qaSession = CURRENT_COHORT?.sessions.find((s) => s.label === "Q&A-Session");
   return (
     <section className="relative overflow-hidden px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
@@ -133,7 +135,7 @@ export default function Sessions() {
           className="mx-auto mt-5 mb-20 max-w-2xl text-center font-serif text-cream"
           style={{ fontSize: "clamp(2rem, 4.6vw, 3.2rem)", lineHeight: 1.06 }}
         >
-          Zwei Sessions. Ein fertiges Setup.
+          Zwei Workshops. Danach Zeit für deine Fragen.
         </motion.h2>
 
         <SessionBlock
@@ -178,6 +180,14 @@ export default function Sessions() {
           flip
           featured
         />
+        <Reveal className="mx-auto mt-20 max-w-5xl rounded-2xl border border-gold/30 bg-gold/5 p-7 md:p-10">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-gold">03 · Q&amp;A-Session · 1 Stunde live</p>
+          <h3 className="mt-4 font-serif text-3xl text-cream">Deine Fragen aus der Praxis.</h3>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-warm-light/75">
+            Nach dem zweiten Workshop arbeitest du einige Tage mit deinem Setup. In der zusätzlichen Q&amp;A-Session klären wir gemeinsam, was dabei noch offen geblieben ist. Die Stunde ist im Kurspreis enthalten.
+          </p>
+          {qaSession && <p className="mt-5 font-mono text-sm text-gold">{formatSessionDate(qaSession.date)} · {qaSession.time}</p>}
+        </Reveal>
       </div>
 
       <style>{`
