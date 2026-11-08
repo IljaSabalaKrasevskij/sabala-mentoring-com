@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal, TiltCard, Brackets, Eyebrow, GoldCTA } from "./shared";
+import { CURRENT_COHORT, COURSE_SCHEDULE, TERMIN_CHIPS } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    BeratungView — Sales-Page für die Beratungsstunde (Mini-Produkt).
@@ -24,9 +25,6 @@ const PREIS = "97";
 const PREIS_REGULAER = "200";
 const GUTSCHEIN = "120";
 const KURS_PREIS = 397;
-// Kein Lauf in cohorts.ts, also Warteliste. Neuer Lauf: hier das Datum, FAQ-Satz und Karte nachziehen.
-const KURS_TERMIN = "Nächster Termin folgt";
-
 /* prefers-reduced-motion respektieren. Im UX-Skill Prioritaet 1 (kritisch):
    Parallax und Auto-Rotation koennen bei empfindlichen Nutzern Schwindel ausloesen. */
 function useReduzierteBewegung() {
@@ -170,7 +168,7 @@ const EINWAENDE: [string, string][] = [
   ["Wie komme ich an meinen Termin?",
    "Direkt nach dem Kauf bekommst du den Link zur Terminwahl und suchst dir aus, was dir passt. Dazu deinen Gutscheincode."],
   ["Und wenn ich danach doch den Kurs will?",
-   "Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. Der nächste Termin steht noch nicht fest. Auf der Akademie-Seite kannst du dich auf die Warteliste setzen."],
+   `Dann löst du deinen Code über 120 € ein und zahlst 277 € statt 397 €. ${COURSE_SCHEDULE}. Zwei Workshops und die zusätzliche Q&A-Session sind inklusive. Die Termine und Buchung findest du auf der Akademie-Seite.`],
 ];
 
 const VORHER = [
@@ -836,13 +834,16 @@ export default function BeratungView() {
                   <span className="font-mono text-[10.5px] uppercase tracking-[0.24em]" style={{ color: gold }}>Einlösbar für</span>
                   <h3 className="mt-3 font-serif text-[1.7rem] leading-tight text-cream">Dein Second Brain</h3>
                   <p className="mt-2 text-[1rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.72)" }}>
-                    Zwei Abende live, in denen wir Claude Code gemeinsam einrichten.
+                    Zwei Workshops à 2,5 Stunden, in denen wir dein Second Brain gemeinsam einrichten. Dazu eine Stunde Q&amp;A für deine offenen Fragen.
                   </p>
-                  <p className="mt-4 font-mono text-[12.5px]" style={{ color: goldLight }}>
-                    {KURS_TERMIN}
-                  </p>
+                  <div className="mt-4 space-y-3 font-mono text-[12.5px]" style={{ color: goldLight }}>
+                    {TERMIN_CHIPS.map((s) => (
+                      <p key={s.label}>{s.label}: {s.date}<br />{s.time}</p>
+                    ))}
+                    {CURRENT_COHORT && <p>Maximal {CURRENT_COHORT.capacity} Plätze</p>}
+                  </div>
                   <a href="/akademie#termine" className="mt-2 self-start font-mono text-[12.5px] underline underline-offset-4" style={{ color: "rgba(250,248,245,0.72)" }}>
-                    Auf die Warteliste
+                    Termine ansehen &amp; Kurs buchen
                   </a>
                 </div>
               </div>

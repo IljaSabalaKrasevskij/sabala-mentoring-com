@@ -8,22 +8,53 @@ export type CohortStatus = "offen" | "fast voll" | "ausgebucht";
 export type Cohort = {
   id: string; // stabile ID, z.B. "second-brain-2026-07-09"
   start: string; // ISO-Datum Session 1
-  sessions: { label: string; date: string; time: string }[];
+  sessions: { label: string; date: string; time: string }[]; // date: ISO-Datum
   capacity: number;
   checkoutUrl: string; // eigenes ThriveCart-Produkt pro Lauf
   status: CohortStatus;
 };
 
 export const COHORTS: Cohort[] = [
-  // Lauf Okt 2026 (8.10. + 15.10.) am 30.10.2026 entfernt: ist gelaufen, der naechste steht noch nicht fest.
   // Historie steht im Vault, nicht hier. Diese Liste zeigt ausschliesslich buchbare Laeufe.
   // Leere Liste = Warteliste: /akademie zeigt dann statt Kauf-Knoepfen das Anmeldeformular.
+  {
+    id: "second-brain-2026-11-27",
+    start: "2026-11-27",
+    sessions: [
+      { label: "Session 1", date: "2026-11-27", time: "14:00–16:30 Uhr MEZ" },
+      { label: "Session 2", date: "2026-12-04", time: "14:00–16:30 Uhr MEZ" },
+      { label: "Q&A-Session", date: "2026-12-11", time: "15:00–16:00 Uhr MEZ" },
+    ],
+    capacity: 6,
+    checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-nov-26/",
+    status: "offen",
+  },
 ];
 
 export const BUCHBAR = COHORTS.length > 0;
+export const CURRENT_COHORT = COHORTS[0];
+export const COURSE_CHECKOUT_URL = CURRENT_COHORT?.checkoutUrl ?? "/akademie#termine";
+
+export function formatSessionDate(date: string) {
+  return new Intl.DateTimeFormat("de-DE", {
+    weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  }).format(new Date(`${date}T12:00:00Z`));
+}
+
+export function formatShortDate(date: string) {
+  const [year, month, day] = date.split("-");
+  return `${day}.${month}.${year}`;
+}
+
+export const COURSE_SCHEDULE = CURRENT_COHORT?.sessions
+  .map((s) => `${s.label}: ${formatSessionDate(s.date)}, ${s.time}`)
+  .join("; ") ?? "Nächster Termin folgt";
 
 /* Termin-Chips im Kopf und im Preisblock. */
-export const TERMIN_CHIPS = COHORTS[0]?.sessions ?? [
+export const TERMIN_CHIPS = CURRENT_COHORT?.sessions.map((s) => ({
+  ...s,
+  date: formatSessionDate(s.date),
+})) ?? [
   { label: "Nächster Lauf", date: "Termin folgt", time: "Warteliste offen" },
 ];
 

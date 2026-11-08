@@ -79,7 +79,7 @@ export default function AcademyNewsletter() {
                   marginBottom: 16,
                 }}
               >
-                Sei dabei, wenn der nächste Kurs öffnet.
+                Neue Kurse und KI-Tipps direkt per Mail.
               </h2>
               <p style={{ fontSize: 15.5, color: "rgba(250,248,245,0.6)", lineHeight: 1.65, marginBottom: 30 }}>
                 Trag dich ein und erfahre als Erster, wann neue Termine und Themen starten.
@@ -102,7 +102,7 @@ export default function AcademyNewsletter() {
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                   <p style={{ fontSize: 15, color: "#FAF8F5", lineHeight: 1.5 }}>
-                    Du bist dabei. Ich melde mich, sobald der nächste Termin steht.
+                    Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail.
                   </p>
                 </div>
               ) : (

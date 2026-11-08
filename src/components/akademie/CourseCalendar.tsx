@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Reveal } from "./shared";
 import LevelBadge from "./LevelBadge";
 import type { Level } from "./levels";
+import { COHORTS, COURSE_SCHEDULE } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   CourseCalendar — Monatssicht, Quelle ist die EVENTS/MONTHS-Liste unten.
+   CourseCalendar — aktuelle Termine aus cohorts.ts, vergangene Laeufe unten.
    Hervorgehobener „Nächster Termin"-Banner + klickbare Kurs-Termine.
    Klick auf einen Termin → Sales-Page des aktiven Kurses (/akademie).
    ───────────────────────────────────────────────────────────────────────── */
@@ -23,7 +24,7 @@ type CourseEvent = {
   time: string;
   label: string;
   href: string;
-  spots?: number;
+  capacity?: number;
   done?: boolean; // bereits gelaufen → nicht mehr buchbar
 };
 
@@ -33,21 +34,26 @@ const EVENTS: CourseEvent[] = [
   { day: 26, month: 6, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "15:00 MEZ", label: "Erster Lauf", href: "/akademie", done: true },
   { day: 21, month: 8, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 21.8. · Session 2: 28.8. · 15-17:30 Uhr", label: "Vorheriger Lauf", href: "/akademie", done: true },
   { day: 8, month: 10, year: 2026, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB, time: "Session 1: 8.10. · Session 2: 15.10. · 15-17:30 Uhr", label: "Letzter Lauf", href: "/akademie", done: true },
+  ...COHORTS.flatMap((cohort) => cohort.sessions.map((session): CourseEvent => {
+    const [year, month, day] = session.date.split("-").map(Number);
+    return {
+      day, month, year, level: 2, title: "Dein Second Brain", sub: SECOND_BRAIN_SUB,
+      time: session.time, label: session.label, href: "/akademie#termine", capacity: cohort.capacity,
+    };
+  })),
 ];
 
 // Nächster Termin für den Highlight-Banner = erster noch nicht gelaufener. Gibt es keinen, führt er zur Warteliste.
 const NEXT = EVENTS.find((e) => !e.done);
 
-const MONTHS = [
-  { month: 6, year: 2026, name: "Juni 2026" },
-  { month: 8, year: 2026, name: "August 2026" },
-  { month: 10, year: 2026, name: "Oktober 2026" },
-];
-
 const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 const MONTH_NAMES = ["Januar", "Februar", "März", "April", "Mai", "Juni",
   "Juli", "August", "September", "Oktober", "November", "Dezember"];
 const monthName = (m: number) => MONTH_NAMES[m - 1];
+const visibleEvents = NEXT ? EVENTS.filter((e) => !e.done) : EVENTS;
+const MONTHS = Array.from(new Map(visibleEvents.map(({ year, month }) => [
+  `${year}-${month}`, { month, year, name: `${monthName(month)} ${year}` },
+])).values());
 
 function getDaysInMonth(month: number, year: number) {
   return new Date(year, month, 0).getDate();
@@ -95,7 +101,7 @@ export default function CourseCalendar() {
         <Reveal delay={0.1}>
           <p style={{ fontSize: 15, color: "rgba(250,248,245,0.5)", marginBottom: 44, maxWidth: 480, lineHeight: 1.6 }}>
             {NEXT
-              ? "Klick auf einen Termin für Details und Buchung. Jeder Termin ist einzeln und live buchbar, mit eigenem Level."
+              ? "Zwei Workshops und eine zusätzliche Q&A-Session. Alle drei Termine gehören zum Kurs und sind im Preis enthalten. Klick auf einen Termin für Details."
               : "Hier siehst du die bisherigen Läufe. Der nächste Termin wird gerade geplant, auf der Warteliste bekommst du ihn per Mail."}
           </p>
         </Reveal>
@@ -152,8 +158,8 @@ export default function CourseCalendar() {
                 <p style={{ fontSize: 13.5, color: "rgba(250,248,245,0.62)", lineHeight: 1.5, marginTop: 5, maxWidth: 360 }}>{NEXT?.sub ?? SECOND_BRAIN_SUB}</p>
                 <div style={{ marginTop: 9 }}><LevelBadge level={NEXT?.level ?? 2} /></div>
                 <p className="font-mono" style={{ fontSize: 13, color: "rgba(250,248,245,0.6)", marginTop: 9 }}>
-                  {NEXT?.time ?? "Trag dich ein, dann bekommst du den Termin per Mail."}
-                  {NEXT?.spots !== undefined && <span style={{ color: "#E8A87C", marginLeft: 14 }}>· {NEXT.spots} Plätze frei</span>}
+                  {NEXT ? COURSE_SCHEDULE : "Trag dich ein, dann bekommst du den Termin per Mail."}
+                  {NEXT?.capacity !== undefined && <span className="mt-2 block" style={{ color: "#E8A87C" }}>Maximal {NEXT.capacity} Plätze</span>}
                 </p>
               </div>
             </div>
@@ -181,7 +187,7 @@ export default function CourseCalendar() {
 
         {/* Zwei-Monats-Grid */}
         <Reveal delay={0.1}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 36 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 36 }}>
             {MONTHS.map(({ month, year, name }) => (
               <MonthView
                 key={`${year}-${month}`}
@@ -226,8 +232,8 @@ export default function CourseCalendar() {
                 {activeEvent.time}
                 {activeEvent.done ? (
                   <span style={{ marginLeft: 16, color: "rgba(250,248,245,0.45)" }}>· gelaufen</span>
-                ) : activeEvent.spots !== undefined ? (
-                  <span style={{ marginLeft: 16, color: activeEvent.spots <= 3 ? "#E8A87C" : "rgba(250,248,245,0.55)" }}>· {activeEvent.spots} Plätze frei</span>
+                ) : activeEvent.capacity !== undefined ? (
+                  <span style={{ marginLeft: 16, color: "rgba(250,248,245,0.55)" }}>· maximal {activeEvent.capacity} Plätze</span>
                 ) : null}
               </p>
             </div>

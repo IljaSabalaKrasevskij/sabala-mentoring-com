@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-export const ACADEMY_CHECKOUT_URL = "https://sabala-mentoring.thrivecart.com/sabala-academy-claude-memorysystem/";
-
 /* Reveal — robuste Scroll-Einblendung.
    Default-State ist SICHTBAR (SSR/no-JS zeigt Inhalt). Erst nach Mount wird
    verborgen + per IntersectionObserver eingeblendet. Schlägt der Observer fehl,

@@ -7,6 +7,7 @@ import SolarSystem from "@/components/home/SolarSystem";
 import ShopTeaser from "@/components/home/ShopTeaser";
 import DerMensch from "@/components/home/DerMensch";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
+import CourseAnnouncement from "@/components/akademie/CourseAnnouncement";
 import Kontakt from "@/components/home/Kontakt";
 import SmoothScroll from "@/components/SmoothScroll";
 import { metadata as layoutMetadata } from "./layout";
@@ -53,6 +54,7 @@ export default function Home() {
             "linear-gradient(to bottom, var(--cream) 0%, #ecdfc6 10%, #c6b69a 26%, #8a7762 44%, #4a3d31 62%, #28201a 80%, #080604 100%)",
         }}
       />
+      <CourseAnnouncement />
       <AcademyNewsletter />
       <Kontakt />
     </SmoothScroll>

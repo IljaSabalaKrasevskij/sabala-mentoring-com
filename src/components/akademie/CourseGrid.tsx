@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Reveal } from "./shared";
 import LevelBadge from "./LevelBadge";
 import type { Level } from "./levels";
+import { BUCHBAR, CURRENT_COHORT, formatShortDate } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    CourseGrid — „Was du hier lernst"
@@ -76,9 +77,11 @@ const BOOKABLE: {
   {
     href: "/akademie#termine", icon: IconBrain, level: 2, title: "Dein Second Brain",
     sub: "Deine lokale Datenbasis, mit der Claude niemals vergisst",
-    desc: "In 2 Sessions à 2,5h richtest du dein lokales KI-Gehirn ein, das sich an alles erinnert. Live mit dir aufgebaut, am Ende einsatzbereit.",
-    metas: ["Warteliste offen", "2× 2,5h live", "Einsteiger willkommen"],
-    priceLabel: "Beide Sessions", price: "€397", cta: "Auf die Warteliste",
+    desc: "In zwei Workshops à 2,5 Stunden richtest du dein lokales KI-Gehirn ein. In einer zusätzlichen Stunde Q&A klären wir deine Fragen aus der Umsetzung.",
+    metas: CURRENT_COHORT
+      ? [...CURRENT_COHORT.sessions.map((s) => `${s.label}: ${formatShortDate(s.date)} · ${s.time}`), `Maximal ${CURRENT_COHORT.capacity} Plätze`]
+      : ["Termin folgt", "2×2,5 Stunden + 1 Stunde Q&A"],
+    priceLabel: "Workshops + Q&A", price: "€397", cta: BUCHBAR ? "Termine & Buchung" : "Zum Kurs",
   },
 ];
 
@@ -151,7 +154,7 @@ export default function CourseGrid() {
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: gold, boxShadow: `0 0 12px ${gold}` }} />
             <span className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: gold }}>
-              Buchbar und Warteliste
+              Jetzt buchbar
             </span>
           </div>
         </Reveal>
