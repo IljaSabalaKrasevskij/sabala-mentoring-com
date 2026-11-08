@@ -55,7 +55,7 @@ export default function WorkshopHeader() {
           className="mt-6 max-w-xl text-base leading-relaxed md:text-lg"
           style={{ color: "rgba(250,248,245,0.78)" }}
         >
-          In zwei Workshops à 2,5 Stunden richtest du dein Second Brain ein: Obsidian, NotebookLM und Claude Code, live aufgebaut. Eine Woche später klären wir deine offenen Fragen in einer zusätzlichen Stunde Q&amp;A.
+          In zwei Workshops à 2,5 Stunden richtest du dein Second Brain ein: Obsidian, NotebookLM und Claude Code, live aufgebaut. Danach klären wir deine offenen Fragen in einer zusätzlichen Stunde Q&amp;A.
         </motion.p>
 
         {/* Termine */}
