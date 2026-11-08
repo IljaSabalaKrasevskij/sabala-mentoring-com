@@ -23,7 +23,7 @@ export const COHORTS: Cohort[] = [
     sessions: [
       { label: "Session 1", date: "2026-11-27", time: "14:00–16:30 Uhr MEZ" },
       { label: "Session 2", date: "2026-12-04", time: "14:00–16:30 Uhr MEZ" },
-      { label: "Q&A-Session", date: "2026-12-11", time: "15:00–16:00 Uhr MEZ" },
+      { label: "Q&A-Session", date: "2026-12-10", time: "17:00–18:00 Uhr MEZ" },
     ],
     capacity: 6,
     checkoutUrl: "https://sabala-mentoring.thrivecart.com/ki-kurs-claude-memorysystem-nov-26/",

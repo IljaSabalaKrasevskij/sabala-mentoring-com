@@ -94,7 +94,7 @@ export default function Termine() {
       <div className="mx-auto max-w-3xl">
         <Eyebrow>{"// dein nächster kurs"}</Eyebrow>
         <h2 className="mt-5 text-center font-serif text-cream" style={{ fontSize: "clamp(2rem, 4.6vw, 3rem)", lineHeight: 1.08 }}>
-          Drei Freitage für dein Second Brain.
+          Drei Termine für dein Second Brain.
         </h2>
         <p className="mx-auto mt-4 max-w-md text-center text-[0.95rem] leading-relaxed text-warm-mid">
           Zwei Workshops zum Aufbauen, danach eine zusätzliche Q&amp;A-Session für deine Fragen aus der Praxis. Alle Uhrzeiten in deutscher Zeit (MEZ).

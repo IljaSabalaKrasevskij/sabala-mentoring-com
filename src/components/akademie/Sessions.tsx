@@ -184,7 +184,7 @@ export default function Sessions() {
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-gold">03 · Q&amp;A-Session · 1 Stunde live</p>
           <h3 className="mt-4 font-serif text-3xl text-cream">Deine Fragen aus der Praxis.</h3>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-warm-light/75">
-            Nach dem zweiten Workshop arbeitest du eine Woche mit deinem Setup. In der zusätzlichen Q&amp;A-Session klären wir gemeinsam, was dabei noch offen geblieben ist. Die Stunde ist im Kurspreis enthalten.
+            Nach dem zweiten Workshop arbeitest du einige Tage mit deinem Setup. In der zusätzlichen Q&amp;A-Session klären wir gemeinsam, was dabei noch offen geblieben ist. Die Stunde ist im Kurspreis enthalten.
           </p>
           {qaSession && <p className="mt-5 font-mono text-sm text-gold">{formatSessionDate(qaSession.date)} · {qaSession.time}</p>}
         </Reveal>

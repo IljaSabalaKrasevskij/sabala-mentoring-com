@@ -6,8 +6,8 @@ import { Eyebrow } from "./shared";
 import { COURSE_SCHEDULE } from "./cohorts";
 
 const QA: [string, string][] = [
-  ["Wann findet der nächste Kurs statt?", `${COURSE_SCHEDULE}. Alle drei Termine sind freitags. Die Uhrzeiten gelten für Deutschland (MEZ).`],
-  ["Was ist die zusätzliche Q&A-Session?", "Nach den beiden Workshops hast du eine Woche Zeit, mit deinem Setup zu arbeiten. In der zusätzlichen Stunde bringst du deine Fragen aus der Umsetzung mit, und wir klären sie gemeinsam. Die Q&A-Session ist im Kurspreis enthalten."],
+  ["Wann findet der nächste Kurs statt?", `${COURSE_SCHEDULE}. Die Uhrzeiten gelten für Deutschland (MEZ).`],
+  ["Was ist die zusätzliche Q&A-Session?", "Nach den beiden Workshops hast du einige Tage Zeit, mit deinem Setup zu arbeiten. In der zusätzlichen Stunde bringst du deine Fragen aus der Umsetzung mit, und wir klären sie gemeinsam. Die Q&A-Session ist im Kurspreis enthalten."],
   ["Ich habe noch nie das Terminal benutzt. Ist das ein Problem?", "Nein. Wir richten das Terminal in Session 2 gemeinsam ein, von Anfang an. Du verlässt die Session mit einer funktionierenden Umgebung — unabhängig von deiner technischen Vorbildung."],
   ["Brauche ich Claude Code Pro?", "Ja. Für Session 2 ist Claude Code Pro Pflicht, sonst kannst du nicht sinnvoll mitarbeiten. Session 1 funktioniert ohne Claude Code Pro, aber für das fertige Memory-System brauchst du es."],
   ["Ich habe Obsidian schon. Fange ich trotzdem von vorne an?", "Nein. Wir schauen gemeinsam auf dein bestehendes Setup und integrieren das System dort, wo es Sinn macht."],
