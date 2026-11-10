@@ -36,8 +36,8 @@ export default function SocialCockpitBonus() {
 
         {/* Drei Teile: Umschalter, Bild, Zusatz. Am Handy in dieser Reihenfolge, damit das Bild direkt unter
             seinem Umschalter steht. Am Laptop stehen Umschalter und Zusatz links, das Bild rechts daneben. */}
-        <div className="mt-8 grid items-center gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-          <Reveal delay={0.05} className="lg:col-start-1 lg:row-start-1 lg:self-end">
+        <div className="mt-8 grid items-center gap-x-12 gap-y-6 min-[56.25rem]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <Reveal delay={0.05} className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-1 min-[56.25rem]:self-end">
             <div className="grid grid-cols-2 gap-2.5">
               {ANSICHTEN.map((a, i) => (
                 <button
@@ -65,7 +65,7 @@ export default function SocialCockpitBonus() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <Reveal delay={0.1} className="min-[56.25rem]:col-start-2 min-[56.25rem]:row-span-2 min-[56.25rem]:row-start-1">
             <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "2000 / 1161", background: "#0b0f17", border: "1.5px solid rgba(184,150,62,0.6)", boxShadow: "0 40px 90px rgba(46,43,38,0.3), 0 10px 30px rgba(184,150,62,0.2)" }}>
               {ANSICHTEN.map((a, i) => (
                 <Image
@@ -83,7 +83,7 @@ export default function SocialCockpitBonus() {
           </Reveal>
 
           {/* Freiwillig dazu: gemeinsame Einrichtung */}
-          <Reveal delay={0.15} className="lg:col-start-1 lg:row-start-2 lg:self-start">
+          <Reveal delay={0.15} className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-2 min-[56.25rem]:self-start">
             <div className="flex items-center justify-between gap-5 rounded-2xl px-6 py-5" style={{ background: "linear-gradient(180deg, #15110b, #0d0a07)", border: "1.5px solid rgba(184,150,62,0.5)", boxShadow: "0 20px 50px rgba(46,43,38,0.26)" }}>
               <div>
                 <p className="font-mono text-[12.5px] uppercase tracking-[0.2em] text-gold">Optional dazu</p>

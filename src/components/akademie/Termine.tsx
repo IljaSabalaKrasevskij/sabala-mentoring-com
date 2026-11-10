@@ -131,18 +131,18 @@ export default function Termine() {
 
       {/* Drei Teile: Kopf, Buchungskarte, Liste. Am Handy in dieser Reihenfolge, damit Termine, Preis und Knopf
           gleich oben stehen. Am Laptop stehen Kopf und Liste links, die Karte rechts daneben. */}
-      <div className="relative mx-auto grid max-w-6xl gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-y-6">
-        <div className="lg:col-start-1 lg:row-start-1">
+      <div className="relative mx-auto grid max-w-6xl gap-x-14 gap-y-8 min-[56.25rem]:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] min-[56.25rem]:gap-y-6">
+        <div className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-1">
           <SektionsKopf links zeile="Dein Platz" titel="Alles drin. Ein Preis." />
         </div>
 
-        <div className="space-y-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+        <div className="space-y-6 min-[56.25rem]:col-start-2 min-[56.25rem]:row-span-2 min-[56.25rem]:row-start-1 min-[56.25rem]:self-center">
           {COHORTS.map((c) => (
             <BuchungsKarte key={c.id} cohort={c} />
           ))}
         </div>
 
-        <Reveal delay={0.05} className="lg:col-start-1 lg:row-start-2">
+        <Reveal delay={0.05} className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-2">
           <ul>
             {DRIN.map(([was, wert]) => (
               <li key={was} className="flex items-start justify-between gap-4 border-b py-3" style={{ borderColor: "rgba(250,248,245,0.1)" }}>

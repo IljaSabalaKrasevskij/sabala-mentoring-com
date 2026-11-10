@@ -5,6 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BUCHBAR, COURSE_CHECKOUT_URL } from "./cohorts";
 
+/* Die Kursseite schaltet schon ab 900 px Breite in die Laptop-Aufteilung (`min-[56.25rem]:` statt `lg:`).
+   So behält ein vergrößertes Laptop-Fenster (Chrome-Zoom bis 125 %) zwei Spalten, statt wie ein Tablet zu stapeln.
+   Die Breite steht in rem wie die Stufen von Tailwind. Mit px sortiert Tailwind sie falsch ein, und `sm:` oder
+   `md:` am selben Element gewinnen dann gegen sie. */
+
 /* Lesefarben. Gold in kleiner Schrift ist auf hellem Grund zu blass (Kontrast 2,7 zu 1),
    darum steht dort ein dunkleres Gold (4,8 zu 1). */
 export const GOLD_AUF_HELL = "#8a6a1f";

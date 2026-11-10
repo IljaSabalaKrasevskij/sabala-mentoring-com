@@ -48,7 +48,7 @@ export default function Faq() {
         <div className="mx-auto max-w-6xl">
           <SektionsKopf hell zeile="Noch Fragen?" titel="Was du vielleicht noch wissen willst" />
 
-          <div className="mt-8 grid items-start gap-x-14 lg:grid-cols-2">
+          <div className="mt-8 grid items-start gap-x-14 min-[56.25rem]:grid-cols-2">
             {[FRAGEN.slice(0, haelfte), FRAGEN.slice(haelfte)].map((spalte, s) => (
               <div key={s}>
                 {spalte.map(([q, a], i) => {

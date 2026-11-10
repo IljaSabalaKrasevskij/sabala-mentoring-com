@@ -44,18 +44,18 @@ export default function WorkshopHeader() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 60% at 74% 62%, rgba(184,150,62,0.16), transparent 70%)" }} />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] lg:pb-[8vh] lg:pt-[9vh]">
+      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[8vh] min-[56.25rem]:pt-[9vh]">
         <motion.p {...EIN(0)} className="max-w-[84%] font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.16em] text-gold sm:tracking-[0.24em]">
           Sabala Academy · Live-Workshop für Selbständige und Unternehmen
         </motion.p>
 
         <motion.h1 {...EIN(0.05)} className="mt-4 text-balance font-serif text-cream" style={{ fontSize: "clamp(2.5rem, 4.6vw, 4.1rem)", lineHeight: 1.05 }}>
-          Claude vergisst nach jeder Session alles. <span className="text-gold-light lg:block">Das hier ändert das.</span>
+          Claude vergisst nach jeder Session alles. <span className="text-gold-light min-[56.25rem]:block">Das hier ändert das.</span>
         </motion.h1>
 
-        <div className="mt-8 grid items-start gap-10 lg:mt-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+        <div className="mt-8 grid items-start gap-10 min-[56.25rem]:mt-9 min-[56.25rem]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[56.25rem]:gap-14">
           <motion.div {...EIN(0.12)}>
-            <p className="max-w-xl text-pretty text-[1.06rem] leading-relaxed lg:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)" }}>
+            <p className="max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)" }}>
               In zwei Live-Workshops richten wir dein Second Brain ein. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte, und jede Session beginnt dort, wo die letzte aufgehört hat.
             </p>
 
@@ -110,7 +110,8 @@ export default function WorkshopHeader() {
                       <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gold text-tech-bg">
                         <Play aria-hidden size={18} fill="currentColor" />
                       </span>
-                      <span className="hidden sm:inline">Video starten ·</span> 2:05
+                      {/* Die Beschriftung nur, wo das Video breit genug ist. Im schmalen Zweispalter (900 bis 1100 px) würde sie die Schrift im Standbild berühren. */}
+                      <span className="hidden sm:inline min-[56.25rem]:hidden min-[68.75rem]:inline">Video starten ·</span> 2:05
                     </span>
                   </button>
                 </>

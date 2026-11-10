@@ -124,7 +124,7 @@ export default function MemoryDemo({ hell = false }: { hell?: boolean }) {
         style={{ background: `radial-gradient(ellipse, ${mode === "without" ? (hell ? "rgba(46,43,38,0.08)" : "rgba(177,74,51,0.12)") : hell ? "rgba(184,150,62,0.22)" : "rgba(184,150,62,0.13)"}, transparent 70%)` }}
       />
 
-      <div className={`relative mx-auto ${hell ? "max-w-6xl lg:grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-14" : "max-w-3xl"}`}>
+      <div className={`relative mx-auto ${hell ? "max-w-6xl min-[56.25rem]:grid min-[56.25rem]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-[56.25rem]:items-center min-[56.25rem]:gap-14" : "max-w-3xl"}`}>
         <div>
           <Eyebrow center={!hell} color={hell ? GOLD_AUF_HELL : "var(--gold)"}>
             {hell ? "Der Beweis" : "// das eigentliche Problem"}
@@ -189,7 +189,7 @@ export default function MemoryDemo({ hell = false }: { hell?: boolean }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7 }}
-            className={`relative mt-10 overflow-hidden rounded-xl ${hell ? "lg:mt-0" : ""}`}
+            className={`relative mt-10 overflow-hidden rounded-xl ${hell ? "min-[56.25rem]:mt-0" : ""}`}
             style={{
               background: "linear-gradient(180deg, #100d09, #0a0806)",
               border: `1px solid ${mode === "without" ? "rgba(177,74,51,0.4)" : "rgba(184,150,62,0.35)"}`,

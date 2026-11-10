@@ -69,7 +69,7 @@ export default function Sessions() {
       <div className="relative mx-auto max-w-6xl">
         <SektionsKopf hell zeile="Der Ablauf" titel="Zwei Workshops, eine Fragestunde, ein fertiges Setup." />
 
-        <div className="mt-9 grid gap-5 lg:grid-cols-3">
+        <div className="mt-9 grid gap-5 min-[56.25rem]:grid-cols-3">
           {SCHRITTE.map((s, i) => {
             const termin = CURRENT_COHORT?.sessions[i];
             const netz = !s.danach;
