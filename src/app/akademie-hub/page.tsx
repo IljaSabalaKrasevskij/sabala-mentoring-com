@@ -10,8 +10,8 @@ export const metadata = {
   title: "Sabala KI Academy · Live-Trainings für Selbstständige",
   description:
     CURRENT_COHORT
-      ? `KI-Praxistrainings live. Second Brain ab ${formatShortDate(CURRENT_COHORT.start)}: zwei Workshops plus Q&A, maximal ${CURRENT_COHORT.capacity} Plätze. Obsidian, NotebookLM und Claude Code.`
-      : "KI-Praxistrainings live für Selbstständige und Unternehmer. Obsidian, NotebookLM und Claude Code gemeinsam einrichten.",
+      ? `KI-Praxistrainings live. Second Brain ab ${formatShortDate(CURRENT_COHORT.start)}: zwei Workshops plus Q&A, maximal ${CURRENT_COHORT.capacity} Plätze. Obsidian, Gemini Notebook und Claude Code.`
+      : "KI-Praxistrainings live für Selbstständige und Unternehmer. Obsidian, Gemini Notebook und Claude Code gemeinsam einrichten.",
 };
 
 export default function AkademieHubPage() {

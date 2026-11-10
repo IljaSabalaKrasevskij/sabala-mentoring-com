@@ -3,6 +3,7 @@ import TrustBar from "@/components/akademie/TrustBar";
 import MemoryDemo from "@/components/akademie/MemoryDemo";
 import SystemConstellation from "@/components/akademie/SystemConstellation";
 import Sessions from "@/components/akademie/Sessions";
+import SocialCockpitBonus from "@/components/akademie/SocialCockpitBonus";
 import ValueStack from "@/components/akademie/ValueStack";
 import Qualify from "@/components/akademie/Qualify";
 import AboutIlja from "@/components/akademie/AboutIlja";
@@ -18,8 +19,8 @@ const title = CURRENT_COHORT
   ? `Second Brain: Kurs ab ${formatShortDate(CURRENT_COHORT.start)}`
   : "Dein Second Brain · Sabala KI Academy";
 const description = CURRENT_COHORT
-  ? `Dein Second Brain: ${CURRENT_COHORT.sessions.map((s) => formatShortDate(s.date)).join(", ")}. Zwei Workshops + 1 Stunde Q&A. Maximal ${CURRENT_COHORT.capacity} Plätze. 397 € netto.`
-  : "Dein Second Brain mit Obsidian, NotebookLM und Claude Code. Zwei Workshops à 2,5 Stunden plus eine zusätzliche Stunde Q&A. 397 € netto.";
+  ? `Dein Second Brain: ${CURRENT_COHORT.sessions.map((s) => formatShortDate(s.date)).join(", ")}. Zwei Workshops + 1 Stunde Q&A. Bonus: Social Media Cockpit. Maximal ${CURRENT_COHORT.capacity} Plätze. 397 € netto.`
+  : "Dein Second Brain mit Obsidian, Gemini Notebook und Claude Code. Zwei Workshops à 2,5 Stunden plus eine zusätzliche Stunde Q&A. 397 € netto.";
 
 export const metadata: Metadata = {
   title,
@@ -45,6 +46,7 @@ export default function AkademiePage() {
       <MemoryDemo />
       <SystemConstellation />
       <Sessions />
+      <SocialCockpitBonus />
       <ValueStack />
       <Qualify />
       <AboutIlja />

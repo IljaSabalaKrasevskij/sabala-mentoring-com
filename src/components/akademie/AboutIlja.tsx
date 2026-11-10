@@ -76,7 +76,7 @@ export default function AboutIlja() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl" style={{ border: "1.5px solid rgba(184,150,62,0.42)", boxShadow: "0 30px 70px rgba(120,90,30,0.22), 0 8px 24px rgba(184,150,62,0.16)" }}>
               <Brackets color="rgba(184,150,62,0.7)" inset={14} size={16} />
               <Image
-                src="/akademie/ilja-trainer.jpg"
+                src="/akademie/ilja-trainer-2026.jpg"
                 alt="Ilja Krasevskij"
                 fill
                 sizes="(max-width: 768px) 90vw, 500px"

@@ -35,6 +35,10 @@ export const BUCHBAR = COHORTS.length > 0;
 export const CURRENT_COHORT = COHORTS[0];
 export const COURSE_CHECKOUT_URL = CURRENT_COHORT?.checkoutUrl ?? "/akademie#termine";
 
+/* Freiwillig zum Bonus: gemeinsame Einrichtung des Social Media Cockpits, netto in Euro.
+   Eine Stelle fuer SocialCockpitBonus, PriceBlock und Faq. */
+export const COCKPIT_EINRICHTUNG_PREIS = 290;
+
 export function formatSessionDate(date: string) {
   return new Intl.DateTimeFormat("de-DE", {
     weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",

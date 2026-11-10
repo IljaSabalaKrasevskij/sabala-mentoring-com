@@ -2,17 +2,18 @@
 
 import { motion } from "framer-motion";
 import { Brackets, Eyebrow } from "./shared";
-import { BUCHBAR, COHORTS, COURSE_CHECKOUT_URL, TERMIN_CHIPS } from "./cohorts";
+import { BUCHBAR, COCKPIT_EINRICHTUNG_PREIS, COHORTS, COURSE_CHECKOUT_URL, TERMIN_CHIPS } from "./cohorts";
 
 /* Preis + Dringlichkeit + CTA. Gold-Glow-Rahmen, klar, ohne Druck-Pathos. */
 
 const INCLUDES = [
-  "Session 1: Obsidian + NotebookLM",
+  "Session 1: Obsidian + Gemini Notebook",
   "Session 2: Claude Code Pro + Memory-System",
   "Zusätzliche Q&A-Session: 1 Stunde für deine Fragen",
   "3 Skills: Closing Session, Memory, Cybersecurity",
   "Live-Umsetzung in beiden Workshops",
   "PARA-Vorlage für Obsidian",
+  "Bonus: der ganze Code meines Social Media Cockpits",
 ];
 
 export default function PriceBlock() {
@@ -22,7 +23,7 @@ export default function PriceBlock() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.16), transparent 65%)" }} />
 
       <div className="relative mx-auto max-w-xl text-center">
-        <Eyebrow>{"// dein platz im naechsten lauf"}</Eyebrow>
+        <Eyebrow>{"// dein platz im nächsten lauf"}</Eyebrow>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -85,6 +86,9 @@ export default function PriceBlock() {
               </li>
             ))}
           </ul>
+          <p className="mx-auto mt-5 max-w-sm border-t pt-4 text-left text-[0.9rem] leading-relaxed" style={{ borderColor: "rgba(184,150,62,0.25)", color: "rgba(250,248,245,0.6)" }}>
+            Optional dazu: gemeinsame Einrichtung deines Cockpits für €{COCKPIT_EINRICHTUNG_PREIS} zzgl. MwSt.
+          </p>
 
           {/* CTA */}
           <a

@@ -13,8 +13,8 @@ type Module = { name: string; body: string };
 
 const S1: Module[] = [
   { name: "Comet Browser + 3 Recherche-Extensions", body: "Dein KI-Browser für Recherche. Wir installieren Comet und die drei Erweiterungen, mit denen aus stundenlangem Suchen ein paar Minuten werden. Quellen finden, lesen und direkt weiterverarbeiten, ohne 20 offene Tabs." },
-  { name: "Firecrawl API, ganze Webseiten als Wissen", body: "Statt mühsam Copy-Paste zieht Firecrawl komplette Webseiten sauber als Text. Einmal die API eingerichtet, und Claude holt sich Quellen selbst, direkt in dein NotebookLM und Obsidian." },
-  { name: "NotebookLM, Schluss mit 20 Tabs", body: "YouTube-Videos, PDFs und Webseiten werden zu einer durchsuchbaren Wissensdatenbank. Aus einem Video machst du eine Präsentation oder einen Podcast. Dein Wissen, nicht Google." },
+  { name: "Firecrawl API, ganze Webseiten als Wissen", body: "Statt mühsam Copy-Paste zieht Firecrawl komplette Webseiten sauber als Text. Einmal die API eingerichtet, und Claude holt sich Quellen selbst, direkt in dein Gemini Notebook und Obsidian." },
+  { name: "Gemini Notebook, Schluss mit 20 Tabs", body: "Früher hieß es NotebookLM. YouTube-Videos, PDFs und Webseiten werden zu einer durchsuchbaren Wissensdatenbank. Aus einem Video machst du eine Präsentation oder einen Podcast. Dein Wissen, nicht Google." },
   { name: "Dein Obsidian-Brain mit PARA", body: "Eine lokale Datenbank für dein gesamtes Wissen, alles als einfache Dateien auf deinem Rechner, verlinkt und durchsuchbar. Wir richten die PARA-Struktur ein, danach übernimmt Claude die Einordnung für dich." },
 ];
 
@@ -23,7 +23,7 @@ const S1_AFTER = ["Ein KI-Recherche-Setup, das aus Stunden Minuten macht", "Eine
 const S2: Module[] = [
   { name: "Terminal + Claude Code", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Du verlässt die Session mit einer funktionierenden Umgebung, auch wenn du das Terminal nie geöffnet hast." },
   { name: "Deine CLAUDE.md, Claude kennt dich", body: "Die eine Datei, die Claude sagt, wer du bist, wie du arbeitest und worauf er zugreifen darf. Einmal geschrieben, startet jede Session mit deinem Kontext statt bei null." },
-  { name: "MCP-Verbindungen, Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und NotebookLM. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung, nicht nur Chat." },
+  { name: "MCP-Verbindungen, Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und Gemini Notebook. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung, nicht nur Chat." },
   { name: "Memory-System + meine Skills", body: "Closing Session (automatische Daily Note), Memory (projektübergreifend) und Cybersecurity (Schutz vor gefährlichen Skripten). Meine eigenen Skills, die ich täglich nutze." },
 ];
 
@@ -142,7 +142,7 @@ export default function Sessions() {
           index="01"
           badge="Session 1 · 2,5 Stunden live"
           title="Recherche und Wissen, an einem Ort"
-          sub="Comet Browser, NotebookLM und dein Obsidian-Brain. Die Basis, aus der Claude schöpft."
+          sub="Comet Browser, Gemini Notebook und dein Obsidian-Brain. Die Basis, aus der Claude schöpft."
           modules={S1}
           after={S1_AFTER}
           featured

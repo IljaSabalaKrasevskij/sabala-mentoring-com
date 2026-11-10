@@ -53,11 +53,11 @@ export default function DiscoveryHero() {
         <p className="font-mono text-[11px] uppercase tracking-[0.4em]" style={{ color: "rgba(212,174,90,0.85)" }}>
           du hast es entdeckt
         </p>
-        <h1 className="mt-7 font-serif leading-[0.98] text-cream" style={{ fontSize: "clamp(2.8rem, 8vw, 6.5rem)" }}>
+        <h2 className="mt-7 font-serif leading-[0.98] text-cream" style={{ fontSize: "clamp(2.8rem, 8vw, 6.5rem)" }}>
           Durchbruch.
           <br />
           <span style={{ color: "#d4ae5a" }}>Durchblick.</span>
-        </h1>
+        </h2>
         <p className="mt-8 max-w-md font-sans text-base md:text-lg" style={{ color: "rgba(250,248,245,0.72)" }}>
           Du bist nur ein Setup davon entfernt, mit KI wirklich zu arbeiten. So wie die Profis.
         </p>
