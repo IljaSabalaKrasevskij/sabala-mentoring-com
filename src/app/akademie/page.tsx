@@ -19,8 +19,9 @@ const SEITE = "https://sabala-mentoring.com/akademie";
 const KURS = "Dein Second Brain: Live-Kurs mit Claude Code, Obsidian und Gemini Notebook";
 const KURZ = "In zwei Live-Workshops und einer Fragestunde richten wir dein Second Brain ein, mit Obsidian, Gemini Notebook und Claude Code. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte.";
 
+/* Mit dem Zusatz „ · Sabala Studios“ aus dem Layout höchstens 60 Zeichen, sonst schneidet Google den Titel ab. */
 const title = CURRENT_COHORT
-  ? `Second Brain für Claude: Live-Kurs ab ${formatShortDate(CURRENT_COHORT.start)}`
+  ? `Second Brain für Claude: Kurs ab ${formatShortDate(CURRENT_COHORT.start)}`
   : "Dein Second Brain · Sabala KI Academy";
 /* Für die Suchergebnisse: unter 160 Zeichen, damit Start, Plätze und Preis nicht abgeschnitten werden.
    Der lange Satz `KURZ` bleibt für die maschinenlesbaren Angaben unten. */
