@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import TrustBar from "@/components/akademie/TrustBar";
+import ErklaerVideo from "@/components/akademie/ErklaerVideo";
 import MemoryDemo from "@/components/akademie/MemoryDemo";
 import SystemConstellation from "@/components/akademie/SystemConstellation";
 import Sessions from "@/components/akademie/Sessions";
@@ -43,6 +44,7 @@ export default function AkademiePage() {
     <main className="flex-1">
       <WorkshopHeader />
       <TrustBar />
+      <ErklaerVideo />
       <MemoryDemo />
       <SystemConstellation />
       <Sessions />
