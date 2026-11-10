@@ -2,8 +2,9 @@
 
 import { Brackets, Eyebrow, Reveal } from "./shared";
 
-/* Erklärvideo direkt unter dem Kopf: Iljas Programme, die Wende, das Fundament. Zwei Minuten,
-   animiert, gesprochen von seinem KI-Stimmklon (im Video und hier gekennzeichnet).
+/* Erklärvideo direkt unter dem Kopf: Iljas Programme, die Wende, das Fundament. Zwei Minuten, animiert.
+   Es spricht sein KI-Klon: die Stimme ist geklont, im Bild ist seine echte Aufnahme mit neu gerechnetem Mund.
+   Beides ist im Video (Schild „KI-Klon von Ilja“) und hier darunter gekennzeichnet.
    Neue Fassung = neuer Dateiname, sonst liefert der Browser die alte aus dem Zwischenspeicher. */
 
 export default function ErklaerVideo() {
@@ -22,11 +23,11 @@ export default function ErklaerVideo() {
         <Reveal delay={0.1}>
           <div className="relative mt-10 aspect-video overflow-hidden rounded-xl" style={{ background: "linear-gradient(135deg, #15110b, #0a0806)", border: "1px solid rgba(184,150,62,0.4)", boxShadow: "0 30px 70px rgba(0,0,0,0.5)" }}>
             <Brackets color="rgba(184,150,62,0.5)" inset={14} size={14} />
-            <video controls preload="metadata" poster="/akademie/erklaervideo-2026-11-poster.jpg" className="absolute inset-0 h-full w-full rounded-xl object-cover">
-              <source src="/akademie/erklaervideo-2026-11.mp4" type="video/mp4" />
+            <video controls preload="metadata" poster="/akademie/erklaervideo-2026-11-klon-poster.jpg" className="absolute inset-0 h-full w-full rounded-xl object-cover">
+              <source src="/akademie/erklaervideo-2026-11-klon.mp4" type="video/mp4" />
             </video>
           </div>
-          <p className="mt-4 text-center text-[0.94rem] text-warm-mid">Gesprochen von meinem KI-Stimmklon. Ganz bewusst.</p>
+          <p className="mt-4 text-center text-[0.94rem] text-warm-mid">Stimme und Bild sind mein KI-Klon. Ganz bewusst.</p>
         </Reveal>
       </div>
     </section>
