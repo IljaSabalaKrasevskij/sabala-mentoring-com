@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { BadgeCheck, CalendarDays, Play, Users } from "lucide-react";
 import { Brackets, Knopf, PlatzKnopf, TEXT_AUF_DUNKEL } from "./shared";
 import { CURRENT_COHORT, formatTagMonat } from "./cohorts";
@@ -13,7 +12,10 @@ import { CURRENT_COHORT, formatTagMonat } from "./cohorts";
    Beides ist im Video (Schild „KI-Klon von Ilja“) und hier darunter gekennzeichnet.
    Neue Fassung = neuer Dateiname, sonst liefert der Browser die alte aus dem Zwischenspeicher. */
 
-const EIN = (delay: number) => ({ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay } });
+/* Der Kopf blendet per CSS ein (`.cs-rise` in globals.css), nicht per JavaScript. So steht die Überschrift
+   schon im ersten Bild da: auf einem langsamen Handy, für Suchmaschinen und ganz ohne JavaScript.
+   Vorher war der Kopf leer, bis das JavaScript geladen war (am gebremsten Handy über eine Sekunde). */
+const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
 
 export default function WorkshopHeader() {
   const video = useRef<HTMLVideoElement>(null);
@@ -45,16 +47,16 @@ export default function WorkshopHeader() {
       </div>
 
       <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[7vh] min-[56.25rem]:pt-[9vh]">
-        <motion.p {...EIN(0)} className="max-w-[84%] font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.16em] text-gold sm:tracking-[0.24em]">
+        <p style={EIN(0)} className="cs-rise max-w-[84%] font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.16em] text-gold sm:tracking-[0.24em]">
           Sabala Academy · Live-Workshop für Selbständige und Unternehmen
-        </motion.p>
+        </p>
 
-        <motion.h1 {...EIN(0.05)} className="mt-4 text-balance font-serif text-cream" style={{ fontSize: "clamp(2.5rem, 4.6vw, 4.1rem)", lineHeight: 1.05 }}>
+        <h1 className="cs-rise mt-4 text-balance font-serif text-cream" style={{ fontSize: "clamp(2.5rem, 4.6vw, 4.1rem)", lineHeight: 1.05, ...EIN(0.05) }}>
           Claude vergisst nach jeder Session alles. <span className="text-gold-light min-[56.25rem]:block">Das hier ändert das.</span>
-        </motion.h1>
+        </h1>
 
         <div className="mt-8 grid items-start gap-10 min-[56.25rem]:mt-9 min-[56.25rem]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[56.25rem]:gap-14">
-          <motion.div {...EIN(0.12)}>
+          <div className="cs-rise" style={EIN(0.12)}>
             <p className="max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)" }}>
               In zwei Live-Workshops richten wir dein Second Brain ein, mit Obsidian, Gemini Notebook und Claude Code. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte, und jede Session beginnt dort, wo die letzte aufgehört hat.
             </p>
@@ -85,10 +87,10 @@ export default function WorkshopHeader() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Ab 1280 px rückt das Video neben die zweite Zeile der Überschrift: die ist kurz, rechts von ihr ist Platz */}
-          <motion.div {...EIN(0.2)} id="video" className="scroll-mt-8 xl:-mt-16">
+          <div id="video" className="cs-rise scroll-mt-8 xl:-mt-16" style={EIN(0.2)}>
             <div className="relative aspect-video overflow-hidden rounded-xl" style={{ background: "#0a0806", border: "1px solid rgba(184,150,62,0.5)", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(184,150,62,0.12)" }}>
               <video
                 ref={video}
@@ -120,7 +122,7 @@ export default function WorkshopHeader() {
             <p className="mt-3 text-[0.9rem]" style={{ color: "rgba(250,248,245,0.6)" }}>
               Stimme und Bild sind mein KI-Klon. Ganz bewusst.
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
