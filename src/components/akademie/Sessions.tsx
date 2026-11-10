@@ -148,27 +148,8 @@ export default function Sessions() {
           featured
         />
 
-        {/* Video in der Mitte */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto my-24 max-w-3xl"
-        >
-          <p className="mb-4 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-warm-mid">// 3 Minuten · warum das wichtig ist</p>
-          <div className="group relative aspect-video overflow-hidden rounded-xl" style={{ background: "linear-gradient(135deg, #15110b, #0a0806)", border: "1px solid rgba(184,150,62,0.3)", boxShadow: "0 30px 70px rgba(0,0,0,0.5)" }}>
-            <Brackets color="rgba(184,150,62,0.5)" inset={14} size={14} />
-            <video
-              controls
-              preload="metadata"
-              poster="/akademie/akademie-intro-poster.jpg"
-              className="absolute inset-0 h-full w-full rounded-xl object-cover"
-            >
-              <source src="/akademie/akademie-intro.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </motion.div>
+        {/* Das Erklärvideo steht jetzt oben unter dem Kopf (ErklaerVideo.tsx), hier nur Luft zwischen den Blöcken */}
+        <div className="h-24" />
 
         <SessionBlock
           index="02"
