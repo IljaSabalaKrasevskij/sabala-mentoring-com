@@ -1,192 +1,102 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Brackets, Eyebrow, Reveal } from "./shared";
+import { BrainCircuit, Check, LibraryBig, LifeBuoy } from "lucide-react";
+import { GOLD_AUF_HELL, HEBT, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard } from "./shared";
 import { CURRENT_COHORT, formatSessionDate } from "./cohorts";
+import { FRAGESTUNDE, WORKSHOPS } from "./ablauf";
 
-/* ─────────────────────────────────────────────────────────────────────────
-   Sessions — zwei große, alternierende Detail-Blöcke + Video in der Mitte.
-   Jeder Block: nummeriertes „Kapitel", Inhalt, „Was du danach hast".
-   ───────────────────────────────────────────────────────────────────────── */
+/* So läuft es ab: drei Termine als drei Karten. Je Workshop steht, womit wir arbeiten und was du danach hast.
+   Die Werkzeuge selbst zeigt der nächste Abschnitt (Werkzeuge.tsx), den ganzen Ablauf das PDF.
+   Die Karten stehen in der Reihenfolge der Sessions in cohorts.ts, daher kommt das Datum. */
 
-type Module = { name: string; body: string };
-
-const S1: Module[] = [
-  { name: "Comet Browser + 3 Recherche-Extensions", body: "Dein KI-Browser für Recherche. Wir installieren Comet und die drei Erweiterungen, mit denen aus stundenlangem Suchen ein paar Minuten werden. Quellen finden, lesen und direkt weiterverarbeiten, ohne 20 offene Tabs." },
-  { name: "Firecrawl API, ganze Webseiten als Wissen", body: "Statt mühsam Copy-Paste zieht Firecrawl komplette Webseiten sauber als Text. Einmal die API eingerichtet, und Claude holt sich Quellen selbst, direkt in dein Gemini Notebook und Obsidian." },
-  { name: "Gemini Notebook, Schluss mit 20 Tabs", body: "Früher hieß es NotebookLM. YouTube-Videos, PDFs und Webseiten werden zu einer durchsuchbaren Wissensdatenbank. Aus einem Video machst du eine Präsentation oder einen Podcast. Dein Wissen, nicht Google." },
-  { name: "Dein Obsidian-Brain mit PARA", body: "Eine lokale Datenbank für dein gesamtes Wissen, alles als einfache Dateien auf deinem Rechner, verlinkt und durchsuchbar. Wir richten die PARA-Struktur ein, danach übernimmt Claude die Einordnung für dich." },
-];
-
-const S1_AFTER = ["Ein KI-Recherche-Setup, das aus Stunden Minuten macht", "Eine Expertendatenbank aus allem, was du je gelernt hast", "Ein lokales Obsidian-Brain, das Claude versteht"];
-
-const S2: Module[] = [
-  { name: "Terminal + Claude Code", body: "Keine Angst vor dem Terminal. Wir installieren alles Schritt für Schritt. Du verlässt die Session mit einer funktionierenden Umgebung, auch wenn du das Terminal nie geöffnet hast." },
-  { name: "Deine CLAUDE.md, Claude kennt dich", body: "Die eine Datei, die Claude sagt, wer du bist, wie du arbeitest und worauf er zugreifen darf. Einmal geschrieben, startet jede Session mit deinem Kontext statt bei null." },
-  { name: "MCP-Verbindungen, Claude trifft dein System", body: "Claude Code verbindet sich mit Obsidian und Gemini Notebook. Damit hat er Zugriff auf dein gesamtes Wissen und kann es nutzen, ergänzen und strukturieren. Das ist Claude als fortgeschrittene Nutzung, nicht nur Chat." },
-  { name: "Memory-System + meine Skills", body: "Closing Session (automatische Daily Note), Memory (projektübergreifend) und Cybersecurity (Schutz vor gefährlichen Skripten). Meine eigenen Skills, die ich täglich nutze." },
-];
-
-const S2_AFTER = ['Du sagst: "Woran haben wir gearbeitet?" und Claude weiß es. Exakt.', "Claude schreibt nach jeder Session automatisch eine Daily Note", "Das Basic-Setup, mit dem die großen Profis arbeiten"];
-
-function SessionBlock({
-  index,
-  badge,
-  title,
-  sub,
-  modules,
-  after,
-  flip,
-  featured,
-}: {
-  index: string;
-  badge: string;
-  title: string;
-  sub: string;
-  modules: Module[];
-  after: string[];
-  flip?: boolean;
-  featured?: boolean;
-}) {
-  return (
-    <div className="relative mx-auto max-w-5xl">
-      <div className={`grid items-start gap-10 md:grid-cols-[0.85fr_1.15fr] ${flip ? "md:[&>*:first-child]:order-2" : ""}`}>
-        {/* linke Spalte: großes Kapitel */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="md:sticky md:top-24"
-        >
-          <span
-            className={`font-serif leading-none ${featured ? "feat-num" : ""}`}
-            style={featured ? { fontSize: "clamp(4.5rem, 12vw, 9rem)" } : { fontSize: "clamp(4rem, 11vw, 8rem)", color: "rgba(184,150,62,0.22)" }}
-          >
-            {index}
-          </span>
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.28em] text-gold">{badge}</p>
-          <h3 className="mt-3 font-serif text-cream" style={{ fontSize: "clamp(1.7rem, 3.4vw, 2.5rem)", lineHeight: 1.1 }}>
-            {title}
-          </h3>
-          <p className="mt-4 text-[1rem] leading-relaxed text-warm-light/65">{sub}</p>
-        </motion.div>
-
-        {/* rechte Spalte: Module + Ergebnis */}
-        <div className="space-y-4">
-          {modules.map((m, i) => (
-            <motion.div
-              key={m.name}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5 }}
-              className={`relative overflow-hidden rounded-2xl p-6 ${featured ? "feat-card" : ""}`}
-              style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012))", border: "1px solid rgba(184,150,62,0.16)", backdropFilter: "blur(6px)" }}
-            >
-              {/* obere Akzentlinie */}
-              <span className="absolute left-6 right-6 top-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.7), transparent)" }} />
-              {featured && <span className="feat-scan pointer-events-none absolute inset-0" />}
-              <Brackets color={featured ? "rgba(212,174,90,0.7)" : "rgba(184,150,62,0.3)"} inset={10} size={9} />
-              <h4 className="relative font-serif text-[1.3rem] text-cream">{m.name}</h4>
-              <p className="relative mt-2.5 text-[0.95rem] leading-relaxed text-warm-light/70">{m.body}</p>
-            </motion.div>
-          ))}
-
-          {/* Was du danach hast */}
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="rounded-2xl p-6"
-            style={{ background: "rgba(184,150,62,0.07)", border: "1px solid rgba(184,150,62,0.28)" }}
-          >
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">Was du danach hast</p>
-            <ul className="mt-3 space-y-2">
-              {after.map((a) => (
-                <li key={a} className="flex gap-2.5 text-[0.95rem] leading-snug text-warm-light/85">
-                  <span style={{ color: "var(--gold)" }}>→</span>
-                  {a}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-}
+const SYMBOLE = [LibraryBig, BrainCircuit, LifeBuoy];
+const KARTEN = [...WORKSHOPS, FRAGESTUNDE];
 
 export default function Sessions() {
-  const qaSession = CURRENT_COHORT?.sessions.find((s) => s.label === "Q&A-Session");
   return (
-    <section className="relative overflow-hidden px-6 py-[14vh]" style={{ background: "var(--tech-bg)" }}>
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[40vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.07), transparent 70%)" }} />
+    <section id="ablauf" className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "var(--cream)" }}>
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[45vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.14), transparent 70%)" }} />
 
-      <div className="relative">
-        <Eyebrow>// der ablauf</Eyebrow>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto mt-5 mb-20 max-w-2xl text-center font-serif text-cream"
-          style={{ fontSize: "clamp(2rem, 4.6vw, 3.2rem)", lineHeight: 1.06 }}
-        >
-          Zwei Workshops. Danach Zeit für deine Fragen.
-        </motion.h2>
+      <div className="relative mx-auto max-w-6xl">
+        <SektionsKopf hell zeile="Der Ablauf" titel="Zwei Workshops, eine Fragestunde, ein fertiges Setup." />
 
-        <SessionBlock
-          index="01"
-          badge="Session 1 · 2,5 Stunden live"
-          title="Recherche und Wissen, an einem Ort"
-          sub="Comet Browser, Gemini Notebook und dein Obsidian-Brain. Die Basis, aus der Claude schöpft."
-          modules={S1}
-          after={S1_AFTER}
-          featured
-        />
+        <div className="mt-9 grid gap-5 min-[56.25rem]:grid-cols-3">
+          {KARTEN.map((s, i) => {
+            const termin = CURRENT_COHORT?.sessions[i];
+            const Symbol = SYMBOLE[i];
+            const netz = !("danach" in s);
+            return (
+              <Reveal key={s.titel} delay={i * 0.08}>
+                {/* Die Karte neigt sich mit der Maus und kommt nach vorn, das Symbol hebt sich dabei von ihr ab. */}
+                <TiltCard
+                  hervor={1.025}
+                  max={5}
+                  radius={16}
+                  className="group/karte h-full p-6 shadow-[0_18px_44px_rgba(46,43,38,0.08)] hover:shadow-[0_36px_72px_rgba(46,43,38,0.22)]"
+                  style={{
+                    background: netz ? "linear-gradient(160deg, #fbf3dc, #f3e6c2)" : "#ffffff",
+                    border: `1px solid rgba(184,150,62,${netz ? 0.55 : 0.3})`,
+                  }}
+                >
+                  <div className="relative flex h-full flex-col [transform-style:preserve-3d]">
+                    {/* Schrittzahl als Wasserzeichen unten rechts, hinter dem Text */}
+                    <span aria-hidden className="absolute -bottom-8 -right-3 font-serif leading-none" style={{ fontSize: "5.5rem", color: `rgba(184,150,62,${netz ? 0.22 : 0.12})` }}>
+                      0{i + 1}
+                    </span>
 
-        {/* Das Erklärvideo steht jetzt oben unter dem Kopf (ErklaerVideo.tsx), hier nur Luft zwischen den Blöcken */}
-        <div className="h-24" />
+                    <div className="relative flex items-center gap-4 [transform-style:preserve-3d]">
+                      <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${HEBT}`} style={{ background: netz ? "rgba(255,255,255,0.7)" : "rgba(184,150,62,0.13)", color: GOLD_AUF_HELL }}>
+                        <Symbol aria-hidden size={24} strokeWidth={1.7} />
+                      </span>
+                      <div>
+                        <p className="font-mono text-[12.5px] uppercase leading-snug tracking-[0.1em]" style={{ color: GOLD_AUF_HELL }}>
+                          {s.art}
+                        </p>
+                        {termin && (
+                          <p className="text-[0.95rem]" style={{ color: TEXT_AUF_HELL }}>
+                            {formatSessionDate(termin.date)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
 
-        <SessionBlock
-          index="02"
-          badge="Session 2 · 2,5 Stunden live"
-          title="Dein Second Brain ×10"
-          sub="Terminal, Claude Code und deine CLAUDE.md. Verbunden, mit Gedächtnis."
-          modules={S2}
-          after={S2_AFTER}
-          flip
-          featured
-        />
-        <Reveal className="mx-auto mt-20 max-w-5xl rounded-2xl border border-gold/30 bg-gold/5 p-7 md:p-10">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-gold">03 · Q&amp;A-Session · 1 Stunde live</p>
-          <h3 className="mt-4 font-serif text-3xl text-cream">Deine Fragen aus der Praxis.</h3>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-warm-light/75">
-            Nach dem zweiten Workshop arbeitest du einige Tage mit deinem Setup. In der zusätzlichen Q&amp;A-Session klären wir gemeinsam, was dabei noch offen geblieben ist. Die Stunde ist im Kurspreis enthalten.
-          </p>
-          {qaSession && <p className="mt-5 font-mono text-sm text-gold">{formatSessionDate(qaSession.date)} · {qaSession.time}</p>}
-        </Reveal>
+                    <h3 className="relative mt-5 font-serif text-[1.6rem] leading-tight text-deep">{s.titel}</h3>
+
+                    {"danach" in s ? (
+                      <>
+                        <p className="relative mt-1.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                          Mit {s.mit}
+                        </p>
+                        <p className="relative mt-4 text-[0.95rem] font-semibold text-deep">Danach hast du:</p>
+                        <ul className="relative mt-2.5 space-y-2.5">
+                          {s.danach.map((d) => (
+                            <li key={d} className="flex items-start gap-2.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                              <Check aria-hidden size={17} strokeWidth={2.6} className="mt-[3px] shrink-0" style={{ color: GOLD_AUF_HELL }} />
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <>
+                        <p className="relative mt-3.5 text-[0.97rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
+                          {s.text}
+                        </p>
+                        <p className="relative mt-auto flex items-center gap-2.5 pt-5 text-[0.97rem] font-semibold text-deep">
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-tech-bg">
+                            <Check aria-hidden size={15} strokeWidth={3} />
+                          </span>
+                          Im Preis enthalten
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </TiltCard>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
-
-      <style>{`
-        .feat-num {
-          background-image: linear-gradient(110deg, #8a6f2e 0%, #f4d98a 45%, #d4ae5a 60%, #8a6f2e 100%);
-          background-size: 220% 100%;
-          -webkit-background-clip: text; background-clip: text; color: transparent;
-          animation: feat-num-shimmer 5s ease-in-out infinite;
-        }
-        @keyframes feat-num-shimmer { 0%,100% { background-position: 0% 0 } 50% { background-position: 100% 0 } }
-        .feat-card { border-color: rgba(212,174,90,0.4) !important; animation: feat-glow 3.6s ease-in-out infinite; }
-        @keyframes feat-glow {
-          0%,100% { box-shadow: 0 0 0 1px rgba(212,174,90,0.18), 0 14px 36px rgba(0,0,0,0.35), 0 0 22px rgba(184,150,62,0.08); }
-          50% { box-shadow: 0 0 0 1px rgba(212,174,90,0.5), 0 18px 44px rgba(0,0,0,0.4), 0 0 40px rgba(184,150,62,0.22); }
-        }
-        .feat-scan { background: linear-gradient(180deg, transparent, rgba(212,174,90,0.1), transparent); height: 40%; animation: feat-scan-move 4.5s linear infinite; }
-        @keyframes feat-scan-move { 0% { transform: translateY(-120%) } 100% { transform: translateY(320%) } }
-      `}</style>
     </section>
   );
 }

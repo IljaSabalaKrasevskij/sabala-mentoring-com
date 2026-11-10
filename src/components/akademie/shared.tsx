@@ -1,7 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { BUCHBAR, COURSE_CHECKOUT_URL } from "./cohorts";
+
+/* Die Kursseite schaltet schon ab 900 px Breite in die Laptop-Aufteilung (`min-[56.25rem]:` statt `lg:`).
+   So behält ein vergrößertes Laptop-Fenster (Chrome-Zoom bis 125 %) zwei Spalten, statt wie ein Tablet zu stapeln.
+   Die Breite steht in rem wie die Stufen von Tailwind. Mit px sortiert Tailwind sie falsch ein, und `sm:` oder
+   `md:` am selben Element gewinnen dann gegen sie. */
+
+/* Lesefarben. Gold in kleiner Schrift ist auf hellem Grund zu blass (Kontrast 2,7 zu 1),
+   darum steht dort ein dunkleres Gold (4,8 zu 1). */
+export const GOLD_AUF_HELL = "#8a6a1f";
+export const TEXT_AUF_HELL = "rgba(46,43,38,0.82)";
+export const TEXT_AUF_DUNKEL = "rgba(250,248,245,0.78)";
 
 /* Reveal — robuste Scroll-Einblendung.
    Default-State ist SICHTBAR (SSR/no-JS zeigt Inhalt). Erst nach Mount wird
@@ -60,13 +73,20 @@ export function Reveal({
 
 /* TiltCard — maus-getrackte 3D-Neigung mit Cursor-folgendem Glow.
    Gibt Karten ein hochwertiges „pop on hover"-Gefühl. Kein Klick-Verlust,
-   solange der Inhalt selbst kein verschachtelter Link mit eigener Transform ist. */
+   solange der Inhalt selbst kein verschachtelter Link mit eigener Transform ist.
+   Reagiert nur auf eine echte Maus (nach einem Fingertipp bliebe die Karte sonst schief stehen)
+   und nicht, wenn jemand „Bewegung reduzieren“ eingestellt hat.
+   Mit `hervor` (Kursseite) liegt die Karte in Ruhe flach und kommt beim Darüberfahren um diesen Faktor
+   auf dich zu. Sie neigt sich, solange die Maus wandert, und legt sich zum Lesen wieder gerade hin.
+   Ihr Inhalt schwebt dabei nicht über der Karte (das machte Schrift und Bilder weich), nur einzelne Teile
+   mit `HEBT` heben sich ab. Ohne `hervor` bleibt alles wie bisher. */
 export function TiltCard({
   children,
   max = 7,
   lift = 8,
   glow = "rgba(212,174,90,0.20)",
   radius = 8,
+  hervor,
   className,
   style,
 }: {
@@ -75,36 +95,52 @@ export function TiltCard({
   lift?: number;
   glow?: string;
   radius?: number;
+  /* Faktor, um den die Karte beim Darüberfahren wächst, z. B. 1.025. */
+  hervor?: number;
   className?: string;
   style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, active: false, still: false });
+  const ruhe = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  function onMove(e: React.MouseEvent) {
+  function onMove(e: React.PointerEvent) {
     const el = ref.current;
-    if (!el) return;
+    if (!el || e.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
-    setT({ rx: (0.5 - py) * max * 2, ry: (px - 0.5) * max * 2, gx: px * 100, gy: py * 100, active: true });
+    setT({ rx: (0.5 - py) * max * 2, ry: (px - 0.5) * max * 2, gx: px * 100, gy: py * 100, active: true, still: false });
+    if (hervor) {
+      /* Bleibt die Maus stehen, legt sich die Karte zum Lesen gerade hin. Vorn bleibt sie trotzdem. */
+      clearTimeout(ruhe.current);
+      ruhe.current = setTimeout(() => setT((v) => (v.active ? { ...v, rx: 0, ry: 0, still: true } : v)), 700);
+    }
   }
   function onLeave() {
-    setT({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+    clearTimeout(ruhe.current);
+    setT({ rx: 0, ry: 0, gx: 50, gy: 50, active: false, still: false });
   }
 
+  const weich = "0.55s cubic-bezier(0.16,1,0.3,1)";
+  /* Liegt die Karte gerade (in Ruhe oder zum Lesen), steht hier keine 3D-Rechnung. Nur dann zeichnet der
+     Browser die Schrift scharf: Eine geneigte Fläche wird aus einem fertigen Bild umgerechnet und ist immer etwas weicher. */
+  const gerade = !!hervor && (!t.active || t.still);
+  const hoch = `translateY(${t.active ? -lift : 0}px)`;
   return (
     <div
       ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
       className={className}
       style={{
         position: "relative",
         borderRadius: radius,
         transformStyle: "preserve-3d",
-        transform: `perspective(900px) rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.active ? -lift : 0}px)`,
-        transition: t.active ? "transform 0.08s linear" : "transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s",
+        transform: gerade ? hoch : `perspective(900px) rotateX(${t.rx}deg) rotateY(${t.ry}deg) ${hoch}`,
+        /* Die Neigung folgt der Maus sofort. Größe und Schatten kommen weich nach, darum stehen sie getrennt. */
+        ...(hervor ? { scale: String(t.active ? hervor : 1), zIndex: t.active ? 2 : undefined } : {}),
+        transition: `transform ${t.active && !t.still ? "0.08s linear" : weich}, scale ${weich}, box-shadow 0.4s`,
         ...style,
       }}
     >
@@ -121,12 +157,17 @@ export function TiltCard({
           zIndex: 1,
         }}
       />
-      <div style={{ position: "relative", zIndex: 2, height: "100%", transform: "translateZ(28px)", transformStyle: "preserve-3d" }}>
+      <div style={{ position: "relative", zIndex: 2, height: "100%", transform: `translateZ(${hervor ? 0 : 28}px)`, transformStyle: "preserve-3d" }}>
         {children}
       </div>
     </div>
   );
 }
+
+/* Für einzelne Teile in einer TiltCard mit `hervor` und der Klasse `group/karte` (Symbol, Farbkarte):
+   Sie heben sich beim Darüberfahren weiter ab als der Text daneben. So entsteht Tiefe.
+   Alle Eltern bis zur Karte brauchen dafür `[transform-style:preserve-3d]`. */
+export const HEBT = "transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover/karte:[transform:translateZ(30px)]";
 
 /* HUD-Eck-Brackets — gibt Karten/Buttons einen „digitalen Rahmen" (aus ValuesManifesto übernommen) */
 export function Brackets({
@@ -166,11 +207,96 @@ export function Eyebrow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
-      className={`font-mono text-[11px] uppercase tracking-[0.35em] ${center ? "text-center" : ""}`}
+      className={`font-mono text-[12.5px] uppercase tracking-[0.3em] ${center ? "text-center" : ""}`}
       style={{ color }}
     >
       {children}
     </motion.p>
+  );
+}
+
+/* Kopf eines Abschnitts der Kursseite: kurze Überzeile, Überschrift, bei Bedarf ein Satz dazu. */
+export function SektionsKopf({
+  zeile,
+  titel,
+  text,
+  hell = false,
+  links = false,
+}: {
+  zeile: string;
+  titel: React.ReactNode;
+  text?: React.ReactNode;
+  /* Abschnitt mit hellem Grund. */
+  hell?: boolean;
+  links?: boolean;
+}) {
+  const mitte = links ? "" : "mx-auto";
+  return (
+    <div className={links ? "" : "text-center"}>
+      <Eyebrow center={!links} color={hell ? GOLD_AUF_HELL : "var(--gold)"}>
+        {zeile}
+      </Eyebrow>
+      <Reveal>
+        <h2 className={`mt-4 max-w-5xl text-balance font-serif ${hell ? "text-deep" : "text-cream"} ${mitte}`} style={{ fontSize: "clamp(2rem, 4.2vw, 3.1rem)", lineHeight: 1.08 }}>
+          {titel}
+        </h2>
+        {text && (
+          <p className={`mt-4 max-w-2xl text-pretty text-[1.06rem] leading-relaxed ${mitte}`} style={{ color: hell ? TEXT_AUF_HELL : TEXT_AUF_DUNKEL }}>
+            {text}
+          </p>
+        )}
+      </Reveal>
+    </div>
+  );
+}
+
+/* Knöpfe der Kursseite. Ein Hauptknopf (Gold gefüllt) und ein zweiter (Goldrand, füllt sich beim
+   Darüberfahren). Beide mindestens 52 px hoch, damit der Finger am Handy sicher trifft. */
+export function Knopf({
+  href,
+  children,
+  zweit = false,
+  hell = false,
+  neuerTab = false,
+  breit = false,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  zweit?: boolean;
+  /* Zweiter Knopf auf hellem Grund: dunkle statt goldener Schrift. */
+  hell?: boolean;
+  /* Externe Ziele (Buchung) im neuen Tab, damit die Seite zum Nachlesen bleibt. */
+  neuerTab?: boolean;
+  breit?: boolean;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}) {
+  const farbe = zweit
+    ? `border-[1.5px] border-gold ${hell ? "text-deep" : "text-gold-light"} hover:text-tech-bg`
+    : "bg-gold text-tech-bg hover:bg-gold-light";
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      {...(neuerTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={`group relative inline-flex min-h-[52px] items-center justify-center gap-3 overflow-hidden px-7 py-3 font-sans text-[1rem] font-semibold tracking-[0.05em] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-light ${breit ? "w-full" : ""} ${farbe}`}
+    >
+      {zweit && <span aria-hidden className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />}
+      <span className="relative inline-flex items-center gap-3">{children}</span>
+      {!zweit && <ArrowRight aria-hidden size={18} strokeWidth={2.2} className="relative shrink-0 transition-transform duration-300 group-hover:translate-x-1" />}
+    </a>
+  );
+}
+
+/* Der eine Hauptknopf der Kursseite, überall mit demselben Text. Vor dem Block „Dein Platz“ springt
+   er dorthin (Termine, Inhalt, Preis), ab dort führt er mit `kasse` zur Buchung. Gibt es keinen
+   buchbaren Lauf, führt er zur Warteliste im selben Block. */
+export function PlatzKnopf({ kasse = false, breit = false }: { kasse?: boolean; breit?: boolean }) {
+  const zurKasse = kasse && BUCHBAR;
+  return (
+    <Knopf href={zurKasse ? COURSE_CHECKOUT_URL : "#termine"} neuerTab={zurKasse} breit={breit}>
+      {BUCHBAR ? "Platz sichern" : "Auf die Warteliste"}
+    </Knopf>
   );
 }
 

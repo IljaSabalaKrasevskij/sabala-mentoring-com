@@ -203,3 +203,64 @@ body {
   /* Dekorative Loops ruhigstellen (Mooni-Logo-Schweben, blinkender Cursor) */
   .animate-float-slow, .animate-pulse { animation: none !important; }
 }
+
+/* ============================================================
+   Kursseite /akademie: Karten zum Umdrehen (Werkzeuge, Skills).
+   Gedreht wird nur mit der Maus. Am Handy und am Tablet greift hier nichts: dort stehen
+   Vorder- und Rückseite untereinander, nichts ist versteckt, und niemand muss tippen und raten.
+   Aufbau:  .dreh (Fläche zum Darüberfahren)  >  .dreh-innen (wird größer)  >  .dreh-vorn + .dreh-hinten (drehen sich)
+   Mit der Tastatur dreht sich die Karte, sobald sie den Fokus hat.
+   `maus:` ist dieselbe Bedingung als Tailwind-Vorsilbe, für das Aussehen der beiden Seiten.
+   ============================================================ */
+@custom-variant maus {
+  @media (hover: hover) and (pointer: fine) {
+    @slot;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dreh:hover, .dreh:focus-visible { z-index: 5; }
+  /* Die Karte kommt über eine flache Vergrößerung nach vorn, nicht über translateZ. Nur so zeichnet der
+     Browser die Schrift am Ende neu, und sie bleibt scharf. */
+  .dreh-innen {
+    display: grid;
+    height: 100%;
+    perspective: 1100px;
+    scale: 1;
+    transition: scale 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .dreh:hover .dreh-innen,
+  .dreh:focus-visible .dreh-innen { scale: 1.045; }
+  /* Jede Seite dreht sich selbst, beide um dieselbe Achse und in dieselbe Richtung. Am Ende steht die
+     Rückseite bei 0 Grad, also ganz ohne 3D-Rechnung: gestochen scharf. Dreht man stattdessen den Rahmen
+     um 180 Grad, bleibt die Schrift der Rückseite weich (gemessen, nicht geraten). */
+  .dreh-vorn,
+  .dreh-hinten {
+    grid-area: 1 / 1;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .dreh-vorn { transform: rotateY(0deg); }
+  .dreh-hinten { transform: rotateY(-180deg); }
+  .dreh:hover .dreh-vorn,
+  .dreh:focus-visible .dreh-vorn { transform: rotateY(180deg); }
+  .dreh:hover .dreh-hinten,
+  .dreh:focus-visible .dreh-hinten { transform: rotateY(0deg); }
+
+  /* Klapptafel: schmale Zeilen kippen um die Querachse nach vorn. */
+  .dreh-quer .dreh-vorn { transform: rotateX(0deg); }
+  .dreh-quer .dreh-hinten { transform: rotateX(180deg); }
+  .dreh-quer:hover .dreh-vorn,
+  .dreh-quer:focus-visible .dreh-vorn { transform: rotateX(-180deg); }
+  .dreh-quer:hover .dreh-hinten,
+  .dreh-quer:focus-visible .dreh-hinten { transform: rotateX(0deg); }
+  .dreh-quer:hover .dreh-innen,
+  .dreh-quer:focus-visible .dreh-innen { scale: 1.015; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dreh-innen,
+  .dreh-vorn,
+  .dreh-hinten { transition: none; }
+}
