@@ -22,9 +22,12 @@ const KURZ = "In zwei Live-Workshops und einer Fragestunde richten wir dein Seco
 const title = CURRENT_COHORT
   ? `Second Brain für Claude: Live-Kurs ab ${formatShortDate(CURRENT_COHORT.start)}`
   : "Dein Second Brain · Sabala KI Academy";
+/* Für die Suchergebnisse: unter 160 Zeichen, damit Start, Plätze und Preis nicht abgeschnitten werden.
+   Der lange Satz `KURZ` bleibt für die maschinenlesbaren Angaben unten. */
+const KURZ_SUCHE = "Claude vergisst nach jeder Session alles? Live-Kurs: dein Second Brain mit Obsidian, Gemini Notebook und Claude Code.";
 const description = CURRENT_COHORT
-  ? `Claude vergisst nach jeder Session alles? ${KURZ} Start ${formatShortDate(CURRENT_COHORT.start)}, maximal ${CURRENT_COHORT.capacity} Plätze, ${KURS_PREIS} € netto.`
-  : `Claude vergisst nach jeder Session alles? ${KURZ} ${KURS_PREIS} € netto.`;
+  ? `${KURZ_SUCHE} Start ${formatShortDate(CURRENT_COHORT.start)}, ${CURRENT_COHORT.capacity} Plätze, ${KURS_PREIS} € netto.`
+  : `${KURZ_SUCHE} Live per Zoom, ${KURS_PREIS} € netto.`;
 
 export const metadata: Metadata = {
   title,
