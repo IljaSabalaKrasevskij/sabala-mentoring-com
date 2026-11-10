@@ -1,7 +1,7 @@
 "use client";
 
 import { BrainCircuit, Check, LibraryBig, LifeBuoy } from "lucide-react";
-import { GOLD_AUF_HELL, Reveal, SektionsKopf, TEXT_AUF_HELL } from "./shared";
+import { GOLD_AUF_HELL, HEBT, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard } from "./shared";
 import { CURRENT_COHORT, formatSessionDate } from "./cohorts";
 import { FRAGESTUNDE, WORKSHOPS } from "./ablauf";
 
@@ -26,67 +26,72 @@ export default function Sessions() {
             const Symbol = SYMBOLE[i];
             const netz = !("danach" in s);
             return (
-              <Reveal
-                key={s.titel}
-                delay={i * 0.08}
-                className="relative flex flex-col overflow-hidden rounded-2xl p-6"
-                style={{
-                  background: netz ? "linear-gradient(160deg, #fbf3dc, #f3e6c2)" : "#ffffff",
-                  border: `1px solid rgba(184,150,62,${netz ? 0.55 : 0.3})`,
-                  boxShadow: "0 18px 44px rgba(46,43,38,0.08)",
-                }}
-              >
-                {/* Schrittzahl als Wasserzeichen unten rechts, hinter dem Text */}
-                <span aria-hidden className="absolute -bottom-3 right-4 font-serif leading-none" style={{ fontSize: "5.5rem", color: `rgba(184,150,62,${netz ? 0.22 : 0.12})` }}>
-                  0{i + 1}
-                </span>
+              <Reveal key={s.titel} delay={i * 0.08}>
+                {/* Die Karte neigt sich mit der Maus und kommt nach vorn, das Symbol hebt sich dabei von ihr ab. */}
+                <TiltCard
+                  hervor={1.025}
+                  max={5}
+                  radius={16}
+                  className="group/karte h-full p-6 shadow-[0_18px_44px_rgba(46,43,38,0.08)] hover:shadow-[0_36px_72px_rgba(46,43,38,0.22)]"
+                  style={{
+                    background: netz ? "linear-gradient(160deg, #fbf3dc, #f3e6c2)" : "#ffffff",
+                    border: `1px solid rgba(184,150,62,${netz ? 0.55 : 0.3})`,
+                  }}
+                >
+                  <div className="relative flex h-full flex-col [transform-style:preserve-3d]">
+                    {/* Schrittzahl als Wasserzeichen unten rechts, hinter dem Text */}
+                    <span aria-hidden className="absolute -bottom-8 -right-3 font-serif leading-none" style={{ fontSize: "5.5rem", color: `rgba(184,150,62,${netz ? 0.22 : 0.12})` }}>
+                      0{i + 1}
+                    </span>
 
-                <div className="relative flex items-center gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full" style={{ background: netz ? "rgba(255,255,255,0.7)" : "rgba(184,150,62,0.13)", color: GOLD_AUF_HELL }}>
-                    <Symbol aria-hidden size={24} strokeWidth={1.7} />
-                  </span>
-                  <div>
-                    <p className="font-mono text-[12.5px] uppercase leading-snug tracking-[0.1em]" style={{ color: GOLD_AUF_HELL }}>
-                      {s.art}
-                    </p>
-                    {termin && (
-                      <p className="text-[0.95rem]" style={{ color: TEXT_AUF_HELL }}>
-                        {formatSessionDate(termin.date)}
-                      </p>
+                    <div className="relative flex items-center gap-4 [transform-style:preserve-3d]">
+                      <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${HEBT}`} style={{ background: netz ? "rgba(255,255,255,0.7)" : "rgba(184,150,62,0.13)", color: GOLD_AUF_HELL }}>
+                        <Symbol aria-hidden size={24} strokeWidth={1.7} />
+                      </span>
+                      <div>
+                        <p className="font-mono text-[12.5px] uppercase leading-snug tracking-[0.1em]" style={{ color: GOLD_AUF_HELL }}>
+                          {s.art}
+                        </p>
+                        {termin && (
+                          <p className="text-[0.95rem]" style={{ color: TEXT_AUF_HELL }}>
+                            {formatSessionDate(termin.date)}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <h3 className="relative mt-5 font-serif text-[1.6rem] leading-tight text-deep">{s.titel}</h3>
+
+                    {"danach" in s ? (
+                      <>
+                        <p className="relative mt-1.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                          Mit {s.mit}
+                        </p>
+                        <p className="relative mt-4 text-[0.95rem] font-semibold text-deep">Danach hast du:</p>
+                        <ul className="relative mt-2.5 space-y-2.5">
+                          {s.danach.map((d) => (
+                            <li key={d} className="flex items-start gap-2.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                              <Check aria-hidden size={17} strokeWidth={2.6} className="mt-[3px] shrink-0" style={{ color: GOLD_AUF_HELL }} />
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <>
+                        <p className="relative mt-3.5 text-[0.97rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
+                          {s.text}
+                        </p>
+                        <p className="relative mt-auto flex items-center gap-2.5 pt-5 text-[0.97rem] font-semibold text-deep">
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-tech-bg">
+                            <Check aria-hidden size={15} strokeWidth={3} />
+                          </span>
+                          Im Preis enthalten
+                        </p>
+                      </>
                     )}
                   </div>
-                </div>
-
-                <h3 className="relative mt-5 font-serif text-[1.6rem] leading-tight text-deep">{s.titel}</h3>
-
-                {"danach" in s ? (
-                  <>
-                    <p className="relative mt-1.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
-                      Mit {s.mit}
-                    </p>
-                    <p className="relative mt-4 text-[0.95rem] font-semibold text-deep">Danach hast du:</p>
-                    <ul className="relative mt-2.5 space-y-2.5">
-                      {s.danach.map((d) => (
-                        <li key={d} className="flex items-start gap-2.5 text-[0.97rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
-                          <Check aria-hidden size={17} strokeWidth={2.6} className="mt-[3px] shrink-0" style={{ color: GOLD_AUF_HELL }} />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <>
-                    <p className="relative mt-3.5 text-[0.97rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
-                      {s.text}
-                    </p>
-                    <p className="relative mt-auto flex items-center gap-2.5 pt-5 text-[0.97rem] font-semibold text-deep">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold text-tech-bg">
-                        <Check aria-hidden size={15} strokeWidth={3} />
-                      </span>
-                      Im Preis enthalten
-                    </p>
-                  </>
-                )}
+                </TiltCard>
               </Reveal>
             );
           })}

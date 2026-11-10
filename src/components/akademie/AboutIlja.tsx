@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Brackets, GOLD_AUF_HELL, Reveal, SektionsKopf, TEXT_AUF_HELL } from "./shared";
+import { Brackets, GOLD_AUF_HELL, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard } from "./shared";
 
 /* Dein Trainer: Porträt und kurze, menschliche Autorität. Kein Lebenslauf.
    Die drei Siegel stehen unter dem Text, weil sie belegen, was der Text sagt. Ihre weißen Bildränder
@@ -50,10 +50,13 @@ export default function AboutIlja() {
             Fensterhöhe, damit der Abschnitt auf einem flachen Laptop-Fenster nicht über den Rand wächst. */}
         <Reveal delay={0.1} className="relative order-first mx-auto w-full md:order-none" style={{ maxWidth: "min(440px, 58vh)" }}>
           <span className="pointer-events-none absolute -inset-6 rounded-3xl" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.2), transparent 70%)" }} />
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl" style={{ border: "1.5px solid rgba(184,150,62,0.45)", boxShadow: "0 30px 70px rgba(120,90,30,0.24), 0 8px 24px rgba(184,150,62,0.16)" }}>
-            <Brackets color="rgba(184,150,62,0.7)" inset={14} size={16} />
-            <Image src="/akademie/ilja-trainer-2026.jpg" alt="Ilja Krasevskij, Trainer der Sabala Academy" fill sizes="(max-width: 768px) 90vw, 440px" className="object-cover object-center" />
-          </div>
+          {/* Das Bild neigt sich mit der Maus und kommt nach vorn */}
+          <TiltCard hervor={1.03} max={6} radius={16}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl" style={{ border: "1.5px solid rgba(184,150,62,0.45)", boxShadow: "0 30px 70px rgba(120,90,30,0.24), 0 8px 24px rgba(184,150,62,0.16)" }}>
+              <Brackets color="rgba(184,150,62,0.7)" inset={14} size={16} />
+              <Image src="/akademie/ilja-trainer-2026.jpg" alt="Ilja Krasevskij, Trainer der Sabala Academy" fill sizes="(max-width: 768px) 90vw, 440px" className="object-cover object-center" />
+            </div>
+          </TiltCard>
         </Reveal>
       </div>
     </section>

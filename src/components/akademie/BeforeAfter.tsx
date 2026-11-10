@@ -18,6 +18,13 @@ const ZEILEN: [heute: string, danach: string][] = [
 const SPALTEN = "md:grid-cols-[minmax(0,0.8fr)_1.5rem_minmax(0,1.3fr)]";
 const FELD = "rgba(184,150,62,0.4)";
 
+/* Die goldene Zelle kommt beim Darüberfahren aus dem Feld heraus auf dich zu: größer, deckend, mit Schatten
+   und einem Goldrand rundum (der Rand unten fehlt im Feld, darum als Schatten).
+   Größer über `scale`, nicht über translateZ: So zeichnet der Browser die Schrift neu und sie bleibt scharf. */
+const VOR =
+  "motion-safe:group-hover/zeile:scale-[1.045] group-hover/zeile:z-10 group-hover/zeile:bg-[#2c230f] group-hover/zeile:shadow-[0_22px_54px_rgba(0,0,0,0.6),0_0_0_1px_rgba(212,174,90,0.9)] md:group-hover/zeile:rounded-xl";
+const WEICH = "transition-[scale,translate,opacity,box-shadow,background-color,border-radius] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]";
+
 export default function BeforeAfter() {
   return (
     <section className="relative overflow-hidden px-6 py-[8vh]" style={{ background: "var(--tech-bg)" }}>
@@ -37,18 +44,19 @@ export default function BeforeAfter() {
             const erste = i === 0;
             const letzte = i === ZEILEN.length - 1;
             return (
-              <Reveal key={heute} delay={i * 0.07} className={`grid items-stretch gap-x-6 gap-y-2.5 pb-5 md:pb-0 ${SPALTEN}`}>
-                <p className="flex items-center gap-3 border-t pt-5 text-[1rem] leading-snug md:py-[18px]" style={{ borderColor: "rgba(250,248,245,0.14)", color: "rgba(250,248,245,0.62)" }}>
+              <Reveal key={heute} delay={i * 0.07} className={`group/zeile grid items-stretch gap-x-6 gap-y-2.5 pb-5 md:pb-0 ${SPALTEN}`}>
+                {/* Fährt die Maus über eine Zeile, tritt links das Heute zurück, und rechts kommt das Danach nach vorn. */}
+                <p className={`flex items-center gap-3 border-t pt-5 text-[1rem] leading-snug decoration-[rgba(250,248,245,0.5)] md:py-[18px] group-hover/zeile:line-through group-hover/zeile:opacity-60 ${WEICH}`} style={{ borderColor: "rgba(250,248,245,0.14)", color: "rgba(250,248,245,0.62)" }}>
                   <X aria-hidden size={17} className="shrink-0" style={{ color: "rgba(250,248,245,0.4)" }} />
                   {heute}
                 </p>
                 <span className="hidden items-center border-t md:flex" style={{ borderColor: "rgba(250,248,245,0.14)" }}>
-                  <ArrowRight aria-hidden size={20} className="text-gold" />
+                  <ArrowRight aria-hidden size={20} className={`text-gold group-hover/zeile:translate-x-1.5 ${WEICH}`} />
                 </span>
                 {/* Am Laptop schließen die fünf Zellen bündig aneinander und bilden ein Feld. Am Handy ist jede ein eigenes Kästchen. */}
                 <p
-                  className={`flex items-center gap-3 rounded-xl border px-4 py-3.5 font-serif text-[1.35rem] leading-tight text-cream md:rounded-none md:border-x md:border-b-0 md:border-t md:px-5 md:py-[18px] md:text-[1.55rem] ${erste ? "md:rounded-t-2xl" : ""} ${letzte ? "md:rounded-b-2xl md:border-b" : ""}`}
-                  style={{ borderColor: FELD, background: "linear-gradient(90deg, rgba(184,150,62,0.16), rgba(184,150,62,0.05))" }}
+                  className={`flex items-center gap-3 rounded-xl border bg-[linear-gradient(90deg,rgba(184,150,62,0.16),rgba(184,150,62,0.05))] px-4 py-3.5 font-serif text-[1.35rem] leading-tight text-cream md:rounded-none md:border-x md:border-b-0 md:border-t md:px-5 md:py-[18px] md:text-[1.55rem] ${erste ? "md:rounded-t-2xl" : ""} ${letzte ? "md:rounded-b-2xl md:border-b" : ""} ${VOR} ${WEICH}`}
+                  style={{ borderColor: FELD }}
                 >
                   <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-gold text-tech-bg">
                     <Check aria-hidden size={14} strokeWidth={3} />

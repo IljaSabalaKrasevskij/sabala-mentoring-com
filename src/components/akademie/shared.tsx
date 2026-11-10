@@ -73,13 +73,20 @@ export function Reveal({
 
 /* TiltCard — maus-getrackte 3D-Neigung mit Cursor-folgendem Glow.
    Gibt Karten ein hochwertiges „pop on hover"-Gefühl. Kein Klick-Verlust,
-   solange der Inhalt selbst kein verschachtelter Link mit eigener Transform ist. */
+   solange der Inhalt selbst kein verschachtelter Link mit eigener Transform ist.
+   Reagiert nur auf eine echte Maus (nach einem Fingertipp bliebe die Karte sonst schief stehen)
+   und nicht, wenn jemand „Bewegung reduzieren“ eingestellt hat.
+   Mit `hervor` (Kursseite) liegt die Karte in Ruhe flach und kommt beim Darüberfahren um diesen Faktor
+   auf dich zu. Sie neigt sich, solange die Maus wandert, und legt sich zum Lesen wieder gerade hin.
+   Ihr Inhalt schwebt dabei nicht über der Karte (das machte Schrift und Bilder weich), nur einzelne Teile
+   mit `HEBT` heben sich ab. Ohne `hervor` bleibt alles wie bisher. */
 export function TiltCard({
   children,
   max = 7,
   lift = 8,
   glow = "rgba(212,174,90,0.20)",
   radius = 8,
+  hervor,
   className,
   style,
 }: {
@@ -88,36 +95,52 @@ export function TiltCard({
   lift?: number;
   glow?: string;
   radius?: number;
+  /* Faktor, um den die Karte beim Darüberfahren wächst, z. B. 1.025. */
+  hervor?: number;
   className?: string;
   style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+  const [t, setT] = useState({ rx: 0, ry: 0, gx: 50, gy: 50, active: false, still: false });
+  const ruhe = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  function onMove(e: React.MouseEvent) {
+  function onMove(e: React.PointerEvent) {
     const el = ref.current;
-    if (!el) return;
+    if (!el || e.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
-    setT({ rx: (0.5 - py) * max * 2, ry: (px - 0.5) * max * 2, gx: px * 100, gy: py * 100, active: true });
+    setT({ rx: (0.5 - py) * max * 2, ry: (px - 0.5) * max * 2, gx: px * 100, gy: py * 100, active: true, still: false });
+    if (hervor) {
+      /* Bleibt die Maus stehen, legt sich die Karte zum Lesen gerade hin. Vorn bleibt sie trotzdem. */
+      clearTimeout(ruhe.current);
+      ruhe.current = setTimeout(() => setT((v) => (v.active ? { ...v, rx: 0, ry: 0, still: true } : v)), 700);
+    }
   }
   function onLeave() {
-    setT({ rx: 0, ry: 0, gx: 50, gy: 50, active: false });
+    clearTimeout(ruhe.current);
+    setT({ rx: 0, ry: 0, gx: 50, gy: 50, active: false, still: false });
   }
 
+  const weich = "0.55s cubic-bezier(0.16,1,0.3,1)";
+  /* Liegt die Karte gerade (in Ruhe oder zum Lesen), steht hier keine 3D-Rechnung. Nur dann zeichnet der
+     Browser die Schrift scharf: Eine geneigte Fläche wird aus einem fertigen Bild umgerechnet und ist immer etwas weicher. */
+  const gerade = !!hervor && (!t.active || t.still);
+  const hoch = `translateY(${t.active ? -lift : 0}px)`;
   return (
     <div
       ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
       className={className}
       style={{
         position: "relative",
         borderRadius: radius,
         transformStyle: "preserve-3d",
-        transform: `perspective(900px) rotateX(${t.rx}deg) rotateY(${t.ry}deg) translateY(${t.active ? -lift : 0}px)`,
-        transition: t.active ? "transform 0.08s linear" : "transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s",
+        transform: gerade ? hoch : `perspective(900px) rotateX(${t.rx}deg) rotateY(${t.ry}deg) ${hoch}`,
+        /* Die Neigung folgt der Maus sofort. Größe und Schatten kommen weich nach, darum stehen sie getrennt. */
+        ...(hervor ? { scale: String(t.active ? hervor : 1), zIndex: t.active ? 2 : undefined } : {}),
+        transition: `transform ${t.active && !t.still ? "0.08s linear" : weich}, scale ${weich}, box-shadow 0.4s`,
         ...style,
       }}
     >
@@ -134,12 +157,17 @@ export function TiltCard({
           zIndex: 1,
         }}
       />
-      <div style={{ position: "relative", zIndex: 2, height: "100%", transform: "translateZ(28px)", transformStyle: "preserve-3d" }}>
+      <div style={{ position: "relative", zIndex: 2, height: "100%", transform: `translateZ(${hervor ? 0 : 28}px)`, transformStyle: "preserve-3d" }}>
         {children}
       </div>
     </div>
   );
 }
+
+/* Für einzelne Teile in einer TiltCard mit `hervor` und der Klasse `group/karte` (Symbol, Farbkarte):
+   Sie heben sich beim Darüberfahren weiter ab als der Text daneben. So entsteht Tiefe.
+   Alle Eltern bis zur Karte brauchen dafür `[transform-style:preserve-3d]`. */
+export const HEBT = "transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover/karte:[transform:translateZ(30px)]";
 
 /* HUD-Eck-Brackets — gibt Karten/Buttons einen „digitalen Rahmen" (aus ValuesManifesto übernommen) */
 export function Brackets({

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { GOLD_AUF_HELL, Reveal, SektionsKopf, TEXT_AUF_HELL } from "./shared";
+import { GOLD_AUF_HELL, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard } from "./shared";
 import { COCKPIT_EINRICHTUNG_PREIS } from "./cohorts";
 
 /* Bonus — Iljas Social Media Cockpit als Code-Geschenk, daneben die freiwillige
@@ -66,38 +66,43 @@ export default function SocialCockpitBonus() {
           </Reveal>
 
           <Reveal delay={0.1} className="min-[56.25rem]:col-start-2 min-[56.25rem]:row-span-2 min-[56.25rem]:row-start-1">
-            <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "2000 / 1161", background: "#0b0f17", border: "1.5px solid rgba(184,150,62,0.6)", boxShadow: "0 40px 90px rgba(46,43,38,0.3), 0 10px 30px rgba(184,150,62,0.2)" }}>
-              {ANSICHTEN.map((a, i) => (
-                <Image
-                  key={a.name}
-                  src={a.bild}
-                  alt={`Social Media Cockpit, Ansicht ${a.name}`}
-                  aria-hidden={aktiv !== i}
-                  fill
-                  sizes="(max-width: 1024px) 94vw, 680px"
-                  className="object-cover transition-opacity duration-500"
-                  style={{ opacity: aktiv === i ? 1 : 0 }}
-                />
-              ))}
-            </div>
+            {/* Das Bildschirmfoto neigt sich mit der Maus wie ein Bildschirm, den du in der Hand drehst */}
+            <TiltCard hervor={1.025} max={4} radius={16}>
+              <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "2000 / 1161", background: "#0b0f17", border: "1.5px solid rgba(184,150,62,0.6)", boxShadow: "0 40px 90px rgba(46,43,38,0.3), 0 10px 30px rgba(184,150,62,0.2)" }}>
+                {ANSICHTEN.map((a, i) => (
+                  <Image
+                    key={a.name}
+                    src={a.bild}
+                    alt={`Social Media Cockpit, Ansicht ${a.name}`}
+                    aria-hidden={aktiv !== i}
+                    fill
+                    sizes="(max-width: 1024px) 94vw, 680px"
+                    className="object-cover transition-opacity duration-500"
+                    style={{ opacity: aktiv === i ? 1 : 0 }}
+                  />
+                ))}
+              </div>
+            </TiltCard>
           </Reveal>
 
           {/* Freiwillig dazu: gemeinsame Einrichtung */}
           <Reveal delay={0.15} className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-2 min-[56.25rem]:self-start">
-            <div className="flex items-center justify-between gap-5 rounded-2xl px-6 py-5" style={{ background: "linear-gradient(180deg, #15110b, #0d0a07)", border: "1.5px solid rgba(184,150,62,0.5)", boxShadow: "0 20px 50px rgba(46,43,38,0.26)" }}>
-              <div>
-                <p className="font-mono text-[12.5px] uppercase tracking-[0.2em] text-gold">Optional dazu</p>
-                <h3 className="mt-1.5 font-serif text-[1.3rem] leading-tight text-cream">Wir richten dein Cockpit gemeinsam ein.</h3>
+            <TiltCard hervor={1.02} max={4} radius={16} className="px-6 py-5 shadow-[0_20px_50px_rgba(46,43,38,0.26)] hover:shadow-[0_32px_70px_rgba(46,43,38,0.4)]" style={{ background: "linear-gradient(180deg, #15110b, #0d0a07)", border: "1.5px solid rgba(184,150,62,0.5)" }}>
+              <div className="flex items-center justify-between gap-5">
+                <div>
+                  <p className="font-mono text-[12.5px] uppercase tracking-[0.2em] text-gold">Optional dazu</p>
+                  <h3 className="mt-1.5 font-serif text-[1.3rem] leading-tight text-cream">Wir richten dein Cockpit gemeinsam ein.</h3>
+                </div>
+                <div className="shrink-0 text-right">
+                  <p className="font-serif text-[2rem] leading-none text-gold-light">{COCKPIT_EINRICHTUNG_PREIS} €</p>
+                  <p className="mt-1.5 text-[0.85rem] leading-tight" style={{ color: "rgba(250,248,245,0.7)" }}>
+                    zzgl. MwSt.
+                    <br />
+                    freiwillig
+                  </p>
+                </div>
               </div>
-              <div className="shrink-0 text-right">
-                <p className="font-serif text-[2rem] leading-none text-gold-light">{COCKPIT_EINRICHTUNG_PREIS} €</p>
-                <p className="mt-1.5 text-[0.85rem] leading-tight" style={{ color: "rgba(250,248,245,0.7)" }}>
-                  zzgl. MwSt.
-                  <br />
-                  freiwillig
-                </p>
-              </div>
-            </div>
+            </TiltCard>
           </Reveal>
 
         </div>

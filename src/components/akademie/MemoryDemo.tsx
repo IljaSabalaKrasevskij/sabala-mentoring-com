@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Brackets, Eyebrow, GOLD_AUF_HELL, TEXT_AUF_HELL } from "./shared";
+import { Brackets, Eyebrow, GOLD_AUF_HELL, TEXT_AUF_HELL, TiltCard } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    MemoryDemo — das Herzstück. Ein Fake-Terminal, das den Kern des Angebots
@@ -66,6 +66,16 @@ function useTypewriter(active: boolean, lines: Line[]) {
   }, [active, lines]);
 
   return shown;
+}
+
+/* Auf der Kursseite neigt sich das Terminal mit der Maus und kommt nach vorn. Die Webinar-Seite bleibt, wie sie ist. */
+function Rahmen({ neigen, children }: { neigen: boolean; children: React.ReactNode }) {
+  if (!neigen) return <>{children}</>;
+  return (
+    <TiltCard hervor={1.02} max={3.5} lift={6} radius={12}>
+      {children}
+    </TiltCard>
+  );
 }
 
 export default function MemoryDemo({ hell = false }: { hell?: boolean }) {
@@ -184,61 +194,63 @@ export default function MemoryDemo({ hell = false }: { hell?: boolean }) {
 
         <div>
           {/* Terminal */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7 }}
-            className={`relative mt-10 overflow-hidden rounded-xl ${hell ? "min-[56.25rem]:mt-0" : ""}`}
-            style={{
-              background: "linear-gradient(180deg, #100d09, #0a0806)",
-              border: `1px solid ${mode === "without" ? "rgba(177,74,51,0.4)" : "rgba(184,150,62,0.35)"}`,
-              boxShadow: hell
-                ? `0 34px 80px rgba(46,43,38,0.34), 0 0 0 6px ${mode === "without" ? "rgba(46,43,38,0.05)" : "rgba(184,150,62,0.14)"}`
-                : `0 30px 80px rgba(0,0,0,0.5), 0 0 40px ${mode === "without" ? "rgba(177,74,51,0.08)" : "rgba(184,150,62,0.1)"}`,
-              transition: "border-color .4s, box-shadow .4s",
-            }}
-          >
-            <Brackets color={mode === "without" ? "rgba(177,74,51,0.6)" : "rgba(184,150,62,0.5)"} inset={10} size={12} />
+          <Rahmen neigen={hell}>
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7 }}
+              className={`relative mt-10 overflow-hidden rounded-xl ${hell ? "min-[56.25rem]:mt-0" : ""}`}
+              style={{
+                background: "linear-gradient(180deg, #100d09, #0a0806)",
+                border: `1px solid ${mode === "without" ? "rgba(177,74,51,0.4)" : "rgba(184,150,62,0.35)"}`,
+                boxShadow: hell
+                  ? `0 34px 80px rgba(46,43,38,0.34), 0 0 0 6px ${mode === "without" ? "rgba(46,43,38,0.05)" : "rgba(184,150,62,0.14)"}`
+                  : `0 30px 80px rgba(0,0,0,0.5), 0 0 40px ${mode === "without" ? "rgba(177,74,51,0.08)" : "rgba(184,150,62,0.1)"}`,
+                transition: "border-color .4s, box-shadow .4s",
+              }}
+            >
+              <Brackets color={mode === "without" ? "rgba(177,74,51,0.6)" : "rgba(184,150,62,0.5)"} inset={10} size={12} />
 
-            {/* Terminal-Kopf */}
-            <div className="flex items-center gap-2 border-b px-5 py-3.5" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#B14A33" }} />
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#CE9248" }} />
-              <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#5F8A86" }} />
-              <span className="ml-3 font-mono text-[12.5px] tracking-wide" style={{ color: "rgba(250,248,245,0.5)" }}>
-                claude · {mode === "without" ? "ohne Gedächtnis" : "mit Obsidian und Memory"}
-              </span>
-            </div>
+              {/* Terminal-Kopf */}
+              <div className="flex items-center gap-2 border-b px-5 py-3.5" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#B14A33" }} />
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#CE9248" }} />
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#5F8A86" }} />
+                <span className="ml-3 font-mono text-[12.5px] tracking-wide" style={{ color: "rgba(250,248,245,0.5)" }}>
+                  claude · {mode === "without" ? "ohne Gedächtnis" : "mit Obsidian und Memory"}
+                </span>
+              </div>
 
-            {/* Konversation */}
-            <div className="min-h-[300px] px-6 py-6 font-mono text-[0.94rem] leading-relaxed sm:text-[0.98rem]">
-              {shown.map((s, i) => {
-                const partial = s.full.text.slice(0, s.chars);
-                const done = s.chars >= s.full.text.length;
-                if (s.full.who === "sys") {
+              {/* Konversation */}
+              <div className="min-h-[300px] px-6 py-6 font-mono text-[0.94rem] leading-relaxed sm:text-[0.98rem]">
+                {shown.map((s, i) => {
+                  const partial = s.full.text.slice(0, s.chars);
+                  const done = s.chars >= s.full.text.length;
+                  if (s.full.who === "sys") {
+                    return (
+                      <p key={i} className="mt-5 flex items-center gap-2 text-[0.94rem] tracking-wide" style={{ color: accent }}>
+                        <span>{mode === "without" ? "✕" : "✓"}</span>
+                        <span style={{ opacity: 0.9 }}>{partial}</span>
+                      </p>
+                    );
+                  }
+                  const isYou = s.full.who === "you";
                   return (
-                    <p key={i} className="mt-5 flex items-center gap-2 text-[0.94rem] tracking-wide" style={{ color: accent }}>
-                      <span>{mode === "without" ? "✕" : "✓"}</span>
-                      <span style={{ opacity: 0.9 }}>{partial}</span>
+                    <p key={i} className={i === 0 ? "" : "mt-4"}>
+                      <span className="select-none" style={{ color: isYou ? "rgba(250,248,245,0.5)" : accent }}>
+                        {isYou ? "du › " : "claude › "}
+                      </span>
+                      <span style={{ color: isYou ? "rgba(250,248,245,0.92)" : "rgba(250,248,245,0.8)" }}>
+                        {partial}
+                        {!done && <span className="ml-0.5 inline-block h-[1em] w-[7px] -translate-y-[1px] align-middle" style={{ background: accent, animation: "blink 1s steps(1) infinite" }} />}
+                      </span>
                     </p>
                   );
-                }
-                const isYou = s.full.who === "you";
-                return (
-                  <p key={i} className={i === 0 ? "" : "mt-4"}>
-                    <span className="select-none" style={{ color: isYou ? "rgba(250,248,245,0.5)" : accent }}>
-                      {isYou ? "du › " : "claude › "}
-                    </span>
-                    <span style={{ color: isYou ? "rgba(250,248,245,0.92)" : "rgba(250,248,245,0.8)" }}>
-                      {partial}
-                      {!done && <span className="ml-0.5 inline-block h-[1em] w-[7px] -translate-y-[1px] align-middle" style={{ background: accent, animation: "blink 1s steps(1) infinite" }} />}
-                    </span>
-                  </p>
-                );
-              })}
-            </div>
-          </motion.div>
+                })}
+              </div>
+            </motion.div>
+          </Rahmen>
 
           {!hell && hinweis}
         </div>
