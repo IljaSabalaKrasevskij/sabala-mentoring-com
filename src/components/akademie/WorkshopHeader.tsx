@@ -44,7 +44,7 @@ export default function WorkshopHeader() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 60% at 74% 62%, rgba(184,150,62,0.16), transparent 70%)" }} />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[8vh] min-[56.25rem]:pt-[9vh]">
+      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[7vh] min-[56.25rem]:pt-[9vh]">
         <motion.p {...EIN(0)} className="max-w-[84%] font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.16em] text-gold sm:tracking-[0.24em]">
           Sabala Academy · Live-Workshop für Selbständige und Unternehmen
         </motion.p>
@@ -56,7 +56,7 @@ export default function WorkshopHeader() {
         <div className="mt-8 grid items-start gap-10 min-[56.25rem]:mt-9 min-[56.25rem]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[56.25rem]:gap-14">
           <motion.div {...EIN(0.12)}>
             <p className="max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)" }}>
-              In zwei Live-Workshops richten wir dein Second Brain ein. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte, und jede Session beginnt dort, wo die letzte aufgehört hat.
+              In zwei Live-Workshops richten wir dein Second Brain ein, mit Obsidian, Gemini Notebook und Claude Code. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte, und jede Session beginnt dort, wo die letzte aufgehört hat.
             </p>
 
             {/* Die Handy-Leiste (PlatzLeiste) zeigt sich, sobald dieser Knopf aus dem Bild ist */}

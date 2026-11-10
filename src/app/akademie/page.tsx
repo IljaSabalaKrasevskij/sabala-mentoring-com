@@ -3,6 +3,7 @@ import WorkshopHeader from "@/components/akademie/WorkshopHeader";
 import MemoryDemo from "@/components/akademie/MemoryDemo";
 import BeforeAfter from "@/components/akademie/BeforeAfter";
 import Sessions from "@/components/akademie/Sessions";
+import Werkzeuge from "@/components/akademie/Werkzeuge";
 import Qualify from "@/components/akademie/Qualify";
 import AboutIlja from "@/components/akademie/AboutIlja";
 import SocialCockpitBonus from "@/components/akademie/SocialCockpitBonus";
@@ -11,10 +12,11 @@ import Faq from "@/components/akademie/Faq";
 import PlatzLeiste from "@/components/akademie/PlatzLeiste";
 import { CURRENT_COHORT, KURS_PREIS, formatShortDate, sessionZeiten } from "@/components/akademie/cohorts";
 import { FRAGEN } from "@/components/akademie/fragen";
+import { WERKZEUGE } from "@/components/akademie/ablauf";
 
 const SEITE = "https://sabala-mentoring.com/akademie";
 const KURS = "Dein Second Brain: Live-Kurs mit Claude Code, Obsidian und Gemini Notebook";
-const KURZ = "In zwei Live-Workshops und einer Fragestunde richten wir dein Second Brain ein. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte.";
+const KURZ = "In zwei Live-Workshops und einer Fragestunde richten wir dein Second Brain ein, mit Obsidian, Gemini Notebook und Claude Code. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte.";
 
 const title = CURRENT_COHORT
   ? `Second Brain für Claude: Live-Kurs ab ${formatShortDate(CURRENT_COHORT.start)}`
@@ -69,6 +71,7 @@ function angaben() {
         description: KURZ,
         url: SEITE,
         inLanguage: "de-DE",
+        teaches: WERKZEUGE.map((w) => `${w.name} (${w.zusatz})`),
         provider: { "@id": "https://sabala-mentoring.com/#organization" },
         ...(lauf && {
           offers: lauf.angebot,
@@ -119,8 +122,9 @@ export default function AkademiePage() {
       <MemoryDemo hell />
       <BeforeAfter />
       <Sessions />
-      <Qualify />
+      <Werkzeuge />
       <AboutIlja />
+      <Qualify />
       <SocialCockpitBonus />
       <Termine />
       <Faq />
