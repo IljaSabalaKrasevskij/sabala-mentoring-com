@@ -2,26 +2,18 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eyebrow } from "./shared";
-import { COCKPIT_EINRICHTUNG_PREIS, COURSE_SCHEDULE } from "./cohorts";
+import { Knopf, PlatzKnopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL } from "./shared";
+import { CURRENT_COHORT, formatTagMonat } from "./cohorts";
+import { FRAGEN } from "./fragen";
 
-const QA: [string, string][] = [
-  ["Wann findet der nächste Kurs statt?", `${COURSE_SCHEDULE}. Die Uhrzeiten gelten für Deutschland (MEZ).`],
-  ["Was ist die zusätzliche Q&A-Session?", "Nach den beiden Workshops hast du einige Tage Zeit, mit deinem Setup zu arbeiten. In der zusätzlichen Stunde bringst du deine Fragen aus der Umsetzung mit, und wir klären sie gemeinsam. Die Q&A-Session ist im Kurspreis enthalten."],
-  ["Was ist der Bonus?", "Du bekommst den ganzen Code meines Social Media Cockpits geschenkt. Damit planst du deinen Social-Media-Content im eigenen Kalender, mit Claude Code und ohne Notion."],
-  ["Was kostet die gemeinsame Einrichtung des Cockpits?", `Den Code bekommst du geschenkt und kannst ihn selbst einrichten. Wenn du das lieber gemeinsam mit mir machst, kostet die Einrichtung €${COCKPIT_EINRICHTUNG_PREIS} zzgl. MwSt. Sie ist freiwillig.`],
-  ["Ich habe noch nie das Terminal benutzt. Ist das ein Problem?", "Nein. Wir richten das Terminal in Session 2 gemeinsam ein, von Anfang an. Du verlässt die Session mit einer funktionierenden Umgebung — unabhängig von deiner technischen Vorbildung."],
-  ["Brauche ich Claude Code Pro?", "Ja. Für Session 2 ist Claude Code Pro Pflicht, sonst kannst du nicht sinnvoll mitarbeiten. Session 1 funktioniert ohne Claude Code Pro, aber für das fertige Memory-System brauchst du es."],
-  ["Ich habe Obsidian schon. Fange ich trotzdem von vorne an?", "Nein. Wir schauen gemeinsam auf dein bestehendes Setup und integrieren das System dort, wo es Sinn macht."],
-  ["Was, wenn ich an einem Termin nicht kann?", "Wir bauen dein System live. Plane deshalb beide Workshops à 2,5 Stunden ein. Die zusätzliche Q&A-Session gibt dir danach Raum für offene Fragen. Der Kurs ist kein Aufzeichnungsprodukt."],
-  ["Für wen ist der Kurs nicht gedacht?", "Nicht für Menschen, die nur nebenbei schauen wollen. Die Plätze sind für Teilnehmer, die beide Workshops einplanen und ihr Setup wirklich einrichten wollen."],
-  ["Ist das für Mac und Windows?", "Beides funktioniert. Obsidian, Gemini Notebook und Claude Code laufen auf beiden Systemen. Etwaige Unterschiede klären wir in der Session."],
-];
+/* Fragen und Schluss. Die Fragen stehen am Laptop in zwei Spalten, damit sie in ein Fenster passen.
+   Danach kommen die zwei Wege, wie es weitergeht: der Platz im Kurs oder, für Unentschlossene,
+   erst die Beratungsstunde. */
 
 function Item({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
   return (
-    <div className="border-b" style={{ borderColor: "rgba(46,43,38,0.12)" }}>
-      <button type="button" onClick={onToggle} className="flex w-full items-center justify-between gap-6 py-6 text-left">
+    <div className="border-b" style={{ borderColor: "rgba(46,43,38,0.14)" }}>
+      <button type="button" aria-expanded={open} onClick={onToggle} className="flex min-h-[60px] w-full items-center justify-between gap-6 py-3.5 text-left">
         <span className="font-serif text-[1.2rem] leading-snug text-deep">{q}</span>
         <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
           <span className="absolute h-[1.5px] w-3.5" style={{ background: "var(--gold)" }} />
@@ -37,7 +29,9 @@ function Item({ q, a, open, onToggle }: { q: string; a: string; open: boolean; o
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-6 pr-10 text-[1rem] leading-relaxed text-warm-mid">{a}</p>
+            <p className="whitespace-pre-line pb-6 pr-8 text-[1.02rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
+              {a}
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -46,28 +40,51 @@ function Item({ q, a, open, onToggle }: { q: string; a: string; open: boolean; o
 }
 
 export default function Faq() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
+  const haelfte = Math.ceil(FRAGEN.length / 2);
   return (
-    <section className="relative px-6 py-[16vh]" style={{ background: "var(--cream)" }}>
-      <div className="mx-auto max-w-2xl">
-        <Eyebrow>{"// noch fragen?"}</Eyebrow>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto mt-5 mb-10 text-center font-serif text-deep"
-          style={{ fontSize: "clamp(2rem, 4.6vw, 3rem)", lineHeight: 1.06 }}
-        >
-          Was du vielleicht noch wissen willst
-        </motion.h2>
+    <>
+      <section className="relative px-6 pb-[4vh] pt-[7vh]" style={{ background: "var(--cream)" }}>
+        <div className="mx-auto max-w-6xl">
+          <SektionsKopf hell zeile="Noch Fragen?" titel="Was du vielleicht noch wissen willst" />
 
-        <div>
-          {QA.map(([q, a], i) => (
-            <Item key={q} q={q} a={a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
-          ))}
+          <div className="mt-8 grid items-start gap-x-14 lg:grid-cols-2">
+            {[FRAGEN.slice(0, haelfte), FRAGEN.slice(haelfte)].map((spalte, s) => (
+              <div key={s}>
+                {spalte.map(([q, a], i) => {
+                  const nr = s * haelfte + i;
+                  return <Item key={q} q={q} a={a} open={open === nr} onToggle={() => setOpen(open === nr ? null : nr)} />;
+                })}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Schluss: die Handy-Leiste (PlatzLeiste) verschwindet, sobald dieser Block erreicht ist */}
+      <section id="schluss" className="relative px-6 pb-[9vh] pt-[5vh]" style={{ background: "var(--cream)" }}>
+        <Reveal className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl px-7 py-10 text-center md:px-12 md:py-12" style={{ background: "linear-gradient(180deg, #17120b, #0a0806)", border: "1.5px solid rgba(184,150,62,0.55)", boxShadow: "0 30px 70px rgba(46,43,38,0.28)" }}>
+          <div className="pointer-events-none absolute left-1/2 top-0 h-[70%] w-[80%] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.22), transparent 70%)" }} />
+          <h2 className="relative mx-auto max-w-2xl text-balance font-serif text-cream" style={{ fontSize: "clamp(1.9rem, 3.8vw, 2.7rem)", lineHeight: 1.1 }}>
+            Lass Claude nicht länger <span className="text-gold-light">bei null anfangen.</span>
+          </h2>
+          <p className="relative mx-auto mt-4 max-w-xl text-pretty text-[1.06rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
+            {CURRENT_COHORT
+              ? `Der nächste Kurs startet am ${formatTagMonat(CURRENT_COHORT.start)}, mit maximal ${CURRENT_COHORT.capacity} Plätzen. Du bist noch unsicher? Dann lernen wir uns erst kennen.`
+              : "Der nächste Kurs wird gerade geplant. Trag dich auf die Warteliste ein, oder wir lernen uns erst kennen."}
+          </p>
+          {/* Am Handy stehen die zwei Knöpfe untereinander und gleich breit */}
+          <div className="relative mx-auto mt-7 flex max-w-xs flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+            <PlatzKnopf kasse />
+            <Knopf zweit href="/beratung">
+              Erst kennenlernen
+            </Knopf>
+          </div>
+          <p className="relative mx-auto mt-5 max-w-lg text-[0.9rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.65)" }}>
+            „Erst kennenlernen“ führt zur Beratungsstunde: 60 Minuten nur für deine Fragen, 1:1. Dazu bekommst du einen Gutschein für den Kurs.
+          </p>
+        </Reveal>
+      </section>
+    </>
   );
 }

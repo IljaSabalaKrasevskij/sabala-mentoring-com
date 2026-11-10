@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { BUCHBAR, COURSE_CHECKOUT_URL } from "./cohorts";
+
+/* Lesefarben. Gold in kleiner Schrift ist auf hellem Grund zu blass (Kontrast 2,7 zu 1),
+   darum steht dort ein dunkleres Gold (4,8 zu 1). */
+export const GOLD_AUF_HELL = "#8a6a1f";
+export const TEXT_AUF_HELL = "rgba(46,43,38,0.82)";
+export const TEXT_AUF_DUNKEL = "rgba(250,248,245,0.78)";
 
 /* Reveal — robuste Scroll-Einblendung.
    Default-State ist SICHTBAR (SSR/no-JS zeigt Inhalt). Erst nach Mount wird
@@ -166,11 +174,96 @@ export function Eyebrow({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
-      className={`font-mono text-[11px] uppercase tracking-[0.35em] ${center ? "text-center" : ""}`}
+      className={`font-mono text-[12.5px] uppercase tracking-[0.3em] ${center ? "text-center" : ""}`}
       style={{ color }}
     >
       {children}
     </motion.p>
+  );
+}
+
+/* Kopf eines Abschnitts der Kursseite: kurze Überzeile, Überschrift, bei Bedarf ein Satz dazu. */
+export function SektionsKopf({
+  zeile,
+  titel,
+  text,
+  hell = false,
+  links = false,
+}: {
+  zeile: string;
+  titel: React.ReactNode;
+  text?: React.ReactNode;
+  /* Abschnitt mit hellem Grund. */
+  hell?: boolean;
+  links?: boolean;
+}) {
+  const mitte = links ? "" : "mx-auto";
+  return (
+    <div className={links ? "" : "text-center"}>
+      <Eyebrow center={!links} color={hell ? GOLD_AUF_HELL : "var(--gold)"}>
+        {zeile}
+      </Eyebrow>
+      <Reveal>
+        <h2 className={`mt-4 max-w-5xl text-balance font-serif ${hell ? "text-deep" : "text-cream"} ${mitte}`} style={{ fontSize: "clamp(2rem, 4.2vw, 3.1rem)", lineHeight: 1.08 }}>
+          {titel}
+        </h2>
+        {text && (
+          <p className={`mt-4 max-w-2xl text-pretty text-[1.06rem] leading-relaxed ${mitte}`} style={{ color: hell ? TEXT_AUF_HELL : TEXT_AUF_DUNKEL }}>
+            {text}
+          </p>
+        )}
+      </Reveal>
+    </div>
+  );
+}
+
+/* Knöpfe der Kursseite. Ein Hauptknopf (Gold gefüllt) und ein zweiter (Goldrand, füllt sich beim
+   Darüberfahren). Beide mindestens 52 px hoch, damit der Finger am Handy sicher trifft. */
+export function Knopf({
+  href,
+  children,
+  zweit = false,
+  hell = false,
+  neuerTab = false,
+  breit = false,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  zweit?: boolean;
+  /* Zweiter Knopf auf hellem Grund: dunkle statt goldener Schrift. */
+  hell?: boolean;
+  /* Externe Ziele (Buchung) im neuen Tab, damit die Seite zum Nachlesen bleibt. */
+  neuerTab?: boolean;
+  breit?: boolean;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}) {
+  const farbe = zweit
+    ? `border-[1.5px] border-gold ${hell ? "text-deep" : "text-gold-light"} hover:text-tech-bg`
+    : "bg-gold text-tech-bg hover:bg-gold-light";
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      {...(neuerTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={`group relative inline-flex min-h-[52px] items-center justify-center gap-3 overflow-hidden px-7 py-3 font-sans text-[1rem] font-semibold tracking-[0.05em] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-light ${breit ? "w-full" : ""} ${farbe}`}
+    >
+      {zweit && <span aria-hidden className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />}
+      <span className="relative inline-flex items-center gap-3">{children}</span>
+      {!zweit && <ArrowRight aria-hidden size={18} strokeWidth={2.2} className="relative shrink-0 transition-transform duration-300 group-hover:translate-x-1" />}
+    </a>
+  );
+}
+
+/* Der eine Hauptknopf der Kursseite, überall mit demselben Text. Vor dem Block „Dein Platz“ springt
+   er dorthin (Termine, Inhalt, Preis), ab dort führt er mit `kasse` zur Buchung. Gibt es keinen
+   buchbaren Lauf, führt er zur Warteliste im selben Block. */
+export function PlatzKnopf({ kasse = false, breit = false }: { kasse?: boolean; breit?: boolean }) {
+  const zurKasse = kasse && BUCHBAR;
+  return (
+    <Knopf href={zurKasse ? COURSE_CHECKOUT_URL : "#termine"} neuerTab={zurKasse} breit={breit}>
+      {BUCHBAR ? "Platz sichern" : "Auf die Warteliste"}
+    </Knopf>
   );
 }
 

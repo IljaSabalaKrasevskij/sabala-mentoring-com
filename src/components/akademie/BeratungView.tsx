@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal, TiltCard, Brackets, Eyebrow, GoldCTA } from "./shared";
-import { CURRENT_COHORT, COURSE_SCHEDULE, TERMIN_CHIPS } from "./cohorts";
+import { CURRENT_COHORT, COURSE_SCHEDULE, KURS_PREIS, TERMIN_CHIPS } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    BeratungView — Sales-Page für die Beratungsstunde (Mini-Produkt).
@@ -24,7 +24,6 @@ const CHECKOUT = "https://sabala-mentoring.thrivecart.com/sabala-academy-beratun
 const PREIS = "97";
 const PREIS_REGULAER = "200";
 const GUTSCHEIN = "120";
-const KURS_PREIS = 397;
 /* prefers-reduced-motion respektieren. Im UX-Skill Prioritaet 1 (kritisch):
    Parallax und Auto-Rotation koennen bei empfindlichen Nutzern Schwindel ausloesen. */
 function useReduzierteBewegung() {
