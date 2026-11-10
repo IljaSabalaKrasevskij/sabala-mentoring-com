@@ -1,5 +1,5 @@
 /* Einzige Quelle der Wahrheit fuer die Akademie-Laeufe ("Kohorten").
-   WorkshopHeader, Termine und CourseCalendar lesen HIER, statt
+   WorkshopHeader, Termine und CourseGrid lesen HIER, statt
    Termine selbst zu hartkodieren. Neuer Lauf = ein Eintrag mehr.
    Etappe 1: status manuell. Etappe 2 leitet status aus verkauften Plaetzen ab. */
 
@@ -43,8 +43,15 @@ export const KURS_RATE = 203;
    Eine Stelle fuer SocialCockpitBonus, Termine und die Fragen. */
 export const COCKPIT_EINRICHTUNG_PREIS = 290;
 
-/* So heissen die drei Termine auf der Kursseite /akademie, in der Reihenfolge von `sessions`.
-   Die Labels in COHORTS bleiben fuer Startseite, Kalender und Beratung, wie sie sind. */
+/* Beratungsstunde, netto in Euro: Einführungspreis, regulärer Preis und der Gutschein für den
+   Second-Brain-Kurs, der zum Kauf gehört. Eine Stelle für /beratung und die Übersichtsseite.
+   Quelle: Vault, Sabala_Mentoring/Preise. */
+export const BERATUNG_PREIS = 97;
+export const BERATUNG_PREIS_REGULAER = 200;
+export const BERATUNG_GUTSCHEIN = 120;
+
+/* So heissen die drei Termine auf der Kursseite /akademie und der Übersichtsseite /akademie-hub,
+   in der Reihenfolge von `sessions`. Die Labels in COHORTS bleiben fuer Startseite und Beratung, wie sie sind. */
 export const TERMIN_NAMEN = ["Workshop 1", "Workshop 2", "Fragestunde"];
 
 export function formatSessionDate(date: string) {

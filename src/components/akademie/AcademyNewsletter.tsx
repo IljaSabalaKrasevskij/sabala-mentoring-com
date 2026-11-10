@@ -1,17 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { Reveal } from "./shared";
+import { Check } from "lucide-react";
+import { Eyebrow, Reveal, TEXT_AUF_DUNKEL } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyNewsletter — „Bleib auf dem Laufenden"
-   Vorbereitete Anmeldung unter dem Kalender. Speichert die E-Mail in den
+   Anmeldung am Ende der Übersichtsseite. Speichert die E-Mail in den
    Lead-Speicher (quelle "Akademie-Newsletter"); der eigentliche Versand
    kommt später. Graceful Fallback, wenn das Backend noch nicht steht.
+   Links daneben stehen die Kurse in Vorbereitung: Wer darauf wartet, trägt sich hier ein.
+   Der Anker #newsletter ist das Ziel der Stufe 3 in AcademyLevels.
    ───────────────────────────────────────────────────────────────────────── */
 
-const gold = "#D4AE5A";
 type Status = "idle" | "loading" | "success" | "error" | "unconfigured";
+
+/* Kurse in Vorbereitung, noch ohne Termin und Preis. */
+const BALD = ["Webseite mit KI bauen", "KI-Automation", "Content-System mit KI"];
+
+const FELD =
+  "min-h-[52px] w-full min-w-0 rounded-sm border border-[rgba(255,255,255,0.22)] bg-[rgba(255,255,255,0.06)] px-4 text-[1rem] text-cream outline-none transition-colors placeholder:text-[rgba(250,248,245,0.55)] focus:border-gold-light";
 
 export default function AcademyNewsletter() {
   const [vorname, setVorname] = useState("");
@@ -38,75 +46,43 @@ export default function AcademyNewsletter() {
   }
 
   return (
-    <section style={{ position: "relative", background: "#080604", padding: "0 0 110px" }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px" }}>
+    <section id="newsletter" className="relative px-6 py-[8vh]" style={{ background: "var(--tech-bg)" }}>
+      <div className="mx-auto max-w-6xl">
         <Reveal>
           <div
-            style={{
-              position: "relative",
-              overflow: "hidden",
-              background: "linear-gradient(135deg, rgba(212,174,90,0.10) 0%, rgba(16,12,7,0.96) 60%)",
-              border: "1px solid rgba(212,174,90,0.28)",
-              borderRadius: 5,
-              padding: "clamp(34px, 5vw, 60px)",
-            }}
+            className="relative grid items-center gap-x-14 gap-y-8 overflow-hidden rounded-2xl p-7 sm:p-10 min-[56.25rem]:grid-cols-2 min-[56.25rem]:p-12"
+            style={{ background: "linear-gradient(135deg, rgba(212,174,90,0.12) 0%, rgba(16,12,7,0.96) 60%)", border: "1px solid rgba(212,174,90,0.35)" }}
           >
             {/* Lichtschein */}
-            <div
-              aria-hidden
-              style={{
-                position: "absolute",
-                top: "-40%",
-                right: "-10%",
-                width: 500,
-                height: 500,
-                background: "radial-gradient(ellipse at center, rgba(212,174,90,0.12) 0%, rgba(212,174,90,0) 70%)",
-                pointerEvents: "none",
-              }}
-            />
+            <div aria-hidden className="pointer-events-none absolute right-[-10%] top-[-40%] h-[500px] w-[500px]" style={{ background: "radial-gradient(ellipse at center, rgba(212,174,90,0.12) 0%, rgba(212,174,90,0) 70%)" }} />
 
-            <div style={{ position: "relative", maxWidth: 560 }}>
-              <p className="font-mono" style={{ fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: gold, marginBottom: 18 }}>
-                Akademie-Newsletter
-              </p>
-              <h2
-                style={{
-                  fontFamily: "var(--font-instrument-serif), Georgia, serif",
-                  fontSize: "clamp(26px, 3.4vw, 42px)",
-                  fontWeight: 400,
-                  color: "#FAF8F5",
-                  lineHeight: 1.1,
-                  marginBottom: 16,
-                }}
-              >
+            <div className="relative">
+              <Eyebrow center={false}>Akademie-Newsletter</Eyebrow>
+              <h2 className="mt-4 text-balance font-serif text-cream" style={{ fontSize: "clamp(1.9rem, 3.4vw, 2.7rem)", lineHeight: 1.1 }}>
                 Neue Kurse und KI-Tipps direkt per Mail.
               </h2>
-              <p style={{ fontSize: 15.5, color: "rgba(250,248,245,0.6)", lineHeight: 1.65, marginBottom: 30 }}>
-                Trag dich ein und erfahre als Erster, wann neue Termine und Themen starten.
-                Kein Spam, nur die Akademie.
+              <p className="mt-6 font-mono text-[12.5px] uppercase tracking-[0.16em] text-gold-light">In Vorbereitung</p>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {BALD.map((kurs) => (
+                  <li key={kurs} className="rounded-full px-3.5 py-1.5 text-[0.95rem] text-cream" style={{ border: "1px solid rgba(250,248,245,0.22)", background: "rgba(250,248,245,0.05)" }}>
+                    {kurs}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="relative">
+              <p className="text-[1.04rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
+                Trag dich ein und erfahre als Erster, wann neue Termine und Themen starten. Kein Spam, nur die Akademie.
               </p>
 
               {status === "success" ? (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                    padding: "20px 24px",
-                    background: "rgba(212,174,90,0.10)",
-                    border: "1px solid rgba(212,174,90,0.35)",
-                    borderRadius: 3,
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                  <p style={{ fontSize: 15, color: "#FAF8F5", lineHeight: 1.5 }}>
-                    Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail.
-                  </p>
-                </div>
+                <p className="mt-5 flex items-center gap-3.5 rounded-sm px-5 py-4 text-[1rem] leading-snug text-cream" style={{ background: "rgba(212,174,90,0.10)", border: "1px solid rgba(212,174,90,0.35)" }}>
+                  <Check aria-hidden size={22} strokeWidth={2} className="shrink-0 text-gold-light" />
+                  Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail.
+                </p>
               ) : (
-                <form onSubmit={submit} style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                <form onSubmit={submit} className="mt-5 grid gap-3 sm:grid-cols-2">
                   {/* Honeypot */}
                   <input
                     type="text"
@@ -124,22 +100,9 @@ export default function AcademyNewsletter() {
                     value={vorname}
                     onChange={(e) => { setVorname(e.target.value); if (status !== "idle") setStatus("idle"); }}
                     placeholder="Vorname"
+                    aria-label="Vorname"
                     autoComplete="given-name"
-                    style={{
-                      flex: "1 1 180px",
-                      minWidth: 0,
-                      background: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.15)",
-                      borderRadius: 2,
-                      padding: "16px 18px",
-                      fontSize: 15,
-                      color: "#FAF8F5",
-                      outline: "none",
-                      fontFamily: "var(--font-satoshi), system-ui",
-                      transition: "border-color 0.2s",
-                    }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+                    className={FELD}
                   />
                   <input
                     type="email"
@@ -147,48 +110,20 @@ export default function AcademyNewsletter() {
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); if (status !== "idle") setStatus("idle"); }}
                     placeholder="deine@email.de"
+                    aria-label="E-Mail-Adresse"
                     autoComplete="email"
-                    style={{
-                      flex: "1 1 240px",
-                      minWidth: 0,
-                      background: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.15)",
-                      borderRadius: 2,
-                      padding: "16px 18px",
-                      fontSize: 15,
-                      color: "#FAF8F5",
-                      outline: "none",
-                      fontFamily: "var(--font-satoshi), system-ui",
-                      transition: "border-color 0.2s",
-                    }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+                    className={FELD}
                   />
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    style={{
-                      flex: "0 0 auto",
-                      background: gold,
-                      color: "#0a0806",
-                      fontSize: 14,
-                      fontWeight: 600,
-                      letterSpacing: "0.04em",
-                      padding: "16px 30px",
-                      border: "none",
-                      borderRadius: 2,
-                      cursor: status === "loading" ? "default" : "pointer",
-                      opacity: status === "loading" ? 0.7 : 1,
-                      transition: "background 0.2s, opacity 0.2s",
-                    }}
-                    onMouseEnter={(e) => { if (status !== "loading") (e.currentTarget as HTMLElement).style.background = "#E0BD6E"; }}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = gold)}
+                    className="min-h-[52px] cursor-pointer bg-gold px-7 text-[1rem] font-semibold tracking-[0.05em] text-tech-bg transition-colors duration-300 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-light disabled:cursor-default disabled:opacity-70 sm:col-span-2"
                   >
                     {status === "loading" ? "Moment …" : "Auf dem Laufenden bleiben"}
                   </button>
 
                   {(status === "error" || status === "unconfigured") && (
-                    <p style={{ flexBasis: "100%", fontSize: 13.5, color: "#E8A87C", marginTop: 4 }}>
+                    <p className="text-[0.9rem] sm:col-span-2" style={{ color: "#E8A87C" }}>
                       {status === "unconfigured"
                         ? "Die Anmeldung ist gleich startklar. Schreib mir solange direkt an ilja@sabala-mentoring.com."
                         : "Das hat gerade nicht geklappt. Versuch es bitte noch einmal."}

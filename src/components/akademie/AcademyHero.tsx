@@ -2,13 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import ClaudeLogo from "@/components/brand/ClaudeLogo";
+import { Knopf, TEXT_AUF_DUNKEL } from "./shared";
+import { CURRENT_COHORT, formatTagMonat } from "./cohorts";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyHero — Fullscreen hero with interactive triangle-mesh canvas orb.
    - Background: library image (ki-library-bg.jpg)
    - Dark radial mask erases the baked-in orb
    - Canvas draws a golden wireframe sphere + glow; particles scatter on hover
+   Der Text steht fertig im HTML und blendet per CSS ein (`.cs-rise`): sichtbar auch ohne JavaScript.
+   Die Kugel rechnet nur, solange der Kopf im Bild ist, und steht still bei „Bewegung reduzieren“.
    ───────────────────────────────────────────────────────────────────────── */
+
+/* Verzögerung fürs Einblenden per CSS, gestaffelt wie im Kopf der Kursseite. */
+const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
 
 export default function AcademyHero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -54,6 +61,7 @@ export default function AcademyHero() {
       W = c.width  = window.innerWidth;
       H = c.height = window.innerHeight;
       initPts();
+      if (ruhig) render();
     }
 
     function update() {
@@ -131,18 +139,21 @@ export default function AcademyHero() {
     }
 
     function loop() {
-      update(); render();
+      if (window.scrollY < H) { update(); render(); }
       raf = requestAnimationFrame(loop);
     }
+    const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
     const onLeave = () => { mx = -9999; my = -9999; };
 
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseleave", onLeave);
-    loop();
+    if (!ruhig) {
+      window.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseleave", onLeave);
+      loop();
+    }
 
     return () => {
       cancelAnimationFrame(raf);
@@ -153,7 +164,7 @@ export default function AcademyHero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden" style={{ height: "100vh", minHeight: 560 }}>
+    <section className="relative overflow-hidden" style={{ height: "100vh", minHeight: 600 }}>
       {/* Layer 1 — Library background */}
       <div
         className="absolute inset-0"
@@ -185,135 +196,36 @@ export default function AcademyHero() {
       />
 
       {/* Layer 4 — Interactive canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 2 }} />
+      <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0" style={{ zIndex: 2 }} />
 
       {/* Layer 5 — Text content */}
-      <div
-        className="absolute inset-0 flex flex-col items-center justify-end text-center"
-        style={{ zIndex: 3, padding: "0 24px 72px" }}
-      >
-        <div className="mb-5 flex flex-col items-center gap-3">
-          <p
-            className="font-mono text-[12px] tracking-[0.28em] uppercase"
-            style={{ color: "#C9A656" }}
-          >
-            Sabala KI Academy
-          </p>
-          <div
-            className="flex items-center gap-2 rounded-full"
-            style={{
-              padding: "6px 14px",
-              border: "1px solid rgba(201,166,86,0.32)",
-              background: "rgba(201,166,86,0.06)",
-            }}
-          >
-            <ClaudeLogo size={15} />
-            <span
-              className="font-mono uppercase"
-              style={{ fontSize: 10.5, letterSpacing: "0.16em", color: "rgba(250,248,245,0.78)" }}
-            >
-              Live mit Claude · primär Claude Code
-            </span>
-          </div>
-        </div>
-
-        <h1
-          className="font-serif"
-          style={{
-            fontFamily: "var(--font-instrument-serif), Georgia, serif",
-            fontSize: "clamp(38px, 5.5vw, 76px)",
-            fontWeight: 400,
-            color: "#FAF8F5",
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            maxWidth: 820,
-            textShadow: "0 2px 30px rgba(0,0,0,0.7)",
-          }}
-        >
-          KI, die im Dienstleister-Alltag wirklich liefert.{" "}
-          <em style={{ color: "#C9A656", fontStyle: "italic" }}>Live mit Claude.</em>
-        </h1>
-
+      <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pb-[7vh] text-center" style={{ zIndex: 3 }}>
+        <p className="cs-rise font-mono text-[12.5px] uppercase tracking-[0.28em] text-gold-light">Sabala KI Academy</p>
         <p
-          className="mt-5"
-          style={{
-            fontSize: "clamp(15px, 1.8vw, 18px)",
-            color: "rgba(250,248,245,0.62)",
-            maxWidth: 540,
-            lineHeight: 1.65,
-            fontWeight: 300,
-            fontFamily: "var(--font-geist-sans, system-ui)",
-          }}
+          className="cs-rise mt-3 flex items-center gap-2 rounded-full px-3.5 py-1.5 font-mono text-[12.5px] uppercase tracking-[0.14em]"
+          style={{ border: "1px solid rgba(212,174,90,0.35)", background: "rgba(212,174,90,0.07)", color: TEXT_AUF_DUNKEL, ...EIN(0.05) }}
         >
-          Live-Trainings für Dienstleister im B2B. Du baust mit Claude und Claude Code
-          erprobte Setups auf, die ab dem nächsten Kundenprojekt Zeit sparen.
+          <ClaudeLogo size={15} />
+          {/* Am Handy die kurze Fassung, sonst bricht das Schild in zwei Zeilen */}
+          <span className="sm:hidden">Live mit Claude Code</span>
+          <span className="hidden sm:inline">Live mit Claude · primär Claude Code</span>
         </p>
 
-        <div className="mt-9 flex gap-4 items-center">
-          <a
-            href="#kurse"
-            style={{
-              padding: "14px 36px",
-              background: "#C9A656",
-              color: "#0A0806",
-              fontSize: 13,
-              fontWeight: 500,
-              letterSpacing: "0.05em",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "background 0.25s",
-            }}
-            onMouseEnter={e => ((e.target as HTMLElement).style.background = "#D4B86A")}
-            onMouseLeave={e => ((e.target as HTMLElement).style.background = "#C9A656")}
-          >
-            Kurse entdecken
-          </a>
-          <a
-            href="/akademie"
-            style={{
-              padding: "13px 28px",
-              border: "1px solid rgba(201,166,86,0.45)",
-              color: "rgba(250,248,245,0.72)",
-              fontSize: 13,
-              letterSpacing: "0.05em",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "all 0.25s",
-            }}
-            onMouseEnter={e => {
-              const el = e.target as HTMLElement;
-              el.style.borderColor = "#C9A656";
-              el.style.color = "#C9A656";
-            }}
-            onMouseLeave={e => {
-              const el = e.target as HTMLElement;
-              el.style.borderColor = "rgba(201,166,86,0.45)";
-              el.style.color = "rgba(250,248,245,0.72)";
-            }}
-          >
-            Nächster Start
-          </a>
-        </div>
+        <h1 className="cs-rise mt-5 max-w-[860px] text-balance font-serif text-cream" style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.6rem)", lineHeight: 1.05, textShadow: "0 2px 30px rgba(0,0,0,0.7)", ...EIN(0.1) }}>
+          KI, die im Dienstleister-Alltag wirklich liefert. <span className="text-gold-light">Live mit Claude.</span>
+        </h1>
 
-        {/* Scroll hint */}
-        <div
-          className="mt-9 flex flex-col items-center gap-2 opacity-30"
-          style={{ animation: "academyScroll 2.8s ease-in-out infinite" }}
-        >
-          <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-            <rect x="1" y="1" width="14" height="18" rx="7" stroke="white" strokeOpacity="0.7" strokeWidth="1.2" />
-            <circle cx="8" cy="6" r="2" fill="white" fillOpacity="0.7" />
-          </svg>
-          <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white">Scrollen</span>
+        <p className="cs-rise mt-5 max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.16) }}>
+          Live-Trainings für Dienstleister im B2B. Du baust mit Claude und Claude Code erprobte Setups auf, die ab dem nächsten Kundenprojekt Zeit sparen.
+        </p>
+
+        <div className="cs-rise mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row" style={EIN(0.22)}>
+          <Knopf href="#einstieg">Deinen Einstieg finden</Knopf>
+          <Knopf zweit href="/akademie">
+            {CURRENT_COHORT ? `Kurs ab ${formatTagMonat(CURRENT_COHORT.start)}` : "Zum Second-Brain-Kurs"}
+          </Knopf>
         </div>
       </div>
-
-      <style>{`
-        @keyframes academyScroll {
-          0%, 100% { transform: translateY(0); opacity: 0.30; }
-          50%       { transform: translateY(5px); opacity: 0.55; }
-        }
-      `}</style>
     </section>
   );
 }
