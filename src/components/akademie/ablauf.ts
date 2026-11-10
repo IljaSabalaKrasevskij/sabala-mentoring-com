@@ -52,7 +52,7 @@ export const WORKSHOPS: Workshop[] = [
       { art: "werkzeug", id: "claude", name: "Terminal und Claude Code", text: "Wir installieren alles Schritt für Schritt, auch wenn du das Terminal noch nie geöffnet hast." },
       { art: "baustein", name: "Deine CLAUDE.md", text: "Die eine Datei, die Claude sagt, wer du bist, wie du arbeitest und worauf er zugreifen darf." },
       { art: "baustein", name: "MCP-Verbindungen", text: "So bekommt Claude Zugriff auf Obsidian und Gemini Notebook, also auf dein Wissen." },
-      { art: "baustein", name: "Memory-System und drei Skills", text: "Closing Session schreibt die Tagesnotiz, Memory merkt sich deine Projekte, Cybersecurity schützt vor gefährlichen Skripten." },
+      { art: "baustein", name: "Fünf Skills", text: "Closing-Routine, Repo-Vetting, Humanizer, Notebook-Skill und Memory. Die Regel dabei: erst prüfen, dann installieren." },
       { art: "rahmen", name: "Abschluss", text: "Der Test: Du fragst Claude, woran ihr gearbeitet habt. Dazu Rückblick und Ausblick auf die Fragestunde." },
     ],
     danach: [
@@ -68,6 +68,32 @@ export const FRAGESTUNDE = {
   titel: "Dein Sicherheitsnetz",
   text: "Nach dem zweiten Workshop arbeitest du ein paar Tage mit deinem Setup. Was dabei offen bleibt, klären wir hier gemeinsam.",
 };
+
+/* Was du mitbekommst. Quelle: Kurs-Handout („Alle Befehle, Prompts & Skills“), Kurspaket Teil 2 und die
+   Aufzeichnung vom Oktober 2026, in der Ilja das Design-Paket ausgegeben hat.
+   `symbol` ist der Name eines lucide-Symbols (Seite: Werkzeuge der Bibliothek, PDF: dieselbe Datei). */
+export type Posten = { symbol: string; name: string; text: string };
+
+/* Die Skills richten wir in Workshop 2 gemeinsam ein. Die Sätze sind bewusst kurz:
+   auf der Seite steht jeder Posten in einer Zeile, damit der Abschnitt in ein Laptop-Fenster passt. */
+export const SKILLS: Posten[] = [
+  { symbol: "notebook-pen", name: "Closing-Routine", text: "Ein Wort am Ende, und Claude schreibt deine Tagesnotiz." },
+  { symbol: "shield-check", name: "Repo-Vetting", text: "Cybersecurity für GitHub: erst prüfen, dann installieren." },
+  { symbol: "pen-line", name: "Humanizer", text: "Nimmt deinen Texten den KI-Klang, in deinem Stil." },
+  { symbol: "book-open-check", name: "Notebook-Skill", text: "Claude bedient dein Gemini Notebook selbst." },
+  { symbol: "brain", name: "Memory", text: "Claude merkt sich, woran ihr arbeitet." },
+];
+
+export const VORLAGEN: Posten[] = [
+  { symbol: "folder-tree", name: "Starter-Vault mit PARA-Struktur", text: "Acht Ordner, fertig angelegt." },
+  { symbol: "file-text", name: "Vorlage für deine CLAUDE.md", text: "Claude befragt dich und schreibt die Datei." },
+  { symbol: "clipboard-copy", name: "Alle Prompts und Befehle", text: "Zum Kopieren auf deiner Kurs-Seite." },
+];
+
+export const DESIGN_PAKET: Posten[] = [
+  { symbol: "palette", name: "Design-Skills für Claude", text: "UI UX Pro Max, Frontend Design, Taste Design." },
+  { symbol: "swatch-book", name: "Über 50 Design-Vorlagen", text: "Design-Systeme im Stil bekannter Marken." },
+];
 
 /* Was die vier Werkzeuge verbindet: alle Bausteine aus beiden Workshops, für die Zeile unter den Werkzeugen. */
 export const BAUSTEINE = WORKSHOPS.flatMap((w) => w.schritte.filter((s) => s.art === "baustein").map((s) => ({ ...s, workshop: w.nr })));

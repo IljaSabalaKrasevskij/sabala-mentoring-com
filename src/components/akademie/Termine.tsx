@@ -24,11 +24,11 @@ import AnmeldeForm from "./AnmeldeForm";
 const DRIN: [was: string, wert: number | string][] = [
   ["Workshop 1 live (2,5 Stunden): dein Wissen an einem Ort", 249],
   ["Workshop 2 live (2,5 Stunden): Claude bekommt ein Gedächtnis", 249],
-  ["Skill-Paket: Closing Session, Memory, Cybersecurity", 19],
+  ["Skill-Paket: fünf Skills von Closing-Routine bis Repo-Vetting", 19],
   ["Live-Umsetzung und Fragen in beiden Workshops", 49],
   ["Fragestunde (1 Stunde live)", "inklusive"],
-  ["PARA-Vorlage für Obsidian", "inklusive"],
-  ["Bonus: der ganze Code meines Social Media Cockpits", "geschenkt"],
+  ["Starter-Vault, Vorlagen und alle Prompts", "inklusive"],
+  ["Bonus: Design-Paket und der Code meines Social Media Cockpits", "geschenkt"],
 ];
 
 const EINZELN = DRIN.reduce((summe, [, wert]) => summe + (typeof wert === "number" ? wert : 0), 0);
@@ -145,7 +145,7 @@ export default function Termine() {
         <Reveal delay={0.05} className="min-[56.25rem]:col-start-1 min-[56.25rem]:row-start-2">
           <ul>
             {DRIN.map(([was, wert]) => (
-              <li key={was} className="flex items-start justify-between gap-4 border-b py-3" style={{ borderColor: "rgba(250,248,245,0.1)" }}>
+              <li key={was} className="flex items-start justify-between gap-4 border-b py-2.5" style={{ borderColor: "rgba(250,248,245,0.1)" }}>
                 <span className="flex items-start gap-3 text-[1rem] leading-snug text-cream">
                   <Check aria-hidden size={18} strokeWidth={2.6} className="mt-[2px] shrink-0 text-gold" />
                   {was}

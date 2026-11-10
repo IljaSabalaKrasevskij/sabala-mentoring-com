@@ -25,7 +25,7 @@ export default function SocialCockpitBonus() {
       <div className="relative mx-auto max-w-6xl">
         <SektionsKopf
           hell
-          zeile="Dein Bonus"
+          zeile="Bonus obendrauf"
           titel={
             <>
               Mein Social Media Cockpit. <span style={{ color: GOLD_AUF_HELL }}>Der ganze Code, geschenkt.</span>

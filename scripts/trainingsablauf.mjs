@@ -1,4 +1,4 @@
-/* Baut den Trainingsablauf des Second-Brain-Kurses als PDF (A4 quer, 4 Seiten).
+/* Baut den Trainingsablauf des Second-Brain-Kurses als PDF (A4 quer, 5 Seiten).
 
      node scripts/trainingsablauf.mjs
 
@@ -23,7 +23,7 @@ import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { ABLAUF_PDF, FRAGESTUNDE, WERKZEUGE, WORKSHOPS } from "../src/components/akademie/ablauf.ts";
+import { ABLAUF_PDF, DESIGN_PAKET, FRAGESTUNDE, SKILLS, VORLAGEN, WERKZEUGE, WORKSHOPS } from "../src/components/akademie/ablauf.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const heim = os.homedir();
@@ -55,7 +55,7 @@ async function symbol(name) {
   const kinder = __iconNode.map(([tag, a]) => `<${tag} ${Object.entries(a).filter(([k]) => k !== "key").map(([k, v]) => `${k}="${v}"`).join(" ")}/>`).join("");
   return `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${kinder}</svg>`;
 }
-const S = Object.fromEntries(await Promise.all(["users", "compass", "flame", "flag", "file-text", "cable", "brain", "life-buoy", "check", "gift", "laptop", "video", "calendar-days"].map(async (n) => [n, await symbol(n)])));
+const S = Object.fromEntries(await Promise.all(["users", "compass", "flame", "flag", "file-text", "cable", "brain", "blocks", "life-buoy", "check", "gift", "laptop", "video", "calendar-days", ...[...SKILLS, ...VORLAGEN, ...DESIGN_PAKET].map((p) => p.symbol)].map(async (n) => [n, await symbol(n)])));
 
 const browser = await chromium.launch();
 
@@ -78,9 +78,9 @@ const PLATTE = {
   obsidian: await logoAlsJpeg("obsidian.svg"),
   claude: await logoAlsJpeg("claude.svg"),
 };
-const SCHRITT_SYMBOL = { Ankommen: S.users, Abschluss: S.flag, Firecrawl: S.flame, "Deine CLAUDE.md": S["file-text"], "MCP-Verbindungen": S.cable, "Memory-System und drei Skills": S.brain };
+const SCHRITT_SYMBOL = { Ankommen: S.users, Abschluss: S.flag, Firecrawl: S.flame, "Deine CLAUDE.md": S["file-text"], "MCP-Verbindungen": S.cable, "Fünf Skills": S.blocks };
 
-const SEITEN = 2 + WORKSHOPS.length;
+const SEITEN = 3 + WORKSHOPS.length;
 const fuss = (nr, links = "Dein Second Brain · Trainingsablauf") => `<footer class="fuss mono"><span>${links}</span><span>${nr} / ${SEITEN}</span></footer>`;
 
 /* ---------- Seite 1: Titel ---------- */
@@ -136,7 +136,39 @@ const workshop = (w) => `
   ${fuss(w.nr + 1)}
 </section>`;
 
-/* ---------- Seite 4: Fragestunde, was du brauchst, Trainer ----------
+/* ---------- Seite 4: Skills und Bonus-Material ---------- */
+
+const posten = (liste) => `<ul class="posten">${liste.map((p) => `<li><span class="symbol">${S[p.symbol]}</span><p><b>${text(p.name)}</b>${text(p.text)}</p></li>`).join("")}</ul>`;
+
+const material = `
+<section class="seite hell">
+  <p class="mono dunkelgold">Skills und Bonus-Material</p>
+  <h2>Fünf Skills, fertige Vorlagen, ein Design-Paket.</h2>
+  <div class="material">
+    <div class="tafel">
+      <p class="mono hellgold">Richten wir im Kurs gemeinsam ein</p>
+      <h3>Fünf Skills für Claude</h3>
+      ${posten(SKILLS)}
+      <p class="regel"><b>Meine goldene Regel:</b> Erst prüfen, dann installieren. Immer.</p>
+    </div>
+    <div class="karten">
+      <div class="karte">
+        <p class="mono dunkelgold">Bekommst du dazu</p>
+        <h3>Vorlagen und Prompts</h3>
+        ${posten(VORLAGEN)}
+      </div>
+      <div class="karte geschenk">
+        <span class="farbkarte">${["#0a0806", "#2e2b26", "#8a6a1f", "#b8963e", "#d4ae5a", "#faf8f5"].map((f) => `<i style="background:${f}"></i>`).join("")}</span>
+        <p class="mono dunkelgold">Bonus, geschenkt</p>
+        <h3>Dein Design-Paket</h3>
+        ${posten(DESIGN_PAKET)}
+      </div>
+    </div>
+  </div>
+  ${fuss(WORKSHOPS.length + 2)}
+</section>`;
+
+/* ---------- Seite 5: Fragestunde, was du brauchst, Trainer ----------
    Die drei Punkte unter „Das brauchst du“ stehen auch in den Fragen der Kursseite (fragen.ts). */
 
 const schluss = `
@@ -178,7 +210,7 @@ const schluss = `
       </ul>
     </div>
     <div>
-      <p class="mono hellgold">Dein Bonus</p>
+      <p class="mono hellgold">Bonus obendrauf</p>
       <p class="bonus">${S.gift}<span>Der ganze Code meines Social Media Cockpits, geschenkt. Damit planst du deinen Content im eigenen Kalender, mit Claude Code.</span></p>
     </div>
   </div>
@@ -249,7 +281,29 @@ h2 { margin-top: 2.2mm; font-size: 31pt; line-height: 1.06; color: #2e2b26; }
 .danach li { display: flex; gap: 2.5mm; font-size: 11pt; line-height: 1.38; font-weight: 500; color: #2e2b26; }
 .danach .ic { margin-top: .5mm; color: #8a6a1f; }
 
-/* Seite 4 */
+/* Seite 4: Skills und Bonus-Material */
+.material { margin-top: 6mm; display: grid; grid-template-columns: 1.08fr 1fr; gap: 5mm; }
+.tafel { display: flex; flex-direction: column; padding: 7mm; border-radius: 3mm; background: #0a0806; border: .3mm solid #6b5a2c; color: #d9d4cb; }
+.tafel h3 { margin-top: 1.4mm; font-size: 23pt; line-height: 1.1; color: #faf8f5; }
+.posten { margin-top: 3.5mm; }
+.posten li { display: flex; align-items: flex-start; gap: 4mm; padding: 1.6mm 0; }
+.posten .symbol { width: 10mm; height: 10mm; flex: none; display: flex; align-items: center; justify-content: center; border-radius: 2.4mm; background: #2a2212; color: #d4ae5a; }
+.posten .symbol .ic { width: 5.4mm; height: 5.4mm; }
+.posten p { font-size: 10.6pt; line-height: 1.38; }
+.posten b { display: block; font-weight: 600; font-size: 12pt; color: #faf8f5; }
+.regel { margin-top: auto; padding: 3.6mm 4.6mm; border-radius: 2.4mm; background: #1f190d; border: .3mm solid #6b5a2c; font-size: 10.8pt; color: #faf8f5; }
+.regel b { font-weight: 600; color: #d4ae5a; }
+.karten { display: grid; gap: 4mm; }
+.karte { position: relative; padding: 5mm 7mm; border-radius: 3mm; background: #ffffff; border: .3mm solid #e0d2ab; }
+.karte.geschenk { background: #f6edd4; border-color: #d9c58d; }
+.karte h3 { margin-top: 1.2mm; font-size: 21pt; line-height: 1.1; color: #2e2b26; }
+.karte .symbol { background: #f3ead2; color: #8a6a1f; }
+.karte.geschenk .symbol { background: #ffffff; }
+.karte .posten b { color: #2e2b26; }
+.farbkarte { position: absolute; right: 7mm; top: 5mm; display: flex; gap: 1.6mm; }
+.farbkarte i { width: 5mm; height: 5mm; border-radius: 50%; border: .25mm solid #cdbf9c; }
+
+/* Seite 5 */
 .weg { margin-top: 8mm; display: flex; }
 .halt { position: relative; flex: 1; padding-top: 8mm; text-align: center; font-size: 9.6pt; color: #a8a297; border-top: .4mm dotted #8a6a1f; }
 .halt::before { content: ""; position: absolute; top: -1.7mm; left: 50%; margin-left: -1.5mm; width: 3mm; height: 3mm; border-radius: 50%; background: #0a0806; border: .4mm solid #b8963e; }
@@ -278,7 +332,7 @@ h2 { margin-top: 2.2mm; font-size: 31pt; line-height: 1.06; color: #2e2b26; }
 .platz + .fuss { margin-top: 0; }
 `;
 
-const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Dein Second Brain: Trainingsablauf</title><style>${css}</style></head><body>${titel}${WORKSHOPS.map(workshop).join("")}${schluss}</body></html>`;
+const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Dein Second Brain: Trainingsablauf</title><style>${css}</style></head><body>${titel}${WORKSHOPS.map(workshop).join("")}${material}${schluss}</body></html>`;
 
 /* ---------- Bauen und prüfen ---------- */
 

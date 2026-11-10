@@ -4,6 +4,7 @@ import MemoryDemo from "@/components/akademie/MemoryDemo";
 import BeforeAfter from "@/components/akademie/BeforeAfter";
 import Sessions from "@/components/akademie/Sessions";
 import Werkzeuge from "@/components/akademie/Werkzeuge";
+import BonusMaterial from "@/components/akademie/BonusMaterial";
 import Qualify from "@/components/akademie/Qualify";
 import AboutIlja from "@/components/akademie/AboutIlja";
 import SocialCockpitBonus from "@/components/akademie/SocialCockpitBonus";
@@ -123,8 +124,9 @@ export default function AkademiePage() {
       <BeforeAfter />
       <Sessions />
       <Werkzeuge />
-      <AboutIlja />
+      <BonusMaterial />
       <Qualify />
+      <AboutIlja />
       <SocialCockpitBonus />
       <Termine />
       <Faq />

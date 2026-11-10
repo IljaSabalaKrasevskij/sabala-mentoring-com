@@ -11,7 +11,7 @@ const TERMINE = CURRENT_COHORT
 export const FRAGEN: [frage: string, antwort: string][] = [
   ["Wann findet der nächste Kurs statt?", TERMINE],
   ["Was ist die Fragestunde?", "Nach den beiden Workshops arbeitest du ein paar Tage mit deinem Setup. In der Fragestunde bringst du mit, was dabei offen geblieben ist, und wir klären es gemeinsam. Die Stunde ist im Preis enthalten."],
-  ["Was ist der Bonus?", "Du bekommst den ganzen Code meines Social Media Cockpits geschenkt. Damit planst du deinen Social-Media-Content im eigenen Kalender, mit Claude Code und ohne Notion."],
+  ["Was ist der Bonus?", "Zwei Dinge. Das Design-Paket: Design-Skills für Claude und über 50 Design-Vorlagen. Und der ganze Code meines Social Media Cockpits. Damit planst du deinen Social-Media-Content im eigenen Kalender, mit Claude Code und ohne Notion."],
   ["Was kostet die gemeinsame Einrichtung des Cockpits?", `Den Code bekommst du geschenkt und kannst ihn selbst einrichten. Wenn du das lieber gemeinsam mit mir machst, kostet die Einrichtung ${COCKPIT_EINRICHTUNG_PREIS} € zzgl. MwSt. Sie ist freiwillig.`],
   ["Ich habe noch nie das Terminal benutzt. Ist das ein Problem?", "Nein. Wir richten das Terminal im zweiten Workshop gemeinsam ein, von Anfang an. Du gehst mit einer Umgebung raus, die läuft, egal wie viel Technik du vorher kanntest."],
   ["Brauche ich Claude Code Pro?", "Ja. Für den zweiten Workshop ist Claude Code Pro Pflicht, sonst kannst du nicht sinnvoll mitarbeiten. Der erste Workshop geht ohne. Für das fertige Memory-System brauchst du es."],
