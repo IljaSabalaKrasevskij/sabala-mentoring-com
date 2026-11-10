@@ -51,11 +51,11 @@ const NODES: Node[] = [
   },
   {
     key: "notebooklm",
-    name: "NotebookLM",
+    name: "Gemini Notebook",
     role: "Deine Expertendatenbank",
     session: "Session 1 · 2,5h live",
     boxTitle: "Wissen auf Knopfdruck",
-    boxBody: "Comet Browser und Firecrawl sammeln die Quellen, NotebookLM macht sie durchsuchbar. YouTube, PDFs und Webseiten, verknüpft mit Obsidian und abrufbar für Claude.",
+    boxBody: "Comet Browser und Firecrawl sammeln die Quellen, Gemini Notebook (früher NotebookLM) macht sie durchsuchbar. YouTube, PDFs und Webseiten, verknüpft mit Obsidian und abrufbar für Claude.",
     color: "#5F8A86",
     x: 83,
     y: 24,
@@ -92,7 +92,7 @@ const EDGES: [number, number][] = [
 // Setup als Grundlage: drei Ebenen, die aufeinander aufbauen (Recherche -> Wissen -> Claude).
 const LAYERS: { step: string; label: string; tools: string[]; note: string }[] = [
   { step: "01", label: "Recherche", tools: ["Comet Browser", "3 Extensions", "Firecrawl API"], note: "Quellen finden und automatisch einsammeln." },
-  { step: "02", label: "Wissen", tools: ["NotebookLM", "Obsidian-Brain (PARA)"], note: "Alles durchsuchbar, an einem Ort." },
+  { step: "02", label: "Wissen", tools: ["Gemini Notebook", "Obsidian-Brain (PARA)"], note: "Alles durchsuchbar, an einem Ort." },
   { step: "03", label: "Claude", tools: ["Terminal", "Claude Code", "CLAUDE.md", "MCP"], note: "Greift auf alles zu und erinnert sich, über Tage." },
 ];
 

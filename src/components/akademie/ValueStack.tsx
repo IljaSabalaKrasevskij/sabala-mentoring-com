@@ -12,7 +12,7 @@ import { BUCHBAR, COURSE_CHECKOUT_URL } from "./cohorts";
    ───────────────────────────────────────────────────────────────────────── */
 
 const ITEMS: { label: string; value: number }[] = [
-  { label: "Session 1 live (2,5h): Obsidian + NotebookLM Setup", value: 249 },
+  { label: "Session 1 live (2,5h): Obsidian + Gemini Notebook Setup", value: 249 },
   { label: "Session 2 live (2,5h): Claude Code Pro + MCP-Verbindungen", value: 249 },
   { label: "Skill-Paket: Closing Session + Memory + Cybersecurity", value: 19 },
   { label: "Live-Umsetzung & Fragen in beiden Workshops", value: 49 },
@@ -127,6 +127,9 @@ export default function ValueStack() {
           </ul>
           <p className="px-5 py-4 text-[0.96rem] text-gold">
             Zusätzlich inklusive: eine Q&amp;A-Session für deine Fragen aus der Praxis.
+          </p>
+          <p className="px-5 pb-4 text-[0.96rem] text-gold">
+            Bonus, geschenkt: der ganze Code meines Social Media Cockpits.
           </p>
 
           {/* Gesamtwert mit Count-Up + sanftem Gold-Pulse */}

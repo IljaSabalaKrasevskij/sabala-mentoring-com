@@ -9,7 +9,7 @@ export default function CourseAnnouncement() {
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold">Sabala Academy · jetzt buchbar</p>
         <h2 id="second-brain-kurs" className="mt-4 font-serif text-4xl text-cream md:text-5xl">Dein Second Brain. Die nächste Runde.</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-warm-light/75">
-          Obsidian, NotebookLM und Claude Code gemeinsam einrichten: zwei Workshops à 2,5 Stunden plus eine zusätzliche Stunde Q&amp;A. Maximal {CURRENT_COHORT.capacity} Plätze.
+          Obsidian, Gemini Notebook und Claude Code gemeinsam einrichten: zwei Workshops à 2,5 Stunden plus eine zusätzliche Stunde Q&amp;A. Maximal {CURRENT_COHORT.capacity} Plätze.
         </p>
         <div className="mt-7 grid gap-5 md:grid-cols-3">
           {CURRENT_COHORT.sessions.map((s) => (

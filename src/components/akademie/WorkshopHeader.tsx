@@ -34,7 +34,7 @@ export default function WorkshopHeader() {
           Sabala Academy · Live-Workshop
         </motion.p>
 
-        <motion.h2
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05 }}
@@ -46,7 +46,7 @@ export default function WorkshopHeader() {
           jeder Session alles.
           <br />
           <span style={{ color: "#b8963e" }}>Das hier ändert das.</span>
-        </motion.h2>
+        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ export default function WorkshopHeader() {
           className="mt-6 max-w-xl text-base leading-relaxed md:text-lg"
           style={{ color: "rgba(250,248,245,0.78)" }}
         >
-          In zwei Workshops à 2,5 Stunden richtest du dein Second Brain ein: Obsidian, NotebookLM und Claude Code, live aufgebaut. Danach klären wir deine offenen Fragen in einer zusätzlichen Stunde Q&amp;A.
+          In zwei Workshops à 2,5 Stunden richtest du dein Second Brain ein: Obsidian, Gemini Notebook und Claude Code, live aufgebaut. Danach klären wir deine offenen Fragen in einer zusätzlichen Stunde Q&amp;A.
         </motion.p>
 
         {/* Termine */}
