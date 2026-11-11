@@ -25,6 +25,10 @@ if (!GEHEIM && process.env.VERCEL) {
 }
 const SCHLUESSEL = createHmac("sha256", GEHEIM || randomBytes(32)).update("formular-siegel-v1").digest("base64url");
 
+/* Absender-IP für die Obergrenzen. Vercel füllt x-forwarded-for selbst aus der Verbindung und überschreibt, was der
+   Aufrufer mitschickt (https://vercel.com/docs/headers/request-headers#x-forwarded-for). Der erste Eintrag ist darum echt
+   und lässt sich nicht fälschen, solange die Seite direkt bei Vercel liegt. Kommt je ein eigener Proxy oder ein anderes
+   CDN davor: hier umstellen (Vercel „Verified Proxy“), sonst zählt die Obergrenze den Proxy statt den Besucher. */
 export const ipAus = (req: Request) => req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
 /**
