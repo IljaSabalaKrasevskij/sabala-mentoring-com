@@ -32,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
 });
 
@@ -189,7 +189,7 @@ export default function BlogDsgvoCookieBannerPage() {
             <p>Gesamt: 2-3 Stunden. Danach hast du eine cookie-freie Webseite und musst dir um die DSGVO-Reform 2027 keine Gedanken machen.</p>
 
             <h3>Wie ich das in der Sabala-Praxis löse</h3>
-            <p>Mein Standard-Setup für Premium-Kunden ist seit 2023 cookie-frei: Vercel-Hosting (Edge-Region Frankfurt), Umami für Analytics (self-hosted oder Cloud), Brevo für Newsletter im Privacy-Mode, YouTube-nocookie für Video-Embeds, OpenStreetMap statt Google Maps. Migration einer bestehenden WordPress-Seite dauert typischerweise 3-5 Stunden, ist im Mini-Pflege-Paket (49 Euro pro Monat) sofort abrufbar.</p>
+            <p>Mein Standard-Setup für Premium-Kunden ist seit 2023 cookie-frei: Vercel-Hosting (Edge-Region Frankfurt), Umami für Analytics (self-hosted oder Cloud), Brevo für Newsletter im Privacy-Mode, YouTube-nocookie für Video-Embeds, OpenStreetMap statt Google Maps. Migration einer bestehenden WordPress-Seite dauert typischerweise 3-5 Stunden.</p>
             <p>Konkretes Beispiel: bei einem Coaching-Relaunch in diesem Quartal haben wir eine alte WordPress-Seite mit Cookie-Banner und drei Tracking-Plugins komplett ersetzt. Heute: cookie-frei, ohne Banner, PageSpeed-Score deutlich über 90 mobil. Aufwand-Differenz zu einer Standard-Migration: null Stunden, weil cookie-frei der Default ist, nicht eine Spar-Variante.</p>
           </div>
         </ScrollReveal>

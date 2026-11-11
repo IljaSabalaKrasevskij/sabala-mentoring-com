@@ -32,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   image: `${url}/cover.jpg`,
 });
@@ -116,6 +116,7 @@ export default function BlogWasKostetKiWebseitePage() {
             <p>Der Unterschied ist nicht „mit oder ohne KI". Der Unterschied ist <strong>Eigentum</strong>.</p>
 
             <h2>Was beide Optionen wirklich kosten</h2>
+            <p><em>Stand November 2026: Die Pflege kostet inzwischen 70 Euro (Basis) oder 249 Euro (Wachstum) netto im Monat. Die Rechnung in diesem Artikel stammt vom Juni 2026 und nutzt noch die früheren Preise. Die aktuellen Stufen stehen auf der Seite <Link href="/webseiten">Webseiten</Link>.</em></p>
             <p><strong>Baukasten (Webflow als Beispiel):</strong> 27 Euro im Monat plus Erweiterungen, Plugins, Lizenzen, Bilder. Realistisch über 3 Jahre: <strong>1.500 bis 3.500 Euro</strong>. Squarespace und Wix ähnlich, günstiger im Grundpreis, teurer in den Add-ons.</p>
             <p><strong>Eigene Webseite (Sabala-Lite als Beispiel):</strong> 8.000 Euro einmalig, inklusive Brand-Audit, fünf Premium-Seiten, drei Blog-Artikel, sechs Monate Pflege. Danach Hosting plus 49 bis 149 Euro Pflege im Monat. Realistisch über 3 Jahre: <strong>9.500 bis 11.900 Euro</strong>.</p>
             <p>Auf den ersten Blick ist Baukasten günstiger. Aber das ist nicht die ganze Wahrheit.</p>
