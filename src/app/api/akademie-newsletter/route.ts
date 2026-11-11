@@ -1,44 +1,36 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { einwilligungStarten, FELDER, ipAus, type Formular } from "@/lib/anmeldung";
 import { insertLead } from "@/lib/leads";
-import { subscribeToAcademy, subscribeWarteliste } from "@/lib/activecampaign";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Akademie-Newsletter-Anmeldung
-   - Nimmt eine E-Mail entgegen, optional einen Vornamen.
-   - Trägt den Kontakt in ActiveCampaign ein (Akademie-Liste → Welcome-Mail),
-     sofern AC konfiguriert ist.
-   - Spiegelt die Anmeldung zusätzlich in die Turso-DB (quelle "Akademie-Newsletter"),
-     damit das Dashboard sie sieht und nichts verloren geht.
-   - Erfolgreich, sobald MINDESTENS einer der beiden Speicher greift.
-   - Mit "warteliste" gleiche Liste, aber eigener Tag und eigene Quelle: So laesst
-     sich die Warteliste getrennt anschreiben, und die Welcome-Mail bleibt aus.
+   Akademie-Newsletter und Wartelisten
+   - Vorname, Nachname, E-Mail, Telefon (freiwillig) und das Häkchen für Mails.
+     Ohne Häkchen gibt es keine Anmeldung: Der Newsletter ist der Zweck dieses Formulars.
+   - Legt die Anfrage in den Briefkasten (Turso). Von dort holt Sabala Mail sie ins CRM.
+   - Speichert den Nachweis der Einwilligung und schickt die Bestätigungsmail.
+     Erst nach dem Klick darin kommt der Kontakt ins Newsletter-Werkzeug (Liste + Tag,
+     der Tag startet die Willkommens-Strecke). Siehe src/lib/anmeldung.ts.
+   - Mit "warteliste" eigene Quelle und eigener Tag: So lässt sich die Warteliste
+     getrennt anschreiben, und die Willkommens-Mail bleibt aus.
    - Honeypot "fax", einfaches In-Memory-Rate-Limit.
    ────────────────────────────────────────────────────────────────────────── */
 
 const WARTELISTE = {
-  kurs: {
-    tag: "Warteliste Second Brain Kurs",
-    quelle: "Warteliste Kurs",
-    anliegen: "Warteliste: möchte den nächsten Termin des Second-Brain-Kurses erfahren.",
-  },
-  webinar: {
-    tag: "Warteliste Webinar",
-    quelle: "Warteliste Webinar",
-    anliegen: "Warteliste: möchte den nächsten Webinar-Termin erfahren.",
-  },
-} as const;
+  kurs: { formular: "Warteliste Kurs", anliegen: "Warteliste: möchte den nächsten Termin des Second-Brain-Kurses erfahren." },
+  webinar: { formular: "Warteliste Webinar", anliegen: "Warteliste: möchte den nächsten Webinar-Termin erfahren." },
+} as const satisfies Record<string, { formular: Formular; anliegen: string }>;
 
 const Schema = z.object({
   warteliste: z.enum(["kurs", "webinar"]).optional(),
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
-  email: z
-    .string()
-    .trim()
-    .max(160)
-    .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
+  vorname: FELDER.vorname,
+  nachname: FELDER.nachname,
+  email: FELDER.email,
+  telefon: FELDER.telefon,
+  einwilligung: z.literal(true),
+  einwilligungVersion: FELDER.einwilligungVersion,
   fax: z.string().max(0).optional().default(""),
 });
 
@@ -54,7 +46,7 @@ function rateLimited(ip: string, now: number): boolean {
 }
 
 export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = ipAus(req);
   if (rateLimited(ip, Date.now())) {
     return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
   }
@@ -75,37 +67,34 @@ export async function POST(req: Request) {
   // Honeypot: stilles OK
   if (data.fax) return NextResponse.json({ ok: true });
 
-  // 1) ActiveCampaign (Newsletter + Welcome-Mail) — best effort
-  let acState: "ok" | "skipped" | "error" = "skipped";
+  // 1) Briefkasten fürs CRM — best effort
   try {
-    acState = liste
-      ? await subscribeWarteliste(data.email, data.vorname || "", liste.tag)
-      : await subscribeToAcademy(data.email, data.vorname || "");
-  } catch (err) {
-    console.error("[akademie-newsletter] AC-Fehler:", err);
-    acState = "error";
-  }
-
-  // 2) Turso-Spiegel fürs Dashboard — best effort
-  let stored = false;
-  try {
-    stored = await insertLead({
-      vorname: data.vorname || "Newsletter",
-      nachname: liste ? "Warteliste" : "Abo",
+    await insertLead({
+      vorname: data.vorname,
+      nachname: data.nachname,
       email: data.email,
       unternehmen: "",
       webseite: "",
       anliegen: liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.",
-      quelle: liste?.quelle ?? "Akademie-Newsletter",
+      quelle: liste?.formular ?? "Akademie-Newsletter",
+      telefon: data.telefon,
     });
   } catch (err) {
     console.error("[akademie-newsletter] Turso-Fehler:", err);
   }
 
-  // Erfolg, sobald einer der beiden Wege gegriffen hat
-  if (acState === "ok" || stored) {
-    return NextResponse.json({ ok: true });
+  // 2) Nachweis der Einwilligung + Bestätigungsmail. Ins Newsletter-Werkzeug geht es erst nach dem Klick.
+  const bestaetigung = await einwilligungStarten({
+    formular: liste?.formular ?? "Akademie-Newsletter",
+    email: data.email,
+    vorname: data.vorname,
+    nachname: data.nachname,
+    version: data.einwilligungVersion,
+    ip,
+  });
+  if (bestaetigung === "fehlt") {
+    // Datenbank oder Postfach nicht eingerichtet, oder der Versand ist gescheitert → Frontend zeigt den Ausweichtext
+    return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
   }
-  // Nichts konfiguriert/erreichbar → Frontend zeigt freundlichen Fallback
-  return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
+  return NextResponse.json({ ok: true, bestaetigung });
 }

@@ -114,8 +114,6 @@ export default function Termine() {
               api="/api/akademie-newsletter"
               extra={{ warteliste: "kurs" }}
               knopf="Auf die Warteliste"
-              danke="Du stehst auf der Liste. Sobald der nächste Lauf feststeht, melde ich mich per Mail."
-              hinweis="Du bekommst den neuen Termin und meinen Akademie-Newsletter."
             />
           </Reveal>
         </div>

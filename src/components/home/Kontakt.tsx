@@ -4,20 +4,25 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Reveal, SektionsKopf, TEXT_AUF_DUNKEL, Weiter } from "@/components/akademie/shared";
+import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 
 /* Kontakt-Block der Startseite: links die Einladung, rechts das Formular, zusammen in einem Laptop-Fenster.
    Schickt an /api/kontakt (Turso + ntfy-Push). Fällt sichtbar auf mailto zurück, falls das Backend
-   nicht antwortet, damit keine Anfrage verloren geht. */
+   nicht antwortet, damit keine Anfrage verloren geht.
+   Das Häkchen für Mails ist freiwillig: Die Anfrage geht auch ohne raus. Mit Häkchen kommt eine Bestätigungsmail. */
 export default function Kontakt() {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "mailto">("idle");
-  const [form, setForm] = useState({ vorname: "", nachname: "", email: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
+  const [form, setForm] = useState({ vorname: "", nachname: "", email: "", telefon: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
+  const [einwilligung, setEinwilligung] = useState(false);
+  const [bestaetigung, setBestaetigung] = useState<string>();
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const mailtoFallback = () => {
-    const body = [`Vorname: ${form.vorname}`, `Nachname: ${form.nachname}`, `E-Mail: ${form.email}`, `Unternehmen: ${form.unternehmen}`, `Webseite: ${form.webseite}`, "", form.anliegen].join("\n");
+    const body = [`Vorname: ${form.vorname}`, `Nachname: ${form.nachname}`, `E-Mail: ${form.email}`, `Telefon: ${form.telefon}`, `Unternehmen: ${form.unternehmen}`, `Webseite: ${form.webseite}`, "", form.anliegen].join("\n");
     window.location.href = `mailto:sabala@sabala-mentoring.com?subject=${encodeURIComponent(`Anfrage: ${form.vorname} ${form.nachname}`)}&body=${encodeURIComponent(body)}`;
   };
 
@@ -28,9 +33,10 @@ export default function Kontakt() {
       const res = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, quelle: pathname || "/" }),
+        body: JSON.stringify({ ...form, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, quelle: pathname || "/" }),
       });
       if (res.ok) {
+        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
         setStatus("done");
       } else {
         // Backend nicht bereit oder Fehler: mailto, damit nichts verloren geht
@@ -68,6 +74,9 @@ export default function Kontakt() {
                   ? "Dein Mailprogramm hat sich geöffnet, schick die Mail einfach ab. Ich melde mich mit einem Terminvorschlag."
                   : "Ich melde mich zeitnah mit einem Terminvorschlag bei dir."}
               </p>
+              {status === "done" && bestaetigungsHinweis(bestaetigung) && (
+                <p className="mt-3 text-[1rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>{bestaetigungsHinweis(bestaetigung)}</p>
+              )}
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -75,12 +84,19 @@ export default function Kontakt() {
                 <input className={feld} style={rand} placeholder="Vorname" aria-label="Vorname" autoComplete="given-name" required value={form.vorname} onChange={set("vorname")} />
                 <input className={feld} style={rand} placeholder="Nachname" aria-label="Nachname" autoComplete="family-name" required value={form.nachname} onChange={set("nachname")} />
               </div>
-              <input type="email" required className={feld} style={rand} placeholder="E-Mail" aria-label="E-Mail-Adresse" autoComplete="email" value={form.email} onChange={set("email")} />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <input type="email" required className={feld} style={rand} placeholder="E-Mail" aria-label="E-Mail-Adresse" autoComplete="email" value={form.email} onChange={set("email")} />
+                <input type="tel" className={feld} style={rand} placeholder="Telefon (freiwillig)" aria-label="Telefon, freiwillig" autoComplete="tel" value={form.telefon} onChange={set("telefon")} />
+              </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 <input className={feld} style={rand} placeholder="Unternehmen (optional)" aria-label="Unternehmen, optional" autoComplete="organization" value={form.unternehmen} onChange={set("unternehmen")} />
                 <input className={feld} style={rand} placeholder="Deine Webseite (optional)" aria-label="Deine Webseite, optional" value={form.webseite} onChange={set("webseite")} />
               </div>
               <textarea className={feld} style={rand} rows={4} required placeholder="Was ist dein Wunsch? Woran steckst du fest? Schreib einfach drauflos." aria-label="Dein Wunsch" value={form.anliegen} onChange={set("anliegen")} />
+
+              <div className="py-1">
+                <Einwilligung id="kontakt-mails" an={einwilligung} setAn={setEinwilligung} />
+              </div>
 
               {/* Honeypot: für Menschen unsichtbar */}
               <input type="text" name="fax" tabIndex={-1} autoComplete="off" value={form.fax} onChange={set("fax")} className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden />

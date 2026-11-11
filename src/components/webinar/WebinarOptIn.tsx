@@ -6,9 +6,9 @@ import { WEBINAR, WEBINAR_KNOPF, WEBINAR_TERMIN } from "./config";
 
 /* ─────────────────────────────────────────────────────────────────────────
    WebinarOptIn — der Anmelde-Block (#anmelden). Mit Termin postet er nach
-   /api/webinar, dort startet der ActiveCampaign-Tag die Webinar-Automation
-   (Zugangslink, Erinnerung, Aufzeichnung). Ohne Termin sammelt er die Warteliste,
-   damit niemand die Mail-Strecke zum alten Datum bekommt.
+   /api/webinar. Nach der Bestätigungsmail startet der ActiveCampaign-Tag die
+   Webinar-Automation (Zugangslink, Erinnerung, Aufzeichnung). Ohne Termin sammelt
+   er die Warteliste, damit niemand die Mail-Strecke zum alten Datum bekommt.
    ───────────────────────────────────────────────────────────────────────── */
 
 const gold = "#d4ae5a";
@@ -63,23 +63,13 @@ export default function WebinarOptIn() {
               <p style={{ fontSize: 15.5, color: "rgba(250,248,245,0.74)", lineHeight: 1.7, marginBottom: 30 }}>
                 {WEBINAR.warteliste
                   ? "Trag dich auf die Warteliste ein. Sobald der neue Termin steht, bekommst du ihn per Mail. Kannst du dann live nicht, geht die Aufzeichnung am Tag danach an dich raus."
-                  : "Trag dich ein, dann bekommst du den Zugangslink und eine Erinnerung kurz vorher. Kannst du live nicht, geht die Aufzeichnung am Tag danach an dich raus."}
+                  : "Trag dich ein und bestätige kurz die Mail, die danach kommt. Dann bekommst du den Zugangslink und eine Erinnerung kurz vorher. Kannst du live nicht, geht die Aufzeichnung am Tag danach an dich raus."}
               </p>
 
               <AnmeldeForm
                 api={WEBINAR.warteliste ? "/api/akademie-newsletter" : "/api/webinar"}
                 extra={WEBINAR.warteliste ? { warteliste: "webinar" } : undefined}
                 knopf={WEBINAR_KNOPF}
-                danke={
-                  WEBINAR.warteliste
-                    ? "Du stehst auf der Liste. Sobald der neue Termin steht, melde ich mich per Mail."
-                    : "Du bist dabei. Schau in dein Postfach, der Zugangslink ist unterwegs. Falls nichts ankommt, wirf einen Blick in den Spam-Ordner."
-                }
-                hinweis={
-                  WEBINAR.warteliste
-                    ? "Du bekommst den neuen Termin und meinen Akademie-Newsletter."
-                    : "Du bekommst den Webinar-Zugang und meinen Akademie-Newsletter."
-                }
               />
 
               {WEBINAR.linkedInEventUrl && (

@@ -92,7 +92,8 @@ async function subscribeToList(
   email: string,
   firstName: string,
   listId: string | undefined,
-  tagName: string
+  tagName: string,
+  lastName = ""
 ): Promise<AcResult> {
   const base = cfgBase();
   if (!base || !listId) return "skipped";
@@ -104,7 +105,7 @@ async function subscribeToList(
     const syncRes = await fetch(`${base.url}/api/3/contact/sync`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ contact: { email, firstName } }),
+      body: JSON.stringify({ contact: { email, firstName, ...(lastName ? { lastName } : {}) } }),
     });
     if (!syncRes.ok) {
       console.error("[activecampaign] contact/sync fehlgeschlagen:", syncRes.status);
@@ -189,12 +190,13 @@ export async function tagContact(
 }
 
 /* Akademie-Newsletter → Akademie-Liste + Akademie-Tag (Welcome-Automation). */
-export async function subscribeToAcademy(email: string, firstName = ""): Promise<AcResult> {
+export async function subscribeToAcademy(email: string, firstName = "", lastName = ""): Promise<AcResult> {
   return subscribeToList(
     email,
     firstName,
     process.env.AC_AKADEMIE_LIST_ID,
-    process.env.AC_AKADEMIE_TAG || AKADEMIE_DEFAULT_TAG
+    process.env.AC_AKADEMIE_TAG || AKADEMIE_DEFAULT_TAG,
+    lastName
   );
 }
 
@@ -202,30 +204,32 @@ export async function subscribeToAcademy(email: string, firstName = ""): Promise
    ponytail: laeuft bewusst auf der bestehenden Akademie-Liste (gleiche Zielgruppe,
    ein Versand-Container). Der eigene Tag trennt die Automation: Erinnerungsmails
    vor dem Termin, Aufzeichnung danach. Per Env auf eine eigene Liste umstellbar. */
-export async function subscribeWebinar(email: string, firstName = ""): Promise<AcResult> {
+export async function subscribeWebinar(email: string, firstName = "", lastName = ""): Promise<AcResult> {
   return subscribeToList(
     email,
     firstName,
     process.env.AC_WEBINAR_LIST_ID || process.env.AC_AKADEMIE_LIST_ID,
-    process.env.AC_WEBINAR_TAG || "Webinar Second Brain"
+    process.env.AC_WEBINAR_TAG || "Webinar Second Brain",
+    lastName
   );
 }
 
 /* Warteliste → Akademie-Liste + eigener Tag. An den Warteliste-Tags haengt keine
    Automation, es geht also keine Mail raus, bis Ilja den neuen Termin verschickt.
    Mit einer Automation auf dem Tag wird daraus jederzeit eine Bestaetigungsmail. */
-export async function subscribeWarteliste(email: string, firstName: string, tagName: string): Promise<AcResult> {
-  return subscribeToList(email, firstName, process.env.AC_AKADEMIE_LIST_ID, tagName);
+export async function subscribeWarteliste(email: string, firstName: string, tagName: string, lastName = ""): Promise<AcResult> {
+  return subscribeToList(email, firstName, process.env.AC_AKADEMIE_LIST_ID, tagName, lastName);
 }
 
 /* Mooni-Voice-Funnel → Mooni-Liste + Mooni-Tag.
    ponytail: feste Default-Liste 28 / Tag "Mooni Voice Beta" — bekannte stabile
    IDs aus dem Standalone-Funnel (gleicher AC-Account). Per Env ueberschreibbar. */
-export async function subscribeMooniVoice(email: string, firstName = ""): Promise<AcResult> {
+export async function subscribeMooniVoice(email: string, firstName = "", lastName = ""): Promise<AcResult> {
   return subscribeToList(
     email,
     firstName,
     process.env.AC_MOONI_LIST_ID || "28",
-    process.env.AC_MOONI_TAG || MOONI_DEFAULT_TAG
+    process.env.AC_MOONI_TAG || MOONI_DEFAULT_TAG,
+    lastName
   );
 }
