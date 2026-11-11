@@ -95,7 +95,9 @@ function Kopf() {
           </p>
         </div>
 
-        <div className="cs-rise relative mx-auto aspect-[5/4] w-full max-w-[560px]" style={EIN(0.2)}>
+        {/* Ohne Verzögerung: Am Handy ist ein Bild des Stapels der größte Inhalt im ersten Bildschirm. Google misst, wann es zu sehen ist,
+            und jede Verzögerung beim Einblenden zählt dabei mit. */}
+        <div className="cs-rise relative mx-auto aspect-[5/4] w-full max-w-[560px]" style={EIN(0)}>
           <span aria-hidden className="pointer-events-none absolute -inset-8 rounded-[2rem]" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.2), transparent 70%)" }} />
           {STAPEL.map(({ fall: f, art, lage }) => (
             <a
