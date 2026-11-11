@@ -2,7 +2,7 @@
    Neues Werkzeug = ein Eintrag mehr, die Seite zeigt es als weitere Karte.
 
    In den Shop kommt nur, was quelloffen ist und nichts kostet (Iljas Entscheidung vom 11.11.2026).
-   Web Design OS und KI-Assistenzteam sind seitdem raus. Jede Angabe hier muss auf der Seite des Werkzeugs
+   Die zwei alten Kaufprodukte sind seitdem raus. Jede Angabe hier muss auf der Seite des Werkzeugs
    oder in seinem Repository belegt sein, nichts dazuerfinden. */
 
 export type Werkzeug = {

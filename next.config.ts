@@ -103,10 +103,11 @@ const nextConfig: NextConfig = {
         destination: "/shop",
         permanent: true,
       },
-      // Web Design OS und KI-Assistenzteam am 11.11.2026 eingestellt: Im Shop stehen nur noch
-      // Open-Source-Werkzeuge. Die Seite für Käufer, /webdesign-os/start, bleibt bestehen.
+      // Die zwei alten Kaufprodukte sind seit 11.11.2026 eingestellt: Im Shop stehen nur noch
+      // Open-Source-Werkzeuge. Seit 12.11.2026 sind auch die Käuferseite und die Bilder entfernt.
+      // Alles unter den alten Adressen führt in den Shop.
       {
-        source: "/webdesign-os",
+        source: "/webdesign-os/:path*",
         destination: "/shop",
         permanent: true,
       },
