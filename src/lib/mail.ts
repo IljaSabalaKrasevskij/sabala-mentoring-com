@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { EINWILLIGUNG_TEXT } from "@/lib/einwilligung-text";
-import { bestaetigungHtml, bestaetigungText } from "@/lib/mail-html";
+import { anlassVon, bestaetigungHtml, bestaetigungText } from "@/lib/mail-html";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Bestätigungsmail für das Double-Opt-in. Geht über das eigene Postfach raus (SMTP),
@@ -24,13 +24,15 @@ import { bestaetigungHtml, bestaetigungText } from "@/lib/mail-html";
 
 export const mailBereit = () => !!process.env.SMTP_HOST && !!process.env.SMTP_USER;
 
-/** Text und HTML der Mail. Eigene Funktion, damit man sie ansehen kann, ohne etwas zu verschicken. */
-export function bestaetigungsMail(link: string) {
-  return { betreff: "Bitte bestätige deine Anmeldung", text: bestaetigungText(link, EINWILLIGUNG_TEXT), html: bestaetigungHtml(link, EINWILLIGUNG_TEXT) };
+/** Text und HTML der Mail. Eigene Funktion, damit man sie ansehen kann, ohne etwas zu verschicken.
+ *  quelle: das Formular aus der Datenbank. Leadmagnete wie das Startpaket bekommen ihren eigenen Betreff (anlassVon in mail-html.ts). */
+export function bestaetigungsMail(link: string, quelle = "") {
+  const anlass = anlassVon(quelle);
+  return { betreff: anlass.betreff, text: bestaetigungText(link, EINWILLIGUNG_TEXT, anlass), html: bestaetigungHtml(link, EINWILLIGUNG_TEXT, anlass) };
 }
 
 /** Schickt die Bestätigungsmail. false, wenn kein Postfach eingerichtet ist. Wirft, wenn der Mailserver ablehnt. */
-export async function bestaetigungSenden(an: string, link: string): Promise<boolean> {
+export async function bestaetigungSenden(an: string, link: string, quelle = ""): Promise<boolean> {
   if (!mailBereit()) return false;
   const port = Number(process.env.SMTP_PORT || 465);
   const user = process.env.SMTP_USER!;
@@ -42,7 +44,7 @@ export async function bestaetigungSenden(an: string, link: string): Promise<bool
     connectionTimeout: 8000,
     socketTimeout: 10000,
   });
-  const m = bestaetigungsMail(link);
+  const m = bestaetigungsMail(link, quelle);
   // Empfänger als fertige Adresse übergeben: So liest nodemailer die Zeichenkette nicht als Liste von Empfängern.
   await transport.sendMail({ from: process.env.MAIL_VON || `Sabala Mentoring <${user}>`, to: { name: "", address: an }, subject: m.betreff, text: m.text, html: m.html });
   return true;

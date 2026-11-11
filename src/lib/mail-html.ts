@@ -93,11 +93,30 @@ ${inhalt}
 </html>`;
 }
 
+/** Wofür jemand bestätigt: Betreff, kleine Zeile im Kopf, Vorschauzeile und ein eigener Satz. Ohne satz gilt der allgemeine Text. */
+export type Anlass = { betreff: string; zeile: string; vorschau: string; satz?: string };
+
+const NEWSLETTER: Anlass = { betreff: "Bitte bestätige deine Anmeldung", zeile: "Newsletter · Anmeldung", vorschau: "Ein Klick fehlt noch, dann bist du dabei." };
+
+/* Leadmagnete nennen in der Mail, was nach dem Klick kommt, damit man die Mail wiedererkennt.
+   Nur feste Texte, gewählt über das Kürzel aus der Datenbank, nie etwas aus dem Formular. Keine Werbung, nur das angeforderte Paket.
+   Der Satz muss im HTML (Knopf oben) und im Text (Link darunter) passen, darum ohne „oben“ und „unten“. */
+const ANLAESSE: Record<string, Anlass> = {
+  "startpaket-claude-code": {
+    betreff: "Dein Claude-Code-Startpaket: ein Klick fehlt noch",
+    zeile: "Claude-Code-Startpaket",
+    vorschau: "Ein Klick, dann liegt dein Startpaket bereit.",
+    satz: "schön, dass du das Claude-Code-Startpaket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
+  },
+};
+
+export const anlassVon = (quelle: string): Anlass => (Object.prototype.hasOwnProperty.call(ANLAESSE, quelle) ? ANLAESSE[quelle] : NEWSLETTER);
+
 /**
  * Die Bestätigungsmail (Double-Opt-in). Sie enthält keine Werbung und nichts, was jemand ins Formular getippt hat:
  * nur die Bitte um den Klick, den Wortlaut der Einwilligung, die Signatur und das Impressum.
  */
-export function bestaetigungHtml(link: string, wortlaut: string): string {
+export function bestaetigungHtml(link: string, wortlaut: string, anlass: Anlass = NEWSLETTER): string {
   const adresse = maskiert(link);
   const inhalt = `
     <tr>
@@ -121,7 +140,7 @@ export function bestaetigungHtml(link: string, wortlaut: string): string {
     <tr>
       <td style="padding:38px 28px 0 28px; font-size:16px; line-height:1.65; color:${TEXT};">
         <p style="margin:0 0 16px 0;">Hey du,</p>
-        <p style="margin:0 0 30px 0;">schön, dass du dabei sein willst. Bestätige oben bitte kurz, dass diese Adresse dir gehört. Erst danach schreibe ich dir.</p>
+        <p style="margin:0 0 30px 0;">${anlass.satz ? maskiert(anlass.satz) : "schön, dass du dabei sein willst. Bestätige oben bitte kurz, dass diese Adresse dir gehört. Erst danach schreibe ich dir."}</p>
       </td>
     </tr>
     <tr>
@@ -136,17 +155,17 @@ export function bestaetigungHtml(link: string, wortlaut: string): string {
         <p style="margin:0; font-size:13px; line-height:1.6;">Geht der Knopf nicht? Dann kopiere diese Adresse in deinen Browser:<br><span style="word-break:break-all; color:#7A7268;">${adresse}</span></p>
       </td>
     </tr>`;
-  return mailRahmen({ titel: "Bitte bestätige deine Anmeldung", vorschau: "Ein Klick fehlt noch, dann bist du dabei.", zeile: "Newsletter · Anmeldung", inhalt, adlerImKopf: false });
+  return mailRahmen({ titel: anlass.betreff, vorschau: anlass.vorschau, zeile: anlass.zeile, inhalt, adlerImKopf: false });
 }
 
 /** Dieselbe Mail als reiner Text, für Mailprogramme ohne HTML und für Spamfilter, die beide Fassungen erwarten. */
-export function bestaetigungText(link: string, wortlaut: string): string {
+export function bestaetigungText(link: string, wortlaut: string, anlass: Anlass = NEWSLETTER): string {
   return [
     "Fast geschafft. Ein Klick fehlt noch.",
     "",
     "Hey du,",
     "",
-    "schön, dass du dabei sein willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Erst danach schreibe ich dir:",
+    anlass.satz ?? "schön, dass du dabei sein willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Erst danach schreibe ich dir:",
     "",
     link,
     "",

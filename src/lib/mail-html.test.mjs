@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { bestaetigungHtml, bestaetigungText } from "./mail-html.ts";
+import { anlassVon, bestaetigungHtml, bestaetigungText } from "./mail-html.ts";
 
 const LINK = "https://sabala-mentoring.com/api/newsletter/bestaetigen?t=abc_DEF-123";
 const WORTLAUT = "Ja, ich will den Sabala Newsletter & mehr.";
@@ -37,4 +37,23 @@ test("Keine Schrift unter 12 px (außer der versteckten Vorschauzeile), kein Sty
   assert.ok(!/<style/i.test(html), "Stile stehen am Element, viele Mailprogramme werfen <style> weg");
   // Die Bestätigungsmail darf keine Werbung enthalten: keine Verweise auf Angebote oder Kanäle
   for (const werbung of ["/akademie", "/shop", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!html.includes(werbung), werbung);
+});
+
+test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den allgemeinen Text", () => {
+  const a = anlassVon("startpaket-claude-code");
+  assert.match(a.betreff, /Claude-Code-Startpaket/);
+  const h = bestaetigungHtml(LINK, WORTLAUT, a);
+  const t = bestaetigungText(LINK, WORTLAUT, a);
+  for (const s of [h, t]) {
+    assert.ok(s.includes("Claude-Code-Startpaket") && s.includes("direkt zum Download"), "nennt Paket und Download");
+    assert.ok(!s.includes("Erst danach schreibe ich dir"), "kein allgemeiner Satz daneben");
+  }
+  assert.ok(h.includes(`<a href="${LINK}"`) && t.includes(LINK), "Link bleibt derselbe");
+  assert.ok(h.includes("<title>Dein Claude-Code-Startpaket: ein Klick fehlt noch</title>"));
+  for (const werbung of ["/akademie", "/shop", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!h.includes(werbung), werbung);
+  // Alles, was kein Leadmagnet mit eigenem Text ist, bekommt die Mail wie bisher
+  for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) {
+    assert.equal(anlassVon(q).betreff, "Bitte bestätige deine Anmeldung", q);
+  }
+  assert.ok(html.includes("Erst danach schreibe ich dir.") && text.includes("Erst danach schreibe ich dir:"), "allgemeine Mail unverändert");
 });
