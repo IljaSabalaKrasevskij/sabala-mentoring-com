@@ -10,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-16";
 
 export const metadata = {
-  title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
+  title: { absolute: "Was kostet eine KI-Webseite? Die 5-Jahres-Rechnung" },
   description:
     "Baukasten 1.500-3.500 Euro über 3 Jahre. Eigene Webseite 8.000-15.000 Euro einmalig. Wo der Break-Even liegt, welche Kosten beide verschleiern, und welche Frage am Ende mehr zählt als der Preis.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
+    title: "Was kostet eine KI-Webseite? Die 5-Jahres-Rechnung",
     description: "Echte Zahlen, Hidden Costs, Break-Even-Punkt. Ohne Agentur-Sprech.",
     type: "article",
     publishedTime: datePublished,

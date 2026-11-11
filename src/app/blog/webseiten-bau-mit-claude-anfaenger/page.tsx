@@ -10,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-18";
 
 export const metadata = {
-  title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
+  title: { absolute: "Webseite mit Claude Code bauen: der Anfänger-Guide" },
   description:
     "Was die meisten beim ersten Claude-Code-Setup falsch machen, und wie der Einstieg wirklich in 45 Minuten produktiv wird. Die drei Pflicht-Dateien und die fünf häufigsten Fehler.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
+    title: "Webseite mit Claude Code bauen: der Anfänger-Guide",
     description: "Drei Pflicht-Dateien, fünf typische Fehler, klarer Einstieg in 45 Minuten.",
     type: "article",
     publishedTime: datePublished,

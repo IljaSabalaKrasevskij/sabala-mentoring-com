@@ -10,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-21";
 
 export const metadata = {
-  title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
+  title: { absolute: "Ponytail-Plugin für Claude Code: was es wirklich bringt" },
   description:
     "Claude Code baut oft zu viel und steht damit schnell am Limit. Ein kostenloses Plugin dreht das um. Was die viralen Zahlen wirklich sagen, ehrlich nachgerechnet, mit allen Sicherheits-Grenzen.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
+    title: "Ponytail-Plugin für Claude Code: was es wirklich bringt",
     description: "Ein Befehl, rund 54 Prozent weniger Code, volle Sicherheit. Ehrlich getestet statt viral nachgeplappert.",
     type: "article",
     publishedTime: datePublished,
