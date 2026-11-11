@@ -124,7 +124,7 @@ export async function einwilligungStarten(d: { formular: Formular; email: string
     // Auch wer schon bestätigt ist, bekommt nur eine Mail mit Link. Erst der Klick löst im Newsletter-Werkzeug etwas aus.
     // Ging eben erst eine Mail an diese Adresse, sieht die Antwort trotzdem gleich aus: Von außen lässt sich nichts über die Adresse ablesen.
     if (!stand.senden) return "gesendet";
-    if (!(await bestaetigungSenden(d.email, `${BASIS}/api/newsletter/bestaetigen?t=${stand.token}`))) return "fehlt";
+    if (!(await bestaetigungSenden(d.email, `${BASIS}/api/newsletter/bestaetigen?t=${stand.token}`, d.formular))) return "fehlt";
     await vermerken(db, stand.id, "mail");
     return "gesendet";
   } catch (err) {
