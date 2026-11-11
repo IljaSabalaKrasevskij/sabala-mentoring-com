@@ -97,7 +97,7 @@ function Kopf() {
 
         <div className="cs-rise relative mx-auto aspect-[5/4] w-full max-w-[560px]" style={EIN(0.2)}>
           <span aria-hidden className="pointer-events-none absolute -inset-8 rounded-[2rem]" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.2), transparent 70%)" }} />
-          {STAPEL.map(({ fall: f, art, lage }, i) => (
+          {STAPEL.map(({ fall: f, art, lage }) => (
             <a
               key={f.id}
               href="/case-studies"
@@ -106,7 +106,8 @@ function Kopf() {
               style={{ border: "1.5px solid rgba(212,174,90,0.5)", boxShadow: "0 26px 60px rgba(0,0,0,0.6), 0 0 40px rgba(184,150,62,0.12)" }}
             >
               <span className="relative block aspect-[16/9]">
-                <Image src={f.image!} alt="" fill priority={i === 2} sizes="(max-width: 900px) 62vw, 370px" className="object-cover object-top" />
+                {/* Alle drei laden früh: Am Handy ist eines davon der größte Inhalt im ersten Bildschirm. */}
+                <Image src={f.image!} alt="" fill priority sizes="(max-width: 900px) 62vw, 370px" className="object-cover object-top" />
               </span>
               <span className="absolute bottom-2 left-2 rounded-full px-2.5 py-1 font-mono text-[12.5px] uppercase tracking-[0.12em] text-cream" style={{ background: "rgba(10,8,6,0.82)", border: "1px solid rgba(212,174,90,0.45)" }}>
                 {art}

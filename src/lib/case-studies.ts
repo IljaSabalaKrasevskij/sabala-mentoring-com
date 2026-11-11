@@ -75,14 +75,14 @@ export const CASE_STUDIES: CaseStudy[] = [
       en: "Position a one person AI studio that does three different things (websites, co-development, an AI academy) on a single homepage, without the visitor losing the thread.",
     },
     claudeUsage: {
-      de: "Die ganze Seite mit Claude Code gebaut: Solar-System-Hero mit React Three Fiber, Sales-Page für die KI-Akademie, Lead-Pipeline in Turso libSQL, Scroll-Choreografie mit Lenis. Architektur, Texte und Code in derselben Schleife geprüft.",
-      en: "Built the entire site with Claude Code: React Three Fiber solar system hero, sales page for the AI academy, lead pipeline into Turso libSQL, scroll choreography with Lenis. Architecture, copy and code reviewed in the same loop.",
+      de: "Die ganze Seite mit Claude Code gebaut: Startseite mit einem Bildstapel aus echten Arbeiten, Sales-Page für die KI-Akademie, Shop für freie Werkzeuge, Lead-Pipeline in Turso libSQL. Architektur, Texte und Code in derselben Schleife geprüft.",
+      en: "Built the entire site with Claude Code: homepage with a stack of real projects, sales page for the AI academy, shop for free tools, lead pipeline into Turso libSQL. Architecture, copy and code reviewed in the same loop.",
     },
     result: {
       de: "Live auf sabala-mentoring.com. Die KI-Akademie-Sales-Page mit zwei ausverkauften Durchgängen gestartet, plus aktive Lead-Pipeline über das Kontaktformular ins eigene Dashboard.",
       en: "Live on sabala-mentoring.com. Launched the academy sales page with two sold out cohorts and an active leads pipeline through the contact form into a self hosted dashboard.",
     },
-    tags: ["Claude Code", "Next.js 16", "React Three Fiber", "Turso"],
+    tags: ["Claude Code", "Next.js 16", "Tailwind CSS", "Turso"],
     url: "https://sabala-mentoring.com",
     image: "/case-studies/sabala-mentoring.jpg",
   },
