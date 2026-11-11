@@ -51,7 +51,7 @@ export const BERATUNG_PREIS_REGULAER = 200;
 export const BERATUNG_GUTSCHEIN = 120;
 
 /* So heissen die drei Termine auf der Kursseite /akademie und der Übersichtsseite /akademie-hub,
-   in der Reihenfolge von `sessions`. Die Labels in COHORTS bleiben fuer Startseite und Beratung, wie sie sind. */
+   in der Reihenfolge von `sessions`. Die Labels in COHORTS bleiben fuer die Startseite, wie sie sind. */
 export const TERMIN_NAMEN = ["Workshop 1", "Workshop 2", "Fragestunde"];
 
 export function formatSessionDate(date: string) {
@@ -85,18 +85,6 @@ export function sessionZeiten(s: { date: string; time: string }) {
     .value.replace("GMT", "");
   return { start: `${s.date}T${von}:00${versatz}`, ende: `${s.date}T${bis}:00${versatz}` };
 }
-
-export const COURSE_SCHEDULE = CURRENT_COHORT?.sessions
-  .map((s) => `${s.label}: ${formatSessionDate(s.date)}, ${s.time}`)
-  .join("; ") ?? "Nächster Termin folgt";
-
-/* Termin-Chips im Kopf und im Preisblock. */
-export const TERMIN_CHIPS = CURRENT_COHORT?.sessions.map((s) => ({
-  ...s,
-  date: formatSessionDate(s.date),
-})) ?? [
-  { label: "Nächster Lauf", date: "Termin folgt", time: "Warteliste offen" },
-];
 
 export const STATUS_LABEL: Record<CohortStatus, string> = {
   offen: "Plätze frei",
