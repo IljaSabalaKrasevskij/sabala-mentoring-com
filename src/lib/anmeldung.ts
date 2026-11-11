@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar } from "@/lib/activecampaign";
+import { subscribeLeadmagnet, subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar, tagContact } from "@/lib/activecampaign";
 import { anmelden, bestaetigen, lastDerStunde, vermerken, type Bestaetigt } from "@/lib/einwilligung";
 import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
 import { getClient } from "@/lib/leads";
 import { bestaetigungSenden, mailBereit } from "@/lib/mail";
+import { FORMULARE, istLeadmagnet, istQuelle, LEADMAGNETE, NISCHEN, nischeVon, type Quelle } from "@/lib/quellen";
 import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -57,11 +58,12 @@ export function eingabeAbsage(fehler: z.ZodError) {
   return NextResponse.json({ ok: false, reason: "validation", feld: String(erster?.path[0] ?? ""), meldung: erster?.message ?? "Bitte prüf deine Angaben." }, { status: 422 });
 }
 
-/** Aus welchem Formular die Einwilligung kam. Steht als Quelle im Nachweis und entscheidet, was nach dem Klick passiert. */
-export type Formular = "Akademie-Newsletter" | "Warteliste Kurs" | "Warteliste Webinar" | "Webinar Second Brain" | "Mooni Voice" | "Kontaktformular";
+/** Aus welchem Formular oder von welchem Leadmagneten die Einwilligung kam (src/lib/quellen.ts). Steht als Quelle im Nachweis und entscheidet, was nach dem Klick passiert. */
+export type Formular = Quelle;
 
-/* Der Eintrag ins Newsletter-Werkzeug je Formular. Tag startet dort die passende Mail-Strecke (Willkommen, Webinar-Zugang). */
-const NACH_KLICK: Record<Formular, (b: Bestaetigt) => Promise<"ok" | "skipped" | "error">> = {
+/* Der Eintrag ins Newsletter-Werkzeug je Formular. Tag startet dort die passende Mail-Strecke (Willkommen, Webinar-Zugang).
+   Leadmagnete stehen nicht hier: Sie laufen alle gleich, auf die Akademie-Liste mit dem Tag „Leadmagnet: <Name>“. */
+const NACH_KLICK: Record<keyof typeof FORMULARE, (b: Bestaetigt) => Promise<"ok" | "skipped" | "error">> = {
   "Akademie-Newsletter": (b) => subscribeToAcademy(b.email, b.vorname, b.nachname),
   Kontaktformular: (b) => subscribeToAcademy(b.email, b.vorname, b.nachname),
   "Warteliste Kurs": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Second Brain Kurs", b.nachname),
@@ -72,11 +74,14 @@ const NACH_KLICK: Record<Formular, (b: Bestaetigt) => Promise<"ok" | "skipped" |
 
 async function insWerkzeug(b: Bestaetigt, formular: string): Promise<void> {
   const db = getClient();
-  const tun = NACH_KLICK[formular as Formular];
-  if (!tun) return;
+  if (!istQuelle(formular)) return;
+  const magnet = istLeadmagnet(formular) ? LEADMAGNETE[formular].name : null;
+  const nische = nischeVon(formular);
   let stand: string;
   try {
-    stand = await tun(b);
+    stand = magnet ? await subscribeLeadmagnet(b.email, b.vorname, b.nachname, magnet) : await NACH_KLICK[formular as keyof typeof FORMULARE](b);
+    // Die Nische als eigener Tag: Daran lassen sich im Newsletter-Werkzeug Gruppen für passende Mails bilden.
+    if (stand === "ok" && nische && (await tagContact(b.email, `Nische: ${NISCHEN[nische]}`)) !== "ok") stand = "ok, aber der Nische-Tag fehlt";
   } catch (err) {
     console.error("[einwilligung] Newsletter-Werkzeug nicht erreichbar:", err);
     stand = "error";
