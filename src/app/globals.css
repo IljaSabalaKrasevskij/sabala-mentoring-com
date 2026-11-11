@@ -25,6 +25,11 @@
 .prose code::after {
   content: none;
 }
+/* Beginnt ein Textblock mit einer Überschrift, bringt der Abschnitt darüber schon Luft mit. Ohne diese Regel
+   addierten sich Abschnitt und Überschrift auf rund 170 px. */
+.prose > :is(h2, h3):first-child {
+  margin-top: 0;
+}
 
 @theme inline {
   --color-warm-canvas: #FAF8F5;
