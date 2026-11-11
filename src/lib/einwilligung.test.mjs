@@ -187,3 +187,7 @@ test("Absender für die Obergrenzen: IPv4 bleibt, bei IPv6 zählt das Netz, egal
   assert.equal(absenderNetz("2001:DB8::1:0:0:0:99"), "2001:0db8:0000:0001", "andere Schreibweise, anderes Gerät, selbes Netz");
   assert.equal(absenderNetz("unknown"), "unbekannt");
 });
+
+test("Unbekannter Schlüssel an einer frischen Datenbank: kein Fehler, einfach nichts", async () => {
+  assert.equal(await bestaetigen(frisch(), "gibtesnichtgibtesnichtgibtesnicht", "198.51.100.9"), null);
+});

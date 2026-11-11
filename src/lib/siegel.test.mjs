@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createClient } from "@libsql/client";
-import { JE_ABSENDER_JE_STUNDE, MAX_ALTER_MS, MIN_ALTER_MS, siegelAusstellen, siegelEinloesen } from "./siegel.ts";
+import { GESAMT_JE_STUNDE, JE_ABSENDER_JE_STUNDE, MAX_ALTER_MS, MIN_ALTER_MS, siegelAusstellen, siegelEinloesen } from "./siegel.ts";
 
 // Läuft gegen eine Datenbank im Speicher, die Uhr wird von Hand gestellt.
 const frisch = () => createClient({ url: ":memory:" });
@@ -77,4 +77,23 @@ test("Ohne Datenbank gelten Unterschrift und Alter weiter", async () => {
   assert.equal(await siegelEinloesen(null, KEY, s, "", T0 + 1), "zu-frueh");
   assert.equal(await siegelEinloesen(null, KEY, s, "", REIF), "ok");
   assert.equal(await siegelEinloesen(null, KEY, `${s}x`, "", REIF), "ungueltig");
+});
+
+test("Grenze über alle Absender: Viele Absender zusammen kommen nicht über die Gesamtzahl je Stunde", async () => {
+  const db = frisch();
+  const absender = Math.ceil(GESAMT_JE_STUNDE / JE_ABSENDER_JE_STUNDE);
+  for (let a = 0; a < absender; a++) {
+    for (let i = 0; i < JE_ABSENDER_JE_STUNDE; i++) {
+      assert.equal(await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), `198.51.100.${a}`, REIF), "ok", `Absender ${a}, Nummer ${i + 1}`);
+    }
+  }
+  assert.equal(await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "203.0.113.200", REIF + 1), "zu-viele", "ein neuer Absender, aber die Stunde ist voll");
+  assert.equal(await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "203.0.113.200", REIF + 60 * 60 * 1000 + 1), "ok", "eine Stunde später ist wieder Platz");
+});
+
+test("Die Tabelle hat Indizes fürs Zählen und Aufräumen", async () => {
+  const db = frisch();
+  await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "203.0.113.7", REIF);
+  const namen = (await db.execute("SELECT name FROM sqlite_master WHERE type = 'index' AND tbl_name = 'formular_siegel' AND name NOT LIKE 'sqlite_%' ORDER BY name")).rows.map((r) => r.name);
+  assert.deepEqual(namen, ["formular_siegel_absender", "formular_siegel_bis", "formular_siegel_eingeloest"]);
 });

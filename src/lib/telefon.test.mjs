@@ -31,6 +31,10 @@ test("Teure und unpersönliche Sondernummern gehen nicht: kein teurer Rückruf �
   for (const roh of ["+49 900 1481726", "+49 180 5481726", "+49 137 4817263", "+49 800 1481726", "+49 700 14817260"]) {
     assert.equal(fehler(roh), "sondernummer", roh);
   }
+  // Satellitentelefone haben kein Land und gelten dem Nummernplan als Mobil. Ein Rückruf kostet mehrere Euro je Minute.
+  for (const roh of ["+870 773 111 632", "+881 631 572 948"]) {
+    assert.equal(fehler(roh), "sondernummer", roh);
+  }
 });
 
 test("Beispielnummern gehen nicht, auch wenn der Nummernplan sie zulässt", () => {
