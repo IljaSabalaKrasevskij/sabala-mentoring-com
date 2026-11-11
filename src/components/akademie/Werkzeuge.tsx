@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowRight, Check, Compass, FileDown, Plus, RotateCw } from "lucide-react";
 import { GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL } from "./shared";
+import { ereignis } from "@/lib/ereignis";
 import { ABLAUF_PDF, BAUSTEINE, WERKZEUGE, type Werkzeug } from "./ablauf";
 
 /* Die Werkzeuge: die vier Programme, die am Ende eingerichtet und verbunden sind, groß und mit Namen.
@@ -121,7 +122,7 @@ export default function Werkzeuge() {
             </ul>
           </details>
 
-          <Knopf zweit href={ABLAUF_PDF} neuerTab>
+          <Knopf zweit href={ABLAUF_PDF} neuerTab onClick={() => ereignis("download", { datei: "second-brain-trainingsablauf.pdf" })}>
             <FileDown aria-hidden size={18} />
             Trainingsablauf als PDF
           </Knopf>

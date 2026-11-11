@@ -6,6 +6,8 @@
    klickt: Bis ein Mensch fertig getippt hat, ist der Stempel alt genug, und niemand wartet.
    ────────────────────────────────────────────────────────────────────────── */
 
+import { ereignis } from "@/lib/ereignis";
+
 type Stempel = { wert: string; reif: number; geholt: number };
 let vorrat: Promise<Stempel> | null = null;
 const FRISCH_MS = 100 * 60 * 1000; // der Server nimmt einen Stempel zwei Stunden lang, hier mit Abstand
@@ -39,6 +41,13 @@ async function nimm(): Promise<Stempel> {
 /** Ein Stempel für Formulare mit eigenem Absenden: als Feld „siegel“ mitschicken. */
 export const siegel = async () => (await nimm()).wert;
 
+/* Zählt das abgeschickte Formular in Umami. quelle ist das Kürzel des Leadmagneten oder die Warteliste.
+   Der Pfad der Seite (so nutzt das Kontaktformular das Feld) und alles Persönliche bleiben draußen. */
+function gezaehlt(api: string, daten: Record<string, unknown>): void {
+  const quelle = typeof daten.quelle === "string" && !daten.quelle.startsWith("/") ? daten.quelle : typeof daten.warteliste === "string" ? `warteliste-${daten.warteliste}` : "";
+  ereignis("formular-abgeschickt", { formular: api.replace(/^\/api\//, ""), ...(quelle ? { quelle } : {}) });
+}
+
 export type Ergebnis =
   | { art: "ok"; bestaetigung?: string }
   | { art: "eingabe"; feld: string; meldung: string } // der Server beanstandet ein Feld, die Meldung gehört ans Formular
@@ -52,7 +61,10 @@ export async function formularSenden(api: string, daten: Record<string, unknown>
       const s = await nimm();
       const res = await fetch(api, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...daten, siegel: s.wert }) });
       const j = (await res.json().catch(() => ({}))) as { bestaetigung?: string; reason?: string; feld?: string; meldung?: string };
-      if (res.ok) return { art: "ok", bestaetigung: j.bestaetigung };
+      if (res.ok) {
+        gezaehlt(api, daten);
+        return { art: "ok", bestaetigung: j.bestaetigung };
+      }
       if (res.status === 422) {
         vorrat = Promise.resolve(s); // nicht eingelöst: Nach dem Korrigieren geht es ohne Warten weiter
         return { art: "eingabe", feld: j.feld ?? "", meldung: j.meldung ?? "Bitte prüf deine Angaben." };

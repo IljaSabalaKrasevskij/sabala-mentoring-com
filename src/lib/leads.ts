@@ -19,6 +19,8 @@ export type Lead = {
   anliegen: string;
   quelle: string;
   telefon?: string;
+  /** Thema, für das sich jemand interessiert: Kürzel aus src/lib/quellen.ts. Leer beim Kontaktformular. */
+  nische?: string | null;
 };
 
 let client: Client | null = null;
@@ -42,19 +44,22 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS leads (
   quelle TEXT,
   status TEXT NOT NULL DEFAULT 'Neu',
   erstellt_am TEXT NOT NULL DEFAULT (datetime('now')),
-  telefon TEXT
+  telefon TEXT,
+  nische TEXT
 )`;
 
-/* Die Tabelle gab es schon vor dem Telefonfeld. Einmal je Instanz: anlegen, falls sie fehlt,
-   und die Spalte nachziehen, falls sie fehlt (ALTER TABLE kennt in SQLite kein IF NOT EXISTS). */
+/* Die Tabelle gab es schon vor dem Telefonfeld und vor der Nische. Einmal je Instanz: anlegen, falls sie fehlt,
+   und die Spalten nachziehen, falls sie fehlen (ALTER TABLE kennt in SQLite kein IF NOT EXISTS). */
 let bereit: Promise<void> | null = null;
 function tabelle(db: Client): Promise<void> {
   return (bereit ??= (async () => {
     await db.execute(CREATE_TABLE);
-    try {
-      await db.execute("ALTER TABLE leads ADD COLUMN telefon TEXT");
-    } catch (err) {
-      if (!/duplicate column/i.test(String(err))) throw err;
+    for (const spalte of ["telefon", "nische"]) {
+      try {
+        await db.execute(`ALTER TABLE leads ADD COLUMN ${spalte} TEXT`);
+      } catch (err) {
+        if (!/duplicate column/i.test(String(err))) throw err;
+      }
     }
   })().catch((err) => {
     bereit = null; // beim naechsten Mal neu versuchen
@@ -70,9 +75,9 @@ export async function insertLead(data: Lead): Promise<boolean> {
 
   await tabelle(db);
   await db.execute({
-    sql: `INSERT INTO leads (vorname, nachname, email, unternehmen, webseite, anliegen, quelle, telefon)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [data.vorname, data.nachname, data.email, data.unternehmen, data.webseite, data.anliegen, data.quelle, data.telefon || null],
+    sql: `INSERT INTO leads (vorname, nachname, email, unternehmen, webseite, anliegen, quelle, telefon, nische)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [data.vorname, data.nachname, data.email, data.unternehmen, data.webseite, data.anliegen, data.quelle, data.telefon || null, data.nische || null],
   });
   return true;
 }

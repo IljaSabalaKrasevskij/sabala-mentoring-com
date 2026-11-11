@@ -193,6 +193,7 @@ export default function WebDesignOsStartView() {
         <div className="mt-9">
           <a
             href={DOWNLOAD_URL || "#ablauf"}
+            data-umami-event="download" data-umami-event-datei="sabala-webdesign-os.zip"
             className="inline-flex items-center gap-2.5 rounded-full bg-gold-light px-8 py-4 text-base font-semibold text-tech-bg transition-transform hover:scale-[1.02]"
           >
             <Download size={20} strokeWidth={2.2} />
