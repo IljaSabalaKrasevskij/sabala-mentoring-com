@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { subscribeLeadmagnet, subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar, tagContact } from "@/lib/activecampaign";
 import { anmelden, bestaetigen, lastDerStunde, vermerken, type Bestaetigt } from "@/lib/einwilligung";
 import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
 import { getClient } from "@/lib/leads";
-import { bestaetigungSenden, mailBereit } from "@/lib/mail";
+import { bestaetigungSenden, downloadSenden, mailBereit } from "@/lib/mail";
 import { FORMULARE, istLeadmagnet, istQuelle, LEADMAGNETE, NISCHEN, nischeVon, type Quelle } from "@/lib/quellen";
 import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
 
@@ -140,6 +140,22 @@ export async function einwilligungBestaetigen(token: string, ip: string): Promis
   if (!db) return null;
   const b = await bestaetigen(db, token, ip);
   if (!b) return null;
-  if (b.neu) await insWerkzeug(b, b.quelle);
+  if (b.neu) {
+    await insWerkzeug(b, b.quelle);
+    // Wer ein Paket angefordert hat, bekommt es genau einmal per Mail zum Aufheben (nur beim ersten Klick, neu).
+    // Erst nach der Antwort: Der Klick landet sofort auf der Dankeseite, auch wenn der Mailserver trödelt.
+    // Adresse und Paket kommen aus der Datenbank, nie aus der Anfrage.
+    after(() => downloadSchicken(b.email, b.quelle));
+  }
   return b.quelle;
+}
+
+/** Die Download-Mail darf den Klick nie stören: Fehler landen im Protokoll, nicht beim Besucher.
+ *  ponytail: Protokoll nur im Vercel-Log. Ins Ereignis-Protokoll (nl_ereignisse), sobald das CRM es anzeigen soll. */
+async function downloadSchicken(an: string, quelle: string): Promise<void> {
+  try {
+    if (await downloadSenden(an, quelle)) console.info(`[einwilligung] Download-Mail raus (${quelle})`);
+  } catch (err) {
+    console.error(`[einwilligung] Download-Mail gescheitert (${quelle}):`, err);
+  }
 }
