@@ -24,7 +24,7 @@ Jeder Artikel ist eine handgebaute `page.tsx` (kein MDX). Server Component.
 
 ## 2. Pflicht-Architektur (Reihenfolge von oben nach unten)
 
-1. **3 JSON-LD-Schemas** als `<Script type="application/ld+json" strategy="beforeInteractive">`: `Article`, `Person` (Ilja, mit `knowsAbout`), `FAQPage`. Das ist der GEO-Hebel, nicht optional.
+1. **3 JSON-LD-Schemas** als einfaches `<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json.replace(/</g, "\\u003c") }} />`: `Article` (mit `author` als `Person`, mit `knowsAbout`), `FAQPage`, dazu `HowTo` oder `BreadcrumbList`. **Nie `next/script`:** Es legt die Daten in ein Skript, das erst im Browser läuft, Crawler ohne JavaScript sehen sie nicht (Fund vom 11.11.2026, PR #102). Das ist der GEO-Hebel.
 2. **Dunkler Hero** (der „neue" Header, bevorzugt): dunkler BG, Cover-Bild bei `opacity-45` unter Gradienten, **heller Text**, `h1` in `font-instrument` mit Gold-Italic-Akzent im zweiten Teil, Tag-Pills (Kategorie · How-to), Datum, Lesezeit, Back-Link „Zurück zum Journal". Referenz-Markup: `claude-code-weniger-code-ponytail` oder `case-studies`.
    - **PFLICHT: Sabala-Logo groß im Hero, direkt über dem „Zurück zum Journal"-Back-Link** (starker Wiedererkennungswert, darf NIE zu klein sein). `<SabalaLogo light size={64} />` aus `@/components/brand/SabalaLogo`, verlinkt auf `/`, mit `mb-8`. Sitzt als erstes Element im `ScrollReveal` des Hero-Content-Blocks (`absolute bottom-0 left-0 ...`), vor dem Back-Link. Das `light`-Prop legt die weiße Scheibe hinter den Gold-Pfad → **weißer Berg** (nie schwarzer/durchscheinender Berg). NICHT klein oben in die Ecke.
 3. **TL;DR-Box** („Das Wichtigste in Kürze" / „Die kurze Antwort vorab"): `bg-warm-light/40 border-l-2 border-refined-gold`, Icon-Bullet-Liste mit 3 bis 4 verdichteten Kernaussagen.
@@ -87,6 +87,8 @@ Diese Konstanten/Komponenten stehen im Gold-Standard-File und werden mitkopiert:
 ---
 
 ## 7. Brand-Tokens (Tailwind)
+
+**Lesbarkeit (seit 11.11.2026, Leser oft ab 50):** keine Schrift mit Deckkraft unter 1 (kein `text-white/60`), Fließtext ab 15 px, Überzeilen ab 12,5 px. Gold als Textfarbe auf hellem Grund nur dunkel (`#7A5C18`), auf dunklem Grund `gold-light`. Neue Artikel: `claude-code-installieren`, `claude-code-kosten`.
 
 `refined-gold` (Akzent) · `deep-charcoal` (Text dunkel) · `warm-steel` (Body) · `warm-light` (helle Karten) · `pure-surface` (Seitengrund) · `#2E2B26` (dunkle Blöcke). Schriften: `font-instrument` (Instrument Serif, Headlines) · `font-satoshi` (Body) · `font-mono` (Eyebrows/Labels, uppercase tracking-widest).
 
