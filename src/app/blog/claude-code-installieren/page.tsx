@@ -398,7 +398,7 @@ export default function ClaudeCodeInstallierenPage() {
         <ScrollReveal>
           <div className={`${proseBlock} mx-auto max-w-[820px]`}>
             <h2>Welche Befehle brauchst du in der ersten Woche?</h2>
-            <p>Sechs Befehle reichen für den Anfang. Alle anderen zeigt dir <code>/help</code>.</p>
+            <p>Sechs Befehle reichen für den Anfang. Alle anderen zeigt dir <code>/help</code>. Einen Spickzettel mit den wichtigsten Befehlen und Tasten bekommst du im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>.</p>
           </div>
         </ScrollReveal>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

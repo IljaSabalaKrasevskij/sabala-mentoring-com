@@ -20,6 +20,7 @@
 - [Claude Code: Themen-Seite](https://sabala-mentoring.com/claude-code): was Claude Code ist, wo es läuft, was es kostet, die wichtigsten Befehle und Skills.
 - [Claude Code installieren](https://sabala-mentoring.com/blog/claude-code-installieren): Anleitung für Mac und Windows, der Weg ohne Terminal, der erste Start und die häufigsten Fehler.
 - [Was kostet Claude Code?](https://sabala-mentoring.com/blog/claude-code-kosten): alle Pläne von Pro bis Enterprise, Nutzungsgrenzen, API-Preise und Spartipps.
+- [Claude-Code-Startpaket](https://sabala-mentoring.com/claude-code/startpaket): kostenloser Ordner mit Installation für Mac und Windows, Spickzettel, zwei CLAUDE.md-Vorlagen und zehn Skills, die Ilja selbst nutzt. Kommt per Mail.
 
 ## Bauen lassen
 

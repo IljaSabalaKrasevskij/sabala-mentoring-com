@@ -220,6 +220,20 @@ export default function ClaudeCodeThemenSeite() {
             </ScrollReveal>
           ))}
         </div>
+        <ScrollReveal>
+          <Link href="/claude-code/startpaket" className="group mt-4 flex flex-col gap-5 rounded-2xl border border-refined-gold/40 bg-[#2E2B26] p-6 transition-colors hover:border-gold-light sm:flex-row sm:items-center sm:justify-between md:p-7">
+            <div className="flex gap-5">
+              <Download className="mt-1 h-6 w-6 flex-shrink-0 text-gold-light" aria-hidden />
+              <div>
+                <h3 className="font-instrument text-2xl leading-snug text-white">Kostenlos: das Startpaket für die erste Woche</h3>
+                <p className="mt-2 font-satoshi text-[16px] leading-relaxed text-[#E9E4DA]">Installation, Spickzettel, zwei CLAUDE.md-Vorlagen und zehn Skills in einem Ordner.</p>
+              </div>
+            </div>
+            <span className="inline-flex flex-shrink-0 items-center gap-2 pl-11 font-satoshi text-[15px] font-semibold text-gold-light group-hover:text-white sm:pl-0">
+              Startpaket ansehen <ArrowRight className="h-4 w-4" aria-hidden />
+            </span>
+          </Link>
+        </ScrollReveal>
       </section>
 
       {/* WAS IST CLAUDE CODE */}
@@ -333,7 +347,7 @@ export default function ClaudeCodeThemenSeite() {
               Skills sind gespeicherte Arbeitsabläufe. Jeder Skill ist eine kurze Anleitung, die Claude lädt, wenn sie zur Aufgabe passt: wie ein Newsletter bei dir aussieht, wie eine Präsentation aufgebaut ist, worauf eine SEO-Prüfung achtet. Einmal sauber geschrieben, sparst du dir jedes Mal das Erklären.
             </p>
             <p>
-              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
+              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Zehn, mit denen du gut anfängst, findest du im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
             </p>
           </div>
         </ScrollReveal>

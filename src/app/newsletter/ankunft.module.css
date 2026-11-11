@@ -75,7 +75,7 @@
   max-width: 34rem;
   font-size: 1.06rem;
   line-height: 1.7;
-  color: rgba(250, 248, 245, 0.86);
+  color: #e9e4da; /* deckend: Text nie unter Deckkraft 1 (Leser ab 50) */
 }
 .inhalt p + p {
   margin-top: 1rem;
