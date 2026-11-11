@@ -12,12 +12,12 @@ export default function WebkursKarte() {
         <div>
           <p className="wk-zeile">
             <span className="wk-punkt" aria-hidden="true" />
-            Neuer Kurs in Vorbereitung
+            <span>Neuer Live-Kurs · Webseiten bauen mit Claude Code</span>
           </p>
           <h2 className="wk-h2">
-            Webseiten bauen mit Claude Code. <span>Die Warteliste ist offen.</span>
+            KI-Webdesign wie die Profis. <span>Die Warteliste ist offen.</span>
           </h2>
-          <p className="wk-lauf">In sechs Wochen baust du deine eigene Webseite und stellst sie live. Sichtbar bei Google und in KI-Antworten.</p>
+          <p className="wk-lauf">In sechs Wochen baust du mit Claude Code deine eigene Webseite und stellst sie live. Skills und Code-Bibliothek bekommst du dazu.</p>
           <Link className="wk-knopf wk-haupt" href={KURS_PFAD}>
             <span>Zur Kursseite</span>
             <Pfeil />

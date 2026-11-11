@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Scheibe, { Pfeil } from "./Scheibe";
-import { KOPF_ZEILE_1, KOPF_ZEILE_2, SCHICHTEN } from "./daten";
+import { KOPF_SATZ, KOPF_ZEILE_1, KOPF_ZEILE_2, SCHICHTEN } from "./daten";
 
 /* ─────────────────────────────────────────────────────────────────────────
    SchichtenKopf: der Kopf der Ankündigungsseite als Scroll-Film aus reinem Code.
@@ -340,7 +340,7 @@ export default function SchichtenKopf() {
           <div className="wk-text">
             <p className="wk-zeile wk-steig">
               <span className="wk-punkt" aria-hidden="true" />
-              Neuer Kurs in Vorbereitung
+              <span>Neuer Live-Kurs · Warteliste offen</span>
             </p>
             <p className="wk-thema wk-steig" style={{ "--wk-d": ".05s" } as React.CSSProperties}>
               Webseiten bauen mit Claude Code
@@ -349,7 +349,7 @@ export default function SchichtenKopf() {
               {KOPF_ZEILE_1} <span className="wk-takt2">{KOPF_ZEILE_2}</span>
             </h1>
             <p className="wk-satz wk-steig" style={{ "--wk-d": ".12s" } as React.CSSProperties}>
-              Scroll weiter und sieh, woraus eine starke Webseite gemacht ist.
+              {KOPF_SATZ}
             </p>
             <div className="wk-knoepfe wk-steig" style={{ "--wk-d": ".18s" } as React.CSSProperties}>
               <a className="wk-knopf wk-haupt" href="#warteliste">

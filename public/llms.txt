@@ -10,7 +10,7 @@
 
 - [KI-Akademie](https://sabala-mentoring.com/akademie-hub): Live-Trainings mit Claude Code für Dienstleister, in kleinen Gruppen.
 - [Second Brain für Claude](https://sabala-mentoring.com/akademie): Live-Kurs. Ein eigenes Wissenssystem mit Obsidian, Gemini Notebook und Claude Code, damit Claude Wissen, Kunden und Projekte kennt.
-- [Webseiten bauen mit Claude Code](https://sabala-mentoring.com/akademie/webseiten-mit-claude-code): Live-Kurs in Vorbereitung, die Warteliste ist offen. In sechs Wochen die eigene Webseite mit Claude Code bauen, auf der eigenen Domain live stellen und bei Google und in KI-Antworten sichtbar machen. Vier Plätze im ersten Durchgang, 1.500 € netto je Platz, noch kein Termin.
+- [Webseiten bauen mit Claude Code](https://sabala-mentoring.com/akademie/webseiten-mit-claude-code): Live-Kurs für KI-Webdesign, die Warteliste ist offen. In sechs Wochen die eigene Webseite mit Claude Code bauen, auf der eigenen Domain live stellen und bei Google und in KI-Antworten sichtbar machen. Sechs Workshops zu je zwei Stunden, dazu Skills, Prompts und fertige Abschnitte aus der Code-Bibliothek. Vier Plätze im ersten Durchgang, 1.500 € netto je Platz, noch kein Termin.
 - [Beratungsstunde](https://sabala-mentoring.com/beratung): eine Stunde 1:1 zu Claude Code, Webseiten, Second Brain und Agenten.
 - [Webinar](https://sabala-mentoring.com/webinar): kostenloses Live-Webinar zum Second Brain, mit Warteliste.
 

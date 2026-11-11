@@ -32,8 +32,8 @@
 /* Text */
 .wk-text{position:relative;z-index:3;max-width:44rem;opacity:var(--wk-text,1);transform:translateX(calc(var(--wk-tw,0) * -60px))}
 .wk-text.wk-fort{visibility:hidden}
-.wk-zeile{display:flex;flex-wrap:wrap;align-items:center;gap:.5em .9em;margin:0;font-family:var(--wk-mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--wk-gold-hell)}
-.wk-punkt{flex:none;width:8px;height:8px;border-radius:50%;background:var(--wk-gelb)}
+.wk-zeile{display:flex;align-items:flex-start;gap:.9em;margin:0;font-family:var(--wk-mono);font-size:12.5px;line-height:1.5;letter-spacing:.22em;text-transform:uppercase;color:var(--wk-gold-hell)}
+.wk-punkt{flex:none;width:8px;height:8px;margin-top:calc(.75em - 4px);border-radius:50%;background:var(--wk-gelb)}
 .wk-thema{margin:10px 0 0;font-family:var(--wk-mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--wk-creme)}
 .wk-kopf h1{margin:22px 0 0;font-family:var(--wk-serif);font-weight:400;font-size:clamp(2.3rem,min(4.3vw,8.6svh),5.2rem);line-height:1.04;letter-spacing:-.01em;text-wrap:balance;color:var(--wk-creme)}
 .wk-takt2{display:block;color:var(--wk-gold-hell)}
@@ -164,6 +164,39 @@
 .wk-skills li{padding:6px 12px;border-radius:99px;background:#F3EFE8;font-family:var(--wk-mono);font-size:12.5px;color:#5d564c}
 .wk-tafel .wk-skills-was{margin:12px 0 0;font-size:15px;line-height:1.5;color:#6f675c}
 
+/* Was sich für dich ändert: links heute, rechts danach im goldenen Feld */
+.wk-etikett{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.wk-wandel{position:relative;background:var(--wk-grund);color:var(--wk-creme);padding:clamp(64px,11vh,130px) var(--wk-rand);overflow:hidden}
+.wk-wandel::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 44% 56% at 84% 54%,rgba(212,174,90,.14),transparent 70%)}
+.wk-wandel .wk-innen{position:relative}
+.wk-wandel-tafel{position:relative;margin-top:30px}
+.wk-wandel-tafel::before{content:"";position:absolute;left:calc(50% + 28px);right:0;top:0;bottom:0;border-radius:16px;border:1px solid rgba(212,174,90,.5);background:linear-gradient(150deg,rgba(212,174,90,.16),rgba(212,174,90,.05) 60%);pointer-events:none}
+.wk-wandel-kopf,.wk-wandel-tafel li{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);align-items:center}
+.wk-wandel-kopf{padding:18px 0 8px;font-family:var(--wk-mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--wk-stumm)}
+.wk-wandel-kopf span:last-child{padding-left:24px;color:var(--wk-gold-hell)}
+.wk-wandel-tafel ul{margin:0;padding:0 0 10px;list-style:none}
+.wk-wandel-tafel li{min-height:64px;padding:10px 0;border-top:1px solid rgba(250,248,245,.12)}
+.wk-wandel-tafel li>svg{justify-self:center;color:var(--wk-stumm)}
+.wk-heute{margin:0;padding-right:8px;font-size:1.04rem;line-height:1.45;color:var(--wk-leise)}
+.wk-dann{display:flex;align-items:flex-start;gap:12px;margin:0;padding:0 24px;font-size:1.08rem;line-height:1.45;font-weight:500;color:var(--wk-creme)}
+.wk-dann svg{flex:none;margin-top:3px;color:var(--wk-gold-hell)}
+
+/* Was du mitbekommst: vier Mitgaben, sechs Bilder aus der Code-Bibliothek, die Werkzeuge mit Namen */
+.wk-mit{background:var(--wk-creme);color:var(--wk-tief);padding:clamp(64px,11vh,130px) var(--wk-rand)}
+.wk-mit-liste{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:30px 0 0;padding:0;list-style:none}
+.wk-mit-liste li{padding:20px 20px 22px;border-radius:14px;background:#fff;border:1px solid rgba(181,176,168,.45);box-shadow:0 10px 30px rgba(46,43,38,.06)}
+.wk-mit-liste small{font-family:var(--wk-mono);font-size:12.5px;letter-spacing:.14em;color:var(--wk-gold-auf-hell)}
+.wk-mit-liste h3{margin:8px 0 0;font-family:var(--wk-serif);font-weight:400;font-size:1.5rem;line-height:1.12;color:var(--wk-tief)}
+.wk-mit-liste p{margin:8px 0 0;font-size:1rem;line-height:1.5;color:var(--wk-text-auf-hell)}
+.wk-regal-titel{margin:30px 0 0;font-family:var(--wk-mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#6f675c}
+.wk-regal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin:12px 0 0;padding:0;list-style:none}
+.wk-regal img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:8px;border:1px solid rgba(46,43,38,.16);box-shadow:0 8px 22px rgba(46,43,38,.12)}
+.wk-regal span{display:block;margin-top:8px;font-size:15px;line-height:1.25;font-weight:500;color:var(--wk-text-auf-hell)}
+.wk-werkzeuge{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.wk-werkzeuge li{display:flex;align-items:baseline;gap:10px;padding:10px 16px;border-radius:99px;background:#fff;border:1px solid rgba(181,176,168,.5)}
+.wk-werkzeuge strong{font-weight:600;font-size:1rem;color:var(--wk-tief)}
+.wk-werkzeuge span{font-size:15px;color:var(--wk-text-auf-hell)}
+
 /* Google und KI: umschalten zwischen dem, was Menschen sehen, und dem, was Maschinen lesen (nur CSS, kein JavaScript) */
 .wk-blick{background:var(--wk-grund);color:var(--wk-creme);padding:clamp(64px,11vh,130px) var(--wk-rand)}
 .wk-blick .wk-innen{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(28px,5vw,72px);align-items:center}
@@ -254,6 +287,7 @@
   .wk-raum{perspective-origin:50% calc(76px + var(--wk-bw) * .65)}
   .wk-text{order:2;max-width:none;padding:8px 20px 30px;transform:none}
   .wk-kopf[data-modus="film"] .wk-text{position:absolute;left:0;right:0;bottom:calc(100lvh - 100svh);padding-bottom:26px}
+  .wk-zeile{letter-spacing:.16em}
   .wk-thema,.wk-satz,.wk-knopf.wk-zweit.wk-kopfknopf,.wk-vermerk{display:none}
   .wk-kopf[data-hoch] .wk-thema,.wk-kopf[data-hoch] .wk-satz{display:block}
   .wk-kopf[data-hoch] .wk-knopf.wk-zweit.wk-kopfknopf{display:inline-flex}
@@ -273,6 +307,15 @@
   .wk-kacheln{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 10px;margin-top:28px}
   .wk-tafel{grid-template-columns:minmax(0,1fr);margin-top:26px}
   .wk-schichten-kopf{grid-template-columns:minmax(0,1fr);gap:16px}
+  .wk-wandel-tafel::before,.wk-wandel-kopf,.wk-wandel-tafel li>svg{display:none}
+  .wk-wandel-tafel li{display:block;min-height:0;margin-top:12px;padding:16px 16px 14px;border:1px solid rgba(250,248,245,.14);border-radius:12px;background:rgba(250,248,245,.03)}
+  .wk-etikett{position:static;display:block;width:auto;height:auto;margin:0 0 4px;clip-path:none;font-family:var(--wk-mono);font-size:12.5px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--wk-stumm)}
+  .wk-dann .wk-etikett{color:var(--wk-gold-hell)}
+  .wk-heute{padding:0;font-size:1rem}
+  .wk-dann{margin-top:12px;padding:0}
+  .wk-dann>svg{display:none}
+  .wk-mit-liste{grid-template-columns:minmax(0,1fr);gap:12px}
+  .wk-regal{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wk-blick .wk-innen,.wk-rahmen .wk-innen,.wk-warte-scheibe,.wk-karte{grid-template-columns:minmax(0,1fr)}
   .wk-blick-bild ul{grid-template-columns:repeat(3,minmax(0,1fr))}
   .wk-blick-daten div{grid-template-columns:minmax(0,1fr);gap:2px}

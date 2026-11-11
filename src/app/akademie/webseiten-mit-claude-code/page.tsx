@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { Motive } from "@/components/webkurs/Scheibe";
 import SchichtenKopf from "@/components/webkurs/SchichtenKopf";
 import Schichten from "@/components/webkurs/Schichten";
-import { Fragen, MaschinenBlick, Rahmen } from "@/components/webkurs/Abschnitte";
+import { Fragen, HeuteDanach, MaschinenBlick, Mitgaben, Rahmen } from "@/components/webkurs/Abschnitte";
 import Warteliste from "@/components/webkurs/Warteliste";
-import { FRAGEN, KURS_NAME, KURS_PFAD, SCHICHTEN, SEITEN_BESCHREIBUNG, SEITEN_TITEL, WEBKURS_PLAETZE, WEBKURS_PREIS } from "@/components/webkurs/daten";
+import { FRAGEN, KURS_NAME, KURS_PFAD, SCHICHTEN, SEITEN_BESCHREIBUNG, SEITEN_TITEL, WEBKURS_LIVE_ZEIT, WEBKURS_PLAETZE, WEBKURS_PREIS } from "@/components/webkurs/daten";
 
 /* Ankündigungsseite für den Kurs „Webseiten bauen mit Claude Code“. Der Kurs ist noch nicht buchbar:
-   Es gibt eine Warteliste, keinen Termin. Sechs kurze Abschnitte: Kopf als Scroll-Film, sechs Schichten,
-   Google und KI, der Rahmen mit Preis, Warteliste, Fragen. */
+   Es gibt eine Warteliste, keinen Termin. Acht kurze Abschnitte: Kopf als Scroll-Film, sechs Schichten,
+   was sich ändert, was du mitbekommst, Google und KI, der Rahmen mit Preis, Warteliste, Fragen. */
 
 const SEITE = `https://sabala-mentoring.com${KURS_PFAD}`;
-const KURZ = "Live-Kurs in sechs Wochen: Du baust deine eigene Webseite mit Claude Code, stellst sie auf deiner Domain live und machst sie sichtbar bei Google und in KI-Antworten.";
+const KURZ = "Live-Kurs in sechs Wochen: Du lernst KI-Webdesign wie die Profis, baust deine eigene Webseite mit Claude Code, stellst sie auf deiner Domain live und machst sie sichtbar bei Google und in KI-Antworten. Skills, Prompts und Code-Bibliothek gehören dazu.";
 
 export const metadata: Metadata = {
   title: SEITEN_TITEL,
@@ -55,7 +55,7 @@ function angaben() {
         hasCourseInstance: {
           "@type": "CourseInstance",
           courseMode: "Online",
-          courseWorkload: "PT21H30M",
+          courseWorkload: WEBKURS_LIVE_ZEIT,
           maximumAttendeeCapacity: WEBKURS_PLAETZE,
           instructor: { "@id": "https://sabala-mentoring.com/#ilja" },
         },
@@ -77,6 +77,8 @@ export default function WebkursPage() {
       <SchichtenKopf />
       <div className="wk-danach">
         <Schichten />
+        <HeuteDanach />
+        <Mitgaben />
         <MaschinenBlick />
         <Rahmen />
         <Warteliste />
