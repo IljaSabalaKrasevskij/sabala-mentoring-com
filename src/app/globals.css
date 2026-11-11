@@ -1,4 +1,35 @@
 @import "tailwindcss";
+/* Textgestaltung der Blog-Artikel (Klassen prose, prose-h2 usw.). Das Paket fehlte bis zum 11.11.2026,
+   darum standen Zwischenüberschriften in Fließtextgröße und Absätze ohne Abstand. */
+@plugin "@tailwindcss/typography";
+
+/* Zwei Korrekturen am Paket, bewusst ohne Ebene, damit sie die Klassen der Artikel überstimmen:
+   1. Links im Fließtext in der Farbe des Textes. Gold als Schriftfarbe erreicht auf Weiß nur 2,8 zu 1,
+      lesbar sind mindestens 4,5 zu 1. Links ohne eigene Klassen bekommen dazu eine goldene Unterstreichung,
+      Gold bleibt beim Darüberfahren. Knöpfe mit eigener Schrift- oder Flächenfarbe behalten ihr Aussehen,
+      auf dunklen Flächen erbt der Link die helle Schrift.
+   2. Inline-Code ohne die Backticks, die das Paket davor und dahinter setzt. */
+.prose a:not([class^="text-"], [class*=" text-"], [class*="bg-"]):not(:where(.not-prose, .not-prose *)) {
+  color: inherit;
+}
+.prose a:not([class]):not(:where(.not-prose, .not-prose *)) {
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-refined-gold);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.prose a:not([class^="text-"], [class*=" text-"], [class*="bg-"]):not(:where(.not-prose, .not-prose *)):hover {
+  color: var(--color-refined-gold);
+}
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+/* Beginnt ein Textblock mit einer Überschrift, bringt der Abschnitt darüber schon Luft mit. Ohne diese Regel
+   addierten sich Abschnitt und Überschrift auf rund 170 px. */
+.prose > :is(h2, h3):first-child {
+  margin-top: 0;
+}
 
 @theme inline {
   --color-warm-canvas: #FAF8F5;
