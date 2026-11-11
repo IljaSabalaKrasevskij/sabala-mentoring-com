@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/akademie", priority: 0.9, changeFrequency: "monthly" },
     { path: "/beratung", priority: 0.9, changeFrequency: "weekly" },
     { path: "/webinar", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/claude-code", priority: 0.9, changeFrequency: "monthly" },
     { path: "/mitentwickelt", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
     { path: "/case-studies", priority: 0.8, changeFrequency: "monthly" },
