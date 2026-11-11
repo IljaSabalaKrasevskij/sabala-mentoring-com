@@ -45,6 +45,36 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 17,
+    title: "Claude Code installieren: Schritt für Schritt für Mac und Windows",
+    excerpt: "Ein Befehl, eine Anmeldung, ein Ordner. Die ganze Anleitung für Mac und Windows, die Abkürzung ohne Terminal über die Desktop-App und die Lösung für die häufigsten Fehler.",
+    category: "KI & Tools",
+    date: "November 2026",
+    readTime: "8 Min",
+    image: "/blog/webseiten-bau-mit-claude-anfaenger/firststeps.jpg",
+    slug: "/blog/claude-code-installieren",
+    keywords: ["claude code", "claude code installieren", "installation", "mac", "windows", "powershell", "terminal", "desktop-app", "anleitung", "einrichten"],
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
+    id: 16,
+    title: "Was kostet Claude Code? Alle Pläne mit echten Zahlen",
+    excerpt: "Von 17 Dollar im Monat bis zur Abrechnung nach Verbrauch: Pro, Max, Ultra, Team und API im Vergleich, was die Nutzungsgrenzen bedeuten und wie du sparst.",
+    category: "KI & Tools",
+    date: "November 2026",
+    readTime: "8 Min",
+    image: "/blog/baukasten-vs-eigene-webseite-kosten-2026/cover.jpg",
+    slug: "/blog/claude-code-kosten",
+    keywords: ["claude code", "claude code preis", "kosten", "pro", "max", "ultra", "team", "api", "abo", "limit", "tokens"],
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 15,
     title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
     excerpt: "Claude Code baut oft zu viel und steht damit schnell am Limit. Ein kostenloses Plugin dreht das um, rund 54 Prozent weniger Code bei voller Sicherheit. Ehrlich nachgerechnet statt viral nachgeplappert.",
