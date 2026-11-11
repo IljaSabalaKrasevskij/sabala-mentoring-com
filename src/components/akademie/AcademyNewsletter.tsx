@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Check } from "lucide-react";
+import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 import { Eyebrow, Reveal, TEXT_AUF_DUNKEL } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyNewsletter — „Bleib auf dem Laufenden"
-   Anmeldung am Ende der Übersichtsseite. Speichert die E-Mail in den
-   Lead-Speicher (quelle "Akademie-Newsletter"); der eigentliche Versand
-   kommt später. Graceful Fallback, wenn das Backend noch nicht steht.
+   Anmeldung am Ende der Übersichtsseite: Vorname, Nachname, E-Mail, Telefon
+   (freiwillig) und das Häkchen für Mails. Danach kommt eine Bestätigungsmail,
+   erst der Klick darin zählt. Graceful Fallback, wenn das Backend noch nicht steht.
    Links daneben stehen die Kurse in Vorbereitung: Wer darauf wartet, trägt sich hier ein.
    Der Anker #newsletter ist das Ziel der Stufe 3 in AcademyLevels.
    ───────────────────────────────────────────────────────────────────────── */
@@ -22,10 +24,16 @@ const FELD =
   "min-h-[52px] w-full min-w-0 rounded-sm border border-[rgba(255,255,255,0.22)] bg-[rgba(255,255,255,0.06)] px-4 text-[1rem] text-cream outline-none transition-colors placeholder:text-[rgba(250,248,245,0.55)] focus:border-gold-light";
 
 export default function AcademyNewsletter() {
+  const id = useId();
   const [vorname, setVorname] = useState("");
+  const [nachname, setNachname] = useState("");
   const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
+  const [bestaetigung, setBestaetigung] = useState<string>();
+  const tippt = () => { if (status !== "idle") setStatus("idle"); };
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -35,9 +43,12 @@ export default function AcademyNewsletter() {
       const res = await fetch("/api/akademie-newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, email, fax }),
+        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax }),
       });
-      if (res.ok) setStatus("success");
+      if (res.ok) {
+        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
+        setStatus("success");
+      }
       else if (res.status === 503) setStatus("unconfigured");
       else setStatus("error");
     } catch {
@@ -79,7 +90,7 @@ export default function AcademyNewsletter() {
               {status === "success" ? (
                 <p className="mt-5 flex items-center gap-3.5 rounded-sm px-5 py-4 text-[1rem] leading-snug text-cream" style={{ background: "rgba(212,174,90,0.10)", border: "1px solid rgba(212,174,90,0.35)" }}>
                   <Check aria-hidden size={22} strokeWidth={2} className="shrink-0 text-gold-light" />
-                  Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail.
+                  {bestaetigung === "aktiv" ? "Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail." : `Fast geschafft. ${bestaetigungsHinweis("gesendet")}`}
                 </p>
               ) : (
                 <form onSubmit={submit} className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -98,22 +109,44 @@ export default function AcademyNewsletter() {
                     type="text"
                     required
                     value={vorname}
-                    onChange={(e) => { setVorname(e.target.value); if (status !== "idle") setStatus("idle"); }}
+                    onChange={(e) => { setVorname(e.target.value); tippt(); }}
                     placeholder="Vorname"
                     aria-label="Vorname"
                     autoComplete="given-name"
                     className={FELD}
                   />
                   <input
+                    type="text"
+                    required
+                    value={nachname}
+                    onChange={(e) => { setNachname(e.target.value); tippt(); }}
+                    placeholder="Nachname"
+                    aria-label="Nachname"
+                    autoComplete="family-name"
+                    className={FELD}
+                  />
+                  <input
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => { setEmail(e.target.value); if (status !== "idle") setStatus("idle"); }}
+                    onChange={(e) => { setEmail(e.target.value); tippt(); }}
                     placeholder="deine@email.de"
                     aria-label="E-Mail-Adresse"
                     autoComplete="email"
                     className={FELD}
                   />
+                  <input
+                    type="tel"
+                    value={telefon}
+                    onChange={(e) => { setTelefon(e.target.value); tippt(); }}
+                    placeholder="Telefon (freiwillig)"
+                    aria-label="Telefon, freiwillig"
+                    autoComplete="tel"
+                    className={FELD}
+                  />
+                  <div className="py-1 sm:col-span-2">
+                    <Einwilligung id={`${id}-mails`} an={einwilligung} setAn={(an) => { setEinwilligung(an); tippt(); }} pflicht />
+                  </div>
                   <button
                     type="submit"
                     disabled={status === "loading"}

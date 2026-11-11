@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Reveal, TiltCard, Eyebrow, GoldCTA } from "@/components/akademie/shared";
+import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 
 /* Mooni Voice: Premium-Produktseite im Sabala-Hausstil (Hybrid):
    dunkler, immersiver Bernstein-Hero mit animierter Voice-Wave + Cream/Gold-Body
@@ -246,7 +248,11 @@ const FAQ = [
 
 export default function MooniVoiceView() {
   const [vorname, setVorname] = useState("");
+  const [nachname, setNachname] = useState("");
   const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [einwilligung, setEinwilligung] = useState(false);
+  const [bestaetigung, setBestaetigung] = useState<string>();
   const [fax, setFax] = useState("");
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -257,11 +263,12 @@ export default function MooniVoiceView() {
     if (busy) return;
     setBusy(true);
     try {
-      await fetch("/api/mooni-voice", {
+      const res = await fetch("/api/mooni-voice", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, email, fax }),
+        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax }),
       });
+      setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
     } catch {
       /* Leadmagnet: Download nie am Netzwerk scheitern lassen */
     }
@@ -476,16 +483,31 @@ export default function MooniVoiceView() {
               </p>
               <input
                 type="text" value={vorname} onChange={(e) => setVorname(e.target.value)}
-                placeholder="Dein Name" required autoComplete="given-name" aria-label="Dein Name"
+                placeholder="Vorname" required autoComplete="given-name" aria-label="Vorname"
+                className="mb-3 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
+                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
+              />
+              <input
+                type="text" value={nachname} onChange={(e) => setNachname(e.target.value)}
+                placeholder="Nachname" required autoComplete="family-name" aria-label="Nachname"
                 className="mb-3 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
                 style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
               />
               <input
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                 placeholder="Deine E-Mail" required autoComplete="email" aria-label="Deine E-Mail"
+                className="mb-3 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
+                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
+              />
+              <input
+                type="tel" value={telefon} onChange={(e) => setTelefon(e.target.value)}
+                placeholder="Telefon (freiwillig)" autoComplete="tel" aria-label="Telefon, freiwillig"
                 className="mb-4 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
                 style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
               />
+              <div className="mb-5">
+                <Einwilligung id="mooni-mails" an={einwilligung} setAn={setEinwilligung} akzent={AMBER} />
+              </div>
               <input type="text" tabIndex={-1} autoComplete="off" value={fax} onChange={(e) => setFax(e.target.value)}
                 aria-hidden style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
               <button
@@ -499,6 +521,9 @@ export default function MooniVoiceView() {
           ) : (
             <div className="mt-6">
               <p className="font-serif text-2xl">Danke{vorname ? `, ${vorname}` : ""}.</p>
+              {bestaetigungsHinweis(bestaetigung) && (
+                <p className="mt-3 font-sans text-[15px] leading-relaxed" style={{ color: "#E8E3DA" }}>{bestaetigungsHinweis(bestaetigung)}</p>
+              )}
               <a
                 ref={downloadRef} href={DMG_URL} download
                 className="mt-5 inline-block w-full rounded-xl py-4 font-sans font-semibold"

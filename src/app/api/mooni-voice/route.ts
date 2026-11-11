@@ -1,28 +1,26 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { einwilligungStarten, FELDER, ipAus, type Bestaetigung } from "@/lib/anmeldung";
 import { insertLead } from "@/lib/leads";
-import { subscribeMooniVoice } from "@/lib/activecampaign";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Mooni-Voice-Anmeldung (Open-Source-Leadmagnet)
-   - Nimmt E-Mail + Vorname entgegen (Download gegen E-Mail).
-   - Traegt den Kontakt in ActiveCampaign ein (Mooni-Liste 28 → Welcome-Mail).
-   - Spiegelt die Anmeldung in die Turso-DB (quelle "Mooni Voice"), damit das
-     Dashboard sie sieht und nichts verloren geht.
-   - Erfolgreich, sobald MINDESTENS einer der beiden Speicher greift.
+   - Der Download hängt nicht am Häkchen: Wer nur laden will, landet im Briefkasten
+     (fürs CRM) und bekommt keine Werbung.
+   - Mit Häkchen: Nachweis der Einwilligung + Bestätigungsmail. Erst nach dem Klick darin
+     kommt der Kontakt auf die Mooni-Liste im Newsletter-Werkzeug (src/lib/anmeldung.ts).
    - Honeypot "fax", einfaches In-Memory-Rate-Limit.
-   Spiegelt bewusst /api/akademie-newsletter (gleiches Muster).
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
-  email: z
-    .string()
-    .trim()
-    .max(160)
-    .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
+  vorname: FELDER.vorname,
+  nachname: FELDER.nachname,
+  email: FELDER.email,
+  telefon: FELDER.telefon,
+  einwilligung: FELDER.einwilligung,
+  einwilligungVersion: FELDER.einwilligungVersion,
   fax: z.string().max(0).optional().default(""),
 });
 
@@ -38,7 +36,7 @@ function rateLimited(ip: string, now: number): boolean {
 }
 
 export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = ipAus(req);
   if (rateLimited(ip, Date.now())) {
     return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
   }
@@ -58,34 +56,38 @@ export async function POST(req: Request) {
   // Honeypot: stilles OK
   if (data.fax) return NextResponse.json({ ok: true });
 
-  // 1) ActiveCampaign (Mooni-Liste + Welcome-Mail) — best effort
-  let acState: "ok" | "skipped" | "error" = "skipped";
-  try {
-    acState = await subscribeMooniVoice(data.email, data.vorname || "");
-  } catch (err) {
-    console.error("[mooni-voice] AC-Fehler:", err);
-    acState = "error";
-  }
-
-  // 2) Turso-Spiegel fürs Dashboard — best effort
+  // 1) Briefkasten fürs CRM — best effort
   let stored = false;
   try {
     stored = await insertLead({
-      vorname: data.vorname || "Mooni",
-      nachname: "Download",
+      vorname: data.vorname,
+      nachname: data.nachname,
       email: data.email,
       unternehmen: "",
       webseite: "",
       anliegen: "Mooni Voice: hat die Open-Source-App heruntergeladen.",
       quelle: "Mooni Voice",
+      telefon: data.telefon,
     });
   } catch (err) {
     console.error("[mooni-voice] Turso-Fehler:", err);
   }
 
-  // Erfolg, sobald einer der beiden Wege gegriffen hat
-  if (acState === "ok" || stored) {
-    return NextResponse.json({ ok: true });
+  // 2) Nur mit Häkchen: Nachweis + Bestätigungsmail
+  let bestaetigung: Bestaetigung | "keine" = "keine";
+  if (data.einwilligung) {
+    bestaetigung = await einwilligungStarten({
+      formular: "Mooni Voice",
+      email: data.email,
+      vorname: data.vorname,
+      nachname: data.nachname,
+      version: data.einwilligungVersion,
+      ip,
+    });
+  }
+
+  if (stored || (bestaetigung !== "keine" && bestaetigung !== "fehlt")) {
+    return NextResponse.json({ ok: true, bestaetigung });
   }
   // Nichts konfiguriert/erreichbar → Frontend laesst den Download trotzdem zu
   return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });

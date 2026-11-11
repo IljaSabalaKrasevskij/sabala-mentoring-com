@@ -10,6 +10,9 @@ export const metadata = {
  * cookiefrei), ActiveCampaign (Newsletter), ThriveCart (Checkout), TidyCal
  * (Termine), Zoom (Calls), WhatsApp, Notion (Audit-Anfragen), eigene Datenbank.
  * Seit November 2026: Sabala Social (Instagram-Stichworte, Abschnitt 11, Loeschweg /daten-loeschen).
+ * Seit November 2026: Formulare mit Telefon (freiwillig) und Haekchen fuer Mails. Double-Opt-in laeuft ueber
+ * das eigene Postfach und die eigene Datenbank (src/lib/anmeldung.ts), ActiveCampaign bekommt den Kontakt
+ * erst nach dem Bestaetigungsklick. Abschnitte 4 (Formulare) und 6 (Newsletter) beschreiben genau das.
  * Schriften kommen ueber next/font/google und werden beim Build heruntergeladen,
  * zur Laufzeit also von unserer eigenen Domain ausgeliefert. Keine Verbindung
  * zu Google beim Seitenaufruf.
@@ -188,6 +191,11 @@ export default function DatenschutzPage() {
               an der Beantwortung von Anfragen).
             </p>
             <p className="mt-4">
+              In unseren Formularen fragen wir Vorname, Nachname und E-Mail-Adresse ab, je nach
+              Formular auch Ihr Anliegen. Die Angabe einer Telefonnummer ist freiwillig. Wir nutzen
+              sie nur für Rückfragen zu Ihrem Anliegen und nicht für Werbeanrufe.
+            </p>
+            <p className="mt-4">
               Damit wir zeitnah reagieren können, werden wir über den Eingang neuer Anfragen
               benachrichtigt. Dabei kommen Benachrichtigungsdienste zum Einsatz, die den Inhalt der
               Anfrage an unser eigenes Endgerät übermitteln. Eine weitergehende Nutzung Ihrer Daten
@@ -232,17 +240,28 @@ export default function DatenschutzPage() {
 
           <section>
             <h2 className="font-semibold text-deep-charcoal text-lg mb-4">6. Newsletter</h2>
-            <h3 className="font-medium text-deep-charcoal mb-2">ActiveCampaign</h3>
+            <h3 className="font-medium text-deep-charcoal mb-2">Anmeldung und Nachweis</h3>
             <p>
-              Für den Versand unserer Newsletter nutzen wir ActiveCampaign, LLC, 1 North Dearborn,
-              Chicago, Illinois 60602, USA. Wenn Sie sich anmelden, speichern wir Ihre E-Mail-Adresse
-              und die von Ihnen angegebenen weiteren Daten bei ActiveCampaign.
+              Unseren Newsletter erhalten Sie nur, wenn Sie in einem unserer Formulare das Häkchen
+              dafür selbst setzen. Das Häkchen ist nie vorab gesetzt. Die Anmeldung erfolgt im
+              Double-Opt-in-Verfahren: Nach Ihrer Eintragung erhalten Sie eine E-Mail, in der Sie die
+              Anmeldung bestätigen. Erst nach diesem Klick versenden wir den Newsletter. Die
+              Bestätigungs-E-Mail verschicken wir über unser eigenes E-Mail-Postfach. Sie enthält
+              keine Werbung.
             </p>
             <p className="mt-4">
-              Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Nach Ihrer Eintragung erhalten Sie
-              eine E-Mail, in der Sie die Anmeldung bestätigen. Erst danach versenden wir den
-              Newsletter. Zum Nachweis Ihrer Einwilligung protokollieren wir Anmeldung und
-              Bestätigung.
+              Zum Nachweis Ihrer Einwilligung speichern wir in unserer eigenen Datenbank den Wortlaut,
+              dem Sie zugestimmt haben, das Formular, über das Sie sich angemeldet haben, sowie
+              Zeitpunkt und IP-Adresse der Anmeldung und der Bestätigung. Rechtsgrundlage ist Art. 6
+              Abs. 1 lit. a DSGVO (Einwilligung) und für den Nachweis Art. 6 Abs. 1 lit. f DSGVO
+              (berechtigtes Interesse, die Einwilligung belegen zu können).
+            </p>
+
+            <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Versand über ActiveCampaign</h3>
+            <p>
+              Für den Versand unserer Newsletter nutzen wir ActiveCampaign, LLC, 1 North Dearborn,
+              Chicago, Illinois 60602, USA. Erst nachdem Sie Ihre Anmeldung bestätigt haben,
+              speichern wir Ihre E-Mail-Adresse sowie Ihren Vor- und Nachnamen bei ActiveCampaign.
             </p>
             <p className="mt-4">
               ActiveCampaign wertet aus, ob und wann Newsletter geöffnet und welche Links darin

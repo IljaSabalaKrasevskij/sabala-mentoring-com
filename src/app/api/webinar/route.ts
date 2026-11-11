@@ -1,27 +1,27 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { einwilligungStarten, FELDER, ipAus } from "@/lib/anmeldung";
 import { insertLead } from "@/lib/leads";
-import { subscribeWebinar } from "@/lib/activecampaign";
 import { WEBINAR } from "@/components/webinar/config";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Webinar-Anmeldung "Second Brain"
-   - Gleicher Bauplan wie /api/akademie-newsletter: AC-Eintrag (Tag triggert
-     die Webinar-Automation mit Zugangslink + Erinnerungen) plus Turso-Spiegel
-     fuers Dashboard.
-   - Erfolgreich, sobald MINDESTENS einer der beiden Speicher greift.
+   - Gleicher Bauplan wie /api/akademie-newsletter: Briefkasten fürs CRM, Nachweis der
+     Einwilligung, Bestätigungsmail. Erst nach dem Klick darin setzt src/lib/anmeldung.ts
+     den Webinar-Tag im Newsletter-Werkzeug, und der startet die Strecke mit Zugangslink
+     und Erinnerungen. Ohne Bestätigung also kein Zugangslink: Das sagt das Formular dazu.
    - Honeypot "fax", einfaches In-Memory-Rate-Limit pro Lambda-Instanz.
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
-  email: z
-    .string()
-    .trim()
-    .max(160)
-    .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
+  vorname: FELDER.vorname,
+  nachname: FELDER.nachname,
+  email: FELDER.email,
+  telefon: FELDER.telefon,
+  einwilligung: z.literal(true),
+  einwilligungVersion: FELDER.einwilligungVersion,
   // Honeypot: bewusst NICHT per max(0) erzwungen. Sonst faengt die Validierung
   // den Bot mit 422 ab und verraet ihm, dass er entdeckt wurde. Gefuellt wird
   // weiter unten still mit 200 quittiert.
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, reason: "warteliste" }, { status: 410 });
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = ipAus(req);
   if (rateLimited(ip, Date.now())) {
     return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
   }
@@ -65,33 +65,33 @@ export async function POST(req: Request) {
   // Honeypot: stilles OK
   if (data.fax) return NextResponse.json({ ok: true });
 
-  // 1) ActiveCampaign — der Tag startet die Webinar-Automation
-  let acState: "ok" | "skipped" | "error" = "skipped";
+  // 1) Briefkasten fürs CRM — best effort
   try {
-    acState = await subscribeWebinar(data.email, data.vorname || "");
-  } catch (err) {
-    console.error("[webinar] AC-Fehler:", err);
-    acState = "error";
-  }
-
-  // 2) Turso-Spiegel fuers Dashboard — best effort
-  let stored = false;
-  try {
-    stored = await insertLead({
-      vorname: data.vorname || "Webinar",
-      nachname: "Anmeldung",
+    await insertLead({
+      vorname: data.vorname,
+      nachname: data.nachname,
       email: data.email,
       unternehmen: "",
       webseite: "",
-      anliegen: "Webinar-Anmeldung: Second Brain für Claude, 12.08.2026.",
+      anliegen: `Webinar-Anmeldung: Second Brain für Claude, ${WEBINAR.date}.`,
       quelle: "Webinar Second Brain",
+      telefon: data.telefon,
     });
   } catch (err) {
     console.error("[webinar] Turso-Fehler:", err);
   }
 
-  if (acState === "ok" || stored) {
-    return NextResponse.json({ ok: true });
+  // 2) Nachweis der Einwilligung + Bestätigungsmail. Der Webinar-Tag kommt nach dem Klick.
+  const bestaetigung = await einwilligungStarten({
+    formular: "Webinar Second Brain",
+    email: data.email,
+    vorname: data.vorname,
+    nachname: data.nachname,
+    version: data.einwilligungVersion,
+    ip,
+  });
+  if (bestaetigung === "fehlt") {
+    return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
   }
-  return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
+  return NextResponse.json({ ok: true, bestaetigung });
 }

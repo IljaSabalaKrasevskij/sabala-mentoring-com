@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { einwilligungStarten, FELDER, ipAus, type Bestaetigung } from "@/lib/anmeldung";
 import { insertLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
@@ -7,7 +8,9 @@ export const runtime = "nodejs";
 /* ──────────────────────────────────────────────────────────────────────────
    Kontakt-Endpoint
    - Validiert die Eingabe (zod), Honeypot gegen Bots, einfaches Rate-Limit.
-   - Schreibt die Anfrage in den Lead-Speicher (Turso/libSQL) -> Dashboard-Pipeline.
+   - Schreibt die Anfrage in den Briefkasten (Turso/libSQL). Von dort holt Sabala Mail sie ins CRM.
+   - Mit Häkchen für Mails: Nachweis der Einwilligung + Bestätigungsmail (src/lib/anmeldung.ts).
+     Die Anfrage selbst hängt nicht am Häkchen.
    - Pusht eine ntfy-Notification, damit Ilja neue Anfragen sofort mitbekommt.
      Gleicher Kanal wie /api/audit-request und /api/umfrage.
    - Wenn Turso nicht konfiguriert ist, antwortet die Route mit 503; das
@@ -21,13 +24,12 @@ export const runtime = "nodejs";
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
-  nachname: z.string().trim().min(1, "Nachname fehlt").max(80),
-  email: z
-    .string()
-    .trim()
-    .max(160)
-    .refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
+  vorname: FELDER.vorname,
+  nachname: FELDER.nachname,
+  email: FELDER.email,
+  telefon: FELDER.telefon,
+  einwilligung: FELDER.einwilligung,
+  einwilligungVersion: FELDER.einwilligungVersion,
   unternehmen: z.string().trim().max(160).optional().default(""),
   webseite: z.string().trim().max(200).optional().default(""),
   anliegen: z.string().trim().min(5, "Bitte ein paar Worte mehr").max(4000),
@@ -58,7 +60,7 @@ async function notify(data: z.infer<typeof Schema>): Promise<void> {
   }
   const server = process.env.NTFY_SERVER || "https://ntfy.sh";
 
-  const message = `${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\n${data.email}${data.webseite ? `\n${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen.slice(0, 500)}`;
+  const message = `${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\n${data.email}${data.telefon ? `\n${data.telefon}` : ""}${data.webseite ? `\n${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen.slice(0, 500)}`;
 
   try {
     // JSON-Mode wie in /api/audit-request: umgeht Header-Encoding-Probleme mit Umlauten.
@@ -85,7 +87,7 @@ async function notify(data: z.infer<typeof Schema>): Promise<void> {
 
 export async function POST(req: Request) {
   // 1) Rate-Limit
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = ipAus(req);
   if (rateLimited(ip, Date.now())) {
     return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
   }
@@ -118,13 +120,19 @@ export async function POST(req: Request) {
       webseite: data.webseite,
       anliegen: data.anliegen,
       quelle: data.quelle || "Website",
+      telefon: data.telefon,
     });
     if (!stored) {
       // Backend noch nicht konfiguriert → Frontend nutzt mailto-Fallback
       return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
     }
     await notify(data);
-    return NextResponse.json({ ok: true });
+    // Häkchen für Mails gesetzt: Nachweis + Bestätigungsmail. Scheitert das, ist die Anfrage trotzdem angekommen.
+    let bestaetigung: Bestaetigung | "keine" = "keine";
+    if (data.einwilligung) {
+      bestaetigung = await einwilligungStarten({ formular: "Kontaktformular", email: data.email, vorname: data.vorname, nachname: data.nachname, version: data.einwilligungVersion, ip });
+    }
+    return NextResponse.json({ ok: true, bestaetigung });
   } catch (err) {
     console.error("[kontakt] Lead-Speicher-Fehler:", err);
     return NextResponse.json({ ok: false, reason: "store_failed" }, { status: 502 });

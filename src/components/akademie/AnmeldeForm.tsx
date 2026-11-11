@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   AnmeldeForm — Vorname + E-Mail fuer Webinar-Anmeldung und Warteliste. Beide
-   unterscheiden sich nur in Ziel-Route und Texten. Fallback-Text, wenn das
-   Backend noch nicht konfiguriert ist, damit die Seite auch vor dem Env-Setup
-   nicht ins Leere laeuft.
+   AnmeldeForm — Vorname, Nachname, E-Mail, Telefon (freiwillig) und das Häkchen
+   für Mails. Für Webinar-Anmeldung und Warteliste, beide unterscheiden sich nur in
+   Ziel-Route und Texten. Das Häkchen ist hier Pflicht, weil die Mail der Zweck ist.
+   Nach dem Abschicken kommt eine Bestätigungsmail, erst der Klick darin zählt.
+   Fallback-Text, wenn das Backend noch nicht konfiguriert ist, damit die Seite
+   auch vor dem Env-Setup nicht ins Leere laeuft.
    ───────────────────────────────────────────────────────────────────────── */
 
 const gold = "#d4ae5a";
@@ -30,18 +34,27 @@ export default function AnmeldeForm({
   extra,
   knopf,
   danke,
-  hinweis,
 }: {
   api: string;
   extra?: Record<string, string>;
   knopf: string;
+  /** Was gilt, sobald die Anmeldung bestätigt ist. */
   danke: string;
-  hinweis: string;
 }) {
+  const id = useId();
   const [vorname, setVorname] = useState("");
+  const [nachname, setNachname] = useState("");
   const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
+  const [bestaetigung, setBestaetigung] = useState<string>();
+  const tippt = () => { if (status !== "idle") setStatus("idle"); };
+  const rand = {
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)"),
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"),
+  };
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -51,9 +64,12 @@ export default function AnmeldeForm({
       const res = await fetch(api, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, email, fax, ...extra }),
+        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra }),
       });
-      if (res.ok) setStatus("success");
+      if (res.ok) {
+        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
+        setStatus("success");
+      }
       else if (res.status === 503) setStatus("unconfigured");
       else setStatus("error");
     } catch {
@@ -77,7 +93,9 @@ export default function AnmeldeForm({
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
           <path d="M20 6L9 17l-5-5" />
         </svg>
-        <p style={{ fontSize: 15, color: "#FAF8F5", lineHeight: 1.6 }}>{danke}</p>
+        <p style={{ fontSize: 15, color: "#FAF8F5", lineHeight: 1.6 }}>
+          {bestaetigung === "aktiv" ? danke : `Fast geschafft. ${bestaetigungsHinweis("gesendet")}`}
+        </p>
       </div>
     );
   }
@@ -98,26 +116,48 @@ export default function AnmeldeForm({
         type="text"
         required
         value={vorname}
-        onChange={(e) => { setVorname(e.target.value); if (status !== "idle") setStatus("idle"); }}
+        onChange={(e) => { setVorname(e.target.value); tippt(); }}
         placeholder="Vorname"
         aria-label="Vorname"
         autoComplete="given-name"
-        style={{ ...inputStyle, flex: "1 1 180px" }}
-        onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)")}
-        onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+        style={{ ...inputStyle, flex: "1 1 200px" }}
+        {...rand}
+      />
+      <input
+        type="text"
+        required
+        value={nachname}
+        onChange={(e) => { setNachname(e.target.value); tippt(); }}
+        placeholder="Nachname"
+        aria-label="Nachname"
+        autoComplete="family-name"
+        style={{ ...inputStyle, flex: "1 1 200px" }}
+        {...rand}
       />
       <input
         type="email"
         required
         value={email}
-        onChange={(e) => { setEmail(e.target.value); if (status !== "idle") setStatus("idle"); }}
+        onChange={(e) => { setEmail(e.target.value); tippt(); }}
         placeholder="deine@email.de"
         aria-label="E-Mail-Adresse"
         autoComplete="email"
-        style={{ ...inputStyle, flex: "1 1 240px" }}
-        onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)")}
-        onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+        style={{ ...inputStyle, flex: "1 1 200px" }}
+        {...rand}
       />
+      <input
+        type="tel"
+        value={telefon}
+        onChange={(e) => { setTelefon(e.target.value); tippt(); }}
+        placeholder="Telefon (freiwillig)"
+        aria-label="Telefon, freiwillig"
+        autoComplete="tel"
+        style={{ ...inputStyle, flex: "1 1 200px" }}
+        {...rand}
+      />
+      <div style={{ flexBasis: "100%", margin: "6px 0 4px" }}>
+        <Einwilligung id={`${id}-mails`} an={einwilligung} setAn={(an) => { setEinwilligung(an); tippt(); }} pflicht />
+      </div>
       <button
         type="submit"
         disabled={status === "loading"}
@@ -148,14 +188,6 @@ export default function AnmeldeForm({
             : "Das hat gerade nicht geklappt. Versuch es bitte noch einmal."}
         </p>
       )}
-
-      <p style={{ flexBasis: "100%", fontSize: 12.5, color: "rgba(250,248,245,0.62)", lineHeight: 1.6, marginTop: 6 }}>
-        {hinweis} Abmelden geht in jeder Mail mit einem Klick. Mehr dazu in der{" "}
-        <a href="/datenschutz" style={{ color: "rgba(250,248,245,0.72)", textDecoration: "underline" }}>
-          Datenschutzerklärung
-        </a>
-        .
-      </p>
     </form>
   );
 }
