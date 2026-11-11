@@ -68,6 +68,7 @@ const NACH_KLICK: Record<keyof typeof FORMULARE, (b: Bestaetigt) => Promise<"ok"
   Kontaktformular: (b) => subscribeToAcademy(b.email, b.vorname, b.nachname),
   "Warteliste Kurs": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Second Brain Kurs", b.nachname),
   "Warteliste Webinar": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Webinar", b.nachname),
+  "Warteliste Webseiten-Kurs": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Webseiten-Kurs", b.nachname),
   "Webinar Second Brain": (b) => subscribeWebinar(b.email, b.vorname, b.nachname),
   "Mooni Voice": (b) => subscribeMooniVoice(b.email, b.vorname, b.nachname),
 };

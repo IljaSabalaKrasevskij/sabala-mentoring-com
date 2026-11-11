@@ -4,10 +4,12 @@ import AcademyLevels from "@/components/akademie/AcademyLevels";
 import CourseGrid from "@/components/akademie/CourseGrid";
 import AcademyValues from "@/components/akademie/AcademyValues";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
+import WebkursKarte from "@/components/akademie/WebkursKarte";
 import { BERATUNG_PREIS, CURRENT_COHORT, formatShortDate } from "@/components/akademie/cohorts";
 
-/* Übersichtsseite der Akademie. Fünf kurze Abschnitte: Kopf, dein Einstieg (vier Stufen),
-   die zwei buchbaren Angebote, so lernst du hier, Newsletter. Jeder passt in ein Laptop-Fenster. */
+/* Übersichtsseite der Akademie. Sechs kurze Abschnitte: Kopf, dein Einstieg (vier Stufen),
+   die zwei buchbaren Angebote, so lernst du hier, der angekündigte Webseiten-Kurs, Newsletter.
+   Jeder passt in ein Laptop-Fenster. */
 
 /* Mit dem Zusatz „ · Sabala Studios“ aus dem Layout genau 60 Zeichen, die Beschreibung bleibt unter 160. */
 const title = "KI-Akademie: Live-Trainings mit Claude Code";
@@ -39,6 +41,7 @@ export default function AkademieHubPage() {
       <AcademyLevels />
       <CourseGrid />
       <AcademyValues />
+      <WebkursKarte />
       <AcademyNewsletter />
     </main>
   );
