@@ -91,14 +91,51 @@ export type Stand = { id: number; status: "ausstehend" | "aktiv"; token: string;
 export type Bestaetigt = { email: string; vorname: string; nachname: string; quelle: string; einwilligung_id: number; neu: boolean };
 
 const eine = async <T>(db: Client, sql: string, args: InValue[] = []) => (await db.execute({ sql, args })).rows[0] as unknown as T | undefined;
+
+/** Legt die Tabellen an, falls sie fehlen. Einmal je Verbindung, damit auch die Zählung vor der ersten Anmeldung etwas zum Zählen hat. */
+const fertig = new WeakMap<Client, Promise<unknown>>();
+export function vorbereiten(db: Client): Promise<unknown> {
+  let p = fertig.get(db);
+  if (!p) {
+    p = db.batch(SCHEMA, "write").catch((err) => { fertig.delete(db); throw err; });
+    fertig.set(db, p);
+  }
+  return p;
+}
+
+/**
+ * Muster für die Zählung je Absender. Bei IPv6 zählt das Netz (die ersten vier Blöcke), sonst wechselt ein Angreifer einfach
+ * die Adresse im eigenen Netz. Das gilt nur, wenn diese vier Blöcke ausgeschrieben sind: Bei verkürzter Schreibweise („::1“,
+ * „2001:db8::1“) stehen vorn weniger Blöcke, dann zählt die Adresse selbst. Gespeichert wird immer die ganze IP.
+ */
+function netz(ip: string): string {
+  const teile = ip.split(":");
+  const kopf = teile.slice(0, 4);
+  return teile.length > 4 && kopf.every((t) => t !== "") ? `${kopf.join(":")}:%` : ip;
+}
+
+/**
+ * Was in der letzten Stunde los war: verschickte Bestätigungsmails über alle Adressen, und Anmeldungen aus dem Netz dieser IP.
+ * Davon hängen die zwei Obergrenzen ab. Gezählt wird in der Datenbank, weil der Zähler im Speicher je Server-Instanz neu beginnt.
+ */
+export async function lastDerStunde(db: Client, ip: string): Promise<{ mails: number; ausNetz: number }> {
+  await vorbereiten(db);
+  const z = await eine<{ mails: number; aus_netz: number }>(
+    db,
+    `SELECT (SELECT count(*) FROM nl_ereignisse WHERE art = 'mail' AND am > datetime('now', '-1 hour')) AS mails,
+            (SELECT count(*) FROM nl_ereignisse WHERE art IN ('angemeldet', 'wunsch') AND ip LIKE ? AND am > datetime('now', '-1 hour')) AS aus_netz`,
+    [netz(ip)],
+  );
+  return { mails: Number(z?.mails ?? 0), ausNetz: Number(z?.aus_netz ?? 0) };
+}
 const token = () => randomBytes(24).toString("base64url"); // 192 Bit Zufall, nicht erratbar
 
 /** Schritt 1. Legt Kontakt und Einwilligung an oder frischt sie auf. Der Wortlaut kommt vom Formular, nicht aus der Datenbank: Bewiesen wird, was dastand. */
 export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
   const email = d.email.trim().toLowerCase();
+  await vorbereiten(db);
   await db.batch(
     [
-      ...SCHEMA,
       // Die Liste zeigt in Sabala Mail den Satz, der gerade am Häkchen steht. Ein älterer Stand der Seite dreht ihn nicht zurück.
       {
         sql: `INSERT INTO nl_listen (marke, schluessel, name, beschreibung, einwilligungstext, einwilligung_version) VALUES (?, ?, ?, ?, ?, ?)
@@ -126,8 +163,12 @@ export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
   if (alt?.status === "aktiv") {
     // Bestätigter Kontakt: nichts an ihm ändern. Nur den Wunsch merken, der Klick entscheidet.
     if (ebenGeschickt) return { id: alt.id, status: "aktiv", token: "", senden: false };
-    const t = token();
-    await db.execute({ sql: "INSERT INTO nl_wuensche (einwilligung_id, formular, token) VALUES (?, ?, ?)", args: [alt.id, d.quelle, t] });
+    // Ein offener Wunsch für dasselbe Formular wird wiederverwendet: je Kontakt höchstens eine offene Zeile je Formular, egal wie oft jemand abschickt.
+    const offen = await eine<{ token: string }>(db, "SELECT token FROM nl_wuensche WHERE einwilligung_id = ? AND formular = ? AND erledigt_am IS NULL ORDER BY id DESC LIMIT 1", [alt.id, d.quelle]);
+    const t = offen?.token ?? token();
+    if (!offen) await db.execute({ sql: "INSERT INTO nl_wuensche (einwilligung_id, formular, token) VALUES (?, ?, ?)", args: [alt.id, d.quelle, t] });
+    // Mit IP vermerkt, damit auch Wünsche in die Obergrenze je Absender zählen
+    await db.execute({ sql: "INSERT INTO nl_ereignisse (einwilligung_id, art, ip, notiz) VALUES (?, 'wunsch', ?, ?)", args: [alt.id, d.ip, d.quelle] });
     return { id: alt.id, status: "aktiv", token: t, senden: true };
   }
   if (alt?.status === "ausstehend" && ebenGeschickt) return { id: alt.id, status: "ausstehend", token: alt.token, senden: false };
@@ -205,11 +246,6 @@ export async function bestaetigen(db: Client, tok: string, ip: string): Promise<
     await merkmal(w.kontakt_id, w.formular);
   }
   return { email: w.email, vorname: w.vorname, nachname: w.nachname, quelle: w.formular, einwilligung_id: w.id, neu };
-}
-
-/** Wie viele Bestätigungsmails in der letzten Stunde rausgingen, über alle Adressen. Für die Obergrenze, die das Postfach vor Missbrauch schützt. */
-export async function mailsLetzteStunde(db: Client): Promise<number> {
-  return Number((await eine<{ n: number }>(db, "SELECT count(*) AS n FROM nl_ereignisse WHERE art = 'mail' AND am > datetime('now', '-1 hour')"))?.n ?? 0);
 }
 
 /** Hält fest, was sonst geschah: „mail“ = Bestätigungsmail ist raus (davon hängt die Wartezeit ab), „werkzeug“ = Eintrag ins Newsletter-Werkzeug nach dem Klick. */

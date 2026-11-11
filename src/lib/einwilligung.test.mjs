@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createClient } from "@libsql/client";
-import { anmelden, bestaetigen, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
+import { anmelden, bestaetigen, lastDerStunde, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
 
 // Läuft gegen eine Datenbank im Speicher. Kein Netz, keine Mail, kein echter Kontakt.
 const frisch = () => createClient({ url: ":memory:" });
@@ -120,4 +120,41 @@ test("Die Liste zeigt den neuesten Wortlaut, ein älterer Stand der Seite dreht 
   assert.equal(liste[0].einwilligung_version, 2);
   const ben = (await db.execute("SELECT e.einwilligungstext FROM nl_einwilligungen e JOIN nl_kontakte k ON k.id = e.kontakt_id WHERE k.email = 'ben@example.com'")).rows[0];
   assert.equal(ben.einwilligungstext, "Alter Text.", "bewiesen wird, was derjenige gesehen hat");
+});
+
+test("Ein offener Wunsch wird wiederverwendet: Zehnmal abschicken ergibt eine Zeile und denselben Link", async () => {
+  const db = frisch();
+  const { token } = await anmelden(db, anna);
+  await bestaetigen(db, token, "198.51.100.9");
+  const eins = await anmelden(db, { ...anna, quelle: "Mooni Voice" }); // Versand „gescheitert“: kein Vermerk „mail“
+  const zwei = await anmelden(db, { ...anna, quelle: "Mooni Voice" });
+  const drei = await anmelden(db, { ...anna, quelle: "Warteliste Kurs" });
+  assert.equal(zwei.token, eins.token, "gleiches Formular, gleicher Link");
+  assert.notEqual(drei.token, eins.token, "anderes Formular, eigener Link");
+  assert.equal((await db.execute("SELECT count(*) AS n FROM nl_wuensche")).rows[0].n, 2);
+});
+
+test("Die Last der Stunde zählt Mails über alle und Anmeldungen je Absender, bei IPv6 je Netz", async () => {
+  const db = frisch();
+  assert.deepEqual(await lastDerStunde(db, "203.0.113.7"), { mails: 0, ausNetz: 0 }, "zählt auch auf einer leeren Datenbank");
+  const a = await anmelden(db, anna);
+  await vermerken(db, a.id, "mail");
+  await anmelden(db, { ...anna, email: "ben@example.com" });
+  await anmelden(db, { ...anna, email: "cara@example.com", ip: "198.51.100.1" });
+  assert.deepEqual(await lastDerStunde(db, "203.0.113.7"), { mails: 1, ausNetz: 2 });
+  assert.equal((await lastDerStunde(db, "192.0.2.99")).ausNetz, 0, "fremde Absender zählen nicht mit");
+  await anmelden(db, { ...anna, email: "dora@example.com", ip: "2001:db8:aa:bb:1::1" });
+  await anmelden(db, { ...anna, email: "emil@example.com", ip: "2001:db8:aa:bb:2::2" });
+  assert.equal((await lastDerStunde(db, "2001:db8:aa:bb:9::9")).ausNetz, 2, "dasselbe IPv6-Netz zählt zusammen");
+  assert.equal((await lastDerStunde(db, "2001:db8:aa:cc:9::9")).ausNetz, 0);
+  // Verkürzte Schreibweise: Die Adresse muss sich selbst zählen, sonst greift die Grenze für sie nie
+  await anmelden(db, { ...anna, email: "finn@example.com", ip: "::1" });
+  await anmelden(db, { ...anna, email: "gina@example.com", ip: "2001:db8::7" });
+  assert.equal((await lastDerStunde(db, "::1")).ausNetz, 1);
+  assert.equal((await lastDerStunde(db, "2001:db8::7")).ausNetz, 1);
+  // Auch der Wunsch eines bestätigten Kontakts zählt für den Absender
+  await bestaetigen(db, a.token, "203.0.113.7");
+  await db.execute("UPDATE nl_ereignisse SET am = datetime('now', '-11 minutes') WHERE art = 'mail'");
+  await anmelden(db, { ...anna, quelle: "Mooni Voice", ip: "192.0.2.50" });
+  assert.equal((await lastDerStunde(db, "192.0.2.50")).ausNetz, 1);
 });
