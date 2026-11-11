@@ -6,7 +6,8 @@
    Trend-Radar zählt neue Anmeldungen je Leadmagnet und je Nische. Hintergrund: Konzept 2027, Abschnitt 7.
 
    Ein neuer Leadmagnet braucht genau zwei Dinge:
-     1. hier eine Zeile unter LEADMAGNETE: Kürzel, Name, Nische
+     1. hier eine Zeile unter LEADMAGNETE: Kürzel, Name, Nische und die Dankeseite, auf der man nach dem Klick
+        in der Bestätigungsmail landet (dort liegt zum Beispiel der Download)
      2. auf seiner Seite: <AnmeldeForm quelle="kürzel" knopf="…" />
    Den Rest erledigt die Route /api/akademie-newsletter. Sie kennt nur Kürzel aus dieser Liste, schreibt Quelle und Nische
    in den Briefkasten und setzt nach dem Klick in der Bestätigungsmail zwei Tags im Newsletter-Werkzeug:
@@ -30,10 +31,14 @@ export type Nische = keyof typeof NISCHEN;
 
 /** Leadmagnete mit eigener Seite und eigenem Formular. Das Kürzel ist die Quelle im Briefkasten. */
 export const LEADMAGNETE = {
-  "startpaket-claude-code": { name: "Claude-Code-Startpaket", nische: "claude-code" },
-  "ki-newsletter": { name: "KI-Newsletter", nische: "einstieg" },
-} as const satisfies Record<string, { name: string; nische: Nische }>;
+  "startpaket-claude-code": { name: "Claude-Code-Startpaket", nische: "claude-code", danke: "/claude-code/startpaket/danke" },
+  "ki-newsletter": { name: "KI-Newsletter", nische: "einstieg", danke: "/newsletter/bestaetigt" },
+} as const satisfies Record<string, { name: string; nische: Nische; danke: string }>;
 export type Leadmagnet = keyof typeof LEADMAGNETE;
+
+/** Wohin der Klick in der Bestätigungsmail führt: Leadmagnete auf ihre eigene Dankeseite, alle anderen Formulare auf die allgemeine.
+ *  Das Ziel steht nur in dieser Datei. Die Quelle kommt aus der Datenbank, nie aus der Anfrage, darum kann niemand umleiten. */
+export const dankeSeite = (quelle: string): string => (istLeadmagnet(quelle) ? LEADMAGNETE[quelle].danke : "/newsletter/bestaetigt");
 
 /** Die Formulare, die es schon gab. Ihre Namen stehen so in den Nachweisen der Einwilligung und bleiben darum, wie sie sind. */
 export const FORMULARE = {

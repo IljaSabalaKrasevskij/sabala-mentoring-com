@@ -132,12 +132,13 @@ export async function einwilligungStarten(d: { formular: Formular; email: string
   }
 }
 
-/** Klick auf den Link in der Mail. true: bestätigt (auch beim zweiten Klick). false: Link unbekannt oder abgemeldet. */
-export async function einwilligungBestaetigen(token: string, ip: string): Promise<boolean> {
+/** Klick auf den Link in der Mail. Gibt die Quelle des bestätigten Formulars zurück (auch beim zweiten Klick), nach ihr richtet sich die Dankeseite.
+ *  null: Link unbekannt oder abgemeldet. */
+export async function einwilligungBestaetigen(token: string, ip: string): Promise<string | null> {
   const db = getClient();
-  if (!db) return false;
+  if (!db) return null;
   const b = await bestaetigen(db, token, ip);
-  if (!b) return false;
+  if (!b) return null;
   if (b.neu) await insWerkzeug(b, b.quelle);
-  return true;
+  return b.quelle;
 }
