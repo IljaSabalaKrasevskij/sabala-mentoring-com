@@ -1,7 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { ArrowLeft, Sparkles, Scissors, Gauge, ShieldCheck, Quote } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
@@ -116,8 +115,8 @@ function PullQuote({ children }: { children: React.ReactNode }) {
 export default function BlogClaudeCodeWenigerCodePage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
