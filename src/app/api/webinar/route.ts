@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER } from "@/lib/anmeldung";
-import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
+import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
 import { WEBINAR } from "@/components/webinar/config";
 
@@ -34,12 +34,8 @@ export async function POST(req: Request) {
 
   const ip = ipAus(req);
 
-  let json: unknown;
-  try {
-    json = await req.json();
-  } catch {
-    return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
-  }
+  const json = await jsonAus(req);
+  if (json === undefined) return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   const parsed = eingabePruefen(Schema, json);
   if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;

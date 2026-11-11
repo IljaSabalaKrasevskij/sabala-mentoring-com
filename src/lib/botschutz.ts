@@ -25,7 +25,27 @@ if (!GEHEIM && process.env.VERCEL) {
 }
 const SCHLUESSEL = createHmac("sha256", GEHEIM || randomBytes(32)).update("formular-siegel-v1").digest("base64url");
 
+/* Absender-IP für die Obergrenzen. Vercel füllt x-forwarded-for selbst aus der Verbindung und überschreibt, was der
+   Aufrufer mitschickt (https://vercel.com/docs/headers/request-headers#x-forwarded-for). Der erste Eintrag ist darum echt
+   und lässt sich nicht fälschen, solange die Seite direkt bei Vercel liegt. Kommt je ein eigener Proxy oder ein anderes
+   CDN davor: hier umstellen (Vercel „Verified Proxy“), sonst zählt die Obergrenze den Proxy statt den Besucher. */
 export const ipAus = (req: Request) => req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+/**
+ * Liest den Körper einer Formular-Anfrage. undefined, wenn er kein JSON ist oder nicht als JSON angekündigt wurde.
+ * Der Kopf zählt: Eine fremde Webseite kann die Browser ihrer Besucher nur „einfache“ Inhaltsarten abschicken lassen
+ * (Text, Formular). Für application/json fragt der Browser vorher nach, und diese Nachfrage beantworten wir nicht.
+ * Ohne die Prüfung könnte eine fremde Seite über ihre Besucher Formulare abschicken: Gezählt würde deren Anschluss,
+ * die Obergrenze je Absender liefe ins Leere, und die Besucher wären danach eine Stunde ausgesperrt.
+ */
+export async function jsonAus(req: Request): Promise<unknown> {
+  if (!/^application\/json\b/i.test(req.headers.get("content-type") ?? "")) return undefined;
+  try {
+    return await req.json();
+  } catch {
+    return undefined;
+  }
+}
 
 export const siegelNeu = () => siegelAusstellen(SCHLUESSEL);
 

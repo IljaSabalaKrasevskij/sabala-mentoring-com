@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { insertSurveyResponse } from "@/lib/survey";
 import { tagContact } from "@/lib/activecampaign";
-import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
+import { FELDER } from "@/lib/anmeldung";
+import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 
 export const runtime = "nodejs";
 
@@ -22,7 +23,8 @@ const Str = (max: number) => z.string().trim().max(max);
 const MultiChoice = z.array(z.string().trim().max(80)).max(20).default([]);
 
 const Schema = z.object({
-  vorname: Str(80).default(""),
+  // freiwillig, aber nur Buchstaben: Der Vorname steht in der Auswertung und in der Nachricht aufs Handy
+  vorname: z.union([z.literal(""), FELDER.vorname]).default(""),
   email: z
     .string()
     .trim()
@@ -63,12 +65,8 @@ async function pushNtfy(email: string, vorname: string, rolle: string, quelle: s
 export async function POST(req: Request) {
   const ip = ipAus(req);
 
-  let json: unknown;
-  try {
-    json = await req.json();
-  } catch {
-    return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
-  }
+  const json = await jsonAus(req);
+  if (json === undefined) return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   const parsed = Schema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json({ ok: false, reason: "validation" }, { status: 422 });
@@ -102,7 +100,7 @@ export async function POST(req: Request) {
   // 2) AC-Tag + 3) ntfy — best effort, parallel, blockieren den Erfolg nicht
   const tag = process.env.AC_UMFRAGE_TAG || "Umfrage ausgefuellt";
   await Promise.allSettled([
-    tagContact(d.email, d.vorname, tag).catch((e) => console.error("[umfrage] AC-Fehler:", e)),
+    tagContact(d.email, tag).catch((e) => console.error("[umfrage] AC-Fehler:", e)),
     pushNtfy(d.email, d.vorname, d.rolle, d.quelle),
   ]);
 
