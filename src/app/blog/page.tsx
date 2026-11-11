@@ -45,6 +45,21 @@ const featuredArticle = {
 
 const articles = [
   {
+    id: 18,
+    title: "Second Brain mit Obsidian und Claude: damit Claude nie wieder bei null anfängt",
+    excerpt: "Acht Ordner, eine kurze CLAUDE.md und drei Werkzeuge: Obsidian als Gedächtnis, Claude Code als Assistent, Gemini Notebook als Rechercheur. So baust du das Grundgerüst an einem Nachmittag.",
+    category: "KI & Tools",
+    date: "November 2026",
+    readTime: "8 Min",
+    image: "/webinar/ordner-zentrale.jpg",
+    slug: "/blog/second-brain-obsidian-claude",
+    keywords: ["second brain", "obsidian", "claude", "claude code", "notebooklm", "gemini notebook", "para", "wissensmanagement", "vault", "claude.md"],
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 17,
     title: "Claude Code installieren: Schritt für Schritt für Mac und Windows",
     excerpt: "Ein Befehl, eine Anmeldung, ein Ordner. Die ganze Anleitung für Mac und Windows, die Abkürzung ohne Terminal über die Desktop-App und die Lösung für die häufigsten Fehler.",

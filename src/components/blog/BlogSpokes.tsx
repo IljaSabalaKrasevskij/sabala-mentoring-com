@@ -7,6 +7,7 @@ const BLOG_INDEX: Record<string, { tag: string; title: string }> = {
   "claude-code-weniger-code-ponytail": { tag: "KI Academy", title: "Claude Code am Limit: weniger Code, mehr Strecke" },
   "claude-code-installieren": { tag: "KI Academy", title: "Claude Code installieren: Mac und Windows" },
   "claude-code-kosten": { tag: "Kosten", title: "Was kostet Claude Code? Alle Pläne" },
+  "second-brain-obsidian-claude": { tag: "Second Brain", title: "Second Brain mit Obsidian und Claude" },
   "webseiten-bau-mit-claude-anfaenger": { tag: "KI Academy", title: "Webseiten-Bau mit Claude Code: der Anfänger-Guide" },
   "webseite-mit-ki-bauen-2026": { tag: "KI & Webseiten", title: "Webseite mit KI bauen: der Premium-Stack" },
   "was-kostet-ki-webseite": { tag: "Pricing", title: "Was eine KI-Webseite wirklich kostet" },
