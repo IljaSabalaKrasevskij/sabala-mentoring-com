@@ -3,6 +3,7 @@ import { z } from "zod";
 import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER } from "@/lib/anmeldung";
 import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
+import { nischeVon } from "@/lib/quellen";
 import { WEBINAR } from "@/components/webinar/config";
 
 export const runtime = "nodejs";
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
       webseite: "",
       anliegen: `Webinar-Anmeldung: Second Brain für Claude, ${WEBINAR.date}.`,
       quelle: "Webinar Second Brain",
+      nische: nischeVon("Webinar Second Brain"),
       telefon: data.telefon,
     });
   } catch (err) {

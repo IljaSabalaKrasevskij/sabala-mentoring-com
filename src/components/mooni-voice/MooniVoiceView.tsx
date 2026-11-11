@@ -529,6 +529,7 @@ export default function MooniVoiceView() {
               )}
               <a
                 ref={downloadRef} href={DMG_URL} download
+                data-umami-event="download" data-umami-event-datei="mooni-voice.dmg"
                 className="mt-5 inline-block w-full rounded-xl py-4 font-sans font-semibold"
                 style={{ background: AMBER, color: "#1a1206", letterSpacing: "0.04em" }}
               >

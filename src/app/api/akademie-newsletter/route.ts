@@ -3,6 +3,7 @@ import { z } from "zod";
 import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Formular } from "@/lib/anmeldung";
 import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
+import { LEADMAGNETE, nischeVon, type Leadmagnet, type Quelle } from "@/lib/quellen";
 
 export const runtime = "nodejs";
 
@@ -16,6 +17,9 @@ export const runtime = "nodejs";
      der Tag startet die Willkommens-Strecke). Siehe src/lib/anmeldung.ts.
    - Mit "warteliste" eigene Quelle und eigener Tag: So lässt sich die Warteliste
      getrennt anschreiben, und die Willkommens-Mail bleibt aus.
+   - Mit "quelle" kommt die Anmeldung von einem Leadmagneten (Kürzel aus src/lib/quellen.ts). Quelle und Nische
+     stehen dann im Briefkasten, nach dem Klick kommen die Tags „Leadmagnet: …“ und „Nische: …“ dazu.
+     Unbekannte Kürzel werden abgelehnt, die Nische kommt nie aus der Anfrage.
    - Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -27,6 +31,7 @@ const WARTELISTE = {
 
 const Schema = z.object({
   warteliste: z.enum(["kurs", "webinar", "webkurs"]).optional(),
+  quelle: z.enum(Object.keys(LEADMAGNETE) as [Leadmagnet, ...Leadmagnet[]], { error: "Dieses Formular kenne ich nicht." }).optional(),
   vorname: FELDER.vorname,
   nachname: FELDER.nachname,
   email: FELDER.email,
@@ -45,6 +50,9 @@ export async function POST(req: Request) {
   if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;
   const liste = data.warteliste ? WARTELISTE[data.warteliste] : null;
+  // Woher die Anmeldung kommt: von einem Leadmagneten, einer Warteliste oder dem Newsletter-Formular selbst
+  const quelle: Quelle = data.quelle ?? liste?.formular ?? "Akademie-Newsletter";
+  const anliegen = data.quelle ? `Leadmagnet: ${LEADMAGNETE[data.quelle].name}` : liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.";
 
   // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (data.fax) return NextResponse.json({ ok: true });
@@ -59,8 +67,9 @@ export async function POST(req: Request) {
       email: data.email,
       unternehmen: "",
       webseite: "",
-      anliegen: liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.",
-      quelle: liste?.formular ?? "Akademie-Newsletter",
+      anliegen,
+      quelle,
+      nische: nischeVon(quelle),
       telefon: data.telefon,
     });
   } catch (err) {
@@ -69,7 +78,7 @@ export async function POST(req: Request) {
 
   // 2) Nachweis der Einwilligung + Bestätigungsmail. Ins Newsletter-Werkzeug geht es erst nach dem Klick.
   const bestaetigung = await einwilligungStarten({
-    formular: liste?.formular ?? "Akademie-Newsletter",
+    formular: quelle,
     email: data.email,
     vorname: data.vorname,
     nachname: data.nachname,

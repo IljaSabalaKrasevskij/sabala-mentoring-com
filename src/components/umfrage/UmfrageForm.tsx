@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ereignis } from "@/lib/ereignis";
 import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -133,7 +134,7 @@ export default function UmfrageForm({ quelle = "Umfrage-Newsletter" }: { quelle?
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vorname, email, rolle, techLevel, modelle, themen, ziele, problem, kontext, quelle, fax, siegel: await siegel() }),
       });
-      if (res.ok) setStatus("success");
+      if (res.ok) { ereignis("formular-abgeschickt", { formular: "umfrage" }); setStatus("success"); }
       else if (res.status === 503) setStatus("unconfigured");
       else setStatus("error");
     } catch {

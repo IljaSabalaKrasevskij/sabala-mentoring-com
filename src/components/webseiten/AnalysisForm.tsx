@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 import { PROJECT_LABELS, PROJECT_TIMELINES, PROJECT_TYPES, validateProjectStep, type AuditErrors, type AuditField, type AuditLang, type ProjectDraft } from "@/lib/audit-request";
 import styles from "./AnalysisForm.module.css";
 import { useAnalysisSession } from "./AnalysisSession";
+import { ereignis } from "@/lib/ereignis";
 import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 const COPY = {
@@ -115,6 +116,7 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
       const response = await fetch("/api/audit-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: draft.noWebsite ? "" : url, email, consent, lang, qualification, siegel: await siegel() }) });
       const result = await response.json();
       if (!response.ok || result.success !== true) throw new Error("Request was not saved");
+      ereignis("formular-abgeschickt", { formular: "audit-request", quelle: "projekt-anfrage" });
       setState("success"); focus.current = "heading";
     } catch { setState("error"); }
     finally { sendingRef.current = false; }

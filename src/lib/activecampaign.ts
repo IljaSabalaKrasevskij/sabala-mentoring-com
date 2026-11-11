@@ -198,6 +198,12 @@ export async function subscribeToAcademy(email: string, firstName = "", lastName
   );
 }
 
+/* Leadmagnet → Akademie-Liste + eigener Tag "Leadmagnet: <Name>". An dem Tag kann die Willkommens-Strecke zu
+   diesem Thema haengen. Ohne Automation auf dem Tag geht keine Mail raus. Namen: src/lib/quellen.ts */
+export async function subscribeLeadmagnet(email: string, firstName: string, lastName: string, name: string): Promise<AcResult> {
+  return subscribeToList(email, firstName, process.env.AC_AKADEMIE_LIST_ID, `Leadmagnet: ${name}`, lastName);
+}
+
 /* Webinar "Second Brain" → Akademie-Liste + eigener Webinar-Tag.
    ponytail: laeuft bewusst auf der bestehenden Akademie-Liste (gleiche Zielgruppe,
    ein Versand-Container). Der eigene Tag trennt die Automation: Erinnerungsmails

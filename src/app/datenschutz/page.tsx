@@ -246,6 +246,8 @@ export default function DatenschutzPage() {
               geräteübergreifendes Profil gebildet und Sie werden nicht über mehrere Sitzungen
               hinweg wiedererkannt. IP-Adressen werden nicht gespeichert. Erfasst werden aufgerufene
               Seite, Verweisquelle, ungefähre Herkunftsregion sowie Browser- und Gerätetyp.
+              Zusätzlich zählen wir, wie oft ein Formular abgeschickt und eine Datei heruntergeladen
+              wird. Diese Zählung enthält keine Angaben zu Ihrer Person.
               Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer
               datensparsamen statistischen Auswertung unseres Angebots).
             </p>

@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { ArrowRight, Check, Loader2, AlertCircle, Sparkles } from "lucide-react";
+import { ereignis } from "@/lib/ereignis";
 import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
@@ -79,6 +80,7 @@ export function ArticleAuditCTA({
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Etwas ist schiefgelaufen.");
       }
+      ereignis("formular-abgeschickt", { formular: "audit-request" });
       setState("success");
     } catch (err) {
       setState("error");

@@ -5,6 +5,7 @@ import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwil
 import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
+import type { Leadmagnet } from "@/lib/quellen";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AnmeldeForm — Vorname, Nachname, E-Mail, Telefon (Pflicht) und das Häkchen
@@ -33,11 +34,15 @@ const inputStyle: React.CSSProperties = {
 };
 
 export default function AnmeldeForm({
-  api,
+  api = "/api/akademie-newsletter",
+  quelle,
   extra,
   knopf,
 }: {
-  api: string;
+  /** Standard ist die Anmeldung zum Newsletter. Sie nimmt auch die Leadmagnete an. */
+  api?: string;
+  /** Leadmagnet, zu dem dieses Formular gehört (Kürzel aus src/lib/quellen.ts). Quelle und Nische landen damit im CRM. */
+  quelle?: Leadmagnet;
   extra?: Record<string, string>;
   knopf: string;
 }) {
@@ -60,7 +65,7 @@ export default function AnmeldeForm({
     e.preventDefault();
     if (status === "loading") return;
     setStatus("loading");
-    const r = await formularSenden(api, { vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra });
+    const r = await formularSenden(api, { vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra, ...(quelle ? { quelle } : {}) });
     if (r.art === "eingabe") setMeldung({ feld: r.feld, text: r.meldung });
     setStatus(r.art === "ok" ? "success" : r.art === "eingabe" ? "idle" : r.art === "fehlt" ? "unconfigured" : "error");
   }
