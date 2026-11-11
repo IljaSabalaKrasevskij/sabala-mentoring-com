@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass } from "@/components/blog/BlogProse";
-import Script from "next/script";
 import { ArticleAuditCTA } from "@/components/blog/ArticleAuditCTA";
 import { ArrowLeft, Sparkles, Shield } from "lucide-react";
 
@@ -33,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
 });
 
@@ -72,8 +71,8 @@ const proseBlock =
 export default function BlogDsgvoCookieBannerPage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
@@ -190,7 +189,7 @@ export default function BlogDsgvoCookieBannerPage() {
             <p>Gesamt: 2-3 Stunden. Danach hast du eine cookie-freie Webseite und musst dir um die DSGVO-Reform 2027 keine Gedanken machen.</p>
 
             <h3>Wie ich das in der Sabala-Praxis löse</h3>
-            <p>Mein Standard-Setup für Premium-Kunden ist seit 2023 cookie-frei: Vercel-Hosting (Edge-Region Frankfurt), Umami für Analytics (self-hosted oder Cloud), Brevo für Newsletter im Privacy-Mode, YouTube-nocookie für Video-Embeds, OpenStreetMap statt Google Maps. Migration einer bestehenden WordPress-Seite dauert typischerweise 3-5 Stunden, ist im Mini-Pflege-Paket (49 Euro pro Monat) sofort abrufbar.</p>
+            <p>Mein Standard-Setup für Premium-Kunden ist seit 2023 cookie-frei: Vercel-Hosting (Edge-Region Frankfurt), Umami für Analytics (self-hosted oder Cloud), Brevo für Newsletter im Privacy-Mode, YouTube-nocookie für Video-Embeds, OpenStreetMap statt Google Maps. Migration einer bestehenden WordPress-Seite dauert typischerweise 3-5 Stunden.</p>
             <p>Konkretes Beispiel: bei einem Coaching-Relaunch in diesem Quartal haben wir eine alte WordPress-Seite mit Cookie-Banner und drei Tracking-Plugins komplett ersetzt. Heute: cookie-frei, ohne Banner, PageSpeed-Score deutlich über 90 mobil. Aufwand-Differenz zu einer Standard-Migration: null Stunden, weil cookie-frei der Default ist, nicht eine Spar-Variante.</p>
           </div>
         </ScrollReveal>

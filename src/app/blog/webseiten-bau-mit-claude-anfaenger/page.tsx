@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass } from "@/components/blog/BlogProse";
-import Script from "next/script";
 import { ArrowLeft, Sparkles, Layers } from "lucide-react";
 
 const slug = "webseiten-bau-mit-claude-anfaenger";
@@ -11,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-18";
 
 export const metadata = {
-  title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
+  title: { absolute: "Webseite mit Claude Code bauen: der Anfänger-Guide" },
   description:
     "Was die meisten beim ersten Claude-Code-Setup falsch machen, und wie der Einstieg wirklich in 45 Minuten produktiv wird. Die drei Pflicht-Dateien und die fünf häufigsten Fehler.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Webseiten-Bau mit Claude Code: der ehrliche Anfänger-Guide",
+    title: "Webseite mit Claude Code bauen: der Anfänger-Guide",
     description: "Drei Pflicht-Dateien, fünf typische Fehler, klarer Einstieg in 45 Minuten.",
     type: "article",
     publishedTime: datePublished,
@@ -69,8 +68,8 @@ const proseBlock =
 export default function BlogWebseitenBauMitClaudePage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 

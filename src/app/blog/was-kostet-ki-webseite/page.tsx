@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass, PullQuote } from "@/components/blog/BlogProse";
-import Script from "next/script";
 import { ArrowLeft, Sparkles, Calculator } from "lucide-react";
 
 const slug = "was-kostet-ki-webseite";
@@ -11,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-16";
 
 export const metadata = {
-  title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
+  title: { absolute: "Was kostet eine KI-Webseite? Die 5-Jahres-Rechnung" },
   description:
     "Baukasten 1.500-3.500 Euro über 3 Jahre. Eigene Webseite 8.000-15.000 Euro einmalig. Wo der Break-Even liegt, welche Kosten beide verschleiern, und welche Frage am Ende mehr zählt als der Preis.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Was eine KI-Webseite wirklich kostet: die ehrliche 5-Jahres-Rechnung",
+    title: "Was kostet eine KI-Webseite? Die 5-Jahres-Rechnung",
     description: "Echte Zahlen, Hidden Costs, Break-Even-Punkt. Ohne Agentur-Sprech.",
     type: "article",
     publishedTime: datePublished,
@@ -33,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   image: `${url}/cover.jpg`,
 });
@@ -65,8 +64,8 @@ const proseBlock =
 export default function BlogWasKostetKiWebseitePage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
@@ -117,6 +116,7 @@ export default function BlogWasKostetKiWebseitePage() {
             <p>Der Unterschied ist nicht „mit oder ohne KI". Der Unterschied ist <strong>Eigentum</strong>.</p>
 
             <h2>Was beide Optionen wirklich kosten</h2>
+            <p><em>Stand November 2026: Die Pflege kostet inzwischen 70 Euro (Basis) oder 249 Euro (Wachstum) netto im Monat. Die Rechnung in diesem Artikel stammt vom Juni 2026 und nutzt noch die früheren Preise. Die aktuellen Stufen stehen auf der Seite <Link href="/webseiten">Webseiten</Link>.</em></p>
             <p><strong>Baukasten (Webflow als Beispiel):</strong> 27 Euro im Monat plus Erweiterungen, Plugins, Lizenzen, Bilder. Realistisch über 3 Jahre: <strong>1.500 bis 3.500 Euro</strong>. Squarespace und Wix ähnlich, günstiger im Grundpreis, teurer in den Add-ons.</p>
             <p><strong>Eigene Webseite (Sabala-Lite als Beispiel):</strong> 8.000 Euro einmalig, inklusive Brand-Audit, fünf Premium-Seiten, drei Blog-Artikel, sechs Monate Pflege. Danach Hosting plus 49 bis 149 Euro Pflege im Monat. Realistisch über 3 Jahre: <strong>9.500 bis 11.900 Euro</strong>.</p>
             <p>Auf den ersten Blick ist Baukasten günstiger. Aber das ist nicht die ganze Wahrheit.</p>

@@ -2,7 +2,6 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
-import Script from "next/script";
 import { ArrowLeft, Sparkles, Calculator } from "lucide-react";
 
 const slug = "baukasten-vs-eigene-webseite-kosten-2026";
@@ -31,7 +30,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
 });
 
@@ -50,7 +49,7 @@ const faq = [
   },
   {
     q: "Was kostet die Pflege langfristig?",
-    a: "Bei Sabala nach den initialen 12 Monaten: 49 Euro pro Monat Mini, 69 Euro pro Monat Plus (mit Monatsbericht), 149 Euro pro Monat Premium (mit Strategie-Call). Bei Baukasten: vergleichbar oder höher, je nach Anbieter.",
+    a: "Die Pflege kostet bei Sabala 70 Euro netto im Monat in der Stufe Basis (Betrieb, Updates, Sicherheit, Backups) und 249 Euro netto im Monat in der Stufe Wachstum (dazu zwei kleine Änderungen und ein Monatsbericht). Die Stufe Partner gibt es auf Anfrage.",
   },
   {
     q: "Wie schnell amortisiert sich der Mehrpreis?",
@@ -70,8 +69,8 @@ const proseBlock =
 export default function BlogBaukastenVsEigenePage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
@@ -131,6 +130,7 @@ export default function BlogBaukastenVsEigenePage() {
             <p><strong>Realistische 3-Jahres-Summe Baukasten: 1.500-3.500 Euro</strong></p>
 
             <h2>Die Premium-Rechnung (Sabala-Lite als Beispiel)</h2>
+            <p><em>Stand November 2026: Die Pflege kostet inzwischen 70 Euro (Basis) oder 249 Euro (Wachstum) netto im Monat. Die Rechnung in diesem Artikel stammt vom Mai 2026 und nutzt noch die früheren Preise. Die aktuellen Stufen stehen auf der Seite <Link href="/webseiten">Webseiten</Link>.</em></p>
             <p><strong>Lite-Paket</strong>: 8.000 Euro einmalig (inklusive Brand-Audit, Identity Sessions, 5-Seiten Premium-Webseite, 3 Blog-Artikel, 6 Monate Pflege Mini).</p>
             <p>Nach 6 Monaten Pflege optional:</p>
             <ul>

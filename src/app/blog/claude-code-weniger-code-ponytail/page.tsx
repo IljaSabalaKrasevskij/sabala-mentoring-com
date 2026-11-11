@@ -1,7 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { ArrowLeft, Sparkles, Scissors, Gauge, ShieldCheck, Quote } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
@@ -11,12 +10,12 @@ const url = `https://sabala-mentoring.com/blog/${slug}`;
 const datePublished = "2026-06-21";
 
 export const metadata = {
-  title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
+  title: { absolute: "Ponytail-Plugin für Claude Code: was es wirklich bringt" },
   description:
     "Claude Code baut oft zu viel und steht damit schnell am Limit. Ein kostenloses Plugin dreht das um. Was die viralen Zahlen wirklich sagen, ehrlich nachgerechnet, mit allen Sicherheits-Grenzen.",
   alternates: { canonical: url },
   openGraph: {
-    title: "Claude Code am Limit: warum weniger Code dich weiterbringt",
+    title: "Ponytail-Plugin für Claude Code: was es wirklich bringt",
     description: "Ein Befehl, rund 54 Prozent weniger Code, volle Sicherheit. Ehrlich getestet statt viral nachgeplappert.",
     type: "article",
     publishedTime: datePublished,
@@ -116,8 +115,8 @@ function PullQuote({ children }: { children: React.ReactNode }) {
 export default function BlogClaudeCodeWenigerCodePage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 

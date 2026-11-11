@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass } from "@/components/blog/BlogProse";
-import Script from "next/script";
 import { ArrowLeft, Lock, AlertTriangle, KeyRound, FileText } from "lucide-react";
 
 const slug = "webdesigner-verschwunden-code-eigentum";
@@ -71,8 +70,8 @@ const proseBlock =
 export default function BlogWebdesignerVerschwundenPage() {
   return (
     <main className="flex flex-col w-full bg-pure-surface min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Script id="schema-article" type="application/ld+json" strategy="beforeInteractive">{articleSchemaJson}</Script>
-      <Script id="schema-faq" type="application/ld+json" strategy="beforeInteractive">{faqSchemaJson}</Script>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
