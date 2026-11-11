@@ -24,7 +24,8 @@ function Punkte({ punkte, hell = false }: { punkte: string[]; hell?: boolean }) 
   );
 }
 
-export default function CourseGrid() {
+/* `startseite`: Der Abschnitt steht auch auf der Startseite. Dort führt die Schlusszeile zur Übersicht der Akademie. */
+export default function CourseGrid({ startseite = false }: { startseite?: boolean }) {
   /* Zwei Workshops in einer Zeile, die Fragestunde in der zweiten: die Uhrzeiten stehen auf der Kursseite.
      Hat ein Lauf einmal nicht genau drei Termine, steht jeder in einer eigenen Zeile. */
   const tage = CURRENT_COHORT?.sessions.map((s) => formatTagMonat(s.date));
@@ -110,9 +111,9 @@ export default function CourseGrid() {
 
         {/* Dritter Weg für Unternehmen: Startseite und Menü versprechen ihn, hier ist die Tür dazu. */}
         <p className="mt-4 text-center text-[1rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
-          Für Teams: Du willst mehrere Plätze oder ein Training nur für dein Unternehmen?{" "}
-          <a href="/termin-buchen" className="inline-flex min-h-[44px] items-center font-semibold text-gold-light underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">
-            Lass uns sprechen
+          {startseite ? "Alle Stufen, weitere Kurse und Trainings für Teams:" : "Für Teams: Du willst mehrere Plätze oder ein Training nur für dein Unternehmen?"}{" "}
+          <a href={startseite ? "/akademie-hub" : "/termin-buchen"} className="inline-flex min-h-[44px] items-center font-semibold text-gold-light underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">
+            {startseite ? "Zur KI-Akademie" : "Lass uns sprechen"}
           </a>
         </p>
       </div>
