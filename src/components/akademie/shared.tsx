@@ -288,6 +288,20 @@ export function Knopf({
   );
 }
 
+/* Textlink mit Pfeil, für den zweiten Weg in einer Karte oder unter einem Abschnitt. */
+export function Weiter({ href, hell = false, children }: { href: string; hell?: boolean; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="group inline-flex min-h-[44px] items-center gap-2 text-[1.02rem] font-semibold underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+      style={{ color: hell ? GOLD_AUF_HELL : "var(--gold-light)" }}
+    >
+      {children}
+      <ArrowRight aria-hidden size={17} strokeWidth={2.2} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+    </a>
+  );
+}
+
 /* Der eine Hauptknopf der Kursseite, überall mit demselben Text. Vor dem Block „Dein Platz“ springt
    er dorthin (Termine, Inhalt, Preis), ab dort führt er mit `kasse` zur Buchung. Gibt es keinen
    buchbaren Lauf, führt er zur Warteliste im selben Block. */

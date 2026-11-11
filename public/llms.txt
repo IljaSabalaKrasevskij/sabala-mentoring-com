@@ -23,7 +23,7 @@ Wer für sein Thema brennt. Wer Werte vor Ego stellt. Wer tech-müde ist und ein
 
 - [Premium-Mentoring](https://sabala-mentoring.com/premium-angebot): 1:1 Premium-Begleitung für Positionierung + Webauftritt + Pflege (€12.000-15.000, 14 Tage Lieferung)
 - [Special-Launch-Angebot — Reference Edition](https://sabala-mentoring.com/special-launch-angebot): OnePager mit 12-Monats-Pflege (€2.490)
-- [GPT-Team](https://sabala-mentoring.com/gpt-team): Custom-GPTs für Sabala-Kunden, fertig konfiguriert für Coaching-Business
+- [Shop](https://sabala-mentoring.com/shop): kostenlose Open-Source-Werkzeuge, zum Beispiel Mooni Voice (Sprache zu Text, lokal auf dem Mac)
 - [Termin buchen](https://sabala-mentoring.com/termin-buchen): Kostenfreies Erstgespräch (30 Min)
 
 ## Inhalte

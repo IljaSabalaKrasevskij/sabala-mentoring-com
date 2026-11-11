@@ -305,7 +305,7 @@ export default function BlogWebseiteMitKIBauenPage() {
               <li><strong>Foto-Authentizität</strong>: AI-generierte Portraits sehen 2026 immer noch wie AI-generierte Portraits aus. Du brauchst echte Fotos, echte Geschichte, echte Bewegung.</li>
             </ul>
             <p>Hier setze ich an. Der AI-Stack ist Werkzeug. Die Substanz dahinter ist Sabala-Arbeit: Brand-Strategie, Voice, Customer-Journey, Foto-Direction, Trust-Architektur. Eine KI-Webseite ohne diese Substanz sieht aus wie jede andere KI-Webseite. Mit dieser Substanz sieht sie aus wie deine.</p>
-            <p>Wer AI auch für den Arbeitsalltag jenseits der Webseite nutzen will, schaut sich <Link href="/gpt-team">mein eigenes KI-Team</Link> an. Sieben spezialisierte Custom GPTs, die Sabala-Stimme verstehen.</p>
+            <p>Wer AI auch für den Arbeitsalltag jenseits der Webseite nutzen will, findet den Einstieg in der <Link href="/akademie-hub">KI-Akademie</Link>.</p>
 
             <h2>Was kostet das alles?</h2>
             <p>Realistische Markt-Preise 2026:</p>

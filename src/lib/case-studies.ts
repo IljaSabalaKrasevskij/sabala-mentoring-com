@@ -324,6 +324,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/webseiten-analytics.jpg",
   },
   {
+    id: "social-media-cockpit",
+    category: "agent-os",
+    title: {
+      de: "Social Media Cockpit: Planen, freigeben, posten",
+      en: "Social Media Cockpit: Plan, Approve, Publish",
+    },
+    industry: { de: "Internes Tool · Social Media", en: "Internal Tool · Social Media" },
+    challenge: {
+      de: "Drei Instagram-Konten regelmäßig bespielen, ohne Handy, ohne Agentur und ohne ein weiteres Abo: Planung, Freigabe, Veröffentlichung und Auswertung gehören an einen Ort, und zwar auf den eigenen Rechner.",
+      en: "Run three Instagram accounts on a regular schedule without a phone, an agency or another subscription: planning, approval, publishing and analysis belong in one place, on your own machine.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code als eigene App gebaut: Wochenplan und Monatskalender mit einer Karte je Beitrag, Freigabe per Klick, Veröffentlichung über die offizielle Instagram-Schnittstelle mit Probelauf vorab. Die Zahlen holt die App selbst ab. Einmal pro Woche liest Claude sie und schlägt vor, was als Nächstes kommt.",
+      en: "Built with Claude Code as a standalone app: weekly plan and monthly calendar with one card per post, approval with one click, publishing through the official Instagram API with a dry run first. The app fetches the numbers itself. Once a week Claude reads them and suggests what comes next.",
+    },
+    result: {
+      de: "Im täglichen Einsatz: Freigegebene Beiträge gehen zum geplanten Termin von selbst raus, und jede Woche liegen neue Vorschläge bereit. Den Code bekommen die Teilnehmer des Second-Brain-Kurses als Bonus dazu.",
+      en: "In daily use: approved posts go out on their own at the scheduled time, and new suggestions are ready every week. Participants of the Second Brain course receive the code as a bonus.",
+    },
+    tags: ["Claude Code", "Instagram API", "SQLite", "Next.js"],
+    isPrivate: true,
+    image: "/case-studies/social-media-cockpit.jpg",
+  },
+  {
     id: "mooni-voice",
     category: "weitere",
     title: {
