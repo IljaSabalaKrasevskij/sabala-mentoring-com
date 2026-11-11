@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
-import SabalaLogo from "@/components/brand/SabalaLogo";
 import { STRINGS, type Locale } from "@/lib/case-studies";
 
 /**
@@ -59,12 +58,8 @@ export function CaseStudiesHero({ lang, toggle }: { lang: Locale; toggle: ReactN
       <div className="relative mx-auto w-full max-w-5xl">
         {/* Logo + language toggle */}
         <div className="cs-rise flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <SabalaLogo size={42} />
-            <span className="font-mono text-[12px] uppercase tracking-[0.34em] text-gold-light">
-              Sabala Studios
-            </span>
-          </div>
+          {/* Das Logo selbst steht seit dem 11.11.2026 oben links in der Kopfzeile (Navbar). Hier bleibt der Schriftzug. */}
+          <span className="font-mono text-[12.5px] uppercase tracking-[0.34em] text-gold-light">Sabala Studios</span>
           {toggle}
         </div>
 
