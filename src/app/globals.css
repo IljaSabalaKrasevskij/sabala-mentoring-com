@@ -206,8 +206,8 @@ body {
 }
 
 /* ============================================================
-   Web Design OS Sales-Page: eigenständige Motion-Bausteine
-   (Aurora-Gold-Mesh + Skill-Marquee). Pure CSS, reduced-motion-safe.
+   Gold-Nebel, Laufband und Körnung: genutzt von /webseiten und /webinar
+   (Klassen wd-aurora-*, wd-marquee-track-*, wd-grain). Pure CSS, reduced-motion-safe.
    ============================================================ */
 @keyframes wd-aurora-a {
   0%, 100% { transform: translate3d(-6%, -4%, 0) scale(1); }

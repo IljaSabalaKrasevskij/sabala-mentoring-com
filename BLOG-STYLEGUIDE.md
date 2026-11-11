@@ -71,7 +71,7 @@ Diese Konstanten/Komponenten stehen im Gold-Standard-File und werden mitkopiert:
 ## 5. CTA-Strategie (1-CTA, Hick's Law)
 
 - **Genau ein primärer CTA pro Artikel, passend zum Thema.** Welches Ziel welcher Artikel bekommt, steht im verbindlichen Mapping: Vault `03_Bereiche/Sabala_Mentoring/Blog/00_Blog-CTA-Strategie-und-Mapping.md`.
-- Ziel-Menü: `<ArticleAuditCTA>` (Default/Sichtbarkeit), `/akademie` (KI-Lernen), `AcademyNewsletter`-Formular (künftige Kurse), `/webseiten` (Premium-Homepage), `/gpt-team` (ChatGPT-Angebot), künftig `/webdesign-os` (Web OS). Audit ist der Default, wenn nichts Spezifischeres passt.
+- Ziel-Menü: `<ArticleAuditCTA>` (Default/Sichtbarkeit), `/akademie` (KI-Lernen), `AcademyNewsletter`-Formular (künftige Kurse), `/webseiten` (Premium-Homepage). Audit ist der Default, wenn nichts Spezifischeres passt.
 - Kein zweiter konkurrierender Sales-CTA. Premium wird nicht über tote Links beworben (`/premium-angebot` existiert nicht mehr → `/webseiten`).
 - **Verbotene tote Ziele:** `/premium-angebot` und `/special-launch-angebot` existieren nicht mehr. Wenn ein Angebot verlinkt werden muss: **`/webseiten`** (Premium-Web), `/akademie` (KI-Akademie), `/termin-buchen`, `/case-studies`.
 
@@ -80,7 +80,7 @@ Diese Konstanten/Komponenten stehen im Gold-Standard-File und werden mitkopiert:
 ## 6. Link-Hygiene (Pflicht-Check vor jedem Publish)
 
 - Jeder interne Link muss auf eine **existierende Route** unter `src/app/.../page.tsx` zeigen.
-- Gültige Top-Level-Routen: `/`, `/blog`, `/akademie`, `/akademie-hub`, `/webseiten`, `/mitentwickelt`, `/gpt-team`, `/case-studies`, `/ueber-mich`, `/termin-buchen`, `/podcast`, `/meditation`, `/webdesign-os`, `/brandguide`, `/impressum`, `/datenschutz`, `/agb`.
+- Gültige Top-Level-Routen: `/`, `/blog`, `/akademie`, `/akademie-hub`, `/webseiten`, `/mitentwickelt`, `/case-studies`, `/ueber-mich`, `/termin-buchen`, `/podcast`, `/meditation`, `/brandguide`, `/impressum`, `/datenschutz`, `/agb`.
 - Tote Ziele NIE verlinken: `/premium-angebot`, `/special-launch-angebot`, `/referenzen` (→ `/case-studies`).
 - Externe Links: `target` und Vollständigkeit prüfen.
 
