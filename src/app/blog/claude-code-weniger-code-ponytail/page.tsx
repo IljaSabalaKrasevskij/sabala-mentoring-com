@@ -4,7 +4,6 @@ import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft, Sparkles, Scissors, Gauge, ShieldCheck, Quote } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
-import SabalaLogo from "@/components/brand/SabalaLogo";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 
 const slug = "claude-code-weniger-code-ponytail";
@@ -129,9 +128,6 @@ export default function BlogClaudeCodeWenigerCodePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#0e0c0a]/85 via-[#1a1612]/35 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-            <Link href="/" aria-label="Sabala Mentoring · Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
-              <SabalaLogo light size={64} />
-            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-pure-surface/70 hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
             </Link>

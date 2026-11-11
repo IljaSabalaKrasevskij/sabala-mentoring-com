@@ -3,7 +3,6 @@ import { ArticleAuditCTA } from "@/components/blog/ArticleAuditCTA";
 import Image from "next/image";
 import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
-import SabalaLogo from "@/components/brand/SabalaLogo";
 import Script from "next/script";
 import { ArrowLeft, Mic, MonitorPlay, Code2, Quote } from "lucide-react";
 
@@ -118,9 +117,6 @@ export default function BlogPostPage() {
         
         <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
           <ScrollReveal>
-             <Link href="/" aria-label="Sabala Mentoring · Startseite" className="inline-block mb-8 transition-opacity hover:opacity-80">
-              <SabalaLogo light size={64} />
-            </Link>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
                 <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
              </Link>

@@ -1,7 +1,6 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Link from "next/link";
 import { ArrowRight, Lock, Sparkles, UserCheck } from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
 
 export const metadata = {
   title: "Termin buchen",
@@ -11,7 +10,6 @@ export const metadata = {
 export default function BookingGatekeeperPage() {
   return (
     <main className="flex flex-col w-full bg-[#2E2B26] min-h-screen selection:bg-refined-gold selection:text-white pb-32">
-      <Navbar />
       {/* HEADER SPACER */}
       <div className="pt-32 md:pt-48 w-full"></div>
 

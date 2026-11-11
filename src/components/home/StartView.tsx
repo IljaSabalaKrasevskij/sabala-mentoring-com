@@ -72,7 +72,7 @@ function Kopf() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 45% 50% at 8% 100%, rgba(184,150,62,0.1), transparent 70%)" }} />
       </div>
 
-      <div className="relative mx-auto grid max-w-[1400px] items-center gap-12 px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[56.25rem]:gap-10 min-[56.25rem]:pb-[8vh] min-[56.25rem]:pt-[11vh]">
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-12 px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[56.25rem]:gap-10 min-[56.25rem]:pb-[8vh] min-[56.25rem]:pt-[max(11vh,5.4rem)]">
         <div>
           <p className="cs-rise text-balance font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.18em] text-gold" style={EIN(0)}>
             Sabala Studios · High-End Creative Web Development

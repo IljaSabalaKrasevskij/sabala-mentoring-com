@@ -74,7 +74,7 @@ function Kopf() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 50% 60% at 76% 50%, rgba(184,150,62,0.2), transparent 70%)" }} />
       </div>
 
-      <div className="relative mx-auto grid max-w-[1400px] items-center gap-10 px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] min-[56.25rem]:gap-14 min-[56.25rem]:pb-[7vh] min-[56.25rem]:pt-[9vh]">
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-10 px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] min-[56.25rem]:gap-14 min-[56.25rem]:pb-[7vh] min-[56.25rem]:pt-[max(9vh,5.4rem)]">
         <div>
           <p className="cs-rise font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.2em] text-gold sm:tracking-[0.24em]" style={EIN(0)}>
             Sabala Academy · 1:1 · Einführungspreis

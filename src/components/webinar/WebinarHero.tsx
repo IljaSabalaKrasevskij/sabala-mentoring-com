@@ -59,7 +59,7 @@ export default function WebinarHero() {
         />
       </div>
 
-      <div className="relative z-10 flex min-h-[86vh] flex-col justify-center px-[6vw] py-[12vh]">
+      <div className="relative z-10 flex min-h-[86vh] flex-col justify-center px-[6vw] pb-[12vh] pt-[max(12vh,5.6rem)]">
         {/* Webinar-Badge: das Format muss in der ersten Sekunde klar sein,
             nicht erst in der Subline. */}
         <motion.div
