@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createClient } from "@libsql/client";
-import { anmelden, bestaetigen, lastDerStunde, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
+import { anmelden, bestaetigen, ipNormal, lastDerStunde, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
 
 // Läuft gegen eine Datenbank im Speicher. Kein Netz, keine Mail, kein echter Kontakt.
 const frisch = () => createClient({ url: ":memory:" });
@@ -157,4 +157,26 @@ test("Die Last der Stunde zählt Mails über alle und Anmeldungen je Absender, b
   await db.execute("UPDATE nl_ereignisse SET am = datetime('now', '-11 minutes') WHERE art = 'mail'");
   await anmelden(db, { ...anna, quelle: "Mooni Voice", ip: "192.0.2.50" });
   assert.equal((await lastDerStunde(db, "192.0.2.50")).ausNetz, 1);
+});
+
+test("Jede IP hat genau eine Schreibweise", () => {
+  const voll = "2001:0db8:0000:0000:0000:0000:0000:0001";
+  for (const ip of ["2001:db8::1", "2001:DB8:0:0:0:0:0:1", "2001:0db8:0000:0000:0000:0000:0000:0001", " 2001:db8::1 "]) assert.equal(ipNormal(ip), voll, ip);
+  assert.equal(ipNormal("::1"), "0000:0000:0000:0000:0000:0000:0000:0001");
+  assert.equal(ipNormal("fe80::1%en0"), "fe80:0000:0000:0000:0000:0000:0000:0001", "ohne Zonen-Anhang");
+  assert.equal(ipNormal("::ffff:203.0.113.7"), "203.0.113.7", "verpackte IPv4 zählt als IPv4");
+  assert.equal(ipNormal("64:ff9b::1.2.3.4"), "0064:ff9b:0000:0000:0000:0000:0102:0304");
+  assert.equal(ipNormal("203.0.113.7"), "203.0.113.7");
+  for (const quatsch of ["unknown", "", "%", "1.2.3", "2001:db8:::1", "a,b"]) assert.equal(ipNormal(quatsch), "unbekannt", quatsch);
+});
+
+test("Ein IPv6-Netz zählt zusammen, egal wie die Adressen geschrieben sind (auch mit Nullen im Netzteil)", async () => {
+  const db = frisch();
+  // Dasselbe /64 (2001:db8:0:0::/64) in vier Schreibweisen. Verkürzt steht das „::“ mitten im Netzteil.
+  const gleichesNetz = ["2001:db8::1:2:3:4", "2001:db8:0:0:9:9:9:9", "2001:0DB8:0000:0000:aaaa::1", "2001:db8::5"];
+  for (const [i, ip] of gleichesNetz.entries()) await anmelden(db, { ...anna, email: `netz${i}@example.com`, ip });
+  await anmelden(db, { ...anna, email: "nachbar@example.com", ip: "2001:db8:0:1::5" });
+  for (const ip of gleichesNetz) assert.equal((await lastDerStunde(db, ip)).ausNetz, 4, ip);
+  assert.equal((await lastDerStunde(db, "2001:db8:0:1::77")).ausNetz, 1, "das Nachbarnetz zählt für sich");
+  assert.equal((await zeile(db)).angemeldet_ip, "2001:0db8:0000:0000:0001:0002:0003:0004", "gespeichert wird die ausgeschriebene IP");
 });

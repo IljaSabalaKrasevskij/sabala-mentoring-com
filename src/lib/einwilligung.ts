@@ -1,5 +1,6 @@
 import type { Client, InValue } from "@libsql/client";
 import { randomBytes } from "node:crypto";
+import { isIP } from "node:net";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Einwilligung in Mails, mit Nachweis und Double-Opt-in.
@@ -104,22 +105,40 @@ export function vorbereiten(db: Client): Promise<unknown> {
 }
 
 /**
- * Muster für die Zählung je Absender. Bei IPv6 zählt das Netz (die ersten vier Blöcke), sonst wechselt ein Angreifer einfach
- * die Adresse im eigenen Netz. Das gilt nur, wenn diese vier Blöcke ausgeschrieben sind: Bei verkürzter Schreibweise („::1“,
- * „2001:db8::1“) stehen vorn weniger Blöcke, dann zählt die Adresse selbst. Gespeichert wird immer die ganze IP.
+ * Eine IP in genau einer Schreibweise. Dieselbe IPv6-Adresse lässt sich auf viele Arten schreiben (verkürzt mit „::“, mit oder
+ * ohne führende Nullen, groß oder klein). Wer auf dem Text zählt, zählt daneben. Darum wird jede IP hier erst geprüft und dann
+ * ausgeschrieben: IPv6 immer als acht Blöcke zu vier Zeichen, IPv4 wie üblich, auch wenn sie in IPv6 verpackt ankommt (::ffff:1.2.3.4).
+ * Alles, was keine IP ist, wird „unbekannt“. So gespeichert und so gezählt, es gibt keine zweite Lesart.
  */
-function netz(ip: string): string {
-  const teile = ip.split(":");
-  const kopf = teile.slice(0, 4);
-  return teile.length > 4 && kopf.every((t) => t !== "") ? `${kopf.join(":")}:%` : ip;
+export function ipNormal(roh: string): string {
+  let ip = roh.trim().toLowerCase().split("%")[0]; // ohne Zonen-Anhang (fe80::1%en0)
+  const verpackt = ip.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+  if (verpackt) ip = verpackt[1];
+  if (isIP(ip) === 4) return ip;
+  if (isIP(ip) !== 6) return "unbekannt";
+  if (ip.includes(".")) {
+    // IPv4 am Ende einer IPv6-Adresse (64:ff9b::1.2.3.4) in zwei Blöcke umschreiben
+    const schnitt = ip.lastIndexOf(":") + 1;
+    const [a, b, c, d] = ip.slice(schnitt).split(".").map(Number);
+    ip = `${ip.slice(0, schnitt)}${((a << 8) | b).toString(16)}:${((c << 8) | d).toString(16)}`;
+  }
+  const bloecke = (t: string) => (t ? t.split(":") : []);
+  const [links, rechts] = ip.split("::"); // isIP hat geprüft: höchstens ein „::“
+  const l = bloecke(links), r = rechts === undefined ? [] : bloecke(rechts);
+  const voll = rechts === undefined ? l : [...l, ...Array<string>(8 - l.length - r.length).fill("0"), ...r];
+  return voll.map((b) => b.padStart(4, "0")).join(":");
 }
+
+/** Muster für die Zählung je Absender, aus einer schon ausgeschriebenen IP. Bei IPv6 zählt das Netz (die ersten vier Blöcke, /64), sonst wechselt ein Angreifer einfach die Adresse im eigenen Netz. */
+const netz = (ip: string) => (ip.includes(":") ? `${ip.slice(0, 19)}:%` : ip);
 
 /**
  * Was in der letzten Stunde los war: verschickte Bestätigungsmails über alle Adressen, und Anmeldungen aus dem Netz dieser IP.
  * Davon hängen die zwei Obergrenzen ab. Gezählt wird in der Datenbank, weil der Zähler im Speicher je Server-Instanz neu beginnt.
  */
-export async function lastDerStunde(db: Client, ip: string): Promise<{ mails: number; ausNetz: number }> {
+export async function lastDerStunde(db: Client, rohIp: string): Promise<{ mails: number; ausNetz: number }> {
   await vorbereiten(db);
+  const ip = ipNormal(rohIp);
   const z = await eine<{ mails: number; aus_netz: number }>(
     db,
     `SELECT (SELECT count(*) FROM nl_ereignisse WHERE art = 'mail' AND am > datetime('now', '-1 hour')) AS mails,
@@ -131,7 +150,8 @@ export async function lastDerStunde(db: Client, ip: string): Promise<{ mails: nu
 const token = () => randomBytes(24).toString("base64url"); // 192 Bit Zufall, nicht erratbar
 
 /** Schritt 1. Legt Kontakt und Einwilligung an oder frischt sie auf. Der Wortlaut kommt vom Formular, nicht aus der Datenbank: Bewiesen wird, was dastand. */
-export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
+export async function anmelden(db: Client, roh: Anmeldung): Promise<Stand> {
+  const d = { ...roh, ip: ipNormal(roh.ip) }; // gespeichert wird die ausgeschriebene IP, sonst passt die Zählung nicht dazu
   const email = d.email.trim().toLowerCase();
   await vorbereiten(db);
   await db.batch(
@@ -208,7 +228,8 @@ export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
  * Schritt 2. Nur „ausstehend“ wird „aktiv“. neu sagt, ob genau dieser Klick etwas bestätigt hat: Dann darf danach einmal etwas passieren.
  * Namen und Formular kommen aus der Datenbank, nie aus der Anfrage. Kennt die Einwilligung den Token nicht, kann es der Wunsch eines bestätigten Kontakts sein.
  */
-export async function bestaetigen(db: Client, tok: string, ip: string): Promise<Bestaetigt | null> {
+export async function bestaetigen(db: Client, tok: string, rohIp: string): Promise<Bestaetigt | null> {
+  const ip = ipNormal(rohIp);
   type Zeile = { id: number; kontakt_id: number; status: string; quelle: string; email: string; vorname: string; nachname: string };
   const merkmal = (kontakt_id: number, m: string) => db.execute({ sql: "INSERT OR IGNORE INTO nl_merkmale (kontakt_id, merkmal) VALUES (?, ?)", args: [kontakt_id, m] });
   const e = await eine<Zeile>(
