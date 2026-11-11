@@ -57,7 +57,7 @@ export function eingabeAbsage(fehler: z.ZodError) {
 }
 
 /** Aus welchem Formular die Einwilligung kam. Steht als Quelle im Nachweis und entscheidet, was nach dem Klick passiert. */
-export type Formular = "Akademie-Newsletter" | "Warteliste Kurs" | "Warteliste Webinar" | "Webinar Second Brain" | "Mooni Voice" | "Kontaktformular";
+export type Formular = "Akademie-Newsletter" | "Warteliste Kurs" | "Warteliste Webinar" | "Warteliste Webseiten-Kurs" | "Webinar Second Brain" | "Mooni Voice" | "Kontaktformular";
 
 /* Der Eintrag ins Newsletter-Werkzeug je Formular. Tag startet dort die passende Mail-Strecke (Willkommen, Webinar-Zugang). */
 const NACH_KLICK: Record<Formular, (b: Bestaetigt) => Promise<"ok" | "skipped" | "error">> = {
@@ -65,6 +65,7 @@ const NACH_KLICK: Record<Formular, (b: Bestaetigt) => Promise<"ok" | "skipped" |
   Kontaktformular: (b) => subscribeToAcademy(b.email, b.vorname, b.nachname),
   "Warteliste Kurs": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Second Brain Kurs", b.nachname),
   "Warteliste Webinar": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Webinar", b.nachname),
+  "Warteliste Webseiten-Kurs": (b) => subscribeWarteliste(b.email, b.vorname, "Warteliste Webseiten-Kurs", b.nachname),
   "Webinar Second Brain": (b) => subscribeWebinar(b.email, b.vorname, b.nachname),
   "Mooni Voice": (b) => subscribeMooniVoice(b.email, b.vorname, b.nachname),
 };

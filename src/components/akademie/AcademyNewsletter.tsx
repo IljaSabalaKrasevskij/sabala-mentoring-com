@@ -19,8 +19,9 @@ import { Eyebrow, Reveal, TEXT_AUF_DUNKEL } from "./shared";
 
 type Status = "idle" | "loading" | "success" | "error" | "unconfigured";
 
-/* Kurse in Vorbereitung, noch ohne Termin und Preis. */
-const BALD = ["Webseite mit KI bauen", "KI-Automation", "Content-System mit KI"];
+/* Kurse in Vorbereitung, noch ohne Termin und Preis.
+   Der Webseiten-Kurs steht nicht mehr hier: Er hat eine eigene Karte direkt darüber (WebkursKarte) und eine eigene Warteliste. */
+const BALD = ["KI-Automation", "Content-System mit KI"];
 
 const FELD =
   "min-h-[52px] w-full min-w-0 rounded-sm border border-[rgba(255,255,255,0.22)] bg-[rgba(255,255,255,0.06)] px-4 text-[1rem] text-cream outline-none transition-colors placeholder:text-[rgba(250,248,245,0.55)] focus:border-gold-light";
