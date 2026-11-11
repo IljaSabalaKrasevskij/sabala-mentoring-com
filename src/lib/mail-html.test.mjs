@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { anlassVon, bestaetigungHtml, bestaetigungText } from "./mail-html.ts";
+import fs from "node:fs";
+import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon } from "./mail-html.ts";
 
 const LINK = "https://sabala-mentoring.com/api/newsletter/bestaetigen?t=abc_DEF-123";
 const WORTLAUT = "Ja, ich will den Sabala Newsletter & mehr.";
@@ -56,4 +57,27 @@ test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den
     assert.equal(anlassVon(q).betreff, "Bitte bestätige deine Anmeldung", q);
   }
   assert.ok(html.includes("Erst danach schreibe ich dir.") && text.includes("Erst danach schreibe ich dir:"), "allgemeine Mail unverändert");
+});
+
+test("Download-Mail: Knopf zum Paket, drei Schritte, nur eigene Adressen, nichts aus dem Formular", () => {
+  const d = downloadVon("startpaket-claude-code");
+  assert.ok(d, "Startpaket hat eine Download-Mail");
+  const h = downloadHtml(d);
+  const t = downloadText(d);
+  assert.ok(h.includes(`<a href="${d.datei}"`) && t.includes(d.datei), "Knopf und Text zeigen auf das Paket");
+  // Das Paket liegt wirklich dort, wohin die Mail zeigt
+  const datei = new URL(`../../public${new URL(d.datei).pathname}`, import.meta.url);
+  assert.ok(fs.existsSync(datei), `fehlt: ${datei.pathname}`);
+  for (const s of d.schritte) assert.ok(t.includes(s), s);
+  for (const stueck of ["SABALA MENTORING LLC, 30 N Gould St Ste N, Sheridan, WY 82801, USA", "Ilja Krasevskij"]) {
+    assert.ok(h.includes(stueck) && t.includes(stueck), stueck);
+  }
+  for (const z of [...h.matchAll(/(?:src|href)="([^"]+)"/g)].map((m) => m[1])) {
+    assert.ok(z.startsWith("https://sabala-mentoring.com/") || z === "mailto:sabala@sabala-mentoring.com", z);
+  }
+  const groessen = [...h.matchAll(/font-size:\s*([\d.]+)px/g)].map((m) => Number(m[1])).filter((g) => g > 1);
+  assert.ok(Math.min(...groessen) >= 12, `kleinste Schrift ${Math.min(...groessen)} px`);
+  assert.ok(!/<style/i.test(h) && !h.includes("undefined") && !t.includes("undefined"));
+  // Nur Quellen mit Paket bekommen eine Download-Mail
+  for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) assert.equal(downloadVon(q), null, q);
 });

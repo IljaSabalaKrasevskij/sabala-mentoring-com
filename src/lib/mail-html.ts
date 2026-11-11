@@ -174,13 +174,132 @@ export function bestaetigungText(link: string, wortlaut: string, anlass: Anlass 
     "",
     "Du hast dich nicht eingetragen? Dann lösch diese Mail einfach. Ohne deinen Klick bekommst du nichts von mir.",
     "",
-    "Alles Liebe,",
-    "Sabala",
-    "Ilja Krasevskij, Tbilisi",
+    ...FUSS_TEXT,
+  ].join("\n");
+}
+
+/** Signatur und Impressum der Text-Fassungen, wie im Fuß der HTML-Mails. */
+const FUSS_TEXT = [
+  "Alles Liebe,",
+  "Sabala",
+  "Ilja Krasevskij, Tbilisi",
+  "",
+  "SABALA MENTORING LLC, 30 N Gould St Ste N, Sheridan, WY 82801, USA",
+  "sabala@sabala-mentoring.com",
+  "Impressum: https://sabala-mentoring.com/impressum",
+  "Datenschutz: https://sabala-mentoring.com/datenschutz",
+];
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Download-Mail: Wer ein Paket angefordert hat (Startpaket), bekommt es nach dem ersten Klick in der Bestätigungsmail
+   noch einmal per Mail zum Aufheben. Verschickt von der Webseite über das eigene Postfach (mail.ts), kein Newsletter-Dienst.
+   Feste Texte je Leadmagnet, gewählt über das Kürzel aus der Datenbank. Ein neues Paket: hier ein Eintrag in DOWNLOADS.
+   ────────────────────────────────────────────────────────────────────────── */
+
+export type Download = {
+  betreff: string;
+  zeile: string;
+  vorschau: string;
+  kopf: string;
+  titel: string;
+  datei: string;
+  groesse: string;
+  absatz: string;
+  schritte: string[];
+  knopf: string;
+  tipp: string;
+  mehr: { text: string; link: string; anzeige: string };
+};
+
+const DOWNLOADS: Record<string, Download> = {
+  "startpaket-claude-code": {
+    betreff: "Dein Claude-Code-Startpaket",
+    zeile: "Claude-Code-Startpaket",
+    vorschau: "Hier ist dein Ordner: Anleitung, Spickzettel, zwei Vorlagen und zehn Skills.",
+    kopf: "Dein Startpaket",
+    titel: "Hier ist dein Startpaket.",
+    datei: `${SEITE}/downloads/claude-code-startpaket.zip`,
+    groesse: "Ein Ordner, 11 KB, für Mac und Windows.",
+    knopf: "Startpaket herunterladen",
+    absatz: "hier ist dein Claude-Code-Startpaket noch einmal zum Aufheben. Im Ordner liegen fünf kurze Anleitungen, zwei CLAUDE.md-Vorlagen und zehn Skills, die ich selbst nutze.",
+    schritte: [
+      "Öffne zuerst die Datei „00 Start hier“. Dort steht, in welcher Reihenfolge du vorgehst.",
+      "Installier Claude Code mit „01 Installation“. Rechne mit zehn Minuten.",
+      "Kopier die Vorlage aus „vorlagen/projekt“ in deinen Projektordner und füll die Lücken aus.",
+    ],
+    tipp: "Nimm dir für den Anfang nur einen der zehn Skills. Den für die Aufgabe, die du am häufigsten erledigst.",
+    mehr: { text: "Alle Anleitungen zu Claude Code auf Deutsch findest du unter", link: `${SEITE}/claude-code`, anzeige: "sabala-mentoring.com/claude-code" },
+  },
+};
+
+/** Das Paket zu einer Quelle. null: Diese Quelle hat kein Paket, dann geht keine Download-Mail raus. */
+export const downloadVon = (quelle: string): Download | null => (Object.prototype.hasOwnProperty.call(DOWNLOADS, quelle) ? DOWNLOADS[quelle] : null);
+
+export function downloadHtml(d: Download): string {
+  const datei = maskiert(d.datei);
+  const schritt = (n: number, t: string) =>
+    `<tr><td valign="top" width="34" style="padding:0 0 14px 0; font-family:${MONO}; font-size:16px; font-weight:700; color:${GOLD};">${n}</td><td style="padding:0 0 14px 0; font-family:${SANS}; font-size:16px; line-height:1.6; color:${TEXT};">${maskiert(t)}</td></tr>`;
+  const inhalt = `
+    <tr>
+      <td align="center" style="background-color:${DUNKEL}; padding:10px 24px 42px 24px;">
+        <img src="${ADLER}" alt="Der Adler von Sabala" width="96" height="96" style="display:block; width:96px; height:96px; border:0; margin:0 auto;">
+        <div style="margin-top:22px;">${zeileMono(maskiert(d.kopf), GOLD_HELL)}</div>
+        <h1 style="margin:14px 0 0 0; font-family:${SERIF}; font-size:38px; line-height:1.12; color:#FAF8F5; font-weight:400;">
+          ${maskiert(d.titel)}<br>
+          <span style="font-style:italic; color:${GOLD_HELL};">Viel Freude damit.</span>
+        </h1>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px auto 0 auto;">
+          <tr>
+            <td align="center" bgcolor="${GOLD_HELL}" style="background-color:${GOLD_HELL}; border-radius:999px;">
+              <a href="${datei}" style="display:inline-block; padding:17px 34px; font-family:${MONO}; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${DUNKEL}; text-decoration:none; border-radius:999px;">${maskiert(d.knopf)}</a>
+            </td>
+          </tr>
+        </table>
+        <div style="margin-top:16px; font-family:${SANS}; font-size:14px; line-height:1.5; color:#B5AEA2;">${maskiert(d.groesse)}</div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:38px 28px 0 28px; font-size:16px; line-height:1.65; color:${TEXT};">
+        <p style="margin:0 0 16px 0;">Hey du,</p>
+        <p style="margin:0 0 26px 0;">${maskiert(d.absatz)}</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 28px 0 28px;">
+        ${zeileMono("So fängst du an")}
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:14px 0 12px 0;">
+          ${d.schritte.map((t, i) => schritt(i + 1, t)).join("\n          ")}
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 28px 36px 28px; font-size:16px; line-height:1.65; color:${TEXT};">
+        <div style="margin:0 0 26px 0; padding:16px 18px; background-color:#F7F3EA; border-left:3px solid ${GOLD};"><strong>Mein Tipp:</strong> ${maskiert(d.tipp)}</div>
+        <p style="margin:0; font-size:15px; color:#5C564B;">P.S. ${maskiert(d.mehr.text)} <a href="${maskiert(d.mehr.link)}" style="color:#7A5C18; text-decoration:underline;">${maskiert(d.mehr.anzeige)}</a>.</p>
+      </td>
+    </tr>`;
+  return mailRahmen({ titel: d.betreff, vorschau: d.vorschau, zeile: d.zeile, inhalt, adlerImKopf: false });
+}
+
+/** Dieselbe Download-Mail als reiner Text. */
+export function downloadText(d: Download): string {
+  return [
+    `${d.titel} Viel Freude damit.`,
     "",
-    "SABALA MENTORING LLC, 30 N Gould St Ste N, Sheridan, WY 82801, USA",
-    "sabala@sabala-mentoring.com",
-    "Impressum: https://sabala-mentoring.com/impressum",
-    "Datenschutz: https://sabala-mentoring.com/datenschutz",
+    "Hey du,",
+    "",
+    d.absatz,
+    "",
+    "Hier lädst du es herunter:",
+    d.datei,
+    "",
+    "So fängst du an:",
+    ...d.schritte.map((t, i) => `${i + 1}. ${t}`),
+    "",
+    `Mein Tipp: ${d.tipp}`,
+    "",
+    `P.S. ${d.mehr.text} ${d.mehr.link}`,
+    "",
+    ...FUSS_TEXT,
   ].join("\n");
 }
