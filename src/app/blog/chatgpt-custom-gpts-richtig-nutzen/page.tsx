@@ -228,8 +228,8 @@ export default function BlogChatGPTCustomGPTsPage() {
                 <li className="flex items-start gap-3"><Sparkles className="w-5 h-5 text-refined-gold mt-1 shrink-0" /><span className="text-deep-charcoal"><strong>Operations und Admin:</strong> Buchhaltungs-Vorab-Checks, Tool-Recherche, To-Do-Strukturierung, die unsichtbare Arbeit, die Energie zieht.</span></li>
               </ul>
               <div className="mt-10">
-                <Link href="/gpt-team" className="inline-flex items-center justify-center bg-deep-charcoal text-white rounded-full px-8 py-4 font-medium hover:bg-refined-gold transition-colors shadow-lg">
-                  Mein KI-Team kennenlernen
+                <Link href="/mitentwickelt" className="inline-flex items-center justify-center bg-deep-charcoal text-white rounded-full px-8 py-4 font-medium hover:bg-refined-gold transition-colors shadow-lg">
+                  So ein Team gemeinsam bauen
                 </Link>
               </div>
             </div>
@@ -316,8 +316,8 @@ export default function BlogChatGPTCustomGPTsPage() {
                 Mooni, Aurel, Lia und die anderen begleiten meine Arbeit: Recherche, Texte, Strategie, Brand-Voice. Wenn du selbst so ein Team willst: ich baue customized AI Agents auf deine Brand, deine Aufgaben, deine Stimme zugeschnitten. Mit deinen Werten, deinen wirklichen Aufgaben.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link href="/gpt-team" className="inline-flex items-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto justify-center">
-                  <Zap className="w-4 h-4" /> Mein KI-Team kennenlernen
+                <Link href="/mitentwickelt" className="inline-flex items-center gap-2 bg-refined-gold text-deep-charcoal hover:bg-white px-8 py-4 transition-colors font-medium rounded-full w-full sm:w-auto justify-center">
+                  <Zap className="w-4 h-4" /> So bauen wir es gemeinsam
                 </Link>
                 <Link href="/termin-buchen" className="text-white/80 hover:text-white px-6 py-4 transition-colors font-medium border border-white/10 rounded-full hover:bg-white/5 w-full sm:w-auto text-center">
                   Eigenes Team bauen lassen

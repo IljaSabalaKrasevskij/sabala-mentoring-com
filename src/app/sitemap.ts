@@ -32,8 +32,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/shop", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/webdesign-os", priority: 0.7, changeFrequency: "monthly" },
-    { path: "/gpt-team", priority: 0.7, changeFrequency: "monthly" },
     { path: "/mooni-voice", priority: 0.6, changeFrequency: "monthly" },
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },

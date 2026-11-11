@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { flushSync } from "react-dom";
-import { AppWindow, ArrowRight, BrainCircuit, Check, ChevronDown, Euro, Gift, KeyRound, LayoutGrid, LockKeyhole, Plus, Presentation, Rocket, Search, ShieldCheck, SquareTerminal, Video, Workflow } from "lucide-react";
+import { AppWindow, BrainCircuit, Check, ChevronDown, Euro, Gift, KeyRound, LayoutGrid, LockKeyhole, Plus, Presentation, Rocket, Search, ShieldCheck, SquareTerminal, Video, Workflow } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { Brackets, GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard } from "./shared";
+import { Brackets, GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard, Weiter } from "./shared";
 import { BERATUNG_GUTSCHEIN, BERATUNG_PREIS, BERATUNG_PREIS_REGULAER, KURS_PREIS } from "./cohorts";
 import { ABLAUF, BERATUNG_CHECKOUT, DANACH, EINWAENDE, FRAGEN_ZAHL, FUER_DICH, THEMEN, type ThemaSymbol } from "./beratung";
 
@@ -40,16 +40,6 @@ function BuchKnopf({ kasse = false, breit = false }: { kasse?: boolean; breit?: 
     <Knopf href={kasse ? BERATUNG_CHECKOUT : "#angebot"} neuerTab={kasse} breit={breit}>
       Beratungsstunde buchen
     </Knopf>
-  );
-}
-
-/* Textlink mit Pfeil, für den zweiten Weg in einer Karte. */
-function Weiter({ href, hell = false, children }: { href: string; hell?: boolean; children: React.ReactNode }) {
-  return (
-    <a href={href} className={`group inline-flex min-h-[44px] items-center gap-2 text-[1.02rem] font-semibold underline-offset-4 hover:underline ${RAND}`} style={{ color: hell ? GOLD_AUF_HELL : "var(--gold-light)" }}>
-      {children}
-      <ArrowRight aria-hidden size={17} strokeWidth={2.2} className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
-    </a>
   );
 }
 
@@ -90,8 +80,9 @@ function Kopf() {
             Sabala Academy · 1:1 · Einführungspreis
           </p>
           <h1 className="cs-rise mt-4 font-serif text-cream" style={{ fontSize: "clamp(2.5rem, 4.6vw, 4.1rem)", lineHeight: 1.05, ...EIN(0.05) }}>
-            <span className="block">Eine Stunde.</span>
-            <span className="block">Deine Fragen.</span>
+            {/* Die Leerzeichen sieht man nicht. Wer nur den Rohtext liest (Suchmaschinen, KI), bekommt so drei getrennte Sätze. */}
+            <span className="block">Eine Stunde.</span>{" "}
+            <span className="block">Deine Fragen.</span>{" "}
             <span className="block text-gold-light">Klare Antworten.</span>
           </h1>
           <p className="cs-rise mt-6 max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.12) }}>

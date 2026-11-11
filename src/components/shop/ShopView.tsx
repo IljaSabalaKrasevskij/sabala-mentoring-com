@@ -1,270 +1,217 @@
-"use client";
+import Image from "next/image";
+import { Check, Eye, Gift, Wrench } from "lucide-react";
+import { GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard, Weiter } from "@/components/akademie/shared";
+import { WERKZEUGE } from "./werkzeuge";
 
-import Link from "next/link";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import SabalaLogo from "@/components/brand/SabalaLogo";
-import ClaudeLogo from "@/components/brand/ClaudeLogo";
-import { ArrowRight, Check } from "lucide-react";
+/* Shop /shop: nur noch quelloffene, kostenlose Werkzeuge. Vier kurze Abschnitte im Aussehen der Akademie-Seiten,
+   jeder passt in ein Laptop-Fenster: Kopf · die Werkzeuge · was Open Source für dich heißt · wie es weitergeht.
+   Die Werkzeuge stehen in werkzeuge.ts. Die Seite braucht kein eigenes JavaScript: Der Kopf blendet per CSS ein
+   (`.cs-rise`), Karten und Knöpfe kommen aus den gemeinsamen Bausteinen. */
 
-/* ─── Produkt-Daten ───────────────────────────────────────────────────────────
- * Nur echte, verkaufbare Produkte. Neues Produkt = ein Eintrag mehr, der Grid
- * rendert es. Reihenfolge = Preis aufsteigend (Einstieg zuerst).
- * cover: Pfad in /public. href: Detailseite oder ThriveCart-Checkout.
- */
-type Product = {
-  kicker: string;
-  title: string;
-  desc: string;
-  points: string[];
-  price: string;
-  priceNote?: string;
-  badge?: string;
-  cover: string;
-  href: string;
-  cta: string;
-  available?: boolean; // false = Karte zeigt "Bald verfügbar", kein Link (Checkout noch nicht live)
-};
+const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
 
-const PRODUCTS: Product[] = [
-  // Skill-Bibliothek raus, bis das Angebot steht (Ilja, 15.8.2026).
-  // Cover liegt weiter unter /shop/skill-bibliothek-cover.jpg, falls es zurueckkommt.
-  {
-    kicker: "Bauen mit Claude Code",
-    title: "Web Design OS",
-    desc: "Das komplette Setup, mit dem ich Premium-Webseiten mit Claude Code baue. Alle Skills, Anleitungen und Inspiration in einem Paket.",
-    points: [
-      "161 Farbpaletten, 57 Font-Paare",
-      "In einer Stunde eingerichtet",
-      "Auf deine Marke gedreht",
-    ],
-    price: "29",
-    priceNote: "netto zzgl. MwSt.",
-    badge: "Beliebt",
-    cover: "/webdesign-os/cover-3d.png",
-    href: "/webdesign-os",
-    cta: "Ansehen",
-  },
-  {
-    kicker: "Custom GPTs",
-    title: "KI-Assistenzteam",
-    desc: "Dein Wissen als sieben spezialisierte GPTs, die in deiner Stimme schreiben und dir die tägliche Routinearbeit abnehmen.",
-    points: [
-      "Sieben kalibrierte Custom GPTs",
-      "Deine Sprache statt generischem KI-Ton",
-      "Sofort einsatzbereit, keine Technik nötig",
-    ],
-    price: "67",
-    priceNote: "netto zzgl. MwSt.",
-    badge: "Launch",
-    cover: "/shop/ki-assistenzteam-cover.jpg",
-    href: "/gpt-team",
-    cta: "Ansehen",
-  },
-  {
-    kicker: "Open Source",
-    title: "Mooni Voice",
-    desc: "Lokale Sprache-zu-Text für den Mac. Sprich, und der Text steht da, in jeder App, auch in Claude Code und Terminal. Lokal, privat, mehrsprachig.",
-    points: [
-      "100 % lokal, deine Stimme bleibt auf dem Gerät",
-      "In jeder App, auch Dev- und KI-Tools",
-      "Gratis und quelloffen (MIT)",
-    ],
-    price: "0",
-    badge: "Gratis",
-    cover: "/shop/mooni-voice-cover.png",
-    href: "/mooni-voice",
-    cta: "Laden",
-    available: true,
-  },
+const HEISST = [
+  { symbol: Gift, titel: "Es kostet nichts.", text: "Kein Preis, kein Abo. Du lädst es herunter und nutzt es." },
+  { symbol: Eye, titel: "Du siehst, was es tut.", text: "Der ganze Code liegt offen bei GitHub. Jeder kann nachlesen, was mit seinen Daten passiert." },
+  { symbol: Wrench, titel: "Du darfst es anpassen.", text: "Die Lizenz erlaubt dir, das Werkzeug zu verändern und weiterzugeben. Verbesserungen sind willkommen." },
 ];
 
-const LADDER = [
-  { step: "01", title: "Im Shop", desc: "holst du dir das praktische Werkzeug fuer deinen Einstieg." },
-  { step: "02", title: "In der KI-Akademie", desc: "lernst du, wie alles zusammenspielt.", href: "/akademie-hub" },
-  { step: "03", title: "Gemeinsam", desc: "bauen wir es direkt in dein Unternehmen.", href: "/mitentwickelt" },
+const WEITER = [
+  { titel: "Im Shop", text: "holst du dir ein Werkzeug für deinen Einstieg." },
+  { titel: "In der KI-Akademie", text: "lernst du, wie alles zusammenspielt.", ziel: { text: "Zur KI-Akademie", href: "/akademie-hub" } },
+  { titel: "Gemeinsam", text: "bauen wir es direkt in dein Unternehmen.", ziel: { text: "Mit dir entwickelt", href: "/mitentwickelt" } },
 ];
 
-function isExternal(href: string) {
-  return href.startsWith("http");
+function Kopf() {
+  return (
+    <section className="relative overflow-hidden px-6 pb-[9vh] pt-[15vh]" style={{ background: "var(--tech-bg)" }}>
+      <div aria-hidden className="absolute inset-0">
+        <Image src="/akademie/ki-library-bg.jpg" alt="" fill priority sizes="100vw" className="object-cover" style={{ opacity: 0.32, objectPosition: "center 40%" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,8,6,0.93) 0%, rgba(10,8,6,0.78) 50%, rgba(10,8,6,0.97) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 60% at 50% 45%, rgba(184,150,62,0.18), transparent 70%)" }} />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl text-center">
+        <p className="cs-rise font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.24em] text-gold" style={EIN(0)}>
+          Sabala AI Shop · Open Source
+        </p>
+        <h1 className="cs-rise mt-5 text-balance font-serif text-cream" style={{ fontSize: "clamp(2.5rem, 5vw, 4.3rem)", lineHeight: 1.05, ...EIN(0.05) }}>
+          Werkzeuge aus meiner Arbeit. <span className="text-gold-light">Gratis für dich.</span>
+        </h1>
+        <p className="cs-rise mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-relaxed min-[56.25rem]:text-[1.14rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.12) }}>
+          Was ich für meinen eigenen Alltag mit KI baue und freigebe, liegt hier. Quelloffen, kostenlos, zum Herunterladen.
+        </p>
+        <div className="cs-rise mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center" style={EIN(0.18)}>
+          <Knopf href="#werkzeuge">Zu den Werkzeugen</Knopf>
+          <Knopf zweit href="/case-studies">
+            Was ich sonst noch baue
+          </Knopf>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Je Werkzeug eine breite Karte: links das Bild, rechts Nutzen, Eckdaten und die zwei Wege (Seite, Quellcode). */
+function Werkzeuge() {
+  return (
+    <section id="werkzeuge" className="relative scroll-mt-4 overflow-hidden px-6 py-[5vh]" style={{ background: "var(--cream)" }}>
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[45vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.14), transparent 70%)" }} />
+
+      <div className="relative mx-auto max-w-6xl">
+        <SektionsKopf
+          hell
+          zeile="Die Werkzeuge"
+          titel={
+            <>
+              Den Anfang macht <span style={{ color: GOLD_AUF_HELL }}>{WERKZEUGE[0].name}.</span>
+            </>
+          }
+          text="Ich stelle hier nach und nach mehr ein, damit mehr Menschen damit arbeiten können."
+        />
+
+        <div className="mt-8 space-y-6">
+          {WERKZEUGE.map((w) => (
+            <Reveal key={w.name}>
+              <TiltCard hervor={1.015} max={3} radius={20} className="shadow-[0_18px_44px_rgba(46,43,38,0.1)] hover:shadow-[0_34px_70px_rgba(46,43,38,0.22)]">
+                <article className="grid overflow-hidden rounded-[20px] bg-white min-[56.25rem]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]" style={{ border: "1px solid rgba(184,150,62,0.32)" }}>
+                  <div className="relative aspect-[16/10] min-[56.25rem]:aspect-auto" style={{ background: "var(--tech-bg)" }}>
+                    <Image src={w.bild} alt={w.bildAlt} fill sizes="(max-width: 900px) 92vw, 490px" className="object-cover" />
+                    <span className="absolute left-4 top-4 rounded-full px-3.5 py-1.5 font-mono text-[12.5px] uppercase tracking-[0.16em] text-tech-bg" style={{ background: "var(--gold-light)" }}>
+                      Gratis
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col p-6 md:p-8">
+                    <p className="font-mono text-[12.5px] uppercase tracking-[0.18em]" style={{ color: GOLD_AUF_HELL }}>
+                      {w.art} · Open Source
+                    </p>
+                    <h3 className="mt-2 font-serif text-[2.1rem] leading-tight text-deep">{w.name}</h3>
+                    <p className="mt-2 text-[1.06rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
+                      {w.satz}
+                    </p>
+                    <ul className="mt-4 space-y-2.5">
+                      {w.punkte.map((p) => (
+                        <li key={p} className="flex items-start gap-3 text-[1rem] leading-snug text-deep">
+                          <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-tech-bg">
+                            <Check aria-hidden size={13} strokeWidth={3} />
+                          </span>
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-[0.95rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                      Braucht: {w.braucht}. Lizenz: {w.lizenz}.
+                    </p>
+                    <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row">
+                      <Knopf href={w.seite}>{w.name} ansehen</Knopf>
+                      <Knopf zweit hell neuerTab href={w.code}>
+                        Code bei GitHub
+                      </Knopf>
+                    </div>
+                  </div>
+                </article>
+              </TiltCard>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OpenSource() {
+  return (
+    <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "var(--tech-bg)" }}>
+      <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[70vh] w-[70vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(212,174,90,0.11), transparent 70%)" }} />
+
+      <div className="relative mx-auto max-w-6xl">
+        <SektionsKopf
+          zeile="Open Source"
+          titel={
+            <>
+              Was das für dich <span className="text-gold-light">heißt.</span>
+            </>
+          }
+        />
+
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {HEISST.map(({ symbol: Symbol, titel, text }, i) => (
+            <Reveal key={titel} delay={i * 0.07}>
+              <TiltCard hervor={1.03} max={6} radius={16} glow="rgba(212,174,90,0.16)" className="group/karte h-full p-6 md:p-7" style={{ background: "linear-gradient(160deg, rgba(184,150,62,0.16) 0%, rgba(24,18,10,0.92) 62%)", border: "1px solid rgba(212,174,90,0.38)" }}>
+                <div className="[transform-style:preserve-3d]">
+                  <span className={`flex h-12 w-12 items-center justify-center rounded-full text-gold-light ${HEBT}`} style={{ background: "rgba(212,174,90,0.14)", border: "1px solid rgba(212,174,90,0.4)" }}>
+                    <Symbol aria-hidden size={22} strokeWidth={1.7} />
+                  </span>
+                  <h3 className="mt-5 font-serif text-[1.55rem] leading-tight text-cream">{titel}</h3>
+                  <p className="mt-2.5 text-[1rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
+                    {text}
+                  </p>
+                </div>
+              </TiltCard>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WieWeiter() {
+  return (
+    <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 55%, var(--cream) 100%)" }}>
+      <div className="relative mx-auto max-w-6xl">
+        <SektionsKopf
+          hell
+          zeile="So geht es weiter"
+          titel={
+            <>
+              Vom Werkzeug <span style={{ color: GOLD_AUF_HELL }}>zum eigenen System.</span>
+            </>
+          }
+        />
+
+        <ol className="mt-8 grid gap-x-10 gap-y-7 md:grid-cols-3">
+          {WEITER.map((s, i) => (
+            <li key={s.titel}>
+              <Reveal delay={i * 0.07} className="flex items-start gap-4">
+                <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-serif text-[1.4rem] leading-none" style={{ background: "rgba(184,150,62,0.14)", border: "1px solid rgba(184,150,62,0.45)", color: GOLD_AUF_HELL }}>
+                  {i + 1}
+                </span>
+                <div>
+                  <p className="text-[1rem] leading-snug" style={{ color: TEXT_AUF_HELL }}>
+                    <span className="block font-serif text-[1.4rem] leading-tight text-deep">{s.titel}</span>
+                    <span className="mt-1 block">{s.text}</span>
+                  </p>
+                  {s.ziel && (
+                    <Weiter hell href={s.ziel.href}>
+                      {s.ziel.text}
+                    </Weiter>
+                  )}
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-8 flex flex-col items-start gap-x-6 gap-y-1 border-t pt-6 md:flex-row md:items-center md:justify-between" style={{ borderColor: "rgba(184,150,62,0.4)" }}>
+          <p className="max-w-3xl text-pretty text-[1.04rem] leading-relaxed text-deep">Neugierig, was ich mir für meine eigene Arbeit gebaut habe? In den Case Studies zeige ich es.</p>
+          <Weiter hell href="/case-studies">
+            Zu den Case Studies
+          </Weiter>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default function ShopView() {
   return (
-    <main className="shop relative w-full overflow-x-hidden font-satoshi text-cream" style={{ background: "var(--tech-bg)" }}>
-      {/* Scoped Keyframes — Aurora-Drift + sanftes Schweben */}
-      <style>{`
-        @keyframes shopAuroraA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6%, 4%) scale(1.12); } }
-        @keyframes shopAuroraB { 0%,100% { transform: translate(0,0) scale(1.05); } 50% { transform: translate(-5%, -3%) scale(1); } }
-        .shop-aurora-a { animation: shopAuroraA 16s ease-in-out infinite; }
-        .shop-aurora-b { animation: shopAuroraB 20s ease-in-out infinite; }
-        @media (prefers-reduced-motion: reduce) { .shop-aurora-a, .shop-aurora-b { animation: none; } }
-      `}</style>
-
-      {/* Globaler Aurora-Hintergrund */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="shop-aurora-a absolute -left-[12%] -top-[10%] h-[70vh] w-[70vh] rounded-full blur-[110px]" style={{ background: "radial-gradient(circle, rgba(184,150,62,0.18), transparent 65%)" }} />
-        <div className="shop-aurora-b absolute -right-[10%] top-[25%] h-[60vh] w-[60vh] rounded-full blur-[120px]" style={{ background: "radial-gradient(circle, rgba(212,174,90,0.12), transparent 65%)" }} />
-        <div className="absolute inset-0 opacity-[0.18] mix-blend-overlay" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
-      </div>
-
-      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative z-10 px-6 pt-36 pb-24 md:pt-44 md:pb-28">
-        <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[70vw] -translate-x-1/2" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.4), transparent)" }} />
-        <div className="relative mx-auto max-w-4xl text-center">
-          <ScrollReveal>
-            <div className="flex items-center justify-center gap-3">
-              <SabalaLogo size={44} light />
-              <span className="font-mono text-[11px] uppercase tracking-[0.34em] text-gold">Sabala AI Shop</span>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.1}>
-            <h1 className="mt-8 font-serif leading-[1.04] text-cream" style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", letterSpacing: "-0.01em" }}>
-              Dein <span className="text-gold-light italic">KI-Werkzeugkasten</span>,<br />sofort einsetzbar.
-            </h1>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.2}>
-            <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-warm-light/80">
-              Skills, Vorlagen und Systeme rund um Claude Code und KI. Aus echter Praxis, damit du heute anfängst statt irgendwann.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.3}>
-            <div className="mt-9 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 backdrop-blur-sm">
-              <ClaudeLogo size={16} />
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-warm-mid">Mit Claude Code gebaut</span>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ─── PRODUKTE ─────────────────────────────────────────────────────── */}
-      <section className="relative z-10 px-6 pb-24">
-        <div className="mx-auto max-w-6xl">
-          <ScrollReveal>
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-gold">Produkte</p>
-            {/* Traegt die Nettopreise: ohne diesen Hinweis muesste gegenueber
-                Verbrauchern brutto ausgezeichnet werden (§ 3 PAngV). */}
-            <p className="mt-3 text-[0.95rem] leading-relaxed text-warm-light/55">
-              Alle Preise verstehen sich netto zuzüglich Mehrwertsteuer. Die Angebote richten sich an
-              Unternehmen und Selbständige. Die Mehrwertsteuer wird im Checkout ausgewiesen.
-            </p>
-          </ScrollReveal>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {PRODUCTS.map((p) => {
-              const ext = isExternal(p.href);
-              const cardInner = (
-                <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#0d0a07]/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_30px_80px_-30px_rgba(184,150,62,0.45)]">
-                  {/* Cover */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
-                      src={p.cover}
-                      alt={p.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0d0a07 6%, transparent 60%)" }} />
-                    {p.badge && (
-                      <span className="absolute left-4 top-4 rounded-full border border-gold/40 bg-tech-bg/70 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-gold-light backdrop-blur-sm">{p.badge}</span>
-                    )}
-                  </div>
-
-                  {/* Body */}
-                  <div className="flex flex-1 flex-col p-7">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-warm-mid">{p.kicker}</span>
-                    <h2 className="mt-2 font-serif text-[1.9rem] leading-tight text-cream">{p.title}</h2>
-                    <p className="mt-3 text-[0.97rem] leading-relaxed text-warm-light/70">{p.desc}</p>
-
-                    <ul className="mt-5 space-y-2.5">
-                      {p.points.map((pt) => (
-                        <li key={pt} className="flex items-start gap-2.5 text-[0.9rem] text-warm-light/75">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                          {pt}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-auto flex items-end justify-between pt-7">
-                      <div>
-                        <p className="font-serif text-cream">
-                          {p.price === "0" ? (
-                            <span className="text-[2.2rem] leading-none">Gratis</span>
-                          ) : (
-                            <>
-                              <span className="text-[2.2rem] leading-none">{p.price}</span>
-                              <span className="ml-1 text-lg text-gold-light">€</span>
-                            </>
-                          )}
-                        </p>
-                        {p.priceNote && <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-warm-mid">{p.priceNote}</p>}
-                      </div>
-                      {p.available === false ? (
-                        <span className="inline-flex items-center rounded-full border border-white/15 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-warm-mid">
-                          Bald verfügbar
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-2 rounded-full bg-gold-light px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-tech-bg transition-colors group-hover:bg-gold">
-                          {p.cta}
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </article>
-              );
-
-              return (
-                <ScrollReveal key={p.title}>
-                  {p.available === false ? (
-                    <div className="block h-full">{cardInner}</div>
-                  ) : ext ? (
-                    <a href={p.href} target="_blank" rel="noopener noreferrer" className="block h-full">{cardInner}</a>
-                  ) : (
-                    <Link href={p.href} className="block h-full">{cardInner}</Link>
-                  )}
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── VALUE LADDER ─────────────────────────────────────────────────── */}
-      <section className="relative z-10 px-6 pb-28">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#0d0a07]/60 px-8 py-14 backdrop-blur-sm md:px-14">
-          <div className="pointer-events-none absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2" style={{ background: "linear-gradient(90deg, transparent, rgba(184,150,62,0.4), transparent)" }} />
-          <ScrollReveal>
-            <p className="text-center font-mono text-[11px] uppercase tracking-[0.28em] text-gold">So geht es weiter</p>
-          </ScrollReveal>
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
-            {LADDER.map((l) => {
-              const inner = (
-                <>
-                  <span className="font-mono text-sm text-gold/70">{l.step}</span>
-                  <p className="mt-3 font-serif text-[1.5rem] text-cream">{l.title}</p>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-warm-light/65">{l.desc}</p>
-                  {l.href && (
-                    <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-gold-light">
-                      Mehr <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  )}
-                </>
-              );
-              return (
-                <ScrollReveal key={l.step}>
-                  {l.href ? (
-                    <Link href={l.href} className="group block transition-opacity hover:opacity-80">{inner}</Link>
-                  ) : (
-                    <div>{inner}</div>
-                  )}
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+    <main className="flex-1">
+      <Kopf />
+      <Werkzeuge />
+      <OpenSource />
+      <WieWeiter />
     </main>
   );
 }
