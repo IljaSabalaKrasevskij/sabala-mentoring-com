@@ -9,6 +9,7 @@ import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
    für Mails. Für Webinar-Anmeldung und Warteliste, beide unterscheiden sich nur in
    Ziel-Route und Texten. Das Häkchen ist hier Pflicht, weil die Mail der Zweck ist.
    Nach dem Abschicken kommt eine Bestätigungsmail, erst der Klick darin zählt.
+   Die Antwort ist für alle gleich, auch wenn die Adresse schon bestätigt ist.
    Fallback-Text, wenn das Backend noch nicht konfiguriert ist, damit die Seite
    auch vor dem Env-Setup nicht ins Leere laeuft.
    ───────────────────────────────────────────────────────────────────────── */
@@ -33,13 +34,10 @@ export default function AnmeldeForm({
   api,
   extra,
   knopf,
-  danke,
 }: {
   api: string;
   extra?: Record<string, string>;
   knopf: string;
-  /** Was gilt, sobald die Anmeldung bestätigt ist. */
-  danke: string;
 }) {
   const id = useId();
   const [vorname, setVorname] = useState("");
@@ -49,7 +47,6 @@ export default function AnmeldeForm({
   const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
-  const [bestaetigung, setBestaetigung] = useState<string>();
   const tippt = () => { if (status !== "idle") setStatus("idle"); };
   const rand = {
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)"),
@@ -66,10 +63,7 @@ export default function AnmeldeForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra }),
       });
-      if (res.ok) {
-        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
-        setStatus("success");
-      }
+      if (res.ok) setStatus("success");
       else if (res.status === 503) setStatus("unconfigured");
       else setStatus("error");
     } catch {
@@ -94,7 +88,7 @@ export default function AnmeldeForm({
           <path d="M20 6L9 17l-5-5" />
         </svg>
         <p style={{ fontSize: 15, color: "#FAF8F5", lineHeight: 1.6 }}>
-          {bestaetigung === "aktiv" ? danke : `Fast geschafft. ${bestaetigungsHinweis("gesendet")}`}
+          Fast geschafft. {bestaetigungsHinweis("gesendet")}
         </p>
       </div>
     );

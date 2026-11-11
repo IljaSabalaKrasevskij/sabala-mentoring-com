@@ -32,7 +32,6 @@ export default function AcademyNewsletter() {
   const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
-  const [bestaetigung, setBestaetigung] = useState<string>();
   const tippt = () => { if (status !== "idle") setStatus("idle"); };
 
   async function submit(e: React.FormEvent) {
@@ -45,10 +44,7 @@ export default function AcademyNewsletter() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax }),
       });
-      if (res.ok) {
-        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
-        setStatus("success");
-      }
+      if (res.ok) setStatus("success");
       else if (res.status === 503) setStatus("unconfigured");
       else setStatus("error");
     } catch {
@@ -90,7 +86,7 @@ export default function AcademyNewsletter() {
               {status === "success" ? (
                 <p className="mt-5 flex items-center gap-3.5 rounded-sm px-5 py-4 text-[1rem] leading-snug text-cream" style={{ background: "rgba(212,174,90,0.10)", border: "1px solid rgba(212,174,90,0.35)" }}>
                   <Check aria-hidden size={22} strokeWidth={2} className="shrink-0 text-gold-light" />
-                  {bestaetigung === "aktiv" ? "Du bist dabei. Du bekommst neue Kurstermine und KI-Tipps per Mail." : `Fast geschafft. ${bestaetigungsHinweis("gesendet")}`}
+                  Fast geschafft. {bestaetigungsHinweis("gesendet")}
                 </p>
               ) : (
                 <form onSubmit={submit} className="mt-5 grid gap-3 sm:grid-cols-2">

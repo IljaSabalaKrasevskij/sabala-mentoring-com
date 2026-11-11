@@ -6,6 +6,9 @@ import { EINWILLIGUNG_TEXT } from "@/lib/einwilligung-text";
    kein Newsletter-Dienst dazwischen. Die Mail enthält keine Werbung: nur die Bitte
    um Bestätigung, den Wortlaut der Einwilligung und das Impressum.
 
+   In der Mail steht nichts, was jemand ins Formular getippt hat, auch kein Name.
+   Sonst könnte ein Fremder über unser Postfach eigenen Text an beliebige Adressen schicken.
+
    Env (Vercel, Production). Das Passwort trägt Ilja selbst ein, es steht in keiner Datei:
      SMTP_HOST   mail.sabala-mentoring.com
      SMTP_PORT   465 (Standard, verschlüsselt ab dem ersten Byte)
@@ -22,8 +25,8 @@ export const mailBereit = () => !!process.env.SMTP_HOST && !!process.env.SMTP_US
 const maskiert = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 /** Text und HTML der Mail. Eigene Funktion, damit man sie ansehen kann, ohne etwas zu verschicken. */
-export function bestaetigungsMail(vorname: string, link: string) {
-  const hallo = vorname ? `Hallo ${vorname},` : "Hallo,";
+export function bestaetigungsMail(link: string) {
+  const hallo = "Hallo,";
   const text = [
     hallo,
     "",
@@ -62,7 +65,7 @@ Geht der Knopf nicht? Dann kopiere diese Adresse in deinen Browser:<br><span sty
 }
 
 /** Schickt die Bestätigungsmail. false, wenn kein Postfach eingerichtet ist. Wirft, wenn der Mailserver ablehnt. */
-export async function bestaetigungSenden(an: string, vorname: string, link: string): Promise<boolean> {
+export async function bestaetigungSenden(an: string, link: string): Promise<boolean> {
   if (!mailBereit()) return false;
   const port = Number(process.env.SMTP_PORT || 465);
   const user = process.env.SMTP_USER!;
@@ -74,7 +77,8 @@ export async function bestaetigungSenden(an: string, vorname: string, link: stri
     connectionTimeout: 8000,
     socketTimeout: 10000,
   });
-  const m = bestaetigungsMail(vorname, link);
-  await transport.sendMail({ from: process.env.MAIL_VON || `Sabala Mentoring <${user}>`, to: an, subject: m.betreff, text: m.text, html: m.html });
+  const m = bestaetigungsMail(link);
+  // Empfänger als fertige Adresse übergeben: So liest nodemailer die Zeichenkette nicht als Liste von Empfängern.
+  await transport.sendMail({ from: process.env.MAIL_VON || `Sabala Mentoring <${user}>`, to: { name: "", address: an }, subject: m.betreff, text: m.text, html: m.html });
   return true;
 }

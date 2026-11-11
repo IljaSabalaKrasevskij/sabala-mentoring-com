@@ -8,6 +8,11 @@ import { randomBytes } from "node:crypto";
    samt Version, die Zeit und die IP. Status „ausstehend“, dazu ein Token für den Link in der Mail.
    Schritt 2 (bestaetigen): Klick auf den Link. Erst jetzt ist die Einwilligung „aktiv“.
 
+   Grundsatz: Was im Formular steht, hat irgendwer getippt. Erst der Klick im Postfach zeigt, dass es der Mensch
+   hinter der Adresse war. Darum ändert ein Formular allein nie etwas an einem bestätigten Kontakt: nicht den Namen,
+   nicht die Merkmale. Trägt sich ein bestätigter Kontakt über ein weiteres Formular ein (etwa die Warteliste),
+   wird das als Wunsch gemerkt (nl_wuensche) und gilt ebenfalls erst nach dem Klick.
+
    Die Tabellen heißen nl_* und liegen in derselben Datenbank wie der Briefkasten (leads).
    Sabala Mail liest sie und zeigt die Einwilligung am Kontakt. Das Schema ist dort dasselbe
    (src/lib/newsletter/db.ts), darum hier nur CREATE IF NOT EXISTS für frische Datenbanken.
@@ -63,6 +68,15 @@ export const SCHEMA = [
     ip TEXT NOT NULL DEFAULT '',
     notiz TEXT NOT NULL DEFAULT ''
   )`,
+  // Ein bestätigter Kontakt hat ein weiteres Formular abgeschickt. Gilt erst, wenn er den Link dazu anklickt.
+  `CREATE TABLE IF NOT EXISTS nl_wuensche (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    einwilligung_id INTEGER NOT NULL REFERENCES nl_einwilligungen(id) ON DELETE CASCADE,
+    formular TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    erstellt_am TEXT NOT NULL DEFAULT (datetime('now')),
+    erledigt_am TEXT
+  )`,
   `CREATE TABLE IF NOT EXISTS nl_merkmale (
     kontakt_id INTEGER NOT NULL REFERENCES nl_kontakte(id) ON DELETE CASCADE,
     merkmal TEXT NOT NULL,
@@ -72,7 +86,7 @@ export const SCHEMA = [
 ];
 
 export type Anmeldung = { email: string; vorname: string; nachname: string; quelle: string; ip: string; text: string; version: number };
-/** senden: Jetzt gehört eine Bestätigungsmail raus. false bei „aktiv“ (schon bestätigt) und wenn eben erst eine rausging. Nach dem Versand: mailVermerken(id). */
+/** senden: Jetzt gehört eine Mail mit diesem Token raus. false, wenn an die Adresse eben erst eine ging. Nach dem Versand: vermerken(id, "mail"). */
 export type Stand = { id: number; status: "ausstehend" | "aktiv"; token: string; senden: boolean };
 export type Bestaetigt = { email: string; vorname: string; nachname: string; quelle: string; einwilligung_id: number; neu: boolean };
 
@@ -92,30 +106,37 @@ export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
               WHERE nl_listen.einwilligung_version < excluded.einwilligung_version`,
         args: [LISTE.marke, LISTE.schluessel, LISTE.name, LISTE.beschreibung, d.text, d.version],
       },
-      {
-        sql: `INSERT INTO nl_kontakte (email, vorname, nachname) VALUES (?, ?, ?)
-              ON CONFLICT(email) DO UPDATE SET vorname = CASE WHEN excluded.vorname = '' THEN vorname ELSE excluded.vorname END,
-                nachname = CASE WHEN excluded.nachname = '' THEN nachname ELSE excluded.nachname END, geaendert_am = datetime('now')`,
-        args: [email, d.vorname, d.nachname],
-      },
+      { sql: "INSERT INTO nl_kontakte (email, vorname, nachname) VALUES (?, ?, ?) ON CONFLICT(email) DO NOTHING", args: [email, d.vorname, d.nachname] },
     ],
     "write",
   );
   const liste = (await eine<{ id: number }>(db, "SELECT id FROM nl_listen WHERE schluessel = ?", [LISTE.schluessel]))!;
   const k = (await eine<{ id: number }>(db, "SELECT id FROM nl_kontakte WHERE email = ?", [email]))!;
-  await db.execute({ sql: "INSERT OR IGNORE INTO nl_merkmale (kontakt_id, merkmal) VALUES (?, ?)", args: [k.id, d.quelle] });
 
-  // mail_s: Sekunden seit der letzten wirklich verschickten Bestätigungsmail. Scheitert der Versand, gibt es keinen Vermerk, und der nächste Versuch schickt wieder.
+  // mail_s: Sekunden seit der letzten wirklich verschickten Mail an diese Adresse. Scheitert der Versand, gibt es keinen Vermerk, und der nächste Versuch schickt wieder.
   const alt = await eine<{ id: number; status: string; token: string; mail_s: number | null }>(
     db,
     `SELECT e.id, e.status, e.token, (julianday('now') - julianday((SELECT max(am) FROM nl_ereignisse WHERE einwilligung_id = e.id AND art = 'mail'))) * 86400 AS mail_s
      FROM nl_einwilligungen e WHERE e.kontakt_id = ? AND e.liste_id = ?`,
     [k.id, liste.id],
   );
-  if (alt?.status === "aktiv") return { id: alt.id, status: "aktiv", token: alt.token, senden: false };
-  // Schutz für fremde Postfächer: Wer eine Adresse zehnmal einträgt, löst trotzdem nur eine Mail aus.
-  if (alt?.status === "ausstehend" && alt.mail_s !== null && alt.mail_s < WARTEN_SEKUNDEN) return { id: alt.id, status: "ausstehend", token: alt.token, senden: false };
+  // Schutz für fremde Postfächer: Wer eine Adresse zehnmal einträgt, löst trotzdem nur eine Mail aus. Gilt in jedem Zustand.
+  const ebenGeschickt = !!alt && alt.mail_s !== null && alt.mail_s < WARTEN_SEKUNDEN;
 
+  if (alt?.status === "aktiv") {
+    // Bestätigter Kontakt: nichts an ihm ändern. Nur den Wunsch merken, der Klick entscheidet.
+    if (ebenGeschickt) return { id: alt.id, status: "aktiv", token: "", senden: false };
+    const t = token();
+    await db.execute({ sql: "INSERT INTO nl_wuensche (einwilligung_id, formular, token) VALUES (?, ?, ?)", args: [alt.id, d.quelle, t] });
+    return { id: alt.id, status: "aktiv", token: t, senden: true };
+  }
+  if (alt?.status === "ausstehend" && ebenGeschickt) return { id: alt.id, status: "ausstehend", token: alt.token, senden: false };
+
+  // Noch nicht bestätigt: Der Name aus dem Formular darf den alten ersetzen, er wird mit dem Klick gültig.
+  await db.execute({
+    sql: "UPDATE nl_kontakte SET vorname = CASE WHEN ? = '' THEN vorname ELSE ? END, nachname = CASE WHEN ? = '' THEN nachname ELSE ? END, geaendert_am = datetime('now') WHERE id = ?",
+    args: [d.vorname, d.vorname, d.nachname, d.nachname, k.id],
+  });
   const t = token();
   let id = alt?.id ?? 0;
   if (alt) {
@@ -142,24 +163,53 @@ export async function anmelden(db: Client, d: Anmeldung): Promise<Stand> {
   return { id, status: "ausstehend", token: t, senden: true };
 }
 
-/** Schritt 2. Nur „ausstehend“ wird „aktiv“. neu sagt, ob genau dieser Klick bestätigt hat: Dann darf danach einmal etwas passieren. */
+/**
+ * Schritt 2. Nur „ausstehend“ wird „aktiv“. neu sagt, ob genau dieser Klick etwas bestätigt hat: Dann darf danach einmal etwas passieren.
+ * Namen und Formular kommen aus der Datenbank, nie aus der Anfrage. Kennt die Einwilligung den Token nicht, kann es der Wunsch eines bestätigten Kontakts sein.
+ */
 export async function bestaetigen(db: Client, tok: string, ip: string): Promise<Bestaetigt | null> {
-  const e = await eine<{ id: number; status: string; quelle: string; email: string; vorname: string; nachname: string }>(
+  type Zeile = { id: number; kontakt_id: number; status: string; quelle: string; email: string; vorname: string; nachname: string };
+  const merkmal = (kontakt_id: number, m: string) => db.execute({ sql: "INSERT OR IGNORE INTO nl_merkmale (kontakt_id, merkmal) VALUES (?, ?)", args: [kontakt_id, m] });
+  const e = await eine<Zeile>(
     db,
-    "SELECT e.id, e.status, e.quelle, k.email, k.vorname, k.nachname FROM nl_einwilligungen e JOIN nl_kontakte k ON k.id = e.kontakt_id WHERE e.token = ?",
+    "SELECT e.id, e.kontakt_id, e.status, e.quelle, k.email, k.vorname, k.nachname FROM nl_einwilligungen e JOIN nl_kontakte k ON k.id = e.kontakt_id WHERE e.token = ?",
     [tok],
   );
-  if (!e) return null;
-  let neu = false;
-  if (e.status === "ausstehend") {
-    // Die Bedingung im UPDATE entscheidet, wer zuerst war, wenn zwei Klicks gleichzeitig kommen (Mensch und Mail-Scanner).
-    const r = await db.execute({ sql: "UPDATE nl_einwilligungen SET status = 'aktiv', bestaetigt_am = datetime('now'), bestaetigt_ip = ? WHERE id = ? AND status = 'ausstehend'", args: [ip, e.id] });
-    neu = r.rowsAffected === 1;
-    if (neu) await db.execute({ sql: "INSERT INTO nl_ereignisse (einwilligung_id, art, ip) VALUES (?, 'bestaetigt', ?)", args: [e.id, ip] });
-  } else if (e.status !== "aktiv") {
-    return null; // abgemeldet oder gesperrt: Der alte Link meldet niemanden wieder an
+  if (e) {
+    let neu = false;
+    if (e.status === "ausstehend") {
+      // Die Bedingung im UPDATE entscheidet, wer zuerst war, wenn zwei Klicks gleichzeitig kommen (Mensch und Mail-Scanner).
+      const r = await db.execute({ sql: "UPDATE nl_einwilligungen SET status = 'aktiv', bestaetigt_am = datetime('now'), bestaetigt_ip = ? WHERE id = ? AND status = 'ausstehend'", args: [ip, e.id] });
+      neu = r.rowsAffected === 1;
+      if (neu) {
+        await db.execute({ sql: "INSERT INTO nl_ereignisse (einwilligung_id, art, ip) VALUES (?, 'bestaetigt', ?)", args: [e.id, ip] });
+        await merkmal(e.kontakt_id, e.quelle);
+      }
+    } else if (e.status !== "aktiv") {
+      return null; // abgemeldet oder gesperrt: Der alte Link meldet niemanden wieder an
+    }
+    return { email: e.email, vorname: e.vorname, nachname: e.nachname, quelle: e.quelle, einwilligung_id: e.id, neu };
   }
-  return { email: e.email, vorname: e.vorname, nachname: e.nachname, quelle: e.quelle, einwilligung_id: e.id, neu };
+
+  const w = await eine<Zeile & { wunsch: number; formular: string }>(
+    db,
+    `SELECT w.id AS wunsch, w.formular, e.id, e.kontakt_id, e.status, e.quelle, k.email, k.vorname, k.nachname
+     FROM nl_wuensche w JOIN nl_einwilligungen e ON e.id = w.einwilligung_id JOIN nl_kontakte k ON k.id = e.kontakt_id WHERE w.token = ?`,
+    [tok],
+  );
+  if (!w || w.status !== "aktiv") return null;
+  const r = await db.execute({ sql: "UPDATE nl_wuensche SET erledigt_am = datetime('now') WHERE id = ? AND erledigt_am IS NULL", args: [w.wunsch] });
+  const neu = r.rowsAffected === 1;
+  if (neu) {
+    await db.execute({ sql: "INSERT INTO nl_ereignisse (einwilligung_id, art, ip, notiz) VALUES (?, 'bestaetigt', ?, ?)", args: [w.id, ip, `weiteres Formular: ${w.formular}`] });
+    await merkmal(w.kontakt_id, w.formular);
+  }
+  return { email: w.email, vorname: w.vorname, nachname: w.nachname, quelle: w.formular, einwilligung_id: w.id, neu };
+}
+
+/** Wie viele Bestätigungsmails in der letzten Stunde rausgingen, über alle Adressen. Für die Obergrenze, die das Postfach vor Missbrauch schützt. */
+export async function mailsLetzteStunde(db: Client): Promise<number> {
+  return Number((await eine<{ n: number }>(db, "SELECT count(*) AS n FROM nl_ereignisse WHERE art = 'mail' AND am > datetime('now', '-1 hour')"))?.n ?? 0);
 }
 
 /** Hält fest, was sonst geschah: „mail“ = Bestätigungsmail ist raus (davon hängt die Wartezeit ab), „werkzeug“ = Eintrag ins Newsletter-Werkzeug nach dem Klick. */

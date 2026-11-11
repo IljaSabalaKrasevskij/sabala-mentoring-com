@@ -50,8 +50,7 @@ export default function Einwilligung({ id, an, setAn, pflicht = false, akzent = 
 
 /** Was nach dem Abschicken über die Bestätigungsmail zu sagen ist. Leer, wenn kein Häkchen gesetzt war. */
 export function bestaetigungsHinweis(bestaetigung: string | undefined): string {
-  if (bestaetigung === "gesendet" || bestaetigung === "wartet") return "Ich habe dir gerade eine Mail geschickt. Klick dort auf „Anmeldung bestätigen“, erst dann bist du dabei. Nichts da? Schau kurz in den Spam-Ordner.";
-  if (bestaetigung === "aktiv") return "Für den Newsletter bist du schon bestätigt, da musst du nichts mehr tun.";
+  if (bestaetigung === "gesendet") return "Ich habe dir gerade eine Mail geschickt. Klick dort auf „Anmeldung bestätigen“, erst dann bist du dabei. Nichts da? Schau kurz in den Spam-Ordner.";
   if (bestaetigung === "fehlt") return "Die Bestätigungsmail für den Newsletter konnte ich gerade nicht schicken. Trag dich dafür bitte später noch einmal ein.";
   return "";
 }

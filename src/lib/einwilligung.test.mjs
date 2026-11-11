@@ -37,12 +37,43 @@ test("Erst der Klick macht aktiv, und nur der erste Klick zählt als neu", async
   assert.equal(await bestaetigen(db, "gibt-es-nicht", "198.51.100.9"), null);
 });
 
-test("Wer schon bestätigt hat, bekommt keine zweite Mail", async () => {
+test("Bestätigter Kontakt und ein weiteres Formular: Ohne Klick ändert sich nichts an ihm, mit Klick gilt der Wunsch", async () => {
   const db = frisch();
   const { token } = await anmelden(db, anna);
   await bestaetigen(db, token, "198.51.100.9");
-  const wieder = await anmelden(db, { ...anna, quelle: "Mooni Voice" });
-  assert.deepEqual({ status: wieder.status, senden: wieder.senden }, { status: "aktiv", senden: false });
+  // Irgendwer trägt Annas Adresse mit fremdem Namen in ein anderes Formular ein
+  const wunsch = await anmelden(db, { ...anna, vorname: "Fremder", nachname: "http://boese.example", quelle: "Mooni Voice" });
+  assert.deepEqual({ status: wunsch.status, senden: wunsch.senden }, { status: "aktiv", senden: true });
+  assert.notEqual(wunsch.token, token, "eigener Link für den Wunsch");
+  const name = async () => (await db.execute("SELECT vorname, nachname FROM nl_kontakte")).rows[0];
+  const merkmale = async () => (await db.execute("SELECT merkmal FROM nl_merkmale ORDER BY merkmal")).rows.map((z) => z.merkmal);
+  assert.deepEqual({ ...(await name()) }, { vorname: "Anna", nachname: "Beispiel" }, "der Name eines bestätigten Kontakts bleibt");
+  assert.deepEqual(await merkmale(), ["Akademie-Newsletter"], "ohne Klick kein neues Merkmal");
+  assert.equal((await zeile(db)).status, "aktiv", "die Einwilligung bleibt bestehen");
+
+  const klick = await bestaetigen(db, wunsch.token, "198.51.100.11");
+  assert.deepEqual({ quelle: klick.quelle, vorname: klick.vorname, nachname: klick.nachname, neu: klick.neu }, { quelle: "Mooni Voice", vorname: "Anna", nachname: "Beispiel", neu: true }, "es gelten die gespeicherten Namen");
+  assert.deepEqual(await merkmale(), ["Akademie-Newsletter", "Mooni Voice"]);
+  assert.equal((await bestaetigen(db, wunsch.token, "198.51.100.11")).neu, false, "der Wunsch gilt nur einmal");
+});
+
+test("Auch an bestätigte Adressen geht in der Wartezeit nur eine Mail", async () => {
+  const db = frisch();
+  const erste = await anmelden(db, anna);
+  await bestaetigen(db, erste.token, "198.51.100.9");
+  const wunsch = await anmelden(db, { ...anna, quelle: "Warteliste Kurs" });
+  await vermerken(db, wunsch.id, "mail");
+  const gleich = await anmelden(db, { ...anna, quelle: "Mooni Voice" });
+  assert.deepEqual({ senden: gleich.senden, token: gleich.token }, { senden: false, token: "" });
+  assert.equal((await db.execute("SELECT count(*) AS n FROM nl_wuensche")).rows[0].n, 1, "kein zweiter Wunsch ohne Mail");
+});
+
+test("Vor dem Klick gibt es kein Merkmal, und ein neuer Versuch darf den Namen noch ändern", async () => {
+  const db = frisch();
+  await anmelden(db, { ...anna, vorname: "Ana" });
+  assert.equal((await db.execute("SELECT count(*) AS n FROM nl_merkmale")).rows[0].n, 0);
+  await anmelden(db, anna); // kein Vermerk „mail“, also darf sofort neu angemeldet werden
+  assert.equal((await db.execute("SELECT vorname FROM nl_kontakte")).rows[0].vorname, "Anna");
 });
 
 test("Zehnmal dieselbe Adresse eintragen löst nur eine Mail aus, nach der Wartezeit wieder eine", async () => {

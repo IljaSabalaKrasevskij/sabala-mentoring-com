@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar } from "@/lib/activecampaign";
-import { anmelden, bestaetigen, vermerken, type Bestaetigt } from "@/lib/einwilligung";
+import { anmelden, bestaetigen, mailsLetzteStunde, vermerken, type Bestaetigt } from "@/lib/einwilligung";
 import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
 import { getClient } from "@/lib/leads";
 import { bestaetigungSenden } from "@/lib/mail";
@@ -11,12 +11,22 @@ import { bestaetigungSenden } from "@/lib/mail";
    Mit Häkchen: Nachweis speichern → Bestätigungsmail → Klick → erst dann der Eintrag
    ins Newsletter-Werkzeug (ActiveCampaign). Ohne Klick steht dort niemand.
    Ohne Häkchen: Die Anfrage landet nur im Briefkasten, Werbung gibt es keine.
+
+   Was im Formular steht, hat irgendwer getippt, auch mit fremder Adresse. Darum:
+   - Die Antwort ist immer dieselbe, egal ob die Adresse schon bestätigt ist. Niemand kann abfragen, wer Abonnent ist.
+   - Ins Newsletter-Werkzeug gehen nur Daten aus der Datenbank, und nur nach einem Klick im Postfach.
+   - Die Mail-Adresse besteht aus einem engen Zeichensatz. Kommas, Klammern und spitze Klammern würde ein Mailprogramm
+     als mehrere Empfänger lesen, und die Sperre je Adresse liefe ins Leere.
    ────────────────────────────────────────────────────────────────────────── */
 
+/* Namen: Buchstaben aller Sprachen, dazu Leerzeichen, Punkt, Bindestrich und Apostroph. Keine Adressen, keine Links:
+   Der Name landet im CRM und nach dem Klick im Newsletter-Werkzeug, dort soll kein fremder Werbetext stehen. */
+const NAME = /^[\p{L}\p{M}][\p{L}\p{M} .'’-]*$/u;
+
 export const FELDER = {
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80),
-  nachname: z.string().trim().min(1, "Nachname fehlt").max(80),
-  email: z.string().trim().max(160).refine((v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "E-Mail ungueltig"),
+  vorname: z.string().trim().min(1, "Vorname fehlt").max(80).regex(NAME, "Vorname ungueltig"),
+  nachname: z.string().trim().min(1, "Nachname fehlt").max(80).regex(NAME, "Nachname ungueltig"),
+  email: z.string().trim().toLowerCase().max(160).regex(/^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/, "E-Mail ungueltig"),
   // freiwillig: Ziffern und die ueblichen Trennzeichen, damit hier kein Freitext landet
   telefon: z.string().trim().max(40).refine((v) => v === "" || /^[+0-9 ()/.-]{5,40}$/.test(v), "Telefon ungueltig").optional().default(""),
   einwilligung: z.boolean().optional().default(false),
@@ -52,8 +62,13 @@ async function insWerkzeug(b: Bestaetigt, formular: string): Promise<void> {
   if (db) await vermerken(db, b.einwilligung_id, "werkzeug", `${formular}: ${stand}`).catch(() => {});
 }
 
-/** gesendet: Mail ist raus. wartet: eben erst eine geschickt. aktiv: schon bestätigt. fehlt: Datenbank oder Postfach nicht eingerichtet, oder der Versand ist gescheitert. */
-export type Bestaetigung = "gesendet" | "wartet" | "aktiv" | "fehlt";
+/** gesendet: Mail ist raus, oder an diese Adresse ging eben erst eine. fehlt: Datenbank oder Postfach nicht eingerichtet, Obergrenze erreicht oder Versand gescheitert. */
+export type Bestaetigung = "gesendet" | "fehlt";
+
+/* Obergrenze über alle Adressen. Echte Spitzen liegen weit darunter (bisher höchstens ein paar Anmeldungen am Tag).
+   Sie schützt das Postfach, falls jemand das Formular mit vielen verschiedenen Adressen füttert.
+   ponytail: eine feste Zahl. Vor einer großen Aktion (Webinar-Start) hochsetzen. */
+const MAILS_JE_STUNDE = 120;
 
 /* Adresse für den Link in der Mail. Fest, nicht aus der Anfrage gelesen: Sonst könnte jemand mit einem gefälschten
    Host-Kopf unsere Mail mit einem Link auf eine fremde Seite verschicken lassen. Vorschau-Bauten nehmen ihre eigene Adresse. */
@@ -66,13 +81,14 @@ export async function einwilligungStarten(d: { formular: Formular; email: string
   if (!db) return "fehlt";
   try {
     const stand = await anmelden(db, { email: d.email, vorname: d.vorname, nachname: d.nachname, quelle: d.formular, ip: d.ip, text: EINWILLIGUNGEN[version], version });
-    if (stand.status === "aktiv") {
-      // Schon bestätigt: Was dieses Formular im Newsletter-Werkzeug auslöst (Warteliste, Mooni), darf gleich passieren.
-      await insWerkzeug({ email: d.email, vorname: d.vorname, nachname: d.nachname, quelle: d.formular, einwilligung_id: stand.id, neu: false }, d.formular);
-      return "aktiv";
+    // Auch wer schon bestätigt ist, bekommt nur eine Mail mit Link. Erst der Klick löst im Newsletter-Werkzeug etwas aus.
+    // Ging eben erst eine Mail an diese Adresse, sieht die Antwort trotzdem gleich aus: Von außen lässt sich nichts über die Adresse ablesen.
+    if (!stand.senden) return "gesendet";
+    if ((await mailsLetzteStunde(db)) >= MAILS_JE_STUNDE) {
+      console.error("[einwilligung] Obergrenze für Bestätigungsmails erreicht, keine Mail verschickt");
+      return "fehlt";
     }
-    if (!stand.senden) return "wartet";
-    if (!(await bestaetigungSenden(d.email, d.vorname, `${BASIS}/api/newsletter/bestaetigen?t=${stand.token}`))) return "fehlt";
+    if (!(await bestaetigungSenden(d.email, `${BASIS}/api/newsletter/bestaetigen?t=${stand.token}`))) return "fehlt";
     await vermerken(db, stand.id, "mail");
     return "gesendet";
   } catch (err) {

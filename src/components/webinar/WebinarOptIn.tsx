@@ -70,11 +70,6 @@ export default function WebinarOptIn() {
                 api={WEBINAR.warteliste ? "/api/akademie-newsletter" : "/api/webinar"}
                 extra={WEBINAR.warteliste ? { warteliste: "webinar" } : undefined}
                 knopf={WEBINAR_KNOPF}
-                danke={
-                  WEBINAR.warteliste
-                    ? "Du stehst auf der Liste. Sobald der neue Termin steht, melde ich mich per Mail."
-                    : "Du bist dabei. Schau in dein Postfach, der Zugangslink ist unterwegs. Falls nichts ankommt, wirf einen Blick in den Spam-Ordner."
-                }
               />
 
               {WEBINAR.linkedInEventUrl && (
