@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
     { path: "/case-studies", priority: 0.8, changeFrequency: "monthly" },
     { path: "/akademie-hub", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/akademie/webseiten-mit-claude-code", priority: 0.8, changeFrequency: "monthly" },
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/shop", priority: 0.7, changeFrequency: "monthly" },

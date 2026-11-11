@@ -45,6 +45,7 @@ export const FORMULARE = {
   "Akademie-Newsletter": { nische: "einstieg" },
   "Warteliste Kurs": { nische: "second-brain" },
   "Warteliste Webinar": { nische: "second-brain" },
+  "Warteliste Webseiten-Kurs": { nische: "webseiten-selbst-bauen" },
   "Webinar Second Brain": { nische: "second-brain" },
   "Mooni Voice": { nische: null },
   Kontaktformular: { nische: null },

@@ -26,10 +26,11 @@ export const runtime = "nodejs";
 const WARTELISTE = {
   kurs: { formular: "Warteliste Kurs", anliegen: "Warteliste: möchte den nächsten Termin des Second-Brain-Kurses erfahren." },
   webinar: { formular: "Warteliste Webinar", anliegen: "Warteliste: möchte den nächsten Webinar-Termin erfahren." },
+  webkurs: { formular: "Warteliste Webseiten-Kurs", anliegen: "Warteliste: möchte den Start des Kurses „Webseiten bauen mit Claude Code“ erfahren." },
 } as const satisfies Record<string, { formular: Formular; anliegen: string }>;
 
 const Schema = z.object({
-  warteliste: z.enum(["kurs", "webinar"]).optional(),
+  warteliste: z.enum(["kurs", "webinar", "webkurs"]).optional(),
   quelle: z.enum(Object.keys(LEADMAGNETE) as [Leadmagnet, ...Leadmagnet[]], { error: "Dieses Formular kenne ich nicht." }).optional(),
   vorname: FELDER.vorname,
   nachname: FELDER.nachname,
