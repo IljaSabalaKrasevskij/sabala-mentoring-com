@@ -8,6 +8,11 @@ const FRAME_COUNT = 189;
 const START_FRAME = 1;
 const READY_THRESHOLD = 24;     // Blog wird sichtbar, sobald die ersten 24 Frames geladen sind
 const PRIORITY_BATCH_SIZE = 24; // Diese ersten Frames mit hoher Priorität parallel laden
+// Jedes Einzelbild trägt unten rechts ein „Veo“-Wasserzeichen (gemessen in 1920×1080: x 1800 bis 1896, y 1008 bis 1048).
+// Beim Zeichnen legen wir den Streifen direkt links daneben darüber. Dort sind nur Wand und Boden zu sehen, der Flicken
+// fällt nicht auf (am 11.11.2026 an allen 189 Bildern geprüft). Wegschneiden ginge auch, kostet aber unten die Tür im Stamm.
+// Angaben in Pixeln eines 1920 breiten Bildes. Neue Bildfolge ohne Zeichen? Dann den Flicken in drawFrame löschen.
+const FLICKEN = { x: 1790, y: 998, breite: 116, hoehe: 60, versatz: 120 };
 
 function getFramePath(index: number) {
   // Matches ezgif-frame-001.jpg format
@@ -147,8 +152,16 @@ export default function TreeBookshelfScrollytelling() {
            offsetY = 0;
        }
 
-       // Slightly scale up to avoid 1px border bleeding
        context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+
+       // Wasserzeichen überdecken (siehe FLICKEN oben): f rechnet auf die Bildgröße um, k auf die gezeichnete Größe
+       const f = img.width / 1920, k = drawWidth / img.width;
+       const { x, y, breite, hoehe, versatz } = FLICKEN;
+       context.drawImage(
+         img,
+         (x - versatz) * f, y * f, breite * f, hoehe * f,
+         offsetX + x * f * k, offsetY + y * f * k, breite * f * k, hoehe * f * k
+       );
     };
 
     // Sub to framer motion spring update
@@ -206,9 +219,6 @@ export default function TreeBookshelfScrollytelling() {
            ref={canvasRef} 
            className="absolute inset-0 w-full h-full object-cover z-0"
          />
-
-         {/* VEO WATERMARK MASK */}
-         <div className="absolute bottom-0 right-0 w-64 h-32 bg-gradient-to-tl from-[#f5f3ee] via-[#f5f3ee]/90 to-transparent z-0 pointer-events-none"></div>
 
          {/* 
             TEXT BEATS 
