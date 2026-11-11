@@ -104,7 +104,7 @@ export default function BlogPostPage() {
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
       {/* HERO SECTION */}
-      <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
+      <section className="relative flex w-full flex-col justify-end min-h-[min(100vw,800px)] md:min-h-[min(calc(100vw*9/21),800px)] overflow-hidden bg-[#2E2B26]">
         <Image
           src="/blog/technik-setup-online-coach/cover.jpg"
           alt="Vintage-Workshop-Cover mit goldenen Equipment-Werkzeugen im Pencil-Style"
@@ -115,7 +115,7 @@ export default function BlogPostPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/80 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/90 to-transparent"></div>
         
-        <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
+        <div className="relative z-10 w-full max-w-[1400px] px-6 pt-8 pb-16 sm:px-12 md:px-24 md:pb-24">
           <ScrollReveal>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
                 <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
