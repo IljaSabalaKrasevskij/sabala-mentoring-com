@@ -348,6 +348,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/case-studies/social-media-cockpit.jpg",
   },
   {
+    id: "sabala-mail",
+    category: "agent-os",
+    title: {
+      de: "Sabala Mail: Alle Postfächer, ein Cockpit",
+      en: "Sabala Mail: Every Inbox, One Cockpit",
+    },
+    industry: { de: "Internes Tool · E-Mail und Büro", en: "Internal Tool · Email and Back Office" },
+    challenge: {
+      de: "Mehrere Marken, viele Postfächer und dazu Kundenkontakte, Webseiten-Zahlen und Fristen in getrennten Programmen: Der Tag begann mit Tab-Wechseln. Gesucht war ein eigenes Programm im Dock, das alles an einem Ort zeigt und bei der Antwort hilft.",
+      en: "Several brands, many inboxes, plus client contacts, website numbers and deadlines in separate programs: the day started with switching tabs. What was needed was a custom app in the dock that shows everything in one place and helps with the reply.",
+    },
+    claudeUsage: {
+      de: "Mit Claude Code als eigene App gebaut: gemeinsamer Eingang über alle Postfächer, nach Marke gruppiert, mit schneller Suche. Claude ordnet jede Mail ein (Thema, Dringlichkeit, kurze Zusammenfassung, Empfehlung) und schlägt auf Wunsch eine Antwort aus Stichpunkten vor. Fällt Claude aus, übernimmt ein lokales Modell. Dazu kamen Bereiche für CRM, Webseiten-Zahlen, Büro und Newsletter.",
+      en: "Built with Claude Code as a standalone app: one shared inbox across all mailboxes, grouped by brand, with fast search. Claude classifies every email (topic, urgency, short summary, recommendation) and drafts a reply from bullet points on request. If Claude is unavailable, a local model takes over. Sections for CRM, website numbers, back office and newsletter were added on top.",
+    },
+    result: {
+      de: "Im täglichen Einsatz als App im Dock: Der Eingang zeigt auf einen Blick, was wichtig ist und was warten kann, Antworten sind vorbereitet, und gesendet wird erst nach meiner Freigabe. Das Bild zeigt das Programm mit Demo-Daten.",
+      en: "In daily use as an app in the dock: the inbox shows at a glance what matters and what can wait, replies are prepared, and nothing is sent without my approval. The screenshot shows the app with demo data.",
+    },
+    tags: ["Claude Code", "IMAP", "SQLite", "Next.js"],
+    isPrivate: true,
+    image: "/case-studies/sabala-mail.jpg",
+  },
+  {
     id: "mooni-voice",
     category: "weitere",
     title: {
