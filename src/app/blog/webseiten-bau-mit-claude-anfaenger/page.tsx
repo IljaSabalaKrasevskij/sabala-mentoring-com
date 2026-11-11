@@ -32,7 +32,7 @@ const articleSchemaJson = JSON.stringify({
   author: { "@type": "Person", name: "Ilja Krasevskij", url: "https://sabala-mentoring.com/ueber-mich" },
   publisher: { "@type": "Organization", name: "Sabala Mentoring" },
   datePublished,
-  dateModified: datePublished,
+  dateModified: "2026-11-11",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   image: `${url}/cover.jpg`,
 });
@@ -172,8 +172,8 @@ export default function BlogWebseitenBauMitClaudePage() {
             <h3>2. Claude wird im falschen Verzeichnis gestartet</h3>
             <p>Wer <code>claude</code> außerhalb des Projekt-Roots aufruft, hat keinen Zugriff auf die CLAUDE.md und keinen Codebase-Kontext. <strong>Erkennbar daran, dass Claude generische Antworten gibt</strong> statt projekt-spezifischer. Lösung: vorher immer <code>cd dein-projekt</code>.</p>
 
-            <h3>3. Free-Account statt Pro</h3>
-            <p>Die Token-Limits im Free-Tier reichen für maximal zehn Minuten echte Arbeit, danach kommt Wartezeit. <strong>Wer ernsthaft baut, braucht Pro.</strong> 20 Euro im Monat sind weniger als eine Stunde Frust.</p>
+            <h3>3. Kostenloser Plan statt Pro</h3>
+            <p>Der kostenlose Claude-Plan enthält Claude Code gar nicht. <strong>Wer bauen will, braucht mindestens Pro.</strong> 20 US-Dollar im Monat, bei Jahreszahlung 17, sind weniger als eine Stunde Frust. Alle Pläne im Vergleich stehen im Artikel <Link href="/blog/claude-code-kosten">Was kostet Claude Code?</Link></p>
 
             <h3>4. Keine Skills, jedes Mal alles neu erklären</h3>
             <p>Wer dieselbe Aufgabe fünfmal ohne Skill macht, verbringt mehr Zeit mit Erklären als mit Bauen. <strong>Spätestens beim zweiten Mal lohnt sich ein Skill.</strong> Das ist die Investition, die sich am schnellsten zurückzahlt.</p>
@@ -191,7 +191,7 @@ export default function BlogWebseitenBauMitClaudePage() {
             <h2>Was du in 45 Minuten erreichen kannst</h2>
             <p>Wenn du wirklich an einem Nachmittag eine Webseite mit Claude Code bauen willst, sind die ersten 45 Minuten der wichtigste Teil. Nicht der Code-Sprint danach.</p>
             <ol>
-              <li><strong>10 Minuten</strong> für Pro-Account und Installation.</li>
+              <li><strong>10 Minuten</strong> für Pro-Account und Installation, Schritt für Schritt in meiner <Link href="/blog/claude-code-installieren">Anleitung zur Installation</Link>.</li>
               <li><strong>15 Minuten</strong> für eine kurze, präzise CLAUDE.md, die dein Projekt prägt.</li>
               <li><strong>20 Minuten</strong> für deinen ersten Skill, der die häufigste Aufgabe in deinem Projekt automatisiert.</li>
             </ol>
