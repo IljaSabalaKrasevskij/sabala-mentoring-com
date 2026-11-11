@@ -139,6 +139,10 @@ export default function RootLayout({
     <html
       lang="de"
       className={`${instrumentSerif.variable} ${satoshi.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
+      // Weiches Scrollen gilt für Sprungmarken auf derselben Seite. Bei einem Seitenwechsel springt Next.js mit diesem
+      // Attribut sofort nach oben. Ohne es erschien die neue Seite erst auf der alten Höhe und flog dann nach oben;
+      // wer dabei das Trackpad oder den Bildschirm berührte, blieb mitten auf der Seite stehen (Ilja, 11.11.2026).
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>
