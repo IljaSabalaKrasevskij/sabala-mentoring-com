@@ -1,17 +1,20 @@
 import Image from "next/image";
 import CourseGrid from "@/components/akademie/CourseGrid";
-import { Brackets, GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard, Weiter } from "@/components/akademie/shared";
-import { WERKZEUGE } from "@/components/shop/werkzeuge";
+import { Brackets, GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard, Weiter } from "@/components/akademie/shared";
 import { CASE_STUDIES, CATEGORIES, type CategoryKey } from "@/lib/case-studies";
+import IljaHeroJourney from "./IljaHeroJourney";
 import Kontakt from "./Kontakt";
+import MooniVoiceTeaser from "./MooniVoiceTeaser";
+import MooniWelt from "./MooniWelt";
 
 /* Startseite: Sabala Studios als Mischung aus drei Dingen (Iljas Vorgabe vom 11.11.2026):
    „How to“ (ich zeige dir, wie es geht), „Build for you“ (ich baue es für dich, samt Webseiten-Service)
-   und Show Cases (was schon läuft). Sieben Abschnitte, im Wechsel dunkel und hell, jeder passt in ein Laptop-Fenster:
-   Kopf · Show Cases · Selbst lernen · Bauen lassen · Freie Werkzeuge · Der Mensch · Kontakt.
+   und Show Cases (was schon läuft). Seit dem 12.11.2026 wieder ganz oben Iljas Kopf-Reise (Porträt mit Metall-Effekt unter der Maus,
+   am Laptop ein Film aus 176 Bildern) und weiter unten Mooni: in 3D mit den sechs Werten, danach als Werkzeug Mooni Voice.
+   Kopf-Reise · Kopf · Show Cases · Selbst lernen · Bauen lassen · Mooni in 3D · Mooni Voice · Der Mensch · Kontakt.
 
    Die Seite erfindet keine eigenen Zahlen und Preise: Show Cases kommen aus case-studies.ts, Kurs und
-   Beratungsstunde aus CourseGrid (cohorts.ts), das Werkzeug aus werkzeuge.ts.
+   Beratungsstunde aus CourseGrid (cohorts.ts).
    Der Kopf blendet per CSS ein (`.cs-rise`): sichtbar auch ohne JavaScript. */
 
 const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
@@ -226,54 +229,6 @@ function Bauen() {
   );
 }
 
-/* Freie Werkzeuge: das erste quelloffene Werkzeug aus dem Shop, als kurzes Band. Die Angaben kommen aus werkzeuge.ts. */
-function Werkzeug() {
-  const w = WERKZEUGE[0];
-  return (
-    <section className="relative overflow-hidden px-6 py-[6.5vh]" style={{ background: "var(--tech-bg)" }}>
-      <div className="pointer-events-none absolute right-[-10vw] top-1/2 h-[70vh] w-[55vw] -translate-y-1/2" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.14), transparent 70%)" }} />
-
-      <div className="relative mx-auto grid max-w-6xl items-center gap-9 min-[56.25rem]:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] min-[56.25rem]:gap-14">
-        <div>
-          <SektionsKopf
-            links
-            zeile="Freie Werkzeuge"
-            titel={
-              <>
-                Und manches <span className="text-gold-light">schenke ich dir.</span>
-              </>
-            }
-          />
-          <Reveal className="mt-5 max-w-xl">
-            <p className="text-[1.08rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
-              <span className="font-semibold text-cream">{w.name}:</span> {w.satz}
-            </p>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {["Gratis", "Open Source", w.braucht].map((t) => (
-                <li key={t} className="rounded-full px-3.5 py-1.5 text-[0.95rem] text-cream" style={{ border: "1px solid rgba(212,174,90,0.45)", background: "rgba(250,248,245,0.05)" }}>
-                  {t}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 flex flex-col items-start gap-x-6 gap-y-2 sm:flex-row sm:items-center">
-              <Knopf href={w.seite}>{w.name} ansehen</Knopf>
-              <Weiter href="/shop">Alle Werkzeuge im Shop</Weiter>
-            </div>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.1}>
-          <TiltCard hervor={1.03} max={6} radius={16}>
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl" style={{ border: "1.5px solid rgba(184,150,62,0.5)", boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(184,150,62,0.14)" }}>
-              <Image src={w.bild} alt={w.bildAlt} fill sizes="(max-width: 900px) 92vw, 480px" className="object-cover" />
-            </div>
-          </TiltCard>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 function Mensch() {
   return (
     <section className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "var(--cream)" }}>
@@ -322,11 +277,13 @@ function Mensch() {
 export default function StartView() {
   return (
     <main className="flex-1">
+      <IljaHeroJourney />
       <Kopf />
       <ShowCases />
       <CourseGrid startseite />
       <Bauen />
-      <Werkzeug />
+      <MooniWelt />
+      <MooniVoiceTeaser />
       <Mensch />
       <Kontakt />
     </main>
