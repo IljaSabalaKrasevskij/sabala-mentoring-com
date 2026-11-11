@@ -10,12 +10,12 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
    - Mindestens drei Sekunden alt? So schnell füllt kein Mensch ein Formular aus. Die Seite wartet von selbst so lange.
    - Höchstens zwei Stunden alt und noch nie benutzt? Jeder Stempel gilt genau einmal.
    - Höchstens 30 eingelöste Stempel je Absender und Stunde, über alle Formulare zusammen.
-   - Höchstens 300 eingelöste Stempel je Stunde über alle Absender. Das ist der Gurt für den Fall, dass viele
-     Absender zusammen angreifen: Briefkasten, Notion und das Handy laufen dann nicht voll.
 
    Das Verfahren braucht kein Versteck im Code: Der Code ist öffentlich, der Schlüssel nicht.
    Wovor es nicht schützt: Programme, die einen echten Browser fernsteuern und sich Zeit lassen. Die bremsen
    die Obergrenze, das unsichtbare Feld und die strengen Feldprüfungen (Name, Mail, Telefon).
+   Eine Grenze über ALLE Absender gibt es bewusst nicht: Mit zehn Adressen wäre sie aufgebraucht, und dann wären
+   die Formulare für alle zu. Wer mit vielen Adressen flutet, bekommt je Adresse 30 Anfragen in der Stunde durch.
    ponytail: kein Bilderrätsel, kein fremder Dienst. Kommt trotzdem Müll durch: Vercel BotID oder Cloudflare Turnstile davorsetzen.
 
    Vom Absender wird nur ein Fingerabdruck gespeichert (mit dem Schlüssel verrechnet, nicht zurückrechenbar),
@@ -28,9 +28,6 @@ export const MIN_ALTER_MS = 3_000;
 export const MAX_ALTER_MS = 2 * 60 * 60 * 1000;
 /* ponytail: feste Zahl. 30 reicht für einen Seminarraum im selben WLAN. Vor einer großen Aktion hochsetzen. */
 export const JE_ABSENDER_JE_STUNDE = 30;
-/* ponytail: feste Zahl, weit über dem echten Betrieb (ein paar Anfragen am Tag). Greift sie, sind die Formulare für alle
-   zu, bis die Stunde um ist. Kommt das vor: Vercel BotID oder Cloudflare Turnstile davorsetzen. */
-export const GESAMT_JE_STUNDE = 300;
 const STUNDE = 60 * 60 * 1000;
 
 export type SiegelUrteil = "ok" | "ungueltig" | "zu-frueh" | "zu-viele";
@@ -53,7 +50,6 @@ const SCHEMA = [
     bis INTEGER NOT NULL
   )`,
   "CREATE INDEX IF NOT EXISTS formular_siegel_absender ON formular_siegel (absender, eingeloest)",
-  "CREATE INDEX IF NOT EXISTS formular_siegel_eingeloest ON formular_siegel (eingeloest)",
   "CREATE INDEX IF NOT EXISTS formular_siegel_bis ON formular_siegel (bis)",
 ];
 const fertig = new WeakMap<Client, Promise<unknown>>();
@@ -95,15 +91,14 @@ export async function siegelEinloesen(db: Client | null, schluessel: string, wer
         sql: `INSERT INTO formular_siegel (id, absender, eingeloest, bis)
               SELECT ?, ?, ?, ?
               WHERE (SELECT count(*) FROM formular_siegel WHERE absender = ? AND eingeloest > ?) < ?
-                AND (SELECT count(*) FROM formular_siegel WHERE eingeloest > ?) < ?
               ON CONFLICT(id) DO NOTHING`,
-        args: [id, wer, jetzt, Math.max(ausgestellt + MAX_ALTER_MS, jetzt + STUNDE), wer, jetzt - STUNDE, JE_ABSENDER_JE_STUNDE, jetzt - STUNDE, GESAMT_JE_STUNDE],
+        args: [id, wer, jetzt, Math.max(ausgestellt + MAX_ALTER_MS, jetzt + STUNDE), wer, jetzt - STUNDE, JE_ABSENDER_JE_STUNDE],
       },
     ],
     "write",
   );
   if (neu.rowsAffected === 1) return "ok";
-  // Nichts geschrieben: Entweder gibt es den Stempel schon (zweites Mal), oder eine der beiden Grenzen ist erreicht.
+  // Nichts geschrieben: Entweder gibt es den Stempel schon (zweites Mal), oder der Absender ist über der Grenze.
   const schonDa = await db.execute({ sql: "SELECT 1 FROM formular_siegel WHERE id = ?", args: [id] });
   return schonDa.rows.length ? "ungueltig" : "zu-viele";
 }
