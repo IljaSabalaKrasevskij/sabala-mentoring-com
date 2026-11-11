@@ -1,11 +1,12 @@
-type Props = { size?: number; className?: string; light?: boolean };
+type Props = { size?: number; className?: string; light?: boolean; knapp?: boolean };
 
-export default function SabalaLogo({ size = 56, className, light = false }: Props) {
+/* knapp: ohne den Leerraum um die Scheibe. Für kleine Einsätze wie die Kopfzeile, wo `size` der Durchmesser sein soll. */
+export default function SabalaLogo({ size = 56, className, light = false, knapp = false }: Props) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 1144.85 1144.85"
+      viewBox={knapp ? "162.39 162.39 820.07 820.07" : "0 0 1144.85 1144.85"}
       fill="none"
       className={className}
       role="img"

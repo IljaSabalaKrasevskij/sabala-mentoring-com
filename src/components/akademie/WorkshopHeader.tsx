@@ -46,7 +46,7 @@ export default function WorkshopHeader() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 60% at 74% 62%, rgba(184,150,62,0.16), transparent 70%)" }} />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[7vh] min-[56.25rem]:pt-[9vh]">
+      <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-24 sm:px-[6vw] min-[56.25rem]:pb-[max(1.6rem,7vh_-_1.3rem)] min-[56.25rem]:pt-[max(9vh,5.4rem)]">
         <p style={EIN(0)} className="cs-rise max-w-[84%] font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.16em] text-gold sm:tracking-[0.24em]">
           Sabala Academy · Live-Workshop für Selbständige und Unternehmen
         </p>
@@ -55,7 +55,7 @@ export default function WorkshopHeader() {
           Claude vergisst nach jeder Session alles. <span className="text-gold-light min-[56.25rem]:block">Das hier ändert das.</span>
         </h1>
 
-        <div className="mt-8 grid items-start gap-10 min-[56.25rem]:mt-9 min-[56.25rem]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[56.25rem]:gap-14">
+        <div className="mt-8 grid items-start gap-10 min-[56.25rem]:mt-7 min-[56.25rem]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[56.25rem]:gap-14">
           <div className="cs-rise" style={EIN(0.12)}>
             <p className="max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)" }}>
               In zwei Live-Workshops richten wir dein Second Brain ein, mit Obsidian, Gemini Notebook und Claude Code. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte, und jede Session beginnt dort, wo die letzte aufgehört hat.

@@ -19,7 +19,6 @@ import {
   Palette,
   Gauge,
 } from "lucide-react";
-import SabalaLogo from "@/components/brand/SabalaLogo";
 
 /* ------------------------------------------------------------------ */
 /* Config — Download liegt auf Vercel Blob (kauf-gated via unguessbare  */
@@ -134,7 +133,6 @@ export default function WebDesignOsStartView() {
       <div className="relative mx-auto w-full max-w-2xl px-6 py-20 sm:py-28">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <SabalaLogo size={40} light />
           <span className="text-xs font-semibold uppercase tracking-[0.28em] text-gold-light/80">
             Sabala Studios
           </span>

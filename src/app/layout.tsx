@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Instrument_Serif, Press_Start_2P } from "next/font/google";
+import { Geist_Mono, Instrument_Serif } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
@@ -16,13 +16,6 @@ const instrumentSerif = Instrument_Serif({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const pressStart = Press_Start_2P({
-  variable: "--font-press-start",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
 });
 
 // Satoshi (Fontshare, ITF Free Font License): selbst hosten ist erlaubt, die Datei
@@ -145,7 +138,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${instrumentSerif.variable} ${satoshi.variable} ${geistMono.variable} ${pressStart.variable} h-full antialiased scroll-smooth`}
+      className={`${instrumentSerif.variable} ${satoshi.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <body className="min-h-[100dvh] flex flex-col relative" suppressHydrationWarning>
