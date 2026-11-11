@@ -14,6 +14,8 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
    Das Verfahren braucht kein Versteck im Code: Der Code ist öffentlich, der Schlüssel nicht.
    Wovor es nicht schützt: Programme, die einen echten Browser fernsteuern und sich Zeit lassen. Die bremsen
    die Obergrenze, das unsichtbare Feld und die strengen Feldprüfungen (Name, Mail, Telefon).
+   Eine Grenze über ALLE Absender gibt es bewusst nicht: Mit zehn Adressen wäre sie aufgebraucht, und dann wären
+   die Formulare für alle zu. Wer mit vielen Adressen flutet, bekommt je Adresse 30 Anfragen in der Stunde durch.
    ponytail: kein Bilderrätsel, kein fremder Dienst. Kommt trotzdem Müll durch: Vercel BotID oder Cloudflare Turnstile davorsetzen.
 
    Vom Absender wird nur ein Fingerabdruck gespeichert (mit dem Schlüssel verrechnet, nicht zurückrechenbar),
@@ -38,17 +40,23 @@ export function siegelAusstellen(schluessel: string, jetzt = Date.now()): string
   return `${kern}.${zeichnen(schluessel, kern)}`;
 }
 
-const TABELLE = `CREATE TABLE IF NOT EXISTS formular_siegel (
-  id TEXT PRIMARY KEY,
-  absender TEXT NOT NULL,
-  eingeloest INTEGER NOT NULL,
-  bis INTEGER NOT NULL
-)`;
+/* Die Indizes halten das Zählen schnell, auch wenn viele Absender die Tabelle füllen. Ohne sie liest jede Anfrage
+   die ganze Tabelle, und dieselbe Datenbank trägt den Briefkasten und die Einwilligungen. */
+const SCHEMA = [
+  `CREATE TABLE IF NOT EXISTS formular_siegel (
+    id TEXT PRIMARY KEY,
+    absender TEXT NOT NULL,
+    eingeloest INTEGER NOT NULL,
+    bis INTEGER NOT NULL
+  )`,
+  "CREATE INDEX IF NOT EXISTS formular_siegel_absender ON formular_siegel (absender, eingeloest)",
+  "CREATE INDEX IF NOT EXISTS formular_siegel_bis ON formular_siegel (bis)",
+];
 const fertig = new WeakMap<Client, Promise<unknown>>();
 function vorbereiten(db: Client): Promise<unknown> {
   let p = fertig.get(db);
   if (!p) {
-    p = db.execute(TABELLE).catch((err) => { fertig.delete(db); throw err; });
+    p = db.batch(SCHEMA, "write").catch((err) => { fertig.delete(db); throw err; });
     fertig.set(db, p);
   }
   return p;

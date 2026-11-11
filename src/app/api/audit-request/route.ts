@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { auditNotionChildren, parseAuditRequest, type AuditRequest } from "@/lib/audit-request";
-import { ipAus, siegelPruefen } from "@/lib/botschutz";
+import { ipAus, jsonAus, siegelPruefen } from "@/lib/botschutz";
 
 export const runtime = "nodejs";
 
@@ -122,12 +122,8 @@ async function pushNtfy(payload: AuditRequest, pageId?: string): Promise<{ sent:
 }
 
 export async function POST(req: NextRequest) {
-  let body: unknown;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Ungültiger Request-Body." }, { status: 400 });
-  }
+  const body = await jsonAus(req);
+  if (body === undefined) return NextResponse.json({ error: "Ungültiger Request-Body." }, { status: 400 });
 
   const parsed = parseAuditRequest(body);
   if (!parsed.data) return NextResponse.json({ error: Object.values(parsed.errors)[0], errors: parsed.errors }, { status: 400 });

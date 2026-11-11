@@ -78,3 +78,19 @@ test("Ohne Datenbank gelten Unterschrift und Alter weiter", async () => {
   assert.equal(await siegelEinloesen(null, KEY, s, "", REIF), "ok");
   assert.equal(await siegelEinloesen(null, KEY, `${s}x`, "", REIF), "ungueltig");
 });
+
+test("Keine Grenze über alle Absender: Viele Absender sperren niemanden aus, der selbst unter seiner Grenze ist", async () => {
+  const db = frisch();
+  for (let a = 0; a < 20; a++) {
+    for (let i = 0; i < JE_ABSENDER_JE_STUNDE; i++) await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), `198.51.100.${a}`, REIF);
+  }
+  assert.equal(await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "198.51.100.0", REIF + 1), "zu-viele", "wer selbst voll ist, bleibt draußen");
+  assert.equal(await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "203.0.113.200", REIF + 1), "ok", "ein echter Besucher kommt trotz 600 fremder Anfragen durch");
+});
+
+test("Die Tabelle hat Indizes fürs Zählen und Aufräumen", async () => {
+  const db = frisch();
+  await siegelEinloesen(db, KEY, siegelAusstellen(KEY, T0), "203.0.113.7", REIF);
+  const namen = (await db.execute("SELECT name FROM sqlite_master WHERE type = 'index' AND tbl_name = 'formular_siegel' AND name NOT LIKE 'sqlite_%' ORDER BY name")).rows.map((r) => r.name);
+  assert.deepEqual(namen, ["formular_siegel_absender", "formular_siegel_bis"]);
+});

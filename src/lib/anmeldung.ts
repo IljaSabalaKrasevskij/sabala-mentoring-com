@@ -21,9 +21,10 @@ import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
      als mehrere Empfänger lesen, und die Sperre je Adresse liefe ins Leere.
    ────────────────────────────────────────────────────────────────────────── */
 
-/* Namen: Buchstaben aller Sprachen, dazu Leerzeichen, Punkt, Bindestrich und Apostroph. Keine Adressen, keine Links:
+/* Namen: Wörter aus Buchstaben aller Sprachen, getrennt durch Leerzeichen, Bindestrich oder Apostroph. Ein Punkt geht nur
+   am Wortende (Dr. Hans, J. R.), nie mitten im Wort: Sonst käme „www.irgendwas.de“ als Vorname durch.
    Der Name landet im CRM und nach dem Klick im Newsletter-Werkzeug, dort soll kein fremder Werbetext stehen. */
-const NAME = /^[\p{L}\p{M}][\p{L}\p{M} .'’-]*$/u;
+const NAME = /^['’]?[\p{L}\p{M}]+\.?(?:[ '’-]+[\p{L}\p{M}]+\.?)*$/u;
 
 /* Die Meldungen sind für Menschen geschrieben: Die Route schickt die erste zurück, das Formular zeigt sie am Feld an. */
 export const FELDER = {
