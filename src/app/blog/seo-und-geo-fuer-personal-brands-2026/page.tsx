@@ -178,11 +178,11 @@ export default function SeoGeoPersonalBrandsPage() {
       <div className="pt-24 md:pt-32 w-full bg-[#2E2B26]"></div>
 
       {/* HERO */}
-      <section className="relative w-full aspect-square md:aspect-[21/9] max-h-[800px] overflow-hidden bg-[#2E2B26]">
+      <section className="relative flex w-full flex-col justify-end min-h-[min(100vw,800px)] md:min-h-[min(calc(100vw*9/21),800px)] overflow-hidden bg-[#2E2B26]">
         <Image src="/blog/seo-und-geo-fuer-personal-brands-2026/cover.jpg" alt="Phantásien-Atlas mit zwei Welten und Gold-Sphäre" fill className="object-cover opacity-90" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-pure-surface via-pure-surface/60 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-pure-surface/60 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-full px-6 sm:px-12 md:px-24 pb-16 md:pb-24 max-w-[1400px] mx-auto z-10">
+        <div className="relative z-10 w-full max-w-[1400px] px-6 pt-8 pb-16 sm:px-12 md:px-24 md:pb-24">
           <ScrollReveal>
             <Link href="/blog" className="inline-flex items-center gap-2 text-warm-steel hover:text-refined-gold transition-colors font-mono text-xs uppercase tracking-widest mb-10">
               <ArrowLeft className="w-4 h-4" /> Zurück zum Journal
@@ -535,9 +535,10 @@ export default function SeoGeoPersonalBrandsPage() {
               </div>
               <div className="flex gap-6">
                 <span className="font-instrument text-3xl text-refined-gold flex-shrink-0 leading-none">25-30</span>
-                <div>
+                {/* min-w-0 und break-words: Die lange Adresse im Text schob die Seite auf kleinen Handys 15 px zu breit. */}
+                <div className="min-w-0">
                   <h3 className="font-instrument text-xl text-pure-surface mb-2">FAQ-Schema deployen</h3>
-                  <p className="text-pure-surface/80">Geh auf einen FAQ-Schema-Generator (zum Beispiel technicalseo.com/tools/schema-markup-generator) und erzeuge das Schema für deine sechs Fragen. Kopiere den Code in den head deiner Seite, deploye, fertig.</p>
+                  <p className="text-pure-surface/80 break-words">Geh auf einen FAQ-Schema-Generator (zum Beispiel technicalseo.com/tools/schema-markup-generator) und erzeuge das Schema für deine sechs Fragen. Kopiere den Code in den head deiner Seite, deploye, fertig.</p>
                 </div>
               </div>
             </div>

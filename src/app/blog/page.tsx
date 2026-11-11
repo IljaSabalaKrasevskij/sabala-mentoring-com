@@ -244,7 +244,11 @@ export default function BlogPage() {
       {/* FEATURED STORY */}
       <section className="px-6 sm:px-12 md:px-24 mb-24 max-w-[1600px] mx-auto w-full">
         <ScrollReveal delay={0.1}>
-          <Link href={featuredArticle.slug} className="group relative block w-full overflow-hidden rounded-[20px] md:rounded-[40px] aspect-square md:aspect-[21/9]">
+          <Link href={featuredArticle.slug} className="group relative grid w-full grid-cols-1 overflow-hidden rounded-[20px] md:rounded-[40px]">
+            {/* Gibt die Mindesthöhe vor (Quadrat am Handy, 21:9 ab Tablet). Der Text liegt in derselben Zelle:
+                Braucht er mehr Platz, wächst die Karte mit, statt ihn oben abzuschneiden.
+                w-full und self-start: Die Höhe folgt der Breite, nie umgekehrt. Die Spalte ist fest eine Kartenbreite (grid-cols-1). */}
+            <span aria-hidden className="col-start-1 row-start-1 w-full self-start aspect-square md:aspect-[21/9]" />
             {/* Background Image Image */}
             <Image 
               src={featuredArticle.image} 
@@ -255,21 +259,21 @@ export default function BlogPage() {
             />
             
             {/* Dark Gradient Overlay for Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-700 group-hover:from-black/90"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/55 to-black/45 transition-opacity duration-700 group-hover:from-black/90"></div>
             
             {/* Gold Filter Hover Effect (Sabala Style) */}
             <div className="absolute inset-0 bg-refined-gold/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
             {/* Content Container */}
-            <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 lg:p-24 flex flex-col justify-end">
+            <div className="relative col-start-1 row-start-1 flex w-full min-w-0 flex-col justify-end self-end p-8 md:p-16 md:pt-8 lg:p-24 lg:pt-8">
               <div className="flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-widest text-refined-gold mb-6">
                 {featuredArticle.isPillar && (
                   <span className="bg-refined-gold/90 text-deep-charcoal px-3 py-1 rounded-full backdrop-blur-sm">Pillar-Hub</span>
                 )}
                 <span className="bg-refined-gold/10 px-3 py-1 rounded-full backdrop-blur-sm border border-refined-gold/20">{featuredArticle.category}</span>
-                <span className="text-white/70">{featuredArticle.date}</span>
-                <span className="text-white/70 hidden sm:inline-block">•</span>
-                <span className="text-white/70 hidden sm:inline-block">{featuredArticle.readTime} Lesezeit</span>
+                <span className="text-white/90">{featuredArticle.date}</span>
+                <span className="text-white/90 hidden sm:inline-block">•</span>
+                <span className="text-white/90 hidden sm:inline-block">{featuredArticle.readTime} Lesezeit</span>
               </div>
               
               <h2 className="font-instrument text-white text-[clamp(2rem,4vw,4rem)] leading-[1.1] mb-6 max-w-[1000px] group-hover:text-shadow-lg transition-all duration-500">
