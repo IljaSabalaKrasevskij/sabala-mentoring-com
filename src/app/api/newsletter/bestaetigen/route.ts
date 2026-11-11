@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { einwilligungBestaetigen, ipAus } from "@/lib/anmeldung";
+import { einwilligungBestaetigen } from "@/lib/anmeldung";
+import { ipAus } from "@/lib/botschutz";
 
 export const runtime = "nodejs";
 

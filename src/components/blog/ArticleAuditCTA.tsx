@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { ArrowRight, Check, Loader2, AlertCircle, Sparkles } from "lucide-react";
+import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
@@ -72,7 +73,7 @@ export function ArticleAuditCTA({
       const res = await fetch("/api/audit-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), consent: true }),
+        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), consent: true, siegel: await siegel() }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -120,7 +121,7 @@ export function ArticleAuditCTA({
                 )}
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-4 max-w-[680px]">
+              <form onSubmit={handleSubmit} onFocus={formularBeruehrt} className="space-y-4 max-w-[680px]">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="text"

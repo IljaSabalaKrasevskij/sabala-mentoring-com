@@ -2,10 +2,12 @@
 
 import { useId, useState } from "react";
 import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
+import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   AnmeldeForm — Vorname, Nachname, E-Mail, Telefon (freiwillig) und das Häkchen
+   AnmeldeForm — Vorname, Nachname, E-Mail, Telefon (Pflicht) und das Häkchen
    für Mails. Für Webinar-Anmeldung und Warteliste, beide unterscheiden sich nur in
    Ziel-Route und Texten. Das Häkchen ist hier Pflicht, weil die Mail der Zweck ist.
    Nach dem Abschicken kommt eine Bestätigungsmail, erst der Klick darin zählt.
@@ -47,6 +49,7 @@ export default function AnmeldeForm({
   const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
+  const [meldung, setMeldung] = useState<{ feld: string; text: string }>(); // der Server beanstandet ein Feld
   const tippt = () => { if (status !== "idle") setStatus("idle"); };
   const rand = {
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(212,174,90,0.6)"),
@@ -57,18 +60,9 @@ export default function AnmeldeForm({
     e.preventDefault();
     if (status === "loading") return;
     setStatus("loading");
-    try {
-      const res = await fetch(api, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra }),
-      });
-      if (res.ok) setStatus("success");
-      else if (res.status === 503) setStatus("unconfigured");
-      else setStatus("error");
-    } catch {
-      setStatus("error");
-    }
+    const r = await formularSenden(api, { vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax, ...extra });
+    if (r.art === "eingabe") setMeldung({ feld: r.feld, text: r.meldung });
+    setStatus(r.art === "ok" ? "success" : r.art === "eingabe" ? "idle" : r.art === "fehlt" ? "unconfigured" : "error");
   }
 
   if (status === "success") {
@@ -95,7 +89,7 @@ export default function AnmeldeForm({
   }
 
   return (
-    <form onSubmit={submit} style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+    <form onSubmit={submit} onFocus={formularBeruehrt} onInput={() => setMeldung(undefined)} style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
       <input
         type="text"
         name="fax"
@@ -139,19 +133,11 @@ export default function AnmeldeForm({
         style={{ ...inputStyle, flex: "1 1 200px" }}
         {...rand}
       />
-      <input
-        type="tel"
-        value={telefon}
-        onChange={(e) => { setTelefon(e.target.value); tippt(); }}
-        placeholder="Telefon (freiwillig)"
-        aria-label="Telefon, freiwillig"
-        autoComplete="tel"
-        style={{ ...inputStyle, flex: "1 1 200px" }}
-        {...rand}
-      />
+      <Telefon onChange={(t) => { setTelefon(t); tippt(); }} fehler={meldung?.feld === "telefon" ? meldung.text : undefined} style={inputStyle} huelleStil={{ flex: "1 1 260px" }} eingabe={rand} />
       <div style={{ flexBasis: "100%", margin: "6px 0 4px" }}>
         <Einwilligung id={`${id}-mails`} an={einwilligung} setAn={(an) => { setEinwilligung(an); tippt(); }} pflicht />
       </div>
+      <FeldMeldung meldung={meldung} style={{ flexBasis: "100%" }} />
       <button
         type="submit"
         disabled={status === "loading"}

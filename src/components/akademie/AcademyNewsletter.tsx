@@ -3,13 +3,15 @@
 import { useId, useState } from "react";
 import { Check } from "lucide-react";
 import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
+import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
 import { Eyebrow, Reveal, TEXT_AUF_DUNKEL } from "./shared";
 
 /* ─────────────────────────────────────────────────────────────────────────
    AcademyNewsletter — „Bleib auf dem Laufenden"
    Anmeldung am Ende der Übersichtsseite: Vorname, Nachname, E-Mail, Telefon
-   (freiwillig) und das Häkchen für Mails. Danach kommt eine Bestätigungsmail,
+   und das Häkchen für Mails, alles Pflicht. Danach kommt eine Bestätigungsmail,
    erst der Klick darin zählt. Graceful Fallback, wenn das Backend noch nicht steht.
    Links daneben stehen die Kurse in Vorbereitung: Wer darauf wartet, trägt sich hier ein.
    Der Anker #newsletter ist das Ziel der Stufe 3 in AcademyLevels.
@@ -32,24 +34,16 @@ export default function AcademyNewsletter() {
   const [einwilligung, setEinwilligung] = useState(false);
   const [fax, setFax] = useState(""); // Honeypot
   const [status, setStatus] = useState<Status>("idle");
+  const [meldung, setMeldung] = useState<{ feld: string; text: string }>(); // der Server beanstandet ein Feld
   const tippt = () => { if (status !== "idle") setStatus("idle"); };
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (status === "loading") return;
     setStatus("loading");
-    try {
-      const res = await fetch("/api/akademie-newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax }),
-      });
-      if (res.ok) setStatus("success");
-      else if (res.status === 503) setStatus("unconfigured");
-      else setStatus("error");
-    } catch {
-      setStatus("error");
-    }
+    const r = await formularSenden("/api/akademie-newsletter", { vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax });
+    if (r.art === "eingabe") setMeldung({ feld: r.feld, text: r.meldung });
+    setStatus(r.art === "ok" ? "success" : r.art === "eingabe" ? "idle" : r.art === "fehlt" ? "unconfigured" : "error");
   }
 
   return (
@@ -89,7 +83,7 @@ export default function AcademyNewsletter() {
                   Fast geschafft. {bestaetigungsHinweis("gesendet")}
                 </p>
               ) : (
-                <form onSubmit={submit} className="mt-5 grid gap-3 sm:grid-cols-2">
+                <form onSubmit={submit} onFocus={formularBeruehrt} onInput={() => setMeldung(undefined)} className="mt-5 grid gap-3 sm:grid-cols-2">
                   {/* Honeypot */}
                   <input
                     type="text"
@@ -129,20 +123,13 @@ export default function AcademyNewsletter() {
                     placeholder="deine@email.de"
                     aria-label="E-Mail-Adresse"
                     autoComplete="email"
-                    className={FELD}
+                    className={`${FELD} sm:col-span-2`}
                   />
-                  <input
-                    type="tel"
-                    value={telefon}
-                    onChange={(e) => { setTelefon(e.target.value); tippt(); }}
-                    placeholder="Telefon (freiwillig)"
-                    aria-label="Telefon, freiwillig"
-                    autoComplete="tel"
-                    className={FELD}
-                  />
+                  <Telefon onChange={(t) => { setTelefon(t); tippt(); }} fehler={meldung?.feld === "telefon" ? meldung.text : undefined} className={FELD} huelle="sm:col-span-2" />
                   <div className="py-1 sm:col-span-2">
                     <Einwilligung id={`${id}-mails`} an={einwilligung} setAn={(an) => { setEinwilligung(an); tippt(); }} pflicht />
                   </div>
+                  <FeldMeldung meldung={meldung} className="sm:col-span-2" />
                   <button
                     type="submit"
                     disabled={status === "loading"}

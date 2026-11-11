@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { einwilligungStarten, FELDER, ipAus, type Bestaetigung } from "@/lib/anmeldung";
+import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Bestaetigung } from "@/lib/anmeldung";
+import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
@@ -11,7 +12,7 @@ export const runtime = "nodejs";
      (fürs CRM) und bekommt keine Werbung.
    - Mit Häkchen: Nachweis der Einwilligung + Bestätigungsmail. Erst nach dem Klick darin
      kommt der Kontakt auf die Mooni-Liste im Newsletter-Werkzeug (src/lib/anmeldung.ts).
-   - Honeypot "fax", einfaches In-Memory-Rate-Limit.
+   - Name, E-Mail und Telefon sind Pflicht. Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
@@ -21,25 +22,11 @@ const Schema = z.object({
   telefon: FELDER.telefon,
   einwilligung: FELDER.einwilligung,
   einwilligungVersion: FELDER.einwilligungVersion,
-  fax: z.string().max(0).optional().default(""),
+  fax: FELDER.fax,
 });
-
-const HITS = new Map<string, number[]>();
-const LIMIT = 6;
-const WINDOW = 10 * 60 * 1000;
-
-function rateLimited(ip: string, now: number): boolean {
-  const arr = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  arr.push(now);
-  HITS.set(ip, arr);
-  return arr.length > LIMIT;
-}
 
 export async function POST(req: Request) {
   const ip = ipAus(req);
-  if (rateLimited(ip, Date.now())) {
-    return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
-  }
 
   let json: unknown;
   try {
@@ -47,14 +34,14 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   }
-  const parsed = Schema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json({ ok: false, reason: "validation" }, { status: 422 });
-  }
+  const parsed = eingabePruefen(Schema, json);
+  if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;
 
-  // Honeypot: stilles OK
+  // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (data.fax) return NextResponse.json({ ok: true });
+  const urteil = await siegelPruefen(ip, json);
+  if (urteil !== "ok") return siegelAbsage(urteil);
 
   // 1) Briefkasten fürs CRM — best effort
   let stored = false;

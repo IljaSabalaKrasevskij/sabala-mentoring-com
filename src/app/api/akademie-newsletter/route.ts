@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { einwilligungStarten, FELDER, ipAus, type Formular } from "@/lib/anmeldung";
+import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Formular } from "@/lib/anmeldung";
+import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Akademie-Newsletter und Wartelisten
-   - Vorname, Nachname, E-Mail, Telefon (freiwillig) und das Häkchen für Mails.
+   - Vorname, Nachname, E-Mail, Telefon und das Häkchen für Mails. Alles Pflicht.
      Ohne Häkchen gibt es keine Anmeldung: Der Newsletter ist der Zweck dieses Formulars.
    - Legt die Anfrage in den Briefkasten (Turso). Von dort holt Sabala Mail sie ins CRM.
    - Speichert den Nachweis der Einwilligung und schickt die Bestätigungsmail.
@@ -15,7 +16,7 @@ export const runtime = "nodejs";
      der Tag startet die Willkommens-Strecke). Siehe src/lib/anmeldung.ts.
    - Mit "warteliste" eigene Quelle und eigener Tag: So lässt sich die Warteliste
      getrennt anschreiben, und die Willkommens-Mail bleibt aus.
-   - Honeypot "fax", einfaches In-Memory-Rate-Limit.
+   - Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
 const WARTELISTE = {
@@ -29,27 +30,13 @@ const Schema = z.object({
   nachname: FELDER.nachname,
   email: FELDER.email,
   telefon: FELDER.telefon,
-  einwilligung: z.literal(true),
+  einwilligung: FELDER.einwilligungPflicht,
   einwilligungVersion: FELDER.einwilligungVersion,
-  fax: z.string().max(0).optional().default(""),
+  fax: FELDER.fax,
 });
-
-const HITS = new Map<string, number[]>();
-const LIMIT = 6;
-const WINDOW = 10 * 60 * 1000;
-
-function rateLimited(ip: string, now: number): boolean {
-  const arr = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  arr.push(now);
-  HITS.set(ip, arr);
-  return arr.length > LIMIT;
-}
 
 export async function POST(req: Request) {
   const ip = ipAus(req);
-  if (rateLimited(ip, Date.now())) {
-    return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
-  }
 
   let json: unknown;
   try {
@@ -57,15 +44,15 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   }
-  const parsed = Schema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json({ ok: false, reason: "validation" }, { status: 422 });
-  }
+  const parsed = eingabePruefen(Schema, json);
+  if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;
   const liste = data.warteliste ? WARTELISTE[data.warteliste] : null;
 
-  // Honeypot: stilles OK
+  // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (data.fax) return NextResponse.json({ ok: true });
+  const urteil = await siegelPruefen(ip, json);
+  if (urteil !== "ok") return siegelAbsage(urteil);
 
   // 1) Briefkasten fürs CRM — best effort
   try {

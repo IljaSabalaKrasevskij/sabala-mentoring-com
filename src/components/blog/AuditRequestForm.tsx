@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { ArrowRight, Check, Loader2, AlertCircle } from "lucide-react";
+import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
@@ -51,7 +52,7 @@ export function AuditRequestForm({ onSuccess }: AuditRequestFormProps = {}) {
       const res = await fetch("/api/audit-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), consent: true }),
+        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), consent: true, siegel: await siegel() }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -80,7 +81,7 @@ export function AuditRequestForm({ onSuccess }: AuditRequestFormProps = {}) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="text-left space-y-5">
+    <form onSubmit={handleSubmit} onFocus={formularBeruehrt} className="text-left space-y-5">
       <div>
         <label htmlFor="audit-url" className="block font-mono text-xs uppercase tracking-widest text-refined-gold/80 mb-2">
           Deine Webseite

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Reveal, TiltCard, Eyebrow, GoldCTA } from "@/components/akademie/shared";
 import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
+import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 
 /* Mooni Voice: Premium-Produktseite im Sabala-Hausstil (Hybrid):
@@ -256,23 +258,22 @@ export default function MooniVoiceView() {
   const [fax, setFax] = useState("");
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [meldung, setMeldung] = useState<{ feld: string; text: string }>(); // der Server beanstandet ein Feld
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (busy) return;
     setBusy(true);
-    try {
-      const res = await fetch("/api/mooni-voice", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax }),
-      });
-      setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
-    } catch {
-      /* Leadmagnet: Download nie am Netzwerk scheitern lassen */
-    }
+    const r = await formularSenden("/api/mooni-voice", { vorname, nachname, email, telefon, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, fax });
     setBusy(false);
+    if (r.art === "eingabe") {
+      // Ein Feld stimmt nicht: Meldung zeigen, noch kein Download
+      setMeldung({ feld: r.feld, text: r.meldung });
+      return;
+    }
+    // Leadmagnet: Der Download scheitert nie am Netz oder am Server
+    if (r.art === "ok") setBestaetigung(r.bestaetigung);
     setDone(true);
     setTimeout(() => downloadRef.current?.click(), 300);
   }
@@ -477,7 +478,7 @@ export default function MooniVoiceView() {
             <VoiceWave height={56} />
           </div>
           {!done ? (
-            <form onSubmit={onSubmit} className="mt-6 text-left">
+            <form onSubmit={onSubmit} onFocus={formularBeruehrt} onInput={() => setMeldung(undefined)} className="mt-6 text-left">
               <p className="mb-5 text-center text-[15px]" style={{ color: "#b8b1c2" }}>
                 Trag dich ein und lade sofort herunter. Gratis und Open Source, du zahlst nie.
               </p>
@@ -499,15 +500,17 @@ export default function MooniVoiceView() {
                 className="mb-3 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
                 style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
               />
-              <input
-                type="tel" value={telefon} onChange={(e) => setTelefon(e.target.value)}
-                placeholder="Telefon (freiwillig)" autoComplete="tel" aria-label="Telefon, freiwillig"
-                className="mb-4 w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
+              <Telefon
+                onChange={setTelefon}
+                fehler={meldung?.feld === "telefon" ? meldung.text : undefined}
+                huelle="mb-4"
+                className="w-full rounded-xl px-4 py-3.5 font-sans text-[15px] outline-none transition-colors focus:border-[color:var(--gold)]"
                 style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(232,163,61,0.25)", color: "#F5F2EC" }}
               />
               <div className="mb-5">
                 <Einwilligung id="mooni-mails" an={einwilligung} setAn={setEinwilligung} akzent={AMBER} />
               </div>
+              <FeldMeldung meldung={meldung} className="mb-4" />
               <input type="text" tabIndex={-1} autoComplete="off" value={fax} onChange={(e) => setFax(e.target.value)}
                 aria-hidden style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
               <button
