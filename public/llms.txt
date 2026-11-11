@@ -10,6 +10,7 @@
 
 - [KI-Akademie](https://sabala-mentoring.com/akademie-hub): Live-Trainings mit Claude Code für Dienstleister, in kleinen Gruppen.
 - [Second Brain für Claude](https://sabala-mentoring.com/akademie): Live-Kurs. Ein eigenes Wissenssystem mit Obsidian, Gemini Notebook und Claude Code, damit Claude Wissen, Kunden und Projekte kennt.
+- [Second Brain mit Obsidian und Claude](https://sabala-mentoring.com/blog/second-brain-obsidian-claude): Anleitung mit acht Ordnern nach PARA, einer CLAUDE.md als Wegweiser und Gemini Notebook für die Recherche.
 - [Beratungsstunde](https://sabala-mentoring.com/beratung): eine Stunde 1:1 zu Claude Code, Webseiten, Second Brain und Agenten.
 - [Webinar](https://sabala-mentoring.com/webinar): kostenloses Live-Webinar zum Second Brain, mit Warteliste.
 
