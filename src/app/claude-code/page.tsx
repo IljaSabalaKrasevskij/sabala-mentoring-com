@@ -9,8 +9,10 @@ import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 const site = "https://sabala-mentoring.com";
 const url = `${site}/claude-code`;
 
-// ponytail: Hintergrund und Foto aus der Akademie, bis eigene Bilder für diese Seite freigegeben sind
-const heroBild = { src: "/akademie/ki-library-bg.jpg", alt: "Eine dunkle Bibliothek mit einer leuchtenden Kugel aus Linien in der Mitte" };
+const heroBild = {
+  src: "/claude-code/hero.jpg",
+  alt: "Skizze: ein Mann arbeitet am Abend an einem Holzschreibtisch am Laptop, um ihn herum ordentlich sortierte Stapel aus Briefen, Notizen und einem Webseiten-Entwurf",
+};
 const iljaFoto = { src: "/akademie/ilja-trainer-2026.jpg", alt: "Ilja Krasevskij, Gründer von Sabala Studios" };
 
 const title = "Claude Code auf Deutsch: einrichten, Kosten, Skills";
@@ -26,7 +28,7 @@ export const metadata = {
     description: "Was Claude Code ist, wie du es einrichtest, was es kostet und wie ich damit mein Geschäft führe.",
     type: "website",
     url,
-    images: [{ url: `${site}${heroBild.src}`, width: 1600, height: 900, alt: heroBild.alt }],
+    images: [{ url: `${site}${heroBild.src}`, width: 1280, height: 720, alt: heroBild.alt }],
   },
 };
 

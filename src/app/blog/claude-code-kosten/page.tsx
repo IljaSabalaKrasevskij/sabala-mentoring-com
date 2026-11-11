@@ -12,11 +12,11 @@ const url = `${site}/blog/${slug}`;
 const datePublished = "2026-11-11";
 const preisStand = "11. November 2026";
 
-// ponytail: Platzhalter aus den Kosten-Artikeln, bis eigene Illustrationen freigegeben sind
 const cover = {
-  src: "/blog/baukasten-vs-eigene-webseite-kosten-2026/cover.jpg",
-  alt: "Skizze: eine goldene Waage, links Münzen, rechts eine Krone, auf hellem Papier",
+  src: `/blog/${slug}/cover.jpg`,
+  alt: "Skizze: eine Frau vergleicht an ihrem Schreibtisch drei leere Karten unterschiedlicher Größe, daneben eine Messingwaage mit ein paar Münzen",
 };
+// ponytail: Platzhalter aus dem Kosten-Artikel, bis KIE wieder Guthaben hat (Bild Abo oder API, Bild Team)
 const zweitesBild = {
   src: "/blog/was-kostet-ki-webseite/cover.jpg",
   alt: "Skizze: ein aufgeschlagenes Rechnungsbuch mit Münzen und Füller auf einem dunklen Schreibtisch",
@@ -36,7 +36,7 @@ export const metadata = {
     type: "article",
     publishedTime: datePublished,
     url,
-    images: [{ url: `${site}${cover.src}`, width: 1800, height: 972, alt: cover.alt }],
+    images: [{ url: `${site}${cover.src}`, width: 1280, height: 720, alt: cover.alt }],
   },
 };
 

@@ -10,14 +10,17 @@ const site = "https://sabala-mentoring.com";
 const url = `${site}/blog/${slug}`;
 const datePublished = "2026-11-11";
 
-// ponytail: Platzhalter aus dem Anfänger-Guide, bis eigene Illustrationen freigegeben sind
 const cover = {
-  src: "/blog/webseiten-bau-mit-claude-anfaenger/firststeps.jpg",
-  alt: "Skizze: ein aufgeräumter Schreibtisch mit offenem Laptop und ersten Code-Zeilen unter warmem Lampenlicht",
+  src: `/blog/${slug}/cover.jpg`,
+  alt: "Skizze: eine Frau öffnet an einem Holzschreibtisch zum ersten Mal ihren Laptop, daneben eine Tasse und ein Zettel mit vier Kästchen zum Abhaken",
 };
-const zweitesBild = {
-  src: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
-  alt: "Skizze: ein aufgeschlagenes Notizbuch mit ersten Plänen neben einem Laptop auf einem dunklen Schreibtisch",
+const ohneTerminal = {
+  src: `/blog/${slug}/ohne-terminal.jpg`,
+  alt: "Skizze: ein älterer Mann arbeitet lächelnd am Küchentisch mit einer einfachen App mit Ordnern auf dem Laptop, Morgenlicht und Pflanzen am Fenster",
+};
+const wegweiser = {
+  src: `/blog/${slug}/wegweiser.jpg`,
+  alt: "Skizze: ein kleiner Holzwegweiser mit leeren Pfeilen auf einem Schreibtisch, dahinter heftet jemand einen kurzen Zettel an eine Pinnwand",
 };
 
 const title = "Claude Code installieren: Anleitung für Mac und Windows";
@@ -34,7 +37,7 @@ export const metadata = {
     type: "article",
     publishedTime: datePublished,
     url,
-    images: [{ url: `${site}${cover.src}`, width: 1392, height: 752, alt: cover.alt }],
+    images: [{ url: `${site}${cover.src}`, width: 1280, height: 720, alt: cover.alt }],
   },
 };
 
@@ -302,6 +305,11 @@ export default function ClaudeCodeInstallierenPage() {
             <p>Ich arbeite selbst meist in der Desktop-App, weil ich dort mehrere Sitzungen nebeneinander sehe. Das Terminal lohnt sich trotzdem: Viele Anleitungen im Netz gehen davon aus, und für manche Werkzeuge ist es der direkte Weg.</p>
           </div>
         </ScrollReveal>
+        <ScrollReveal>
+          <div className="relative mx-auto mt-10 aspect-[16/9] max-w-[1000px] overflow-hidden rounded-2xl border border-refined-gold/30">
+            <Image src={ohneTerminal.src} alt={ohneTerminal.alt} fill sizes="(min-width: 1100px) 1000px, 100vw" className="object-cover" />
+          </div>
+        </ScrollReveal>
       </section>
 
       <PullQuote>Das schwarze Fenster ist die größte Hürde. Danach wird es leicht.</PullQuote>
@@ -331,14 +339,6 @@ export default function ClaudeCodeInstallierenPage() {
             <p>Arbeitest du lieber in der klassischen Eingabeaufforderung (CMD), nimmst du diesen Befehl:</p>
           </div>
           <Codeblock code="curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd" />
-        </ScrollReveal>
-      </section>
-
-      <section className="mx-auto w-full max-w-[1100px] px-6 pt-16 sm:px-12 md:px-24">
-        <ScrollReveal>
-          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-refined-gold/30">
-            <Image src={zweitesBild.src} alt={zweitesBild.alt} fill sizes="(min-width: 1100px) 1000px, 100vw" className="object-cover" />
-          </div>
         </ScrollReveal>
       </section>
 
@@ -384,6 +384,11 @@ export default function ClaudeCodeInstallierenPage() {
             <p>
               Mein Tipp aus dem Alltag: Halte sie kurz. Meine eigene CLAUDE.md beginnt mit dem Satz <em>Diese Datei ist ein Wegweiser, kein Lager.</em> Sie sagt Claude nur, wo es nachschauen soll, alles andere liegt in eigenen Dateien. Regeln, die für alle deine Projekte gelten, schreibst du in die Datei <code>~/.claude/CLAUDE.md</code> in deinem Benutzerordner.
             </p>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal>
+          <div className="relative mx-auto mt-10 aspect-[16/9] max-w-[1000px] overflow-hidden rounded-2xl border border-refined-gold/30">
+            <Image src={wegweiser.src} alt={wegweiser.alt} fill sizes="(min-width: 1100px) 1000px, 100vw" className="object-cover" />
           </div>
         </ScrollReveal>
       </section>
