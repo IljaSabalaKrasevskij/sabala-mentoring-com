@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } fr
 import { PROJECT_LABELS, PROJECT_TIMELINES, PROJECT_TYPES, validateProjectStep, type AuditErrors, type AuditField, type AuditLang, type ProjectDraft } from "@/lib/audit-request";
 import styles from "./AnalysisForm.module.css";
 import { useAnalysisSession } from "./AnalysisSession";
+import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 const COPY = {
   de: {
@@ -111,7 +112,7 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
     setState("loading");
     const { url, email, consent, ...qualification } = draft;
     try {
-      const response = await fetch("/api/audit-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: draft.noWebsite ? "" : url, email, consent, lang, qualification }) });
+      const response = await fetch("/api/audit-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: draft.noWebsite ? "" : url, email, consent, lang, qualification, siegel: await siegel() }) });
       const result = await response.json();
       if (!response.ok || result.success !== true) throw new Error("Request was not saved");
       setState("success"); focus.current = "heading";
@@ -126,7 +127,7 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
     <a href={onContinue ? "#hebel" : "#pflege"} onClick={onContinue ? event => { event.preventDefault(); onContinue(); } : undefined} className={styles.continueLink}>{T.successLink}<ArrowRight size={16} aria-hidden /></a>
   </div>;
 
-  return <form ref={form} onSubmit={submit} noValidate className={styles.form} data-analysis-step={step + 1} data-variant={variant} aria-busy={state === "loading"}>
+  return <form ref={form} onSubmit={submit} onFocus={formularBeruehrt} noValidate className={styles.form} data-analysis-step={step + 1} data-variant={variant} aria-busy={state === "loading"}>
     <ol className={styles.progress} aria-label={T.progress}>{T.steps.map((label, i) => <li key={label} aria-current={step === i ? "step" : undefined} data-complete={i < step}><span aria-hidden>{String(i + 1).padStart(2, "0")}</span>{label}</li>)}</ol>
     <h3 ref={heading} tabIndex={-1} className={styles.title}>{variant === "consultation" && step === 2 ? (lang === "de" ? "Wie erreicht Ilja dich?" : "How can Ilja reach you?") : T.titles[step]}</h3>
     <p className={styles.intro}>{variant === "consultation" ? (lang === "de" ? ["Ein kurzer Einblick hilft Ilja, die Analyse vorzubereiten.", "Die Richtung genügt. Die Einzelheiten klärt ihr im persönlichen Gespräch.", "Ilja liest deine Angaben und meldet sich per E-Mail, um einen Termin mit dir abzustimmen."] : ["A little context helps Ilja prepare your analysis.", "A direction is enough. You will work out the details in your conversation.", "Ilja will read your answers and email you to arrange a time to talk."])[step] : T.intros[step]}</p>

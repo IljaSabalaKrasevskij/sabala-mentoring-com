@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { insertSurveyResponse } from "@/lib/survey";
 import { tagContact } from "@/lib/activecampaign";
+import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 
 export const runtime = "nodejs";
 
@@ -13,7 +14,8 @@ export const runtime = "nodejs";
    - Taggt den Kontakt in ActiveCampaign ("Umfrage ausgefuellt") — best effort,
      ohne Listen-Zwang (auch fuer Bestandskunden sauber).
    - Pusht eine ntfy-Notification, damit Ilja neue Antworten sofort mitbekommt.
-   - Erfolgreich, sobald der Turso-Write greift. Honeypot "fax", Rate-Limit.
+   - Erfolgreich, sobald der Turso-Write greift.
+   - Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
 const Str = (max: number) => z.string().trim().max(max);
@@ -34,19 +36,8 @@ const Schema = z.object({
   problem: Str(2000).default(""),
   kontext: Str(2000).default(""),
   quelle: Str(60).default("Umfrage-Newsletter"),
-  fax: z.string().max(0).optional().default(""), // Honeypot
+  fax: z.string().max(200).optional().default(""), // unsichtbares Feld: gefüllt wird still quittiert, nicht abgelehnt
 });
-
-const HITS = new Map<string, number[]>();
-const LIMIT = 6;
-const WINDOW = 10 * 60 * 1000;
-
-function rateLimited(ip: string, now: number): boolean {
-  const arr = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  arr.push(now);
-  HITS.set(ip, arr);
-  return arr.length > LIMIT;
-}
 
 async function pushNtfy(email: string, vorname: string, rolle: string, quelle: string): Promise<void> {
   const NTFY_TOPIC = process.env.NTFY_TOPIC;
@@ -70,10 +61,7 @@ async function pushNtfy(email: string, vorname: string, rolle: string, quelle: s
 }
 
 export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (rateLimited(ip, Date.now())) {
-    return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
-  }
+  const ip = ipAus(req);
 
   let json: unknown;
   try {
@@ -87,8 +75,10 @@ export async function POST(req: Request) {
   }
   const d = parsed.data;
 
-  // Honeypot: stilles OK
+  // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (d.fax) return NextResponse.json({ ok: true });
+  const urteil = await siegelPruefen(ip, json);
+  if (urteil !== "ok") return siegelAbsage(urteil);
 
   // 1) Turso-Write — das ist die Wahrheit fuers Dashboard
   let stored = false;

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { auditNotionChildren, parseAuditRequest, type AuditRequest } from "@/lib/audit-request";
+import { ipAus, siegelPruefen } from "@/lib/botschutz";
 
 export const runtime = "nodejs";
 
@@ -131,6 +132,12 @@ export async function POST(req: NextRequest) {
   const parsed = parseAuditRequest(body);
   if (!parsed.data) return NextResponse.json({ error: Object.values(parsed.errors)[0], errors: parsed.errors }, { status: 400 });
   const payload = parsed.data;
+
+  // Botschutz: Stempel und Obergrenze je Absender (src/lib/botschutz.ts). Diese Route legt Seiten in Notion an und klingelt auf dem Handy.
+  const urteil = await siegelPruefen(ipAus(req), body);
+  if (urteil !== "ok") {
+    return NextResponse.json({ error: payload.lang === "en" ? "Please reload the page and try again." : "Bitte lade die Seite neu und versuch es noch einmal." }, { status: urteil === "zu-viele" ? 429 : 400 });
+  }
 
   const [fileResult, notionResult] = await Promise.all([saveToFile(payload), saveToNotion(payload)]);
   if (!notionResult.saved) console.warn("[audit-request] Notion:", notionResult.reason);

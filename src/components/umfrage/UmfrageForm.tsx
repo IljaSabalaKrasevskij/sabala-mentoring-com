@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formularBeruehrt, siegel } from "@/lib/formular-senden";
 
 /* ─────────────────────────────────────────────────────────────────────────
    UmfrageForm — "Wo willst du mit KI hin?"
@@ -130,7 +131,7 @@ export default function UmfrageForm({ quelle = "Umfrage-Newsletter" }: { quelle?
       const res = await fetch("/api/umfrage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vorname, email, rolle, techLevel, modelle, themen, ziele, problem, kontext, quelle, fax }),
+        body: JSON.stringify({ vorname, email, rolle, techLevel, modelle, themen, ziele, problem, kontext, quelle, fax, siegel: await siegel() }),
       });
       if (res.ok) setStatus("success");
       else if (res.status === 503) setStatus("unconfigured");
@@ -157,7 +158,7 @@ export default function UmfrageForm({ quelle = "Umfrage-Newsletter" }: { quelle?
   }
 
   return (
-    <form onSubmit={submit} style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 120px" }}>
+    <form onSubmit={submit} onFocus={formularBeruehrt} onPointerDown={formularBeruehrt} style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px 120px" }}>
       {/* Honeypot */}
       <input type="text" name="fax" value={fax} onChange={(e) => setFax(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
 

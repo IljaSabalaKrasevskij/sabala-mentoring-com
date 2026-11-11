@@ -132,6 +132,12 @@ export function ipNormal(roh: string): string {
 /** Muster für die Zählung je Absender, aus einer schon ausgeschriebenen IP. Bei IPv6 zählt das Netz (die ersten vier Blöcke, /64), sonst wechselt ein Angreifer einfach die Adresse im eigenen Netz. */
 const netz = (ip: string) => (ip.includes(":") ? `${ip.slice(0, 19)}:%` : ip);
 
+/** Wofür ein Absender bei den Obergrenzen zählt, in einer Schreibweise: bei IPv4 die Adresse, bei IPv6 das Netz (/64). So zählt auch der Stempel der Formulare (siegel.ts). */
+export const absenderNetz = (rohIp: string) => {
+  const ip = ipNormal(rohIp);
+  return ip.includes(":") ? ip.slice(0, 19) : ip;
+};
+
 /**
  * Was in der letzten Stunde los war: verschickte Bestätigungsmails über alle Adressen, und Anmeldungen aus dem Netz dieser IP.
  * Davon hängen die zwei Obergrenzen ab. Gezählt wird in der Datenbank, weil der Zähler im Speicher je Server-Instanz neu beginnt.

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { einwilligungStarten, FELDER, ipAus } from "@/lib/anmeldung";
+import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER } from "@/lib/anmeldung";
+import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
 import { WEBINAR } from "@/components/webinar/config";
 
@@ -12,7 +13,7 @@ export const runtime = "nodejs";
      Einwilligung, Bestätigungsmail. Erst nach dem Klick darin setzt src/lib/anmeldung.ts
      den Webinar-Tag im Newsletter-Werkzeug, und der startet die Strecke mit Zugangslink
      und Erinnerungen. Ohne Bestätigung also kein Zugangslink: Das sagt das Formular dazu.
-   - Honeypot "fax", einfaches In-Memory-Rate-Limit pro Lambda-Instanz.
+   - Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
 const Schema = z.object({
@@ -20,24 +21,10 @@ const Schema = z.object({
   nachname: FELDER.nachname,
   email: FELDER.email,
   telefon: FELDER.telefon,
-  einwilligung: z.literal(true),
+  einwilligung: FELDER.einwilligungPflicht,
   einwilligungVersion: FELDER.einwilligungVersion,
-  // Honeypot: bewusst NICHT per max(0) erzwungen. Sonst faengt die Validierung
-  // den Bot mit 422 ab und verraet ihm, dass er entdeckt wurde. Gefuellt wird
-  // weiter unten still mit 200 quittiert.
-  fax: z.string().max(200).optional().default(""),
+  fax: FELDER.fax,
 });
-
-const HITS = new Map<string, number[]>();
-const LIMIT = 6;
-const WINDOW = 10 * 60 * 1000;
-
-function rateLimited(ip: string, now: number): boolean {
-  const arr = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  arr.push(now);
-  HITS.set(ip, arr);
-  return arr.length > LIMIT;
-}
 
 export async function POST(req: Request) {
   // Ohne Termin wuerde der Tag die Mail-Strecke zum alten Datum starten.
@@ -46,9 +33,6 @@ export async function POST(req: Request) {
   }
 
   const ip = ipAus(req);
-  if (rateLimited(ip, Date.now())) {
-    return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
-  }
 
   let json: unknown;
   try {
@@ -56,14 +40,14 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   }
-  const parsed = Schema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json({ ok: false, reason: "validation" }, { status: 422 });
-  }
+  const parsed = eingabePruefen(Schema, json);
+  if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;
 
-  // Honeypot: stilles OK
+  // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (data.fax) return NextResponse.json({ ok: true });
+  const urteil = await siegelPruefen(ip, json);
+  if (urteil !== "ok") return siegelAbsage(urteil);
 
   // 1) Briefkasten fürs CRM — best effort
   try {

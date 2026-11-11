@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { einwilligungStarten, FELDER, ipAus, type Bestaetigung } from "@/lib/anmeldung";
+import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Bestaetigung } from "@/lib/anmeldung";
+import { ipAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Kontakt-Endpoint
-   - Validiert die Eingabe (zod), Honeypot gegen Bots, einfaches Rate-Limit.
+   - Validiert die Eingabe (zod). Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    - Schreibt die Anfrage in den Briefkasten (Turso/libSQL). Von dort holt Sabala Mail sie ins CRM.
    - Mit Häkchen für Mails: Nachweis der Einwilligung + Bestätigungsmail (src/lib/anmeldung.ts).
      Die Anfrage selbst hängt nicht am Häkchen.
@@ -32,23 +33,10 @@ const Schema = z.object({
   einwilligungVersion: FELDER.einwilligungVersion,
   unternehmen: z.string().trim().max(160).optional().default(""),
   webseite: z.string().trim().max(200).optional().default(""),
-  anliegen: z.string().trim().min(5, "Bitte ein paar Worte mehr").max(4000),
+  anliegen: z.string().trim().min(5, "Bitte schreib ein paar Worte zu deinem Wunsch.").max(4000, "Bitte fass dich etwas kürzer."),
   quelle: z.string().trim().max(200).optional().default(""),
-  // Honeypot: Feld "fax" muss leer bleiben
-  fax: z.string().max(0).optional().default(""),
+  fax: FELDER.fax,
 });
-
-// Best-effort In-Memory-Rate-Limit (pro Lambda-Instanz): 5 Anfragen / 10 Min / IP
-const HITS = new Map<string, number[]>();
-const LIMIT = 5;
-const WINDOW = 10 * 60 * 1000;
-
-function rateLimited(ip: string, now: number): boolean {
-  const arr = (HITS.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  arr.push(now);
-  HITS.set(ip, arr);
-  return arr.length > LIMIT;
-}
 
 async function notify(data: z.infer<typeof Schema>): Promise<void> {
   const topic = process.env.NTFY_TOPIC;
@@ -86,31 +74,27 @@ async function notify(data: z.infer<typeof Schema>): Promise<void> {
 }
 
 export async function POST(req: Request) {
-  // 1) Rate-Limit
   const ip = ipAus(req);
-  if (rateLimited(ip, Date.now())) {
-    return NextResponse.json({ ok: false, reason: "rate_limited" }, { status: 429 });
-  }
 
-  // 2) Parsen + validieren
+  // 1) Parsen + validieren
   let json: unknown;
   try {
     json = await req.json();
   } catch {
     return NextResponse.json({ ok: false, reason: "bad_json" }, { status: 400 });
   }
-  const parsed = Schema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json({ ok: false, reason: "validation", issues: parsed.error.issues.map((i) => i.message) }, { status: 422 });
-  }
+  const parsed = eingabePruefen(Schema, json);
+  if (!parsed.success) return eingabeAbsage(parsed.error);
   const data = parsed.data;
 
-  // 3) Honeypot: stilles OK, nichts speichern
+  // 2) Botschutz: unsichtbares Feld gefüllt → stilles OK, nichts speichern. Dann der Stempel.
   if (data.fax) {
     return NextResponse.json({ ok: true });
   }
+  const urteil = await siegelPruefen(ip, json);
+  if (urteil !== "ok") return siegelAbsage(urteil);
 
-  // 4) Speichern
+  // 3) Speichern
   try {
     const stored = await insertLead({
       vorname: data.vorname,

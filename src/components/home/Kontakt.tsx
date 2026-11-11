@@ -5,11 +5,14 @@ import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Reveal, SektionsKopf, TEXT_AUF_DUNKEL, Weiter } from "@/components/akademie/shared";
 import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwilligung";
+import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
+import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
 
 /* Kontakt-Block der Startseite: links die Einladung, rechts das Formular, zusammen in einem Laptop-Fenster.
    Schickt an /api/kontakt (Turso + ntfy-Push). Fällt sichtbar auf mailto zurück, falls das Backend
    nicht antwortet, damit keine Anfrage verloren geht.
+   Telefon ist Pflicht und wird vom Server geprüft: Stimmt die Nummer nicht, steht die Meldung am Feld.
    Das Häkchen für Mails ist freiwillig: Die Anfrage geht auch ohne raus. Mit Häkchen kommt eine Bestätigungsmail. */
 export default function Kontakt() {
   const pathname = usePathname();
@@ -17,6 +20,7 @@ export default function Kontakt() {
   const [form, setForm] = useState({ vorname: "", nachname: "", email: "", telefon: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
   const [einwilligung, setEinwilligung] = useState(false);
   const [bestaetigung, setBestaetigung] = useState<string>();
+  const [meldung, setMeldung] = useState<{ feld: string; text: string }>(); // der Server beanstandet ein Feld
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -28,22 +32,18 @@ export default function Kontakt() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "sending") return;
     setStatus("sending");
-    try {
-      const res = await fetch("/api/kontakt", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, quelle: pathname || "/" }),
-      });
-      if (res.ok) {
-        setBestaetigung(((await res.json().catch(() => ({}))) as { bestaetigung?: string }).bestaetigung);
-        setStatus("done");
-      } else {
-        // Backend nicht bereit oder Fehler: mailto, damit nichts verloren geht
-        setStatus("mailto");
-        mailtoFallback();
-      }
-    } catch {
+    const r = await formularSenden("/api/kontakt", { ...form, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, quelle: pathname || "/" });
+    if (r.art === "ok") {
+      setBestaetigung(r.bestaetigung);
+      setStatus("done");
+    } else if (r.art === "eingabe") {
+      // Ein Feld stimmt nicht: Meldung zeigen, das Ausgefüllte bleibt stehen
+      setMeldung({ feld: r.feld, text: r.meldung });
+      setStatus("idle");
+    } else {
+      // Backend nicht bereit oder Fehler: mailto, damit nichts verloren geht
       setStatus("mailto");
       mailtoFallback();
     }
@@ -79,14 +79,15 @@ export default function Kontakt() {
               )}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} onFocus={formularBeruehrt} onInput={() => setMeldung(undefined)} className="@container space-y-3">
               <div className="grid gap-3 sm:grid-cols-2">
                 <input className={feld} style={rand} placeholder="Vorname" aria-label="Vorname" autoComplete="given-name" required value={form.vorname} onChange={set("vorname")} />
                 <input className={feld} style={rand} placeholder="Nachname" aria-label="Nachname" autoComplete="family-name" required value={form.nachname} onChange={set("nachname")} />
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
+              {/* Nebeneinander nur, wenn das Formular breit genug ist: Neben der Vorwahl braucht die Nummer Platz für 13 Ziffern. */}
+              <div className="grid gap-3 @min-[33rem]:grid-cols-2">
                 <input type="email" required className={feld} style={rand} placeholder="E-Mail" aria-label="E-Mail-Adresse" autoComplete="email" value={form.email} onChange={set("email")} />
-                <input type="tel" className={feld} style={rand} placeholder="Telefon (freiwillig)" aria-label="Telefon, freiwillig" autoComplete="tel" value={form.telefon} onChange={set("telefon")} />
+                <Telefon onChange={(t) => setForm((f) => ({ ...f, telefon: t }))} fehler={meldung?.feld === "telefon" ? meldung.text : undefined} className={feld} style={rand} />
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 <input className={feld} style={rand} placeholder="Unternehmen (optional)" aria-label="Unternehmen, optional" autoComplete="organization" value={form.unternehmen} onChange={set("unternehmen")} />
@@ -97,6 +98,8 @@ export default function Kontakt() {
               <div className="py-1">
                 <Einwilligung id="kontakt-mails" an={einwilligung} setAn={setEinwilligung} />
               </div>
+
+              <FeldMeldung meldung={meldung} />
 
               {/* Honeypot: für Menschen unsichtbar */}
               <input type="text" name="fax" tabIndex={-1} autoComplete="off" value={form.fax} onChange={set("fax")} className="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden />

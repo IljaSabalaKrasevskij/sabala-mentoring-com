@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createClient } from "@libsql/client";
-import { anmelden, bestaetigen, ipNormal, lastDerStunde, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
+import { absenderNetz, anmelden, bestaetigen, ipNormal, lastDerStunde, vermerken, WARTEN_SEKUNDEN } from "./einwilligung.ts";
 
 // Läuft gegen eine Datenbank im Speicher. Kein Netz, keine Mail, kein echter Kontakt.
 const frisch = () => createClient({ url: ":memory:" });
@@ -179,4 +179,11 @@ test("Ein IPv6-Netz zählt zusammen, egal wie die Adressen geschrieben sind (auc
   for (const ip of gleichesNetz) assert.equal((await lastDerStunde(db, ip)).ausNetz, 4, ip);
   assert.equal((await lastDerStunde(db, "2001:db8:0:1::77")).ausNetz, 1, "das Nachbarnetz zählt für sich");
   assert.equal((await zeile(db)).angemeldet_ip, "2001:0db8:0000:0000:0001:0002:0003:0004", "gespeichert wird die ausgeschriebene IP");
+});
+
+test("Absender für die Obergrenzen: IPv4 bleibt, bei IPv6 zählt das Netz, egal wie die Adresse geschrieben ist", () => {
+  assert.equal(absenderNetz(" 203.0.113.7 "), "203.0.113.7");
+  assert.equal(absenderNetz("2001:db8:0:1::5"), "2001:0db8:0000:0001");
+  assert.equal(absenderNetz("2001:DB8::1:0:0:0:99"), "2001:0db8:0000:0001", "andere Schreibweise, anderes Gerät, selbes Netz");
+  assert.equal(absenderNetz("unknown"), "unbekannt");
 });

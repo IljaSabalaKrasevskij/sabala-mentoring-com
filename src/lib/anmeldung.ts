@@ -1,9 +1,11 @@
+import { NextResponse } from "next/server";
 import { z } from "zod";
 import { subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar } from "@/lib/activecampaign";
 import { anmelden, bestaetigen, lastDerStunde, vermerken, type Bestaetigt } from "@/lib/einwilligung";
 import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
 import { getClient } from "@/lib/leads";
 import { bestaetigungSenden, mailBereit } from "@/lib/mail";
+import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Was alle Formulare gemeinsam haben: dieselben Felder, dasselbe Häkchen, derselbe Weg.
@@ -23,16 +25,36 @@ import { bestaetigungSenden, mailBereit } from "@/lib/mail";
    Der Name landet im CRM und nach dem Klick im Newsletter-Werkzeug, dort soll kein fremder Werbetext stehen. */
 const NAME = /^[\p{L}\p{M}][\p{L}\p{M} .'’-]*$/u;
 
+/* Die Meldungen sind für Menschen geschrieben: Die Route schickt die erste zurück, das Formular zeigt sie am Feld an. */
 export const FELDER = {
-  vorname: z.string().trim().min(1, "Vorname fehlt").max(80).regex(NAME, "Vorname ungueltig"),
-  nachname: z.string().trim().min(1, "Nachname fehlt").max(80).regex(NAME, "Nachname ungueltig"),
-  email: z.string().trim().toLowerCase().max(160).regex(/^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/, "E-Mail ungueltig"),
-  // freiwillig: Ziffern und die ueblichen Trennzeichen, damit hier kein Freitext landet
-  telefon: z.string().trim().max(40).refine((v) => v === "" || /^[+0-9 ()/.-]{5,40}$/.test(v), "Telefon ungueltig").optional().default(""),
+  vorname: z.string({ error: "Bitte gib deinen Vornamen an." }).trim().min(2, "Bitte gib deinen Vornamen an.").max(80, "Der Vorname ist zu lang.").regex(NAME, "Im Vornamen gehen nur Buchstaben."),
+  nachname: z.string({ error: "Bitte gib deinen Nachnamen an." }).trim().min(2, "Bitte gib deinen Nachnamen an.").max(80, "Der Nachname ist zu lang.").regex(NAME, "Im Nachnamen gehen nur Buchstaben."),
+  email: z.string({ error: "Bitte gib deine E-Mail-Adresse an." }).trim().toLowerCase().max(160, "Bitte prüf deine E-Mail-Adresse.").regex(/^[a-z0-9._%+-]+@[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}$/, "Bitte prüf deine E-Mail-Adresse."),
+  // Pflicht. Nur echte Nummern mit Ländervorwahl, heraus kommt eine Schreibweise (+49 1520 4817263). Regeln: src/lib/telefon.ts
+  telefon: z.string({ error: TELEFON_MELDUNG.fehlt }).max(60, TELEFON_MELDUNG.ungueltig).transform((roh, ctx) => {
+    const t = telefonPruefen(roh);
+    if ("nummer" in t) return t.nummer;
+    ctx.issues.push({ code: "custom", message: TELEFON_MELDUNG[t.fehler], input: roh });
+    return z.NEVER;
+  }),
   einwilligung: z.boolean().optional().default(false),
+  // Für Formulare, deren Zweck die Mails sind (Newsletter, Warteliste, Webinar)
+  einwilligungPflicht: z.literal(true, { error: "Bitte setz das Häkchen. Ohne dein Ja darf ich dir nicht schreiben." }),
   // Nummer des Satzes, der am Haekchen stand. Fehlt sie, gilt der aktuelle.
   einwilligungVersion: z.number().int().refine((v) => v in EINWILLIGUNGEN, "Einwilligungstext unbekannt").optional(),
+  // Unsichtbares Feld gegen Roboter. Bewusst nicht per max(0) erzwungen: Sonst fängt die Prüfung den Roboter mit 422 ab
+  // und verrät ihm, dass er aufgefallen ist. Gefüllt quittiert die Route still mit 200 und speichert nichts.
+  fax: z.string().max(200).optional().default(""),
 };
+
+/** Prüft die Eingabe. Wo ein Feld keine eigene Meldung hat, steht der allgemeine Hinweis, nie englischer Standardtext. */
+export const eingabePruefen = <S extends z.ZodType>(schema: S, json: unknown) => schema.safeParse(json, { error: () => "Bitte prüf deine Angaben." });
+
+/** Antwort bei falscher Eingabe: das erste beanstandete Feld mit seiner Meldung. */
+export function eingabeAbsage(fehler: z.ZodError) {
+  const erster = fehler.issues[0];
+  return NextResponse.json({ ok: false, reason: "validation", feld: String(erster?.path[0] ?? ""), meldung: erster?.message ?? "Bitte prüf deine Angaben." }, { status: 422 });
+}
 
 /** Aus welchem Formular die Einwilligung kam. Steht als Quelle im Nachweis und entscheidet, was nach dem Klick passiert. */
 export type Formular = "Akademie-Newsletter" | "Warteliste Kurs" | "Warteliste Webinar" | "Webinar Second Brain" | "Mooni Voice" | "Kontaktformular";
@@ -113,5 +135,3 @@ export async function einwilligungBestaetigen(token: string, ip: string): Promis
   if (b.neu) await insWerkzeug(b, b.quelle);
   return true;
 }
-
-export const ipAus = (req: Request) => req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";

@@ -10,7 +10,8 @@ export const metadata = {
  * cookiefrei), ActiveCampaign (Newsletter), ThriveCart (Checkout), TidyCal
  * (Termine), Zoom (Calls), WhatsApp, Notion (Audit-Anfragen), eigene Datenbank.
  * Seit November 2026: Sabala Social (Instagram-Stichworte, Abschnitt 11, Loeschweg /daten-loeschen).
- * Seit November 2026: Formulare mit Telefon (freiwillig) und Haekchen fuer Mails. Double-Opt-in laeuft ueber
+ * Seit November 2026: Formulare mit Telefon (Pflicht, wird geprueft), Botschutz ohne fremden Dienst (Abschnitt 4)
+ * und Haekchen fuer Mails. Double-Opt-in laeuft ueber
  * das eigene Postfach und die eigene Datenbank (src/lib/anmeldung.ts), ActiveCampaign bekommt den Kontakt
  * erst nach dem Bestaetigungsklick. Abschnitte 4 (Formulare) und 6 (Newsletter) beschreiben genau das.
  * Schriften kommen ueber next/font/google und werden beim Build heruntergeladen,
@@ -191,9 +192,21 @@ export default function DatenschutzPage() {
               an der Beantwortung von Anfragen).
             </p>
             <p className="mt-4">
-              In unseren Formularen fragen wir Vorname, Nachname und E-Mail-Adresse ab, je nach
-              Formular auch Ihr Anliegen. Die Angabe einer Telefonnummer ist freiwillig. Wir nutzen
-              sie nur für Rückfragen zu Ihrem Anliegen und nicht für Werbeanrufe.
+              In unseren Formularen fragen wir Vorname, Nachname, E-Mail-Adresse und Telefonnummer
+              ab, je nach Formular auch Ihr Anliegen. Die Telefonnummer ist eine Pflichtangabe. Wir
+              nutzen sie, um Sie bei Rückfragen zu Ihrem Anliegen persönlich zu erreichen und um
+              ernst gemeinte Anfragen von falschen Einträgen zu unterscheiden. Dazu prüfen wir auf
+              unserem eigenen Server automatisch, ob die Nummer nach den Regeln des jeweiligen Landes
+              gültig ist. Für Werbeanrufe nutzen wir Ihre Nummer nicht.
+            </p>
+            <p className="mt-4">
+              Unsere Formulare sind gegen automatisierte Einträge geschützt. Dafür setzen wir keinen
+              fremden Dienst und kein Bilderrätsel ein. Beim Ausfüllen erhält Ihr Browser von unserem
+              Server ein einmal gültiges Kennzeichen, das beim Absenden geprüft wird. Zusätzlich
+              begrenzen wir, wie viele Formulare pro Stunde von einem Anschluss eingehen. Dazu
+              speichern wir kurzzeitig, in der Regel für zwei Stunden, einen verschlüsselten Kurzwert
+              Ihrer IP-Adresse, aus dem sich die Adresse nicht zurückrechnen lässt. Rechtsgrundlage ist
+              Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Schutz vor Missbrauch).
             </p>
             <p className="mt-4">
               Damit wir zeitnah reagieren können, werden wir über den Eingang neuer Anfragen
