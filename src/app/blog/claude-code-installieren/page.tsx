@@ -220,6 +220,9 @@ export default function ClaudeCodeInstallierenPage() {
             <Link href="/blog" className="inline-flex items-center gap-2 font-mono text-[13px] uppercase tracking-widest text-[#E9E4DA] transition-colors hover:text-gold-light">
               <ArrowLeft className="h-4 w-4" /> Zurück zum Journal
             </Link>
+            <Link href="/claude-code" className="font-mono text-[13px] uppercase tracking-widest text-gold-light underline decoration-gold-light underline-offset-4 transition-colors hover:text-white">
+              Alles zu Claude Code
+            </Link>
           </div>
           <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[13px] uppercase tracking-widest">
             <span className="rounded-full border border-gold-light bg-[#2E2B26] px-3 py-1 text-gold-light">KI-Akademie · Anleitung</span>

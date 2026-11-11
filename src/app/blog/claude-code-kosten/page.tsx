@@ -145,7 +145,7 @@ const breadcrumbSchemaJson = JSON.stringify({
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Start", item: site },
-    { "@type": "ListItem", position: 2, name: "Blog", item: `${site}/blog` },
+    { "@type": "ListItem", position: 2, name: "Claude Code", item: `${site}/claude-code` },
     { "@type": "ListItem", position: 3, name: "Was kostet Claude Code?", item: url },
   ],
 });
@@ -178,6 +178,9 @@ export default function ClaudeCodeKostenPage() {
           <div className="mb-10 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Link href="/blog" className="inline-flex items-center gap-2 font-mono text-[13px] uppercase tracking-widest text-[#E9E4DA] transition-colors hover:text-gold-light">
               <ArrowLeft className="h-4 w-4" /> Zurück zum Journal
+            </Link>
+            <Link href="/claude-code" className="font-mono text-[13px] uppercase tracking-widest text-gold-light underline decoration-gold-light underline-offset-4 transition-colors hover:text-white">
+              Alles zu Claude Code
             </Link>
           </div>
           <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[13px] uppercase tracking-widest">
