@@ -47,7 +47,15 @@ export default function Navbar() {
     const [pfad, anker] = href.split("#");
     if (pfad && pfad !== pathname) return;
     setOpen(false);
-    if (!anker) window.scrollTo({ top: 0 });
+    if (anker) return;
+    // Sofort nach oben, ohne Flug durch die ganze Seite. Wie Next.js beim Seitenwechsel: weiches Scrollen kurz aus,
+    // Layout lesen (sonst übernimmt Chrome die Änderung nicht), springen, wieder an.
+    const html = document.documentElement;
+    const vorher = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    html.getClientRects();
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = vorher;
   };
 
   return (
