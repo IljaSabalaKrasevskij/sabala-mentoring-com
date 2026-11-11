@@ -235,6 +235,7 @@ export async function anmelden(db: Client, roh: Anmeldung): Promise<Stand> {
  * Namen und Formular kommen aus der Datenbank, nie aus der Anfrage. Kennt die Einwilligung den Token nicht, kann es der Wunsch eines bestätigten Kontakts sein.
  */
 export async function bestaetigen(db: Client, tok: string, rohIp: string): Promise<Bestaetigt | null> {
+  await vorbereiten(db); // sonst scheitert die Suche nach einem unbekannten Schlüssel an einer frischen Datenbank (Tabelle nl_wuensche fehlt)
   const ip = ipNormal(rohIp);
   type Zeile = { id: number; kontakt_id: number; status: string; quelle: string; email: string; vorname: string; nachname: string };
   const merkmal = (kontakt_id: number, m: string) => db.execute({ sql: "INSERT OR IGNORE INTO nl_merkmale (kontakt_id, merkmal) VALUES (?, ?)", args: [kontakt_id, m] });

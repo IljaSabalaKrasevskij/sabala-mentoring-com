@@ -153,12 +153,10 @@ async function subscribeToList(
 /* Nur taggen: Kontakt syncen (idempotent) und einen Tag setzen — OHNE Listen-
    Anmeldung. Fuer Signale wie "Umfrage ausgefuellt", die eine Automation
    triggern koennen, ohne die Listen-Mitgliedschaft zu veraendern (wichtig fuer
-   Bestandskunden, die nicht in den Academy-Newsletter gehoeren). */
-export async function tagContact(
-  email: string,
-  firstName: string,
-  tagName: string
-): Promise<AcResult> {
+   Bestandskunden, die nicht in den Academy-Newsletter gehoeren).
+   Bewusst ohne Namen: Hier gibt es keinen Klick im Postfach. Ein Name aus dem Formular wuerde sonst die Anrede
+   eines bestehenden Kontakts ueberschreiben, mit dem Text, den irgendwer getippt hat. */
+export async function tagContact(email: string, tagName: string): Promise<AcResult> {
   const base = cfgBase();
   if (!base) return "skipped";
   const headers = { "Api-Token": base.key, "Content-Type": "application/json" };
@@ -166,7 +164,7 @@ export async function tagContact(
     const syncRes = await fetch(`${base.url}/api/3/contact/sync`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ contact: { email, firstName } }),
+      body: JSON.stringify({ contact: { email } }),
     });
     if (!syncRes.ok) return "error";
     const synced = (await syncRes.json()) as { contact?: { id?: string } };

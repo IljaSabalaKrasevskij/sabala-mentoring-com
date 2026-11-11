@@ -7,8 +7,8 @@ import { parsePhoneNumberFromString } from "libphonenumber-js/max";
    Länge, Vorwahlbereich und Art der Nummer. Durch kommen Mobil, Festnetz und Internet-Telefonie.
    Abgelehnt werden
    - Nummern ohne Ländervorwahl. Das Formular setzt sie davor, ohne sie ist „0664 …“ nicht eindeutig.
-   - teure und unpersönliche Sondernummern (0900, 0180, 0137, 0800, 0700): Niemand soll über das Formular
-     einen teuren Rückruf auslösen können.
+   - teure und unpersönliche Sondernummern (0900, 0180, 0137, 0800, 0700) und Satellitennummern (+870, +881):
+     Niemand soll über das Formular einen teuren Rückruf auslösen können.
    - Beispielnummern wie 0151 23456789 oder 0170 1111111: nach Nummernplan gültig, aber erkennbar erfunden.
 
    Was die Prüfung nicht kann: wissen, ob die Nummer dem Menschen gehört, der sie eintippt. Das ginge nur mit
@@ -52,6 +52,8 @@ export function telefonPruefen(roh: string): { nummer: string } | { fehler: Tele
   const n = parsePhoneNumberFromString(text);
   if (!n || !n.isValid()) return { fehler: "ungueltig" };
   if (!ERLAUBT.has(n.getType() ?? "")) return { fehler: "sondernummer" };
+  // Nummern ohne Land sind Satellitentelefone und internationale Dienste (+870, +881, +882). Ein Rückruf kostet mehrere Euro je Minute.
+  if (!n.country) return { fehler: "sondernummer" };
   if (erfunden(n.nationalNumber)) return { fehler: "platzhalter" };
   return { nummer: n.formatInternational() };
 }

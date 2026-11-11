@@ -13,6 +13,12 @@
 - [Beratungsstunde](https://sabala-mentoring.com/beratung): eine Stunde 1:1 zu Claude Code, Webseiten, Second Brain und Agenten.
 - [Webinar](https://sabala-mentoring.com/webinar): kostenloses Live-Webinar zum Second Brain, mit Warteliste.
 
+## Claude Code auf Deutsch
+
+- [Claude Code: Themen-Seite](https://sabala-mentoring.com/claude-code): was Claude Code ist, wo es läuft, was es kostet, die wichtigsten Befehle und Skills.
+- [Claude Code installieren](https://sabala-mentoring.com/blog/claude-code-installieren): Anleitung für Mac und Windows, der Weg ohne Terminal, der erste Start und die häufigsten Fehler.
+- [Was kostet Claude Code?](https://sabala-mentoring.com/blog/claude-code-kosten): alle Pläne von Pro bis Enterprise, Nutzungsgrenzen, API-Preise und Spartipps.
+
 ## Bauen lassen
 
 - [Webseiten](https://sabala-mentoring.com/webseiten): Webauftritte aus eigenem Code, schnell, DSGVO-konform, sichtbar bei Google und in KI-Antworten.

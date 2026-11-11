@@ -9,7 +9,7 @@ import * as validation from "../../../lib/audit-request.ts";
 const sample = { url: "example.com", email: "alex@example.com", consent: true, lang: "de", qualification: { company: "Beispiel Studio", industry: "Architektur", noWebsite: false, projectType: "relaunch", audience: "Gewerbliche Bauherren", goal: "Wir möchten unser Angebot klarer zeigen und passende Projektanfragen erhalten.", timeline: "open", name: "Alex Beispiel", role: "Geschäftsführung" } };
 
 // Run the actual handler with isolated transports. Never write a test lead or send a notification.
-function handler({ notionFails = false, pushFails = false } = {}) {
+function handler({ notionFails = false, pushFails = false, siegel = "ok", istJson = true } = {}) {
   const calls = [];
   const exports = {};
   const source = ts.transpileModule(readFileSync(new URL("./route.ts", import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
@@ -22,6 +22,8 @@ function handler({ notionFails = false, pushFails = false } = {}) {
       if (name === "fs/promises") return { mkdir: () => { throw new Error("Unexpected file write"); }, writeFile: () => { throw new Error("Unexpected file write"); } };
       if (name === "path") return path;
       if (name === "@/lib/audit-request") return validation;
+      // Botschutz als Attrappe: Der echte braucht Datenbank und Schlüssel. Hier zählt nur, was die Route mit seinem Urteil macht.
+      if (name === "@/lib/botschutz") return { ipAus: () => "203.0.113.7", jsonAus: async (req) => (istJson ? req.json() : undefined), siegelPruefen: async () => siegel };
       throw new Error(`Unexpected module: ${name}`);
     },
     async fetch(url, options) {
@@ -75,4 +77,18 @@ test("compact blog submissions remain compatible", async () => {
   const legacy = { url: sample.url, email: sample.email, consent: true };
   assert.equal((await post(legacy)).status, 200);
   assert.equal(calls[0].body.children, undefined);
+});
+
+test("ohne gültigen Stempel wird nichts gespeichert und niemand benachrichtigt", async () => {
+  for (const [siegel, status] of [["ungueltig", 400], ["zu-frueh", 400], ["zu-viele", 429]]) {
+    const { post, calls } = handler({ siegel });
+    assert.equal((await post(sample)).status, status, siegel);
+    assert.equal(calls.length, 0, siegel);
+  }
+});
+
+test("ein Körper, der nicht als JSON angekündigt ist, wird abgelehnt (fremde Webseiten können nur so schicken)", async () => {
+  const { post, calls } = handler({ istJson: false });
+  assert.equal((await post(sample)).status, 400);
+  assert.equal(calls.length, 0);
 });
