@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { EINWILLIGUNG_TEXT } from "@/lib/einwilligung-text";
-import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon } from "@/lib/mail-html";
+import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon, streckenHtml, streckenText } from "@/lib/mail-html";
+import type { StreckenMail } from "@/lib/strecken";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Bestätigungsmail für das Double-Opt-in. Geht über das eigene Postfach raus (SMTP),
@@ -31,8 +32,8 @@ export function bestaetigungsMail(link: string, quelle = "") {
   return { betreff: anlass.betreff, text: bestaetigungText(link, EINWILLIGUNG_TEXT, anlass), html: bestaetigungHtml(link, EINWILLIGUNG_TEXT, anlass) };
 }
 
-/** Schickt eine fertige Mail über das eigene Postfach. Wirft, wenn der Mailserver ablehnt. */
-async function senden(an: string, m: { betreff: string; text: string; html: string }): Promise<void> {
+/** Schickt eine fertige Mail über das eigene Postfach. Wirft, wenn der Mailserver ablehnt. kopf: zusätzliche Kopfzeilen (Abmelden). */
+async function senden(an: string, m: { betreff: string; text: string; html: string }, kopf?: Record<string, string>): Promise<void> {
   const port = Number(process.env.SMTP_PORT || 465);
   const user = process.env.SMTP_USER!;
   const transport = nodemailer.createTransport({
@@ -44,7 +45,23 @@ async function senden(an: string, m: { betreff: string; text: string; html: stri
     socketTimeout: 10000,
   });
   // Empfänger als fertige Adresse übergeben: So liest nodemailer die Zeichenkette nicht als Liste von Empfängern.
-  await transport.sendMail({ from: process.env.MAIL_VON || `Sabala Mentoring <${user}>`, to: { name: "", address: an }, subject: m.betreff, text: m.text, html: m.html });
+  await transport.sendMail({ from: process.env.MAIL_VON || `Sabala Mentoring <${user}>`, to: { name: "", address: an }, subject: m.betreff, text: m.text, html: m.html, headers: kopf });
+}
+
+/** Eine Mail aus einer Strecke (strecken.ts). basis: Adresse der Webseite für die Abmelde-Links.
+ *  Im Test geht sie ins Test-Postfach, mit dem echten Empfänger im Betreff. Ihr Abmelde-Link ist nur eine Probe und meldet niemanden ab.
+ *  Echte Mails tragen die Ein-Klick-Abmeldung im Kopf (RFC 8058): Gmail und Apple Mail zeigen dann ihren eigenen Abmelde-Knopf. */
+export async function streckenMailSenden(m: StreckenMail, basis: string): Promise<void> {
+  if (!mailBereit()) throw new Error("Postfach nicht eingerichtet");
+  const d = {
+    betreff: m.test ? `[Test für ${m.fuer}] ${m.betreff}` : m.betreff,
+    vorschau: m.vorschau,
+    inhalt: m.inhalt,
+    vorname: m.vorname,
+    abmelden: `${basis}/newsletter/abmelden?t=${m.abmelden ?? "probe"}`,
+  };
+  const kopf = m.abmelden ? { "List-Unsubscribe": `<${basis}/api/newsletter/abmelden?t=${m.abmelden}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : undefined;
+  await senden(m.an, { betreff: d.betreff, text: streckenText(d), html: streckenHtml(d) }, kopf);
 }
 
 /** Schickt die Bestätigungsmail. false, wenn kein Postfach eingerichtet ist. Wirft, wenn der Mailserver ablehnt. */

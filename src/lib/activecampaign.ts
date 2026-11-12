@@ -237,3 +237,63 @@ export async function subscribeMooniVoice(email: string, firstName = "", lastNam
     lastName
   );
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Abgleich mit den Strecken der Webseite (strecken.ts), solange ActiveCampaign parallel läuft:
+   - Wer sich dort abgemeldet hat, bekommt auch von der Webseite nichts mehr (acStand, vor jeder Strecken-Mail).
+   - Wer sich auf der Webseite abmeldet, wird dort von ALLEN Listen genommen (acAbmelden). Alle, weil die Rundmails
+     dort an alle Listen gehen (Befund 12.11.2026): Eine Abmeldung nur von der Akademie-Liste würde nichts stoppen.
+   Listen-Status in ActiveCampaign: 1 aktiv, 2 abgemeldet, 3 unzustellbar, 0 unbestätigt.
+   ────────────────────────────────────────────────────────────────────────── */
+
+type AcListe = { list: string; status: string | number };
+
+/** Die Listen einer Adresse. null: ActiveCampaign nicht eingerichtet. id null: Adresse steht dort nicht. Wirft bei Störung. */
+async function listenVon(email: string) {
+  const base = cfgBase();
+  if (!base) return null;
+  const headers = { "Api-Token": base.key };
+  const k = await fetch(`${base.url}/api/3/contacts?email=${encodeURIComponent(email)}`, { headers, signal: AbortSignal.timeout(8000) });
+  if (!k.ok) throw new Error(`contacts ${k.status}`);
+  const id = ((await k.json()) as { contacts?: { id: string }[] }).contacts?.[0]?.id ?? null;
+  if (!id) return { base, id: null, listen: [] as AcListe[] };
+  const l = await fetch(`${base.url}/api/3/contacts/${id}/contactLists`, { headers, signal: AbortSignal.timeout(8000) });
+  if (!l.ok) throw new Error(`contactLists ${l.status}`);
+  return { base, id, listen: ((await l.json()) as { contactLists?: AcListe[] }).contactLists ?? [] };
+}
+
+/** aktiv: auf mindestens einer Liste aktiv. abgemeldet: dort selbst abgemeldet und nirgends mehr aktiv. unbekannt: steht dort nicht.
+ *  „Unzustellbar“ (3) zählt nicht: Wer gerade den Link in unserer Bestätigungsmail geklickt hat, ist erreichbar, der alte Stand dort ist überholt. */
+export async function acStand(email: string): Promise<"aktiv" | "abgemeldet" | "unbekannt" | "fehler"> {
+  try {
+    const r = await listenVon(email);
+    if (!r) return "unbekannt";
+    const status = r.listen.map((x) => String(x.status));
+    if (status.includes("1")) return "aktiv";
+    return status.includes("2") ? "abgemeldet" : "unbekannt";
+  } catch (err) {
+    console.error("[activecampaign] Stand nicht lesbar:", err);
+    return "fehler";
+  }
+}
+
+/** Nimmt eine Adresse von allen Listen, auf denen sie aktiv ist. */
+export async function acAbmelden(email: string): Promise<AcResult> {
+  try {
+    const r = await listenVon(email);
+    if (!r) return "skipped";
+    for (const x of r.listen.filter((x) => String(x.status) === "1")) {
+      const res = await fetch(`${r.base.url}/api/3/contactLists`, {
+        method: "POST",
+        headers: { "Api-Token": r.base.key, "Content-Type": "application/json" },
+        body: JSON.stringify({ contactList: { list: Number(x.list), contact: Number(r.id), status: 2 } }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) return "error";
+    }
+    return "ok";
+  } catch (err) {
+    console.error("[activecampaign] Abmelden gescheitert:", err);
+    return "error";
+  }
+}
