@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/webinar", priority: 0.9, changeFrequency: "weekly" },
     { path: "/claude-code", priority: 0.9, changeFrequency: "monthly" },
     { path: "/claude-code/startpaket", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/claude-code/skill-paket", priority: 0.8, changeFrequency: "monthly" },
     { path: "/mitentwickelt", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-mich", priority: 0.9, changeFrequency: "monthly" },
     { path: "/case-studies", priority: 0.8, changeFrequency: "monthly" },

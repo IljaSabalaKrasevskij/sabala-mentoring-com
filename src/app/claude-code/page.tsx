@@ -347,7 +347,7 @@ export default function ClaudeCodeThemenSeite() {
               Skills sind gespeicherte Arbeitsabläufe. Jeder Skill ist eine kurze Anleitung, die Claude lädt, wenn sie zur Aufgabe passt: wie ein Newsletter bei dir aussieht, wie eine Präsentation aufgebaut ist, worauf eine SEO-Prüfung achtet. Einmal sauber geschrieben, sparst du dir jedes Mal das Erklären.
             </p>
             <p>
-              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Zehn, mit denen du gut anfängst, findest du im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
+              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Zehn, mit denen du gut anfängst, findest du im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>. Vier meiner eigenen für Texte ohne KI-Klang und schöneres Design stecken im <Link href="/claude-code/skill-paket">Skill-Paket</Link>. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
             </p>
           </div>
         </ScrollReveal>

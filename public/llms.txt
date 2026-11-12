@@ -21,6 +21,7 @@
 - [Claude Code installieren](https://sabala-mentoring.com/blog/claude-code-installieren): Anleitung für Mac und Windows, der Weg ohne Terminal, der erste Start und die häufigsten Fehler.
 - [Was kostet Claude Code?](https://sabala-mentoring.com/blog/claude-code-kosten): alle Pläne von Pro bis Enterprise, Nutzungsgrenzen, API-Preise und Spartipps.
 - [Claude-Code-Startpaket](https://sabala-mentoring.com/claude-code/startpaket): kostenloser Ordner mit Installation für Mac und Windows, Spickzettel, zwei CLAUDE.md-Vorlagen und zehn Skills, die Ilja selbst nutzt. Kommt per Mail.
+- [Skill-Paket](https://sabala-mentoring.com/claude-code/skill-paket): kostenloser Ordner mit vier Skills für Claude auf Deutsch (menschlich schreiben, einfach erklären, schön gestalten, vor dem Livegang prüfen) und zwei Prüfskripten. Für Claude Code und die Claude-App, kommt per Mail.
 
 ## Bauen lassen
 
@@ -34,7 +35,7 @@
 
 ## Freie Werkzeuge
 
-- [Ressourcen](https://sabala-mentoring.com/ressourcen): alles Kostenlose an einem Ort, das Claude-Code-Startpaket und Werkzeuge aus der täglichen Arbeit.
+- [Ressourcen](https://sabala-mentoring.com/ressourcen): alles Kostenlose an einem Ort, das Claude-Code-Startpaket, das Skill-Paket und Werkzeuge aus der täglichen Arbeit.
 - [Mooni Voice](https://sabala-mentoring.com/mooni-voice): Sprache zu Text, lokal auf dem Mac.
 
 ## Artikel

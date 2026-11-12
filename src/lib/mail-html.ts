@@ -114,6 +114,12 @@ const ANLAESSE: Record<string, Anlass> = {
     vorschau: "Ein Klick, dann liegt dein Startpaket bereit.",
     satz: "schön, dass du das Claude-Code-Startpaket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
   },
+  "skill-paket": {
+    betreff: "Dein Skill-Paket: ein Klick fehlt noch",
+    zeile: "Skill-Paket",
+    vorschau: "Ein Klick, dann liegen deine vier Skills bereit.",
+    satz: "schön, dass du das Skill-Paket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
+  },
 };
 
 export const anlassVon = (quelle: string): Anlass => (Object.prototype.hasOwnProperty.call(ANLAESSE, quelle) ? ANLAESSE[quelle] : NEWSLETTER);
@@ -237,6 +243,24 @@ const DOWNLOADS: Record<string, Download> = {
     ],
     tipp: "Nimm dir für den Anfang nur einen der zehn Skills. Den für die Aufgabe, die du am häufigsten erledigst.",
     mehr: { text: "Alle Anleitungen zu Claude Code auf Deutsch findest du unter", link: `${SEITE}/claude-code`, anzeige: "sabala-mentoring.com/claude-code" },
+  },
+  "skill-paket": {
+    betreff: "Dein Skill-Paket",
+    zeile: "Skill-Paket",
+    vorschau: "Hier sind deine vier Skills: menschlich schreiben, einfach erklären, schön gestalten, vor dem Livegang prüfen.",
+    kopf: "Dein Skill-Paket",
+    titel: "Hier ist dein Skill-Paket.",
+    seite: `${SEITE}/claude-code/skill-paket/danke`,
+    groesse: "Ein Ordner, 44 KB, für Claude Code und die Claude-App.",
+    knopf: "Zum Download",
+    absatz: "hier ist dein Skill-Paket noch einmal zum Aufheben. Im Ordner liegen vier Skills für Claude, zwei kleine Prüfskripte und eine Anleitung für Claude Code und die Claude-App.",
+    schritte: [
+      "Öffne zuerst die Datei „00 Start hier“. Dort steht, wie du die Skills installierst.",
+      "Trag in „meine-stimme.md“ ein, wie du schreibst. Ab dann klingt Claude nach dir.",
+      "Lass Claude einen Newsletter schreiben und prüf ihn mit „pruefen.py“.",
+    ],
+    tipp: "Fang mit menschlich-schreiben an. Den Unterschied merkst du schon beim ersten Text.",
+    mehr: { text: "Weitere kostenlose Hilfen findest du unter", link: `${SEITE}/ressourcen`, anzeige: "sabala-mentoring.com/ressourcen" },
   },
 };
 

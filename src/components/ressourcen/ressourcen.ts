@@ -12,8 +12,8 @@ export type Ressource = {
   satz: string;
   /* Höchstens drei, kurz genug für eine Zeile am Laptop (sonst passt der Abschnitt nicht mehr ins Fenster). */
   punkte: string[];
-  /* ganz: Bild nicht beschneiden (Symbol auf dunklem Grund). Ohne Bild zeigt die Karte eine ruhige Fläche. */
-  bild?: { src: string; alt: string; ganz?: boolean };
+  /* ganz: Bild nicht beschneiden (Symbol auf dunklem Grund). */
+  bild: { src: string; alt: string; ganz?: boolean };
   /* Seite der Ressource und Sprungziel ihres Formulars dort. */
   seite: string;
   formular: string;
@@ -21,8 +21,6 @@ export type Ressource = {
   /* Nur bei Open Source: öffentliches Repository und Lizenz (SPDX-Kürzel). */
   code?: string;
   lizenz?: string;
-  /* Noch in Arbeit: ruhige Fläche statt Bild, kein Eintrag in den Angaben für Google. */
-  kommt?: true;
 };
 
 export const RESSOURCEN: Ressource[] = [
@@ -40,6 +38,19 @@ export const RESSOURCEN: Ressource[] = [
     knopf: "Startpaket holen",
   },
   {
+    name: "Skill-Paket",
+    art: "Skills für Claude · Deutsch",
+    satz: "Vier Skills, die ich selbst nutze, auf Deutsch und zum Anpassen an deine Stimme.",
+    punkte: ["Texte ohne KI-Klang", "Schöneres Design", "Check vor dem Livegang"],
+    bild: {
+      src: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
+      alt: "Skizze: aufgeschlagenes Notizbuch mit Entwürfen für eine Webseite, daneben ein Laptop und eine Tasse Kaffee",
+    },
+    seite: "/claude-code/skill-paket",
+    formular: "anfordern",
+    knopf: "Skill-Paket holen",
+  },
+  {
     name: "Mooni Voice",
     art: "Diktieren · Open Source",
     satz: "Du sprichst, und der Text steht da. In jeder App, auch in Claude Code.",
@@ -50,15 +61,5 @@ export const RESSOURCEN: Ressource[] = [
     knopf: "Mooni Voice holen",
     code: "https://github.com/IljaSabalaKrasevskij/mooni-voice",
     lizenz: "MIT",
-  },
-  {
-    name: "Skill-Paket",
-    art: "Skills für Claude",
-    satz: "Meine Skills für menschliche Texte und schöneres Design. Ich packe sie gerade für dich zusammen.",
-    punkte: ["Du bekommst Bescheid per Mail"],
-    seite: "/claude-code/startpaket",
-    formular: "anfordern",
-    knopf: "Bis dahin: das Startpaket",
-    kommt: true,
   },
 ];

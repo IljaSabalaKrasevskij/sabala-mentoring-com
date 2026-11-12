@@ -8,7 +8,7 @@ const SEITE = `${SITE}/ressourcen`;
 /* Mit dem Zusatz „ · Sabala Studios“ aus dem Layout 60 Zeichen, die Beschreibung bleibt unter 160. */
 const title = "Kostenlose Ressourcen zu Claude Code und KI";
 const description =
-  "Das Claude-Code-Startpaket und Mooni Voice: Vorlagen und Werkzeuge aus meiner täglichen Arbeit mit KI. Kostenlos, du trägst dich ein und lädst sie herunter.";
+  "Claude-Code-Startpaket, Skill-Paket und Mooni Voice: Vorlagen, Skills und Werkzeuge aus meiner täglichen Arbeit mit KI. Kostenlos zum Herunterladen.";
 
 export const metadata: Metadata = {
   title,
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
 };
 
-/* Maschinenlesbare Angaben: die Liste der Ressourcen, jede kostenlos. Was noch kommt, steht nicht drin.
+/* Maschinenlesbare Angaben: die Liste der Ressourcen, jede kostenlos.
    Werkzeuge mit Quellcode als Anwendung, alles andere als Werk. Die Person steht schon im Layout. */
 const ANGABEN = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "@id": `${SEITE}#ressourcen`,
   name: title,
-  itemListElement: RESSOURCEN.filter((r) => !r.kommt).map((r, i) => ({
+  itemListElement: RESSOURCEN.map((r, i) => ({
     "@type": "ListItem",
     position: i + 1,
     item: {

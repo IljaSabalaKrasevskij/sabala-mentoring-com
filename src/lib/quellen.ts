@@ -32,6 +32,7 @@ export type Nische = keyof typeof NISCHEN;
 /** Leadmagnete mit eigener Seite und eigenem Formular. Das Kürzel ist die Quelle im Briefkasten. */
 export const LEADMAGNETE = {
   "startpaket-claude-code": { name: "Claude-Code-Startpaket", nische: "claude-code", danke: "/claude-code/startpaket/danke" },
+  "skill-paket": { name: "Skill-Paket", nische: "claude-code", danke: "/claude-code/skill-paket/danke" },
   "ki-newsletter": { name: "KI-Newsletter", nische: "einstieg", danke: "/newsletter/bestaetigt" },
 } as const satisfies Record<string, { name: string; nische: Nische; danke: string }>;
 export type Leadmagnet = keyof typeof LEADMAGNETE;

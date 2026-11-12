@@ -18,6 +18,7 @@ test("Jede Quelle zeigt auf eine Nische, die es gibt (oder bewusst auf keine)", 
 test("Kürzel von Leadmagneten und Namen alter Formulare stoßen nicht zusammen, Fremdes wird nicht erkannt", () => {
   for (const kuerzel of Object.keys(LEADMAGNETE)) assert.ok(!(kuerzel in FORMULARE), kuerzel);
   assert.equal(istLeadmagnet("startpaket-claude-code"), true);
+  assert.equal(istLeadmagnet("skill-paket"), true);
   assert.equal(istLeadmagnet("Akademie-Newsletter"), false);
   assert.equal(istQuelle("Akademie-Newsletter"), true);
   for (const fremd of ["", "gibt-es-nicht", "toString", "__proto__", "constructor"]) {
@@ -33,6 +34,7 @@ test("Der Klick in der Bestätigungsmail führt auf eine eigene Seite der Websei
     assert.equal(dankeSeite(kuerzel), m.danke);
   }
   assert.equal(dankeSeite("startpaket-claude-code"), "/claude-code/startpaket/danke");
+  assert.equal(dankeSeite("skill-paket"), "/claude-code/skill-paket/danke");
   for (const sonst of ["Akademie-Newsletter", "Warteliste Kurs", "", "gibt-es-nicht", "__proto__", "//boese.example"]) {
     assert.equal(dankeSeite(sonst), "/newsletter/bestaetigt", sonst);
   }

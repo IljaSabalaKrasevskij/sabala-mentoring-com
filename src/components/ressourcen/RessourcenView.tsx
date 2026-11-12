@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Check, CodeXml, Gift, Mail, Palette, PenLine, Sparkles, Wrench } from "lucide-react";
+import { Check, CodeXml, Gift, Mail, Wrench } from "lucide-react";
 import { GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TiltCard, Weiter } from "@/components/akademie/shared";
 import { RESSOURCEN, type Ressource } from "./ressourcen";
 
@@ -42,7 +42,7 @@ function Kopf() {
           Was ich selbst nutze. <span className="text-gold-light">Gratis für dich.</span>
         </h1>
         <p className="cs-rise mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-relaxed min-[56.25rem]:text-[1.14rem]" style={{ color: TEXT_DUNKEL, ...EIN(0.12) }}>
-          Startpaket, Werkzeuge und Vorlagen aus meiner täglichen Arbeit mit KI. Du trägst dich ein und lädst sie herunter.
+          Startpaket, Skills und Werkzeuge aus meiner täglichen Arbeit mit KI. Du trägst dich ein und lädst sie herunter.
         </p>
         <div className="cs-rise mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center" style={EIN(0.18)}>
           <Knopf href="#ressourcen">Zu den Ressourcen</Knopf>
@@ -55,36 +55,15 @@ function Kopf() {
   );
 }
 
-/* Was noch kommt: ruhige Fläche mit drei Symbolen statt Bild, keine Strichrahmen. Die Symbole stehen unter der Zone
-   des Etiketts „Kommt bald“, damit sie sich bei flachem Fenster (Bild 120 px hoch) nicht überdecken. */
-function Bald() {
-  return (
-    <div aria-hidden className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 80% at 50% 60%, rgba(184,150,62,0.2), transparent 75%)" }}>
-      <div className="absolute inset-x-0 bottom-0 top-[52px] flex items-center justify-center gap-3">
-        {[PenLine, Sparkles, Palette].map((Symbol, i) => (
-          <span key={i} className="flex h-12 w-12 items-center justify-center rounded-full text-gold-light" style={{ background: "rgba(212,174,90,0.14)", border: "1px solid rgba(212,174,90,0.45)" }}>
-            <Symbol size={22} strokeWidth={1.7} />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /* Je Ressource eine Karte: oben das Bild, darunter Nutzen, Punkte und der Weg zum Formular. */
 function Karte({ r }: { r: Ressource }) {
   return (
     <TiltCard hervor={1.015} max={3} radius={20} className="h-full shadow-[0_18px_44px_rgba(46,43,38,0.1)] hover:shadow-[0_34px_70px_rgba(46,43,38,0.22)]">
       <article className="flex h-full flex-col overflow-hidden rounded-[20px] bg-white" style={{ border: "1px solid rgba(184,150,62,0.32)" }}>
         <div className="relative shrink-0" style={{ height: "clamp(120px, calc(100svh - 540px), 200px)", background: "var(--tech-bg)" }}>
-          {r.bild ? (
-            <Image src={r.bild.src} alt={r.bild.alt} fill sizes="(min-width: 1024px) 360px, 92vw" className={r.bild.ganz ? "object-contain" : "object-cover"} style={{ objectPosition: "center 30%" }} />
-          ) : (
-            <Bald />
-          )}
-          <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 font-mono text-[12.5px] uppercase tracking-[0.16em] text-tech-bg" style={{ background: "var(--gold-light)" }}>
-            {r.kommt && <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: "#f5c542", boxShadow: "0 0 0 2px rgba(10,8,6,0.55)" }} />}
-            {r.kommt ? "Kommt bald" : "Gratis"}
+          <Image src={r.bild.src} alt={r.bild.alt} fill sizes="(min-width: 1024px) 360px, 92vw" className={r.bild.ganz ? "object-contain" : "object-cover"} style={{ objectPosition: "center 30%" }} />
+          <span className="absolute left-4 top-4 rounded-full px-3.5 py-1.5 font-mono text-[12.5px] uppercase tracking-[0.16em] text-tech-bg" style={{ background: "var(--gold-light)" }}>
+            Gratis
           </span>
           {r.code && (
             <a
@@ -119,15 +98,8 @@ function Karte({ r }: { r: Ressource }) {
               </li>
             ))}
           </ul>
-          {/* Was noch kommt, bekommt nur einen leisen Textlink, alles andere den goldenen Knopf zum Formular. */}
           <div className="mt-auto pt-5">
-            {r.kommt ? (
-              <Weiter hell href={`${r.seite}#${r.formular}`}>
-                {r.knopf}
-              </Weiter>
-            ) : (
-              <Knopf href={`${r.seite}#${r.formular}`}>{r.knopf}</Knopf>
-            )}
+            <Knopf href={`${r.seite}#${r.formular}`}>{r.knopf}</Knopf>
           </div>
         </div>
       </article>
