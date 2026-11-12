@@ -54,6 +54,17 @@ export const BERATUNG_GUTSCHEIN = 120;
    in der Reihenfolge von `sessions`. Die Labels in COHORTS bleiben fuer die Startseite, wie sie sind. */
 export const TERMIN_NAMEN = ["Workshop 1", "Workshop 2", "Fragestunde"];
 
+/* Die Eckdaten des laufenden Kurses als kurze Punkte für Karten (Akademie-Übersicht und Startseite).
+   Zwei Workshops in einer Zeile, die Fragestunde in der zweiten: die Uhrzeiten stehen auf der Kursseite.
+   Hat ein Lauf einmal nicht genau drei Termine, steht jeder in einer eigenen Zeile. Ohne buchbaren Lauf: Warteliste. */
+export function kursPunkte(): string[] {
+  if (!CURRENT_COHORT) return ["Zwei Live-Workshops und eine Fragestunde", "Kleine Runde, live per Zoom", "Auf der Warteliste erfährst du den Termin zuerst"];
+  const { sessions, capacity } = CURRENT_COHORT;
+  const tage = sessions.map((s) => formatTagMonat(s.date));
+  const termine = tage.length === 3 ? [`Workshops am ${tage[0]} und ${tage[1]}`, `${TERMIN_NAMEN[2]} am ${tage[2]}`] : tage.map((t, i) => `${TERMIN_NAMEN[i] ?? sessions[i].label}: ${t}`);
+  return [...termine, `Kleine Runde, maximal ${capacity} Plätze`];
+}
+
 export function formatSessionDate(date: string) {
   return new Intl.DateTimeFormat("de-DE", {
     weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",

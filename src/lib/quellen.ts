@@ -51,6 +51,16 @@ export const FORMULARE = {
   Kontaktformular: { nische: null },
 } as const satisfies Record<string, { nische: Nische | null }>;
 
+/** Themen im Kontaktformular der Startseite („Worum geht es?“). Das Formular schickt nur das Kürzel. Name und Nische kommen
+ *  von hier, wie bei den Leadmagneten. `frage` steht als Hilfe im Nachrichtenfeld, sobald ein Thema gewählt ist. */
+export const KONTAKT_THEMEN = {
+  webseite: { name: "Webseite", frage: "Was soll deine Webseite können? Gibt es schon eine?", nische: null },
+  "ki-schulung": { name: "KI-Schulung fürs Team", frage: "Wie groß ist euer Team, und was soll es danach mit KI können?", nische: "ki-schulung" },
+  kurs: { name: "Kurs oder Beratung", frage: "Woran arbeitest du gerade, und wo steckst du fest?", nische: null },
+  anderes: { name: "Etwas anderes", frage: "Was ist dein Wunsch? Schreib einfach drauflos.", nische: null },
+} as const satisfies Record<string, { name: string; frage: string; nische: Nische | null }>;
+export type KontaktThema = keyof typeof KONTAKT_THEMEN;
+
 export type Quelle = keyof typeof FORMULARE | Leadmagnet;
 
 export const istLeadmagnet = (quelle: string): quelle is Leadmagnet => Object.prototype.hasOwnProperty.call(LEADMAGNETE, quelle);

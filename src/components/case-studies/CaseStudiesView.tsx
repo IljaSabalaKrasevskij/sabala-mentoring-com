@@ -97,7 +97,7 @@ export function CaseStudiesView({ initialLang }: { initialLang: Locale }) {
               const start = offset;
               offset += items.length;
               return (
-                <div key={cat.key} className="mt-20 first:mt-0">
+                <div key={cat.key} id={`rubrik-${cat.key}`} className="mt-20 scroll-mt-24 first:mt-0">
                   {/* Rubrik-Kopf */}
                   <div className="cs-rise mb-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
                     <h3 className="font-instrument text-[clamp(1.6rem,3vw,2.3rem)] leading-none tracking-tight">
