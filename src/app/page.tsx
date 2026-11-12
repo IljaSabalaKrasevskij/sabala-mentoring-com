@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import StartView from "@/components/home/StartView";
 import { metadata as layoutMetadata } from "./layout";
 
-/* Startseite. Der Titel kommt aus dem Layout („Sabala Studios · High-End Creative Web Development“).
+/* Startseite. Der Titel kommt aus dem Layout („Sabala Studios · Ich baue mit KI. Du baust mit.“).
    Die Beschreibung nennt die drei Dinge, für die die Seite steht: zeigen, bauen, Show Cases. Höchstens 160 Zeichen. */
 const description = "Sabala Studios von Ilja Krasevskij: Ich zeige dir, wie du mit KI arbeitest, oder baue es für dich. Webseiten, KI-Systeme, Live-Kurse und Show Cases im Einsatz.";
 

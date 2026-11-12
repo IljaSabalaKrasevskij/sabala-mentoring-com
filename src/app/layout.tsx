@@ -29,7 +29,7 @@ const satoshi = localFont({
 
 const siteUrl = "https://sabala-mentoring.com";
 const siteName = "Sabala Studios";
-const siteTitle = "Sabala Studios · High-End Creative Web Development";
+const siteTitle = "Sabala Studios · Ich baue mit KI. Du baust mit.";
 const siteDescription =
   "Premium-Webauftritte aus eigenem Code: eigenständig im Design, schnell in der Technik, sichtbar bei Google und in KI-Antworten. Dazu KI-Trainings für Teams. Von Ilja Krasevskij.";
 const ogImage = `${siteUrl}/og-image.jpg`;
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Sabala Studios. High-End Creative Web Development.",
+        alt: "Ilja Krasevskij am Laptop. Sabala Studios.",
       },
     ],
   },
