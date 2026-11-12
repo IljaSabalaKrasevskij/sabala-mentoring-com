@@ -32,9 +32,10 @@ async function strecke(db, { status = "an", seit = "2026-11-12 09:00:00", stopp 
   }
 }
 
-const postfach = (streikt = false) => {
+/** fehler: Antwortcode des Mailservers, mit dem jeder Versand scheitert (451 bremst, 550 lehnt ab). Ohne: alles kommt an. */
+const postfach = (fehler = 0) => {
   const mails = [];
-  return { mails, senden: async (m) => { if (streikt) throw new Error("Postfach streikt"); mails.push(m); } };
+  return { mails, senden: async (m) => { if (fehler) throw Object.assign(new Error(`${fehler} Probefehler`), { responseCode: fehler }); mails.push(m); } };
 };
 const t = (db, p, minuten, extra = {}) => takt(db, { senden: p.senden, testAn: TEST_AN, jetzt: um(minuten), ...extra });
 const spalte = async (db, sql) => (await db.execute(sql)).rows;
@@ -82,7 +83,8 @@ test("Kauf stoppt, Abmelden stoppt sofort, und der Abmelde-Link gilt auch nach e
   await strecke(db, { stopp: "Kauf: Webseiten-Kurs", schritte: [{ warten: 0 }, { warten: 1440 }, { warten: 1440 }] });
   const p = postfach();
   await t(db, p, 1);
-  assert.equal(p.mails.length, 2);
+  await t(db, p, 6);
+  assert.equal(p.mails.length, 2, "eine Mail je Takt");
   const token = p.mails.find((m) => m.an === "geher@example.com").abmelden;
   assert.match(token, /^[A-Za-z0-9_-]{32}$/);
 
@@ -119,23 +121,24 @@ test("Testmodus: Mails gehen nur ins Test-Postfach, ohne echten Abmelde-Link; ec
   await streckeSchalten(db, "probe", "an", um(2));
   await kontakt(db, "neu@example.com", "2026-11-12 10:03:00");
   await t(db, p, 5, { pruefen });
+  await t(db, p, 10, { pruefen });
   assert.deepEqual(p.mails.slice(1).map((m) => [m.an, m.test]), [["echt@example.com", false], ["neu@example.com", false]]);
 
   // Zurück auf Test: Echte Läufe warten, wer jetzt kommt, läuft als Test.
-  await streckeSchalten(db, "probe", "test", um(6));
-  await kontakt(db, "spaet@example.com", "2026-11-12 10:10:00");
-  await t(db, p, 70, { pruefen });
+  await streckeSchalten(db, "probe", "test", um(11));
+  await kontakt(db, "spaet@example.com", "2026-11-12 10:12:00");
+  await t(db, p, 75, { pruefen });
   assert.deepEqual(p.mails.slice(3).map((m) => [m.an, m.fuer]), [[TEST_AN, "spaet@example.com"]], "Mail 2 der echten Läufe wartet");
   assert.deepEqual(gefragt, ["echt@example.com", "neu@example.com"], "ActiveCampaign wird nur vor echten Mails gefragt");
   const arten = (await spalte(db, "SELECT art FROM nl_ereignisse WHERE art LIKE 'strecke%' ORDER BY id")).map((x) => x.art);
   assert.deepEqual(arten, ["strecke-test", "strecke", "strecke", "strecke-test"]);
 });
 
-test("Scheitert der Versand, kommt dieselbe Mail eine Stunde später, nach drei Fehlern ist Schluss; zwei Takte zugleich senden nie doppelt", async () => {
+test("Lehnt der Server ab, kommt die Mail eine Stunde später, nach drei Ablehnungen ist Schluss; bremst das Postfach, zählt das nicht; zwei Takte zugleich senden nie doppelt", async () => {
   const db = frisch();
   await kontakt(db, "anna@example.com");
   await strecke(db, { schritte: [{ warten: 0 }, { warten: 60 }] });
-  const kaputt = postfach(true);
+  const kaputt = postfach(550);
   await t(db, kaputt, 1);
   let [l] = await spalte(db, "SELECT schritt, status, fehler, faellig_am FROM nl_laeufe");
   assert.deepEqual({ ...l }, { schritt: 1, status: "laeuft", fehler: 1, faellig_am: "2026-11-12 11:01:00" });
@@ -149,7 +152,7 @@ test("Scheitert der Versand, kommt dieselbe Mail eine Stunde später, nach drei 
   const db1 = frisch();
   await kontakt(db1, "anna@example.com");
   await strecke(db1, { schritte: [{ warten: 0 }, { warten: 60 }] });
-  await t(db1, postfach(true), 1);
+  await t(db1, postfach(550), 1);
   const heil = postfach();
   await t(db1, heil, 61);
   assert.equal(heil.mails.length, 1);
@@ -166,6 +169,21 @@ test("Scheitert der Versand, kommt dieselbe Mail eine Stunde später, nach drei 
   [l] = await spalte(db3, "SELECT schritt, fehler FROM nl_laeufe");
   assert.deepEqual({ ...l }, { schritt: 2, fehler: 0 });
 
+  // Das Postfach bremst zwei Stunden lang (451): Nichts wird gezählt, alles Fällige wartet je 30 Minuten, niemand fliegt raus.
+  const db4 = frisch();
+  await kontakt(db4, "a@example.com");
+  await kontakt(db4, "b@example.com");
+  await strecke(db4);
+  const bremst = postfach(451);
+  for (const m of [1, 31, 61, 91, 121]) await t(db4, bremst, m);
+  const zeilen = await spalte(db4, "SELECT status, fehler, faellig_am FROM nl_laeufe ORDER BY id");
+  assert.deepEqual(zeilen.map((x) => [x.status, x.fehler, x.faellig_am]), [["laeuft", 0, "2026-11-12 12:31:00"], ["laeuft", 0, "2026-11-12 12:31:00"]], "beide warten, keiner gezählt");
+  assert.equal(bremst.mails.length, 0);
+  const wieder = postfach();
+  await t(db4, wieder, 151);
+  await t(db4, wieder, 156);
+  assert.equal(wieder.mails.length, 2, "danach geht alles raus");
+
   const db2 = frisch();
   await kontakt(db2, "anna@example.com");
   await strecke(db2);
@@ -174,15 +192,15 @@ test("Scheitert der Versand, kommt dieselbe Mail eine Stunde später, nach drei 
   assert.equal(p.mails.length, 1);
 });
 
-test("Höchstens zehn Mails je Takt; ein verpasster fester Termin wird übersprungen, nie nachgeholt", async () => {
+test("Höchstens eine Mail je Takt, zwölf in der Stunde; ein verpasster fester Termin wird übersprungen, nie nachgeholt", async () => {
   const db = frisch();
   for (let i = 0; i < 12; i++) await kontakt(db, `k${i}@example.com`);
   await strecke(db);
   const p = postfach();
   await t(db, p, 1);
-  assert.equal(p.mails.length, JE_TAKT);
-  await t(db, p, 6);
-  assert.equal(p.mails.length, 12);
+  assert.equal(p.mails.length, 1, "der erste Takt schickt genau eine (12 je Stunde, passt neben eine Rundmail ins Postfach)");
+  for (let i = 1; i < 12; i++) await t(db, p, 1 + 5 * i);
+  assert.equal(p.mails.length, 12, "nach einer Stunde sind alle zwölf raus");
 
   const db2 = frisch();
   await kontakt(db2, "spaet@example.com");

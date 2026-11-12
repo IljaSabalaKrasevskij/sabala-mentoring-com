@@ -19,7 +19,9 @@ import { randomBytes } from "node:crypto";
    - Jeder läuft eine Strecke höchstens einmal.
    - Vor jeder Mail: Einwilligung noch aktiv? Stopp-Merkmal da (Kauf)? Bei ActiveCampaign abgemeldet? Dann ist Schluss.
    - Eine Mail geht höchstens einmal raus: Der Schritt wird erst genommen (UPDATE mit Bedingung), dann verschickt.
-     Scheitert der Versand, wird er zurückgegeben und eine Stunde später neu versucht. Nach dem dritten Fehler ist Schluss.
+     Scheitert der Versand, wird er zurückgegeben. Bremst das Postfach (vorübergehend, etwa „451 bitte später“), warten
+     alle fälligen Mails 30 Minuten, gezählt wird das nicht. Lehnt der Server die Mail ab (5xx), kommt sie eine Stunde
+     später wieder, nach der dritten Ablehnung ist für diesen Menschen Schluss.
    - Was passiert, steht in nl_ereignisse. Sabala Mail zeigt es am Kontakt.
 
    Ohne App-Importe, damit strecken.test.mjs die Datei direkt mit Node laden kann. Versand und Rückfrage bei
@@ -29,11 +31,20 @@ import { randomBytes } from "node:crypto";
 /** Dieselbe Liste wie LISTE.schluessel in einwilligung.ts: der Sabala Newsletter, dazu sagen alle Formulare Ja. */
 const LISTE = "sabala-newsletter";
 
-/** Mails je Takt (alle fünf Minuten), also höchstens 120 in der Stunde.
- *  ponytail: feste Zahl fürs eigene Postfach. Für große Listen kommt ein Versanddienst (geplant: Amazon SES), dann hochsetzen. */
-export const JE_TAKT = 10;
-/** Nach so vielen gescheiterten Versuchen hört eine Strecke für diesen Kontakt auf. */
+/** Mails je Takt (alle fünf Minuten), also höchstens 12 in der Stunde. Das Postfach (Serverprofis) schafft etwa 60 je Stunde
+ *  und teilt sie mit den Bestätigungsmails und den Rundmails aus Sabala Mail (48 je Stunde, alle 75 Sekunden eine). Übrig bleiben 12.
+ *  ponytail: feste Zahl fürs eigene Postfach. Mit eigenem Versanddienst (geplant: Amazon SES) hochsetzen. */
+export const JE_TAKT = 1;
+/** So lange warten alle fälligen Mails, wenn das Postfach bremst. */
+const PAUSE_MINUTEN = 30;
+/** Nach so vielen Ablehnungen am Stück hört eine Strecke für diesen Kontakt auf. */
 const VERSUCHE = 3;
+/** Endgültig heißt: Der Server lehnt diese Mail ab (5xx, etwa „Adresse gibt es nicht“). Alles andere ist vorübergehend:
+ *  das Postfach bremst (4xx), die Verbindung reißt ab, die Zeit läuft aus. Das soll niemanden aus einer Strecke werfen. */
+const endgueltig = (err: unknown) => {
+  const code = Number((err as { responseCode?: unknown } | null)?.responseCode);
+  return code >= 500 && code < 600;
+};
 
 export const SCHEMA_STRECKEN = [
   `CREATE TABLE IF NOT EXISTS nl_strecken (
@@ -231,7 +242,7 @@ export async function takt(
      LEFT JOIN nl_einwilligungen e ON e.kontakt_id = l.kontakt_id AND e.liste_id = (SELECT id FROM nl_listen WHERE schluessel = ?)
      WHERE l.status = 'laeuft' AND l.faellig_am <= ? AND (s.status = 'an' OR (s.status = 'test' AND l.test = 1))
      ORDER BY l.faellig_am LIMIT ?`,
-    [LISTE, jetzt, JE_TAKT * 5],
+    [LISTE, jetzt, JE_TAKT + 20], // mehr ansehen als senden: Gestoppte und Übersprungene kosten keinen Versand
   );
   const bis = Date.now() + 40_000; // Zeitrahmen der Funktion: lieber im nächsten Takt weiter als mitten im Versand abbrechen
 
@@ -296,16 +307,30 @@ export async function takt(
     try {
       await o.senden({ an: l.test ? o.testAn : l.email, fuer: l.email, vorname: l.vorname, betreff: s.betreff, vorschau: s.vorschau, inhalt: s.inhalt, abmelden: token, test: !!l.test });
     } catch (err) {
-      // Zurückgeben: derselbe Schritt in einer Stunde. Beim dritten Fehler ist Schluss.
-      await db.execute({
-        sql: `UPDATE nl_laeufe SET schritt = ?, fehler = fehler + 1,
-                status = CASE WHEN fehler + 1 >= ? THEN 'gestoppt' ELSE 'laeuft' END,
-                grund = CASE WHEN fehler + 1 >= ? THEN 'Versand ${VERSUCHE}-mal gescheitert' ELSE grund END,
-                faellig_am = CASE WHEN fehler + 1 >= ? THEN NULL ELSE ? END
-              WHERE id = ? AND schritt = ? AND status = ?`,
-        args: [l.schritt, VERSUCHE, VERSUCHE, VERSUCHE, plus(jetzt, 60), l.id, nach.schritt, nach.status],
-      });
-      await ereignis("strecke-fehler", `${l.strecke}, Mail ${s.nr}: ${String(err instanceof Error ? err.message : err).slice(0, 200)}`)?.catch(() => {});
+      const text = String(err instanceof Error ? err.message : err).slice(0, 200);
+      if (endgueltig(err)) {
+        // Der Server lehnt diese Mail ab: derselbe Schritt in einer Stunde. Bei der dritten Ablehnung ist Schluss.
+        await db.execute({
+          sql: `UPDATE nl_laeufe SET schritt = ?, fehler = fehler + 1,
+                  status = CASE WHEN fehler + 1 >= ? THEN 'gestoppt' ELSE 'laeuft' END,
+                  grund = CASE WHEN fehler + 1 >= ? THEN 'Versand ${VERSUCHE}-mal abgelehnt' ELSE grund END,
+                  faellig_am = CASE WHEN fehler + 1 >= ? THEN NULL ELSE ? END
+                WHERE id = ? AND schritt = ? AND status = ?`,
+          args: [l.schritt, VERSUCHE, VERSUCHE, VERSUCHE, plus(jetzt, 60), l.id, nach.schritt, nach.status],
+        });
+        await ereignis("strecke-fehler", `${l.strecke}, Mail ${s.nr}: abgelehnt, ${text}`)?.catch(() => {});
+      } else {
+        // Das Postfach bremst: zurückgeben, ohne zu zählen, und alles Fällige wartet. Sonst stieße jeder Takt erneut an die Grenze.
+        const spaeter = plus(jetzt, PAUSE_MINUTEN);
+        await db.batch(
+          [
+            { sql: "UPDATE nl_laeufe SET schritt = ?, status = 'laeuft', faellig_am = ? WHERE id = ? AND schritt = ? AND status = ?", args: [l.schritt, spaeter, l.id, nach.schritt, nach.status] },
+            { sql: "UPDATE nl_laeufe SET faellig_am = ? WHERE status = 'laeuft' AND faellig_am <= ?", args: [spaeter, jetzt] },
+          ],
+          "write",
+        );
+        await ereignis("strecke-fehler", `${l.strecke}, Mail ${s.nr}: Postfach bremst, neuer Versuch in ${PAUSE_MINUTEN} Minuten (${text})`)?.catch(() => {});
+      }
       r.fehler++;
       break; // Streikt das Postfach, streikt es meist für alle. Der Rest kommt im nächsten Takt.
     }
