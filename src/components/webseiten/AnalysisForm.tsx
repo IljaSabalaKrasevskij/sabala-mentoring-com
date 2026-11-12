@@ -8,6 +8,7 @@ import styles from "./AnalysisForm.module.css";
 import { useAnalysisSession } from "./AnalysisSession";
 import { ereignis } from "@/lib/ereignis";
 import { formularBeruehrt, siegel } from "@/lib/formular-senden";
+import Telefon from "@/components/formular/Telefon";
 
 const COPY = {
   de: {
@@ -92,6 +93,8 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
   }, [step, errors, state]);
 
   const navigate = (destination: number) => {
+    // Das Telefonfeld merkt sich die Eingabe selbst und beginnt nach dem Zurückblättern leer: im Entwurf dann auch.
+    if (destination === 2) setDraft(previous => ({ ...previous, telefon: "" }));
     setStep(destination); setErrors({}); focus.current = "heading";
   };
 
@@ -111,10 +114,14 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
     }
     sendingRef.current = true;
     setState("loading");
-    const { url, email, consent, ...qualification } = draft;
+    const { url, email, consent, telefon, ...qualification } = draft;
     try {
-      const response = await fetch("/api/audit-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: draft.noWebsite ? "" : url, email, consent, lang, qualification, siegel: await siegel() }) });
+      const response = await fetch("/api/audit-request", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: draft.noWebsite ? "" : url, email, consent, lang, qualification, ...(lang === "de" ? { telefon } : {}), siegel: await siegel() }) });
       const result = await response.json();
+      // Die Nummer prüft erst der Server (Ländervorwahl, Sondernummern, Beispielnummern): Seine Meldung steht dann am Feld.
+      if (response.status === 422 && result.feld === "telefon") {
+        setErrors({ telefon: result.meldung }); focus.current = "telefon"; setState("idle"); return;
+      }
       if (!response.ok || result.success !== true) throw new Error("Request was not saved");
       ereignis("formular-abgeschickt", { formular: "audit-request", quelle: "projekt-anfrage" });
       setState("success"); focus.current = "heading";
@@ -155,6 +162,13 @@ export default function AnalysisForm({ lang, variant = "page", onContinue }: { l
         <Field id={id("name")} label={T.name} error={errors.name}><input {...props("name")} autoComplete="name" value={draft.name} onChange={e => update("name", e.target.value)} maxLength={120} placeholder={T.namePlaceholder} /></Field>
         <Field id={id("role")} label={T.role} error={errors.role}><input {...props("role")} autoComplete="organization-title" value={draft.role} onChange={e => update("role", e.target.value)} maxLength={120} placeholder={T.rolePlaceholder} /></Field>
         <Field id={id("email")} label={T.email} error={errors.email}><input {...props("email")} type="email" autoComplete="email" autoCapitalize="none" spellCheck={false} value={draft.email} onChange={e => update("email", e.target.value)} maxLength={254} placeholder={T.emailPlaceholder} /></Field>
+        {lang === "de" && <div className={styles.telefonFeld}>
+          <label htmlFor={id("telefon")}>Deine Telefonnummer</label>
+          {/* Die Meldung zeigt das Formular selbst (.fieldError), in den Farben von hellem und dunklem Grund. */}
+          <Telefon onChange={t => update("telefon", t)} className={styles.telefonKasten}
+            eingabe={{ id: id("telefon"), name: "telefon", "aria-invalid": !!errors.telefon, "aria-describedby": errors.telefon ? `${id("telefon")}-error` : undefined }} />
+          {errors.telefon && <p id={`${id("telefon")}-error`} className={styles.fieldError}>{errors.telefon}</p>}
+        </div>}
         <div><label className={styles.check}><input {...props("consent")} type="checkbox" checked={draft.consent} onChange={e => update("consent", e.target.checked)} /><span>{T.consent} <Link href="/datenschutz">{T.privacy}</Link>.</span></label>{errors.consent && <p id={`${id("consent")}-error`} className={styles.fieldError}>{errors.consent}</p>}</div>
       </>}
     </fieldset>

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { auditDetailRows, auditNotionChildren, normalizeAuditUrl, parseAuditRequest, validateProjectStep, EMPTY_PROJECT } from "./audit-request.ts";
 
 export const validRequest = {
-  url: " example.com ", email: " alex@example.com ", consent: true, lang: "de",
+  url: " example.com ", email: " alex@example.com ", telefon: "+49 1520 4817263", consent: true, lang: "de",
   qualification: { company: " Beispiel Studio ", industry: "Architektur", noWebsite: false, projectType: "relaunch", audience: "Gewerbliche Bauherren", goal: "Unser Auftritt soll die Qualität unserer Arbeit zeigen und passende Anfragen bringen.", timeline: "within-3-months", name: "Alex Beispiel", role: "Geschäftsführung" },
 };
 
@@ -68,4 +68,14 @@ test("each step validates its own fields and provides English errors", () => {
   assert.deepEqual(Object.keys(validateProjectStep(EMPTY_PROJECT, 0, "de")), ["company", "industry", "url"]);
   assert.deepEqual(Object.keys(validateProjectStep(EMPTY_PROJECT, 1, "de")), ["projectType", "audience", "goal", "timeline"]);
   assert.match(validateProjectStep(EMPTY_PROJECT, 2, "en").name, /Please/);
+});
+
+test("das deutsche Formular verlangt eine Telefonnummer, das englische hat keins", () => {
+  assert.ok(validateProjectStep(EMPTY_PROJECT, 2, "de").telefon);
+  assert.equal(validateProjectStep(EMPTY_PROJECT, 2, "en").telefon, undefined);
+  const { telefon: _ohne, ...ohneTelefon } = validRequest;
+  assert.ok(parseAuditRequest(ohneTelefon).errors.telefon);
+  assert.ok(parseAuditRequest({ ...ohneTelefon, lang: "en" }).data);
+  const mit = { ...parseAuditRequest(validRequest).data, telefon: "+49 1520 4817263" };
+  assert.equal(Object.fromEntries(auditDetailRows(mit))["Telefon"], "+49 1520 4817263");
 });

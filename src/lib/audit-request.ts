@@ -25,12 +25,14 @@ export type ProjectDetails = {
   name: string;
   role: string;
 };
-export type ProjectDraft = ProjectDetails & { url: string; email: string; consent: boolean };
-export type AuditRequest = { url: string; email: string; consent: true; lang: AuditLang; qualification?: ProjectDetails };
+// telefon: Pflicht in den deutschen Formularen (Iljas Regel). Hier nur „nicht leer“, die echte Prüfung macht der Server
+// mit src/lib/telefon.ts. Die Datei läuft auch im Browser, die Nummernliste dort wäre zu schwer.
+export type ProjectDraft = ProjectDetails & { url: string; email: string; consent: boolean; telefon: string };
+export type AuditRequest = { url: string; email: string; consent: true; lang: AuditLang; qualification?: ProjectDetails; telefon?: string };
 export type AuditField = keyof ProjectDraft;
 export type AuditErrors = Partial<Record<AuditField, string>>;
 
-export const EMPTY_PROJECT: ProjectDraft = { company: "", industry: "", noWebsite: false, url: "", projectType: "", audience: "", goal: "", timeline: "", name: "", role: "", email: "", consent: false };
+export const EMPTY_PROJECT: ProjectDraft = { company: "", industry: "", noWebsite: false, url: "", projectType: "", audience: "", goal: "", timeline: "", name: "", role: "", email: "", consent: false, telefon: "" };
 
 export function normalizeAuditUrl(raw: unknown): string | null {
   if (typeof raw !== "string" || raw.trim().length > 2000) return null;
@@ -71,6 +73,8 @@ export function validateProjectStep(draft: Partial<ProjectDraft>, step: number, 
     if (!textInRange(draft.name, 2, 120)) errors.name = de ? "Bitte gib deinen Namen an." : "Please enter your name.";
     if (!textInRange(draft.role, 2, 120)) errors.role = de ? "Welche Rolle hast du im Unternehmen?" : "What is your role in the company?";
     if (!normalizeAuditEmail(draft.email)) errors.email = de ? "Bitte gib eine gültige E-Mail-Adresse ein." : "Please enter a valid email address.";
+    // Das englische Formular hat kein Telefonfeld: Das Bauteil mit der Ländervorwahl spricht nur Deutsch.
+    if (de && !textInRange(draft.telefon, 1, 60)) errors.telefon = "Bitte gib deine Telefonnummer mit Ländervorwahl an.";
     if (draft.consent !== true) errors.consent = de ? "Bitte bestätige die Datenschutzhinweise." : "Please confirm the privacy notice.";
   }
   return errors;
@@ -93,7 +97,7 @@ export function parseAuditRequest(body: unknown): { data: AuditRequest; errors?:
   }
   if (!raw.qualification || typeof raw.qualification !== "object" || Array.isArray(raw.qualification)) return { errors: { company: "Ungültige Projektangaben." } };
   const q = raw.qualification as Record<string, unknown>;
-  const draft = { ...q, url: raw.url, email: raw.email, consent: raw.consent } as Partial<ProjectDraft>;
+  const draft = { ...q, url: raw.url, email: raw.email, consent: raw.consent, telefon: raw.telefon } as Partial<ProjectDraft>;
   const errors = { ...validateProjectStep(draft, 0, lang), ...validateProjectStep(draft, 1, lang), ...validateProjectStep(draft, 2, lang) };
   if (typeof q.noWebsite !== "boolean") errors.url = lang === "de" ? "Bitte gib an, ob bereits eine Webseite besteht." : "Please specify whether you have a website.";
   if (Object.keys(errors).length) return { errors };
@@ -114,6 +118,7 @@ export function auditDetailRows(payload: AuditRequest): [string, string][] {
     ["Vorhaben", q.projectType ? PROJECT_LABELS.de.projectType[q.projectType] : ""], ["Zielgruppe", q.audience],
     ["Gewünschte Veränderung", q.goal], ["Zeitrahmen", q.timeline ? PROJECT_LABELS.de.timeline[q.timeline] : ""],
     ["Ansprechpartner", q.name], ["Rolle im Unternehmen", q.role], ["E-Mail", payload.email],
+    ...(payload.telefon ? [["Telefon", payload.telefon] as [string, string]] : []),
     ["Formularsprache", payload.lang], ["Datenschutz-Einwilligung", "Bestätigt"],
   ];
 }
