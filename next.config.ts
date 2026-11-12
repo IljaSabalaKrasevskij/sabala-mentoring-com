@@ -42,6 +42,16 @@ const nextConfig: NextConfig = {
         destination: "https://sabala-mentoring.com/:path*",
         permanent: true,
       },
+      // Vercel lieferte die Live-Seite zusätzlich unter sabala-mentoring.vercel.app aus, mit Status 200 und ohne noindex.
+      // So fand Google Vercel-Adressen (Ilja, 12.11.2026). Auch hier: alles auf die eigene Domain.
+      // Vorschauen haben andere Namen (…-sabala-studios-projects.vercel.app) und bleiben erreichbar. Kein eigenes Werkzeug
+      // ruft die Seite über diesen Namen auf (am 12.11.2026 in Sabala Mail, sabala-data und den Skills gesucht).
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "sabala-mentoring.vercel.app" }],
+        destination: "https://sabala-mentoring.com/:path*",
+        permanent: true,
+      },
       // Next.js liefert die Startseite auch unter /index aus, GSC fuehrte sie als Duplikat.
       {
         source: "/index",
