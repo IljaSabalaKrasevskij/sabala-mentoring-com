@@ -89,15 +89,16 @@ export default function MooniVoiceTeaser() {
             >
               Mooni Voice laden <span aria-hidden>→</span>
             </Link>
+            {/* Tippfläche 47 px statt 19 px: Innenabstand oben und unten, der gleich große negative Außenabstand hält Zeilen und Abstände wie vorher */}
             <a
               href="https://github.com/IljaSabalaKrasevskij/mooni-voice"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light"
+              className="-my-3.5 py-3.5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light"
             >
               Quellcode auf GitHub ↗
             </a>
-            <Link href="/shop" className="font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light">
+            <Link href="/shop" className="-my-3.5 py-3.5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light">
               Alle Werkzeuge im Shop →
             </Link>
           </div>

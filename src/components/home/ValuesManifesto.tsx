@@ -123,6 +123,7 @@ function PortalMooniScene() {
   );
 }
 
+// Braucht keine Pause: Das Portal gibt es nur, solange es offen ist, und dann deckt es das ganze Fenster.
 function PortalMooniBG() {
   return (
     <Canvas camera={{ position: [0, 0, 9], fov: 38 }} dpr={[1, 1.5]} gl={{ alpha: true }} style={{ pointerEvents: "none" }}>
@@ -256,7 +257,19 @@ export default function ValuesManifesto() {
   const [hovered, setHovered] = useState<number | null>(null);
   const [mooniHover, setMooniHover] = useState(false);
   const [portal, setPortal] = useState(false);
+  const [nah, setNah] = useState(true);
   const [vp, setVp] = useState({ w: 0, h: 0 });
+
+  // Mooni rechnet nur, solange die Strecke höchstens einen Bildschirm entfernt ist (seit 12.11.2026: darunter folgen
+  // sechs Abschnitte, dort lesen die Leute lange). Weiter weg zeichnet die 3D-Welt kein Bild. Der Vorlauf von einem
+  // Bildschirm sorgt dafür, dass Mooni schon wieder läuft, bevor er ins Bild kommt: Beim Anlaufen beginnt sein Schweben neu.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setNah(e.isIntersecting), { rootMargin: "100% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const onResize = () => setVp({ w: window.innerWidth, h: window.innerHeight });
@@ -266,6 +279,7 @@ export default function ValuesManifesto() {
   }, []);
 
   // Fortschritt beim Scrollen von 0 bis 1. Seit dem 11.11.2026 ohne Lenis: normales Scroll-Ereignis, höchstens einmal je Frame.
+  // ponytail: misst auch außer Sicht, aber nur beim Scrollen; der Wert bleibt dort bei 0 oder 1, React zeichnet nichts neu (gemessen 12.11.2026).
   useEffect(() => {
     let frame = 0;
     const messen = () => {
@@ -328,7 +342,7 @@ export default function ValuesManifesto() {
 
         {/* Mooni zentral */}
         <div className="absolute inset-0 z-10">
-          <Canvas camera={{ position: [0, 0, 7], fov: 40 }} dpr={[1, 2]} gl={{ alpha: true }}>
+          <Canvas frameloop={nah ? "always" : "never"} camera={{ position: [0, 0, 7], fov: 40 }} dpr={[1, 2]} gl={{ alpha: true }}>
             <ambientLight intensity={0.85} />
             <directionalLight position={[4, 6, 5]} intensity={2.6} />
             <directionalLight position={[-5, 2, 3]} intensity={1.1} color="#F2E2B8" />
@@ -457,7 +471,7 @@ export default function ValuesManifesto() {
                   key={v.word}
                   type="button"
                   onClick={() => setHovered(hovered === i ? null : i)}
-                  className="relative flex items-center justify-center gap-2 px-3 py-3 transition-all duration-200"
+                  className="relative flex min-h-11 items-center justify-center gap-2 px-3 py-3 transition-all duration-200"
                   style={{
                     borderRadius: 12,
                     background: isHot ? v.color : "linear-gradient(180deg, #ffffff, #f3eee4)",
@@ -478,11 +492,12 @@ export default function ValuesManifesto() {
           </div>
         </div>
 
-        {/* Easter-Egg: klein, unten rechts (oben rechts liegt seit dem 11.11.2026 das Menü), wer's findet, klickt Mooni */}
+        {/* Easter-Egg: klein, unten rechts (oben rechts liegt seit dem 11.11.2026 das Menü), wer's findet, klickt Mooni.
+            Tippfläche 47 px: Innenabstand plus gleich großer negativer Außenabstand, der Text bleibt an seinem Platz. */}
         <button
           type="button"
           onClick={() => setPortal(true)}
-          className="absolute bottom-6 right-6 z-20 font-mono text-[12.5px] tracking-[0.22em]"
+          className="absolute bottom-6 right-6 z-20 -my-3.5 py-3.5 font-mono text-[12.5px] tracking-[0.22em]"
           style={{ color: "#2F6F6B" }}
         >
           ◉ ping_mooni
