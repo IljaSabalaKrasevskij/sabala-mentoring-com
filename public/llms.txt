@@ -34,7 +34,7 @@
 
 ## Freie Werkzeuge
 
-- [Shop](https://sabala-mentoring.com/shop): kostenlose Open-Source-Werkzeuge aus der täglichen Arbeit.
+- [Ressourcen](https://sabala-mentoring.com/ressourcen): alles Kostenlose an einem Ort, das Claude-Code-Startpaket und Werkzeuge aus der täglichen Arbeit.
 - [Mooni Voice](https://sabala-mentoring.com/mooni-voice): Sprache zu Text, lokal auf dem Mac.
 
 ## Artikel

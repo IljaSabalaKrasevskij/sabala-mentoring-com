@@ -18,7 +18,7 @@ const STUFEN: Stufe[] = [
     hier: "Du hast von KI gehört, ChatGPT mal probiert, nutzt es aber nicht im Alltag.",
     weiter: "Hol dir in einer Stunde Klarheit. Du fragst, ich zeige es dir live am Bildschirm.",
     ziel: { text: "Zur Beratungsstunde", href: "/beratung" },
-    auch: { text: "Lieber allein starten: zum Shop", href: "/shop" },
+    auch: { text: "Lieber allein starten: zu den Ressourcen", href: "/ressourcen" },
   },
   {
     level: 2,

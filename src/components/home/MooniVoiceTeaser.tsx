@@ -98,8 +98,8 @@ export default function MooniVoiceTeaser() {
             >
               Quellcode auf GitHub ↗
             </a>
-            <Link href="/shop" className="-my-3.5 py-3.5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light">
-              Alle Werkzeuge im Shop →
+            <Link href="/ressourcen" className="-my-3.5 py-3.5 font-mono text-[12.5px] uppercase tracking-[0.14em] text-warm-light transition-colors hover:text-gold-light">
+              Alle Ressourcen →
             </Link>
           </div>
         </motion.div>
