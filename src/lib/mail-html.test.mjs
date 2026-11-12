@@ -59,9 +59,19 @@ test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den
   assert.ok(html.includes("Erst danach schreibe ich dir.") && text.includes("Erst danach schreibe ich dir:"), "allgemeine Mail unverändert");
 });
 
+test("Das Skill-Paket nennt sich in der Bestätigungsmail, ohne Werbung", () => {
+  const a = anlassVon("skill-paket");
+  assert.match(a.betreff, /Skill-Paket/);
+  const h = bestaetigungHtml(LINK, WORTLAUT, a);
+  const t = bestaetigungText(LINK, WORTLAUT, a);
+  for (const s of [h, t]) assert.ok(s.includes("Skill-Paket") && s.includes("direkt zum Download"), "nennt Paket und Download");
+  for (const werbung of ["/akademie", "/shop", "/ressourcen", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!h.includes(werbung), werbung);
+});
+
 test("Download-Mail: Knopf zum Paket, drei Schritte, nur eigene Adressen, nichts aus dem Formular", () => {
-  const d = downloadVon("startpaket-claude-code");
-  assert.ok(d, "Startpaket hat eine Download-Mail");
+  for (const quelle of ["startpaket-claude-code", "skill-paket"]) {
+  const d = downloadVon(quelle);
+  assert.ok(d, `${quelle} hat eine Download-Mail`);
   const h = downloadHtml(d);
   const t = downloadText(d);
   assert.ok(h.includes(`<a href="${d.seite}"`) && t.includes(d.seite), "Knopf und Text zeigen auf die Dankeseite");
@@ -82,6 +92,7 @@ test("Download-Mail: Knopf zum Paket, drei Schritte, nur eigene Adressen, nichts
   const groessen = [...h.matchAll(/font-size:\s*([\d.]+)px/g)].map((m) => Number(m[1])).filter((g) => g > 1);
   assert.ok(Math.min(...groessen) >= 12, `kleinste Schrift ${Math.min(...groessen)} px`);
   assert.ok(!/<style/i.test(h) && !h.includes("undefined") && !t.includes("undefined"));
+  }
   // Nur Quellen mit Paket bekommen eine Download-Mail
   for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) assert.equal(downloadVon(q), null, q);
 });
