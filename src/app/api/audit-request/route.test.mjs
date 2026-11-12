@@ -5,12 +5,14 @@ import path from "node:path";
 import vm from "node:vm";
 import ts from "typescript";
 import * as validation from "../../../lib/audit-request.ts";
+import * as telefon from "../../../lib/telefon.ts";
 
-const sample = { url: "example.com", email: "alex@example.com", consent: true, lang: "de", qualification: { company: "Beispiel Studio", industry: "Architektur", noWebsite: false, projectType: "relaunch", audience: "Gewerbliche Bauherren", goal: "Wir möchten unser Angebot klarer zeigen und passende Projektanfragen erhalten.", timeline: "open", name: "Alex Beispiel", role: "Geschäftsführung" } };
+const sample = { url: "example.com", email: "alex@example.com", telefon: "+49 1520 4817263", consent: true, lang: "de", qualification: { company: "Beispiel Studio", industry: "Architektur", noWebsite: false, projectType: "relaunch", audience: "Gewerbliche Bauherren", goal: "Wir möchten unser Angebot klarer zeigen und passende Projektanfragen erhalten.", timeline: "open", name: "Alex Beispiel", role: "Geschäftsführung" } };
 
 // Run the actual handler with isolated transports. Never write a test lead or send a notification.
-function handler({ notionFails = false, pushFails = false, siegel = "ok", istJson = true } = {}) {
+function handler({ notionFails = false, pushFails = false, briefkastenFails = false, siegel = "ok", istJson = true } = {}) {
   const calls = [];
+  const leads = []; // was in den Briefkasten fürs CRM ginge
   const exports = {};
   const source = ts.transpileModule(readFileSync(new URL("./route.ts", import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
   const sandbox = {
@@ -24,6 +26,9 @@ function handler({ notionFails = false, pushFails = false, siegel = "ok", istJso
       if (name === "@/lib/audit-request") return validation;
       // Botschutz als Attrappe: Der echte braucht Datenbank und Schlüssel. Hier zählt nur, was die Route mit seinem Urteil macht.
       if (name === "@/lib/botschutz") return { ipAus: () => "203.0.113.7", jsonAus: async (req) => (istJson ? req.json() : undefined), siegelPruefen: async () => siegel };
+      // Briefkasten als Attrappe: Der echte schreibt in Turso. Die Telefonprüfung ist die echte.
+      if (name === "@/lib/leads") return { insertLead: async (lead) => { if (briefkastenFails) return false; leads.push(lead); return true; } };
+      if (name === "@/lib/telefon") return telefon;
       throw new Error(`Unexpected module: ${name}`);
     },
     async fetch(url, options) {
@@ -34,7 +39,7 @@ function handler({ notionFails = false, pushFails = false, siegel = "ok", istJso
     },
   };
   vm.runInNewContext(source, sandbox);
-  return { post: body => exports.POST({ json: async () => body }), calls };
+  return { post: body => exports.POST({ json: async () => body }), calls, leads };
 }
 
 test("persists all project details before notifying with the saved page link", async () => {
@@ -61,10 +66,51 @@ test("invalid qualification never reaches persistence or notifications", async (
   assert.equal(calls.length, 0);
 });
 
-test("storage failure returns an error and sends no notification", async () => {
-  const { post, calls } = handler({ notionFails: true });
+test("Notion fällt aus, der Briefkasten hält die Anfrage: Erfolg und Push", async () => {
+  const { post, calls, leads } = handler({ notionFails: true });
+  assert.equal((await post(sample)).status, 200);
+  assert.equal(leads.length, 1);
+  assert.equal(calls.length, 2); // Notion versucht, dann der Push
+});
+
+test("fallen Notion und Briefkasten aus, gibt es einen Fehler und keinen Push", async () => {
+  const { post, calls } = handler({ notionFails: true, briefkastenFails: true });
   assert.equal((await post(sample)).status, 500);
   assert.equal(calls.length, 1);
+});
+
+test("die Anfrage landet im Briefkasten fürs CRM, mit Name, Telefon und allen Angaben", async () => {
+  const { post, calls, leads } = handler();
+  assert.equal((await post(sample)).status, 200);
+  const [lead] = leads;
+  assert.equal(lead.quelle, "Webseiten-Analyse");
+  assert.equal(lead.vorname, "Alex");
+  assert.equal(lead.nachname, "Beispiel");
+  assert.equal(lead.email, sample.email);
+  assert.equal(lead.telefon, "+49 1520 4817263");
+  assert.equal(lead.unternehmen, sample.qualification.company);
+  assert.ok(lead.anliegen.startsWith("Webseiten-Analyse\n"), lead.anliegen);
+  for (const wert of [sample.qualification.goal, sample.qualification.audience, "Architektur"]) assert.ok(lead.anliegen.includes(wert), wert);
+  assert.ok(JSON.stringify(calls[0].body.children).includes("+49 1520 4817263"), "Telefon steht auch in Notion");
+  assert.ok(calls[1].body.message.includes("+49 1520 4817263"), "und im Push");
+});
+
+test("ohne gültige Telefonnummer wird nichts gespeichert, die Meldung gehört ans Feld", async () => {
+  for (const nummer of [undefined, "", "0151 2345678", "+49 151 23456789", "+49 900 1234567"]) {
+    const { post, calls, leads } = handler();
+    const response = await post({ ...sample, telefon: nummer });
+    const body = await response.json();
+    assert.ok([400, 422].includes(response.status), `${nummer}: ${response.status}`);
+    if (response.status === 422) assert.equal(body.feld, "telefon", nummer);
+    assert.equal(calls.length + leads.length, 0, nummer);
+  }
+});
+
+test("das englische Formular hat kein Telefonfeld und braucht keins", async () => {
+  const { post, leads } = handler();
+  const { telefon: _ohne, ...englisch } = { ...sample, lang: "en" };
+  assert.equal((await post(englisch)).status, 200);
+  assert.equal(leads[0].telefon, undefined);
 });
 
 test("a saved request stays successful even if the notification fails", async () => {
@@ -72,11 +118,18 @@ test("a saved request stays successful even if the notification fails", async ()
   assert.equal((await post(sample)).status, 200);
 });
 
-test("compact blog submissions remain compatible", async () => {
-  const { post, calls } = handler();
-  const legacy = { url: sample.url, email: sample.email, consent: true };
-  assert.equal((await post(legacy)).status, 200);
+test("die kurze Blog-Fassung bleibt verträglich, braucht jetzt aber die Telefonnummer", async () => {
+  const { post, calls, leads } = handler();
+  const kurz = { url: sample.url, email: sample.email, consent: true };
+  assert.equal((await post({ ...kurz, telefon: sample.telefon })).status, 200);
   assert.equal(calls[0].body.children, undefined);
+  assert.ok(leads[0].anliegen.startsWith("Webseiten-Audit aus dem Blog\n"), leads[0].anliegen);
+  assert.equal(leads[0].vorname, "");
+  const ohne = handler();
+  const antwort = await ohne.post(kurz);
+  assert.equal(antwort.status, 422);
+  assert.equal((await antwort.json()).feld, "telefon");
+  assert.equal(ohne.calls.length + ohne.leads.length, 0);
 });
 
 test("ohne gültigen Stempel wird nichts gespeichert und niemand benachrichtigt", async () => {

@@ -1,6 +1,7 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Link from "next/link";
 import { ArrowRight, Lock, Sparkles, UserCheck } from "lucide-react";
+import { KontaktFormular } from "@/components/home/Kontakt";
 
 export const metadata = {
   title: "Termin buchen",
@@ -103,7 +104,7 @@ export default function BookingGatekeeperPage() {
           <div className="w-px h-16 bg-gradient-to-b from-white/20 to-transparent mx-auto mb-12"></div>
           <h2 className="font-instrument text-2xl md:text-3xl text-white mb-6">Zeit sparen durch Wertschätzung</h2>
           <p className="text-white/50 font-satoshi text-lg leading-[1.8] max-w-[700px] mx-auto">
-            Wahre Begleitung fordert Präsenz. Ich verarbeite keine Anfragen am Fließband, sondern arbeite konkret und intensiv an Ergebnissen. Diese Klarheit an der "Tür" spart uns beiden Zeit und schützt die Qualität des Mentorings.
+            Wahre Begleitung fordert Präsenz. Ich verarbeite keine Anfragen am Fließband, sondern arbeite konkret und intensiv an Ergebnissen. Diese Klarheit an der „Tür“ spart uns beiden Zeit und schützt die Qualität des Mentorings.
           </p>
         </ScrollReveal>
       </section>
@@ -140,25 +141,11 @@ export default function BookingGatekeeperPage() {
                       Ein Bildschirm kann viel vermitteln, aber manchmal braucht es erst ein kurzes Wort von Mensch zu Mensch. Wenn du eine individuelle Frage hast oder nicht sicher bist, wo du aktuell stehst: Schreib mir offen und ehrlich. Ich antworte dir ganz persönlich.
                    </p>
                    
-                   <form className="space-y-6 flex flex-col w-full max-w-lg">
-                      <div className="flex flex-col gap-2">
-                         <label htmlFor="name" className="text-xs text-warm-steel/60 font-mono tracking-[0.15em] uppercase">Wie darf ich dich nennen?</label>
-                         <input type="text" id="name" className="bg-transparent border-b-2 border-whisper-border px-2 py-3 text-deep-charcoal focus:outline-none focus:border-refined-gold transition-colors font-satoshi text-lg" placeholder="Dein Name" />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                         <label htmlFor="email" className="text-xs text-warm-steel/60 font-mono tracking-[0.15em] uppercase">Wohin darf ich antworten?</label>
-                         <input type="email" id="email" className="bg-transparent border-b-2 border-whisper-border px-2 py-3 text-deep-charcoal focus:outline-none focus:border-refined-gold transition-colors font-satoshi text-lg" placeholder="deine@email.de" />
-                      </div>
-                      
-                      <div className="flex flex-col gap-2 mt-4">
-                         <label htmlFor="message" className="text-xs text-warm-steel/60 font-mono tracking-[0.15em] uppercase">Deine Gedanken</label>
-                         <textarea id="message" rows={3} className="bg-transparent border-b-2 border-whisper-border px-2 py-3 text-deep-charcoal focus:outline-none focus:border-refined-gold transition-colors resize-none font-satoshi text-lg" placeholder="Wie kann ich dir helfen?"></textarea>
-                      </div>
-
-                      <button type="button" className="bg-deep-charcoal hover:bg-refined-gold text-pure-surface rounded-full px-10 py-5 font-bold uppercase tracking-widest transition-all mt-8 shadow-[0_10px_30px_rgba(26,26,24,0.15)] hover:shadow-[0_15px_40px_rgba(184,150,62,0.3)] hover:-translate-y-1 self-start text-sm">
-                         Nachricht senden
-                      </button>
-                   </form>
+                   {/* Das Kontaktformular der Startseite in einer dunklen Karte: Telefon, Botschutz und Häkchen wie überall,
+                       die Anfrage landet im CRM. Vorher stand hier ein Formular ohne Absenden, Nachrichten gingen verloren. */}
+                   <div className="w-full max-w-xl rounded-[2rem] p-6 shadow-[0_20px_50px_rgba(26,26,24,0.18)] md:p-8" style={{ background: "var(--tech-bg)" }}>
+                      <KontaktFormular />
+                   </div>
                 </div>
 
              </div>

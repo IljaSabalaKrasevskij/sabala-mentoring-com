@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
-import { auditNotionChildren, parseAuditRequest, type AuditRequest } from "@/lib/audit-request";
+import { auditDetailRows, auditNotionChildren, parseAuditRequest, type AuditRequest } from "@/lib/audit-request";
 import { ipAus, jsonAus, siegelPruefen } from "@/lib/botschutz";
+import { insertLead } from "@/lib/leads";
+import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
 
 export const runtime = "nodejs";
 
@@ -62,11 +64,36 @@ async function saveToNotion(payload: AuditRequest): Promise<{ saved: boolean; pa
   }
 }
 
+/* Briefkasten fürs CRM (Turso, Tabelle leads), wie bei allen anderen Formularen: Von dort holt Sabala Mail die Anfrage.
+   Vorher landeten Analyse-Anfragen nur in Notion und kamen nie im CRM an. Notion bleibt der zweite Speicher. */
+async function saveToBriefkasten(payload: AuditRequest): Promise<boolean> {
+  const q = payload.qualification;
+  const [vorname = "", ...rest] = (q?.name ?? "").split(/\s+/).filter(Boolean);
+  const OHNE = ["Ansprechpartner", "E-Mail", "Telefon", "Formularsprache", "Datenschutz-Einwilligung"]; // steht schon in eigenen Spalten
+  const angaben = q ? auditDetailRows(payload).filter(([k]) => !OHNE.includes(k)).map(([k, v]) => `${k}: ${v}`) : [`Webseite: ${payload.url}`];
+  try {
+    return await insertLead({
+      vorname,
+      nachname: rest.join(" "),
+      email: payload.email,
+      unternehmen: q?.company ?? "",
+      webseite: payload.url,
+      anliegen: [q ? "Webseiten-Analyse" : "Webseiten-Audit aus dem Blog", ...angaben].join("\n"),
+      quelle: "Webseiten-Analyse",
+      telefon: payload.telefon,
+    });
+  } catch (err) {
+    console.error("[audit-request] Briefkasten:", err);
+    return false;
+  }
+}
+
 async function pushNtfy(payload: AuditRequest, pageId?: string): Promise<{ sent: boolean; reason?: string; channel?: string }> {
   const q = payload.qualification;
+  const telefon = payload.telefon ? `\n${payload.telefon}` : "";
   const summary = q
-    ? `${q.company} · ${q.industry}\n${q.name} · ${q.role}\n${payload.email}\n${payload.url || "Noch keine Webseite"}\n\n${q.goal.slice(0, 300)}`
-    : `URL: ${payload.url}\nEmail: ${payload.email}`;
+    ? `${q.company} · ${q.industry}\n${q.name} · ${q.role}\n${payload.email}${telefon}\n${payload.url || "Noch keine Webseite"}\n\n${q.goal.slice(0, 300)}`
+    : `URL: ${payload.url}\nE-Mail: ${payload.email}${telefon}`;
   const notionLink = pageId ? `https://www.notion.so/${pageId.replaceAll("-", "")}` : "https://www.notion.so/5fd25d02df244473bbeadba79f88ae12";
   // Primary: ntfy.sh (Open-Source, Self-hosted-ready, robust)
   const NTFY_TOPIC = process.env.NTFY_TOPIC;
@@ -129,15 +156,26 @@ export async function POST(req: NextRequest) {
   if (!parsed.data) return NextResponse.json({ error: Object.values(parsed.errors)[0], errors: parsed.errors }, { status: 400 });
   const payload = parsed.data;
 
+  // Telefon: Pflicht in den deutschen Formularen, geprüft wie bei allen anderen (src/lib/telefon.ts). Vor dem Stempel,
+  // damit ein Tippfehler keinen verbraucht. Das englische Formular hat kein Telefonfeld.
+  if (payload.lang === "de") {
+    const roh = (body as Record<string, unknown>).telefon;
+    const t = telefonPruefen(typeof roh === "string" ? roh : "");
+    if (!("nummer" in t)) return NextResponse.json({ error: TELEFON_MELDUNG[t.fehler], feld: "telefon", meldung: TELEFON_MELDUNG[t.fehler] }, { status: 422 });
+    payload.telefon = t.nummer;
+  }
+
   // Botschutz: Stempel und Obergrenze je Absender (src/lib/botschutz.ts). Diese Route legt Seiten in Notion an und klingelt auf dem Handy.
   const urteil = await siegelPruefen(ipAus(req), body);
   if (urteil !== "ok") {
     return NextResponse.json({ error: payload.lang === "en" ? "Please reload the page and try again." : "Bitte lade die Seite neu und versuch es noch einmal." }, { status: urteil === "zu-viele" ? 429 : 400 });
   }
 
-  const [fileResult, notionResult] = await Promise.all([saveToFile(payload), saveToNotion(payload)]);
+  // Gespeichert ist die Anfrage, sobald sie in einem der Speicher steht: Briefkasten (CRM), Notion oder lokal als Datei.
+  const [fileResult, notionResult, imBriefkasten] = await Promise.all([saveToFile(payload), saveToNotion(payload), saveToBriefkasten(payload)]);
   if (!notionResult.saved) console.warn("[audit-request] Notion:", notionResult.reason);
-  if (!notionResult.saved && !fileResult) {
+  if (!imBriefkasten) console.warn("[audit-request] Briefkasten: nicht gespeichert");
+  if (!notionResult.saved && !fileResult && !imBriefkasten) {
     console.error("[audit-request] Kein Save-Backend erreichbar. Anfrage nicht gespeichert.");
     return NextResponse.json({ error: "Speichern fehlgeschlagen. Versuch es bitte später." }, { status: 500 });
   }
