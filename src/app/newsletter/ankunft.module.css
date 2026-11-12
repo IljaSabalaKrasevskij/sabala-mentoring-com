@@ -147,3 +147,9 @@
   .auf, .ring, .haken { animation: none; }
   .ring { display: none; }
 }
+/* Der Knopf als echter Knopf (Abmelden schickt ein Formular ab): ohne Rahmen und Systemschrift des Browsers. */
+button.knopf {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}

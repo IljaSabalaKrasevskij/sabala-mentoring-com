@@ -6,6 +6,7 @@ import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
 import { getClient } from "@/lib/leads";
 import { bestaetigungSenden, downloadSenden, mailBereit } from "@/lib/mail";
 import { FORMULARE, istLeadmagnet, istQuelle, LEADMAGNETE, NISCHEN, nischeVon, type Quelle } from "@/lib/quellen";
+import { merkmalSetzen } from "@/lib/strecken";
 import { TELEFON_MELDUNG, telefonPruefen } from "@/lib/telefon";
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -106,7 +107,7 @@ const JE_ABSENDER_JE_STUNDE = 30;
 
 /* Adresse für den Link in der Mail. Fest, nicht aus der Anfrage gelesen: Sonst könnte jemand mit einem gefälschten
    Host-Kopf unsere Mail mit einem Link auf eine fremde Seite verschicken lassen. Vorschau-Bauten nehmen ihre eigene Adresse. */
-const BASIS = (process.env.SEITE_URL || (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://sabala-mentoring.com")).replace(/\/+$/, "");
+export const BASIS = (process.env.SEITE_URL || (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://sabala-mentoring.com")).replace(/\/+$/, "");
 
 /** Häkchen gesetzt: Nachweis festhalten und die Bestätigungsmail schicken. */
 export async function einwilligungStarten(d: { formular: Formular; email: string; vorname: string; nachname: string; version?: number; ip: string }): Promise<Bestaetigung> {
@@ -141,6 +142,9 @@ export async function einwilligungBestaetigen(token: string, ip: string): Promis
   const b = await bestaetigen(db, token, ip);
   if (!b) return null;
   if (b.neu) {
+    // Die Nische auch als Merkmal, wie der Tag im Newsletter-Werkzeug. Daran können Strecken hängen (strecken.ts).
+    const nische = istQuelle(b.quelle) ? nischeVon(b.quelle) : null;
+    if (nische) await merkmalSetzen(db, b.email, `Nische: ${NISCHEN[nische]}`).catch((err) => console.error("[einwilligung] Nische nicht gemerkt:", err));
     await insWerkzeug(b, b.quelle);
     // Wer ein Paket angefordert hat, bekommt es genau einmal per Mail zum Aufheben (nur beim ersten Klick, neu).
     // Erst nach der Antwort: Der Klick landet sofort auf der Dankeseite, auch wenn der Mailserver trödelt.

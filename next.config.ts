@@ -46,10 +46,12 @@ const nextConfig: NextConfig = {
       // So fand Google Vercel-Adressen (Ilja, 12.11.2026). Auch hier: alles auf die eigene Domain.
       // Vorschauen haben andere Namen (…-sabala-studios-projects.vercel.app) und bleiben erreichbar. Kein eigenes Werkzeug
       // ruft die Seite über diesen Namen auf (am 12.11.2026 in Sabala Mail, sabala-data und den Skills gesucht).
+      // Ausgenommen ist der Takt der Mail-Strecken (vercel.json, crons): Vercel ruft ihn über eine eigene Adresse auf und
+      // folgt keiner Umleitung, ein 308 würde ihn still beenden. Er antwortet nur mit dem Schlüssel CRON_SECRET.
       {
-        source: "/:path*",
+        source: "/:path((?!api/strecken/takt$).*)",
         has: [{ type: "host", value: "sabala-mentoring.vercel.app" }],
-        destination: "https://sabala-mentoring.com/:path*",
+        destination: "https://sabala-mentoring.com/:path",
         permanent: true,
       },
       // Next.js liefert die Startseite auch unter /index aus, GSC fuehrte sie als Duplikat.

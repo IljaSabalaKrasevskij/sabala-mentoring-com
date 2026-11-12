@@ -28,8 +28,9 @@ export const maskiert = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&
 const zeileMono = (t: string, farbe = GOLD) =>
   `<div style="font-family:${MONO}; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:${farbe};">${t}</div>`;
 
-/** Kopf, Inhalt, Fuß. inhalt sind fertige Tabellenzeilen (<tr>…</tr>), zeile steht klein unter dem Schriftzug. adlerImKopf: der kleine Adler rechts oben, wie im Newsletter. */
-export function mailRahmen({ titel, vorschau, zeile, inhalt, adlerImKopf = true }: { titel: string; vorschau: string; zeile: string; inhalt: string; adlerImKopf?: boolean }): string {
+/** Kopf, Inhalt, Fuß. inhalt sind fertige Tabellenzeilen (<tr>…</tr>), zeile steht klein unter dem Schriftzug. adlerImKopf: der kleine Adler rechts oben, wie im Newsletter.
+ *  abmelden: Adresse der Abmelde-Seite. Gesetzt bei allem, was nicht nur bestätigt oder ausliefert (Strecken, Newsletter). */
+export function mailRahmen({ titel, vorschau, zeile, inhalt, adlerImKopf = true, abmelden }: { titel: string; vorschau: string; zeile: string; inhalt: string; adlerImKopf?: boolean; abmelden?: string }): string {
   return `<!doctype html>
 <html lang="de">
 <head>
@@ -81,7 +82,12 @@ ${inhalt}
           <span style="color:#5C574F; padding:0 6px;">&middot;</span>
           <a href="${SEITE}/impressum" style="color:#A09C95; text-decoration:underline;">Impressum</a>
           <span style="color:#5C574F; padding:0 6px;">&middot;</span>
-          <a href="${SEITE}/datenschutz" style="color:#A09C95; text-decoration:underline;">Datenschutz</a>
+          <a href="${SEITE}/datenschutz" style="color:#A09C95; text-decoration:underline;">Datenschutz</a>${
+            abmelden
+              ? `<br>Du bekommst diese Mail, weil du dich auf sabala-mentoring.com eingetragen hast.
+          <a href="${maskiert(abmelden)}" style="color:#D9D3C9; text-decoration:underline;">Abmelden</a> geht jederzeit.`
+              : ""
+          }
         </div>
       </td>
     </tr>
@@ -304,4 +310,57 @@ export function downloadText(d: Download): string {
     "",
     ...FUSS_TEXT,
   ].join("\n");
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Strecken-Mails (strecken.ts): Der Text kommt aus der Datenbank, geschrieben im Cockpit. Schreibweise:
+   - Leerzeile = neuer Absatz, einfacher Zeilenumbruch bleibt einer.
+   - Ein Absatz nur aus [Text](https://…) wird ein goldener Knopf. Im Fließtext wird [Text](https://…) ein Link, **so** wird fett.
+   - {vorname} wird ersetzt, ohne Namen steht „du“ da („Hey {vorname},“ → „Hey du,“).
+   Alles wird zuerst maskiert, erst danach werden Links und Fett eingesetzt. Links nur mit https, sonst bleibt der Text stehen, wie er ist.
+   ────────────────────────────────────────────────────────────────────────── */
+
+export type StreckenInhalt = { betreff: string; vorschau: string; inhalt: string; vorname: string; abmelden: string };
+
+const LINK = /\[([^\]\n]+)\]\((https:\/\/[^\s)"<>]+)\)/g;
+const absaetze = (inhalt: string) => inhalt.replace(/\r/g, "").split(/\n[ \t]*\n/).map((t) => t.trim()).filter(Boolean);
+const knopf = (text: string, link: string) => `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:8px 0 26px 0;">
+          <tr>
+            <td align="center" bgcolor="${GOLD_HELL}" style="background-color:${GOLD_HELL}; border-radius:999px;">
+              <a href="${link}" style="display:inline-block; padding:16px 30px; font-family:${MONO}; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${DUNKEL}; text-decoration:none; border-radius:999px;">${text}</a>
+            </td>
+          </tr>
+        </table>`;
+
+export function streckenHtml(m: StreckenInhalt): string {
+  const name = maskiert(m.vorname.trim() || "du");
+  const html = absaetze(m.inhalt)
+    .map((roh) => {
+      const t = maskiert(roh); // ab hier ist alles maskiert, auch die Adressen in den Links
+      const k = t.match(/^\[([^\]\n]+)\]\((https:\/\/[^\s)"<>]+)\)$/);
+      if (k) return knopf(k[1], k[2]);
+      const satz = t
+        .replace(LINK, `<a href="$2" style="color:#7A5C18; text-decoration:underline;">$1</a>`)
+        .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n/g, "<br>");
+      return `<p style="margin:0 0 18px 0;">${satz}</p>`;
+    })
+    .join("\n        ")
+    .replaceAll("{vorname}", () => name); // als Funktion: Sonst liest replaceAll $&, $' und $$ im Namen als Muster
+  const inhalt = `
+    <tr>
+      <td style="padding:38px 28px 20px 28px; font-family:${SANS}; font-size:16px; line-height:1.65; color:${TEXT};">
+        ${html}
+      </td>
+    </tr>`;
+  return mailRahmen({ titel: m.betreff, vorschau: m.vorschau, zeile: "Sabala Newsletter", inhalt, abmelden: m.abmelden });
+}
+
+export function streckenText(m: StreckenInhalt): string {
+  const text = absaetze(m.inhalt)
+    .join("\n\n")
+    .replace(LINK, "$1: $2")
+    .replace(/\*\*([^*\n]+)\*\*/g, "$1")
+    .replaceAll("{vorname}", () => m.vorname.trim() || "du");
+  return [text, "", ...FUSS_TEXT, "", "Du bekommst diese Mail, weil du dich auf sabala-mentoring.com eingetragen hast.", `Abmelden mit einem Klick: ${m.abmelden}`].join("\n");
 }
