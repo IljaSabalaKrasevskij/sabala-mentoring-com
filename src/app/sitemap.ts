@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/akademie/webseiten-mit-claude-code", priority: 0.8, changeFrequency: "monthly" },
     { path: "/termin-buchen", priority: 0.8, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/shop", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/ressourcen", priority: 0.7, changeFrequency: "monthly" },
     { path: "/mooni-voice", priority: 0.6, changeFrequency: "monthly" },
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },

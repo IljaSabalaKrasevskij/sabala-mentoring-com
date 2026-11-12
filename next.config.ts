@@ -112,20 +112,26 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/open-source-projekte",
-        destination: "/shop",
+        destination: "/ressourcen",
         permanent: true,
       },
-      // Die zwei alten Kaufprodukte sind seit 11.11.2026 eingestellt: Im Shop stehen nur noch
-      // Open-Source-Werkzeuge. Seit 12.11.2026 sind auch die Käuferseite und die Bilder entfernt.
-      // Alles unter den alten Adressen führt in den Shop.
+      // Seit 12.11.2026 heißt der Shop „Ressourcen“: kostenlose Leadmagnete wie das Startpaket und Mooni Voice.
+      // Die alte Adresse antwortet mit 301 (Iljas Auftrag), die übrigen Regeln bleiben bei 308.
+      {
+        source: "/shop",
+        destination: "/ressourcen",
+        statusCode: 301,
+      },
+      // Die zwei alten Kaufprodukte sind seit 11.11.2026 eingestellt, seit 12.11.2026 auch die Käuferseite
+      // und die Bilder. Alles unter den alten Adressen führt direkt zu den Ressourcen, ohne Umweg über /shop.
       {
         source: "/webdesign-os/:path*",
-        destination: "/shop",
+        destination: "/ressourcen",
         permanent: true,
       },
       {
         source: "/gpt-team",
-        destination: "/shop",
+        destination: "/ressourcen",
         permanent: true,
       },
     ];

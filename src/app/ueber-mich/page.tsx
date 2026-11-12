@@ -349,7 +349,7 @@ function VisionMessage() {
               Deshalb erkläre ich alles kinderleicht. Wenn du nach einem Gespräch mit mir nicht weißt, was du am Montag konkret anders machst, habe ich meinen Job nicht gemacht. Fachbegriffe sind billig. Verständnis ist die Arbeit.
             </p>
             <p>
-              Und ich baue nur, was ich selbst benutze. VegaLeads läuft jeden Morgen für mein eigenes Geschäft, bevor ich es jemandem verkaufe. Diese Webseite steht auf demselben Setup, das du im Shop bekommst. Was bei dir landet, hat sich vorher bei mir bewährt.
+              Und ich baue nur, was ich selbst benutze. VegaLeads läuft jeden Morgen für mein eigenes Geschäft, bevor ich es jemandem verkaufe. Diese Webseite habe ich selbst mit Claude Code gebaut. Was bei dir landet, hat sich vorher bei mir bewährt.
             </p>
             <p>
               Dazu gehört auch: Wir dürfen Freude an der Sache haben. Gute Arbeit und ein gutes Leben schließen sich nicht aus. Wenn dich das anspricht, passen wir wahrscheinlich gut zusammen.

@@ -37,7 +37,7 @@ test("Keine Schrift unter 12 px (außer der versteckten Vorschauzeile), kein Sty
   assert.ok(Math.min(...groessen) >= 12, `kleinste Schrift ${Math.min(...groessen)} px`);
   assert.ok(!/<style/i.test(html), "Stile stehen am Element, viele Mailprogramme werfen <style> weg");
   // Die Bestätigungsmail darf keine Werbung enthalten: keine Verweise auf Angebote oder Kanäle
-  for (const werbung of ["/akademie", "/shop", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!html.includes(werbung), werbung);
+  for (const werbung of ["/akademie", "/shop", "/ressourcen", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!html.includes(werbung), werbung);
 });
 
 test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den allgemeinen Text", () => {
@@ -51,7 +51,7 @@ test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den
   }
   assert.ok(h.includes(`<a href="${LINK}"`) && t.includes(LINK), "Link bleibt derselbe");
   assert.ok(h.includes("<title>Dein Claude-Code-Startpaket: ein Klick fehlt noch</title>"));
-  for (const werbung of ["/akademie", "/shop", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!h.includes(werbung), werbung);
+  for (const werbung of ["/akademie", "/shop", "/ressourcen", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!h.includes(werbung), werbung);
   // Alles, was kein Leadmagnet mit eigenem Text ist, bekommt die Mail wie bisher
   for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) {
     assert.equal(anlassVon(q).betreff, "Bitte bestätige deine Anmeldung", q);
