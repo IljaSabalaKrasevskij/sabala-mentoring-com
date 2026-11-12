@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard } from "./shared";
-import { BERATUNG_GUTSCHEIN, BERATUNG_PREIS, BERATUNG_PREIS_REGULAER, CURRENT_COHORT, KURS_PREIS, KURS_RATE, STATUS_LABEL, TERMIN_NAMEN, formatTagMonat } from "./cohorts";
+import { BERATUNG_GUTSCHEIN, BERATUNG_PREIS, BERATUNG_PREIS_REGULAER, CURRENT_COHORT, KURS_PREIS, KURS_RATE, STATUS_LABEL, formatTagMonat, kursPunkte } from "./cohorts";
 
 /* Jetzt buchbar: die zwei Angebote der Akademie nebeneinander, je mit Stufe, Nutzen, Eckdaten, Preis und Knopf.
    Links die Beratungsstunde als leichter Einstieg, rechts hell hervorgehoben der Kurs mit seinen Terminen.
    Die Termine stehen nur hier (der frühere Kalender zeigte dieselben drei Tage noch einmal).
-   Preise und Termine kommen aus cohorts.ts. Der Anker #kurse bleibt, die Startseite verlinkt darauf. */
+   Preise und Termine kommen aus cohorts.ts. Steht auf der Übersichtsseite der Akademie (Anker #kurse).
+   Die Startseite hat seit dem 12.11.2026 einen eigenen Abschnitt für den Kurs (home/Angebote.tsx). */
 
 function Punkte({ punkte, hell = false }: { punkte: string[]; hell?: boolean }) {
   return (
@@ -24,13 +26,7 @@ function Punkte({ punkte, hell = false }: { punkte: string[]; hell?: boolean }) 
   );
 }
 
-/* `startseite`: Der Abschnitt steht auch auf der Startseite. Dort führt die Schlusszeile zur Übersicht der Akademie. */
-export default function CourseGrid({ startseite = false }: { startseite?: boolean }) {
-  /* Zwei Workshops in einer Zeile, die Fragestunde in der zweiten: die Uhrzeiten stehen auf der Kursseite.
-     Hat ein Lauf einmal nicht genau drei Termine, steht jeder in einer eigenen Zeile. */
-  const tage = CURRENT_COHORT?.sessions.map((s) => formatTagMonat(s.date));
-  const termine = tage && (tage.length === 3 ? [`Workshops am ${tage[0]} und ${tage[1]}`, `${TERMIN_NAMEN[2]} am ${tage[2]}`] : tage.map((t, i) => `${TERMIN_NAMEN[i] ?? CURRENT_COHORT!.sessions[i].label}: ${t}`));
-
+export default function CourseGrid() {
   return (
     <section id="kurse" className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="pointer-events-none absolute left-1/2 top-[-10%] h-[70vh] w-[70vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(212,174,90,0.12), transparent 70%)" }} />
@@ -94,7 +90,7 @@ export default function CourseGrid({ startseite = false }: { startseite?: boolea
                 <p className="mt-2.5 text-[1.04rem] leading-relaxed text-deep">
                   Claude vergisst nach jeder Session alles. Nach zwei Live-Workshops kennt er dein Wissen, deine Kunden und deine Projekte.
                 </p>
-                <Punkte hell punkte={termine ? [...termine, `Kleine Runde, maximal ${CURRENT_COHORT!.capacity} Plätze`] : ["Zwei Live-Workshops und eine Fragestunde", "Kleine Runde, live per Zoom", "Auf der Warteliste erfährst du den Termin zuerst"]} />
+                <Punkte hell punkte={kursPunkte()} />
                 <div className="mt-auto flex flex-wrap items-end justify-between gap-x-6 gap-y-4 pt-5">
                   <p className="leading-none">
                     <span className="font-serif text-[2.5rem] text-deep">{KURS_PREIS} €</span>
@@ -109,12 +105,13 @@ export default function CourseGrid({ startseite = false }: { startseite?: boolea
           </Reveal>
         </div>
 
-        {/* Dritter Weg für Unternehmen: Startseite und Menü versprechen ihn, hier ist die Tür dazu. */}
+        {/* Dritter Weg für Unternehmen: Das Menü verspricht ihn („Dein Team wird KI-fit“). Er führt zum Kontaktformular der
+            Startseite, dort ist das Thema „KI-Schulung fürs Team“ schon gewählt. Vorher stand hier die alte Seite /termin-buchen. */}
         <p className="mt-4 text-center text-[1rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
-          {startseite ? "Alle Stufen, weitere Kurse und Trainings für Teams:" : "Für Teams: Du willst mehrere Plätze oder ein Training nur für dein Unternehmen?"}{" "}
-          <a href={startseite ? "/akademie-hub" : "/termin-buchen"} className="inline-flex min-h-[44px] items-center font-semibold text-gold-light underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">
-            {startseite ? "Zur KI-Akademie" : "Lass uns sprechen"}
-          </a>
+          Für Teams: Du willst mehrere Plätze oder ein Training nur für dein Unternehmen?{" "}
+          <Link href="/#anfrage-team" className="inline-flex min-h-[44px] items-center font-semibold text-gold-light underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">
+            Lass uns sprechen
+          </Link>
         </p>
       </div>
     </section>

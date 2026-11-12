@@ -3,6 +3,7 @@ import { z } from "zod";
 import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Bestaetigung } from "@/lib/anmeldung";
 import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
+import { KONTAKT_THEMEN, type KontaktThema } from "@/lib/quellen";
 
 export const runtime = "nodejs";
 
@@ -12,6 +13,8 @@ export const runtime = "nodejs";
    - Schreibt die Anfrage in den Briefkasten (Turso/libSQL). Von dort holt Sabala Mail sie ins CRM.
    - Mit Häkchen für Mails: Nachweis der Einwilligung + Bestätigungsmail (src/lib/anmeldung.ts).
      Die Anfrage selbst hängt nicht am Häkchen.
+   - Thema aus „Worum geht es?“ (freiwillig): nur Kürzel aus quellen.ts. Der Name steht vorn in der Anfrage und im Push,
+     die Nische (bei der KI-Schulung) geht mit in den Briefkasten und von dort ins CRM.
    - Pusht eine ntfy-Notification, damit Ilja neue Anfragen sofort mitbekommt.
      Gleicher Kanal wie /api/audit-request und /api/umfrage.
    - Wenn Turso nicht konfiguriert ist, antwortet die Route mit 503; das
@@ -35,10 +38,11 @@ const Schema = z.object({
   webseite: z.string().trim().max(200).optional().default(""),
   anliegen: z.string().trim().min(5, "Bitte schreib ein paar Worte zu deinem Wunsch.").max(4000, "Bitte fass dich etwas kürzer."),
   quelle: z.string().trim().max(200).optional().default(""),
+  thema: z.enum(Object.keys(KONTAKT_THEMEN) as [KontaktThema, ...KontaktThema[]]).optional(),
   fax: FELDER.fax,
 });
 
-async function notify(data: z.infer<typeof Schema>): Promise<void> {
+async function notify(data: z.infer<typeof Schema>, thema?: string): Promise<void> {
   const topic = process.env.NTFY_TOPIC;
   if (!topic) {
     // Laut, nicht still: ein fehlender Kanal hat hier schon einmal monatelang
@@ -48,7 +52,7 @@ async function notify(data: z.infer<typeof Schema>): Promise<void> {
   }
   const server = process.env.NTFY_SERVER || "https://ntfy.sh";
 
-  const message = `${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\n${data.email}${data.telefon ? `\n${data.telefon}` : ""}${data.webseite ? `\n${data.webseite}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen.slice(0, 500)}`;
+  const message = `${data.vorname} ${data.nachname}${data.unternehmen ? ` (${data.unternehmen})` : ""}\n${data.email}${data.telefon ? `\n${data.telefon}` : ""}${data.webseite ? `\n${data.webseite}` : ""}${thema ? `\nThema: ${thema}` : ""}\nSeite: ${data.quelle || "Website"}\n\n${data.anliegen.slice(0, 500)}`;
 
   try {
     // JSON-Mode wie in /api/audit-request: umgeht Header-Encoding-Probleme mit Umlauten.
@@ -58,7 +62,7 @@ async function notify(data: z.infer<typeof Schema>): Promise<void> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         topic,
-        title: "Neue Website-Anfrage",
+        title: thema ? `Neue Anfrage: ${thema}` : "Neue Website-Anfrage",
         message,
         tags: ["envelope"],
         priority: 4,
@@ -90,7 +94,8 @@ export async function POST(req: Request) {
   const urteil = await siegelPruefen(ip, json);
   if (urteil !== "ok") return siegelAbsage(urteil);
 
-  // 3) Speichern
+  // 3) Speichern. Das Thema steht vorn in der Anfrage, damit es im CRM und in jeder Antwort sichtbar bleibt.
+  const thema = data.thema ? KONTAKT_THEMEN[data.thema] : undefined;
   try {
     const stored = await insertLead({
       vorname: data.vorname,
@@ -98,15 +103,16 @@ export async function POST(req: Request) {
       email: data.email,
       unternehmen: data.unternehmen,
       webseite: data.webseite,
-      anliegen: data.anliegen,
+      anliegen: thema ? `Thema: ${thema.name}\n\n${data.anliegen}` : data.anliegen,
       quelle: data.quelle || "Website",
       telefon: data.telefon,
+      nische: thema?.nische ?? null,
     });
     if (!stored) {
       // Backend noch nicht konfiguriert → Frontend nutzt mailto-Fallback
       return NextResponse.json({ ok: false, reason: "unconfigured" }, { status: 503 });
     }
-    await notify(data);
+    await notify(data, thema?.name);
     // Häkchen für Mails gesetzt: Nachweis + Bestätigungsmail. Scheitert das, ist die Anfrage trotzdem angekommen.
     let bestaetigung: Bestaetigung | "keine" = "keine";
     if (data.einwilligung) {

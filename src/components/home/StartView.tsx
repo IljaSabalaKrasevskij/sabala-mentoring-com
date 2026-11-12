@@ -1,7 +1,8 @@
 import Image from "next/image";
-import CourseGrid from "@/components/akademie/CourseGrid";
+import WebkursKarte from "@/components/akademie/WebkursKarte";
 import { Brackets, GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, TEXT_AUF_HELL, TiltCard, Weiter } from "@/components/akademie/shared";
 import { CASE_STUDIES, CATEGORIES, type CategoryKey } from "@/lib/case-studies";
+import { KiSchulung, NeuImBlog, SecondBrain } from "./Angebote";
 import IljaHeroJourney from "./IljaHeroJourney";
 import Kontakt from "./Kontakt";
 import MooniVoiceTeaser from "./MooniVoiceTeaser";
@@ -9,12 +10,15 @@ import MooniWelt from "./MooniWelt";
 
 /* Startseite: Sabala Studios als Mischung aus drei Dingen (Iljas Vorgabe vom 11.11.2026):
    „How to“ (ich zeige dir, wie es geht), „Build for you“ (ich baue es für dich, samt Webseiten-Service)
-   und Show Cases (was schon läuft). Seit dem 12.11.2026 wieder ganz oben Iljas Kopf-Reise (Porträt mit Metall-Effekt unter der Maus,
-   am Laptop ein Film aus 176 Bildern) und weiter unten Mooni: in 3D mit den sechs Werten, danach als Werkzeug Mooni Voice.
-   Kopf-Reise · Kopf · Show Cases · Selbst lernen · Bauen lassen · Mooni in 3D · Mooni Voice · Der Mensch · Kontakt.
+   und Show Cases (was schon läuft). Ganz oben Iljas Kopf-Reise (Porträt mit Metall-Effekt unter der Maus,
+   am Laptop ein Film aus 176 Bildern), dann Mooni: in 3D mit den sechs Werten, danach als Werkzeug Mooni Voice.
+   Nach Mooni die Übersicht über alles, was Ilja anbietet, in seiner Reihenfolge (Wunsch vom 12.11.2026):
+   Second-Brain-Kurs · Warteliste Webdesign-Kurs · KI-Schulung für Firmen · Webdesign-Angebot · Blog · Show Cases.
+   Kopf-Reise · Kopf · Mooni in 3D · Mooni Voice · Übersicht · Der Mensch · Kontakt.
+   Hell und dunkel wechseln sich ab: Zwei Nachbarn haben nie denselben Grund.
 
    Die Seite erfindet keine eigenen Zahlen und Preise: Show Cases kommen aus case-studies.ts, Kurs und
-   Beratungsstunde aus CourseGrid (cohorts.ts).
+   Beratungsstunde aus cohorts.ts, der Webdesign-Kurs aus webkurs/daten.ts, die Artikel aus blog-artikel.ts.
    Der Kopf blendet per CSS ein (`.cs-rise`): sichtbar auch ohne JavaScript. */
 
 const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
@@ -37,11 +41,12 @@ const RUBRIK_BILD: Record<CategoryKey, string> = {
   weitere: "second-brain",
 };
 
-/* Die zwei Wege, bei denen Ilja baut. Überschrift und Satz stammen von der jeweiligen Seite. */
+/* Die zwei Wege, bei denen Ilja baut. Der Satz stammt von der jeweiligen Seite. Die Überschrift von /webseiten
+   („Design, das verkauft. Und im Kopf bleibt.“) trägt seit dem 12.11.2026 der ganze Abschnitt. */
 const BAUEN = [
   {
     art: "Webseiten-Service",
-    titel: "Design, das verkauft. Und im Kopf bleibt.",
+    titel: "Deine Webseite, von mir gebaut.",
     text: "Premium-Webseiten aus eigenem Code: unter zwei Sekunden geladen, sichtbar bei Google und in KI-Antworten.",
     zusatz: "Der erste Schritt ist eine kostenlose Potenzial-Analyse.",
     bild: fall("cyber-sales").image!,
@@ -126,7 +131,7 @@ function Kopf() {
   );
 }
 
-/* Show Cases: je Rubrik eine Karte mit Bild und Anzahl. Der Beweis steht direkt unter dem Kopf. */
+/* Show Cases: je Rubrik eine Karte mit Bild und Anzahl. Jede Karte springt auf /case-studies direkt in ihre Rubrik. */
 function ShowCases() {
   return (
     <section id="showcases" className="relative scroll-mt-4 overflow-hidden px-6 py-[5.5vh]" style={{ background: "var(--cream)" }}>
@@ -150,7 +155,7 @@ function ShowCases() {
             return (
               <Reveal key={r.key} delay={i * 0.06} className="h-full">
                 <TiltCard hervor={1.03} max={6} radius={16} className={`h-full ${SCHATTEN}`}>
-                  <a href="/case-studies" className="flex h-full flex-col overflow-hidden rounded-2xl bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" style={{ border: "1px solid rgba(184,150,62,0.32)" }}>
+                  <a href={`/case-studies#rubrik-${r.key}`} className="flex h-full flex-col overflow-hidden rounded-2xl bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" style={{ border: "1px solid rgba(184,150,62,0.32)" }}>
                     <span className="relative block aspect-[16/10]" style={{ background: "var(--tech-bg)" }}>
                       <Image src={bild.image!} alt="" fill sizes="(max-width: 900px) 46vw, 270px" className="object-cover object-top" />
                     </span>
@@ -190,7 +195,7 @@ function Bauen() {
           zeile="Bauen lassen"
           titel={
             <>
-              Oder ich baue es <span style={{ color: GOLD_AUF_HELL }}>für dich.</span>
+              Design, das verkauft. <span style={{ color: GOLD_AUF_HELL }}>Und im Kopf bleibt.</span>
             </>
           }
         />
@@ -229,9 +234,10 @@ function Bauen() {
   );
 }
 
+/* Sandton: Die Show Cases direkt davor stehen auf Creme. */
 function Mensch() {
   return (
-    <section className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "var(--cream)" }}>
+    <section className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "var(--warm-light)" }}>
       <div className="pointer-events-none absolute -left-[10%] top-[15%] h-[55vh] w-[55vw]" style={{ background: "radial-gradient(ellipse, rgba(184,150,62,0.16), transparent 70%)" }} />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-9 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] md:gap-14">
@@ -274,18 +280,22 @@ function Mensch() {
   );
 }
 
+/* Ein div statt <main>: Das Layout legt schon ein <main> um jede Seite. */
 export default function StartView() {
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       <IljaHeroJourney />
       <Kopf />
-      <ShowCases />
-      <CourseGrid startseite />
-      <Bauen />
       <MooniWelt />
       <MooniVoiceTeaser />
+      <SecondBrain />
+      <WebkursKarte startseite />
+      <KiSchulung />
+      <Bauen />
+      <NeuImBlog />
+      <ShowCases />
       <Mensch />
       <Kontakt />
-    </main>
+    </div>
   );
 }

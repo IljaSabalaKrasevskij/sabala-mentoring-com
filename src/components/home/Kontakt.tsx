@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Reveal, SektionsKopf, TEXT_AUF_DUNKEL, Weiter } from "@/components/akademie/shared";
@@ -8,25 +8,41 @@ import Einwilligung, { bestaetigungsHinweis } from "@/components/formular/Einwil
 import Telefon, { FeldMeldung } from "@/components/formular/Telefon";
 import { EINWILLIGUNG_VERSION } from "@/lib/einwilligung-text";
 import { formularBeruehrt, formularSenden } from "@/lib/formular-senden";
+import { KONTAKT_THEMEN, type KontaktThema } from "@/lib/quellen";
+
+const THEMEN = Object.entries(KONTAKT_THEMEN) as [KontaktThema, (typeof KONTAKT_THEMEN)[KontaktThema]][];
 
 /* Das Kontaktformular allein, für dunklen Grund. Steht auf der Startseite (Kontakt unten) und auf /termin-buchen.
    Schickt an /api/kontakt (Turso + ntfy-Push), der Pfad der Seite geht als Quelle mit. Fällt sichtbar auf mailto zurück,
    falls das Backend nicht antwortet, damit keine Anfrage verloren geht.
    Telefon ist Pflicht und wird vom Server geprüft: Stimmt die Nummer nicht, steht die Meldung am Feld.
-   Das Häkchen für Mails ist freiwillig: Die Anfrage geht auch ohne raus. Mit Häkchen kommt eine Bestätigungsmail. */
+   Das Häkchen für Mails ist freiwillig: Die Anfrage geht auch ohne raus. Mit Häkchen kommt eine Bestätigungsmail.
+   Oben fragt das Formular „Worum geht es?“ (Themen aus quellen.ts, freiwillig). Der Knopf der Schulungs-Sektion springt auf
+   #anfrage-team und wählt dort „KI-Schulung fürs Team“ vor, auch von anderen Seiten aus (/#anfrage-team). */
 export function KontaktFormular() {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "mailto">("idle");
   const [form, setForm] = useState({ vorname: "", nachname: "", email: "", telefon: "", unternehmen: "", webseite: "", anliegen: "", fax: "" });
+  const [thema, setThema] = useState<KontaktThema | "">("");
   const [einwilligung, setEinwilligung] = useState(false);
   const [bestaetigung, setBestaetigung] = useState<string>();
   const [meldung, setMeldung] = useState<{ feld: string; text: string }>(); // der Server beanstandet ein Feld
+
+  /* Sprung auf #anfrage-team (Schulungs-Sektion, Akademie-Übersicht): Thema vorwählen. Umwählen geht jederzeit. */
+  useEffect(() => {
+    const vorwahl = () => {
+      if (window.location.hash === "#anfrage-team") setThema("ki-schulung");
+    };
+    vorwahl();
+    window.addEventListener("hashchange", vorwahl);
+    return () => window.removeEventListener("hashchange", vorwahl);
+  }, []);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const mailtoFallback = () => {
-    const body = [`Vorname: ${form.vorname}`, `Nachname: ${form.nachname}`, `E-Mail: ${form.email}`, `Telefon: ${form.telefon}`, `Unternehmen: ${form.unternehmen}`, `Webseite: ${form.webseite}`, "", form.anliegen].join("\n");
+    const body = [`Thema: ${thema ? KONTAKT_THEMEN[thema].name : "nicht gewählt"}`, `Vorname: ${form.vorname}`, `Nachname: ${form.nachname}`, `E-Mail: ${form.email}`, `Telefon: ${form.telefon}`, `Unternehmen: ${form.unternehmen}`, `Webseite: ${form.webseite}`, "", form.anliegen].join("\n");
     window.location.href = `mailto:sabala@sabala-mentoring.com?subject=${encodeURIComponent(`Anfrage: ${form.vorname} ${form.nachname}`)}&body=${encodeURIComponent(body)}`;
   };
 
@@ -34,7 +50,7 @@ export function KontaktFormular() {
     e.preventDefault();
     if (status === "sending") return;
     setStatus("sending");
-    const r = await formularSenden("/api/kontakt", { ...form, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, quelle: pathname || "/" });
+    const r = await formularSenden("/api/kontakt", { ...form, thema: thema || undefined, einwilligung, einwilligungVersion: EINWILLIGUNG_VERSION, quelle: pathname || "/" });
     if (r.art === "ok") {
       setBestaetigung(r.bestaetigung);
       setStatus("done");
@@ -67,6 +83,19 @@ export function KontaktFormular() {
     </div>
   ) : (
     <form onSubmit={handleSubmit} onFocus={formularBeruehrt} onInput={() => setMeldung(undefined)} className="@container space-y-3">
+      <fieldset className="pb-1">
+        <legend className="mb-2 font-mono text-[12.5px] uppercase tracking-[0.16em] text-gold-light">Worum geht es?</legend>
+        <div className="flex flex-wrap gap-2">
+          {THEMEN.map(([kuerzel, t]) => (
+            <label key={kuerzel} className="cursor-pointer">
+              <input type="radio" name="thema" value={kuerzel} checked={thema === kuerzel} onChange={() => setThema(kuerzel)} className="peer sr-only" />
+              <span className="inline-flex min-h-[44px] items-center rounded-full border border-[rgba(184,150,62,0.5)] px-4 text-[0.95rem] text-cream transition-colors duration-300 hover:border-gold peer-checked:border-gold peer-checked:bg-gold peer-checked:font-semibold peer-checked:text-tech-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-gold-light">
+                {t.name}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <div className="grid gap-3 sm:grid-cols-2">
         <input className={feld} style={rand} placeholder="Vorname" aria-label="Vorname" autoComplete="given-name" required value={form.vorname} onChange={set("vorname")} />
         <input className={feld} style={rand} placeholder="Nachname" aria-label="Nachname" autoComplete="family-name" required value={form.nachname} onChange={set("nachname")} />
@@ -80,7 +109,7 @@ export function KontaktFormular() {
         <input className={feld} style={rand} placeholder="Unternehmen (optional)" aria-label="Unternehmen, optional" autoComplete="organization" value={form.unternehmen} onChange={set("unternehmen")} />
         <input className={feld} style={rand} placeholder="Deine Webseite (optional)" aria-label="Deine Webseite, optional" value={form.webseite} onChange={set("webseite")} />
       </div>
-      <textarea className={feld} style={rand} rows={4} required placeholder="Was ist dein Wunsch? Woran steckst du fest? Schreib einfach drauflos." aria-label="Dein Wunsch" value={form.anliegen} onChange={set("anliegen")} />
+      <textarea className={feld} style={rand} rows={4} required placeholder={thema ? KONTAKT_THEMEN[thema].frage : "Was ist dein Wunsch? Woran steckst du fest? Schreib einfach drauflos."} aria-label="Dein Wunsch" value={form.anliegen} onChange={set("anliegen")} />
 
       <div className="py-1">
         <Einwilligung id="kontakt-mails" an={einwilligung} setAn={setEinwilligung} />
@@ -108,6 +137,8 @@ export default function Kontakt() {
   return (
     <section id="kontakt" className="relative scroll-mt-4 overflow-hidden px-6 py-[6.5vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="pointer-events-none absolute left-1/2 top-0 h-[45vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.1), transparent 70%)" }} />
+      {/* Sprungziel der Schulungs-Anfrage: Der Browser springt hierher, das Formular wählt das Thema vor. */}
+      <span id="anfrage-team" aria-hidden className="absolute top-0" />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-9 min-[56.25rem]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-[56.25rem]:gap-14">
         <div>
