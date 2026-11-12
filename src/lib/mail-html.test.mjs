@@ -64,10 +64,14 @@ test("Download-Mail: Knopf zum Paket, drei Schritte, nur eigene Adressen, nichts
   assert.ok(d, "Startpaket hat eine Download-Mail");
   const h = downloadHtml(d);
   const t = downloadText(d);
-  assert.ok(h.includes(`<a href="${d.datei}"`) && t.includes(d.datei), "Knopf und Text zeigen auf das Paket");
-  // Das Paket liegt wirklich dort, wohin die Mail zeigt
-  const datei = new URL(`../../public${new URL(d.datei).pathname}`, import.meta.url);
-  assert.ok(fs.existsSync(datei), `fehlt: ${datei.pathname}`);
+  assert.ok(h.includes(`<a href="${d.seite}"`) && t.includes(d.seite), "Knopf und Text zeigen auf die Dankeseite");
+  // Nie direkt auf eine Datei: Aus Mailprogrammen öffnet das einen leeren Tab (Safari, Apps am Handy)
+  assert.ok(!/\.(zip|pdf|dmg)(?:[?#]|$)/i.test(d.seite), `Knopf zeigt auf eine Datei: ${d.seite}`);
+  // Die Seite gibt es, und das Paket liegt dort, wohin ihr Download-Knopf zeigt
+  const seite = new URL(`../app${new URL(d.seite).pathname}/page.tsx`, import.meta.url);
+  assert.ok(fs.existsSync(seite), `fehlt: ${seite.pathname}`);
+  const ziel = fs.readFileSync(seite, "utf-8").match(/href="(\/downloads\/[^"]+)"/)?.[1];
+  assert.ok(ziel && fs.existsSync(new URL(`../../public${ziel}`, import.meta.url)), `Paket fehlt: ${ziel}`);
   for (const s of d.schritte) assert.ok(t.includes(s), s);
   for (const stueck of ["SABALA MENTORING LLC, 30 N Gould St Ste N, Sheridan, WY 82801, USA", "Ilja Krasevskij"]) {
     assert.ok(h.includes(stueck) && t.includes(stueck), stueck);

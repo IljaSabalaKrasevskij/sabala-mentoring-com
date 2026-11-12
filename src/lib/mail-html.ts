@@ -202,7 +202,9 @@ export type Download = {
   vorschau: string;
   kopf: string;
   titel: string;
-  datei: string;
+  /** Wohin der Knopf führt: die Dankeseite mit dem Download, nie die Datei selbst. Ein Link direkt auf das ZIP
+   *  öffnet aus vielen Mailprogrammen einen leeren Tab (Safari, Apps am Handy), der Download läuft dann unbemerkt. */
+  seite: string;
   groesse: string;
   absatz: string;
   schritte: string[];
@@ -218,9 +220,9 @@ const DOWNLOADS: Record<string, Download> = {
     vorschau: "Hier ist dein Ordner: Anleitung, Spickzettel, zwei Vorlagen und zehn Skills.",
     kopf: "Dein Startpaket",
     titel: "Hier ist dein Startpaket.",
-    datei: `${SEITE}/downloads/claude-code-startpaket.zip`,
+    seite: `${SEITE}/claude-code/startpaket/danke`,
     groesse: "Ein Ordner, 11 KB, für Mac und Windows.",
-    knopf: "Startpaket herunterladen",
+    knopf: "Zum Download",
     absatz: "hier ist dein Claude-Code-Startpaket noch einmal zum Aufheben. Im Ordner liegen fünf kurze Anleitungen, zwei CLAUDE.md-Vorlagen und zehn Skills, die ich selbst nutze.",
     schritte: [
       "Öffne zuerst die Datei „00 Start hier“. Dort steht, in welcher Reihenfolge du vorgehst.",
@@ -236,7 +238,7 @@ const DOWNLOADS: Record<string, Download> = {
 export const downloadVon = (quelle: string): Download | null => (Object.prototype.hasOwnProperty.call(DOWNLOADS, quelle) ? DOWNLOADS[quelle] : null);
 
 export function downloadHtml(d: Download): string {
-  const datei = maskiert(d.datei);
+  const seite = maskiert(d.seite);
   const schritt = (n: number, t: string) =>
     `<tr><td valign="top" width="34" style="padding:0 0 14px 0; font-family:${MONO}; font-size:16px; font-weight:700; color:${GOLD};">${n}</td><td style="padding:0 0 14px 0; font-family:${SANS}; font-size:16px; line-height:1.6; color:${TEXT};">${maskiert(t)}</td></tr>`;
   const inhalt = `
@@ -251,7 +253,7 @@ export function downloadHtml(d: Download): string {
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px auto 0 auto;">
           <tr>
             <td align="center" bgcolor="${GOLD_HELL}" style="background-color:${GOLD_HELL}; border-radius:999px;">
-              <a href="${datei}" style="display:inline-block; padding:17px 34px; font-family:${MONO}; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${DUNKEL}; text-decoration:none; border-radius:999px;">${maskiert(d.knopf)}</a>
+              <a href="${seite}" style="display:inline-block; padding:17px 34px; font-family:${MONO}; font-size:15px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${DUNKEL}; text-decoration:none; border-radius:999px;">${maskiert(d.knopf)}</a>
             </td>
           </tr>
         </table>
@@ -291,7 +293,7 @@ export function downloadText(d: Download): string {
     d.absatz,
     "",
     "Hier lädst du es herunter:",
-    d.datei,
+    d.seite,
     "",
     "So fängst du an:",
     ...d.schritte.map((t, i) => `${i + 1}. ${t}`),
