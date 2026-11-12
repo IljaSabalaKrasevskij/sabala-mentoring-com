@@ -282,7 +282,7 @@ export default function StartpaketSeite() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ: Die Frage ist die Tippfläche. Innenabstand plus gleich großer negativer Außenabstand macht sie am Handy 44 px hoch, ohne die Abstände zu ändern. Der Link im letzten Satz bekommt py-3 (Innenabstand zählt bei Text nicht zur Zeilenhöhe). */}
       <section className="mx-auto w-full max-w-[900px] px-6 pt-24 sm:px-12 md:px-24">
         <ScrollReveal>
           <p className="mb-4 text-center font-mono text-[13px] uppercase tracking-widest text-[#7A5C18]">Häufige Fragen</p>
@@ -292,7 +292,7 @@ export default function StartpaketSeite() {
           {faq.map((f, i) => (
             <ScrollReveal key={f.q} delay={i * 0.04}>
               <details className="group rounded-xl border border-refined-gold/40 bg-cream px-6 py-5 transition-colors hover:border-refined-gold [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6">
+                <summary className="-my-1.5 flex cursor-pointer list-none items-center justify-between gap-6 py-1.5">
                   <h3 className="font-instrument text-xl text-deep-charcoal">{f.q}</h3>
                   <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-refined-gold text-xl text-[#7A5C18] transition-transform duration-300 group-open:rotate-45">+</span>
                 </summary>
@@ -303,7 +303,7 @@ export default function StartpaketSeite() {
         </div>
         <p className="mt-12 pb-24 text-center font-satoshi text-[16px] text-[#57514A]">
           Alle Anleitungen zu Claude Code findest du auf der{" "}
-          <Link href="/claude-code" className="font-semibold text-[#7A5C18] underline decoration-refined-gold underline-offset-4 hover:text-deep-charcoal">
+          <Link href="/claude-code" className="py-3 font-semibold text-[#7A5C18] underline decoration-refined-gold underline-offset-4 hover:text-deep-charcoal">
             Themen-Seite Claude Code
           </Link>
           .
