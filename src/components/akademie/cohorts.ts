@@ -40,7 +40,7 @@ export const KURS_PREIS = 397;
 export const KURS_RATE = 203;
 
 /* Freiwillig zum Bonus: gemeinsame Einrichtung des Social Media Cockpits, netto in Euro.
-   Eine Stelle fuer SocialCockpitBonus, Termine und die Fragen. */
+   Eine Stelle fuer BonusWahl, Termine und die Fragen. Gilt nur, wenn jemand das Cockpit waehlt. */
 export const COCKPIT_EINRICHTUNG_PREIS = 290;
 
 /* Beratungsstunde, netto in Euro: Einführungspreis, regulärer Preis und der Gutschein für den

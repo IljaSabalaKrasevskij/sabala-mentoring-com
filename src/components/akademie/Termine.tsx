@@ -28,7 +28,7 @@ const DRIN: [was: string, wert: number | string][] = [
   ["Live-Umsetzung und Fragen in beiden Workshops", 49],
   ["Fragestunde (1 Stunde live)", "inklusive"],
   ["Starter-Vault, Vorlagen und alle Prompts", "inklusive"],
-  ["Bonus: Design-Paket und der Code meines Social Media Cockpits", "geschenkt"],
+  ["Bonus: Design-Paket und ein Werkzeug nach Wahl, Social Media Cockpit oder Mail- und Newsletter-Programm", "geschenkt"],
 ];
 
 const EINZELN = DRIN.reduce((summe, [, wert]) => summe + (typeof wert === "number" ? wert : 0), 0);
@@ -163,7 +163,7 @@ export default function Termine() {
             </li>
           </ul>
           <p className="mt-5 text-[0.9rem] leading-relaxed" style={{ color: "rgba(250,248,245,0.65)" }}>
-            Optional dazu: gemeinsame Einrichtung deines Cockpits für {COCKPIT_EINRICHTUNG_PREIS} € zzgl. MwSt.
+            Wählst du das Cockpit, richten wir es auf Wunsch gemeinsam ein, für {COCKPIT_EINRICHTUNG_PREIS} € zzgl. MwSt.
           </p>
         </Reveal>
       </div>

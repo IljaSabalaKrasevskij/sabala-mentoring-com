@@ -7,7 +7,7 @@ import Werkzeuge from "@/components/akademie/Werkzeuge";
 import BonusMaterial from "@/components/akademie/BonusMaterial";
 import Qualify from "@/components/akademie/Qualify";
 import AboutIlja from "@/components/akademie/AboutIlja";
-import SocialCockpitBonus from "@/components/akademie/SocialCockpitBonus";
+import BonusWahl from "@/components/akademie/BonusWahl";
 import Termine from "@/components/akademie/Termine";
 import Faq from "@/components/akademie/Faq";
 import PlatzLeiste from "@/components/akademie/PlatzLeiste";
@@ -131,7 +131,7 @@ export default function AkademiePage() {
       <BonusMaterial />
       <Qualify />
       <AboutIlja />
-      <SocialCockpitBonus />
+      <BonusWahl />
       <Termine />
       <Faq />
       <PlatzLeiste />
