@@ -64,3 +64,17 @@
 .form[data-variant=page] .next:hover { background:#394131; }
 .form[data-variant=page] .summary { border-color:#8b713a55; }
 .form[data-variant=page] .summary button, .form[data-variant=page] .continueLink, .form[data-variant=page] .successIcon { color:#33442d; }
+/* Telefon mit Ländervorwahl (Bauteil src/components/formular/Telefon.tsx). Eigene Hülle statt .field, damit dessen Regeln
+   für input und select nicht in die unsichtbare Vorwahl-Auswahl greifen. .telefonKasten trägt Vorwahl und Nummer und sieht
+   aus wie die anderen Felder, dunkel im Beratungsraum, hell auf der Verkaufsseite. */
+.telefonFeld { min-width:0; }
+.telefonFeld > label { display:block; margin:0 0 8px; font-size:13px; line-height:1.5; color:#e0d5bd; }
+.telefonKasten { padding:12px 13px; min-height:46px; color:#f3ead7; background:#0a080699; border:1px solid #b8963e66; border-radius:0; font:inherit; font-size:16px; line-height:1.5; color-scheme:dark; transition:border-color .2s; }
+.telefonFeld input::placeholder { color:#a79c86; opacity:1; font-size:13px; }
+.telefonFeld input:focus { outline:2px solid #d7b66b; outline-offset:3px; border-color:#d7b66b; }
+.telefonFeld [aria-invalid=true] { border-color:#efb3a6; }
+.form[data-variant=page] .telefonFeld > label { color:#2e271b; font-weight:600; }
+.form[data-variant=page] .telefonKasten { color:#201c14; background:#fffaf0d9; border-color:#96774480; color-scheme:light; box-shadow:inset 0 2px 3px #6b4d1510; }
+.form[data-variant=page] .telefonFeld input::placeholder { color:#796648; }
+.form[data-variant=page] .telefonFeld input:focus { outline-color:#4f432a; border-color:#4f432a; }
+.form[data-variant=page] .telefonFeld [aria-invalid=true] { border-color:#922e23; }

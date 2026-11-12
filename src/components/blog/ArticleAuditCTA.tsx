@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { ArrowRight, Check, Loader2, AlertCircle, Sparkles } from "lucide-react";
 import { ereignis } from "@/lib/ereignis";
 import { formularBeruehrt, siegel } from "@/lib/formular-senden";
+import Telefon from "@/components/formular/Telefon";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
@@ -26,7 +27,7 @@ interface ArticleAuditCTAProps {
 /**
  * Article-Audit-CTA: Kompakter Lead-Magnet-Block für unter Blog-Beiträge.
  * Embedded Audit-Form, identische Voice + Visual wie die existing CTA-Cards.
- * POST gegen /api/audit-request (Notion + ntfy-Push).
+ * POST gegen /api/audit-request (Briefkasten fürs CRM, Notion, ntfy-Push). Telefon ist Pflicht, der Server prüft die Nummer.
  */
 export function ArticleAuditCTA({
   eyebrow = "Persönliches Audit",
@@ -35,6 +36,8 @@ export function ArticleAuditCTA({
 }: ArticleAuditCTAProps) {
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [telefonFehler, setTelefonFehler] = useState<string>();
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -61,7 +64,12 @@ export function ArticleAuditCTA({
       return;
     }
     if (!validateEmail(email.trim())) {
-      setErrorMessage("Bitte gib eine gültige Email-Adresse ein.");
+      setErrorMessage("Bitte gib eine gültige E-Mail-Adresse ein.");
+      return;
+    }
+    // Nur Vorwahl ohne Nummer zählt als leer. Ob es die Nummer gibt, prüft der Server.
+    if (telefon.replace(/\D/g, "").length < 5) {
+      setTelefonFehler("Bitte gib deine Telefonnummer mit Ländervorwahl an.");
       return;
     }
     if (!consent) {
@@ -74,10 +82,15 @@ export function ArticleAuditCTA({
       const res = await fetch("/api/audit-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), consent: true, siegel: await siegel() }),
+        body: JSON.stringify({ url: normalizedUrl, email: email.trim(), telefon, consent: true, siegel: await siegel() }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
+        if (res.status === 422 && data.feld === "telefon") {
+          setTelefonFehler(data.meldung);
+          setState("idle");
+          return;
+        }
         throw new Error(data.error || "Etwas ist schiefgelaufen.");
       }
       ereignis("formular-abgeschickt", { formular: "audit-request" });
@@ -101,7 +114,7 @@ export function ArticleAuditCTA({
               </div>
               <h3 className="font-instrument text-3xl md:text-4xl text-white mb-4">Danke. Wir schauen drauf.</h3>
               <p className="text-white/70 font-satoshi leading-relaxed max-w-[500px] mx-auto">
-                Du bekommst dein Premium-Webseiten-Audit in den kommenden Tagen per Email. Persönlich, mit Substanz, ohne Funnel-Sprech. Schau in deinen Posteingang (und ggf. den Spam-Ordner).
+                Ich schaue mir deine Seite persönlich an und schicke dir dein Audit in den kommenden Tagen per E-Mail.
               </p>
             </div>
           ) : (
@@ -118,7 +131,7 @@ export function ArticleAuditCTA({
               <p className="text-white/60 font-satoshi text-lg leading-relaxed mb-8 max-w-[680px]">
                 {bridge ?? (
                   <>
-                    Ich schaue mir deine Webseite persönlich an. Substanz, Voice, Sichtbarkeit, Trust-Elemente. Du bekommst eine ehrliche Einschätzung mit drei konkreten Hebeln — kein Marketing-Sprech, kein Funnel.
+                    Ich schaue mir deine Webseite persönlich an. Substanz, Voice, Sichtbarkeit, Trust-Elemente. Du bekommst eine ehrliche Einschätzung mit drei konkreten Hebeln. Kein Marketing-Sprech, kein Funnel.
                   </>
                 )}
               </p>
@@ -142,10 +155,16 @@ export function ArticleAuditCTA({
                     placeholder="du@deine-webseite.com"
                     required
                     autoComplete="email"
-                    aria-label="Deine Email"
+                    aria-label="Deine E-Mail"
                     className="flex-1 bg-white/5 border border-white/15 rounded-full px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-refined-gold focus:bg-white/10 transition-colors font-satoshi"
                   />
                 </div>
+
+                <Telefon
+                  onChange={(t) => { setTelefon(t); setTelefonFehler(undefined); }}
+                  fehler={telefonFehler}
+                  className="bg-white/5 border border-white/15 rounded-full px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-refined-gold focus:bg-white/10 transition-colors font-satoshi"
+                />
 
                 <label className="flex items-start gap-3 cursor-pointer group">
                   <input
@@ -156,7 +175,7 @@ export function ArticleAuditCTA({
                     className="mt-1 w-4 h-4 rounded border-white/30 bg-white/5 text-refined-gold focus:ring-refined-gold focus:ring-offset-0 cursor-pointer"
                   />
                   <span className="text-white/60 text-sm font-satoshi leading-relaxed group-hover:text-white/80 transition-colors">
-                    Einverstanden, dass meine Daten verarbeitet werden, um mir das Audit per Email zu senden. Details in der <a href="/datenschutz" className="text-refined-gold hover:underline">Datenschutzerklärung</a>. Abmeldung jederzeit möglich.
+                    Einverstanden, dass meine Daten verarbeitet werden, um mir das Audit per E-Mail zu senden. Details in der <a href="/datenschutz" className="text-refined-gold hover:underline">Datenschutzerklärung</a>. Abmeldung jederzeit möglich.
                   </span>
                 </label>
 
