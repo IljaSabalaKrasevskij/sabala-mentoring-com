@@ -18,6 +18,16 @@ export const metadata = {
  * zur Laufzeit also von unserer eigenen Domain ausgeliefert. Keine Verbindung
  * zu Google beim Seitenaufruf.
  *
+ * Seit 12.11.2026 (Abschnitt 6): Rundmails aus Sabala Mail (Repo sabala-mail, scripts/rundmail-senden.mjs) ueber das eigene Postfach
+ * sabala@ bei der Serverprofis GmbH (Rechenzentrum Muenchen; heute im Wiederverkaeufer-Konto, Umzug ins eigene Konto
+ * geplant). Fuer grosse Listen Amazon SES eu-central-1, Absender sabala@news.sabala-mentoring.com. Vertragspartner bei
+ * US-Kontoadresse: Amazon Web Services, Inc. (Customer Agreement, Abschnitt 12), AV-Vertrag ueber Service Terms 1.14,
+ * DPF aktiv als Teil der Zertifizierung von Amazon.com, Inc. (dataprivacyframework.gov, geprueft 12.11.2026).
+ * WICHTIG: In SES den Virtual Deliverability Manager nicht mit "Engagement tracking" einschalten (im Assistenten
+ * steht es auf an). Sonst stimmt der Satz "Öffnungen und Klicks messen wir auch hier nicht" nicht mehr.
+ * Abmeldung: /newsletter/abmelden plus Ein-Klick-Kopfzeilen (RFC 8058), traegt in Turso und bei ActiveCampaign aus.
+ * Datenbank (Abschnitt 2): Turso (ChiselStrike Inc.), Region aws-eu-west-1 (Irland).
+ *
  * Bewusst NICHT mehr drin: YouTube. Die Seite bindet keine Videos ein, der
  * alte Abschnitt beschrieb eine Verarbeitung, die es nicht gibt.
  *
@@ -93,7 +103,9 @@ export default function DatenschutzPage() {
             <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Speicherung Ihrer Eingaben</h3>
             <p>
               Angaben, die Sie in ein Formular auf dieser Website eintragen, speichern wir in einer
-              von uns betriebenen Datenbank. Zugriff darauf haben ausschließlich wir selbst sowie
+              von uns betriebenen Datenbank. Sie läuft beim Anbieter Turso (ChiselStrike Inc., 2093
+              Philadelphia Pike #6336, Claymont, Delaware 19703, USA). Die Daten liegen auf Servern in
+              Irland. Zugriff darauf haben ausschließlich wir selbst sowie
               technische Dienstleister, die uns beim Betrieb unterstützen und vertraglich zur
               Vertraulichkeit verpflichtet sind.
             </p>
@@ -148,7 +160,7 @@ export default function DatenschutzPage() {
             <p>
               Diese Seite nutzt aus Sicherheitsgründen eine SSL- beziehungsweise TLS-Verschlüsselung.
               Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers
-              mit „https://" beginnt.
+              mit „https://“ beginnt.
             </p>
           </section>
 
@@ -265,27 +277,84 @@ export default function DatenschutzPage() {
               keine Werbung.
             </p>
             <p className="mt-4">
-              Zum Nachweis Ihrer Einwilligung speichern wir in unserer eigenen Datenbank den Wortlaut,
-              dem Sie zugestimmt haben, das Formular, über das Sie sich angemeldet haben, sowie
-              Zeitpunkt und IP-Adresse der Anmeldung und der Bestätigung. Rechtsgrundlage ist Art. 6
-              Abs. 1 lit. a DSGVO (Einwilligung) und für den Nachweis Art. 6 Abs. 1 lit. f DSGVO
-              (berechtigtes Interesse, die Einwilligung belegen zu können).
+              Zum Nachweis Ihrer Einwilligung speichern wir in unserer eigenen Datenbank (siehe
+              Abschnitt&nbsp;2) den Wortlaut, dem Sie zugestimmt haben, das Formular, über das Sie sich
+              angemeldet haben, sowie Zeitpunkt und IP-Adresse der Anmeldung und der Bestätigung.
+              Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und für den Nachweis Art. 6
+              Abs. 1 lit. f DSGVO (berechtigtes Interesse, die Einwilligung belegen zu können).
+            </p>
+
+            <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Versand über unser eigenes Postfach</h3>
+            <p>
+              Seit dem 12.&nbsp;November&nbsp;2026 versenden wir unseren Newsletter über unser eigenes
+              E-Mail-Postfach sabala@sabala-mentoring.com. Das Postfach liegt bei der Serverprofis GmbH,
+              Otto-Lilienthal-Ring 34-36, 85622 Feldkirchen, Deutschland. Deren Server stehen in einem
+              Rechenzentrum in München. Derzeit läuft das Postfach über das Konto eines IT-Dienstleisters,
+              der die Leistungen von Serverprofis weiterverkauft. Der Umzug in ein eigenes Konto bei
+              Serverprofis ist geplant.
+            </p>
+            <p className="mt-4">
+              Den Versand starten wir mit unserer eigenen Software (Sabala Mail) auf unserem Rechner in
+              Tiflis (Georgien). Sie liest die Empfänger aus unserer Datenbank und hält fest, an welche
+              Adresse wann eine E-Mail ging. Für den Versand verwenden wir Ihre E-Mail-Adresse und Ihren
+              persönlichen Abmeldelink. Ob Sie diese E-Mails öffnen oder Links darin anklicken, messen
+              wir nicht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).
+            </p>
+
+            <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Versand über Amazon SES</h3>
+            <p>
+              Größere Versände wickeln wir über Amazon Simple Email Service (Amazon SES) ab. Anbieter ist
+              die Amazon Web Services, Inc., 410 Terry Avenue North, Seattle, WA 98109-5210, USA. Wir
+              nutzen dafür die Rechenzentren von Amazon in Frankfurt am Main. Absender ist dann
+              sabala@news.sabala-mentoring.com, eine Adresse nur für den Versand. Ihre Antworten
+              erreichen uns weiter unter sabala@sabala-mentoring.com.
+            </p>
+            <p className="mt-4">
+              Amazon SES verarbeitet Ihre E-Mail-Adresse, den Inhalt der E-Mail und Angaben zur
+              Zustellung. Meldet Ihr E-Mail-Anbieter, dass Ihre Adresse nicht erreichbar ist oder dass
+              Sie eine unserer E-Mails als Spam markiert haben, setzt Amazon SES die Adresse auf eine
+              Sperrliste unseres Kontos. An diese Adresse verschickt Amazon SES dann keine E-Mails mehr,
+              solange wir sie nicht von der Liste nehmen. Öffnungen und Klicks messen wir auch hier
+              nicht.
+            </p>
+            <p className="mt-4">
+              Mit Amazon Web Services besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO, der
+              die Standardvertragsklauseln der Europäischen Kommission einschließt. Amazon Web Services,
+              Inc. ist außerdem nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist
+              Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).
             </p>
 
             <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Versand über ActiveCampaign</h3>
             <p>
-              Für den Versand unserer Newsletter nutzen wir ActiveCampaign, LLC, 1 North Dearborn,
+              Parallel nutzen wir für den Newsletter weiterhin ActiveCampaign, LLC, 1 North Dearborn,
               Chicago, Illinois 60602, USA. Erst nachdem Sie Ihre Anmeldung bestätigt haben,
               speichern wir Ihre E-Mail-Adresse sowie Ihren Vor- und Nachnamen bei ActiveCampaign.
             </p>
             <p className="mt-4">
-              ActiveCampaign wertet aus, ob und wann Newsletter geöffnet und welche Links darin
-              angeklickt werden. Wir nutzen das, um unsere Inhalte an den Interessen unserer Leser
-              auszurichten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), die Sie
-              jederzeit für die Zukunft widerrufen können. Der Abmeldelink steht in jeder E-Mail.
-              Nach der Abmeldung speichern wir Ihre Adresse auf einer Sperrliste, damit Sie keine
-              weiteren Mailings erhalten. Mit ActiveCampaign besteht ein Auftragsverarbeitungsvertrag
-              nach Art. 28 DSGVO.
+              Bei Newslettern, die über ActiveCampaign versendet werden, wertet ActiveCampaign aus, ob
+              und wann sie geöffnet und welche Links darin angeklickt werden. Wir nutzen das, um unsere
+              Inhalte an den Interessen unserer Leser auszurichten. Rechtsgrundlage ist Art. 6 Abs. 1
+              lit. a DSGVO (Einwilligung), die Sie jederzeit für die Zukunft widerrufen können. Mit
+              ActiveCampaign besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO.
+            </p>
+
+            <h3 className="font-medium text-deep-charcoal mt-6 mb-2">Abmeldung</h3>
+            <p>
+              Sie können den Newsletter jederzeit abbestellen. In jeder E-Mail steht dafür ein
+              persönlicher Abmeldelink. In E-Mails aus unserem eigenen Postfach und über Amazon SES
+              führt er auf die Seite sabala-mentoring.com/newsletter/abmelden. Dort genügt ein Klick auf
+              „Jetzt abmelden“. Viele E-Mail-Programme zeigen außerdem oben in der E-Mail einen eigenen
+              Knopf zum Abmelden, der ebenfalls mit einem Klick wirkt. Auf diesen beiden Wegen gilt die
+              Abmeldung sofort, in unserer Datenbank und bei ActiveCampaign. Sie können auch auf eine
+              unserer E-Mails mit „Abmelden“ antworten oder uns schreiben. Dann tragen wir Sie von Hand
+              aus.
+            </p>
+            <p className="mt-4">
+              Zum Nachweis speichern wir, wann und auf welchem Weg Sie sich abgemeldet haben, bei einer
+              Abmeldung per Link oder Knopf auch die IP-Adresse. Ihre E-Mail-Adresse behalten wir auf
+              einer Sperrliste, damit Sie keine weiteren Newsletter erhalten. Rechtsgrundlage ist Art. 6
+              Abs. 1 lit. f DSGVO (berechtigtes Interesse, Ihre Abmeldung dauerhaft zu beachten und
+              belegen zu können).
             </p>
           </section>
 
