@@ -88,14 +88,27 @@ const nextConfig: NextConfig = {
         destination: "/blog/warum-business-mentoring-programme-scheitern",
         permanent: true,
       },
+      // Zwei alte Artikel, am 13.11.2026 entfernt (Ilja: „Ja, beide“). Sie passten nicht mehr zum Angebot:
+      // ChatGPT statt Claude und Technik für Online-Coaches. Inhalt liegt in docs/entfernte-artikel/.
+      // Die kurzen Pfade von früher führen direkt aufs neue Ziel, ohne Umweg über die alte Adresse.
+      {
+        source: "/blog/chatgpt-custom-gpts-richtig-nutzen",
+        destination: "/claude-code",
+        permanent: true,
+      },
       {
         source: "/chatgpt-custom-gpts-richtig-nutzen",
-        destination: "/blog/chatgpt-custom-gpts-richtig-nutzen",
+        destination: "/claude-code",
+        permanent: true,
+      },
+      {
+        source: "/blog/technik-setup-online-coach",
+        destination: "/blog",
         permanent: true,
       },
       {
         source: "/technik-setup-online-coach",
-        destination: "/blog/technik-setup-online-coach",
+        destination: "/blog",
         permanent: true,
       },
       {
