@@ -256,7 +256,7 @@ export default function BlogWebseitenBauMitClaudePage() {
           </div>
         </ScrollReveal>
       </section>
-      <BlogSpokes slugs={["claude-code-weniger-code-ponytail", "webseite-mit-ki-bauen-2026", "chatgpt-custom-gpts-richtig-nutzen"]} />
+      <BlogSpokes slugs={["claude-code-weniger-code-ponytail", "webseite-mit-ki-bauen-2026", "claude-code-installieren"]} />
     </main>
   );
 }

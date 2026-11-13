@@ -14,9 +14,7 @@ const BLOG_INDEX: Record<string, { tag: string; title: string }> = {
   "premium-webseite-oder-baukasten": { tag: "Premium & Brand", title: "Premium-Webseite oder Baukasten?" },
   "baukasten-vs-eigene-webseite-kosten-2026": { tag: "Pricing", title: "Baukasten vs. eigene Webseite: die Kosten" },
   "webdesigner-verschwunden-code-eigentum": { tag: "Code-Eigentum", title: "Wenn dein Webdesigner verschwindet" },
-  "technik-setup-online-coach": { tag: "How-to", title: "Technik-Setup für Online-Coaches" },
   "warum-business-mentoring-programme-scheitern": { tag: "Mentoring", title: "Warum Mentoring-Programme scheitern" },
-  "chatgpt-custom-gpts-richtig-nutzen": { tag: "ChatGPT", title: "Custom GPTs richtig nutzen" },
   "dsgvo-cookie-banner-reform-2026": { tag: "Recht", title: "DSGVO & Cookie-Banner-Reform 2026" },
   "eu-ai-act-coach-2026": { tag: "Recht", title: "EU AI Act: was Coaches klären müssen" },
 };

@@ -185,7 +185,7 @@ export default function BlogEuAiActCoachPage() {
               <li><strong>Realistisch für Einzel-Coaches</strong>: erste Prüfungen ab 2027, vermutlich nach Beschwerden.</li>
               <li><strong>Höhere Wahrscheinlichkeit</strong>: Abmahnung durch Wettbewerbszentrale wegen fehlender AI-Kennzeichnung.</li>
             </ul>
-            <p>Mein eigenes Vorgehen: AI-Bilder im Sabala-Blog seit Februar 2026 gekennzeichnet, AI-Hinweis im Newsletter-Footer, AI-Stack intern dokumentiert. Aufwand: einmalig 2 Stunden plus 5 Minuten pro Veröffentlichung. Wer AI bewusst und verantwortungsvoll in der Praxis einsetzen will, schaut sich auch <Link href="/blog/chatgpt-custom-gpts-richtig-nutzen">Custom GPTs als strukturiertes AI-System</Link> an. Strukturierte Custom GPTs sind transparenter als Default-ChatGPT-Sessions, was im AI-Act-Audit hilft.</p>
+            <p>Mein eigenes Vorgehen: AI-Bilder im Sabala-Blog seit Februar 2026 gekennzeichnet, AI-Hinweis im Newsletter-Footer, AI-Stack intern dokumentiert. Aufwand: einmalig 2 Stunden plus 5 Minuten pro Veröffentlichung.</p>
 
             <h3>Wie ich das bei Sabala-Kunden umsetze</h3>
             <p>In jedem aktuellen Sabala-Projekt baue ich beim Launch ein AI-Inventar in Notion: welche Tools nutzt der Kunde (ChatGPT, Claude, Midjourney, KIE AI), wo läuft was, welche Daten gehen rein, welche kommen raus. Plus ein AI-Hinweis im Footer der neuen Webseite, plus eine kurze AI-Richtlinie als interne Notion-Page. Das ist Compliance-by-Setup, nicht Compliance-als-Nacharbeit. Wenn 2027 ein Audit kommt, hat der Kunde alles griffbereit.</p>
@@ -257,7 +257,7 @@ export default function BlogEuAiActCoachPage() {
           </div>
         </ScrollReveal>
       </section>
-      <BlogSpokes slugs={["chatgpt-custom-gpts-richtig-nutzen", "claude-code-weniger-code-ponytail", "dsgvo-cookie-banner-reform-2026"]} />
+      <BlogSpokes slugs={["second-brain-obsidian-claude", "claude-code-weniger-code-ponytail", "dsgvo-cookie-banner-reform-2026"]} />
     </main>
   );
 }

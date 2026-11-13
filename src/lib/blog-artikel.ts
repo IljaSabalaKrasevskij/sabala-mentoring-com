@@ -196,32 +196,6 @@ export const articles = [
     accent: "text-refined-gold"
   },
   {
-    id: 4,
-    title: "99% aller Selbstständigen nutzen ChatGPT falsch",
-    excerpt: "Fehlender Kontext, unstimmige Sprache, ein Textwall der nicht zu dir passt. Warum Custom GPTs mit klaren Rollen der echte Hebel für Solopreneure sind.",
-    category: "KI & Tools",
-    date: "April 2026",
-    readTime: "9 Min",
-    image: "/blog/chatgpt-custom-gpts-richtig-nutzen/cover.jpg",
-    slug: "/blog/chatgpt-custom-gpts-richtig-nutzen",
-    keywords: ["chatgpt", "custom gpt", "custom gpts", "gpts", "ki tools", "automatisierung", "prompt", "openai", "workflow", "solopreneur"],
-    layout: "col-span-1 md:col-span-1 row-span-1",
-    aspect: "aspect-square"
-  },
-  {
-    id: 2,
-    title: "Technik Setup für Online Coaches: Warum deine Präsenz am Equipment hängt.",
-    excerpt: "Ein schlechtes Mikrofon zerstört selbst die tiefste energetische Übertragung. Wie du ortsunabhängig arbeitest, ohne an Qualität und Ausstrahlung zu verlieren.",
-    category: "Business & Mentoring",
-    date: "Januar 2026",
-    readTime: "6 Min",
-    image: "/blog/technik-setup-online-coach/cover.jpg",
-    slug: "/blog/technik-setup-online-coach",
-    keywords: ["equipment", "technik", "mikrofon", "kamera", "setup", "podcast", "video", "online coach", "studio", "licht", "homeoffice"],
-    layout: "col-span-1 md:col-span-1 row-span-1",
-    aspect: "aspect-square"
-  },
-  {
     id: 3,
     title: "Warum viele Business Mentoring Programme scheitern",
     excerpt: "Und warum klassische Schablonen für tief und relational arbeitende Menschen keine Lösung sind.",
