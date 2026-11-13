@@ -173,7 +173,7 @@ export function MaschinenBlick() {
               <div>
                 <dt>Kurs-Daten</dt>
                 <dd>
-                  {KURS_NAME} · sechs Wochen · vier Plätze · {WEBKURS_PREIS_TEXT} netto
+                  {KURS_NAME} · sechs Wochen · kleine Gruppe · {WEBKURS_PREIS_TEXT} netto
                 </dd>
               </div>
               <div>
