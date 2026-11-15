@@ -37,6 +37,8 @@ export type Paket = {
   claim: string;
   /* Akzentfarbe des Pakets auf der Bühne und in der Karte. */
   farbe: string;
+  /* Der erste Auftrag zum Ausprobieren, wörtlich aus „00 Start hier“ des Pakets. Steht in der Download-Mail und auf der Dankeseite. */
+  auftrag: string;
   skills: [Skill, Skill, Skill];
   empfehlungen: Empfehlung[];
 };
@@ -48,6 +50,7 @@ export const PAKETE: Paket[] = [
     kurz: "Texte",
     claim: "Texte, die nach dir klingen.",
     farbe: "#E8D9B0",
+    auftrag: "Schreib drei Sätze für meine Startseite. Ich bin [Beruf] in [Ort] und mache [Leistung]. Nutze menschlich-schreiben.",
     skills: [
       { ordner: "menschlich-schreiben", titel: "Texte ohne KI-Klang", satz: "Schreibt konkret und im Fluss, ohne Gedankenstriche und Werbefloskeln. Mit Prüfskript und deiner Stimme.", wofuer: "Webseiten-Texte, Mails, Angebote" },
       { ordner: "einfach-erklaeren", titel: "Einfach erklären", satz: "Erklärt Fachthemen so, dass jeder sie versteht und weiß, was er als Nächstes tut.", wofuer: "Anleitungen, Kundenfragen, Schulungen" },
@@ -61,6 +64,7 @@ export const PAKETE: Paket[] = [
     kurz: "Design",
     claim: "Seiten, die hochwertig wirken.",
     farbe: "#D4AE5A",
+    auftrag: "Mach diesen Abschnitt schöner. Nutze schoen-gestalten und zeig mir erst, was du ändern willst: [Datei oder Adresse]",
     skills: [
       { ordner: "schoen-gestalten", titel: "Schöner gestalten", satz: "Gestaltet Seiten, Folien und PDFs lesbar und hochwertig, ohne den Look aus dem KI-Baukasten.", wofuer: "Webseiten, Präsentationen, PDFs" },
       { ordner: "bilder-mit-stil", titel: "Bilder mit Stil", satz: "Legt den Stil einmal fest, schreibt die Bild-Aufträge dazu und prüft jedes Bild auf typische KI-Fehler.", wofuer: "Titelbilder, Illustrationen, Beitragsbilder" },
@@ -77,6 +81,7 @@ export const PAKETE: Paket[] = [
     kurz: "SEO",
     claim: "Gefunden werden, bei Google und in KI-Antworten.",
     farbe: "#C9A24B",
+    auftrag: "Mach diese Seite fit für Google, nach seo-seite: [Adresse oder Text]",
     skills: [
       { ordner: "themen-finden", titel: "Themen finden", satz: "Findet Themen in der Sprache deiner Kunden, prüft sie an der ersten Google-Seite und ordnet sie.", wofuer: "Blog-Planung, Ratgeber, alte Artikel aufräumen" },
       { ordner: "seo-seite", titel: "Seite für Google bauen", satz: "Liefert Titel, Beschreibung, Überschriften als Fragen, Fragen-Block und interne Links, mit Zeichenzahl.", wofuer: "Leistungsseiten, Artikel, zu lange Titel" },
@@ -90,6 +95,7 @@ export const PAKETE: Paket[] = [
     kurz: "Recherche",
     claim: "Markt und Mitbewerber verstehen.",
     farbe: "#C98F5E",
+    auftrag: "Schärfe meine Zielgruppe nach zielgruppe-schaerfen. Mein bester Kunde war [Beispiel].",
     skills: [
       { ordner: "mitbewerber-pruefen", titel: "Mitbewerber vergleichen", satz: "Stellt dich neben deine Mitbewerber: erster Satz, Angebot, Preis, Lücken, mit Sternen nach fester Regel.", wofuer: "neues Angebot, Preisfindung, neue Webseite" },
       { ordner: "zielgruppe-schaerfen", titel: "Zielgruppe schärfen", satz: "Beschreibt Wunschkunden über Prüfsteine und ein echtes Beispiel statt über eine erfundene Kunstfigur.", wofuer: "Angebot, Anzeigen, Kaltakquise" },
@@ -103,6 +109,7 @@ export const PAKETE: Paket[] = [
     kurz: "Social Media",
     claim: "Beiträge planen, statt jeden Tag neu anzufangen.",
     farbe: "#E0A070",
+    auftrag: "Schreib einen LinkedIn-Beitrag aus dieser Notiz: [was du erlebt oder gemessen hast]. Ich will, dass Leute [nächster Schritt].",
     skills: [
       { ordner: "beitrag-schreiben", titel: "Beiträge schreiben", satz: "Schreibt Beiträge mit starker erster Zeile, einem Gedanken und einem nächsten Schritt, samt Belegen.", wofuer: "LinkedIn, Instagram, Ankündigungen" },
       { ordner: "karussell-planen", titel: "Karussells planen", satz: "Plant ein Karussell Folie für Folie: eine Idee und ein Blickfang je Folie, lesbar am Handy.", wofuer: "Erklär-Reihen, Anleitungen, Serien" },
@@ -116,6 +123,7 @@ export const PAKETE: Paket[] = [
     kurz: "Entwicklung",
     claim: "Sauber bauen und dabei Tokens sparen.",
     farbe: "#A9C4B0",
+    auftrag: "Räum meine CLAUDE.md nach tokens-sparen auf. Nichts darf verloren gehen, nenn mir die Zeilen vorher und nachher.",
     skills: [
       { ordner: "tokens-sparen", titel: "Tokens sparen", satz: "Hält das Gedächtnis der Unterhaltung schlank: erst suchen, gezielt lesen, die kleinste Lösung zuerst.", wofuer: "lange Sitzungen, große Projekte, CLAUDE.md aufräumen" },
       { ordner: "sicher-bauen", titel: "Sicher bauen", satz: "Achtet auf Eingaben, Anmeldung, Rechte und Geheimnisse und belegt es am Ende mit echten Proben.", wofuer: "Formulare, Login, Datenbanken" },
@@ -320,6 +328,60 @@ export const berufVon = (id: BerufId): Beruf => BERUFE.find((b) => b.id === id)!
 export const berufeMit = (id: PaketId): Beruf[] => BERUFE.filter((b) => b.setup.some((s) => s.paket === id));
 export const ALLE_PAKETE: PaketId[] = PAKETE.map((p) => p.id);
 export const SKILL_ZAHL = PAKETE.reduce((n, p) => n + p.skills.length, 0);
+
+/* ── Die Wahl im Formular ─────────────────────────────────────────────────────
+   Welche Pakete jemand will (leer heißt alle) und welches Setup. Die Wahl reist vom Formular über den Link in der
+   Bestätigungsmail bis zur Dankeseite und zur Download-Mail. Unterwegs zählt nur, was hier als Kürzel steht:
+   Alles andere fällt weg. So kann niemand über den Link fremden Text in eine Mail, ein Merkmal oder eine Seite bringen. */
+
+export type Wahl = { pakete: PaketId[]; beruf: BerufId | null };
+
+export const istPaket = (t: string): t is PaketId => PAKETE.some((p) => p.id === t);
+export const istBeruf = (t: string): t is BerufId => BERUFE.some((b) => b.id === t);
+
+/** Liest die Wahl aus dem Formular oder dem Link. Unbekanntes fällt weg. Ist kein bekanntes Paket dabei, gelten alle sechs.
+ *  Die Reihenfolge ist immer die der Seite, egal wie sie im Link steht. */
+export function wahlLesen(pakete?: string | null, beruf?: string | null): Wahl {
+  const teile = new Set((pakete ?? "").split(","));
+  const gewaehlt = ALLE_PAKETE.filter((id) => teile.has(id));
+  return { pakete: gewaehlt.length ? gewaehlt : [...ALLE_PAKETE], beruf: beruf && istBeruf(beruf) ? beruf : null };
+}
+
+/** Die Wahl für einen Link, etwa „pakete=texte,seo&beruf=texter“. Alle sechs ohne Setup: leer. Nur Kürzel aus dieser Datei. */
+export function wahlQuery(w: Wahl): string {
+  const teile: string[] = [];
+  if (w.pakete.length < ALLE_PAKETE.length) teile.push(`pakete=${w.pakete.join(",")}`);
+  if (w.beruf) teile.push(`beruf=${w.beruf}`);
+  return teile.join("&");
+}
+
+/** Merkmale am Kontakt nach dem Klick in der Bestätigungsmail: je Paket eins und eins für den Beruf.
+ *  An ihnen können Strecken und Update-Mails hängen (Sabala Mail), etwa „Skill-Paket: Texte“ oder „Beruf: Texter“. */
+export const wahlMerkmale = (w: Wahl): string[] => [
+  ...w.pakete.map((id) => `Skill-Paket: ${paketVon(id).name}`),
+  ...(w.beruf ? [`Beruf: ${berufVon(w.beruf).name}`] : []),
+];
+
+/** Die Wahl in einer Zeile fürs CRM (Briefkasten), etwa „Pakete: Texte, SEO und KI-Suche · Setup: Texter“. */
+export const wahlText = (w: Wahl): string =>
+  (w.pakete.length === ALLE_PAKETE.length ? "Pakete: alle sechs" : `Pakete: ${w.pakete.map((id) => paketVon(id).name).join(", ")}`) +
+  (w.beruf ? ` · Setup: ${berufVon(w.beruf).name}` : "");
+
+/** Was die Download-Mail über die Wahl wissen muss, als reine Daten (mail-html.ts kennt diese Datei nicht). */
+export const wahlFuerMail = (w: Wahl) => ({
+  pakete: w.pakete.map((id) => {
+    const p = paketVon(id);
+    return { name: p.name, kurz: p.kurz, claim: p.claim, skills: p.skills.map((k) => k.titel).join(", "), auftrag: p.auftrag };
+  }),
+  alle: w.pakete.length === ALLE_PAKETE.length,
+  setup: w.beruf
+    ? (() => {
+        const b = berufVon(w.beruf);
+        return { als: b.als, erstes: paketVon(b.setup[0].paket).name, aufgabe: b.anleitung.aufgaben[0] };
+      })()
+    : null,
+  query: wahlQuery(w),
+});
 
 /** Fragen und Antworten: die Seite zeigt sie, page.tsx gibt sie als FAQPage an Google. Antworten kurz, 35 bis 60 Wörter. */
 export const FRAGEN: { q: string; a: string }[] = [

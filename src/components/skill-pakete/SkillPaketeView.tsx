@@ -4,12 +4,13 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Component, Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { BookOpen, ChartColumn, Check, CodeXml, Compass, ExternalLink, Megaphone, Palette, PenLine, Plus, RefreshCw, Search, type LucideIcon } from "lucide-react";
+import { BookOpen, Check, Compass, ExternalLink, Plus, RefreshCw, type LucideIcon } from "lucide-react";
 import AnmeldeForm from "@/components/akademie/AnmeldeForm";
 import { GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, Weiter } from "@/components/akademie/shared";
 import type { Steuer } from "./Buehne";
 import { ALLE_PAKETE, BEISPIELE, BERUFE, FRAGEN, PAKETE, SKILL_ZAHL, berufVon, berufeMit, paketVon, type BerufId, type PaketId } from "./daten";
 import s from "./skill-pakete.module.css";
+import { SYMBOL } from "./symbole";
 
 /* Skill-Pakete /claude-code/skill-paket (Iljas Wunsch, 15.11.2026): Pakete nach Thema, Setups je Beruf,
    im Formular ein Häkchen je Paket. Sechs Abschnitte im Aussehen der Akademie-Seiten, jeder passt in ein Laptop-Fenster:
@@ -21,7 +22,6 @@ import s from "./skill-pakete.module.css";
 
 const Buehne = dynamic(() => import("./Buehne"), { ssr: false });
 
-const SYMBOL: Record<PaketId, LucideIcon> = { texte: PenLine, design: Palette, seo: Search, recherche: ChartColumn, social: Megaphone, entwicklung: CodeXml };
 /* „sechs Pakete“, „Sechs Skill-Pakete“: Das Zahlwort folgt der Zahl der Pakete in daten.ts. */
 const ANZAHL = ["null", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn"][PAKETE.length];
 const ANZAHL_GROSS = ANZAHL[0].toUpperCase() + ANZAHL.slice(1);

@@ -1,5 +1,6 @@
 import { after, NextResponse } from "next/server";
 import { z } from "zod";
+import { wahlMerkmale, type Wahl } from "@/components/skill-pakete/daten";
 import { subscribeLeadmagnet, subscribeMooniVoice, subscribeToAcademy, subscribeWarteliste, subscribeWebinar, tagContact } from "@/lib/activecampaign";
 import { anmelden, bestaetigen, lastDerStunde, vermerken, type Bestaetigt } from "@/lib/einwilligung";
 import { EINWILLIGUNG_VERSION, EINWILLIGUNGEN } from "@/lib/einwilligung-text";
@@ -109,8 +110,13 @@ const JE_ABSENDER_JE_STUNDE = 30;
    Host-Kopf unsere Mail mit einem Link auf eine fremde Seite verschicken lassen. Vorschau-Bauten nehmen ihre eigene Adresse. */
 export const BASIS = (process.env.SEITE_URL || (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://sabala-mentoring.com")).replace(/\/+$/, "");
 
+/** Der Link in der Bestätigungsmail. zusatz: weitere Angaben im Link, bei den Skill-Paketen die Wahl („pakete=texte,seo&beruf=texter“).
+ *  Er entsteht nur aus festen Kürzeln (wahlQuery in daten.ts). Was nicht danach aussieht, bleibt draußen. */
+export const bestaetigungsLink = (token: string, zusatz = "") =>
+  `${BASIS}/api/newsletter/bestaetigen?t=${token}${/^[a-z]+=[a-z,]+(&[a-z]+=[a-z,]+)*$/.test(zusatz) ? `&${zusatz}` : ""}`;
+
 /** Häkchen gesetzt: Nachweis festhalten und die Bestätigungsmail schicken. */
-export async function einwilligungStarten(d: { formular: Formular; email: string; vorname: string; nachname: string; version?: number; ip: string }): Promise<Bestaetigung> {
+export async function einwilligungStarten(d: { formular: Formular; email: string; vorname: string; nachname: string; version?: number; ip: string; zusatz?: string }): Promise<Bestaetigung> {
   const db = getClient();
   const version = d.version ?? EINWILLIGUNG_VERSION;
   // Ohne Datenbank oder Postfach gar nicht erst anfangen: Dann entsteht auch kein Eintrag, zu dem nie eine Mail käme.
@@ -125,7 +131,7 @@ export async function einwilligungStarten(d: { formular: Formular; email: string
     // Auch wer schon bestätigt ist, bekommt nur eine Mail mit Link. Erst der Klick löst im Newsletter-Werkzeug etwas aus.
     // Ging eben erst eine Mail an diese Adresse, sieht die Antwort trotzdem gleich aus: Von außen lässt sich nichts über die Adresse ablesen.
     if (!stand.senden) return "gesendet";
-    if (!(await bestaetigungSenden(d.email, `${BASIS}/api/newsletter/bestaetigen?t=${stand.token}`, d.formular))) return "fehlt";
+    if (!(await bestaetigungSenden(d.email, bestaetigungsLink(stand.token, d.zusatz), d.formular))) return "fehlt";
     await vermerken(db, stand.id, "mail");
     return "gesendet";
   } catch (err) {
@@ -135,8 +141,10 @@ export async function einwilligungStarten(d: { formular: Formular; email: string
 }
 
 /** Klick auf den Link in der Mail. Gibt die Quelle des bestätigten Formulars zurück (auch beim zweiten Klick), nach ihr richtet sich die Dankeseite.
- *  null: Link unbekannt oder abgemeldet. */
-export async function einwilligungBestaetigen(token: string, ip: string): Promise<string | null> {
+ *  null: Link unbekannt oder abgemeldet.
+ *  wahl: bei den Skill-Paketen die Wahl aus dem Link. Sie kommt aus der Anfrage, ist aber auf feste Kürzel beschränkt (wahlLesen),
+ *  und den Link hat nur, wer das Postfach öffnen kann. Mehr als welche Pakete jemand bekommt, lässt sich damit nicht ändern. */
+export async function einwilligungBestaetigen(token: string, ip: string, wahl: Wahl | null = null): Promise<string | null> {
   const db = getClient();
   if (!db) return null;
   const b = await bestaetigen(db, token, ip);
@@ -145,20 +153,23 @@ export async function einwilligungBestaetigen(token: string, ip: string): Promis
     // Die Nische auch als Merkmal, wie der Tag im Newsletter-Werkzeug. Daran können Strecken hängen (strecken.ts).
     const nische = istQuelle(b.quelle) ? nischeVon(b.quelle) : null;
     if (nische) await merkmalSetzen(db, b.email, `Nische: ${NISCHEN[nische]}`).catch((err) => console.error("[einwilligung] Nische nicht gemerkt:", err));
+    // Skill-Pakete: je Paket ein Merkmal und eins für den Beruf („Skill-Paket: Texte“, „Beruf: Texter“). Daran hängen Strecken und Update-Mails.
+    const paketWahl = b.quelle === "skill-paket" ? wahl : null;
+    for (const m of paketWahl ? wahlMerkmale(paketWahl) : []) await merkmalSetzen(db, b.email, m).catch((err) => console.error("[einwilligung] Merkmal nicht gemerkt:", m, err));
     await insWerkzeug(b, b.quelle);
     // Wer ein Paket angefordert hat, bekommt es genau einmal per Mail zum Aufheben (nur beim ersten Klick, neu).
     // Erst nach der Antwort: Der Klick landet sofort auf der Dankeseite, auch wenn der Mailserver trödelt.
     // Adresse und Paket kommen aus der Datenbank, nie aus der Anfrage.
-    after(() => downloadSchicken(b.email, b.quelle));
+    after(() => downloadSchicken(b.email, b.quelle, paketWahl));
   }
   return b.quelle;
 }
 
 /** Die Download-Mail darf den Klick nie stören: Fehler landen im Protokoll, nicht beim Besucher.
  *  ponytail: Protokoll nur im Vercel-Log. Ins Ereignis-Protokoll (nl_ereignisse), sobald das CRM es anzeigen soll. */
-async function downloadSchicken(an: string, quelle: string): Promise<void> {
+async function downloadSchicken(an: string, quelle: string, wahl: Wahl | null): Promise<void> {
   try {
-    if (await downloadSenden(an, quelle)) console.info(`[einwilligung] Download-Mail raus (${quelle})`);
+    if (await downloadSenden(an, quelle, wahl)) console.info(`[einwilligung] Download-Mail raus (${quelle})`);
   } catch (err) {
     console.error(`[einwilligung] Download-Mail gescheitert (${quelle}):`, err);
   }

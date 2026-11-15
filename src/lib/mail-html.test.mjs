@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon } from "./mail-html.ts";
+import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon, skillPaketeDownload } from "./mail-html.ts";
+import { wahlFuerMail, wahlLesen } from "../components/skill-pakete/daten.ts";
 
 const LINK = "https://sabala-mentoring.com/api/newsletter/bestaetigen?t=abc_DEF-123";
 const WORTLAUT = "Ja, ich will den Sabala Newsletter & mehr.";
@@ -95,4 +96,34 @@ test("Download-Mail: Knopf zum Paket, drei Schritte, nur eigene Adressen, nichts
   }
   // Nur Quellen mit Paket bekommen eine Download-Mail
   for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) assert.equal(downloadVon(q), null, q);
+});
+
+test("Skill-Pakete: Jede Wahl bekommt ihre eigene Download-Mail, nur mit festen Texten", () => {
+  const eins = skillPaketeDownload(wahlFuerMail(wahlLesen("entwicklung", "")));
+  const drei = skillPaketeDownload(wahlFuerMail(wahlLesen("texte,seo,recherche", "texter")));
+  const alle = skillPaketeDownload(wahlFuerMail(wahlLesen("", "")));
+  assert.equal(eins.betreff, "Dein Skill-Paket Entwicklung");
+  assert.equal(drei.betreff, "Deine drei Skill-Pakete");
+  assert.equal(alle.betreff, "Deine sechs Skill-Pakete");
+  assert.match(drei.vorschau, /Skill-Pakete Texte, SEO und Recherche: neun Skills/, "kurze Namen, kein doppeltes „und“");
+  assert.equal(drei.seite, "https://sabala-mentoring.com/claude-code/skill-paket/danke?pakete=texte,seo,recherche&beruf=texter", "Knopf trägt die Wahl");
+  assert.equal(alle.seite, "https://sabala-mentoring.com/claude-code/skill-paket/danke");
+  assert.ok(drei.schritte[0].includes("Dein Setup als Texter") && drei.tipp.includes("Texte"), "Setup steht in den Schritten und im Tipp");
+  for (const d of [eins, drei, alle]) {
+    const h = downloadHtml(d);
+    const t = downloadText(d);
+    for (const p of d.pakete) {
+      assert.ok(h.includes(p.claim) && t.includes(p.claim), p.name);
+      assert.ok(t.includes(`Probier zuerst: „${p.auftrag}“`), p.name);
+    }
+    for (const s of d.schritte) assert.ok(t.includes(s), s);
+    for (const z of [...h.matchAll(/(?:src|href)="([^"]+)"/g)].map((m) => m[1])) {
+      assert.ok(z.startsWith("https://sabala-mentoring.com/") || z === "mailto:sabala@sabala-mentoring.com", z);
+    }
+    const groessen = [...h.matchAll(/font-size:\s*([\d.]+)px/g)].map((m) => Number(m[1])).filter((g) => g > 1);
+    assert.ok(Math.min(...groessen) >= 12, `kleinste Schrift ${Math.min(...groessen)} px`);
+    assert.ok(!h.includes("undefined") && !t.includes("undefined") && !/<style/i.test(h));
+    assert.ok(!/[–—]/.test(h + t), "keine Gedankenstriche");
+  }
+  assert.ok(downloadText(drei).includes("Hier lädst du sie herunter:") && downloadText(eins).includes("Hier lädst du es herunter:"));
 });

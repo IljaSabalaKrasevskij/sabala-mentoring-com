@@ -38,17 +38,17 @@ export const RESSOURCEN: Ressource[] = [
     knopf: "Startpaket holen",
   },
   {
-    name: "Skill-Paket",
+    name: "Skill-Pakete",
     art: "Skills für Claude · Deutsch",
-    satz: "Vier Skills, die ich selbst nutze, auf Deutsch und zum Anpassen an deine Stimme.",
-    punkte: ["Texte ohne KI-Klang", "Schöneres Design", "Check vor dem Livegang"],
+    satz: "Sechs Pakete mit je drei Skills, die ich selbst nutze, dazu ein Setup für deinen Beruf.",
+    punkte: ["Texte, Design, SEO", "Recherche, Social Media, Entwicklung", "Updates, wenn ein Skill dazukommt"],
     bild: {
-      src: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
-      alt: "Skizze: aufgeschlagenes Notizbuch mit Entwürfen für eine Webseite, daneben ein Laptop und eine Tasse Kaffee",
+      src: "/images/skill-pakete/karte.jpg",
+      alt: "Mooni, der kleine Roboter, zwischen dunklen Schachteln mit goldenen Zeichen",
     },
     seite: "/claude-code/skill-paket",
     formular: "anfordern",
-    knopf: "Skill-Paket holen",
+    knopf: "Skill-Pakete holen",
   },
   {
     name: "Mooni Voice",

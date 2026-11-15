@@ -13,9 +13,10 @@ import { FRAGEN } from "@/components/skill-pakete/daten";
 const site = "https://sabala-mentoring.com";
 const url = `${site}/claude-code/skill-paket`;
 
+/* Vorschaubild für WhatsApp, LinkedIn und Co.: der Kopf der Seite mit der 3D-Bühne, aus dem Bau fotografiert (1200 × 630). */
 const bild = {
-  src: "/blog/webseiten-bau-mit-claude-anfaenger/cover.jpg",
-  alt: "Skizze: aufgeschlagenes Notizbuch mit Entwürfen für eine Webseite, daneben ein Laptop und eine Tasse Kaffee auf dunklem Holz",
+  src: "/images/skill-pakete/og.jpg",
+  alt: "Bring Claude dein Handwerk bei: Mooni, der kleine Roboter, zwischen sechs dunklen Schachteln mit goldenen Zeichen, daneben die Wahl des Berufs",
 };
 
 const title = "Claude Skills auf Deutsch: sechs kostenlose Skill-Pakete";
@@ -31,7 +32,7 @@ export const metadata = {
     description,
     type: "website",
     url,
-    images: [{ url: `${site}${bild.src}`, alt: bild.alt }],
+    images: [{ url: `${site}${bild.src}`, width: 1200, height: 630, alt: bild.alt }],
   },
 };
 

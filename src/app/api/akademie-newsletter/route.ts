@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { istBeruf, istPaket, wahlLesen, wahlQuery, wahlText } from "@/components/skill-pakete/daten";
 import { eingabeAbsage, eingabePruefen, einwilligungStarten, FELDER, type Formular } from "@/lib/anmeldung";
 import { ipAus, jsonAus, siegelAbsage, siegelPruefen } from "@/lib/botschutz";
 import { insertLead } from "@/lib/leads";
@@ -20,6 +21,9 @@ export const runtime = "nodejs";
    - Mit "quelle" kommt die Anmeldung von einem Leadmagneten (Kürzel aus src/lib/quellen.ts). Quelle und Nische
      stehen dann im Briefkasten, nach dem Klick kommen die Tags „Leadmagnet: …“ und „Nische: …“ dazu.
      Unbekannte Kürzel werden abgelehnt, die Nische kommt nie aus der Anfrage.
+   - Skill-Pakete (Quelle skill-paket): „pakete“ (Kürzel mit Komma, leer heißt alle sechs) und „beruf“ (Setup, leer heißt keins).
+     Nur Kürzel aus src/components/skill-pakete/daten.ts. Die Wahl steht im Briefkasten und reist im Link der
+     Bestätigungsmail mit. Nach dem Klick werden daraus Merkmale, die Download-Mail und die Dankeseite.
    - Botschutz: unsichtbares Feld, Stempel und Obergrenze (src/lib/botschutz.ts).
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -38,6 +42,8 @@ const Schema = z.object({
   telefon: FELDER.telefon,
   einwilligung: FELDER.einwilligungPflicht,
   einwilligungVersion: FELDER.einwilligungVersion,
+  pakete: z.string().max(120).optional().default("").refine((t) => t === "" || t.split(",").every(istPaket), "Dieses Paket kenne ich nicht."),
+  beruf: z.string().max(40).optional().default("").refine((t) => t === "" || istBeruf(t), "Dieses Setup kenne ich nicht."),
   fax: FELDER.fax,
 });
 
@@ -52,7 +58,10 @@ export async function POST(req: Request) {
   const liste = data.warteliste ? WARTELISTE[data.warteliste] : null;
   // Woher die Anmeldung kommt: von einem Leadmagneten, einer Warteliste oder dem Newsletter-Formular selbst
   const quelle: Quelle = data.quelle ?? liste?.formular ?? "Akademie-Newsletter";
-  const anliegen = data.quelle ? `Leadmagnet: ${LEADMAGNETE[data.quelle].name}` : liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.";
+  const wahl = data.quelle === "skill-paket" ? wahlLesen(data.pakete, data.beruf) : null;
+  const anliegen = data.quelle
+    ? `Leadmagnet: ${LEADMAGNETE[data.quelle].name}${wahl ? ` · ${wahlText(wahl)}` : ""}`
+    : liste?.anliegen ?? "Akademie-Newsletter: möchte über neue Kurse & Termine informiert werden.";
 
   // Botschutz: unsichtbares Feld gefüllt → stilles OK. Dann der Stempel.
   if (data.fax) return NextResponse.json({ ok: true });
@@ -84,6 +93,7 @@ export async function POST(req: Request) {
     nachname: data.nachname,
     version: data.einwilligungVersion,
     ip,
+    zusatz: wahl ? wahlQuery(wahl) : "",
   });
   if (bestaetigung === "fehlt") {
     // Datenbank oder Postfach nicht eingerichtet, oder der Versand ist gescheitert → Frontend zeigt den Ausweichtext
