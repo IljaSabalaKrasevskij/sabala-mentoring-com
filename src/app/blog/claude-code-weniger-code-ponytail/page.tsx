@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles, Scissors, Gauge, ShieldCheck, Quote } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
+import { StartpaketKasten } from "@/components/blog/StartpaketKasten";
 
 const slug = "claude-code-weniger-code-ponytail";
 const url = `https://sabala-mentoring.com/blog/${slug}`;
@@ -311,6 +312,9 @@ export default function BlogClaudeCodeWenigerCodePage() {
         </ScrollReveal>
       </section>
 
+      {/* STARTPAKET: Kasten mitten im Artikel, der Haupt-Aufruf am Ende bleibt */}
+      <StartpaketKasten artikel="claude-code-weniger-code-ponytail" titel="Ponytail ist einer von zehn Skills im Startpaket." text="Dazu die Installation für Mac und Windows, ein Spickzettel und zwei CLAUDE.md-Vorlagen. Kostenlos per Mail." />
+
       {/* FAQ */}
       <section className="px-6 sm:px-12 md:px-24 pt-24 max-w-[900px] mx-auto w-full">
         <ScrollReveal>
@@ -321,7 +325,7 @@ export default function BlogClaudeCodeWenigerCodePage() {
           {faq.map((f, i) => (
             <ScrollReveal key={i} delay={i * 0.04}>
               <details className="group bg-warm-light/30 border border-refined-gold/15 rounded-xl px-6 py-5 hover:border-refined-gold/40 transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer list-none">
+                <summary className="-my-1.5 flex justify-between items-center cursor-pointer list-none py-1.5">
                   <h3 className="font-instrument text-lg md:text-xl text-deep-charcoal pr-6">{f.q}</h3>
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-refined-gold/10 border border-refined-gold/30 flex items-center justify-center text-refined-gold text-xl transition-transform duration-300 group-open:rotate-45">+</span>
                 </summary>
