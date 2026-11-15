@@ -4,23 +4,34 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Component, Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { ChartColumn, Check, Megaphone, Palette, PenLine, Plus, Search, type LucideIcon } from "lucide-react";
+import { BookOpen, ChartColumn, Check, CodeXml, Compass, ExternalLink, Megaphone, Palette, PenLine, Plus, RefreshCw, Search, type LucideIcon } from "lucide-react";
 import AnmeldeForm from "@/components/akademie/AnmeldeForm";
 import { GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, Weiter } from "@/components/akademie/shared";
 import type { Steuer } from "./Buehne";
-import { ALLE_PAKETE, BERUFE, FRAGEN, PAKETE, SKILL_ZAHL, berufVon, berufeMit, paketVon, type BerufId, type PaketId } from "./daten";
+import { ALLE_PAKETE, BEISPIELE, BERUFE, FRAGEN, PAKETE, SKILL_ZAHL, berufVon, berufeMit, paketVon, type BerufId, type PaketId } from "./daten";
 import s from "./skill-pakete.module.css";
 
-/* Skill-Pakete /claude-code/skill-paket (Iljas Wunsch, 15.11.2026): fünf Pakete nach Thema, Setups je Beruf,
-   im Formular ein Häkchen je Paket. Fünf Abschnitte im Aussehen der Akademie-Seiten, jeder passt in ein Laptop-Fenster:
-   Kopf und Setup (eine Bühne für beide) · die Pakete · der Beweis · anfordern · Fragen.
+/* Skill-Pakete /claude-code/skill-paket (Iljas Wunsch, 15.11.2026): Pakete nach Thema, Setups je Beruf,
+   im Formular ein Häkchen je Paket. Sechs Abschnitte im Aussehen der Akademie-Seiten, jeder passt in ein Laptop-Fenster:
+   Kopf und Setup (eine Bühne für beide) · die Pakete · Vorher und Nachher · die Abkürzung · anfordern · Fragen.
+   Wie viele Pakete es sind, steht nur in daten.ts: Zahlwörter, Spalten und Bühne richten sich danach.
    Die 3D-Bühne lädt nach, die Überschrift steht sofort. Fällt 3D aus, steht Mooni als Bild da.
    Alle Setups und alle Paket-Felder stehen im HTML, sichtbar ist das gewählte: Google liest alles, nichts springt.
    Lesefarben deckend (Leser ab 50, keine blasse Schrift). Inhalte kommen aus daten.ts. */
 
 const Buehne = dynamic(() => import("./Buehne"), { ssr: false });
 
-const SYMBOL: Record<PaketId, LucideIcon> = { texte: PenLine, design: Palette, seo: Search, recherche: ChartColumn, social: Megaphone };
+const SYMBOL: Record<PaketId, LucideIcon> = { texte: PenLine, design: Palette, seo: Search, recherche: ChartColumn, social: Megaphone, entwicklung: CodeXml };
+/* „sechs Pakete“, „Sechs Skill-Pakete“: Das Zahlwort folgt der Zahl der Pakete in daten.ts. */
+const ANZAHL = ["null", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn"][PAKETE.length];
+const ANZAHL_GROSS = ANZAHL[0].toUpperCase() + ANZAHL.slice(1);
+
+/* Warum hier und nicht bei GitHub suchen: Auswahl, Anleitung, Updates (Iljas Punkte vom 15.11.2026). */
+const VORTEILE: { symbol: LucideIcon; titel: string; text: string }[] = [
+  { symbol: Compass, titel: "Die Abkürzung.", text: "Auf GitHub liegen unzählige Skills, die meisten auf Englisch. Hier bekommst du die Regeln, nach denen ich selbst arbeite, als fertige Skills auf Deutsch." },
+  { symbol: BookOpen, titel: "Mit Anleitung.", text: "Zu jedem Skill steht da, wofür du ihn nutzt, mit fertigen Aufträgen und einem Vorher und Nachher. Dazu die Skills anderer Entwickler, die ich zusätzlich nutze, mit Link." },
+  { symbol: RefreshCw, titel: "Mit Updates.", text: "Kommt ein Skill dazu oder wird einer besser, bekommst du ihn per Mail. Suchen musst du nichts." },
+];
 const TEXT_DUNKEL = "#E9E4DA";
 const TEXT_HELL = "#57514A";
 const LAPTOP = "(min-width: 56.25rem)";
@@ -56,6 +67,8 @@ export default function SkillPaketeView() {
   /* Nichts vorab angehakt: Nur so zeigt die Auswahl, was jemanden wirklich interessiert. Leer heißt „alle fünf“. */
   const [auswahl, setAuswahl] = useState<PaketId[]>([]);
   const [offen, setOffen] = useState<PaketId>("texte");
+  const [zeig, setZeig] = useState<PaketId>("texte");
+  const [mitSkill, setMitSkill] = useState(false);
   const [aktiv, setAktiv] = useState(false);
   const [ruhig, setRuhig] = useState(false);
 
@@ -129,11 +142,11 @@ export default function SkillPaketeView() {
             <h1 className="cs-rise mt-4 font-serif text-cream" style={{ fontSize: "clamp(2.45rem, min(5vw, 9.2vh), 4.6rem)", lineHeight: 1.03, ...EIN(0.05) }}>
               <span className="block text-balance">Bring Claude dein Handwerk bei.</span>
               <span className="mt-2 block italic text-gold-light" style={{ fontSize: "0.6em", lineHeight: 1.15 }}>
-                Fünf Skill-Pakete, kostenlos.
+                {ANZAHL_GROSS} Skill-Pakete, kostenlos.
               </span>
             </h1>
             <p className="cs-rise mt-5 max-w-[34rem] text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: TEXT_DUNKEL, ...EIN(0.12) }}>
-              {SKILL_ZAHL} Skills auf Deutsch für Texte, Design, SEO, Marktrecherche und Social Media. Sag, was du machst, und Mooni stellt dir dein Setup zusammen.
+              {SKILL_ZAHL} Skills auf Deutsch für {UND.format(PAKETE.map((p) => p.kurz))}. Sag, was du machst, und Mooni stellt dir dein Setup zusammen.
             </p>
             <div className="cs-rise mt-7 flex flex-col gap-3 sm:flex-row sm:items-center" style={EIN(0.18)}>
               <Knopf href="#anfordern">Pakete anfordern</Knopf>
@@ -148,7 +161,7 @@ export default function SkillPaketeView() {
 
           <div className={s.buehne}>
             <div className={s.buehneInnen}>
-              <div ref={leinwand} className={s.leinwand} role="img" aria-label="Mooni mit den fünf Skill-Paketen als Schachteln">
+              <div ref={leinwand} className={s.leinwand} role="img" aria-label="Mooni mit den Skill-Paketen als Schachteln">
                 <Fang ersatz={<MooniBild />}>
                   <Buehne steuer={steuer} setup={setup} aktiv={aktiv} ruhig={ruhig} onPaket={zeigePaket} />
                 </Fang>
@@ -223,7 +236,7 @@ export default function SkillPaketeView() {
                       >
                         Dieses Setup holen
                       </Knopf>
-                      <Weiter href="#pakete">Alle fünf ansehen</Weiter>
+                      <Weiter href="#pakete">Alle {ANZAHL} ansehen</Weiter>
                     </div>
                   </div>
                 );
@@ -233,8 +246,8 @@ export default function SkillPaketeView() {
         </div>
       </section>
 
-      {/* 2 · DIE PAKETE: fünf Schachteln, eine ist offen */}
-      <section id="pakete" className="relative scroll-mt-4 overflow-hidden px-6 py-[4vh]" style={{ background: "var(--cream)" }}>
+      {/* 2 · DIE PAKETE: je Paket eine Schachtel, eine ist offen */}
+      <section id="pakete" className={`${s.flachRand} relative scroll-mt-4 overflow-hidden px-6 py-[4vh]`} style={{ background: "var(--cream)" }}>
         <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[45vh] w-[80vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at top, rgba(184,150,62,0.14), transparent 70%)" }} />
 
         <div className="relative mx-auto max-w-6xl">
@@ -243,16 +256,16 @@ export default function SkillPaketeView() {
             zeile="Die Pakete"
             titel={
               <>
-                Was steckt in den <span style={{ color: GOLD_AUF_HELL }}>fünf Paketen?</span>
+                Was steckt in den <span style={{ color: GOLD_AUF_HELL }}>{ANZAHL} Paketen?</span>
               </>
             }
           />
           {/* Eigener Absatz statt des Textes im Kopf-Baustein: Dessen Farbe ist halb durchsichtig, hier steht sie deckend. */}
           <p className="mx-auto mt-3 max-w-4xl text-pretty text-center text-[1.04rem] leading-relaxed" style={{ color: TEXT_HELL }}>
-            Je drei Skills für Claude, auf Deutsch und zum Anpassen. Nimm ein Paket, dein Setup oder alle fünf.
+            Je drei Skills, damit Claude sicher den richtigen nimmt. Neue kommen als Update dazu.
           </p>
 
-          <div className={`${s.raster} mt-5`}>
+          <div className={`${s.raster} mt-5`} style={{ "--zahl": PAKETE.length } as React.CSSProperties}>
             {PAKETE.map((p) => {
               const an = p.id === offen;
               const dabei = auswahl.includes(p.id);
@@ -277,22 +290,25 @@ export default function SkillPaketeView() {
                     <span aria-hidden className={s.deckel} />
                     <span className={s.koerper}>
                       <Symbol aria-hidden size={22} strokeWidth={1.8} className={s.symbol} />
-                      <span className={s.name}>{p.name}</span>
+                      <span className={s.name}>
+                        <span className="min-[56.25rem]:hidden">{p.name}</span>
+                        <span className="hidden min-[56.25rem]:inline">{p.kurz}</span>
+                      </span>
                       <span className={s.zahl}>{dabei ? "3 Skills · dabei" : "3 Skills"}</span>
                     </span>
                   </button>
 
                   <div id={`feld-${p.id}`} role="region" aria-labelledby={`reiter-${p.id}`} className={`${s.feld} ${an ? s.feldAn : ""}`}>
                     <div
-                      className="grid gap-5 rounded-[18px] bg-white p-5 min-[56.25rem]:grid-cols-[minmax(0,0.78fr)_minmax(0,1.5fr)] min-[56.25rem]:gap-8 min-[56.25rem]:p-6"
+                      className="grid gap-5 rounded-[18px] bg-white p-5 min-[56.25rem]:grid-cols-[minmax(0,0.68fr)_minmax(0,1.7fr)] min-[56.25rem]:gap-x-6 min-[56.25rem]:gap-y-4"
                       style={{ border: "1px solid rgba(184,150,62,0.35)", boxShadow: "0 18px 44px rgba(46,43,38,0.08)" }}
                     >
-                      <div className="flex flex-col">
-                        <h3 className="text-balance font-serif text-[1.7rem] leading-tight text-deep min-[56.25rem]:text-[2rem]">{p.claim}</h3>
-                        <p className="mt-3 text-[1rem] leading-snug" style={{ color: TEXT_HELL }}>
+                      <div className="flex flex-col min-[56.25rem]:justify-center">
+                        <h3 className="text-balance font-serif text-[1.7rem] leading-tight text-deep min-[56.25rem]:text-[1.9rem]">{p.claim}</h3>
+                        <p className="mt-2.5 text-[1rem] leading-snug" style={{ color: TEXT_HELL }}>
                           {berufe.length === BERUFE.length ? "In jedem Setup dabei." : `Im Setup für ${UND.format(berufe.map((b) => b.name))}.`}
                         </p>
-                        <div className="mt-auto pt-4">
+                        <div className="mt-4">
                           <button
                             type="button"
                             aria-pressed={dabei}
@@ -314,13 +330,40 @@ export default function SkillPaketeView() {
                             className={`rounded-[14px] p-4 ${an ? s.karte : ""}`}
                             style={{ animationDelay: `${j * 0.08}s`, background: "linear-gradient(180deg, #fdf9ee, #f6eedb)", border: "1px solid rgba(184,150,62,0.4)", borderTop: `4px solid ${p.farbe}` }}
                           >
-                            <p className="font-mono text-[15px] leading-snug" style={{ color: GOLD_AUF_HELL }}>
+                            <h4 className="font-serif text-[1.3rem] leading-tight text-deep">{k.titel}</h4>
+                            <p className="mt-0.5 font-mono text-[15px] leading-snug" style={{ color: GOLD_AUF_HELL }}>
                               {k.ordner}
                             </p>
                             <p className="mt-2 text-[0.97rem] leading-snug text-deep">{k.satz}</p>
+                            <p className="mt-2 text-[0.97rem] leading-snug" style={{ color: TEXT_HELL }}>
+                              <span className="font-semibold text-deep">Wofür:</span> {k.wofuer}
+                            </p>
                           </li>
                         ))}
                       </ul>
+                      {/* Skills anderer Entwickler: verlinkt, nicht mitgeliefert. Eigene Zeile unter den Karten, damit die linke Spalte
+                          niedrig bleibt. py-3 macht die Links am Handy 44 px hoch, am Laptop reicht die normale Zeile. */}
+                      {p.empfehlungen.length > 0 && (
+                        <p className="border-t pt-2 text-[1rem] leading-relaxed min-[56.25rem]:col-span-2 min-[56.25rem]:pt-3" style={{ color: TEXT_HELL, borderColor: "rgba(184,150,62,0.3)" }}>
+                          Passt dazu von GitHub:{" "}
+                          {p.empfehlungen.map((e, n) => (
+                            <Fragment key={e.repo}>
+                              {n > 0 && ", "}
+                              <a
+                                href={`https://github.com/${e.repo}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title={`${e.name}: ${e.satz} (Lizenz ${e.lizenz})`}
+                                className="inline-flex items-center gap-1 py-3 font-semibold underline decoration-[rgba(184,150,62,0.7)] underline-offset-4 hover:text-deep min-[56.25rem]:py-0"
+                                style={{ color: GOLD_AUF_HELL }}
+                              >
+                                {e.name}
+                                <ExternalLink aria-hidden size={14} strokeWidth={2.2} />
+                              </a>
+                            </Fragment>
+                          ))}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </Fragment>
@@ -330,63 +373,158 @@ export default function SkillPaketeView() {
         </div>
       </section>
 
-      {/* 3 · DER BEWEIS: Die schlechten Beispielsätze stehen nur im <pre>, damit Prüfungen der Seite sie nicht als Text werten. */}
-      <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "var(--tech-bg)" }}>
+      {/* 3 · VORHER UND NACHHER: je Paket ein echtes Beispiel aus dem Test (einmal ohne Skill, einmal mit).
+          „Ohne Skill“ steht in <samp>: Es ist eine Probe, kein Text der Seite. Prüfungen der Seite werten sie darum nicht. */}
+      <section id="beispiele" className="relative scroll-mt-4 overflow-hidden px-6 py-[6vh]" style={{ background: "var(--tech-bg)" }}>
         <div aria-hidden className="pointer-events-none absolute left-1/2 top-[-10%] h-[70vh] w-[70vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(212,174,90,0.11), transparent 70%)" }} />
 
         <div className="relative mx-auto max-w-6xl">
           <SektionsKopf
-            zeile="So arbeitet ein Skill"
+            zeile="Vorher und Nachher"
             titel={
               <>
-                Wie klingt ein Text <span className="text-gold-light">danach?</span>
+                Was ändert ein Skill <span className="text-gold-light">am Ergebnis?</span>
               </>
             }
           />
 
-          <div className="mt-7 grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-            <Reveal className="h-full">
-              <div className="h-full overflow-hidden rounded-[16px]" style={{ background: "#15120d", border: "1px solid rgba(212,174,90,0.4)" }}>
-                <p className="border-b border-[#3a332a] px-5 py-3 font-mono text-[15px]" style={{ color: TEXT_DUNKEL }}>
-                  Vorher: ein typischer KI-Satz, geprüft
-                </p>
-                <pre className="whitespace-pre-wrap break-words px-5 py-4 font-mono text-[15px] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
-                  <code>
-                    <span className="text-[#BDB5A6]">$ cat text.md</span>
-                    {"\nIn der heutigen schnelllebigen Zeit ist deine Webseite mehr als nur eine Visitenkarte – sie bringt dein Business auf das nächste Level!\n\n"}
-                    <span className="text-[#BDB5A6]">$ python3 pruefen.py text.md</span>
-                    {"\n"}
-                    <span className="text-gold-light">
-                      {"Zeile 1  FEHLER  Gedankenstrich „–“\nZeile 1  FEHLER  Wort aus der Liste „nächste Level“\nZeile 1  FEHLER  Wort aus der Liste „In der heutigen schnelllebigen Zeit“\nZeile 1  FEHLER  Wort aus der Liste „mehr als nur“\n4 Fehler, 0 Hinweise."}
-                    </span>
-                  </code>
-                </pre>
-              </div>
-            </Reveal>
-            <Reveal delay={0.07} className="h-full">
-              <div className="flex h-full flex-col justify-center rounded-[16px] p-7 md:p-8" style={{ background: "linear-gradient(180deg, #fdf9ee, #f6eedb)", border: "1px solid rgba(212,174,90,0.5)" }}>
-                <p className={ZEILE} style={{ color: GOLD_AUF_HELL }}>
-                  Nachher, mit dem Skill
-                </p>
-                <p className="mt-3 font-serif text-[1.8rem] leading-snug text-deep">Deine Webseite hat drei Sekunden. In der Zeit muss klar sein, was du machst und für wen.</p>
-                <p className="mt-4 flex items-center gap-3 text-[1rem]" style={{ color: TEXT_HELL }}>
-                  <Check aria-hidden size={20} strokeWidth={2.4} className="shrink-0" style={{ color: GOLD_AUF_HELL }} /> Prüfskript: keine Funde.
-                </p>
-              </div>
-            </Reveal>
+          <div role="group" aria-label="Paket wählen" className="mt-5 flex flex-wrap justify-center gap-2">
+            {PAKETE.map((p) => {
+              const an = p.id === zeig;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  aria-pressed={an}
+                  onClick={() => setZeig(p.id)}
+                  className={`min-h-[44px] cursor-pointer rounded-full border px-4 py-2 text-[15.5px] font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light ${
+                    an ? "border-gold-light bg-gold-light text-tech-bg" : "border-[rgba(212,174,90,0.5)] bg-[#17120b] text-cream maus:hover:border-gold-light maus:hover:bg-[#241b0f]"
+                  }`}
+                >
+                  {p.kurz}
+                </button>
+              );
+            })}
           </div>
 
-          <p className="mx-auto mt-6 max-w-3xl text-pretty text-center text-[1.02rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
-            Das ist der Skill <span className="font-mono text-[0.95rem] text-gold-light">menschlich-schreiben</span> aus dem Paket Texte. Sein Prüfskript findet, was nach KI klingt, und Claude schreibt es neu.
+          <div className={`${s.stapel} ${s.mittig} mt-5`}>
+            {PAKETE.map((p) => {
+              const b = BEISPIELE[p.id];
+              return (
+                <div key={p.id} data-an={p.id === zeig}>
+                  {b.bilder ? (
+                    /* Ausgabe ist ein Bild: links der Auftrag, rechts EIN großes Bildschirmfoto mit Umschalter.
+                       Zwei Fotos nebeneinander wären im flachen Fenster nur daumennagelgroß. */
+                    <div className={s.bildBeispiel}>
+                      <div className={s.bildText}>
+                        <p className="font-mono text-[15px] text-gold-light">{b.skill}</p>
+                        <p className="mt-2 text-[1.02rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
+                          Auftrag: „{b.auftrag}“
+                        </p>
+                      </div>
+                      <figure className={`${s.bildFigur} rounded-[16px] p-3 md:p-4`} style={{ background: "#15120d", border: "1px solid rgba(255,255,255,0.18)" }}>
+                        <figcaption role="group" aria-label="Fassung zeigen" className="flex gap-2">
+                          {[false, true].map((mit) => (
+                            <button
+                              key={String(mit)}
+                              type="button"
+                              aria-pressed={mitSkill === mit}
+                              onClick={() => setMitSkill(mit)}
+                              className={`min-h-[44px] flex-1 cursor-pointer rounded-full border px-4 py-2 text-[15.5px] font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light ${
+                                mitSkill === mit ? "border-gold-light bg-gold-light text-tech-bg" : "border-[rgba(212,174,90,0.5)] bg-[#17120b] text-cream maus:hover:border-gold-light maus:hover:bg-[#241b0f]"
+                              }`}
+                            >
+                              {mit ? "Mit dem Skill" : "Ohne Skill"}
+                            </button>
+                          ))}
+                        </figcaption>
+                        <div className={s.fotos}>
+                          <Image src={b.bilder.vorher} alt={b.vorher} width={1366} height={650} sizes="(min-width: 1024px) 700px, 92vw" data-an={!mitSkill} aria-hidden={mitSkill} className={s.foto} />
+                          <Image src={b.bilder.nachher} alt={b.nachher} width={1366} height={650} sizes="(min-width: 1024px) 700px, 92vw" data-an={mitSkill} aria-hidden={!mitSkill} className={s.foto} />
+                        </div>
+                      </figure>
+                      {/* Der Beleg steht im Quelltext nach dem Bild: Am Handy folgt das Bild direkt auf den Auftrag. */}
+                      {b.beleg && (
+                        <p className={`${s.bildBeleg} flex items-start gap-2.5 text-[1rem] leading-relaxed`} style={{ color: TEXT_DUNKEL }}>
+                          <Check aria-hidden size={19} strokeWidth={2.4} className="mt-[3px] shrink-0 text-gold-light" /> {b.beleg}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <p className="mx-auto max-w-4xl text-pretty text-center text-[1.02rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
+                        <span className="font-mono text-[15px] text-gold-light">{b.skill}</span> · Auftrag: „{b.auftrag}“
+                      </p>
+                      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                        <figure className="rounded-[16px] p-5 md:p-6" style={{ background: "#15120d", border: "1px solid rgba(255,255,255,0.18)" }}>
+                          <figcaption className={ZEILE} style={{ color: "#BDB5A6" }}>
+                            Ohne Skill
+                          </figcaption>
+                          <samp className="mt-2.5 block whitespace-pre-line font-sans text-[1rem] leading-relaxed" style={{ color: "#D6CFC2" }}>
+                            {b.vorher}
+                          </samp>
+                        </figure>
+                        <figure className="rounded-[16px] p-5 md:p-6" style={{ background: "linear-gradient(180deg, #fdf9ee, #f6eedb)", border: "1px solid rgba(212,174,90,0.5)" }}>
+                          <figcaption className={ZEILE} style={{ color: GOLD_AUF_HELL }}>
+                            Mit dem Skill
+                          </figcaption>
+                          <p className="mt-2.5 whitespace-pre-line text-[1rem] leading-relaxed text-deep">{b.nachher}</p>
+                          {b.beleg && (
+                            <p className="mt-3 flex items-center gap-2.5 text-[1rem]" style={{ color: TEXT_HELL }}>
+                              <Check aria-hidden size={19} strokeWidth={2.4} className="shrink-0" style={{ color: GOLD_AUF_HELL }} /> {b.beleg}
+                            </p>
+                          )}
+                        </figure>
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="mx-auto mt-4 max-w-5xl text-pretty text-center text-[15px] leading-relaxed" style={{ color: "#BDB5A6" }}>
+            Jedes Beispiel stammt aus einem Test: derselbe Auftrag, einmal ohne Skill und einmal mit. Die Betriebe darin sind erfunden.
           </p>
         </div>
       </section>
 
-      {/* 4 · ANFORDERN: Häkchen je Paket, dann das Formular */}
-      <section id="anfordern" className="scroll-mt-4 px-6 py-[7vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 55%, var(--cream) 100%)" }}>
+      {/* 4 · DIE ABKÜRZUNG: warum hier und nicht selbst bei GitHub suchen */}
+      <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 55%, var(--cream) 100%)" }}>
+        <div className="relative mx-auto max-w-6xl">
+          <SektionsKopf
+            hell
+            zeile="Die Abkürzung"
+            titel={
+              <>
+                Gibt es Skills nicht auch <span style={{ color: GOLD_AUF_HELL }}>kostenlos auf GitHub?</span>
+              </>
+            }
+          />
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {VORTEILE.map(({ symbol: Symbol, titel, text }, i) => (
+              <Reveal key={titel} delay={i * 0.07} className="h-full">
+                <div className="h-full rounded-[18px] bg-white p-6 md:p-7" style={{ border: "1px solid rgba(184,150,62,0.35)", boxShadow: "0 18px 44px rgba(46,43,38,0.08)" }}>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full" style={{ background: "rgba(184,150,62,0.14)", border: "1px solid rgba(184,150,62,0.45)", color: GOLD_AUF_HELL }}>
+                    <Symbol aria-hidden size={22} strokeWidth={1.7} />
+                  </span>
+                  <h3 className="mt-5 font-serif text-[1.55rem] leading-tight text-deep">{titel}</h3>
+                  <p className="mt-2.5 text-[1rem] leading-relaxed" style={{ color: TEXT_HELL }}>
+                    {text}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5 · ANFORDERN: Häkchen je Paket, dann das Formular */}
+      <section id="anfordern" className="relative scroll-mt-4 overflow-hidden px-6 py-[7vh]" style={{ background: "var(--tech-bg)" }}>
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-[-10%] h-[70vh] w-[70vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(212,174,90,0.12), transparent 70%)" }} />
         <div
-          className="mx-auto grid max-w-6xl gap-9 rounded-[20px] p-6 sm:p-9 lg:grid-cols-2 lg:gap-14 lg:p-12"
-          style={{ background: "linear-gradient(150deg, #2a2217 0%, #14100b 55%, #100c07 100%)", border: "1px solid rgba(212,174,90,0.4)", boxShadow: "0 30px 70px rgba(46,43,38,0.28)" }}
+          className="relative mx-auto grid max-w-6xl gap-9 rounded-[20px] p-6 sm:p-9 lg:grid-cols-2 lg:gap-14 lg:p-12"
+          style={{ background: "linear-gradient(150deg, #2a2217 0%, #14100b 55%, #100c07 100%)", border: "1px solid rgba(212,174,90,0.45)", boxShadow: "0 30px 70px rgba(0,0,0,0.5)" }}
         >
           <div>
             <p className={`${ZEILE} text-gold-light`}>Kostenlos per Mail</p>
@@ -396,14 +534,14 @@ export default function SkillPaketeView() {
 
             <fieldset className="mt-6">
               <legend className="sr-only">Pakete auswählen</legend>
-              <div className="grid gap-2">
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {PAKETE.map((p) => {
                   const Symbol = SYMBOL[p.id];
                   const dabei = auswahl.includes(p.id);
                   return (
                     <label
                       key={p.id}
-                      className="flex min-h-[52px] cursor-pointer items-center gap-3.5 rounded-[12px] px-4 py-2.5 transition-colors duration-200"
+                      className="flex min-h-[52px] cursor-pointer items-center gap-3 rounded-[12px] px-4 py-2.5 transition-colors duration-200"
                       style={{ background: dabei ? "rgba(212,174,90,0.16)" : "rgba(255,255,255,0.04)", border: `1px solid ${dabei ? "rgba(212,174,90,0.75)" : "rgba(255,255,255,0.16)"}` }}
                     >
                       <span className="relative block h-[22px] w-[22px] shrink-0">
@@ -418,9 +556,6 @@ export default function SkillPaketeView() {
                       </span>
                       <Symbol aria-hidden size={19} strokeWidth={1.8} className="shrink-0" style={{ color: p.farbe }} />
                       <span className="font-serif text-[1.25rem] leading-tight text-cream">{p.name}</span>
-                      <span className="ml-auto hidden whitespace-nowrap font-mono text-[12.5px] uppercase tracking-[0.12em] sm:inline" style={{ color: TEXT_DUNKEL }}>
-                        3 Skills
-                      </span>
                     </label>
                   );
                 })}
@@ -433,10 +568,10 @@ export default function SkillPaketeView() {
                 onClick={() => setAuswahl(ALLE_PAKETE)}
                 className="min-h-[44px] cursor-pointer text-[1rem] font-semibold text-gold-light underline decoration-[rgba(212,174,90,0.6)] underline-offset-4 maus:hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light"
               >
-                Alle fünf anhaken
+                Alle {ANZAHL} anhaken
               </button>
               <p aria-live="polite" className="text-[1rem]" style={{ color: TEXT_DUNKEL }}>
-                {auswahl.length === 0 ? "Nichts angehakt? Dann bekommst du alle fünf." : auswahl.length === 1 ? "Ein Paket gewählt." : `${auswahl.length} von ${PAKETE.length} Paketen gewählt.`}
+                {auswahl.length === 0 ? `Nichts angehakt? Dann bekommst du alle ${ANZAHL}.` : auswahl.length === 1 ? "Ein Paket gewählt." : `${auswahl.length} von ${PAKETE.length} Paketen gewählt.`}
               </p>
             </div>
 
@@ -464,35 +599,36 @@ export default function SkillPaketeView() {
 
           <div>
             <p className="mb-6 text-pretty text-[1.02rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
-              Trag dich ein und bestätige kurz die Mail, die danach kommt. Der Klick darin führt dich zu deinen Paketen. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen. Abmelden geht jederzeit mit einem Klick.
+              Trag dich ein und bestätige kurz die Mail, die danach kommt. Der Klick darin führt dich zu deinen Paketen. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen, und eine Mail, wenn ein Skill dazukommt. Abmelden geht jederzeit mit einem Klick.
             </p>
             <AnmeldeForm quelle="skill-paket" extra={{ pakete: auswahl.join(","), beruf: mitSetup ? beruf : "" }} knopf="Meine Pakete anfordern" />
           </div>
         </div>
       </section>
 
-      {/* 5 · FRAGEN: Die Frage ist die Tippfläche (Innenabstand plus gleich großer negativer Außenabstand, am Handy 44 px hoch). */}
-      <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "var(--tech-bg)" }}>
+      {/* 6 · FRAGEN: Die Frage ist die Tippfläche (Innenabstand plus gleich großer negativer Außenabstand, am Handy 44 px hoch). */}
+      <section className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "var(--cream)" }}>
         <div className="relative mx-auto max-w-6xl">
           <SektionsKopf
+            hell
             zeile="Häufige Fragen"
             titel={
               <>
-                Was willst du vorher <span className="text-gold-light">wissen?</span>
+                Was willst du vorher <span style={{ color: GOLD_AUF_HELL }}>wissen?</span>
               </>
             }
           />
 
-          <div className="mt-7 grid items-start gap-3 min-[56.25rem]:grid-cols-2">
+          <div className="mt-6 grid items-start gap-2.5 min-[56.25rem]:grid-cols-2">
             {FRAGEN.map((f) => (
-              <details key={f.q} className="group rounded-[14px] px-5 py-4 [&_summary::-webkit-details-marker]:hidden" style={{ background: "rgba(24,18,10,0.92)", border: "1px solid rgba(212,174,90,0.38)" }}>
+              <details key={f.q} className="group rounded-[14px] bg-white px-5 py-3.5 [&_summary::-webkit-details-marker]:hidden" style={{ border: "1px solid rgba(184,150,62,0.38)" }}>
                 <summary className="-my-1.5 flex cursor-pointer list-none items-center justify-between gap-5 py-1.5">
-                  <h3 className="font-serif text-[1.3rem] leading-snug text-cream">{f.q}</h3>
-                  <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-light text-xl text-gold-light transition-transform duration-300 group-open:rotate-45">
+                  <h3 className="font-serif text-[1.3rem] leading-snug text-deep">{f.q}</h3>
+                  <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xl transition-transform duration-300 group-open:rotate-45" style={{ borderColor: "#b8963e", color: GOLD_AUF_HELL }}>
                     +
                   </span>
                 </summary>
-                <p className="mt-3 text-[1rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
+                <p className="mt-3 text-[1rem] leading-relaxed" style={{ color: TEXT_HELL }}>
                   {f.a}
                 </p>
               </details>
@@ -500,13 +636,13 @@ export default function SkillPaketeView() {
           </div>
 
           {/* py-3 an den Links im Satz: Tippfläche am Handy 44 px, die Zeile bleibt gleich hoch. */}
-          <p className="mt-8 text-center text-[1rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
+          <p className="mt-7 text-center text-[1rem] leading-relaxed" style={{ color: TEXT_HELL }}>
             Noch mehr kostenlose Hilfen, darunter das{" "}
-            <Link href="/claude-code/startpaket" className="py-3 font-semibold text-gold-light underline decoration-[rgba(212,174,90,0.6)] underline-offset-4 hover:text-cream">
+            <Link href="/claude-code/startpaket" className="py-3 font-semibold underline decoration-[rgba(184,150,62,0.7)] underline-offset-4 hover:text-deep" style={{ color: GOLD_AUF_HELL }}>
               Claude-Code-Startpaket
             </Link>
             , findest du unter{" "}
-            <Link href="/ressourcen" className="py-3 font-semibold text-gold-light underline decoration-[rgba(212,174,90,0.6)] underline-offset-4 hover:text-cream">
+            <Link href="/ressourcen" className="py-3 font-semibold underline decoration-[rgba(184,150,62,0.7)] underline-offset-4 hover:text-deep" style={{ color: GOLD_AUF_HELL }}>
               Ressourcen
             </Link>
             .

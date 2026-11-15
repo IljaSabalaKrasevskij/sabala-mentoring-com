@@ -8,9 +8,10 @@ import { PAKETE, type PaketId } from "./daten";
 
 /* ─────────────────────────────────────────────────────────────────────────
    3D-Bühne der Skill-Pakete (Iljas Wunsch, 15.11.2026: „wirklich 3D-Elemente“).
-   Mooni schwebt in der Mitte, die fünf Pakete kreisen um ihn. Beim Weiterscrollen (fokus → 1) stellen sich
-   die drei Pakete des gewählten Berufs in eine Reihe, die Deckel klappen auf, Licht fällt heraus und die
-   Skills steigen als Karten nach oben. Wechselt der Beruf, tauschen die Pakete die Plätze.
+   Mooni schwebt in der Mitte, die Pakete kreisen um ihn (so viele, wie in daten.ts stehen). Beim Weiterscrollen
+   (fokus → 1) stellen sich die drei Pakete des gewählten Berufs in eine Reihe, die Deckel klappen auf, Licht
+   fällt heraus und die Skills steigen als Karten nach oben. Die übrigen Pakete umkreisen Mooni als kleine
+   Trabanten. Wechselt der Beruf, tauschen die Pakete die Plätze.
 
    Technik wie Mooni auf der Startseite (ValuesManifesto): three.js über @react-three/fiber, rechnet nur,
    solange die Bühne zu sehen ist (`aktiv`). Der Entpacker für das Modell liegt lokal unter /draco,
@@ -18,7 +19,7 @@ import { PAKETE, type PaketId } from "./daten";
    React zeichnet beim Scrollen nichts neu.
    Das Leuchten ist gemalt (Flächen mit weichem Verlauf, die Licht addieren), kein Nachbearbeiten des Bildes:
    Das hält die Bühne durchsichtig und am Handy schnell.
-   Zeichnungen der fünf Symbole: Lucide (ISC-Lizenz), dieselben Symbole wie in den Karten darunter.
+   Zeichnungen der Symbole: Lucide (ISC-Lizenz), dieselben Symbole wie in den Karten darunter.
    ───────────────────────────────────────────────────────────────────────── */
 
 const MOONI = "/mooni/mooni-robot.glb";
@@ -34,7 +35,7 @@ const BAHN_HOEHE = -0.76;
 const BAHN_NEIGUNG = Math.atan2(BAHN_Z, -BAHN_Y);
 const BAHN_TIEFE = Math.hypot(BAHN_Y, BAHN_Z);
 
-/** Wird von der Seite beschrieben: 0 = alle fünf kreisen um Mooni, 1 = die drei Pakete des Setups stehen in einer Reihe. */
+/** Wird von der Seite beschrieben: 0 = alle Pakete kreisen um Mooni, 1 = die drei Pakete des Setups stehen in einer Reihe. */
 export type Steuer = { fokus: number };
 
 type Props = {
@@ -56,10 +57,11 @@ const ZEICHEN: Record<PaketId, string> = {
   recherche: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
   social:
     '<path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"/><path d="M8 6v8"/>',
+  entwicklung: '<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>',
 };
 
 /* Kurze Namen für die Schilder unter den Paketen: Auf der Bühne ist wenig Platz. */
-const KURZ: Record<PaketId, string> = { texte: "Texte", design: "Design", seo: "SEO", recherche: "Recherche", social: "Social Media" };
+const KURZ: Record<PaketId, string> = Object.fromEntries(PAKETE.map((p) => [p.id, p.kurz])) as Record<PaketId, string>;
 
 /** Weißes Symbol auf Schwarz, als Maske für die Goldprägung auf der Schachtel. */
 function zeichenTextur(inhalt: string) {
@@ -171,7 +173,7 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
   const praegung = useRef<(THREE.MeshStandardMaterial | null)[]>([]);
   const glimmen = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
   const strahl = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
-  const z = useRef({ f: 0, zeit: 0, drehung: 0, winkel: PAKETE.map((_, i) => Math.PI / 2 + (i * TAU) / 5), offen: PAKETE.map(() => 0), hover: -1, mooni: 0 });
+  const z = useRef({ f: 0, zeit: 0, drehung: 0, winkel: PAKETE.map((_, i) => Math.PI / 2 + (i * TAU) / PAKETE.length), offen: PAKETE.map(() => 0), hover: -1, mooni: 0 });
 
   // Geteilte Stoffe und Bilder, die sich nie ändern: Lack, Gold, Karte, das Licht im Inneren, die Masken der Prägung.
   const stoff = useMemo(
@@ -196,8 +198,9 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
     return new THREE.BufferGeometry().setFromPoints(punkte);
   }, []);
 
-  // Rang im Setup (0, 1, 2) oder -1 für die zwei Pakete, die nicht dazugehören.
+  // Rang im Setup (0, 1, 2) oder -1 für die Pakete, die nicht dazugehören.
   const rang = useMemo(() => PAKETE.map((p) => setup.indexOf(p.id)), [setup]);
+  const uebrig = Math.max(1, PAKETE.length - setup.length);
 
   useFrame((state, dtRoh) => {
     const dt = Math.min(dtRoh, 0.05);
@@ -245,7 +248,7 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
       const r = rang[i];
 
       // Winkel auf dem kürzesten Weg zum Platz
-      const zielW = Math.PI / 2 + (i * TAU) / 5 + s.drehung;
+      const zielW = Math.PI / 2 + (i * TAU) / PAKETE.length + s.drehung;
       let d = (zielW - s.winkel[i]) % TAU;
       if (d > Math.PI) d -= TAU;
       if (d < -Math.PI) d += TAU;
@@ -263,7 +266,7 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
       const as = 0.6;
       const ary = -Math.cos(w) * 0.55;
 
-      // B: Reihe der drei Pakete. Die zwei anderen warten klein neben Mooni.
+      // B: Reihe der drei Pakete. Die übrigen umkreisen Mooni als kleine Trabanten.
       let bx: number, by: number, bz: number, bs: number, bry: number;
       if (r >= 0) {
         bx = (r - 1) * S;
@@ -272,12 +275,12 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
         bs = S / 1.62;
         bry = (1 - r) * 0.2;
       } else {
-        const seite = hinten++ === 0 ? -1 : 1;
-        bx = seite * 1.36;
-        by = mooniY - 0.2 + schweb;
-        bz = -1.5;
-        bs = 0.36;
-        bry = seite * 0.45;
+        const wk = (hinten++ / uebrig) * TAU + 0.6 + (ruhig ? 0 : t * 0.3);
+        bx = Math.cos(wk) * 1.5;
+        by = mooniY - 0.12 + Math.sin(wk) * 0.14 + schweb;
+        bz = -1.1 + Math.sin(wk) * 0.8;
+        bs = 0.3;
+        bry = Math.PI / 2 - wk;
       }
       g.position.set(ax + (bx - ax) * e, ay + (by - ay) * e, az + (bz - az) * e);
       g.scale.setScalar(Math.max((as + (bs - as) * e) * auf, 0.001));
@@ -295,7 +298,7 @@ function Szene({ steuer, setup, ruhig, onPaket }: Omit<Props, "aktiv">) {
         kg.position.set((j - 1) * 0.3, 0.04 + oj * (0.5 + (1 - Math.abs(j - 1)) * 0.07), -0.05 + (1 - j) * 0.02);
         kg.rotation.set(-0.1, 0, (1 - j) * 0.16 * oj);
       });
-      // In der Reihe treten die zwei Pakete zurück, die nicht zum Setup gehören.
+      // In der Reihe treten die Pakete zurück, die nicht zum Setup gehören.
       const matt = r < 0 ? e : 0;
       const pr = praegung.current[i];
       if (pr) {

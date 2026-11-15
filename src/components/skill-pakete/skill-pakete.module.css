@@ -151,9 +151,10 @@
 }
 
 @media (min-width: 56.25rem) {
+  /* So viele Spalten wie Pakete: Die Zahl kommt aus daten.ts über --zahl. */
   .raster {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 22px 16px;
+    grid-template-columns: repeat(var(--zahl, 6), minmax(0, 1fr));
+    gap: 20px 12px;
   }
   .reiter {
     grid-row: 1;
@@ -166,6 +167,10 @@
     /* Im flachen Fenster niedriger, damit der Abschnitt hineinpasst. */
     min-height: clamp(104px, 16vh, 136px);
     padding: 16px 18px 14px;
+  }
+  /* Sechs Schachteln nebeneinander: Im schmalen Fenster schrumpft der Name mit. */
+  .name {
+    font-size: clamp(1.1rem, 1.55vw, 1.45rem);
   }
   .zahl {
     margin-top: auto;
@@ -197,6 +202,33 @@
   }
   .feldAn {
     visibility: visible;
+  }
+}
+
+/* Flaches Laptop-Fenster (bis 740 px hoch): Zeichen und Name stehen in einer Zeile, der Abschnitt bekommt weniger Rand.
+   So passen sechs Schachteln samt offenem Feld in ein Fenster von 650 px Höhe. */
+@media (min-width: 56.25rem) and (max-height: 740px) {
+  .flachRand {
+    padding-block: 1.8vh;
+  }
+  .raster {
+    gap: 14px 10px;
+  }
+  .koerper {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 6px 9px;
+    min-height: 0;
+    padding: 12px 14px 11px;
+  }
+  .symbol {
+    width: 20px;
+    height: 20px;
+  }
+  .zahl {
+    grid-column: 1 / -1;
+    margin-top: 0;
   }
 }
 
@@ -242,8 +274,69 @@
 }
 
 /* Alle Fassungen liegen in derselben Zelle, sichtbar ist die gewählte. Die Zelle bleibt so hoch wie die längste. */
+/* Bildschirmfotos in „Vorher und Nachher“: beide liegen übereinander, sichtbar ist die gewählte Fassung.
+   Am Laptop folgt die Höhe dem Fenster, damit der Abschnitt hineinpasst. */
+.fotos {
+  display: grid;
+  margin-top: 12px;
+  justify-items: center;
+}
+.foto {
+  grid-area: 1 / 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(120, 104, 70, 0.45);
+  transition: opacity 0.35s ease;
+}
+.foto[data-an="false"] {
+  opacity: 0;
+}
+@media (min-width: 64rem) {
+  .foto {
+    /* Breite aus der erlaubten Höhe (Seitenverhältnis 1366 zu 650), nie breiter als die Spalte. */
+    width: min(100%, calc(clamp(200px, calc(100svh - 400px), 400px) * 2.1));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .foto {
+    transition: none;
+  }
+}
+
+/* Beispiel mit Bild. Handy: Auftrag, Bild, Beleg untereinander. Laptop: links Auftrag und Beleg (in der Höhe mittig),
+   rechts das Bild über die ganze Höhe. */
+.bildBeispiel {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 64rem) {
+  .bildBeispiel {
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto 1fr;
+    gap: 12px 32px;
+  }
+  .bildText {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .bildBeleg {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .bildFigur {
+    grid-column: 2;
+    grid-row: 1 / -1;
+  }
+}
+
 .stapel {
   display: grid;
+}
+/* Kürzere Fassungen stehen in der Höhe mittig, statt oben zu kleben. */
+.mittig > * {
+  align-self: center;
 }
 .stapel > * {
   grid-area: 1 / 1;

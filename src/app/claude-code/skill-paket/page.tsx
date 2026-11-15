@@ -3,7 +3,8 @@ import { FRAGEN } from "@/components/skill-pakete/daten";
 
 /* ──────────────────────────────────────────────────────────────────────────
    Leadmagnet „Skill-Pakete“ (15.11.2026, Iljas Wunsch: mehrere Skill-Pakete nach Thema, Setups je Beruf,
-   Häkchen je Paket, Seite mit 3D). Vorher stand hier ein einzelnes Paket mit vier Skills (12.11.2026).
+   Häkchen je Paket, Seite mit 3D, dazu ein Paket für Entwickler, Vorher und Nachher, Updates).
+   Vorher stand hier ein einzelnes Paket mit vier Skills (12.11.2026).
    Die Seite selbst ist SkillPaketeView, alle Inhalte stehen in src/components/skill-pakete/daten.ts.
    Das Formular trägt die Quelle skill-paket. Nach dem Klick in der Bestätigungsmail führt dankeSeite()
    aus src/lib/quellen.ts auf /claude-code/skill-paket/danke.
@@ -17,9 +18,9 @@ const bild = {
   alt: "Skizze: aufgeschlagenes Notizbuch mit Entwürfen für eine Webseite, daneben ein Laptop und eine Tasse Kaffee auf dunklem Holz",
 };
 
-const title = "Claude Skills auf Deutsch: fünf kostenlose Skill-Pakete";
+const title = "Claude Skills auf Deutsch: sechs kostenlose Skill-Pakete";
 const description =
-  "Fünf kostenlose Skill-Pakete für Claude auf Deutsch: Texte, Design, SEO, Marktrecherche, Social Media. Mit Setup für deinen Beruf, für Claude Code und die App.";
+  "Sechs kostenlose Skill-Pakete für Claude auf Deutsch: Texte, Design, SEO, Marktrecherche, Social Media, Entwicklung. Mit Setup für deinen Beruf und Updates.";
 
 export const metadata = {
   title: { absolute: title },
