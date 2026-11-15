@@ -115,10 +115,10 @@ const ANLAESSE: Record<string, Anlass> = {
     satz: "schön, dass du das Claude-Code-Startpaket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
   },
   "skill-paket": {
-    betreff: "Dein Skill-Paket: ein Klick fehlt noch",
-    zeile: "Skill-Paket",
-    vorschau: "Ein Klick, dann liegen deine vier Skills bereit.",
-    satz: "schön, dass du das Skill-Paket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
+    betreff: "Deine Skill-Pakete: ein Klick fehlt noch",
+    zeile: "Skill-Pakete",
+    vorschau: "Ein Klick, dann liegen deine Skill-Pakete bereit.",
+    satz: "schön, dass du die Skill-Pakete willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
   },
 };
 
@@ -223,7 +223,12 @@ export type Download = {
   knopf: string;
   tipp: string;
   mehr: { text: string; link: string; anzeige: string };
+  /** Skill-Pakete: die gewählten Pakete, je mit Versprechen, Skills und dem ersten Auftrag. So ist jede Mail eine andere. */
+  pakete?: PaketZeile[];
 };
+
+/** kurz: der kurze Name für die Vorschauzeile („SEO“ statt „SEO und KI-Suche“), damit dort kein „und“ doppelt steht. */
+export type PaketZeile = { name: string; kurz: string; claim: string; skills: string; auftrag: string };
 
 const DOWNLOADS: Record<string, Download> = {
   "startpaket-claude-code": {
@@ -245,27 +250,81 @@ const DOWNLOADS: Record<string, Download> = {
     mehr: { text: "Alle Anleitungen zu Claude Code auf Deutsch findest du unter", link: `${SEITE}/claude-code`, anzeige: "sabala-mentoring.com/claude-code" },
   },
   "skill-paket": {
-    betreff: "Dein Skill-Paket",
-    zeile: "Skill-Paket",
-    vorschau: "Hier sind deine vier Skills: menschlich schreiben, einfach erklären, schön gestalten, vor dem Livegang prüfen.",
-    kopf: "Dein Skill-Paket",
-    titel: "Hier ist dein Skill-Paket.",
+    betreff: "Deine sechs Skill-Pakete",
+    zeile: "Skill-Pakete",
+    vorschau: "Hier sind deine sechs Skill-Pakete: achtzehn Skills für Claude, mit Anleitung.",
+    kopf: "Deine Skill-Pakete",
+    titel: "Hier sind deine Pakete.",
     seite: `${SEITE}/claude-code/skill-paket/danke`,
-    groesse: "Ein Ordner, 44 KB, für Claude Code und die Claude-App.",
+    groesse: "Je Paket ein Ordner, für Claude Code und die Claude-App.",
     knopf: "Zum Download",
-    absatz: "hier ist dein Skill-Paket noch einmal zum Aufheben. Im Ordner liegen vier Skills für Claude, zwei kleine Prüfskripte und eine Anleitung für Claude Code und die Claude-App.",
+    absatz: "hier sind deine sechs Skill-Pakete noch einmal zum Aufheben. In jedem liegen drei Skills für Claude und eine Anleitung „00 Start hier“ mit fertigen Aufträgen.",
     schritte: [
-      "Öffne zuerst die Datei „00 Start hier“. Dort steht, wie du die Skills installierst.",
-      "Trag in „meine-stimme.md“ ein, wie du schreibst. Ab dann klingt Claude nach dir.",
-      "Lass Claude einen Newsletter schreiben und prüf ihn mit „pruefen.py“.",
+      "Lade deine Pakete herunter und lies in jedem zuerst „00 Start hier“.",
+      "Richte die Skills ein, wie es in „01 Installation“ steht. Das dauert ein paar Minuten.",
+      "Gib Claude einen der fertigen Aufträge und schau dir an, was dabei herauskommt.",
     ],
-    tipp: "Fang mit menschlich-schreiben an. Den Unterschied merkst du schon beim ersten Text.",
-    mehr: { text: "Weitere kostenlose Hilfen findest du unter", link: `${SEITE}/ressourcen`, anzeige: "sabala-mentoring.com/ressourcen" },
+    tipp: "Fang mit einem Paket an, dem für die Aufgabe, die du am häufigsten erledigst. Die anderen kommen dazu, wenn das erste sitzt.",
+    mehr: { text: "Kommt ein Skill dazu oder wird einer besser, schreibe ich dir. Weitere kostenlose Hilfen findest du unter", link: `${SEITE}/ressourcen`, anzeige: "sabala-mentoring.com/ressourcen" },
   },
 };
 
 /** Das Paket zu einer Quelle. null: Diese Quelle hat kein Paket, dann geht keine Download-Mail raus. */
 export const downloadVon = (quelle: string): Download | null => (Object.prototype.hasOwnProperty.call(DOWNLOADS, quelle) ? DOWNLOADS[quelle] : null);
+
+/** Was die Download-Mail der Skill-Pakete über die Wahl wissen muss. Kommt aus wahlFuerMail() in src/components/skill-pakete/daten.ts. */
+export type PaketeWahl = { pakete: PaketZeile[]; alle: boolean; setup: { als: string; erstes: string; aufgabe: string } | null; query: string };
+
+const ZAHLWORT = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs"];
+const SKILLS_ZAHLWORT: Record<number, string> = { 3: "drei", 6: "sechs", 9: "neun", 12: "zwölf", 15: "fünfzehn", 18: "achtzehn" };
+
+/** Die Download-Mail der Skill-Pakete für eine Wahl: Betreff, Pakete, Schritte und Tipp hängen davon ab, was jemand angehakt hat.
+ *  Alles darin kommt aus festen Texten (daten.ts), nichts aus dem Formular. Der Knopf führt auf die Dankeseite mit derselben Wahl. */
+export function skillPaketeDownload(w: PaketeWahl): Download {
+  const basis = DOWNLOADS["skill-paket"];
+  const n = w.pakete.length;
+  const eins = n === 1;
+  const und = (namen: string[]) => (namen.length > 1 ? `${namen.slice(0, -1).join(", ")} und ${namen.at(-1)}` : namen[0] ?? "");
+  const liste = und(w.pakete.map((p) => p.name));
+  const kurzListe = und(w.pakete.map((p) => p.kurz));
+  const skills = SKILLS_ZAHLWORT[n * 3] ?? String(n * 3);
+  const schritte = w.setup
+    ? [
+        `Auf der Download-Seite steht „Dein Setup als ${w.setup.als}“: welche Pakete du in welcher Reihenfolge einrichtest.`,
+        "Kopier den Textbaustein von dort in deine CLAUDE.md. Dann weiß Claude, wie du arbeitest und wann es welchen Skill nimmt.",
+        `Gib Claude den ersten Auftrag aus deinem Setup: „${w.setup.aufgabe}“`,
+      ]
+    : [eins ? "Lade dein Paket herunter und lies zuerst „00 Start hier“." : "Lade deine Pakete herunter und lies in jedem zuerst „00 Start hier“.", basis.schritte[1], basis.schritte[2]];
+  return {
+    ...basis,
+    betreff: eins ? `Dein Skill-Paket ${liste}` : `Deine ${ZAHLWORT[n]} Skill-Pakete`,
+    vorschau: eins ? `Hier ist dein Skill-Paket ${liste}: drei Skills für Claude, mit Anleitung.` : `Hier sind deine Skill-Pakete ${kurzListe}: ${skills} Skills für Claude, mit Anleitung.`,
+    kopf: eins ? "Dein Skill-Paket" : "Deine Skill-Pakete",
+    titel: eins ? "Hier ist dein Paket." : "Hier sind deine Pakete.",
+    seite: `${basis.seite}${w.query ? `?${w.query}` : ""}`,
+    groesse: eins ? "Ein Ordner, für Claude Code und die Claude-App." : basis.groesse,
+    absatz: eins
+      ? `hier ist dein Skill-Paket ${liste} noch einmal zum Aufheben. Darin liegen drei Skills für Claude und eine Anleitung „00 Start hier“ mit fertigen Aufträgen.`
+      : `hier sind deine ${ZAHLWORT[n]} Skill-Pakete noch einmal zum Aufheben. In jedem liegen drei Skills für Claude und eine Anleitung „00 Start hier“ mit fertigen Aufträgen.`,
+    schritte,
+    tipp: w.setup
+      ? `Fang mit dem ersten Paket deines Setups an: ${w.setup.erstes}. Die anderen kommen dazu, wenn das erste sitzt.`
+      : eins
+        ? "Nimm dir für den Anfang einen der drei Skills vor, den für die Aufgabe, die du am häufigsten erledigst."
+        : basis.tipp,
+    pakete: w.pakete,
+  };
+}
+
+/** Ein Paket in der Download-Mail: Name, Versprechen, die drei Skills und der erste Auftrag zum Ausprobieren. */
+const paketBlock = (p: PaketZeile) => `<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin:14px 0 6px 0; border-left:3px solid ${GOLD};">
+          <tr><td style="padding:2px 0 2px 16px; font-family:${SANS}; font-size:16px; line-height:1.6; color:${TEXT};">
+            <div style="font-family:${SERIF}; font-size:24px; line-height:1.2; color:${TEXT};">${maskiert(p.name)}</div>
+            <div style="margin-top:2px;">${maskiert(p.claim)}</div>
+            <div style="margin-top:6px; font-size:15px; color:#5C564B;">Skills: ${maskiert(p.skills)}</div>
+            <div style="margin-top:8px;"><strong>Probier zuerst:</strong> „${maskiert(p.auftrag)}“</div>
+          </td></tr>
+        </table>`;
 
 export function downloadHtml(d: Download): string {
   const seite = maskiert(d.seite);
@@ -296,6 +355,12 @@ export function downloadHtml(d: Download): string {
         <p style="margin:0 0 26px 0;">${maskiert(d.absatz)}</p>
       </td>
     </tr>
+    ${d.pakete?.length ? `<tr>
+      <td style="padding:0 28px 24px 28px;">
+        ${zeileMono(d.pakete.length === 1 ? "Dein Paket" : "Deine Pakete")}
+        ${d.pakete.map(paketBlock).join("\n        ")}
+      </td>
+    </tr>` : ""}
     <tr>
       <td style="padding:0 28px 0 28px;">
         ${zeileMono("So fängst du an")}
@@ -322,9 +387,12 @@ export function downloadText(d: Download): string {
     "",
     d.absatz,
     "",
-    "Hier lädst du es herunter:",
+    (d.pakete?.length ?? 0) > 1 ? "Hier lädst du sie herunter:" : "Hier lädst du es herunter:",
     d.seite,
     "",
+    ...(d.pakete?.length
+      ? [d.pakete.length === 1 ? "Dein Paket:" : "Deine Pakete:", "", ...d.pakete.flatMap((p) => [p.name, p.claim, `Skills: ${p.skills}`, `Probier zuerst: „${p.auftrag}“`, ""])]
+      : []),
     "So fängst du an:",
     ...d.schritte.map((t, i) => `${i + 1}. ${t}`),
     "",
