@@ -16,6 +16,21 @@ export const featuredArticle = {
 
 export const articles = [
   {
+    id: 19,
+    title: "Claude Code Skills: was sie sind und welche zehn sich für den Anfang lohnen",
+    excerpt: "Ein Skill ist eine kurze Anleitung, die Claude liest, sobald sie zur Aufgabe passt. Was Skills sind, wie du sie installierst und welche zehn ich jedem für die erste Woche empfehle.",
+    category: "KI & Tools",
+    date: "November 2026",
+    readTime: "9 Min",
+    image: "/blog/claude-code-skills/cover.jpg",
+    slug: "/blog/claude-code-skills",
+    keywords: ["claude code", "skills", "claude skills", "claude code skills", "skill.md", "plugin", "marktplatz", "skill-creator", "humanizer", "ponytail", "claude.md", "agent skills"],
+    layout: "col-span-1 md:col-span-1 row-span-1",
+    aspect: "aspect-square",
+    gradient: "from-[#2E2B26] via-[#1a1612] to-[#08070a]",
+    accent: "text-refined-gold"
+  },
+  {
     id: 18,
     title: "Second Brain mit Obsidian und Claude: damit Claude nie wieder bei null anfängt",
     excerpt: "Acht Ordner, eine kurze CLAUDE.md und drei Werkzeuge: Obsidian als Gedächtnis, Claude Code als Assistent, Gemini Notebook als Rechercheur. So baust du das Grundgerüst an einem Nachmittag.",

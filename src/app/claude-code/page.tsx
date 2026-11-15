@@ -1,7 +1,7 @@
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
-import { Download, Wallet, Laptop, Gauge, Terminal, AppWindow, Globe, Mail, Brain, Share2, Presentation, Sparkles, ArrowRight } from "lucide-react";
+import { Download, Wallet, Laptop, Gauge, Terminal, AppWindow, Globe, Mail, Brain, Share2, Presentation, Sparkles, ArrowRight, Puzzle } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
 import { dropCapClass, GoldDivider, PullQuote } from "@/components/blog/BlogProse";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
@@ -46,6 +46,7 @@ const start = [
   { href: "/blog/claude-code-kosten", icon: Wallet, t: "Was kostet Claude Code?", d: "Alle Pläne von Pro bis Enterprise und wann sich die API lohnt." },
   { href: "/blog/webseiten-bau-mit-claude-anfaenger", icon: Laptop, t: "Wie baue ich meine erste Webseite?", d: "Die drei Dateien, die jedes Projekt braucht, und die typischen Fehler am Anfang." },
   { href: "/blog/claude-code-weniger-code-ponytail", icon: Gauge, t: "Wie komme ich weiter, bevor das Limit kommt?", d: "Ein kostenloses Plugin, das Claude weniger Code schreiben lässt." },
+  { href: "/blog/claude-code-skills", icon: Puzzle, t: "Welche Skills lohnen sich?", d: "Was Skills sind, wie du sie installierst und zehn kostenlose für den Anfang." },
 ];
 
 const vergleich = [
@@ -206,7 +207,7 @@ export default function ClaudeCodeThemenSeite() {
         </ScrollReveal>
         <div className="grid gap-4 sm:grid-cols-2">
           {start.map((s, i) => (
-            <ScrollReveal key={s.href} delay={i * 0.05}>
+            <ScrollReveal key={s.href} delay={i * 0.05} className={i === start.length - 1 && start.length % 2 ? "sm:col-span-2" : undefined}>
               <Link href={s.href} className="group flex h-full gap-5 rounded-2xl border border-refined-gold/40 bg-cream p-6 transition-colors hover:border-refined-gold hover:bg-warm-light md:p-7">
                 <s.icon className="mt-1 h-6 w-6 flex-shrink-0 text-[#7A5C18]" aria-hidden />
                 <div>
@@ -347,7 +348,7 @@ export default function ClaudeCodeThemenSeite() {
               Skills sind gespeicherte Arbeitsabläufe. Jeder Skill ist eine kurze Anleitung, die Claude lädt, wenn sie zur Aufgabe passt: wie ein Newsletter bei dir aussieht, wie eine Präsentation aufgebaut ist, worauf eine SEO-Prüfung achtet. Einmal sauber geschrieben, sparst du dir jedes Mal das Erklären.
             </p>
             <p>
-              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Zehn, mit denen du gut anfängst, findest du im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>. Vier meiner eigenen für Texte ohne KI-Klang und schöneres Design stecken im <Link href="/claude-code/skill-paket">Skill-Paket</Link>. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
+              Ich arbeite mit 118 Skills, 35 davon habe ich selbst geschrieben. Die anderen stammen aus offenen Sammlungen, die ich vor dem Einsatz prüfe. Für den Anfang reicht ein einziger Skill für die Aufgabe, die du am häufigsten erledigst. Welche zehn sich für den Anfang lohnen und wie du sie installierst, steht im Artikel <Link href="/blog/claude-code-skills">Claude Code Skills</Link>, alle zehn als Ordner im kostenlosen <Link href="/claude-code/startpaket">Startpaket</Link>. Vier meiner eigenen für Texte ohne KI-Klang und schöneres Design stecken im <Link href="/claude-code/skill-paket">Skill-Paket</Link>. Wie du dein ganzes Wissen so ordnest, dass Claude es findet, zeige ich im Artikel <Link href="/blog/second-brain-obsidian-claude">Second Brain mit Obsidian und Claude</Link>.
             </p>
           </div>
         </ScrollReveal>

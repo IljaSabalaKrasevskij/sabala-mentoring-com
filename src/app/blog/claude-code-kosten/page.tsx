@@ -5,6 +5,7 @@ import { ArrowLeft, Sparkles, Wallet, Clock, Users, Bot } from "lucide-react";
 import { CountUp } from "@/components/blog/CountUp";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass, GoldDivider, PullQuote } from "@/components/blog/BlogProse";
+import { StartpaketKasten } from "@/components/blog/StartpaketKasten";
 
 const slug = "claude-code-kosten";
 const site = "https://sabala-mentoring.com";
@@ -441,6 +442,9 @@ export default function ClaudeCodeKostenPage() {
         </div>
       </section>
 
+      {/* STARTPAKET: Kasten mitten im Artikel, der Haupt-Aufruf am Ende bleibt */}
+      <StartpaketKasten artikel="claude-code-kosten" titel="Plan gewählt? Dann leg los." text="Das kostenlose Startpaket führt dich durch die erste Woche: Installation, Spickzettel, zwei CLAUDE.md-Vorlagen und zehn Skills." />
+
       {/* FAQ */}
       <section className="mx-auto w-full max-w-[900px] px-6 pt-24 sm:px-12 md:px-24">
         <ScrollReveal>
@@ -451,7 +455,7 @@ export default function ClaudeCodeKostenPage() {
           {faq.map((f, i) => (
             <ScrollReveal key={f.q} delay={i * 0.04}>
               <details className="group rounded-xl border border-refined-gold/40 bg-cream px-6 py-5 transition-colors hover:border-refined-gold [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6">
+                <summary className="-my-1.5 flex cursor-pointer list-none items-center justify-between gap-6 py-1.5">
                   <h3 className="font-instrument text-xl text-deep-charcoal">{f.q}</h3>
                   <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-refined-gold text-xl text-[#7A5C18] transition-transform duration-300 group-open:rotate-45">+</span>
                 </summary>

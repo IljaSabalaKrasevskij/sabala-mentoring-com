@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BlogSpokes } from "@/components/blog/BlogSpokes";
 import { dropCapClass } from "@/components/blog/BlogProse";
 import { ArrowLeft, Sparkles, Layers } from "lucide-react";
+import { StartpaketKasten } from "@/components/blog/StartpaketKasten";
 
 const slug = "webseiten-bau-mit-claude-anfaenger";
 const url = `https://sabala-mentoring.com/blog/${slug}`;
@@ -200,6 +201,9 @@ export default function BlogWebseitenBauMitClaudePage() {
         </ScrollReveal>
       </section>
 
+      {/* STARTPAKET: Kasten mitten im Artikel, der Haupt-Aufruf am Ende bleibt */}
+      <StartpaketKasten artikel="webseiten-bau-mit-claude-anfaenger" titel="Die Vorlagen für deine ersten 45 Minuten." text="Im kostenlosen Startpaket: Installation, zwei CLAUDE.md-Vorlagen zum Ausfüllen und zehn Skills für den Anfang." />
+
       {/* FAQ */}
       {/* Visueller Anker */}
       <section className="px-6 sm:px-12 md:px-24 pt-12 max-w-[1100px] mx-auto w-full">
@@ -219,7 +223,7 @@ export default function BlogWebseitenBauMitClaudePage() {
           {faq.map((f, i) => (
             <ScrollReveal key={i} delay={i * 0.04}>
               <details className="group bg-warm-light/30 border border-refined-gold/15 rounded-xl px-6 py-5 hover:border-refined-gold/40 transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex justify-between items-center cursor-pointer list-none">
+                <summary className="-my-1.5 flex justify-between items-center cursor-pointer list-none py-1.5">
                   <h3 className="font-instrument text-lg md:text-xl text-deep-charcoal pr-6">{f.q}</h3>
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-refined-gold/10 border border-refined-gold/30 flex items-center justify-center text-refined-gold text-xl transition-transform duration-300 group-open:rotate-45">+</span>
                 </summary>
