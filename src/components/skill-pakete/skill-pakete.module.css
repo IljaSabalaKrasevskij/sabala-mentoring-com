@@ -1,0 +1,298 @@
+/* Skill-Pakete: die fünf Pakete als Schachteln zum Aufklappen.
+   Handy: Schachtel und ihr Feld stehen als Paar untereinander (Akkordeon), das Ergebnis erscheint dort, wo der Finger ist.
+   Laptop: fünf Schachteln nebeneinander, alle Felder liegen in derselben Zelle darunter. Nicht gewählte Felder sind
+   dort unsichtbar statt entfernt, darum bleibt die Zelle so hoch wie das höchste Feld und nichts springt. */
+
+.raster {
+  display: grid;
+  gap: 12px;
+}
+
+.reiter {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-top: 30px;
+  text-align: left;
+  cursor: pointer;
+}
+.reiter:focus-visible {
+  outline: 2px solid #8a6a1f;
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+/* Schachtel: dunkler Lack mit Messingkante */
+.koerper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #2c2217 0%, #18120b 55%, #0f0b06 100%);
+  border: 1px solid rgba(212, 174, 90, 0.42);
+  box-shadow: 0 10px 26px rgba(46, 43, 38, 0.18);
+  transition: border-color 0.3s, box-shadow 0.3s, scale 0.3s;
+}
+.symbol {
+  flex-shrink: 0;
+  color: var(--farbe);
+}
+.name {
+  font-family: var(--font-instrument), serif;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  color: #faf8f5;
+}
+.zahl {
+  margin-left: auto;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #e9e4da;
+}
+
+/* Deckel, links angeschlagen */
+.deckel {
+  position: absolute;
+  z-index: 3;
+  left: -3px;
+  right: -3px;
+  top: 18px;
+  height: 16px;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg, #3d301d, #1c160d);
+  border: 1px solid rgba(212, 174, 90, 0.6);
+  transform-origin: 5% 100%;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Drei Skills als Karten, die aus der offenen Schachtel schauen */
+.zettel {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  height: 0;
+}
+.zettel i {
+  display: block;
+  width: 22%;
+  max-width: 46px;
+  height: 36px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #f6eedb, #e9ddc0);
+  border-top: 5px solid #c9a24b;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+}
+
+/* Am Handy stehen die Schachteln untereinander: Der Deckel hebt sich nur so weit, wie der Abstand zur Schachtel darüber reicht. */
+.an .deckel {
+  transform: translateY(-18px) rotate(-2deg);
+}
+.an .zettel i {
+  opacity: 1;
+}
+.an .zettel i:nth-child(1) {
+  transform: translateY(-20px) rotate(-7deg);
+}
+.an .zettel i:nth-child(2) {
+  transform: translateY(-24px);
+  transition-delay: 0.06s;
+}
+.an .zettel i:nth-child(3) {
+  transform: translateY(-20px) rotate(7deg);
+  transition-delay: 0.12s;
+}
+.an .koerper {
+  border-color: var(--farbe);
+  box-shadow: 0 18px 40px rgba(46, 43, 38, 0.3), inset 0 0 0 1px var(--farbe);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reiter:hover .koerper {
+    scale: 1.03;
+  }
+}
+
+.feld {
+  display: none;
+}
+.feldAn {
+  display: block;
+}
+
+/* Die Skills steigen als Karten aus dem Paket */
+.karte {
+  animation: karte-steigt 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes karte-steigt {
+  from {
+    opacity: 0.01;
+    translate: 0 26px;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@media (min-width: 56.25rem) {
+  .raster {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 22px 16px;
+  }
+  .reiter {
+    grid-row: 1;
+    padding-top: 32px;
+  }
+  .koerper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    /* Im flachen Fenster niedriger, damit der Abschnitt hineinpasst. */
+    min-height: clamp(104px, 16vh, 136px);
+    padding: 16px 18px 14px;
+  }
+  .zahl {
+    margin-top: auto;
+    margin-left: 0;
+  }
+  .deckel {
+    top: 20px;
+  }
+  .zettel {
+    top: 32px;
+  }
+  .an .deckel {
+    transform: translateY(-22px) rotate(-7deg);
+  }
+  .an .zettel i:nth-child(1) {
+    transform: translateY(-24px) rotate(-9deg);
+  }
+  .an .zettel i:nth-child(2) {
+    transform: translateY(-29px);
+  }
+  .an .zettel i:nth-child(3) {
+    transform: translateY(-24px) rotate(9deg);
+  }
+  .feld {
+    display: block;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    visibility: hidden;
+  }
+  .feldAn {
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .karte {
+    animation: none;
+  }
+  .deckel,
+  .zettel i {
+    transition: none;
+  }
+}
+
+/* ── Kopf und Setup: ein Raster, eine Bühne ─────────────────────────────────
+   Handy: Text, Bühne mit der Berufswahl, Setup stehen untereinander.
+   Laptop: links zwei Bildschirme Text (Kopf, dann Setup), rechts die Bühne über beide Zeilen. Sie klebt am Fenster,
+   bis das Setup durch ist. Der Abschnitt selbst schneidet nichts ab (kein overflow), sonst klebt nichts mehr. */
+.kopfRaster {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 0 24px;
+}
+.kopfText {
+  padding: 100px 0 4px;
+}
+/* Die Bühne ragt seitlich in den Rand der Seite: So hat das Leuchten Platz zum Auslaufen. */
+.leinwand {
+  position: relative;
+  margin-inline: -24px;
+  height: 42svh;
+  min-height: 300px;
+  max-height: 440px;
+}
+.wahl {
+  padding: 4px 0 2px;
+}
+.setup {
+  padding: 30px 0 44px;
+  scroll-margin-top: 8px;
+}
+
+/* Alle Fassungen liegen in derselben Zelle, sichtbar ist die gewählte. Die Zelle bleibt so hoch wie die längste. */
+.stapel {
+  display: grid;
+}
+.stapel > * {
+  grid-area: 1 / 1;
+}
+.stapel > [data-an="false"] {
+  visibility: hidden;
+}
+
+@media (min-width: 56.25rem) {
+  .kopfRaster {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    column-gap: clamp(20px, 3vw, 48px);
+    padding: 0 clamp(24px, 4vw, 56px);
+  }
+  .kopfText {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    padding: 92px 0 36px;
+  }
+  .buehne {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .buehneInnen {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100svh;
+    flex-direction: column;
+    padding: 26px 0 22px;
+  }
+  .leinwand {
+    margin-inline: -20px;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+  .setup {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 0;
+  }
+}
