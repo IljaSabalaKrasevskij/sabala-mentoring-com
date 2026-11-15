@@ -1,0 +1,319 @@
+/* Dankeseite der Skill-Pakete (SkillPaketeDanke.tsx), im Kleid der Ankunft: dunkler Grund, Creme und Gold.
+   Lesefarben deckend, Fließtext ab 15 px, Überzeilen ab 12,5 px, Tippflächen ab 44 px (Leser ab 50). */
+
+.platzhalter {
+  min-height: 40vh;
+}
+
+/* Die Ankunft ist eine schmale Spalte. Pakete und Setup brauchen mehr Breite: Sie treten mittig aus der Spalte heraus. */
+.breit {
+  position: relative;
+  left: 50%;
+  width: min(62rem, calc(100vw - 3rem));
+  margin-top: 3.2rem;
+  transform: translateX(-50%);
+  text-align: left;
+}
+
+.zeile {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.pakete {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+  gap: 14px;
+  margin: 1.1rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+.paket {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.15rem 1.25rem 1.25rem;
+  border: 1px solid rgba(212, 174, 90, 0.42);
+  border-top: 3px solid var(--farbe);
+  border-radius: 16px;
+  background: linear-gradient(160deg, #2c2217 0%, #18120b 60%, #0f0b06 100%);
+}
+.paketKopf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.symbol {
+  flex-shrink: 0;
+  color: var(--farbe, var(--gold-light));
+}
+.paketName {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+}
+.claim {
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #e9e4da;
+}
+/* Die drei Skills untereinander, je mit einem Punkt in der Farbe des Pakets. */
+.skills {
+  display: grid;
+  gap: 3px;
+  margin: 0.3rem 0 0.85rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #d6cfc2;
+}
+.skills li {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.skills li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--farbe);
+  transform: translateY(-2px);
+}
+.laden {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: auto;
+  padding: 0 1.1rem;
+  border: 1.5px solid var(--gold-light);
+  border-radius: 999px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--cream);
+  transition: background-color 0.25s;
+}
+.laden:hover {
+  background: rgba(212, 174, 90, 0.16);
+}
+
+.alleZeile {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.knopf {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 1.9rem;
+  background: var(--gold);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--tech-bg);
+  transition: background-color 0.3s;
+}
+.knopf:hover {
+  background: var(--gold-light);
+}
+
+.hinweis {
+  max-width: 40rem;
+  margin: 1.2rem auto 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  text-wrap: pretty;
+  color: #e9e4da;
+}
+
+.berufe {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.1rem;
+}
+.beruf {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid rgba(212, 174, 90, 0.55);
+  border-radius: 999px;
+  background: #17120b;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.beruf:hover {
+  border-color: var(--gold-light);
+}
+.beruf[aria-pressed="true"] {
+  border-color: var(--gold-light);
+  background: var(--gold-light);
+  color: var(--tech-bg);
+}
+
+.setup {
+  max-width: 46rem;
+  margin: 1.5rem auto 0;
+  padding: 1.6rem 1.5rem 1.7rem;
+  border: 1px solid rgba(212, 174, 90, 0.35);
+  border-radius: 18px;
+  background: #15110c;
+}
+.setupTitel {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: clamp(1.75rem, 3.4vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+}
+.setupTitel em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+.reihe {
+  display: grid;
+  gap: 0.95rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.schritt {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: start;
+}
+.nr {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gold-light);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tech-bg);
+}
+.schrittName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--cream);
+}
+.schrittSatz {
+  margin-top: 2px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #e9e4da;
+}
+.nachladen {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.unterTitel {
+  margin-top: 1.7rem;
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.bausteinKopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin-top: 1.7rem;
+}
+.bausteinKopf .unterTitel {
+  margin-top: 0;
+}
+.kopieren {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 1.05rem;
+  border: 1px solid rgba(212, 174, 90, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+}
+.kopieren:hover {
+  border-color: var(--gold-light);
+}
+.baustein {
+  margin-top: 0.7rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: #0d0a06;
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #e9e4da;
+}
+.erklaerung {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #e9e4da;
+}
+.auftraege {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.75rem 0 0;
+  padding-left: 1.4rem;
+  list-style: decimal;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--cream);
+}
+.auftraege li::marker {
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.laden:focus-visible,
+.knopf:focus-visible,
+.beruf:focus-visible,
+.kopieren:focus-visible,
+.nachladen:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}

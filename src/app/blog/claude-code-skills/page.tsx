@@ -419,7 +419,7 @@ export default function ClaudeCodeSkillsPage() {
               Am einfachsten geht es mit <code>skill-creator</code> aus der Liste oben. Du beschreibst den Ablauf so, wie du ihn einer neuen Mitarbeiterin erklären würdest, und Claude schreibt daraus die SKILL.md. Danach probierst du ihn zwei, drei Mal aus und schärfst nach, wo Claude noch rät.
             </p>
             <p>
-              Vier meiner eigenen Skills gibt es kostenlos zum Mitnehmen, auf Deutsch: für Texte ohne KI-Klang, einfache Erklärungen, schöneres Design und die Prüfung vor dem Livegang. Sie stecken im <Link href="/claude-code/skill-paket">Skill-Paket</Link>.
+              Achtzehn meiner eigenen Skills gibt es kostenlos zum Mitnehmen, auf Deutsch und sortiert in sechs Pakete: von Texten ohne KI-Klang über Design, SEO und Marktrecherche bis zu Social Media und Entwicklung. Du findest sie in den <Link href="/claude-code/skill-paket">Skill-Paketen</Link>, mit einem Setup für deinen Beruf.
             </p>
           </div>
         </ScrollReveal>

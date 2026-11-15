@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { EINWILLIGUNG_TEXT } from "@/lib/einwilligung-text";
-import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon, streckenHtml, streckenText } from "@/lib/mail-html";
+import { wahlFuerMail, type Wahl } from "@/components/skill-pakete/daten";
+import { anlassVon, bestaetigungHtml, bestaetigungText, downloadHtml, downloadText, downloadVon, skillPaketeDownload, streckenHtml, streckenText } from "@/lib/mail-html";
 import type { StreckenMail } from "@/lib/strecken";
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -71,15 +72,16 @@ export async function bestaetigungSenden(an: string, link: string, quelle = ""):
   return true;
 }
 
-/** Die Mail mit dem Paket zum Aufheben. null: Diese Quelle hat kein Paket. */
-export function downloadMail(quelle: string) {
-  const d = downloadVon(quelle);
+/** Die Mail mit dem Paket zum Aufheben. null: Diese Quelle hat kein Paket.
+ *  wahl: bei den Skill-Paketen die angehakten Pakete und das Setup (aus dem Link, nur bekannte Kürzel). Ohne Wahl gelten alle sechs. */
+export function downloadMail(quelle: string, wahl?: Wahl | null) {
+  const d = quelle === "skill-paket" && wahl ? skillPaketeDownload(wahlFuerMail(wahl)) : downloadVon(quelle);
   return d && { betreff: d.betreff, text: downloadText(d), html: downloadHtml(d) };
 }
 
 /** Schickt die Download-Mail nach dem ersten Klick in der Bestätigungsmail. false: kein Postfach oder kein Paket. Wirft, wenn der Mailserver ablehnt. */
-export async function downloadSenden(an: string, quelle: string): Promise<boolean> {
-  const m = downloadMail(quelle);
+export async function downloadSenden(an: string, quelle: string, wahl?: Wahl | null): Promise<boolean> {
+  const m = downloadMail(quelle, wahl);
   if (!m || !mailBereit()) return false;
   await senden(an, m);
   return true;

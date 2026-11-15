@@ -22,7 +22,7 @@
 - [Was kostet Claude Code?](https://sabala-mentoring.com/blog/claude-code-kosten): alle Pläne von Pro bis Enterprise, Nutzungsgrenzen, API-Preise und Spartipps.
 - [Claude Code Skills](https://sabala-mentoring.com/blog/claude-code-skills): was Skills sind, Unterschied zu Plugin und CLAUDE.md, drei Wege zur Installation (Marktplatz, Ordner, Claude-App), zehn kostenlose Skills für den Anfang und fünf Fragen, mit denen du fremde Skills prüfst.
 - [Claude-Code-Startpaket](https://sabala-mentoring.com/claude-code/startpaket): kostenloser Ordner mit Installation für Mac und Windows, Spickzettel, zwei CLAUDE.md-Vorlagen und zehn Skills, die Ilja selbst nutzt. Kommt per Mail.
-- [Skill-Paket](https://sabala-mentoring.com/claude-code/skill-paket): kostenloser Ordner mit vier Skills für Claude auf Deutsch (menschlich schreiben, einfach erklären, schön gestalten, vor dem Livegang prüfen) und zwei Prüfskripten. Für Claude Code und die Claude-App, kommt per Mail.
+- [Skill-Pakete](https://sabala-mentoring.com/claude-code/skill-paket): sechs kostenlose Pakete mit je drei Skills für Claude auf Deutsch: Texte, Design, SEO und KI-Suche, Marktrecherche, Social Media, Entwicklung. Dazu ein Setup je Beruf (Webdesigner, Content Creator, Social Media Manager, Texter, Berater oder Coach, Software-Entwickler) mit Textbaustein und ersten Aufträgen. Für Claude Code und die Claude-App, kommt per Mail, Updates inklusive.
 
 ## Bauen lassen
 
@@ -36,7 +36,7 @@
 
 ## Freie Werkzeuge
 
-- [Ressourcen](https://sabala-mentoring.com/ressourcen): alles Kostenlose an einem Ort, das Claude-Code-Startpaket, das Skill-Paket und Werkzeuge aus der täglichen Arbeit.
+- [Ressourcen](https://sabala-mentoring.com/ressourcen): alles Kostenlose an einem Ort, das Claude-Code-Startpaket, die sechs Skill-Pakete und Werkzeuge aus der täglichen Arbeit.
 - [Mooni Voice](https://sabala-mentoring.com/mooni-voice): Sprache zu Text, lokal auf dem Mac.
 
 ## Artikel

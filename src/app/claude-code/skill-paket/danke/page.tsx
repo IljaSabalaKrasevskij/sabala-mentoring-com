@@ -1,37 +1,41 @@
 import Link from "next/link";
+import SkillPaketeDanke from "@/components/skill-pakete/SkillPaketeDanke";
 import { EINWILLIGUNG_TEXT } from "@/lib/einwilligung-text";
 import Ankunft from "@/app/newsletter/Ankunft";
 import stil from "@/app/newsletter/ankunft.module.css";
 
 export const metadata = {
-  title: "Dein Skill-Paket | Sabala Mentoring",
+  title: "Deine Skill-Pakete | Sabala Mentoring",
   robots: { index: false, follow: false },
 };
 
-/* Ziel nach dem Klick in der Bestätigungsmail, wenn jemand das Skill-Paket angefordert hat
-   (dankeSeite() in src/lib/quellen.ts). Hier liegt der Download.
-   ponytail: weiches Tor wie beim Startpaket. Die Datei unter /downloads ist öffentlich, für ein kostenloses Paket reicht das.
-   Paket neu bauen: sh skillpaket/bauen.sh */
+/* Ziel nach dem Klick in der Bestätigungsmail, wenn jemand Skill-Pakete angefordert hat (dankeSeite() in src/lib/quellen.ts).
+   Der Link trägt die Wahl aus dem Formular (pakete, beruf). Pakete und Setup zeigt SkillPaketeDanke, die Inhalte stehen in daten.ts.
+   Ohne JavaScript bleibt der Download aller Pakete in einem Ordner.
+   ponytail: weiches Tor wie beim Startpaket. Die Dateien unter /downloads sind öffentlich, für kostenlose Pakete reicht das.
+   Pakete neu bauen: sh skillpaket/bauen.sh */
 export default function SkillPaketDankePage() {
   return (
-    <Ankunft adler="/newsletter/adler-blick.webp" erledigt zeile="Bestätigt" titel="Dein Skill-Paket." pointe="Liegt bereit.">
-      <p>Danke fürs Bestätigen. Hier sind deine vier Skills für Claude mit Anleitung. Am besten öffnest du zuerst die Datei „00 Start hier“, dort steht, wie du sie in Claude Code oder in der Claude-App installierst.</p>
-      {/* Abstand nach unten: Anders als auf der allgemeinen Ankunftsseite folgt hier noch Text unter den Knöpfen. */}
-      <div className={stil.wege} style={{ marginBottom: "2.2rem" }}>
-        <a
-          href="/downloads/skill-paket.zip"
-          download
-          className={stil.knopf}
-          data-umami-event="download"
-          data-umami-event-datei="skill-paket.zip"
-        >
-          Skill-Paket herunterladen
-        </a>
-        <Link href="/ressourcen" className={stil.weiter}>Alle Ressourcen</Link>
+    <Ankunft adler="/newsletter/adler-blick.webp" erledigt zeile="Bestätigt" titel="Deine Skill-Pakete." pointe="Liegen bereit.">
+      <p>Danke fürs Bestätigen. Hier sind deine Pakete für Claude, darunter die Anleitung für deinen Beruf.</p>
+      <SkillPaketeDanke />
+      <noscript>
+        <p style={{ marginTop: "2rem" }}>
+          <a href="/downloads/skill-pakete/alle.zip" download className={stil.knopf}>
+            Alle sechs Pakete herunterladen
+          </a>
+        </p>
+      </noscript>
+      <div style={{ marginTop: "3.2rem" }}>
+        <p>Kommt ein Skill dazu oder wird einer besser, schreibe ich dir. Außerdem bekommst du KI-Updates für dein Unternehmen, neue Kurse und Termine.</p>
+        <p className={stil.wortlaut}>„{EINWILLIGUNG_TEXT}“</p>
+        <p>Der Link zum Abmelden steht in jeder Mail. Ein Klick genügt.</p>
+        <div className={stil.wege}>
+          <Link href="/ressourcen" className={stil.weiter}>
+            Weitere kostenlose Hilfen
+          </Link>
+        </div>
       </div>
-      <p>Ich schreibe dir außerdem, wenn es etwas Neues gibt: KI-Updates für dein Unternehmen, neue Kurse und Termine.</p>
-      <p className={stil.wortlaut}>„{EINWILLIGUNG_TEXT}“</p>
-      <p>Der Link zum Abmelden steht in jeder Mail. Ein Klick genügt.</p>
     </Ankunft>
   );
 }

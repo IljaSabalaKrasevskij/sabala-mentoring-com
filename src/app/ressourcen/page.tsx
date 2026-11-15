@@ -8,7 +8,7 @@ const SEITE = `${SITE}/ressourcen`;
 /* Mit dem Zusatz „ · Sabala Studios“ aus dem Layout 60 Zeichen, die Beschreibung bleibt unter 160. */
 const title = "Kostenlose Ressourcen zu Claude Code und KI";
 const description =
-  "Claude-Code-Startpaket, Skill-Paket und Mooni Voice: Vorlagen, Skills und Werkzeuge aus meiner täglichen Arbeit mit KI. Kostenlos zum Herunterladen.";
+  "Claude-Code-Startpaket, sechs Skill-Pakete und Mooni Voice: Vorlagen, Skills und Werkzeuge aus meiner täglichen Arbeit mit KI. Kostenlos zum Herunterladen.";
 
 export const metadata: Metadata = {
   title,
