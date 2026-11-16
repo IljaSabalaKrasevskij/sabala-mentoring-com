@@ -259,8 +259,10 @@ export default function DatenschutzPage() {
             <p>
               Unseren Newsletter erhalten Sie nur, wenn Sie in einem unserer Formulare das Häkchen
               dafür selbst setzen. Das Häkchen ist nie vorab gesetzt. Die Anmeldung erfolgt im
-              Double-Opt-in-Verfahren: Nach Ihrer Eintragung erhalten Sie eine E-Mail, in der Sie die
-              Anmeldung bestätigen. Erst nach diesem Klick versenden wir den Newsletter. Die
+              Double-Opt-in-Verfahren: Nach Ihrer Eintragung erhalten Sie eine E-Mail mit einem Link.
+              Er öffnet eine Seite, auf der Sie die Anmeldung mit einem Knopf bestätigen. Das Öffnen
+              des Links allein bestätigt nichts. Erst nach dem Klick auf den Knopf versenden wir den
+              Newsletter. Die
               Bestätigungs-E-Mail verschicken wir über unser eigenes E-Mail-Postfach. Sie enthält
               keine Werbung.
             </p>

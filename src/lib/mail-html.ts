@@ -102,23 +102,23 @@ ${inhalt}
 /** Wofür jemand bestätigt: Betreff, kleine Zeile im Kopf, Vorschauzeile und ein eigener Satz. Ohne satz gilt der allgemeine Text. */
 export type Anlass = { betreff: string; zeile: string; vorschau: string; satz?: string };
 
-const NEWSLETTER: Anlass = { betreff: "Bitte bestätige deine Anmeldung", zeile: "Newsletter · Anmeldung", vorschau: "Ein Klick fehlt noch, dann bist du dabei." };
+const NEWSLETTER: Anlass = { betreff: "Bitte bestätige deine Anmeldung", zeile: "Newsletter · Anmeldung", vorschau: "Kurz bestätigen, dann bist du dabei." };
 
 /* Leadmagnete nennen in der Mail, was nach dem Klick kommt, damit man die Mail wiedererkennt.
    Nur feste Texte, gewählt über das Kürzel aus der Datenbank, nie etwas aus dem Formular. Keine Werbung, nur das angeforderte Paket.
    Der Satz muss im HTML (Knopf oben) und im Text (Link darunter) passen, darum ohne „oben“ und „unten“. */
 const ANLAESSE: Record<string, Anlass> = {
   "startpaket-claude-code": {
-    betreff: "Dein Claude-Code-Startpaket: ein Klick fehlt noch",
+    betreff: "Dein Claude-Code-Startpaket: ein Schritt fehlt noch",
     zeile: "Claude-Code-Startpaket",
-    vorschau: "Ein Klick, dann liegt dein Startpaket bereit.",
-    satz: "schön, dass du das Claude-Code-Startpaket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
+    vorschau: "Kurz bestätigen, dann liegt dein Startpaket bereit.",
+    satz: "schön, dass du das Claude-Code-Startpaket willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Danach geht es direkt zum Download.",
   },
   "skill-paket": {
-    betreff: "Deine Skill-Pakete: ein Klick fehlt noch",
+    betreff: "Deine Skill-Pakete: ein Schritt fehlt noch",
     zeile: "Skill-Pakete",
-    vorschau: "Ein Klick, dann liegen deine Skill-Pakete bereit.",
-    satz: "schön, dass du die Skill-Pakete willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Der Klick bringt dich direkt zum Download.",
+    vorschau: "Kurz bestätigen, dann liegen deine Skill-Pakete bereit.",
+    satz: "schön, dass du die Skill-Pakete willst. Bestätige bitte kurz, dass diese Adresse dir gehört. Danach geht es direkt zum Download.",
   },
 };
 
@@ -137,7 +137,7 @@ export function bestaetigungHtml(link: string, wortlaut: string, anlass: Anlass 
         <div style="margin-top:22px;">${zeileMono("Schritt 2 von 2", GOLD_HELL)}</div>
         <h1 style="margin:14px 0 0 0; font-family:${SERIF}; font-size:38px; line-height:1.12; color:#FAF8F5; font-weight:400;">
           Fast geschafft.<br>
-          <span style="font-style:italic; color:${GOLD_HELL};">Ein Klick fehlt noch.</span>
+          <span style="font-style:italic; color:${GOLD_HELL};">Ein Schritt fehlt noch.</span>
         </h1>
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px auto 0 auto;">
           <tr>
@@ -146,7 +146,7 @@ export function bestaetigungHtml(link: string, wortlaut: string, anlass: Anlass 
             </td>
           </tr>
         </table>
-        <div style="margin-top:16px; font-family:${SANS}; font-size:14px; line-height:1.5; color:#B5AEA2;">Ein Klick genügt.</div>
+        <div style="margin-top:16px; font-family:${SANS}; font-size:14px; line-height:1.5; color:#B5AEA2;">Der Knopf öffnet eine Seite. Dort bestätigst du mit einem Klick.</div>
       </td>
     </tr>
     <tr>
@@ -173,7 +173,7 @@ export function bestaetigungHtml(link: string, wortlaut: string, anlass: Anlass 
 /** Dieselbe Mail als reiner Text, für Mailprogramme ohne HTML und für Spamfilter, die beide Fassungen erwarten. */
 export function bestaetigungText(link: string, wortlaut: string, anlass: Anlass = NEWSLETTER): string {
   return [
-    "Fast geschafft. Ein Klick fehlt noch.",
+    "Fast geschafft. Ein Schritt fehlt noch.",
     "",
     "Hey du,",
     "",

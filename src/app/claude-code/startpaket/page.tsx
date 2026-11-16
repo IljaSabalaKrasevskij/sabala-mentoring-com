@@ -81,7 +81,7 @@ const fuerWen = [
 
 const ablauf = [
   { n: "1", t: "Eintragen", d: "Name, Mail-Adresse und Telefonnummer." },
-  { n: "2", t: "Mail bestätigen", d: "Ein Klick auf den Link in der Mail." },
+  { n: "2", t: "Mail bestätigen", d: "Link in der Mail öffnen, Adresse bestätigen." },
   { n: "3", t: "Herunterladen", d: "Der Klick führt dich direkt zum Paket." },
 ];
 
@@ -262,7 +262,7 @@ export default function StartpaketSeite() {
             <p className="mb-4 font-mono text-[13px] uppercase tracking-[0.22em] text-gold-light">Kostenlos per Mail</p>
             <h2 className="mb-5 font-instrument text-[clamp(1.9rem,3.6vw,2.8rem)] leading-[1.1] text-white">Schick mir das Startpaket.</h2>
             <p className="mb-8 font-satoshi text-[16px] leading-relaxed text-[#E9E4DA]">
-              Trag dich ein und bestätige kurz die Mail, die danach kommt. Der Klick darin führt dich direkt zum Download. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen. Abmelden geht jederzeit mit einem Klick.
+              Trag dich ein und bestätige kurz die Mail, die danach kommt. Nach der Bestätigung geht es direkt zum Download. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen. Abmelden geht jederzeit mit einem Klick.
             </p>
             <ol className="flex flex-col gap-5">
               {ablauf.map((a) => (

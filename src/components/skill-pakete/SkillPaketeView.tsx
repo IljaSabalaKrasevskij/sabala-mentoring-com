@@ -599,7 +599,7 @@ export default function SkillPaketeView() {
 
           <div>
             <p className="mb-6 text-pretty text-[1.02rem] leading-relaxed" style={{ color: TEXT_DUNKEL }}>
-              Trag dich ein und bestätige kurz die Mail, die danach kommt. Der Klick darin führt dich zu deinen Paketen. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen, und eine Mail, wenn ein Skill dazukommt. Abmelden geht jederzeit mit einem Klick.
+              Trag dich ein und bestätige kurz die Mail, die danach kommt. Nach der Bestätigung geht es zu deinen Paketen. Danach bekommst du meinen Newsletter mit KI-Updates für dein Unternehmen, und eine Mail, wenn ein Skill dazukommt. Abmelden geht jederzeit mit einem Klick.
             </p>
             <AnmeldeForm quelle="skill-paket" extra={{ pakete: auswahl.join(","), beruf: mitSetup ? beruf : "" }} knopf="Meine Pakete anfordern" />
           </div>

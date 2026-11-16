@@ -51,7 +51,7 @@ test("Das Startpaket nennt sich in der Mail, alle anderen Formulare behalten den
     assert.ok(!s.includes("Erst danach schreibe ich dir"), "kein allgemeiner Satz daneben");
   }
   assert.ok(h.includes(`<a href="${LINK}"`) && t.includes(LINK), "Link bleibt derselbe");
-  assert.ok(h.includes("<title>Dein Claude-Code-Startpaket: ein Klick fehlt noch</title>"));
+  assert.ok(h.includes("<title>Dein Claude-Code-Startpaket: ein Schritt fehlt noch</title>"));
   for (const werbung of ["/akademie", "/shop", "/ressourcen", "/webseiten", "linkedin.com", "instagram.com"]) assert.ok(!h.includes(werbung), werbung);
   // Alles, was kein Leadmagnet mit eigenem Text ist, bekommt die Mail wie bisher
   for (const q of ["Akademie-Newsletter", "Warteliste Kurs", "ki-newsletter", "", "__proto__", "toString"]) {
