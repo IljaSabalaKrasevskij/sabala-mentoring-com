@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Scheibe, { Motive, Pfeil } from "@/components/webkurs/Scheibe";
-import { KOPF_ZEILE_1, KOPF_ZEILE_2, KURS_PFAD, SCHICHTEN, WEBKURS_PLAETZE } from "@/components/webkurs/daten";
+import { KOPF_ZEILE_1, KOPF_ZEILE_2, KURS_PFAD, SCHICHTEN } from "@/components/webkurs/daten";
 
 /* Karte für den Kurs „Webseiten bauen mit Claude Code“. Auf der Übersichtsseite steht sie direkt über dem Newsletter und führt
    auf die Kursseite. Auf der Startseite (`startseite`, seit 12.11.2026) trägt sie die Überschrift der Kursseite und die Eckdaten
@@ -23,7 +23,7 @@ export default function WebkursKarte({ startseite = false }: { startseite?: bool
               ? "Du baust mit Claude Code deine eigene Webseite, von der Idee bis zum Launch, mit SEO, GEO und Hosting. Skills und Code-Bibliothek bekommst du dazu."
               : "In sechs Wochen baust du mit Claude Code deine eigene Webseite und stellst sie live. Skills und Code-Bibliothek bekommst du dazu."}
           </p>
-          {startseite && <p className="wk-karte-fakten">Sechs Live-Workshops · {WEBKURS_PLAETZE}&nbsp;Plätze · Termin folgt</p>}
+          {startseite && <p className="wk-karte-fakten">Sechs Live-Workshops · kleine Gruppe · Termin folgt</p>}
           <Link className="wk-knopf wk-haupt" href={startseite ? `${KURS_PFAD}#warteliste` : KURS_PFAD}>
             <span>{startseite ? "Auf die Warteliste" : "Zur Kursseite"}</span>
             <Pfeil />
