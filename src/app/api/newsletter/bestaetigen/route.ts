@@ -7,19 +7,25 @@ import { dankeSeite } from "@/lib/quellen";
 export const runtime = "nodejs";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Klick auf den Link in der Bestätigungsmail (Double-Opt-in, Schritt 2).
-   Macht die Einwilligung „aktiv“, hält Zeit und IP des Klicks fest und trägt den
-   Kontakt erst jetzt ins Newsletter-Werkzeug ein. Danach geht es auf die Dankeseite des Formulars:
-   Leadmagnete haben eine eigene (mit dem Download), alle anderen landen auf der allgemeinen.
+   Bestätigen aus der Mail (Double-Opt-in, Schritt 2), gebaut wie das Abmelden daneben.
+   GET kommt vom Link in der Bestätigungsmail, oder von einem Virenscanner, der Links vorab öffnet
+   (in Firmen üblich: Microsoft 365, Proofpoint, Mimecast). Darum bestätigt GET nichts, er führt nur
+   auf die Seite mit dem Knopf (/newsletter/bestaetigen).
+   POST kommt vom Knopf „Adresse bestätigen“. Erst er macht die Einwilligung „aktiv“, hält Zeit und IP
+   dieses Klicks fest und trägt den Kontakt ins Newsletter-Werkzeug ein. Danach geht es auf die Dankeseite
+   des Formulars: Leadmagnete haben eine eigene (mit dem Download), alle anderen landen auf der allgemeinen.
 
-   Skill-Pakete: Der Link trägt die Wahl aus dem Formular (pakete, beruf). Gelesen werden nur feste Kürzel (wahlLesen),
-   die Dankeseite bekommt dieselbe Wahl. Pfad und Ziel bleiben fest, darum kann auch ein veränderter Link nirgendwohin umleiten.
-
-   ponytail: Der Link bestätigt direkt, ohne Zwischenseite mit Knopf. Sollten Mail-Scanner,
-   die Links vorab öffnen, zum Thema werden: hier eine Seite mit Knopf davorsetzen.
+   Skill-Pakete: Der Link trägt die Wahl aus dem Formular (pakete, beruf), die Seite reicht sie an den Knopf weiter.
+   Gelesen werden nur feste Kürzel (wahlLesen), die Dankeseite bekommt dieselbe Wahl. Pfad und Ziel bleiben fest,
+   darum kann auch ein veränderter Link nirgendwohin umleiten.
    ────────────────────────────────────────────────────────────────────────── */
 
-export async function GET(req: Request) {
+export function GET(req: Request) {
+  const url = new URL(req.url);
+  return NextResponse.redirect(new URL(`/newsletter/bestaetigen${url.search}`, url), 303);
+}
+
+export async function POST(req: Request) {
   const url = new URL(req.url);
   const token = url.searchParams.get("t") ?? "";
   const wahl = wahlLesen(url.searchParams.get("pakete"), url.searchParams.get("beruf"));
