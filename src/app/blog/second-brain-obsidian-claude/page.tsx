@@ -119,7 +119,7 @@ const faq = [
   },
   {
     q: "Was kostet ein Second Brain mit Obsidian und Claude?",
-    a: "Obsidian kostet nichts, auch nicht für die Arbeit. Eine Firmenlizenz ist freiwillig, und den Abgleich zwischen Geräten gibt es auf Wunsch ab 4 US-Dollar im Monat. Für Claude Code brauchst du mindestens Claude Pro für 20 US-Dollar im Monat, bei Jahreszahlung 17 Dollar. Für Gemini Notebook brauchst du ein Google-Konto.",
+    a: "Obsidian kostet nichts, auch nicht für die Arbeit. Eine Firmenlizenz ist freiwillig, und den Abgleich zwischen Geräten gibt es auf Wunsch ab 4 US-Dollar im Monat. Für Claude Code brauchst du mindestens Claude Pro für 18 Euro im Monat, bei Jahreszahlung 15 Euro. Für Gemini Notebook brauchst du ein Google-Konto.",
   },
   {
     q: "Brauche ich Programmierkenntnisse?",

@@ -11,7 +11,8 @@ const slug = "claude-code-kosten";
 const site = "https://sabala-mentoring.com";
 const url = `${site}/blog/${slug}`;
 const datePublished = "2026-11-11";
-const preisStand = "11. November 2026";
+const dateModified = "2026-11-24";
+const preisStand = "24. November 2026";
 
 const cover = {
   src: `/blog/${slug}/cover.jpg`,
@@ -23,9 +24,9 @@ const zweitesBild = {
   alt: "Skizze: ein aufgeschlagenes Rechnungsbuch mit Münzen und Füller auf einem dunklen Schreibtisch",
 };
 
-const title = "Was kostet Claude Code? Pro, Max, Team und API im Vergleich";
+const title = "Claude Code Kosten: Preise in Euro für Pro, Max, Ultra";
 const description =
-  "Was Claude Code wirklich kostet: alle Pläne von Pro bis Enterprise, was die Nutzungsgrenzen bedeuten, wann sich die API lohnt und wie du sparst.";
+  "Was Claude Code in Deutschland kostet: Pro ab 15 € im Monat, Max 90 €, Ultra 180 €. Dazu Team, API, Zahlungsmethoden, Testabo und wie du sparst.";
 
 export const metadata = {
   title: { absolute: title },
@@ -33,9 +34,10 @@ export const metadata = {
   alternates: { canonical: url },
   openGraph: {
     title,
-    description: "Von 17 Dollar im Monat bis zur Abrechnung nach Verbrauch: welcher Plan zu welcher Arbeit passt.",
+    description: "Von 15 Euro im Monat bis zur Abrechnung nach Verbrauch: welcher Plan zu welcher Arbeit passt.",
     type: "article",
     publishedTime: datePublished,
+    modifiedTime: dateModified,
     url,
     images: [{ url: `${site}${cover.src}`, width: 1280, height: 720, alt: cover.alt }],
   },
@@ -50,14 +52,15 @@ const autor = {
   knowsAbout: ["Claude Code", "KI im Unternehmen", "Webseiten mit KI", "Second Brain"],
 };
 
-// Quelle: claude.com/pricing, abgerufen am 11.11.2026. Preise in USD pro Monat, ohne Steuer.
+// Quelle: claude.com/de/pricing, aus Deutschland abgerufen am 24.11.2026. Preise in Euro pro Monat, ohne Steuer.
+// In den USA (claude.com/pricing, am selben Tag): Pro 20 $ (17 $ bei Jahreszahlung), Max 100 $, Ultra 200 $, Team 25 $ und 125 $ (20 $ und 100 $ bei Jahreszahlung).
 const plaene = [
-  { name: "Free", gruppe: "allein", preis: "0 $", jahr: "", code: false, fuer: "Chatten und ausprobieren", detail: "Claude Code ist nicht enthalten." },
-  { name: "Pro", gruppe: "allein", preis: "20 $", jahr: "17 $ im Monat bei Jahreszahlung", code: true, fuer: "Lernen und kleinere Projekte", detail: "Das Grundkontingent, an dem sich die anderen Pläne messen." },
-  { name: "Max", gruppe: "allein", preis: "100 $", jahr: "", code: true, fuer: "Täglich mehrere Stunden bauen", detail: "Fünfmal so viel Nutzung wie Pro, pro fünf Stunden und pro Woche." },
-  { name: "Ultra", gruppe: "allein", preis: "200 $", jahr: "", code: true, fuer: "Den ganzen Tag mit mehreren Sitzungen", detail: "Zehnmal so viel Nutzung wie Pro pro Woche." },
-  { name: "Team Standard", gruppe: "team", preis: "25 $ pro Platz", jahr: "20 $ pro Platz bei Jahreszahlung", code: true, fuer: "Teams von 2 bis 150 Personen", detail: "Mehr Nutzung als Pro, Claude Code und Cowork sind dabei." },
-  { name: "Team Premium", gruppe: "team", preis: "125 $ pro Platz", jahr: "100 $ pro Platz bei Jahreszahlung", code: true, fuer: "Für alle im Team, die viel bauen", detail: "Fünfmal so viel Nutzung wie ein Standard-Platz." },
+  { name: "Free", gruppe: "allein", preis: "0 €", jahr: "", code: false, fuer: "Chatten und ausprobieren", detail: "Claude Code ist nicht enthalten." },
+  { name: "Pro", gruppe: "allein", preis: "18 €", jahr: "15 € im Monat bei Jahreszahlung, 180 € im Voraus", code: true, fuer: "Lernen und kleinere Projekte", detail: "Das Grundkontingent, an dem sich die anderen Pläne messen." },
+  { name: "Max", gruppe: "allein", preis: "90 €", jahr: "nur mit monatlicher Zahlung", code: true, fuer: "Täglich mehrere Stunden bauen", detail: "Fünfmal so viel Nutzung wie Pro, pro fünf Stunden und pro Woche." },
+  { name: "Ultra", gruppe: "allein", preis: "180 €", jahr: "nur mit monatlicher Zahlung", code: true, fuer: "Den ganzen Tag mit mehreren Sitzungen", detail: "Zehnmal so viel Nutzung wie Pro pro Woche." },
+  { name: "Team Standard", gruppe: "team", preis: "21,04 € pro Platz", jahr: "18 € pro Platz bei Jahreszahlung", code: true, fuer: "Teams von 2 bis 150 Personen", detail: "Mehr Nutzung als Pro, Claude Code und Cowork sind dabei." },
+  { name: "Team Premium", gruppe: "team", preis: "105,23 € pro Platz", jahr: "90 € pro Platz bei Jahreszahlung", code: true, fuer: "Für alle im Team, die viel bauen", detail: "Fünfmal so viel Nutzung wie ein Standard-Platz." },
   { name: "Enterprise", gruppe: "team", preis: "20 $ pro Platz", jahr: "bei Jahreszahlung, dazu die Nutzung nach API-Preisen", code: true, fuer: "Firmen ab 20 Plätzen", detail: "Der Verbrauch wird zusätzlich abgerechnet." },
 ];
 
@@ -67,16 +70,25 @@ const gruppen = [
 ];
 
 const zahlen = [
-  { wert: 17, label: "im Monat für Pro", sub: "bei Jahreszahlung, sonst 20 $" },
-  { wert: 100, label: "im Monat für Max", sub: "fünfmal so viel Nutzung wie Pro" },
-  { wert: 200, label: "im Monat für Ultra", sub: "zehnmal so viel wie Pro pro Woche" },
-  { wert: 13, label: "pro Arbeitstag über die API", sub: "Schnitt in Firmen laut Anthropic" },
+  { wert: 15, einheit: " €", label: "im Monat für Pro", sub: "bei Jahreszahlung, sonst 18 €" },
+  { wert: 90, einheit: " €", label: "im Monat für Max", sub: "fünfmal so viel Nutzung wie Pro" },
+  { wert: 180, einheit: " €", label: "im Monat für Ultra", sub: "zehnmal so viel wie Pro pro Woche" },
+  { wert: 13, einheit: " $", label: "pro Arbeitstag über die API", sub: "Schnitt in Firmen laut Anthropic" },
 ];
 
-// Quelle: platform.claude.com/docs/en/about-claude/pricing, abgerufen am 11.11.2026, USD pro Million Tokens.
+// Eigene Rechnung: Preis von Anthropic mal 1,19. Bei neuen Preisen beide Spalten anpassen.
+const mitSteuer = [
+  { plan: "Pro, monatlich", netto: "18,00 €", brutto: "21,42 €" },
+  { plan: "Pro, jährlich", netto: "15,00 € im Monat, 180 € im Jahr", brutto: "17,85 € im Monat, 214,20 € im Jahr" },
+  { plan: "Max", netto: "90,00 €", brutto: "107,10 €" },
+  { plan: "Ultra", netto: "180,00 €", brutto: "214,20 €" },
+];
+
+// Quelle: claude.com/de/pricing und platform.claude.com/docs/de/about-claude/pricing, abgerufen am 24.11.2026, USD pro Million Tokens.
 const api = [
   { m: "Sonnet 5.5", ein: "2 $", aus: "10 $", wann: "die meisten Aufgaben" },
   { m: "Opus 5.5", ein: "4 $", aus: "20 $", wann: "schwierige und lange Aufgaben" },
+  { m: "Fable 5.2", ein: "8 $", aus: "40 $", wann: "das stärkste Modell, für die schwersten Aufgaben" },
   { m: "Haiku 5.5", ein: "0,10 $", aus: "0,50 $", wann: "kleine, schnelle Aufgaben (Preis bis 100.000 Tokens pro Anfrage)" },
 ];
 
@@ -99,11 +111,11 @@ const tipps = [
 const faq = [
   {
     q: "Ist Claude Code kostenlos?",
-    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Der günstigste Weg ist Pro für 20 US-Dollar im Monat, bei Jahreszahlung 17 Dollar im Monat. Alternativ zahlst du über ein API-Konto nach Verbrauch. Anthropic nennt alle Preise ohne Steuer, den Endbetrag siehst du an der Kasse.",
+    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Der günstigste Weg ist Pro für 18 Euro im Monat, bei Jahreszahlung 15 Euro im Monat. Alternativ zahlst du über ein API-Konto nach Verbrauch. Anthropic nennt alle Preise ohne Steuer, den Endbetrag siehst du an der Kasse.",
   },
   {
     q: "Was kostet Claude Code im Monat?",
-    a: "Für eine Person zwischen 17 und 200 US-Dollar im Monat, je nach Plan: Pro, Max oder Ultra. Im Team kostet ein Platz zwischen 20 und 125 Dollar. Über die API zahlst du nach Verbrauch, Anthropic nennt aus Firmen im Schnitt 150 bis 250 Dollar pro Entwickler und Monat. Alle Preise verstehen sich ohne Steuer.",
+    a: "Für eine Person in Deutschland zwischen 15 und 180 Euro im Monat, je nach Plan: Pro, Max oder Ultra. Im Team kostet ein Platz zwischen 18 und 105,23 Euro. Über die API zahlst du nach Verbrauch, Anthropic nennt aus Firmen im Schnitt 150 bis 250 US-Dollar pro Entwickler und Monat. Alle Preise verstehen sich ohne Mehrwertsteuer.",
   },
   {
     q: "Reicht Pro für Claude Code?",
@@ -123,7 +135,23 @@ const faq = [
   },
   {
     q: "Gibt es Preise in Euro?",
-    a: "Anthropic nennt seine Preise in US-Dollar und ohne Steuer. Was du am Ende zahlst, inklusive der Steuer, die für dich gilt, zeigt dir die Kasse beim Abschluss. Schau dort vor dem Kauf auf den Endbetrag.",
+    a: "Ja. In Deutschland zeigt Anthropic die Preise in Euro: Pro 18 Euro im Monat oder 15 Euro bei Jahreszahlung, Max 90 Euro, Ultra 180 Euro, jeweils ohne Steuer. Mit 19 Prozent Mehrwertsteuer sind das 21,42 Euro für Pro, 107,10 Euro für Max und 214,20 Euro für Ultra. Enterprise und die API nennt Anthropic in US-Dollar. Den genauen Endbetrag zeigt dir die Kasse vor dem Kauf.",
+  },
+  {
+    q: "Welche Zahlungsmethoden gibt es für Claude?",
+    a: "Im Web nimmt Anthropic für Pro, Max und Ultra nur Kredit- oder Debitkarten. PayPal oder Lastschrift gibt es dort nicht. Wer das Abo in der Claude-App auf dem iPhone oder auf Android abschließt, zahlt über Apple oder Google mit den Zahlungsarten, die dort hinterlegt sind. Große Firmen im Enterprise-Plan können über den Vertrieb auch auf Rechnung zahlen.",
+  },
+  {
+    q: "Gibt es ein Testabo oder eine kostenlose Testphase?",
+    a: `Für Pro, Max und Ultra nennt Anthropic keine Testphase, Stand ${preisStand}. Der kostenlose Plan zeigt dir den Chat, aber ohne Claude Code. Zum Ausprobieren buchst du einen Monat Pro. Du kannst jederzeit kündigen, und im Europäischen Wirtschaftsraum kannst du innerhalb der Widerrufsfrist von 14 Tagen eine Erstattung direkt in der App beantragen.`,
+  },
+  {
+    q: "Kann ich monatlich kündigen?",
+    a: "Ja. Du kannst jederzeit kündigen, der Plan bleibt bis zum Ende des bezahlten Zeitraums aktiv. Anthropic rät, mindestens 24 Stunden vor der Verlängerung zu kündigen. Danach wechselt dein Konto in den kostenlosen Plan, deine Chats und Projekte bleiben erhalten.",
+  },
+  {
+    q: "Was kostet Claude Enterprise?",
+    a: "20 US-Dollar pro Platz und Monat bei jährlicher Abrechnung, mindestens 20 Plätze. Dazu kommt die Nutzung, abgerechnet nach den API-Preisen. Die Kosten hängen also davon ab, wie viel dein Team mit welchem Modell arbeitet. Mengenrabatte gibt es über den Vertrieb, veröffentlicht werden sie nicht.",
   },
 ];
 
@@ -135,7 +163,7 @@ const articleSchemaJson = JSON.stringify({
   author: autor,
   publisher: { "@type": "Organization", name: "Sabala Mentoring", url: site },
   datePublished,
-  dateModified: datePublished,
+  dateModified,
   inLanguage: "de-DE",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   image: `${site}${cover.src}`,
@@ -186,14 +214,14 @@ export default function ClaudeCodeKostenPage() {
           </div>
           <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[13px] uppercase tracking-widest">
             <span className="rounded-full border border-gold-light bg-[#2E2B26] px-3 py-1 text-gold-light">KI-Akademie · Kosten</span>
-            <span className="text-[#E9E4DA]">November 2026</span>
-            <span className="text-[#E9E4DA]">8 Min Lesezeit</span>
+            <span className="text-[#E9E4DA]">Stand {preisStand}</span>
+            <span className="text-[#E9E4DA]">9 Min Lesezeit</span>
           </div>
           <h1 className="mb-6 max-w-[1100px] font-instrument text-[clamp(2.5rem,5vw,5rem)] leading-[1.05] text-white">
             Was kostet Claude Code? <span className="italic text-gold-light">Alle Pläne mit echten Zahlen.</span>
           </h1>
           <p className="max-w-[760px] font-satoshi text-lg leading-relaxed text-[#E9E4DA] md:text-xl">
-            Von 17 Dollar im Monat bis zur Abrechnung nach Verbrauch: welcher Plan zu welcher Arbeit passt, was die Grenzen bedeuten und wo du sparst.
+            Von 15 Euro im Monat bis zur Abrechnung nach Verbrauch: welcher Plan zu welcher Arbeit passt, was die Grenzen bedeuten und wo du sparst.
           </p>
         </div>
       </section>
@@ -203,7 +231,7 @@ export default function ClaudeCodeKostenPage() {
         <div className="rounded-r-lg border-l-2 border-refined-gold bg-cream p-8 md:p-10">
           <p className="mb-5 font-mono text-[13px] uppercase tracking-widest text-[#7A5C18]">Die kurze Antwort vorab</p>
           <p className="font-satoshi text-lg leading-relaxed text-deep-charcoal">
-            Claude Code steckt in jedem bezahlten Claude-Plan. <strong>Pro</strong> kostet 20 US-Dollar im Monat, bei Jahreszahlung 17, und reicht zum Lernen und für kleinere Projekte. Wer täglich viele Stunden baut, nimmt <strong>Max</strong> für 100 oder <strong>Ultra</strong> für 200 Dollar. Über die API zahlst du nach Verbrauch, in Firmen laut Anthropic im Schnitt rund 13 Dollar pro Arbeitstag.
+            Claude Code steckt in jedem bezahlten Claude-Plan. <strong>Pro</strong> kostet in Deutschland 18 Euro im Monat, bei Jahreszahlung 15, und reicht zum Lernen und für kleinere Projekte. Wer täglich viele Stunden baut, nimmt <strong>Max</strong> für 90 oder <strong>Ultra</strong> für 180 Euro. Dazu kommt jeweils die Mehrwertsteuer. Über die API zahlst du nach Verbrauch, in Firmen laut Anthropic im Schnitt rund 13 Dollar pro Arbeitstag.
           </p>
         </div>
       </section>
@@ -243,12 +271,69 @@ export default function ClaudeCodeKostenPage() {
           </div>
         ))}
         <p className="mx-auto mt-5 max-w-[820px] font-satoshi text-[15px] leading-relaxed text-[#57514A]">
-          Preise in US-Dollar pro Monat und ohne Steuer, Stand {preisStand}. Quelle:{" "}
-          <a href="https://claude.com/pricing" target="_blank" rel="noopener noreferrer" className="text-[#7A5C18] underline decoration-refined-gold underline-offset-4">
-            claude.com/pricing
+          Preise in Euro pro Monat und ohne Steuer, so wie Anthropic sie in Deutschland anzeigt, Stand {preisStand}. Enterprise nennt Anthropic in US-Dollar. Quelle:{" "}
+          <a href="https://claude.com/de/pricing" target="_blank" rel="noopener noreferrer" className="text-[#7A5C18] underline decoration-refined-gold underline-offset-4">
+            claude.com/de/pricing
           </a>
           .
         </p>
+      </section>
+
+      {/* EURO MIT STEUER */}
+      <section className="mx-auto w-full max-w-[820px] px-6 pt-20 sm:px-12 md:px-24">
+        <ScrollReveal>
+          <div className={proseBlock}>
+            <h2>Was kostet Claude Code in Deutschland in Euro?</h2>
+            <p>
+              Anthropic zeigt die Preise in Deutschland in Euro an, aber ohne Mehrwertsteuer. Auf deiner Rechnung kommt sie dazu. Mit 19 Prozent sieht das für die drei Pläne für eine Person so aus:
+            </p>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal>
+          {/* ohne Mindestbreite: am Handy bricht der Text um, damit alle drei Spalten ohne Wischen sichtbar sind */}
+          <div className="mt-2 overflow-hidden rounded-2xl border border-refined-gold/40">
+            <table className="w-full border-collapse text-left font-satoshi text-[15px] sm:text-[16px]">
+              <thead className="bg-[#2E2B26] text-white">
+                <tr>
+                  <th className="px-3 py-4 font-semibold sm:px-5">Plan</th>
+                  <th className="px-3 py-4 font-semibold sm:px-5">Preis ohne Steuer</th>
+                  <th className="px-3 py-4 font-semibold sm:px-5">Mit 19 % Mehrwertsteuer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mitSteuer.map((r) => (
+                  <tr key={r.plan} className="border-t border-refined-gold/30 bg-cream align-top">
+                    <td className="px-3 py-4 font-semibold text-deep-charcoal sm:px-5">{r.plan}</td>
+                    <td className="px-3 py-4 text-deep-charcoal sm:px-5">{r.netto}</td>
+                    <td className="px-3 py-4 text-deep-charcoal sm:px-5">{r.brutto}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 font-satoshi text-[15px] leading-relaxed text-[#57514A]">
+            Die rechte Spalte ist meine eigene Rechnung aus den Preisen von Anthropic, Stand {preisStand}. Den genauen Endbetrag mit der Steuer, die für dich gilt, zeigt dir die Kasse vor dem Kauf. Zum Vergleich: In den USA kosten die Pläne 20, 100 und 200 Dollar, Pro bei Jahreszahlung 17 Dollar im Monat.
+          </p>
+        </ScrollReveal>
+      </section>
+
+      {/* BEZAHLEN UND TESTEN */}
+      <section className="mx-auto w-full max-w-[820px] px-6 pt-20 sm:px-12 md:px-24">
+        <ScrollReveal>
+          <div className={proseBlock}>
+            <h2>Wie bezahlst du, und gibt es ein Testabo?</h2>
+            <p>
+              Im Web nimmt Anthropic für Pro, Max und Ultra nur <strong>Kredit- oder Debitkarten</strong>. PayPal oder Lastschrift gibt es dort nicht. Schließt du das Abo in der Claude-App auf dem iPhone oder auf Android ab, läuft die Zahlung über Apple oder Google, mit den Zahlungsarten, die du dort hinterlegt hast.
+            </p>
+            <p>
+              Pro zahlst du monatlich oder jährlich, Max und Ultra nur monatlich. Deine Rechnungen findest du in den Einstellungen unter Abrechnung, sie kommen zusätzlich per Mail. Die Einzelheiten stehen in der{" "}
+              <a href="https://support.claude.com/de/articles/8325618-haufig-gestellte-fragen-zur-abrechnung-von-bezahlten-planen" target="_blank" rel="noopener noreferrer">Hilfe von Anthropic zur Abrechnung</a>.
+            </p>
+            <p>
+              Ein <strong>Testabo</strong> nennt Anthropic für diese Pläne nicht. Zum Ausprobieren nimmst du einen Monat Pro: Du kannst jederzeit kündigen, der Plan läuft dann bis zum Ende des bezahlten Monats. Im Europäischen Wirtschaftsraum kannst du außerdem innerhalb der Widerrufsfrist von 14 Tagen eine Erstattung direkt in der App beantragen.
+            </p>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* ZAHLEN */}
@@ -258,7 +343,7 @@ export default function ClaudeCodeKostenPage() {
             <ScrollReveal key={z.label} delay={i * 0.06}>
               <div className="flex h-full flex-col rounded-2xl border border-refined-gold/40 bg-[#2E2B26] p-6 md:p-7">
                 <span className="mb-2 font-instrument text-4xl leading-none text-gold-light md:text-5xl">
-                  <CountUp to={z.wert} suffix=" $" />
+                  <CountUp to={z.wert} suffix={z.einheit} />
                 </span>
                 <span className="mb-1 font-satoshi text-[15px] font-semibold text-white">{z.label}</span>
                 <span className="font-satoshi text-[15px] leading-snug text-[#E9E4DA]">{z.sub}</span>
@@ -274,7 +359,7 @@ export default function ClaudeCodeKostenPage() {
           <div className={proseBlock}>
             <h2>Was bedeuten die Nutzungsgrenzen?</h2>
             <p className={dropCapClass}>
-              Bei Pro und Max gelten zwei Grenzen: ein Fenster von fünf Stunden und eine Grenze pro Woche. Beide teilst du dir mit dem normalen Claude-Chat. Was du morgens im Chat verbrauchst, fehlt dir am Nachmittag in Claude Code. Bei Ultra nennt Anthropic nur noch eine Wochengrenze, im Team hat jeder Platz sein eigenes Kontingent.
+              Bei Pro und Max gelten zwei Grenzen: ein Fenster von fünf Stunden und eine Grenze pro Woche. Beide teilst du dir mit dem normalen Claude-Chat. Was du morgens im Chat verbrauchst, fehlt dir am Nachmittag in Claude Code. Bei Ultra entfällt für verifizierte Konten das Fenster von fünf Stunden, es bleibt die Grenze pro Woche. Im Team hat jeder Platz sein eigenes Kontingent.
             </p>
             <p>Ist das Kontingent aufgebraucht, hast du vier Möglichkeiten:</p>
             <ul>
@@ -328,7 +413,7 @@ export default function ClaudeCodeKostenPage() {
           </div>
           <p className="mt-4 font-satoshi text-[15px] leading-relaxed text-[#57514A]">
             US-Dollar pro Million Tokens, Stand {preisStand}. Quelle:{" "}
-            <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener noreferrer" className="text-[#7A5C18] underline decoration-refined-gold underline-offset-4">
+            <a href="https://platform.claude.com/docs/de/about-claude/pricing" target="_blank" rel="noopener noreferrer" className="text-[#7A5C18] underline decoration-refined-gold underline-offset-4">
               Preisliste der Claude-Plattform
             </a>
             .
@@ -338,6 +423,9 @@ export default function ClaudeCodeKostenPage() {
           <div className={`${proseBlock} mt-8`}>
             <p>
               Was Claude schon gelesen hat, speichert es zwischen. Beim nächsten Lesen kostet das nur einen Bruchteil, bei Sonnet 5.5 zum Beispiel 0,10 $ statt 2 $ pro Million Tokens.
+            </p>
+            <p>
+              Neu ist ein API-Guthaben in den großen Plänen: Bei Max sind 100 Dollar im Monat dabei, bei Ultra 200 Dollar. Das Guthaben liegt in der Claude Console und ist für eigene Entwicklungen über die API gedacht.
             </p>
             <p>
               Und was heißt das im Alltag? Anthropic nennt aus Firmen im Schnitt rund 13 Dollar pro Entwickler und aktivem Arbeitstag, im Monat 150 bis 250 Dollar. 90 Prozent bleiben unter 30 Dollar am Tag. Bei diesen Werten ist ein Pro-Abo schon nach zwei Arbeitstagen im Monat bezahlt. Die Zahlen stehen in der{" "}

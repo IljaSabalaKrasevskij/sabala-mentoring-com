@@ -96,7 +96,7 @@ const faq = [
   },
   {
     q: "Brauche ich ein Claude-Abo?",
-    a: "Für Claude Code ja. Es ist ab dem Pro-Plan dabei: 20 US-Dollar im Monat, bei jährlicher Zahlung 17 US-Dollar im Monat, jeweils zuzüglich Steuer. Im kostenlosen Plan fehlt Claude Code. Das Paket kannst du schon vorher lesen und dann entscheiden.",
+    a: "Für Claude Code ja. Es ist ab dem Pro-Plan dabei: 18 Euro im Monat, bei jährlicher Zahlung 15 Euro im Monat, jeweils zuzüglich Mehrwertsteuer. Im kostenlosen Plan fehlt Claude Code. Das Paket kannst du schon vorher lesen und dann entscheiden.",
   },
   {
     q: "Funktioniert das auch auf Windows?",

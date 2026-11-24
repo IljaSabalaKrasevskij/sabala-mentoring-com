@@ -63,10 +63,10 @@ export const articles = [
   {
     id: 16,
     title: "Was kostet Claude Code? Alle Pläne mit echten Zahlen",
-    excerpt: "Von 17 Dollar im Monat bis zur Abrechnung nach Verbrauch: Pro, Max, Ultra, Team und API im Vergleich, was die Nutzungsgrenzen bedeuten und wie du sparst.",
+    excerpt: "Von 15 Euro im Monat bis zur Abrechnung nach Verbrauch: Pro, Max, Ultra, Team und API im Vergleich, was die Nutzungsgrenzen bedeuten und wie du sparst.",
     category: "KI & Tools",
     date: "November 2026",
-    readTime: "8 Min",
+    readTime: "9 Min",
     image: "/blog/claude-code-kosten/cover.jpg",
     slug: "/blog/claude-code-kosten",
     keywords: ["claude code", "claude code preis", "kosten", "pro", "max", "ultra", "team", "api", "abo", "limit", "tokens"],
