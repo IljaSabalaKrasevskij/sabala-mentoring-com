@@ -174,7 +174,7 @@ export default function BlogWebseitenBauMitClaudePage() {
             <p>Wer <code>claude</code> außerhalb des Projekt-Roots aufruft, hat keinen Zugriff auf die CLAUDE.md und keinen Codebase-Kontext. <strong>Erkennbar daran, dass Claude generische Antworten gibt</strong> statt projekt-spezifischer. Lösung: vorher immer <code>cd dein-projekt</code>.</p>
 
             <h3>3. Kostenloser Plan statt Pro</h3>
-            <p>Der kostenlose Claude-Plan enthält Claude Code gar nicht. <strong>Wer bauen will, braucht mindestens Pro.</strong> 20 US-Dollar im Monat, bei Jahreszahlung 17, sind weniger als eine Stunde Frust. Alle Pläne im Vergleich stehen im Artikel <Link href="/blog/claude-code-kosten">Was kostet Claude Code?</Link></p>
+            <p>Der kostenlose Claude-Plan enthält Claude Code gar nicht. <strong>Wer bauen will, braucht mindestens Pro.</strong> 18 Euro im Monat, bei Jahreszahlung 15, sind weniger als eine Stunde Frust. Alle Pläne im Vergleich stehen im Artikel <Link href="/blog/claude-code-kosten">Was kostet Claude Code?</Link></p>
 
             <h3>4. Keine Skills, jedes Mal alles neu erklären</h3>
             <p>Wer dieselbe Aufgabe fünfmal ohne Skill macht, verbringt mehr Zeit mit Erklären als mit Bauen. <strong>Spätestens beim zweiten Mal lohnt sich ein Skill.</strong> Das ist die Investition, die sich am schnellsten zurückzahlt.</p>

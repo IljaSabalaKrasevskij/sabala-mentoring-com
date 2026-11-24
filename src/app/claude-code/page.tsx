@@ -62,10 +62,10 @@ const wege = [
 
 // Quelle: claude.com/pricing, abgerufen am 11.11.2026, USD pro Monat ohne Steuer.
 const preise = [
-  { plan: "Pro", preis: "20 $", info: "17 $ bei Jahreszahlung, zum Lernen und für kleinere Projekte" },
-  { plan: "Max", preis: "100 $", info: "fünfmal so viel Nutzung wie Pro" },
-  { plan: "Ultra", preis: "200 $", info: "zehnmal so viel Nutzung wie Pro pro Woche" },
-  { plan: "Team", preis: "ab 20 $", info: "pro Platz bei Jahreszahlung, für 2 bis 150 Personen" },
+  { plan: "Pro", preis: "18 €", info: "15 € bei Jahreszahlung, zum Lernen und für kleinere Projekte" },
+  { plan: "Max", preis: "90 €", info: "fünfmal so viel Nutzung wie Pro" },
+  { plan: "Ultra", preis: "180 €", info: "zehnmal so viel Nutzung wie Pro pro Woche" },
+  { plan: "Team", preis: "ab 18 €", info: "pro Platz bei Jahreszahlung, für 2 bis 150 Personen" },
 ];
 
 const befehle = [
@@ -92,7 +92,7 @@ const faq = [
   },
   {
     q: "Ist Claude Code kostenlos?",
-    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Du brauchst Pro für 20 US-Dollar im Monat, bei Jahreszahlung 17 Dollar, oder einen größeren Plan wie Max oder Ultra. Alternativ zahlst du über ein API-Konto nach Verbrauch. Anthropic nennt alle Preise ohne Steuer.",
+    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Du brauchst Pro für 18 Euro im Monat, bei Jahreszahlung 15 Euro, oder einen größeren Plan wie Max oder Ultra. Alternativ zahlst du über ein API-Konto nach Verbrauch. Anthropic nennt alle Preise ohne Steuer.",
   },
   {
     q: "Brauche ich Programmierkenntnisse für Claude Code?",
@@ -112,7 +112,7 @@ const faq = [
   },
   {
     q: "Kann ich Claude Code im Team nutzen?",
-    a: "Ja. Mit Claude Team bekommt jeder einen eigenen Platz, Standard für 25 oder Premium für 125 US-Dollar im Monat, bei Jahreszahlung 20 und 100 Dollar. Claude Code ist in beiden enthalten, die Abrechnung läuft zentral, und jeder Platz hat sein eigenes Kontingent. Für Firmen ab 20 Plätzen gibt es Enterprise.",
+    a: "Ja. Mit Claude Team bekommt jeder einen eigenen Platz, Standard für 21,04 oder Premium für 105,23 Euro im Monat, bei Jahreszahlung 18 und 90 Euro. Claude Code ist in beiden enthalten, die Abrechnung läuft zentral, und jeder Platz hat sein eigenes Kontingent. Für Firmen ab 20 Plätzen gibt es Enterprise.",
   },
 ];
 
@@ -194,7 +194,7 @@ export default function ClaudeCodeThemenSeite() {
         <div className="rounded-r-lg border-l-2 border-refined-gold bg-cream p-8 md:p-10">
           <p className="mb-5 font-mono text-[13px] uppercase tracking-widest text-[#7A5C18]">Die kurze Antwort vorab</p>
           <p className="font-satoshi text-lg leading-relaxed text-deep-charcoal">
-            Claude Code ist ein KI-Werkzeug von Anthropic, das direkt in deinen Dateien arbeitet. Es liest deinen Projektordner, schreibt und ändert Dateien und führt Befehle aus, immer mit deiner Erlaubnis. Du nutzt es im Terminal, in der Claude-Desktop-App oder im Browser und brauchst dafür ein bezahltes Claude-Abo ab 17 US-Dollar im Monat.
+            Claude Code ist ein KI-Werkzeug von Anthropic, das direkt in deinen Dateien arbeitet. Es liest deinen Projektordner, schreibt und ändert Dateien und führt Befehle aus, immer mit deiner Erlaubnis. Du nutzt es im Terminal, in der Claude-Desktop-App oder im Browser und brauchst dafür ein bezahltes Claude-Abo ab 15 Euro im Monat.
           </p>
         </div>
       </section>
@@ -299,7 +299,7 @@ export default function ClaudeCodeThemenSeite() {
           <div className={`${proseBlock} mx-auto max-w-[820px]`}>
             <h2>Was kostet Claude Code?</h2>
             <p>
-              Claude Code steckt in jedem bezahlten Claude-Plan, der kostenlose Plan enthält es nicht. Für eine Person kostet es 17 bis 200 US-Dollar im Monat. Alle Pläne, die Grenzen und die Rechnung mit der API stehen im Artikel <Link href="/blog/claude-code-kosten">Was kostet Claude Code?</Link>
+              Claude Code steckt in jedem bezahlten Claude-Plan, der kostenlose Plan enthält es nicht. Für eine Person kostet es in Deutschland 15 bis 180 Euro im Monat. Alle Pläne, die Grenzen und die Rechnung mit der API stehen im Artikel <Link href="/blog/claude-code-kosten">Was kostet Claude Code?</Link>
             </p>
           </div>
         </ScrollReveal>
@@ -313,7 +313,7 @@ export default function ClaudeCodeThemenSeite() {
               </div>
             ))}
           </div>
-          <p className="mx-auto mt-4 max-w-[1000px] font-satoshi text-[15px] text-[#57514A]">Pro Monat, in US-Dollar und ohne Steuer, Stand 11. November 2026.</p>
+          <p className="mx-auto mt-4 max-w-[1000px] font-satoshi text-[15px] text-[#57514A]">Pro Monat, in Euro und ohne Steuer, Stand 24. November 2026.</p>
         </ScrollReveal>
       </section>
 

@@ -136,7 +136,7 @@ const faq = [
   },
   {
     q: "Sind Claude Skills kostenlos?",
-    a: "Die meisten Skills sind kostenlos und quelloffen, auch alle zehn aus diesem Artikel. Du brauchst nur Zugang zu Claude. Claude Code ist ab dem Pro-Plan dabei, der 20 US-Dollar im Monat kostet, bei Jahreszahlung 17 Dollar. In der Claude-App gehen Skills schon im kostenlosen Plan.",
+    a: "Die meisten Skills sind kostenlos und quelloffen, auch alle zehn aus diesem Artikel. Du brauchst nur Zugang zu Claude. Claude Code ist ab dem Pro-Plan dabei, der 18 Euro im Monat kostet, bei Jahreszahlung 15 Euro. In der Claude-App gehen Skills schon im kostenlosen Plan.",
   },
   {
     q: "Was ist der Unterschied zwischen einem Skill und einem Plugin?",

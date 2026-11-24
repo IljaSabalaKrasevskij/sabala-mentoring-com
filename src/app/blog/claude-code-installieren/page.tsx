@@ -10,6 +10,8 @@ const slug = "claude-code-installieren";
 const site = "https://sabala-mentoring.com";
 const url = `${site}/blog/${slug}`;
 const datePublished = "2026-11-11";
+const dateModified = "2026-11-24";
+const stand = "24. November 2026";
 
 const cover = {
   src: `/blog/${slug}/cover.jpg`,
@@ -37,6 +39,7 @@ export const metadata = {
     description: "Ein Befehl, eine Anmeldung, ein Ordner. Dazu der Weg ohne Terminal und die Lösung für die häufigsten Fehler.",
     type: "article",
     publishedTime: datePublished,
+    modifiedTime: dateModified,
     url,
     images: [{ url: `${site}${cover.src}`, width: 1280, height: 720, alt: cover.alt }],
   },
@@ -64,7 +67,7 @@ const macSchritte: Schritt[] = [
 const winSchritte: Schritt[] = [
   { t: "PowerShell öffnen", d: "Drück die Windows-Taste, tipp PowerShell und öffne sie. Administratorrechte brauchst du nicht." },
   { t: "Den Befehl einfügen", d: "Kopier die Zeile, füg sie in PowerShell ein und drück Enter.", code: "irm https://claude.ai/install.ps1 | iex" },
-  { t: "Git für Windows dazunehmen", d: "Claude Code läuft auch ohne. Mit Git für Windows kann es aber Befehle in der Bash ausführen, so wie auf dem Mac. Anthropic empfiehlt es." },
+  { t: "Git für Windows dazunehmen", d: "Das ist freiwillig. Ohne Git für Windows führt Claude Code Befehle über PowerShell aus. Mit Git für Windows nutzt es die Bash, so wie auf dem Mac. Anthropic empfiehlt es." },
   { t: "Prüfen und starten", d: "Öffne ein neues PowerShell-Fenster, prüf die Version, wechsel in deinen Projektordner und tipp claude. Die Anmeldung läuft wie auf dem Mac über den Browser.", code: "claude --version\ncd $HOME\\Documents\\meine-webseite\nclaude" },
 ];
 
@@ -105,7 +108,15 @@ const befehle = [
 const faq = [
   {
     q: "Kann ich Claude Code kostenlos nutzen?",
-    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Am günstigsten ist Pro für 20 US-Dollar im Monat, bei Jahreszahlung 17 Dollar im Monat, jeweils ohne Steuer. Alternativ nutzt du ein API-Konto in der Claude Console und zahlst nach Verbrauch. Welcher Weg sich für dich rechnet, zeige ich im Artikel zu den Kosten von Claude Code.",
+    a: "Nein. Der kostenlose Claude-Plan enthält Claude Code nicht. Am günstigsten ist Pro für 18 Euro im Monat, bei Jahreszahlung 15 Euro im Monat, jeweils ohne Mehrwertsteuer. Alternativ nutzt du ein API-Konto in der Claude Console und zahlst nach Verbrauch. Welcher Weg sich für dich rechnet, zeige ich im Artikel zu den Kosten von Claude Code.",
+  },
+  {
+    q: "Wo kann ich Claude Code herunterladen?",
+    a: "Es gibt zwei Wege. Die Desktop-App für Mac und Windows lädst du bei Anthropic unter claude.com/download. Für das Terminal lädst du nichts von Hand: Der Befehl aus dieser Anleitung holt Claude Code direkt von den Servern von Anthropic. Nimm nur diese beiden Wege und lade Claude Code nie von fremden Seiten.",
+  },
+  {
+    q: "Brauche ich WSL für Claude Code unter Windows?",
+    a: "Nein. Claude Code läuft direkt unter Windows, in PowerShell oder in der Eingabeaufforderung, und braucht dafür keine Administratorrechte. WSL, das Linux-Fenster in Windows, ist eine zweite Möglichkeit: Dort nimmst du den Befehl für Mac und Linux. Das lohnt sich, wenn deine Projekte ohnehin unter Linux laufen oder Claude Befehle abgeschirmt in einer Sandbox ausführen soll.",
   },
   {
     q: "Brauche ich Programmierkenntnisse für die Installation?",
@@ -141,7 +152,7 @@ const articleSchemaJson = JSON.stringify({
   author: autor,
   publisher: { "@type": "Organization", name: "Sabala Mentoring", url: site },
   datePublished,
-  dateModified: datePublished,
+  dateModified,
   inLanguage: "de-DE",
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   image: `${site}${cover.src}`,
@@ -158,6 +169,20 @@ const howToSchemaJson = JSON.stringify({
     position: i + 1,
     name: s.t,
     text: s.code ? `${s.d} Befehl: ${s.code.replace("\n", " und dann ")}` : s.d,
+  })),
+});
+
+const howToWindowsSchemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Claude Code auf Windows installieren",
+  inLanguage: "de-DE",
+  tool: [{ "@type": "HowToTool", name: "PowerShell" }],
+  step: winSchritte.map((s, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: s.t,
+    text: s.code ? `${s.d} Befehl: ${s.code.split("\n").join(" und dann ")}` : s.d,
   })),
 });
 
@@ -207,6 +232,7 @@ export default function ClaudeCodeInstallierenPage() {
     <main className="flex min-h-screen w-full flex-col bg-pure-surface pb-32 selection:bg-refined-gold selection:text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleSchemaJson.replace(/</g, "\\u003c") }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: howToSchemaJson.replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: howToWindowsSchemaJson.replace(/</g, "\\u003c") }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqSchemaJson.replace(/</g, "\\u003c") }} />
 
       <div className="w-full bg-[#2E2B26] pt-24 md:pt-32" />
@@ -227,8 +253,8 @@ export default function ClaudeCodeInstallierenPage() {
           </div>
           <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[13px] uppercase tracking-widest">
             <span className="rounded-full border border-gold-light bg-[#2E2B26] px-3 py-1 text-gold-light">KI-Akademie · Anleitung</span>
-            <span className="text-[#E9E4DA]">November 2026</span>
-            <span className="text-[#E9E4DA]">8 Min Lesezeit</span>
+            <span className="text-[#E9E4DA]">Stand {stand}</span>
+            <span className="text-[#E9E4DA]">9 Min Lesezeit</span>
           </div>
           <h1 className="mb-6 max-w-[1100px] font-instrument text-[clamp(2.5rem,5vw,5rem)] leading-[1.05] text-white">
             Claude Code installieren: <span className="italic text-gold-light">Schritt für Schritt, für Mac und Windows.</span>
@@ -300,8 +326,14 @@ export default function ClaudeCodeInstallierenPage() {
         <ScrollReveal>
           <div className={`${proseBlock} mx-auto mt-10 max-w-[820px]`}>
             <p>
-              Für die Desktop-App lädst du die Claude-App für Mac oder Windows, meldest dich an und wechselst in den Bereich <strong>Code</strong>. Dort wählst du den Ordner, in dem Claude arbeiten soll, und beschreibst deine Aufgabe in normalen Sätzen. Node.js oder eine Installation im Terminal brauchst du dafür nicht. Die genaue Anleitung steht in der{" "}
-              <a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener noreferrer">offiziellen Kurzanleitung von Anthropic</a>.
+              Für die Desktop-App lädst du die Claude-App für Mac oder Windows unter{" "}
+              <a href="https://claude.com/de/download" target="_blank" rel="noopener noreferrer">claude.com/download</a>, meldest dich an und wechselst in den Bereich <strong>Code</strong>. Dort wählst du den Ordner, in dem Claude arbeiten soll, und beschreibst deine Aufgabe in normalen Sätzen. Node.js oder eine Installation im Terminal brauchst du dafür nicht. Die genaue Anleitung steht in der{" "}
+              <a href="https://code.claude.com/docs/de/desktop-quickstart" target="_blank" rel="noopener noreferrer">offiziellen Kurzanleitung von Anthropic</a>.
+            </p>
+            <p>
+              Arbeitest du schon in einem Code-Editor? Für{" "}
+              <a href="https://code.claude.com/docs/de/vs-code" target="_blank" rel="noopener noreferrer">VS Code</a> und für die{" "}
+              <a href="https://code.claude.com/docs/de/jetbrains" target="_blank" rel="noopener noreferrer">Programme von JetBrains</a> gibt es eigene Erweiterungen von Anthropic. Für den Einstieg brauchst du sie nicht.
             </p>
             <p>Ich arbeite selbst meist in der Desktop-App, weil ich dort mehrere Sitzungen nebeneinander sehe. Das Terminal lohnt sich trotzdem: Viele Anleitungen im Netz gehen davon aus, und für manche Werkzeuge ist es der direkte Weg.</p>
           </div>
@@ -324,6 +356,13 @@ export default function ClaudeCodeInstallierenPage() {
           </div>
         </ScrollReveal>
         <Schritte items={macSchritte} />
+        <ScrollReveal>
+          <div className={`${proseBlock} mt-8`}>
+            <p>
+              <strong>Und auf Linux?</strong> Dort gilt derselbe Befehl wie in Schritt 2. Anthropic nennt Ubuntu ab 20.04 und Debian ab 10, alles Weitere läuft wie auf dem Mac.
+            </p>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* WINDOWS */}
@@ -340,6 +379,12 @@ export default function ClaudeCodeInstallierenPage() {
             <p>Arbeitest du lieber in der klassischen Eingabeaufforderung (CMD), nimmst du diesen Befehl:</p>
           </div>
           <Codeblock code="curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd" />
+          <div className={`${proseBlock} mt-8`}>
+            <p>
+              <strong>Brauchst du WSL?</strong> Nein. Claude Code läuft direkt unter Windows. WSL, das Linux-Fenster in Windows, ist eine zweite Möglichkeit: Dort nimmst du den Befehl vom Mac. Das lohnt sich, wenn deine Projekte ohnehin unter Linux laufen oder Claude Befehle abgeschirmt in einer Sandbox ausführen soll. Die Unterschiede zeigt die{" "}
+              <a href="https://code.claude.com/docs/de/setup" target="_blank" rel="noopener noreferrer">Installationsseite von Anthropic</a>.
+            </p>
+          </div>
         </ScrollReveal>
       </section>
 
