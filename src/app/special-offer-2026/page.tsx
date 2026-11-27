@@ -1,63 +1,47 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CalendarClock, Check, Gift, Percent } from "lucide-react";
-import { Brackets, GOLD_AUF_HELL, HEBT, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard, Weiter } from "@/components/akademie/shared";
+import { ArrowRight, CalendarClock, Mail, Percent } from "lucide-react";
+import AboutIlja from "@/components/akademie/AboutIlja";
+import { Brackets, GOLD_AUF_HELL, Knopf, Reveal, SektionsKopf, TEXT_AUF_DUNKEL, TEXT_AUF_HELL, TiltCard } from "@/components/akademie/shared";
 import { KURS_PREIS } from "@/components/akademie/cohorts";
-import { KURS_PFAD, WEBKURS_PREIS } from "@/components/webkurs/daten";
+import { WEBKURS_PREIS } from "@/components/webkurs/daten";
+import { KASSE_SB, KASSE_WEB, PREIS_SB, PREIS_WEB, euro } from "./angebot";
+import Umschalter from "./Umschalter";
 
-/* Special Offer 2026 (Ilja, 27.11.2026): zwei Gutscheine für Kurse in 2027, je zum halben Preis.
-   Gekauft wird bei ThriveCart, den persönlichen Code schickt Ilja nach dem Kauf, eingelöst wird er 2027 als Coupon.
-   ponytail: nicht im Index, nicht in Sitemap und llms.txt, kein JSON-LD. Die Seite lebt nur von der Rundmail und nur 2026;
-   danach löschen oder per Umleitung auf /akademie-hub schicken. Vier Abschnitte: Kopf, Gutscheine, Ablauf, Fragen. */
+/* Special Offer 2026 (Ilja, 27.11.2026): Verkaufsseite für zwei Gutscheine, je ein Platz in einem Kurs 2027 zum halben Preis.
+   Bauplan: Vault Akademie/Special-Offer-2026_Verkaufsseite_Bauplan.md. Sieben Abschnitte: Kopf, Heute und 2027,
+   Umschalter mit beiden Kursen, Ablauf, Trainer, Fragen, Schluss. Gekauft wird bei ThriveCart, der Code kommt mit der
+   automatischen Kaufbestätigung. ponytail: nicht im Index, nicht in Sitemap und llms.txt, kein JSON-LD. Die Seite lebt
+   von der Rundmail und nur 2026; danach löschen oder per Umleitung auf /akademie-hub schicken. */
 
 const SEITE = "/special-offer-2026";
-const KASSE = "https://sabala-mentoring.thrivecart.com";
-const euro = (n: number) => `${n.toLocaleString("de-DE")} €`; // festes Leerzeichen: Zahl und € brechen nie getrennt um
 const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
 
-const GUTSCHEINE = [
-  {
-    marke: "Gutschein · Second-Brain-Kurs",
-    name: "Second Brain mit Claude Code",
-    satz: "Dein eigenes KI-System, das sich alles merkt. Wir richten es zusammen live ein.",
-    punkte: ["Zwei Live-Workshops und eine Fragestunde per Zoom", "Claude Code und Obsidian, fertig eingerichtet und verbunden", "Meine Skills und Vorlagen bleiben bei dir"],
-    // ponytail: Ilja ließ 197 oder 198 offen. 197 passt zur Preisleiter 97 / 397 und hält die Ersparnis über 50 %.
-    preis: 197,
-    statt: KURS_PREIS,
-    kasse: `${KASSE}/gutschein-2027-second-brain/`,
-    bild: "/case-studies/second-brain.jpg",
-    alt: "Ein Second Brain als Sternkarte: Notizen, Skills und Erinnerungen rund um Claude",
-    mehr: "/akademie",
-  },
-  {
-    marke: "Gutschein · Webseiten-Kurs",
-    name: "Webseiten bauen mit Claude Code",
-    satz: "In sechs Wochen baust du deine eigene Webseite und stellst sie selbst online.",
-    punkte: ["Sechs Workshops zu je zwei Stunden und fünf Fragestunden", "Eine Einzelstunde mit mir und ein Technik-Check vorab", "Deine Webseite, live auf deiner eigenen Domain"],
-    preis: WEBKURS_PREIS / 2,
-    statt: WEBKURS_PREIS,
-    kasse: `${KASSE}/gutschein-2027-webseiten-kurs/`,
-    bild: "/akademie/webkurs/bibliothek/kopf-zwei-takt.webp",
-    alt: "Der Kopf einer Webseite, gebaut mit Claude Code",
-    mehr: KURS_PFAD,
-  },
+const HEUTE_2027: [string, string][] = [
+  ["Claude vergisst nach jedem Chat, wer du bist.", "Claude kennt dein Wissen, deine Kunden und deine Projekte."],
+  ["Dein Wissen liegt verstreut in Tabs, Mails und Notizen.", "Alles liegt an einem Ort, auf deinem eigenen Rechner."],
+  ["Deine Webseite hängt an einem Baukasten oder an jemandem, der sie für dich ändert.", "Du baust und änderst deine Seite selbst, mit Claude Code."],
+  ["2027 zahlst du den vollen Preis.", "Du hast heute die Hälfte gespart. Dein Platz ist bezahlt."],
 ];
 
-const SCHRITTE = [
-  ["Heute", "Du kaufst deinen Gutschein über die Kasse. Die Bestätigung kommt sofort per Mail."],
-  ["Nach dem Kauf", "Ich schicke dir deinen persönlichen Gutscheincode."],
-  ["2027", "Sobald die Termine stehen, suchst du dir deinen aus und löst den Code ein. Dein Platz ist bezahlt."],
+const SCHRITTE: [string, string][] = [
+  ["Heute", "Du kaufst deinen Gutschein über die sichere Kasse. Die Rechnung kommt sofort."],
+  ["Direkt danach", "Dein Gutscheincode kommt automatisch per Mail."],
+  ["2027", "Sobald die Termine stehen, wählst du deinen Termin und gibst den Code an der Kasse ein. Dein Platz ist bezahlt."],
 ];
 
-const FRAGEN = [
+const FRAGEN: [string, string][] = [
   ["Wann sind die Kurse 2027?", "Die Termine stehen noch nicht fest. Sobald sie da sind, bekommst du sie per Mail und wählst deinen Termin."],
+  ["Wie bekomme ich meinen Gutscheincode?", "Automatisch: Direkt nach dem Kauf kommt eine Mail mit deinem Code und der Rechnung."],
+  ["Kann ich mir den Termin aussuchen?", "Ja. Der Gutschein gilt für jeden Termin dieses Kurses in 2027."],
   ["Was ist, wenn 2027 kein Kurs stattfindet?", "Dann bekommst du dein Geld vollständig zurück."],
   ["Kann ich den Gutschein verschenken?", "Ja. Er gilt für eine Person deiner Wahl. Sag mir beim Einlösen einfach, wer kommt."],
+  ["Kann ich beide Gutscheine kaufen?", `Ja. Dann sparst du zusammen ${euro(KURS_PREIS - PREIS_SB + WEBKURS_PREIS - PREIS_WEB)}.`],
   ["Warum stehen die Preise netto da?", "Das Angebot richtet sich an Unternehmen und Selbständige. Die Mehrwertsteuer rechnet die Kasse dazu."],
 ];
 
 const title = "Special Offer 2026: Kurs-Gutschein für 2027";
-const description = `Zwei Gutscheine für 2027: Second Brain mit Claude Code für ${euro(197)} statt ${euro(KURS_PREIS)}, der Webseiten-Kurs für ${euro(WEBKURS_PREIS / 2)} statt ${euro(WEBKURS_PREIS)}, netto. Nur 2026.`;
+const description = `Zwei Gutscheine für 2027: Second Brain mit Claude Code für ${euro(PREIS_SB)} statt ${euro(KURS_PREIS)}, der Webseiten-Kurs für ${euro(PREIS_WEB)} statt ${euro(WEBKURS_PREIS)}, netto. Nur 2026.`;
 
 export const metadata: Metadata = {
   title,
@@ -69,11 +53,10 @@ export const metadata: Metadata = {
 
 function Kopf() {
   const fakten = [
-    { symbol: Gift, text: "Zwei Gutscheine: Second-Brain-Kurs und Webseiten-Kurs" },
     { symbol: Percent, text: "Je 50 % günstiger, netto" },
-    { symbol: CalendarClock, text: "Nur 2026 erhältlich, einlösbar 2027" },
+    { symbol: Mail, text: "Dein Code kommt automatisch per Mail" },
+    { symbol: CalendarClock, text: "Gilt für jeden Termin 2027" },
   ];
-
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--tech-bg)" }}>
       <div aria-hidden className="absolute inset-0">
@@ -92,13 +75,13 @@ function Kopf() {
             <span className="block text-gold-light">Heute zum halben Preis.</span>
           </h1>
           <p className="cs-rise mt-6 max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.12rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.12) }}>
-            Kauf dir jetzt deinen Gutschein. Nach dem Kauf bekommst du deinen persönlichen Code, und 2027 ist dein Platz schon bezahlt.
+            Zwei Kurse, zwei Gutscheine: Du sicherst dir heute deinen Platz und zahlst nur die Hälfte.
           </p>
 
           <div className="cs-rise mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={EIN(0.18)}>
-            <Knopf href="#gutscheine">Zu den Gutscheinen</Knopf>
-            <Knopf zweit href="#ablauf">
-              So funktioniert es
+            <Knopf href="#second-brain">Second Brain ansehen</Knopf>
+            <Knopf zweit href="#webseiten-kurs">
+              Webseiten-Kurs ansehen
             </Knopf>
           </div>
 
@@ -130,82 +113,46 @@ function Kopf() {
   );
 }
 
-/* Die zwei Gutscheine als dunkle Karten mit gestricheltem Goldrand (wie der Gutschein auf /beratung) auf hellem Grund. */
-function Gutscheine() {
+/* Heute und 2027: links, wie es heute ist, rechts im goldenen Feld, wie es mit dem Gutschein wird. */
+function Heute2027() {
   return (
-    <section id="gutscheine" className="relative scroll-mt-4 overflow-hidden px-6 py-[6.5vh]" style={{ background: "var(--cream)" }}>
-      <div className="relative mx-auto max-w-6xl">
+    <section className="relative overflow-hidden px-6 py-[6.5vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 60%, var(--cream) 100%)" }}>
+      <div className="relative mx-auto max-w-5xl">
         <SektionsKopf
           hell
-          zeile="Zwei Gutscheine"
+          zeile="Was sich für dich ändert"
           titel={
             <>
-              Such dir deinen Kurs aus. <span style={{ color: GOLD_AUF_HELL }}>Du zahlst die Hälfte.</span>
+              Heute probierst du KI aus. <span style={{ color: GOLD_AUF_HELL }}>2027 arbeitet sie für dich.</span>
             </>
           }
         />
-
-        <div className="mt-8 grid items-stretch gap-6 min-[56.25rem]:grid-cols-2">
-          {GUTSCHEINE.map((g, i) => (
-            <Reveal key={g.name} delay={i * 0.08} className="h-full">
-              <TiltCard
-                hervor={1.02}
-                max={4}
-                radius={16}
-                glow="rgba(212,174,90,0.16)"
-                className="group/karte h-full overflow-hidden shadow-[0_30px_70px_rgba(46,43,38,0.28)]"
-                style={{ background: "linear-gradient(150deg, rgba(184,150,62,0.22) 0%, rgba(24,18,10,0.97) 55%)", border: "2px dashed rgba(212,174,90,0.65)" }}
-              >
-                <div className="flex h-full flex-col [transform-style:preserve-3d]">
-                  <div className="relative aspect-[16/8] overflow-hidden border-b border-dashed" style={{ borderColor: "rgba(212,174,90,0.5)" }}>
-                    <Image src={g.bild} alt={g.alt} fill sizes="(max-width: 900px) 92vw, 560px" className="object-cover object-top" />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6 md:p-7">
-                    <p className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-gold-light">{g.marke}</p>
-                    <h3 className="mt-2 font-serif text-[1.7rem] leading-tight text-cream">{g.name}</h3>
-                    <p className="mt-2 text-[1.02rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
-                      {g.satz}
-                    </p>
-                    <ul className="mt-4 space-y-2.5 [transform-style:preserve-3d]">
-                      {g.punkte.map((p) => (
-                        <li key={p} className="flex items-start gap-3 text-[1rem] leading-snug" style={{ color: TEXT_AUF_DUNKEL }}>
-                          <span className={`mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-tech-bg ${HEBT}`}>
-                            <Check aria-hidden size={13} strokeWidth={3} />
-                          </span>
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className={`mt-6 leading-none ${HEBT}`}>
-                      <span className="font-serif text-gold-light" style={{ fontSize: "clamp(2.8rem, 5vw, 3.6rem)" }}>
-                        {euro(g.preis)}
-                      </span>
-                      <span className="ml-3 text-[1.05rem] text-cream">
-                        statt <span className="line-through decoration-[rgba(250,248,245,0.6)]">{euro(g.statt)}</span>
-                      </span>
-                    </p>
-                    <p className="mt-2 text-[0.9rem] leading-snug" style={{ color: TEXT_AUF_DUNKEL }}>
-                      netto zzgl. MwSt. · für Unternehmen und Selbständige
-                    </p>
-                    <div className="mt-auto flex flex-col gap-3 pt-6">
-                      <Knopf href={g.kasse} neuerTab breit>
-                        Gutschein kaufen
-                      </Knopf>
-                      <p className="text-center">
-                        <Weiter href={g.mehr}>Mehr zum Kurs</Weiter>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </TiltCard>
-            </Reveal>
-          ))}
+        <div className="mt-8 hidden grid-cols-[1fr_auto_1fr] gap-4 px-1 md:grid">
+          <p className="font-mono text-[12.5px] uppercase tracking-[0.18em]" style={{ color: TEXT_AUF_HELL }}>Heute</p>
+          <span className="w-5" />
+          <p className="font-mono text-[12.5px] uppercase tracking-[0.18em]" style={{ color: GOLD_AUF_HELL }}>2027, mit deinem Gutschein</p>
         </div>
+        <ul className="mt-3 space-y-3">
+          {HEUTE_2027.map(([heute, danach], i) => (
+            <li key={heute}>
+              <Reveal delay={i * 0.06} className="grid items-stretch gap-2 md:grid-cols-[1fr_auto_1fr] md:gap-4">
+                <p className="rounded-xl bg-white/70 px-5 py-4 text-[1.02rem] leading-snug" style={{ color: TEXT_AUF_HELL, border: "1px solid rgba(46,43,38,0.1)" }}>
+                  {heute}
+                </p>
+                <ArrowRight aria-hidden size={20} className="mx-auto rotate-90 self-center text-gold md:rotate-0" />
+                <p className="rounded-xl px-5 py-4 text-[1.02rem] font-medium leading-snug text-deep" style={{ background: "linear-gradient(135deg, #f6e7bf 0%, #efd89a 100%)", border: "1px solid rgba(184,150,62,0.55)" }}>
+                  {danach}
+                </p>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
 }
 
+/* Ablauf: drei Schritte, darunter die zwei Gutscheine so, wie sie an der Kasse aussehen (gleiche Banner wie bei ThriveCart). */
 function Ablauf() {
   return (
     <section id="ablauf" className="relative scroll-mt-4 overflow-hidden px-6 py-[6.5vh]" style={{ background: "var(--tech-bg)" }}>
@@ -230,6 +177,21 @@ function Ablauf() {
             </li>
           ))}
         </ol>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {[
+            ["/newsletter/second-brain-banner.jpg", "Gutschein Second Brain", "Banner: Dein Second Brain, die lokale Datenbasis, mit der Claude nie vergisst"],
+            ["/special-offer/deine-webseite-banner.jpg", "Gutschein Webseiten-Kurs", "Banner: Deine Webseite, gebaut mit Claude Code, live auf deiner eigenen Domain"],
+          ].map(([bild, name, alt]) => (
+            <Reveal key={name}>
+              <figure className="overflow-hidden rounded-xl" style={{ border: "2px dashed rgba(212,174,90,0.55)" }}>
+                <div className="relative aspect-[1200/375]">
+                  <Image src={bild} alt={alt} fill sizes="(max-width: 768px) 92vw, 560px" className="object-cover" />
+                </div>
+                <figcaption className="px-4 py-2.5 font-mono text-[12.5px] uppercase tracking-[0.16em] text-gold-light">{name}</figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -243,8 +205,9 @@ function Fragen() {
         <div className="mt-8 space-y-3">
           {FRAGEN.map(([frage, antwort]) => (
             <details key={frage} className="group rounded-xl bg-white/70 px-5 py-4" style={{ border: "1px solid rgba(184,150,62,0.35)" }}>
-              <summary className="cursor-pointer list-none text-[1.06rem] font-semibold text-deep marker:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[1.06rem] font-semibold text-deep marker:hidden">
                 {frage}
+                <span aria-hidden className="text-[1.3rem] leading-none text-gold transition-transform duration-300 group-open:rotate-45">+</span>
               </summary>
               <p className="mt-2 text-[1.02rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>
                 {antwort}
@@ -257,13 +220,46 @@ function Fragen() {
   );
 }
 
+function Schluss() {
+  return (
+    <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "var(--tech-bg)" }}>
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[60vh] w-[60vw] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(ellipse, rgba(212,174,90,0.14), transparent 70%)" }} />
+      <div className="relative mx-auto max-w-4xl text-center">
+        <SektionsKopf
+          zeile="Special Offer 2026"
+          titel={
+            <>
+              Nur 2026: <span className="text-gold-light">dein Platz zum halben Preis.</span>
+            </>
+          }
+          text="Such dir einen Kurs aus oder nimm beide. Der Code kommt direkt nach dem Kauf per Mail."
+        />
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Knopf href={KASSE_SB} neuerTab>
+            Second Brain · {euro(PREIS_SB)}
+          </Knopf>
+          <Knopf href={KASSE_WEB} neuerTab>
+            Webseiten-Kurs · {euro(PREIS_WEB)}
+          </Knopf>
+        </div>
+        <p className="mt-4 text-[0.9rem]" style={{ color: TEXT_AUF_DUNKEL }}>
+          Preise netto zzgl. MwSt. · für Unternehmen und Selbständige
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export default function SpecialOfferPage() {
   return (
     <main className="flex-1">
       <Kopf />
-      <Gutscheine />
+      <Heute2027 />
+      <Umschalter />
       <Ablauf />
+      <AboutIlja />
       <Fragen />
+      <Schluss />
     </main>
   );
 }
