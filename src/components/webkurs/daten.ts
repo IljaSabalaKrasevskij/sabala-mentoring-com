@@ -8,8 +8,7 @@ export const KURS_NAME = "Webseiten bauen mit Claude Code";
 /* Preis je Platz, netto in Euro. Quelle: Vault, Sabala_Mentoring/Preise. */
 export const WEBKURS_PREIS = 1500;
 export const WEBKURS_PREIS_TEXT = `${WEBKURS_PREIS.toLocaleString("de-DE")} €`;
-/* Plätze im ersten Durchgang. */
-export const WEBKURS_PLAETZE = 4;
+/* Die Gruppengröße nennt die Seite bewusst nicht: Ilja hat sie noch nicht festgelegt (12.11.2026). */
 /* Live-Zeit für die maschinenlesbaren Angaben: 6 Workshops zu je 2 Stunden, 5 Fragestunden, 1 Einzelstunde, Technik-Check (30 Minuten). */
 export const WEBKURS_LIVE_ZEIT = "PT18H30M";
 
@@ -64,7 +63,7 @@ export const RAHMEN: [string, string][] = [
   ["Dauer", "Sechs Wochen"],
   ["Live per Zoom", "Sechs Workshops zu je zwei Stunden und fünf Fragestunden"],
   ["Persönlich", "Eine Einzelstunde mit Ilja und ein Technik-Check vor dem Start"],
-  ["Gruppe", `${WEBKURS_PLAETZE === 4 ? "Vier" : WEBKURS_PLAETZE} Plätze im ersten Durchgang`],
+  ["Gruppe", "Klein, damit in jedem Workshop Zeit für deine Seite bleibt"],
   ["Ergebnis", "Deine Webseite, live auf deiner eigenen Domain"],
 ];
 
@@ -72,7 +71,7 @@ export const FRAGEN: [string, string][] = [
   ["Wann startet der Kurs?", "Der Termin steht noch nicht fest. Wer auf der Warteliste steht, erfährt ihn zuerst."],
   ["Was kostet ein Platz?", `${WEBKURS_PREIS_TEXT} netto zzgl. MwSt. Das Angebot richtet sich an Unternehmen und Selbständige.`],
   ["Was bekomme ich mit?", "Meine Skills für Claude Code, fertige Abschnitte aus meiner Code-Bibliothek, die Prompts jeder Woche, Vorlagen und die Aufzeichnungen der Workshops. Alles bleibt bei dir."],
-  ["Wie groß ist die Gruppe?", "Im ersten Durchgang gibt es vier Plätze. So bleibt in jedem Workshop Zeit für deine Seite."],
+  ["Wie groß ist die Gruppe?", "Ich trainiere in kleinen Gruppen. So bleibt in jedem Workshop Zeit für deine Seite."],
   ["Was brauche ich vorher?", "Einen Rechner, auf dem Claude Code läuft, und ein bezahltes Claude-Abo. Programmieren musst du nicht können. Vor dem Start prüfen wir gemeinsam, ob bei dir alles eingerichtet ist. Wenn du Claude Code noch nie benutzt hast, ist der Second-Brain-Kurs der passende Einstieg."],
   ["Was habe ich am Ende?", "Deine eigene Webseite, live auf deiner Domain. Du kannst sie danach selbst ändern und erweitern."],
   ["Welche laufenden Kosten kommen dazu?", "Ein Claude-Abo, deine Domain und das Hosting. Vercel verlangt für geschäftliche Seiten den Pro-Tarif für 20 Dollar im Monat (Stand November 2026)."],
@@ -81,7 +80,7 @@ export const FRAGEN: [string, string][] = [
 
 /* Für Suchergebnisse. Mit dem Zusatz „ · Sabala Studios“ aus dem Layout bleibt der Titel unter 60 Zeichen, die Beschreibung unter 160. */
 export const SEITEN_TITEL = "KI-Webdesign lernen: Kurs mit Claude Code";
-export const SEITEN_BESCHREIBUNG = `KI-Webdesign lernen wie die Profis: In sechs Wochen baust du deine Webseite mit Claude Code. Skills und Code-Bibliothek dazu. Vier Plätze, ${WEBKURS_PREIS_TEXT} netto.`;
+export const SEITEN_BESCHREIBUNG = `KI-Webdesign lernen wie die Profis: In sechs Wochen baust du deine Webseite mit Claude Code. Skills und Code-Bibliothek dazu. ${WEBKURS_PREIS_TEXT} netto je Platz.`;
 /* Die Antwort in Kurzform (40 bis 60 Wörter): wer, was, für wen. Steht sichtbar am Anfang des ersten Abschnitts. */
 export const ANTWORT = "Ein Live-Kurs von Ilja Krasevskij für Selbständige und Unternehmen. In sechs Wochen lernst du KI-Webdesign wie die Profis: Du baust mit Claude Code deine eigene Webseite, Schicht für Schicht, und stellst sie auf deiner Domain live. Skills, Prompts und Code-Bibliothek bekommst du dazu. Der Termin steht noch nicht fest, die Warteliste ist offen.";
 /* Kopf: Überschrift in zwei Takten und der Satz darunter (höchstens 20 Wörter, mit den Werkzeugen). */

@@ -4,7 +4,7 @@ import SchichtenKopf from "@/components/webkurs/SchichtenKopf";
 import Schichten from "@/components/webkurs/Schichten";
 import { Fragen, HeuteDanach, MaschinenBlick, Mitgaben, Rahmen } from "@/components/webkurs/Abschnitte";
 import Warteliste from "@/components/webkurs/Warteliste";
-import { FRAGEN, KURS_NAME, KURS_PFAD, SCHICHTEN, SEITEN_BESCHREIBUNG, SEITEN_TITEL, WEBKURS_LIVE_ZEIT, WEBKURS_PLAETZE, WEBKURS_PREIS } from "@/components/webkurs/daten";
+import { FRAGEN, KURS_NAME, KURS_PFAD, SCHICHTEN, SEITEN_BESCHREIBUNG, SEITEN_TITEL, WEBKURS_LIVE_ZEIT, WEBKURS_PREIS } from "@/components/webkurs/daten";
 
 /* Ankündigungsseite für den Kurs „Webseiten bauen mit Claude Code“. Der Kurs ist noch nicht buchbar:
    Es gibt eine Warteliste, keinen Termin. Acht kurze Abschnitte: Kopf als Scroll-Film, sechs Schichten,
@@ -56,7 +56,6 @@ function angaben() {
           "@type": "CourseInstance",
           courseMode: "Online",
           courseWorkload: WEBKURS_LIVE_ZEIT,
-          maximumAttendeeCapacity: WEBKURS_PLAETZE,
           instructor: { "@id": "https://sabala-mentoring.com/#ilja" },
         },
       },

@@ -18,7 +18,7 @@ import { WEBKURS_PREIS_TEXT } from "./daten";
 
 type Status = "idle" | "loading" | "success" | "error" | "unconfigured";
 
-const FAKTEN = ["Du erfährst den Termin zuerst.", "Vier Plätze im ersten Durchgang.", `${WEBKURS_PREIS_TEXT} netto je Platz, zzgl. MwSt.`];
+const FAKTEN = ["Du erfährst den Termin zuerst.", "Live per Zoom, in kleiner Gruppe.", `${WEBKURS_PREIS_TEXT} netto je Platz, zzgl. MwSt.`];
 
 function Haken({ gross = false }: { gross?: boolean }) {
   return (
