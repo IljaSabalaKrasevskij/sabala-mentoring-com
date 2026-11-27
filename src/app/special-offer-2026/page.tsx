@@ -19,8 +19,8 @@ import "./special-offer.css";
    Ilja nach der ersten Fassung: „beide Angebote beschrieben, jeweils 50 %, jeweils mit einem Button … richtig High-End,
    Motion Graphics, wirklich alles rausholen“. Darum stehen beide Kurse vollständig untereinander, mit den bewegten
    Abschnitten der Kursseiten (Terminal, Werkzeug-Karten, Skill-Tafel, sechs Schichten, Code-Bibliothek).
-   Hell und dunkel wechseln sich ab. ponytail: nicht im Index, nicht in Sitemap und llms.txt, kein JSON-LD. Die Seite lebt
-   von der Rundmail und nur 2026; danach löschen oder per Umleitung auf /akademie-hub schicken. */
+   Hell und dunkel wechseln sich ab. Seit 27.11.2026 im Index und in der Sitemap (Ilja: Links für Google und Bing).
+   ponytail: nicht in llms.txt, kein JSON-LD. Das Angebot gilt nur 2026; danach löschen und per 301 auf /akademie-hub schicken. */
 
 const SEITE = "/special-offer-2026";
 const EIN = (delay: number) => ({ "--cs-d": `${delay}s` }) as React.CSSProperties;
@@ -77,7 +77,6 @@ const description = `Zwei Angebote für 2027, je 50 % gespart: Second Brain mit 
 export const metadata: Metadata = {
   title,
   description,
-  robots: { index: false, follow: false },
   alternates: { canonical: SEITE },
   openGraph: { title, description, url: SEITE, type: "website", locale: "de_DE", siteName: "Sabala Studios", images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Sabala Academy · Special Offer 2026" }] },
 };
