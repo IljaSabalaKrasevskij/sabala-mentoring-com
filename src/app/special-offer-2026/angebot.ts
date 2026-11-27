@@ -7,5 +7,7 @@ export const KASSE_WEB = "https://sabala-mentoring.thrivecart.com/gutschein-2027
 // ponytail: Ilja ließ 197 oder 198 offen. 197 passt zur Preisleiter 97 / 397 und hält die Ersparnis über 50 %.
 export const PREIS_SB = 197;
 export const PREIS_WEB = WEBKURS_PREIS / 2;
+/* Das Angebot gilt nur 2026. Danach blendet die Akademie-Übersicht ihren Hinweis aus. */
+export const ANGEBOT_ENDE = Date.parse("2027-01-01T00:00:00+01:00");
 /* Festes Leerzeichen: Zahl und € brechen nie getrennt um. */
 export const euro = (n: number) => `${n.toLocaleString("de-DE")} €`;

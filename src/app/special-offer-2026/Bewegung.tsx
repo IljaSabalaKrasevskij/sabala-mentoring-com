@@ -81,22 +81,23 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
   );
 }
 
-/* Kopf rechts: beide Gutscheine übereinander, leicht gedreht, schwebend. Ein Klick springt zum Angebot. */
-export function HeroGutscheine() {
+/* Kopf rechts: beide Gutscheine übereinander, leicht gedreht, schwebend. Ein Klick springt zum Angebot.
+   Von einer anderen Seite aus führt `ziel` auf die Angebotsseite, `grund` färbt die Kerben wie den Hintergrund. */
+export function HeroGutscheine({ ziel = "", grund }: { ziel?: string; grund?: string } = {}) {
   return (
     <div className="relative mx-auto aspect-[0.98] w-full max-w-[440px]">
       <span aria-hidden className="so-licht pointer-events-none absolute inset-[-10%] rounded-full" style={{ background: "radial-gradient(closest-side, rgba(212,174,90,0.28), transparent)" }} />
       {GUTSCHEINE.map((g, i) => (
         <a
           key={g.id}
-          href={`#${g.id}`}
+          href={`${ziel}#${g.id}`}
           aria-label={`${g.name}: Gutschein ${euro(g.preis)} statt ${euro(g.statt)} ansehen`}
           className={`absolute block w-[84%] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold ${i === 0 ? "left-0 top-0 z-10" : "bottom-0 right-0 z-20"}`}
           style={{ transform: `rotate(${i === 0 ? -7 : 5}deg)` }}
         >
           <div className={i === 0 ? "so-schweben" : "so-schweben-spaet"}>
             <TiltCard hervor={1.03} max={8} radius={18}>
-              <GutscheinKarte g={g} spaet={i === 1} />
+              <GutscheinKarte g={g} grund={grund} spaet={i === 1} />
             </TiltCard>
           </div>
         </a>
