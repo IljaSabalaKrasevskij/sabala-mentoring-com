@@ -1,0 +1,33 @@
+/* Special Offer 2026: Bewegung der Gutschein-Seite. Alle Klassen tragen die Vorsilbe so-.
+   Bei „Bewegung reduzieren“ steht alles still, der Inhalt bleibt sichtbar. */
+
+@keyframes so-schweben { 0%, 100% { transform: translate3d(0, 0, 0) } 50% { transform: translate3d(0, -14px, 0) } }
+@keyframes so-glanz { 0% { transform: translateX(-140%) skewX(-18deg) } 55%, 100% { transform: translateX(260%) skewX(-18deg) } }
+@keyframes so-laufband { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes so-licht { 0%, 100% { transform: translate(-8%, -6%) scale(1) } 50% { transform: translate(10%, 8%) scale(1.18) } }
+@keyframes so-blinken { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+
+.so-schweben { animation: so-schweben 7s ease-in-out infinite }
+.so-schweben-spaet { animation: so-schweben 8.5s ease-in-out -3.5s infinite }
+
+/* Lichtstreif, der über eine Gutschein-Karte läuft. Das Eltern-Element braucht position: relative. */
+.so-glanz { position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: inherit }
+.so-glanz::after {
+  content: ""; position: absolute; top: -30%; bottom: -30%; left: 0; width: 32%;
+  background: linear-gradient(90deg, transparent, rgba(255, 236, 190, 0.26), transparent);
+  animation: so-glanz 6s ease-in-out infinite;
+}
+.so-glanz-spaet::after { animation-delay: -2.8s }
+
+.so-laufband { display: flex; width: max-content; animation: so-laufband 46s linear infinite }
+.so-laufband-rahmen:hover .so-laufband { animation-play-state: paused }
+
+.so-licht { animation: so-licht 18s ease-in-out infinite }
+.so-cursor { animation: so-blinken 1s step-end infinite }
+
+/* Perforation einer Gutschein-Karte: zwei ausgestanzte Halbkreise oben und unten an der Trennlinie. */
+.so-stanz { position: absolute; width: 22px; height: 22px; border-radius: 9999px; transform: translateX(-50%) }
+
+@media (prefers-reduced-motion: reduce) {
+  .so-schweben, .so-schweben-spaet, .so-laufband, .so-licht, .so-cursor, .so-glanz::after { animation: none }
+}
