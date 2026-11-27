@@ -45,7 +45,7 @@ const GUTSCHEINE: Gutschein[] = [
 export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: { g: Gutschein; grund?: string; spaet?: boolean }) {
   return (
     <div
-      className="relative grid aspect-[1.72] w-full grid-cols-[minmax(0,1fr)_29%] overflow-hidden rounded-[18px] text-left"
+      className="relative grid aspect-[1.72] w-full grid-cols-[minmax(0,1fr)_31%] overflow-hidden rounded-[18px] text-left"
       style={{
         background: "radial-gradient(120% 90% at 0% 0%, #5a4520 0%, #2c210f 38%, #140e07 72%, #0e0a05 100%)",
         border: "1.5px solid rgba(212,174,90,0.6)",
@@ -56,7 +56,7 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
       <div className="relative flex flex-col justify-between p-[7%] pr-[5%]">
         <div className="flex items-center gap-2">
           <Image src="/images/logo-sabala-mentoring.png" alt="" width={22} height={22} />
-          <span className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-gold-light">Gutschein · 2027</span>
+          <span className="whitespace-nowrap font-mono text-[12.5px] uppercase tracking-[0.1em] text-gold-light sm:tracking-[0.18em]">Gutschein · 2027</span>
         </div>
         <div>
           <p className="font-serif leading-[0.95] text-cream" style={{ fontSize: "clamp(1.7rem, 3.1vw, 2.6rem)" }}>{g.name}</p>
@@ -75,7 +75,7 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
         <span className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)" }}>
           −<Zaehler bis={50} art="prozent" />
         </span>
-        <span className="mt-2 font-mono text-[12.5px] uppercase tracking-[0.1em] text-[rgba(250,248,245,0.7)]">ein Platz</span>
+        <span className="mt-2 whitespace-nowrap font-mono text-[12.5px] uppercase tracking-[0.04em] text-[rgba(250,248,245,0.7)] sm:tracking-[0.1em]">ein Platz</span>
       </div>
     </div>
   );
