@@ -8,7 +8,8 @@ import { ANTWORT, SCHICHTEN } from "./daten";
    Hier landen die sechs Scheiben aus dem Kopf. Darum bewegt sich in diesem Abschnitt beim Laden nichts:
    Der Kopf zeigt am Ende seines Films eine verkleinerte Kopie davon, und beide müssen gleich aussehen.
    Alle sechs Tafeln stehen im HTML, fünf sind nur ausgeblendet: Suchmaschinen und KI-Systeme lesen kein JavaScript. */
-export default function Schichten() {
+/* `satz` ersetzt den Absatz über dem Raster, etwa auf der Gutschein-Seite, wo „die Warteliste ist offen“ nicht passt. */
+export default function Schichten({ satz = ANTWORT }: { satz?: string } = {}) {
   const [aktiv, setAktiv] = useState(0);
   /* Nach jedem Wechsel bekommt der Kopf Bescheid und zieht seine Kopie neu. */
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function Schichten() {
             </h2>
           </div>
           {/* Antwort in Kurzform: wer, was, für wen. Diesen Absatz zitieren Suchmaschinen und KI-Assistenten. */}
-          <p className="wk-lauf">{ANTWORT}</p>
+          <p className="wk-lauf">{satz}</p>
         </div>
 
         <div className="wk-kacheln">
