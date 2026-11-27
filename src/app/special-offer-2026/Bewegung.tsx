@@ -59,11 +59,11 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
           <span className="whitespace-nowrap font-mono text-[12.5px] uppercase tracking-[0.1em] text-gold-light sm:tracking-[0.18em]">Gutschein · 2027</span>
         </div>
         <div>
-          <p className="font-serif leading-[0.95] text-cream" style={{ fontSize: "clamp(1.7rem, 3.1vw, 2.6rem)" }}>{g.name}</p>
+          <p className="font-serif leading-[0.95] text-cream" style={{ fontSize: "clamp(1.5rem, 2.3vw, 2.05rem)" }}>{g.name}</p>
           <p className="mt-1 text-[clamp(0.8rem,1.1vw,0.95rem)] text-[rgba(250,248,245,0.7)]">{g.zusatz}</p>
         </div>
         <p className="leading-none">
-          <span className="font-serif text-gold-light" style={{ fontSize: "clamp(1.6rem, 2.7vw, 2.25rem)" }}>{euro(g.preis)}</span>
+          <span className="font-serif text-gold-light" style={{ fontSize: "clamp(1.4rem, 2vw, 1.8rem)" }}>{euro(g.preis)}</span>
           <span className="ml-2 text-[clamp(0.8rem,1vw,0.92rem)] text-[rgba(250,248,245,0.65)]">
             statt <span className="line-through">{euro(g.statt)}</span>
           </span>
@@ -72,7 +72,7 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
       <div className="relative flex flex-col items-center justify-center border-l-2 border-dashed border-[rgba(212,174,90,0.5)] text-center">
         <span className="so-stanz -top-[11px] left-0" style={{ background: grund }} />
         <span className="so-stanz -bottom-[11px] left-0" style={{ background: grund }} />
-        <span className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(1.9rem, 3.6vw, 3rem)" }}>
+        <span className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(1.7rem, 2.7vw, 2.35rem)" }}>
           −<Zaehler bis={50} art="prozent" />
         </span>
         <span className="mt-2 whitespace-nowrap font-mono text-[12.5px] uppercase tracking-[0.04em] text-[rgba(250,248,245,0.7)] sm:tracking-[0.1em]">ein Platz</span>
@@ -84,7 +84,7 @@ export function GutscheinKarte({ g, grund = "var(--tech-bg)", spaet = false }: {
 /* Kopf rechts: beide Gutscheine übereinander, leicht gedreht, schwebend. Ein Klick springt zum Angebot. */
 export function HeroGutscheine() {
   return (
-    <div className="relative mx-auto aspect-[0.98] w-full max-w-[520px]">
+    <div className="relative mx-auto aspect-[0.98] w-full max-w-[440px]">
       <span aria-hidden className="so-licht pointer-events-none absolute inset-[-10%] rounded-full" style={{ background: "radial-gradient(closest-side, rgba(212,174,90,0.28), transparent)" }} />
       {GUTSCHEINE.map((g, i) => (
         <a
@@ -109,7 +109,7 @@ export function HeroGutscheine() {
 export function GutscheinBox({ id }: { id: Gutschein["id"] }) {
   const g = GUTSCHEINE.find((x) => x.id === id)!;
   return (
-    <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-12">
+    <div className="mx-auto grid max-w-4xl items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-10">
       <motion.div initial={{ opacity: 0, rotate: -4, y: 30 }} whileInView={{ opacity: 1, rotate: -2, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.9, ease: EASE }}>
         <TiltCard hervor={1.03} max={7} radius={18}>
           <GutscheinKarte g={g} grund="var(--cream)" />
@@ -117,7 +117,7 @@ export function GutscheinBox({ id }: { id: Gutschein["id"] }) {
       </motion.div>
       <div>
         <p className="font-mono text-[12.5px] uppercase tracking-[0.2em]" style={{ color: "#8a6a1f" }}>Dein Gutschein für 2027</p>
-        <p className="mt-3 font-serif leading-[1.05] text-deep" style={{ fontSize: "clamp(2rem, 3.6vw, 2.9rem)" }}>
+        <p className="mt-3 font-serif leading-[1.05] text-deep" style={{ fontSize: "clamp(1.7rem, 2.7vw, 2.3rem)" }}>
           Du sparst <span style={{ color: "#8a6a1f" }}><Zaehler bis={g.statt - g.preis} art="euro" /></span>.
         </p>
         <p className="mt-3 text-[1.05rem] leading-relaxed text-[rgba(46,43,38,0.82)]">
@@ -127,7 +127,7 @@ export function GutscheinBox({ id }: { id: Gutschein["id"] }) {
           href={g.kasse}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-6 inline-flex min-h-[56px] w-full items-center justify-center gap-3 bg-gold px-7 py-3 font-sans text-[1.02rem] font-semibold tracking-[0.04em] text-tech-bg transition-colors duration-300 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto"
+          className="group mt-5 inline-flex min-h-[52px] w-full items-center justify-center gap-3 bg-gold px-7 py-3 font-sans text-[1.02rem] font-semibold tracking-[0.04em] text-tech-bg transition-colors duration-300 hover:bg-gold-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto"
         >
           Gutschein {g.name} kaufen
           <ArrowRight aria-hidden size={18} strokeWidth={2.2} className="transition-transform duration-300 group-hover:translate-x-1" />
