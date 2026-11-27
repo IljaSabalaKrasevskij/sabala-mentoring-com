@@ -6,8 +6,9 @@ import AcademyValues from "@/components/akademie/AcademyValues";
 import AcademyNewsletter from "@/components/akademie/AcademyNewsletter";
 import WebkursKarte from "@/components/akademie/WebkursKarte";
 import { BERATUNG_PREIS, CURRENT_COHORT, formatShortDate } from "@/components/akademie/cohorts";
+import SpecialOfferHinweis from "@/app/special-offer-2026/Hinweis";
 
-/* Übersichtsseite der Akademie. Sechs kurze Abschnitte: Kopf, dein Einstieg (vier Stufen),
+/* Übersichtsseite der Akademie. Sechs kurze Abschnitte (2026 dazu der Hinweis aufs Special Offer unter dem Kopf): Kopf, dein Einstieg (vier Stufen),
    die zwei buchbaren Angebote, so lernst du hier, der angekündigte Webseiten-Kurs, Newsletter.
    Jeder passt in ein Laptop-Fenster. */
 
@@ -38,6 +39,7 @@ export default function AkademieHubPage() {
   return (
     <main className="flex-1">
       <AcademyHero />
+      <SpecialOfferHinweis />
       <AcademyLevels />
       <CourseGrid />
       <AcademyValues />
