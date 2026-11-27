@@ -96,25 +96,25 @@ function Kopf() {
         <div className="so-licht absolute -right-[10%] top-[5%] h-[90%] w-[60%]" style={{ background: "radial-gradient(closest-side, rgba(184,150,62,0.22), transparent)" }} />
       </div>
 
-      <div className="relative mx-auto grid max-w-[1400px] items-center gap-12 px-6 pb-16 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] min-[56.25rem]:gap-10 min-[56.25rem]:pb-[8vh] min-[56.25rem]:pt-[max(10vh,5.6rem)]">
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-10 px-6 pb-12 pt-24 sm:px-[6vw] min-[56.25rem]:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] min-[56.25rem]:gap-10 min-[56.25rem]:pb-[6vh] min-[56.25rem]:pt-[max(8vh,5.4rem)]">
         <div>
           <p className="cs-rise font-mono text-[12.5px] uppercase leading-relaxed tracking-[0.2em] text-gold sm:tracking-[0.24em]" style={EIN(0)}>
             Special Offer 2026 · Sabala Academy
           </p>
-          <h1 className="cs-rise mt-4 font-serif text-cream" style={{ fontSize: "clamp(2.6rem, 5vw, 4.6rem)", lineHeight: 1.02, ...EIN(0.05) }}>
+          <h1 className="cs-rise mt-4 font-serif text-cream" style={{ fontSize: "clamp(2.2rem, 3.8vw, 3.45rem)", lineHeight: 1.04, ...EIN(0.05) }}>
             <span className="block">Zwei Kurse für 2027.</span>{" "}
             <span className="block text-gold-light">Heute zum halben Preis.</span>
           </h1>
-          <p className="cs-rise mt-6 max-w-xl text-pretty text-[1.06rem] leading-relaxed min-[56.25rem]:text-[1.14rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.12) }}>
+          <p className="cs-rise mt-5 max-w-xl text-pretty text-[1.04rem] leading-relaxed min-[56.25rem]:text-[1.08rem]" style={{ color: "rgba(250,248,245,0.86)", ...EIN(0.12) }}>
             Sichere dir jetzt deinen Platz im Second-Brain-Kurs, im Webseiten-Kurs oder in beiden. Du zahlst heute die Hälfte, 2027 ist dein Platz bezahlt.
           </p>
-          <div className="cs-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={EIN(0.18)}>
+          <div className="cs-rise mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={EIN(0.18)}>
             <Knopf href="#second-brain">Second Brain ansehen</Knopf>
             <Knopf zweit href="#webseiten-kurs">
               Webseiten-Kurs ansehen
             </Knopf>
           </div>
-          <ul className="cs-rise mt-8 grid gap-2.5 sm:grid-cols-3 sm:gap-4" style={EIN(0.24)}>
+          <ul className="cs-rise mt-6 grid gap-2.5 sm:grid-cols-3 sm:gap-4" style={EIN(0.24)}>
             {fakten.map(({ symbol: Symbol, text }) => (
               <li key={text} className="flex items-start gap-2.5 text-[0.95rem] leading-snug" style={{ color: TEXT_AUF_DUNKEL }}>
                 <Symbol aria-hidden size={18} className="mt-0.5 shrink-0 text-gold" />
@@ -122,7 +122,7 @@ function Kopf() {
               </li>
             ))}
           </ul>
-          <div className="cs-rise mt-8 flex items-center gap-3" style={EIN(0.3)}>
+          <div className="cs-rise mt-6 flex items-center gap-3" style={EIN(0.3)}>
             <span className="relative h-11 w-11 overflow-hidden rounded-full" style={{ border: "1.5px solid rgba(212,174,90,0.7)" }}>
               <Image src="/akademie/ilja-trainer-2026.jpg" alt="Ilja Krasevskij" fill sizes="44px" className="object-cover object-top" />
             </span>
@@ -144,7 +144,7 @@ function Kopf() {
 /* Übersicht: beide Angebote nebeneinander, jedes mit Bild, Nutzen, Preis, Ersparnis und zwei Wegen. */
 function Uebersicht() {
   return (
-    <section className="relative overflow-hidden px-6 py-[7vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 70%, var(--cream) 100%)" }}>
+    <section className="relative overflow-hidden px-6 py-[5.5vh]" style={{ background: "linear-gradient(180deg, var(--cream) 0%, #faf2dd 70%, var(--cream) 100%)" }}>
       <div className="relative mx-auto max-w-6xl">
         <SektionsKopf
           hell
@@ -155,7 +155,7 @@ function Uebersicht() {
             </>
           }
         />
-        <div className="mt-10 grid items-stretch gap-7 md:grid-cols-2">
+        <div className="mt-8 grid items-stretch gap-6 md:grid-cols-2">
           {ANGEBOTE.map((a, i) => (
             <Reveal key={a.id} delay={i * 0.1} className="h-full">
               <TiltCard hervor={1.015} max={3} radius={20} className="h-full">
@@ -164,11 +164,11 @@ function Uebersicht() {
                     <Image src={a.bild} alt={a.alt} fill sizes="(max-width: 768px) 92vw, 560px" className="object-cover" />
                     <span className="absolute right-4 top-4 rounded-full bg-gold px-3.5 py-1.5 font-mono text-[12.5px] font-bold tracking-[0.12em] text-tech-bg shadow-lg">−50&nbsp;%</span>
                   </div>
-                  <div className="flex flex-1 flex-col p-6 md:p-8">
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
                     <p className="font-mono text-[12.5px] uppercase tracking-[0.2em]" style={{ color: GOLD_AUF_HELL }}>Angebot {a.nr}</p>
-                    <h3 className="mt-2 font-serif text-[clamp(1.7rem,2.6vw,2.2rem)] leading-tight text-deep">{a.name}</h3>
+                    <h3 className="mt-2 font-serif text-[clamp(1.45rem,2vw,1.8rem)] leading-tight text-deep">{a.name}</h3>
                     <p className="mt-2 text-[1.02rem] leading-relaxed" style={{ color: TEXT_AUF_HELL }}>{a.satz}</p>
-                    <ul className="mt-5 space-y-2.5">
+                    <ul className="mt-4 space-y-2">
                       {a.punkte.map((p) => (
                         <li key={p} className="flex items-start gap-3 text-[0.98rem] leading-snug text-deep">
                           <span className="mt-[2px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-tech-bg">
@@ -178,9 +178,9 @@ function Uebersicht() {
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-auto pt-7">
+                    <div className="mt-auto pt-6">
                       <div className="flex flex-wrap items-end gap-x-4 gap-y-1">
-                        <span className="font-serif leading-none text-deep" style={{ fontSize: "clamp(2.6rem, 4vw, 3.2rem)" }}>{euro(a.preis)}</span>
+                        <span className="font-serif leading-none text-deep" style={{ fontSize: "clamp(2.1rem, 2.9vw, 2.6rem)" }}>{euro(a.preis)}</span>
                         <span className="pb-1 text-[1.02rem]" style={{ color: TEXT_AUF_HELL }}>
                           statt <span className="line-through">{euro(a.statt)}</span>
                         </span>
@@ -220,8 +220,8 @@ function Uebersicht() {
 /* Kopf eines Angebots (dunkel): große Nummer im Hintergrund, Versprechen, Kennzahlen, darunter die Bausteine. */
 function AngebotKopf({ id, nr, zeile2, titel, gold, satz, zahlen, children }: { id: string; nr: number; zeile2: string; titel: string; gold: string; satz: string; zahlen: [number, string][]; children: React.ReactNode }) {
   return (
-    <section id={id} className="relative scroll-mt-0 overflow-hidden px-6 py-[8vh]" style={{ background: "var(--tech-bg)" }}>
-      <span aria-hidden className="pointer-events-none absolute -right-[2vw] -top-[6vh] select-none font-serif leading-none" style={{ fontSize: "clamp(14rem, 32vw, 30rem)", color: "transparent", WebkitTextStroke: "1.5px rgba(212,174,90,0.18)" }}>
+    <section id={id} className="relative scroll-mt-0 overflow-hidden px-6 py-[6vh]" style={{ background: "var(--tech-bg)" }}>
+      <span aria-hidden className="pointer-events-none absolute -right-[2vw] -top-[6vh] select-none font-serif leading-none" style={{ fontSize: "clamp(9rem, 18vw, 16rem)", color: "transparent", WebkitTextStroke: "1.5px rgba(212,174,90,0.18)" }}>
         0{nr}
       </span>
       <div className="so-licht pointer-events-none absolute -left-[15%] top-[10%] h-[70%] w-[55%]" style={{ background: "radial-gradient(closest-side, rgba(184,150,62,0.16), transparent)" }} />
@@ -230,20 +230,20 @@ function AngebotKopf({ id, nr, zeile2, titel, gold, satz, zahlen, children }: { 
           <p className="font-mono text-[12.5px] uppercase tracking-[0.24em] text-gold">
             Angebot {nr} · {zeile2}
           </p>
-          <h2 className="mt-4 max-w-4xl font-serif text-cream" style={{ fontSize: "clamp(2.3rem, 4.6vw, 3.9rem)", lineHeight: 1.04 }}>
+          <h2 className="mt-4 max-w-4xl font-serif text-cream" style={{ fontSize: "clamp(2.1rem, 3.5vw, 3.2rem)", lineHeight: 1.06 }}>
             {titel} <span className="text-gold-light">{gold}</span>
           </h2>
-          <p className="mt-5 max-w-2xl text-pretty text-[1.08rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
+          <p className="mt-4 max-w-2xl text-pretty text-[1.04rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>
             {satz}
           </p>
         </Reveal>
-        <div className="mt-9 grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4">
           {zahlen.map(([zahl, wort], i) => (
-            <Reveal key={wort} delay={i * 0.06} className="rounded-2xl px-5 py-4" style={{ background: "rgba(250,248,245,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
-              <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(2.4rem, 4vw, 3.2rem)" }}>
+            <Reveal key={wort} delay={i * 0.06} className="rounded-2xl px-5 py-3" style={{ background: "rgba(250,248,245,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
+              <p className="font-serif leading-none text-gold-light" style={{ fontSize: "clamp(1.85rem, 2.6vw, 2.35rem)" }}>
                 <Zaehler bis={zahl} dauer={1.2} />
               </p>
-              <p className="mt-1.5 text-[0.98rem] text-cream">{wort}</p>
+              <p className="mt-1 text-[0.95rem] text-cream">{wort}</p>
             </Reveal>
           ))}
         </div>
@@ -269,12 +269,12 @@ function SecondBrainKopf() {
       satz="In zwei Live-Workshops baust du dein eigenes KI-System. Danach kennt Claude dein Wissen, deine Kunden und deine Projekte. Alles liegt auf deinem Rechner und gehört dir."
       zahlen={[[2, "Live-Workshops"], [1, "Fragestunde"], [4, "Werkzeuge"], [5, "Skills"]]}
     >
-      <ol className="mt-6 grid gap-4 md:grid-cols-3">
+      <ol className="mt-5 grid gap-3 md:grid-cols-3">
         {ablauf.map(([wann, titel, text], i) => (
           <li key={wann}>
-            <Reveal delay={i * 0.08} className="h-full rounded-2xl p-6" style={{ background: "linear-gradient(160deg, rgba(184,150,62,0.14), rgba(250,248,245,0.03) 60%)", border: "1px solid rgba(184,150,62,0.35)" }}>
+            <Reveal delay={i * 0.08} className="h-full rounded-2xl p-5" style={{ background: "linear-gradient(160deg, rgba(184,150,62,0.14), rgba(250,248,245,0.03) 60%)", border: "1px solid rgba(184,150,62,0.35)" }}>
               <p className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-gold">{wann}</p>
-              <p className="mt-2 font-serif text-[1.55rem] leading-tight text-cream">{titel}</p>
+              <p className="mt-1.5 font-serif text-[1.35rem] leading-tight text-cream">{titel}</p>
               <p className="mt-2 text-[1rem] leading-relaxed" style={{ color: TEXT_AUF_DUNKEL }}>{text}</p>
             </Reveal>
           </li>
@@ -296,9 +296,9 @@ function WebkursKopf() {
       zahlen={[[6, "Wochen"], [6, "Workshops"], [5, "Fragestunden"], [1, "Einzelstunde"]]}
     >
       {/* ponytail: „Gruppe“ fehlt bewusst. Die Teilnehmerzahl nennt Ilja noch nicht (12.11.2026). */}
-      <dl className="mt-6 grid gap-4 md:grid-cols-2">
+      <dl className="mt-5 grid gap-3 md:grid-cols-2">
         {RAHMEN.filter(([k]) => k !== "Gruppe").map(([k, v], i) => (
-          <Reveal key={k} delay={i * 0.06} className="flex gap-4 rounded-2xl p-5" style={{ background: "rgba(250,248,245,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
+          <Reveal key={k} delay={i * 0.06} className="flex gap-4 rounded-2xl p-4" style={{ background: "rgba(250,248,245,0.04)", border: "1px solid rgba(184,150,62,0.3)" }}>
             <dt className="w-28 shrink-0 font-mono text-[12.5px] uppercase tracking-[0.16em] text-gold">{k}</dt>
             <dd className="text-[1rem] leading-relaxed text-cream">{v}</dd>
           </Reveal>
@@ -311,7 +311,7 @@ function WebkursKopf() {
 /* Abschluss eines Angebots: der Gutschein zum Kaufen, auf warmem Grund mit goldener Linie. */
 function GutscheinAbschluss({ id }: { id: "second-brain" | "webseiten-kurs" }) {
   return (
-    <section id={`gutschein-${id}`} className="relative overflow-hidden px-6 py-[8vh]" style={{ background: "linear-gradient(180deg, #faf2dd 0%, var(--cream) 100%)", borderTop: "1px solid rgba(184,150,62,0.45)" }}>
+    <section id={`gutschein-${id}`} className="relative overflow-hidden px-6 py-[6vh]" style={{ background: "linear-gradient(180deg, #faf2dd 0%, var(--cream) 100%)", borderTop: "1px solid rgba(184,150,62,0.45)" }}>
       <GutscheinBox id={id} />
     </section>
   );
@@ -321,10 +321,10 @@ function GutscheinAbschluss({ id }: { id: "second-brain" | "webseiten-kurs" }) {
 function Laufband() {
   const reihe = [...LAUFBAND, ...LAUFBAND];
   return (
-    <div className="so-laufband-rahmen relative overflow-hidden py-5" style={{ background: "var(--tech-bg)", borderTop: "1px solid rgba(184,150,62,0.3)", borderBottom: "1px solid rgba(184,150,62,0.3)" }} aria-label="Werkzeuge und Skills in den Kursen">
+    <div className="so-laufband-rahmen relative overflow-hidden py-4" style={{ background: "var(--tech-bg)", borderTop: "1px solid rgba(184,150,62,0.3)", borderBottom: "1px solid rgba(184,150,62,0.3)" }} aria-label="Werkzeuge und Skills in den Kursen">
       <div className="so-laufband">
         {reihe.map((wort, i) => (
-          <span key={`${wort}-${i}`} aria-hidden={i >= LAUFBAND.length} className="flex items-center gap-6 pr-6 font-serif text-[1.6rem] text-cream">
+          <span key={`${wort}-${i}`} aria-hidden={i >= LAUFBAND.length} className="flex items-center gap-5 pr-5 font-serif text-[1.3rem] text-cream">
             {wort}
             <span aria-hidden className="h-1.5 w-1.5 rotate-45 bg-gold" />
           </span>
@@ -338,9 +338,9 @@ function Laufband() {
 
 function Ablauf() {
   return (
-    <section id="ablauf" className="relative scroll-mt-4 overflow-hidden px-6 py-[8vh]" style={{ background: "var(--tech-bg)" }}>
+    <section id="ablauf" className="relative scroll-mt-4 overflow-hidden px-6 py-[6vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="so-licht pointer-events-none absolute right-[-10%] top-[10%] h-[80%] w-[55%]" style={{ background: "radial-gradient(closest-side, rgba(184,150,62,0.16), transparent)" }} />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 min-[56.25rem]:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 min-[56.25rem]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
         <div>
           <SektionsKopf
             links
@@ -372,7 +372,7 @@ function Ablauf() {
 
 function FragenSchluss() {
   return (
-    <section className="relative overflow-hidden px-6 pb-[16vh] pt-[8vh]" style={{ background: "var(--tech-bg)" }}>
+    <section className="relative overflow-hidden px-6 pb-[14vh] pt-[6vh]" style={{ background: "var(--tech-bg)" }}>
       <div className="relative mx-auto max-w-3xl">
         <SektionsKopf zeile="Fragen" titel="Was du zum Gutschein wissen willst" />
         <div className="mt-8 space-y-3">
@@ -390,7 +390,7 @@ function FragenSchluss() {
         </div>
       </div>
 
-      <div className="relative mx-auto mt-[10vh] max-w-5xl text-center">
+      <div className="relative mx-auto mt-[8vh] max-w-5xl text-center">
         <div className="so-licht pointer-events-none absolute left-1/2 top-1/2 h-[140%] w-[90%] -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(closest-side, rgba(212,174,90,0.2), transparent)" }} />
         <div className="relative">
           <SektionsKopf
